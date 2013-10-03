@@ -66,11 +66,13 @@ This will make the first LED red. Note the use of 0b0001 and 0b0011, which are t
 
 We can do other colours too:
 
-```SPI1.send4bit([0,255,0], 0b0001, 0b0011); // green```
+```
+SPI1.send4bit([0,255,0], 0b0001, 0b0011); // green
 
-```SPI1.send4bit([0,0,255], 0b0001, 0b0011); // blue```
+SPI1.send4bit([0,0,255], 0b0001, 0b0011); // blue
 
-```SPI1.send4bit([255,255,255], 0b0001, 0b0011); // white```
+SPI1.send4bit([255,255,255], 0b0001, 0b0011); // white
+```
 
 And we can then control a second or third LED by just sending more data:
 
