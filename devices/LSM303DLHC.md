@@ -1,10 +1,12 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-LSM303DLHC Accelerometer (STM32F3DISCOVERY)
+LSM303DLHC Accelerometer
 ======================================
 
 * KEYWORDS: STM32F3DISCOVERY,Accelerometer,LSM303DLHC,I2C,Sensor
 
 [Datasheet](/datasheets/LSM303DLHCL.pdf)
+
+This is the accelerometer that is on the STM32F3DISCOVERY board.
 
 Here is some simple code for the accelerometer in the LSM303DLHC chip on the STM32F3DISCOVERY board :
 

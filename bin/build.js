@@ -22,7 +22,7 @@ marked.setOptions({
   tables: true,
   breaks: false,
   pedantic: false,
-  sanitize: true,
+  sanitize: false,
   smartLists: true,
   smartypants: false,
   langPrefix: 'lang-'
@@ -74,6 +74,7 @@ function grabKeywords(markdownFiles) {
    };
    // add keyword for directory
    file.split("/").forEach(function (k) {
+     k = k.toLowerCase();
      if (k.indexOf(".")>0) return; // no actual files
      if (keywords[k] != undefined)  {
        keywords[k].push(fileInfo);
@@ -85,6 +86,7 @@ function grabKeywords(markdownFiles) {
    var match = contents.match(regex);
    if (match!=null) {
      match[1].split(",").forEach(function(k) { 
+       k = k.toLowerCase();
        //console.log(k);
        if (keywords[k] != undefined)  {
          keywords[k].push(fileInfo);
@@ -97,6 +99,22 @@ function grabKeywords(markdownFiles) {
   return keywords;
 }
 
+// Create a keywords structure that can be used for searching the website
+function createKeywordsJS(keywords) {
+  var kw = {};
+  for (keyword in keywords) {
+    var keywordPages = keywords[keyword];
+    var kwd = [];
+    kw[keyword] = kwd;
+    for (idx in keywordPages) {
+      var data = keywordPages[idx];
+      kwd.push({ title : data["title"],
+                 file : htmlLinks[data["path"]] });
+    }
+  }
+  return kw;
+}
+
 console.log(markdownFiles);
 var keywords = grabKeywords(markdownFiles);
 console.log(keywords);
@@ -106,24 +124,39 @@ htmlLinks = {};
 markdownFiles.forEach(function (file) {
   var htmlFile = file.substring(file.lastIndexOf("/")+1);
   htmlFile = htmlFile.replace(/ /g,"+");
-  htmlFile = htmlFile.substring(0,htmlFile.lastIndexOf("."))+".html";
-  htmlFiles[file] = "html/"+htmlFile;
+  htmlFile = htmlFile.substring(0,htmlFile.lastIndexOf("."));
+  htmlFiles[file] = "html/"+htmlFile+".html";
   htmlLinks[file] = htmlFile;
 });
+
+fs.writeFile("html/keywords.js", "var keywords = "+JSON.stringify(createKeywordsJS(keywords))+";");
+
 
 markdownFiles.forEach(function (file) {
    var contents = fs.readFileSync(file).toString();
    // replace simple links
    contents = contents.replace(/\[\[([a-zA-Z0-9_ ]+)\]\]/g,"[$1]($1.html)");
+   contents = contents.replace(/(\[.+\]\([^ ]+) ([^ ]+\))/g,"$1+$2");
+   // Hacks for 'broken' markdown parsing
+   contents = contents.replace(/\n\n```([^\n]+)```\n\n/g,"\n\n```\n$1\n```\n\n"); // turn in-line code on its own into separate paragraph
+   contents = contents.replace(/```([^ \n][^\n]+)```/g,"``` $1 ```"); // need spaces after ```
+   // Hide keywords
+   contents = contents.replace(/(.*KEYWORDS: .*)/g, "<!---\n$1\n--->");
    // TODO - 'Tutorial 2' -> 'Tutorial+2', recognize pages that are references in docs themselves
    var contentLines = contents.split("\n");
    var regex = /APPEND_KEYWORD: (.*)/;
    for (i in contentLines) {
       var match = contentLines[i].match(regex);
       if (match!=null) {
-        var kw = match[1];
+        var kw = match[1].toLowerCase();;
         if (keywords[kw]!=undefined) {
-          var links = keywords[kw].map(function(a,b) { return "* ["+a.title+"]("+htmlLinks[a.path]+")"; });
+          var pages = keywords[kw];
+          var links = [ ];
+          for (j in pages) {
+            var a = pages[j];
+            if (a["path"]!=file)
+              links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );
+          }        
           contentLines[i] = links.join("\n");
         } else {
           console.log("WARNING: APPEND_KEYWORD for '"+kw+"' in "+file+" found nothing");
@@ -134,7 +167,11 @@ markdownFiles.forEach(function (file) {
    
    contentLines.splice(0,1); // remove first line (copyright)
    
-   html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'+
+   html = marked(contentLines.join("\n")).replace(/lang-JavaScript/g, 'sh_javascript');
+   github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+file;
+   html = '<div style="min-height:700px;">' + html + '</div>'+
+          '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues">let us know</a>.</p>';
+/*   html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'+
 '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">'+
 '<head>'+
 '        <link rel="stylesheet" href="css/sitewide.css" type="text/css" />'+
@@ -144,9 +181,9 @@ markdownFiles.forEach(function (file) {
 '        <title>'+contentLines[0]+'</title>'+
 '</head>'+
 '<body onload="sh_highlightDocument();"><div id="wrap"><div id="main">'+
-marked(contentLines.join("\n")).replace(/lang-JavaScript/g, 'sh_javascript')+
+html+
 '</div></div></body>'+
-'</html>';
+'</html>';*/
 
    
    fs.writeFile(htmlFiles[file], html);

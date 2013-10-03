@@ -2,6 +2,11 @@
 Index
 =====
 
+Tutorials
+-----
+
+* APPEND_KEYWORD: tutorials
+
 Tasks
 -----
 
