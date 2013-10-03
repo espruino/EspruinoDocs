@@ -139,6 +139,7 @@ fs.writeFile("html/keywords.js", "var keywords = "+JSON.stringify(createKeywords
 markdownFiles.forEach(function (file) {
    var contents = fs.readFileSync(file).toString();
    // replace simple links
+   contents = contents.replace(/\[\[http:\/\/youtu.be\/([a-zA-Z0-9_ ]+)\]\]/g,"[![Video Thumbnail](http://img.youtube.com/vi/$1/0.jpg)](http://www.youtube.com/watch?v=$1)"); // youtube
    contents = contents.replace(/\[\[([a-zA-Z0-9_ ]+)\]\]/g,"[$1]($1.html)");
    contents = contents.replace(/(\[.+\]\([^ ]+) ([^ ]+\))/g,"$1+$2");
    // Hacks for 'broken' markdown parsing

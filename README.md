@@ -13,6 +13,7 @@ It also looks for a title (second line, after copyright notices) which it uses t
 
 There are a few extra bits too:
 * ```[[My Page]]``` links to a page on the Espruino website
+* ```[[http://youtu.be/VIDEOID]]``` puts a video on the page
 
 It then converts the markdown to HTML and shoves it on the Espruino website. lovely.
 
