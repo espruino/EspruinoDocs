@@ -62,7 +62,12 @@ function addKeyword(keywords, k, fileInfo) {
   k = k.toLowerCase();
   //console.log(k);
   if (keywords[k] != undefined)  {
-    keywords[k].push(fileInfo);
+    var contains = false;
+    for (i in keywords[k])
+      if (keywords[k][i]["title"]==fileInfo["title"])
+        return true;
+    if (!contains)
+      keywords[k].push(fileInfo);
   } else {
     keywords[k] = [fileInfo];
   }
