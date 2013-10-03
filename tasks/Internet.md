@@ -11,7 +11,7 @@ Client
 
 HTTP clients are like Web browsers - they request a webpage from (or submit information to) a web server.
 
-For a simple HTTP client just use [[#http.get]]. Note that as the data from the webpage is sent in packets, you must register a handler to deal with each bit of data as it arrives.
+For a simple HTTP client just use ```http.get```. Note that as the data from the webpage is sent in packets, you must register a handler to deal with each bit of data as it arrives.
 
 The example below will just output the contents of the Espruino website:
 
@@ -26,7 +26,7 @@ http.get("http://www.espruino.com", function(res) {
 Server
 ------
 
-HTTP servers are pretty easy. Just use [[#http.createServer]], and then use the listen method to specify which port to listen on. The following example will just write 'Hello World' in your web browser if you connect to [[http://localhost:8080]]
+HTTP servers are pretty easy. Just use ```http.createServer```, and then use the listen method to specify which port to listen on. The following example will just write 'Hello World' in your web browser if you connect to http://localhost:8080
 
 ```JavaScript
 http.createServer(function (req, res) {

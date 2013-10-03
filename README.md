@@ -13,7 +13,6 @@ It also looks for a title (second line, after copyright notices) which it uses t
 
 There are a few extra bits too:
 * ```[[My Page]]``` links to a page on the Espruino website
-* ```[[#Math.random]]``` links to that page in the Espruino code reference
 
 It then converts the markdown to HTML and shoves it on the Espruino website. lovely.
 
