@@ -58,6 +58,16 @@ function getMarkdown(dir) {
 
 var markdownFiles = getMarkdown(BASEDIR);
 
+function addKeyword(keywords, k, fileInfo) {
+  k = k.toLowerCase();
+  //console.log(k);
+  if (keywords[k] != undefined)  {
+    keywords[k].push(fileInfo);
+  } else {
+    keywords[k] = [fileInfo];
+  }
+}
+
 function grabKeywords(markdownFiles) {
   var keywords = {};
   var regex = /KEYWORDS: (.*)/;
@@ -74,25 +84,14 @@ function grabKeywords(markdownFiles) {
    };
    // add keyword for directory
    file.split("/").forEach(function (k) {
-     k = k.toLowerCase();
-     if (k.indexOf(".")>0) return; // no actual files
-     if (keywords[k] != undefined)  {
-       keywords[k].push(fileInfo);
-     } else {
-       keywords[k] = [fileInfo];
-     }
+     if (k.indexOf(".")>0) k = k.substr(0,k.indexOf(".")); // remove file extension
+     addKeyword(keywords, k, fileInfo);
    });
    // add keywords in file
    var match = contents.match(regex);
    if (match!=null) {
      match[1].split(",").forEach(function(k) { 
-       k = k.toLowerCase();
-       //console.log(k);
-       if (keywords[k] != undefined)  {
-         keywords[k].push(fileInfo);
-       } else {
-         keywords[k] = [fileInfo];
-       }
+       addKeyword(keywords, k, fileInfo);
      });
    }
   });
