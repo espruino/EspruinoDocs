@@ -1,5 +1,11 @@
 // Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. 
 var fs = require('fs');
+var path = require('path');
+if (fs.existsSync==undefined) fs.existsSync = path.existsSync;
+
+var HTML_DIR = "html/";
+var IMAGE_DIR = "refimages/";
+
 var marked = require('marked');
 //var pygmentize = require('pygmentize-bundled')
 //var hljs = require('highlight.js')
@@ -28,6 +34,10 @@ marked.setOptions({
   langPrefix: 'lang-'
 });
 
+
+function WARNING(s) {
+  console.log("WARNING: "+s);
+}
 
 function getFiles(dir) {
   var results = [];
@@ -81,8 +91,8 @@ function grabKeywords(markdownFiles) {
    // get file info
    var contents = fs.readFileSync(file).toString();
    var contentLines = contents.split("\n");
-   if (contentLines[0].substr(0,15)!="<!--- Copyright") console.log("WARNING: "+file+" doesn't have a copyright line");
-   if (contentLines[2].substr(0,3)!="===") console.log("WARNING: "+file+" doesn't have a title on the first line");
+   if (contentLines[0].substr(0,15)!="<!--- Copyright") WARNING(file+" doesn't have a copyright line");
+   if (contentLines[2].substr(0,3)!="===") WARNING(file+" doesn't have a title on the first line");
    var fileInfo = {
      path : file,
      title : contentLines[1], // second line
@@ -119,9 +129,36 @@ function createKeywordsJS(keywords) {
   return kw;
 }
 
-console.log(markdownFiles);
+function handleImages(file, contents) {
+  var basePath = file;
+  if (basePath.lastIndexOf(".")>0)
+    basePath = basePath.substr(0, basePath.lastIndexOf("."));
+  var tagStart = contents.indexOf("![");
+  while (tagStart>=0) {
+    var tagMid = contents.indexOf("](", tagStart);
+    var tagEnd = contents.indexOf(")", tagMid);
+    if (tagMid>=0 && tagEnd>=0) {
+      // we've found a tag - do stuff
+      var imageName = contents.substring(tagMid+2, tagEnd);
+      var imagePath = basePath+"/"+imageName;
+      if (fs.existsSync(imagePath)) {
+        var newPath = IMAGE_DIR+htmlLinks[file]+"_"+imageName;
+        console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
+        fs.createReadStream(imagePath).pipe(fs.createWriteStream(HTML_DIR+newPath));
+        // now rename the image in the tag
+        contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
+      } else {
+        WARNING("Image '"+imagePath+"' does not exist");
+      }
+    }
+    tagStart = contents.indexOf("![", tagStart+1);
+  }
+  return contents;
+}
+
+//console.log(markdownFiles);
 var keywords = grabKeywords(markdownFiles);
-console.log(keywords);
+//console.log(keywords);
 
 htmlFiles = {};
 htmlLinks = {};
@@ -129,15 +166,18 @@ markdownFiles.forEach(function (file) {
   var htmlFile = file.substring(file.lastIndexOf("/")+1);
   htmlFile = htmlFile.replace(/ /g,"+");
   htmlFile = htmlFile.substring(0,htmlFile.lastIndexOf("."));
-  htmlFiles[file] = "html/"+htmlFile+".html";
+  htmlFiles[file] = HTML_DIR+htmlFile+".html";
   htmlLinks[file] = htmlFile;
 });
 
-fs.writeFile("html/keywords.js", "var keywords = "+JSON.stringify(createKeywordsJS(keywords))+";");
+fs.writeFile(HTML_DIR+"keywords.js", "var keywords = "+JSON.stringify(createKeywordsJS(keywords))+";");
 
 
 markdownFiles.forEach(function (file) {
    var contents = fs.readFileSync(file).toString();
+   // Check over images... ![Image Title](foo.png)
+   contents = handleImages(file, contents);
+   
    // replace simple links
    contents = contents.replace(/\[\[http:\/\/youtu.be\/([a-zA-Z0-9_ ]+)\]\]/g,"[![Video Thumbnail](http://img.youtube.com/vi/$1/0.jpg)](http://www.youtube.com/watch?v=$1)"); // youtube
    contents = contents.replace(/\[\[([a-zA-Z0-9_ ]+)\]\]/g,"[$1]($1.html)");
@@ -164,7 +204,7 @@ markdownFiles.forEach(function (file) {
           }        
           contentLines[i] = links.join("\n");
         } else {
-          console.log("WARNING: APPEND_KEYWORD for '"+kw+"' in "+file+" found nothing");
+          WARNING("APPEND_KEYWORD for '"+kw+"' in "+file+" found nothing");
           contentLines[i] = "";
         }
       }
