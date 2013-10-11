@@ -16,6 +16,7 @@ For a simple HTTP client just use ```http.get```. Note that as the data from the
 The example below will just output the contents of the Espruino website:
 
 ```JavaScript
+var http = require("http");
 http.get("http://www.espruino.com", function(res) {
  res.on('data', function(data) {
   console.log(data);
@@ -29,6 +30,7 @@ Server
 HTTP servers are pretty easy. Just use ```http.createServer```, and then use the listen method to specify which port to listen on. The following example will just write 'Hello World' in your web browser if you connect to http://localhost:8080
 
 ```JavaScript
+var http = require("http");
 http.createServer(function (req, res) {
   res.writeHead(200);
   res.end("Hello World"); 
@@ -40,6 +42,8 @@ By itself this isn't too useful - but a simple way to control things from the we
 When clicked, they request the webpage /on or /off, and the server detects this and turns pin D7 on or off to match.
 
 ```JavaScript
+var http = require("http");
+
 function onPageRequest(req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
   res.write('<html><body>');
