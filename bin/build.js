@@ -216,7 +216,7 @@ markdownFiles.forEach(function (file) {
    html = marked(contentLines.join("\n")).replace(/lang-JavaScript/g, 'sh_javascript');
    github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+file;
    html = '<div style="min-height:700px;">' + html + '</div>'+
-          '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues">let us know</a>.</p>';
+          '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues/new?title='+file+'">let us know</a>.</p>';
 /*   html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'+
 '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">'+
 '<head>'+
