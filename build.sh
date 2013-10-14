@@ -11,5 +11,9 @@ WEBSITE=~/workspace/espruinowebsite
 cp html/*.html $WEBSITE/reference/
 cp html/keywords.js $WEBSITE/www/js
 cp datasheets/* $WEBSITE/www/datasheets
-mkdir $WEBSITE/www/refimages
+mkdir -p $WEBSITE/www/refimages
+rm $WEBSITE/www/refimages/*
 cp html/refimages/* $WEBSITE/www/refimages
+mkdir -p $WEBSITE/www/modules
+rm $WEBSITE/www/modules/*
+cp devices/*.js $WEBSITE/www/modules

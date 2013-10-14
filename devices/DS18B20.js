@@ -3,7 +3,7 @@
 Module for the DS18B20 temperature sensor
 
 ```
-var sensor = require("Encoder").connect(hardware,A1);
+var sensor = require("DS18B20").connect(hardware,A1);
 console.log(sensor.getTemp());
 ```
 */

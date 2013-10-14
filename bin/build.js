@@ -180,8 +180,9 @@ markdownFiles.forEach(function (file) {
    
    // replace simple links
    contents = contents.replace(/\[\[http:\/\/youtu.be\/([a-zA-Z0-9_ ]+)\]\]/g,"[![Video Thumbnail](http://img.youtube.com/vi/$1/0.jpg)](http://www.youtube.com/watch?v=$1)"); // youtube
-   contents = contents.replace(/\[\[([a-zA-Z0-9_ ]+)\]\]/g,"[$1]($1.html)");
-   contents = contents.replace(/(\[.+\]\([^ ]+) ([^ ]+\))/g,"$1+$2");
+   contents = contents.replace(/\[\[([a-zA-Z0-9_ ]+).js\]\]/g,"[$1](/modules/$1.js) ([About Modules](/Modules))");
+   contents = contents.replace(/\[\[([a-zA-Z0-9_ ]+)\]\]/g,"[$1](/$1)");
+   contents = contents.replace(/(\[.+\]\([^) ]+) ([^) ]+\))/g,"$1+$2");
    // Hacks for 'broken' markdown parsing
    contents = contents.replace(/\n\n```([^\n]+)```\n\n/g,"\n\n```\n$1\n```\n\n"); // turn in-line code on its own into separate paragraph
    contents = contents.replace(/```([^ \n][^\n]+)```/g,"``` $1 ```"); // need spaces after ```
