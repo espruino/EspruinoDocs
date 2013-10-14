@@ -9,7 +9,7 @@ node bin/build.js
 
 WEBSITE=~/workspace/espruinowebsite
 
-rm $WEBSITE/reference/*
+#rm $WEBSITE/reference/*
 cp html/*.html $WEBSITE/reference/
 cp html/keywords.js $WEBSITE/www/js
 cp datasheets/* $WEBSITE/www/datasheets

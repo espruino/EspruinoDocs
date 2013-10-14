@@ -3,14 +3,16 @@ var fs = require('fs');
 var path = require('path');
 if (fs.existsSync==undefined) fs.existsSync = path.existsSync;
 
+var BASEDIR = ".";
 var HTML_DIR = "html/";
 var IMAGE_DIR = "refimages/";
+var FUNCTION_KEYWORD_FILE = "../Espruino/function_keywords.js";
+var KEYWORD_JS_FILE = HTML_DIR+"keywords.js";
 
 var marked = require('marked');
 //var pygmentize = require('pygmentize-bundled')
 //var hljs = require('highlight.js')
 
-var BASEDIR = ".";
 
 // Set default options except highlight which has no default
 marked.setOptions({
@@ -85,6 +87,10 @@ function addKeyword(keywords, k, fileInfo) {
 
 function grabKeywords(markdownFiles) {
   var keywords = {};
+
+  if (fs.existsSync(FUNCTION_KEYWORD_FILE))
+    keywords = JSON.parse(fs.readFileSync(FUNCTION_KEYWORD_FILE));
+
   var regex = /KEYWORDS: (.*)/;
   markdownFiles.forEach(function (file) {
 
@@ -122,8 +128,10 @@ function createKeywordsJS(keywords) {
     kw[keyword] = kwd;
     for (idx in keywordPages) {
       var data = keywordPages[idx];
+      var f = (data["path"].substr(0,1)=="/") ? data["path"] : htmlLinks[data["path"]];
+      if (f==undefined) warn("No file info for "+data["path"]);
       kwd.push({ title : data["title"],
-                 file : htmlLinks[data["path"]] });
+                 file : f });
     }
   }
   return kw;
@@ -170,7 +178,7 @@ markdownFiles.forEach(function (file) {
   htmlLinks[file] = htmlFile;
 });
 
-fs.writeFile(HTML_DIR+"keywords.js", "var keywords = "+JSON.stringify(createKeywordsJS(keywords))+";");
+fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(keywords))+";");
 
 
 markdownFiles.forEach(function (file) {
@@ -200,7 +208,7 @@ markdownFiles.forEach(function (file) {
           var links = [ ];
           for (j in pages) {
             var a = pages[j];
-            if (a["path"]!=file)
+            if (a["path"]!=file && htmlLinks[a.path]!=undefined) // if we don't have links it is probably in the reference
               links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );
           }        
           contentLines[i] = links.join("\n");
