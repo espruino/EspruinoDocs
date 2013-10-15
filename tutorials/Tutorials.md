@@ -7,3 +7,5 @@ Tutorials
 These tutorials are designed for the Espruino [[Boards]]. They may work on [[Other Boards]] but please be aware that pins and functionality may be different.
 
 * APPEND_KEYWORD: Tutorials
+
+You can also check out other code via [[Code Examples]]

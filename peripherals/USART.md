@@ -2,6 +2,10 @@
 USART / UART / Serial Port
 =======================
 
+* KEYWORDS: Serial,USART,UART,RS232
+
+[Serial Class](/Reference#Serial) in the Reference.
+
 Espruino can respond to information on serial ports or USB. If you're plugged in via USB, you can create a very simple command interpreter on the first serial port with the following code:
 
 ```JavaScript

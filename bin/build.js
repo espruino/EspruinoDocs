@@ -116,6 +116,11 @@ function grabKeywords(markdownFiles) {
      });
    }
   });
+
+  // sort keywords
+  for (keyword in keywords) 
+    keywords[keyword].sort(function(a,b){ return (a.title == b.title)?0:(a.title > b.title ? 1 : -1); });
+
   return keywords;
 }
 
