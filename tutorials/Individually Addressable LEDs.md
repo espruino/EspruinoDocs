@@ -52,11 +52,13 @@ Software
 
 So now it's connected up, we need to send some data. First off, we'll set up SPI:
 
-```SPI1.setup({baud:3200000, mosi:D11});```
+```SPI1.setup({baud:1600000, mosi:D11});```
 
 Note that we're setting the MOSI pin here - if you are using a different pin to D11 (see the wiring up section) then you'll have to change this.
 
-We choose 3200000 baud, because we want to transmit 4 bits of information for each real bit, and we want to transmit at 800000 baud, so 800000 * 4 = 3200000. Note that the STM32 chips can't get exactly the SPI baud rate you request - however they'll get it right to within +/- 50%.
+We choose 1600000 baud, because we want to transmit 4 bits of information for each real bit, and we want to transmit at 800000 baud. While 800000 * 4 = 3200000, the STM32 chips can't get exactly the SPI baud rate you request - they'll get it right to within +/- 50%. 
+
+**This may mean that if the next command doesn't work, you have to repeat the command above with a baud rate of 3200000**
 
 And now, we'll send data to the first light. The data is transmitted as sets of bytes for red, green, and blue:
 
