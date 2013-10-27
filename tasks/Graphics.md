@@ -6,6 +6,51 @@ Graphics Library
 
 Espruino has a built-in graphics library (however on less powerful devices this may have been removed to save on Flash memory).
 
+This Library is handled with the Graphics class. On some boards that have an LCD built in, there will be a predefined variable called 'LCD' (an instance of the Graphics Object) - and this is what is used in the examples below.
+
+If you have a board without an in-build LCD, you can create your own instance(s) of the Graphics class for LCDs, or your own use.
+
+### LCD Drivers
+
+Below are a list of currently available LCD drivers:
+
+* APPEND_KEYWORD: Graphics Driver
+
+### Internal Use
+
+You can create a Graphics class which renders to an ArrayBuffer:
+
+```
+Graphics.prototype.print = function() { 
+  for (var y=0;y<this.getHeight();y++)
+    console.log(new Uint8Array(this.buffer,this.getWidth()*y,this.getWidth()));
+}
+var g = Graphics.createArrayBuffer(8,8,8);
+g.setColor(1)
+g.drawString("X",0,0) 
+g.print()
+//0,0,0,0,0,0,0,0
+//0,1,1,0,0,0,1,1
+//0,1,1,0,0,0,1,1
+//0,0,1,1,0,1,1,0
+//0,0,0,1,1,1,0,0
+//0,0,1,1,0,1,1,0
+//0,1,1,0,0,0,1,1
+//0,1,1,0,0,0,1,1
+```
+
+Or you can create a Graphics instance which calls your function whenever a pixel needs to be drawn:
+
+```
+var g = Graphics.createCallback(8,8,1,function(x,y,c) {
+ print(x+","+y);
+});
+g.drawLine(0,0,2,2)
+//0,0
+//1,1
+//2,2
+```
+
 Hello World
 -----------
 
