@@ -16,7 +16,7 @@ function NRF(sck, miso, mosi, csn, ce, payload) {
   this.BASE_CONFIG = 8; //EN_CRC
   this.cmd = ""; // for receiving commands
   this.SPI = SPI1;
-  this.SPI.setup({sck:SCK, miso:MISO, mosi:MOSI});
+  this.SPI.setup({sck:sck, miso:miso, mosi:mosi});
 }
 NRF.prototype.C = { 
 CONFIG      :0x00,
