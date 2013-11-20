@@ -3,12 +3,12 @@
 Module for the DS18B20 temperature sensor
 
 ```
-var sensor = require("DS18B20").connect(hardware,A1);
+var sensor = require("DS18B20").connect(A1);
 console.log(sensor.getTemp());
 ```
 */
-exports.connect = function(hardware,pin) {
-  var ow = new OneWire(pin);
+exports.connect = function(/*=PIN*/pin) {
+  var ow = new OneWire(pin); 
   ow.device = ow.search()[0];
   if (ow.device===undefined) {
     print("No OneWire devices found");

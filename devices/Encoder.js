@@ -4,7 +4,7 @@ Module for connecting to Rotary encoder.
 
 ```
 var step = 0;
-require("Encoder").connect(hardware,A1,A2,function (direction) {
+require("Encoder").connect(A1,A2,function (direction) {
   step += direction;
   print(step);
 });
@@ -12,7 +12,7 @@ require("Encoder").connect(hardware,A1,A2,function (direction) {
 
 */
 
-function Encoder(pina, pinb, callback) {
+function Encoder(/*=PIN*/pina, /*=PIN*/pinb, callback) {
   this.timeout = undefined;
   this.last = 0;
   this.PINA = pina;
@@ -39,7 +39,7 @@ function Encoder(pina, pinb, callback) {
  setWatch(this.rotaryTimeout, this.PINB, { repeat: true });
 }
 
-exports.connect = function(hardware,pina, pinb, callback) {
+exports.connect = function(pina, pinb, callback) {
   return new Encoder(pina, pinb, callback);
 }
 

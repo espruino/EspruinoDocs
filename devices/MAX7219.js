@@ -4,12 +4,12 @@ Module for the MAX7219 7 segment display driver
 
 ```
 SPI2.setup();
-var disp = require("MAX7219").connect(hardware,SPI2,B6);
+var disp = require("MAX7219").connect(SPI2,B6);
 disp.set(12345);
 setTimeout(function() { disp.off(); }, 10000);
 ```
 */
-exports.connect = function(hardware,_spi,_cs) {
+exports.connect = function(/*=SPI*/_spi,/*=PIN*/_cs) {
   var spi = _spi; 
   var cs = _cs;
   spi.send ([0x9,0xff],B6); // decode mode
