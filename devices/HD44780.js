@@ -49,7 +49,7 @@ function HD44780(write) {
  };
 }
 
-function connectI2C(/*=I2C*/_i2c) {
+exports.connectI2C = function(/*=I2C*/_i2c) {
  var i2c = _i2c;
  var write = function(x, c) {
   var a = (x&0xF0) |8| ((c===undefined)?1:0);
@@ -57,9 +57,9 @@ function connectI2C(/*=I2C*/_i2c) {
   i2c.writeTo(0x27, [a,a,a|4,a|4,a,a,b,b,b|4,b|4,b,b]);
  };
  return new HD44780(write);
-}
+};
 
-function connect(/*=PIN*/_rs,/*=PIN*/_en,/*=PIN*/_d4,/*=PIN*/_d5,/*=PIN*/_d6,/*=PIN*/_d7) {
+exports.connect = function(/*=PIN*/_rs,/*=PIN*/_en,/*=PIN*/_d4,/*=PIN*/_d5,/*=PIN*/_d6,/*=PIN*/_d7) {
  var data = [_d7,_d6,_d5,_d4];
  var rs = _rs;
  var en = _en;
@@ -72,5 +72,5 @@ function connect(/*=PIN*/_rs,/*=PIN*/_en,/*=PIN*/_d4,/*=PIN*/_d5,/*=PIN*/_d6,/*=
   digitalPulse(en, 1, 0.01);
  };
  return new HD44780(write);
-}
+};
 
