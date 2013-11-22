@@ -2,7 +2,7 @@
 Rotary Encoder
 =============
 
-* KEYWORDS: Rotary,Encoder,Rotary Encoder
+* KEYWORDS: Module,Rotary,Encoder,Rotary Encoder
 
 [Incremental Rotary Encoders](http://en.wikipedia.org/wiki/Rotary_encoder#Incremental_rotary_encoder) supported by this module use two 'switches', which change state in a [Gray Code](http://en.wikipedia.org/wiki/Gray_code). This allows them to detect either clockwise or anticlockwise movement.
 

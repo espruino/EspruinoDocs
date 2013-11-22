@@ -2,7 +2,7 @@
 Wii Nunchuck
 ====================================
 
-* KEYWORDS: Accelerometer,I2C,Sensor,Wii,Nunchuck,Joystick,Joy Stick,Button
+* KEYWORDS: Module,Accelerometer,I2C,Sensor,Wii,Nunchuck,Joystick,Joy Stick,Button
 
 ![Wii Nunchuck](nunchuck.jpg)
 
@@ -26,7 +26,7 @@ The connector viewed from the end is connected like this:
                   |________|
 ```
 
-Once wired up, you can use the Wii nunchuck with just the following:
+Once wired up, you can use the Wii nunchuck with just the following - using the [[wii_nunchuck.js]] module:
 
 
 ```

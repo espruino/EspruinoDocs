@@ -22,3 +22,8 @@ WiFi-enabled Espruino
 ------------------
 
 **We're working on this - but soon:** If you have a WiFi-enabled Espruino and it is connected to the internet, ```writing require('mymodule')``` will cause it to look on the internet for the module with the name you have given.
+
+Existing Modules
+--------------
+
+* APPEND_KEYWORD: Module
