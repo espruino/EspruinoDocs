@@ -4,7 +4,9 @@ Internet (HTTP)
 
 * KEYWORDS: Internet,HTTP,Web,TCPIP,TCP/IP,TCP-IP,IP,TCP
 
-Internet support in Espruino is currently limited to the Raspberry Pi version, although it should hopefully be available soon using CC3000 WiFi. Basic internet functionality is handled using the Http class.
+To use the internet in Espruino you need an internet connection. If you're using Espruino under Linux (for example Raspberry Pi or OpenWRT) then you're sorted and can use the examples below directly, otherwise you'll need a module to connect to the internet. Currently your only choice is the TI [[CC3000]], however hopefully this will change in the future.
+
+Basic internet functionality is handled using the Http class.
 
 Client
 ------
