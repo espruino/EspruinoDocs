@@ -69,10 +69,10 @@ Or use vector fonts, which are scaleable!
 LCD.clear();
 LCD.setFontVector(40);
 LCD.setColor(1,0,0);
-LCD.drawVectorString("Hello",0,0); // 40px high in red
+LCD.drawString("Hello",0,0); // 40px high in red
 LCD.setFontVector(60);
 LCD.setColor(0,1,0);
-LCD.drawVectorString("World",40,40); // 60px high in green
+LCD.drawString("World",40,40); // 60px high in green
 ```
  
 Circles
