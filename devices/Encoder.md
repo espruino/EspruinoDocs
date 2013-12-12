@@ -12,7 +12,7 @@ Rotary encoders are handled by the [[Encoder.js]] module.
 
 ```
 var step = 0;
-require("Encoder").connect(hardware,A1,A2,function (direction) {
+require("Encoder").connect(A1,A2,function (direction) {
   step += direction;
   print(step);
 });
