@@ -1,0 +1,32 @@
+<!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
+KeyPad Matrix
+=============
+
+* KEYWORDS: KeyPad,Key pad,matrix,buttons,button,switch
+
+A [KeyPad Matrix](http://en.wikipedia.org/wiki/Keyboard_matrix_circuit) is a selection of switches arranged in a grid. One side of each switch is connected with horizontal wires (rows) and one side is connected with vertical wires (columns). By putting a signal on one side (for example the rows) and reading the other side (the columns), you can determine which key is pressed down.
+
+**Note:** this isn't very good at determining when multiple keys are pressed.
+
+KeyPads are handled by the [[KeyPad.js]] module. 
+
+Simply supply two arrays, one of wires connected to columns,
+one of wires connected to rows.
+
+If a third argument (a callback function) is supplied, watches will be set up, and the callback
+will be called automatically as soon as a button is pressed. If it isn't, it's up to the user to
+use ```keypad.read()``` to find out what key is pressed. -1 will be returned if no key is pressed.
+
+```
+require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9], function(e) {
+  print("123A456B789C*0#D"[e]);
+});
+```
+
+or
+
+```
+var keypad = require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9]);
+print("123A456B789C*0#D"[keypad.read()]);
+```
+
