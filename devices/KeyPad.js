@@ -26,7 +26,6 @@ exports.connect = function (columns, rows, callback) {
   var watches = [];
   var lastState = 0;
   var readState = function() {
-    removeWatches();
     var press = -1;
     for (var i in rows) {
       digitalWrite(rows, 1 << i);
