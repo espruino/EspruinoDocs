@@ -62,7 +62,7 @@ exports.connect = function (columns, rows, callback) {
       clearWatch(watches[i]);
   };
   setup();
-  if (callback) addWatches();
+  if (callback!==undefined) addWatches();
   return {
     read: readState
   };
