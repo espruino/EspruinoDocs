@@ -13,7 +13,9 @@ The Espruino board only has one USB connector - just plug it in with a Micro USB
 
 
 **Windows XP Users:** Windows XP does not to have generic drivers for USB CDC devices installed, so you'll have to get them from ST via http://www.st.com/web/en/catalog/tools/PF257938
+
 **Other Windows Users:** Newer versions of windows have USB CDC devices installed already, however windows may inexplicably take a few minutes or two to install them.
+
 **Mac OS X and Linux Users:** The board will just plug in and go!
 
 Set up a Terminal App
@@ -37,6 +39,8 @@ And after you've got it running you can:
 
 Set up a Terminal App (Alternative)
 --------------------------------
+
+**Note:** We're putting a lot of functionality into the Chrome Web App (built in tutorials, module loading, syntax highlighting, etc) so we'd really recommend that you use it. However you can still access Espruino in other ways...
 
 ### Windows
 
