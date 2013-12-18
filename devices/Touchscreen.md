@@ -4,79 +4,37 @@ Touchscreen
 
 * KEYWORDS: HYSTM32,HYSTM32_24,HYSTM32_28,HYSTM32_32,Touchscreen,SPI,ADS7843
 
-This code reads the value from the touchscreen, and calls the touchCallback function which draws a line on the screen. Different boards have different pinouts and touchscreen arrangements, so need slightly different code:
+We've created a [[Touchscreen.js]] module that allows you to easily access the touchscreen on devices that have them built in. If you've wired up your own touchscreen then you will probably need to use the relevant touchscreen module directly though (such as the [[ASD7843]]). 
 
-2.4 inch display
---------------
+Using the touchscreen is as easy as writing ```require("Touchscreen").connect( ... )```, and supplying a callback function. The callback function has two arguments (X and Y). When you move your finger on the touchscreen the X and Y coordinates are reported back, and when you lift your finger, the callback function is called once with X and Y set to undefined.
+
+The following example draws a rectangle at each point that is reported when you drag your finger.
 
 ```
-var onInit = function () {
-  SPI1.send([0x90,0],B7); // just wake the controller up
-};
-var touchFunc = function () {
-  if (!digitalRead(B6)) { // touch down
-    var dx = SPI1.send([0x90,0,0],B7);
-    var dy = SPI1.send([0xD0,0,0],B7);
-    var pos = {x:(dx[1]*256+dx[2])*LCD.getWidth()/0x8000, 
-               y:LCD.getHeight()-(dy[1]*256+dy[2])*LCD.getHeight()/0x8000};
-    touchCallback(pos.x, pos.y);
-    lastPos = pos;
-  } else lastPos = null;
-};
-var touchCallback = function (x,y) {
-  if (lastPos!=null) { 
-    LCD.drawLine(x,y,lastPos.x,lastPos.y,0xFFFF);
+require("Touchscreen").connect(function(x,y) {
+  if (x!==undefined)
+    LCD.fillRect(x-1,y-1,x+1,y+1);
+});
+```
+
+In most cases you'll want to know when the user's finger was first pressed. You can do this by remembering when the user last lifted their finger. The following example shows how to draw lines - note that it uses ```moveTo``` when the user first presses their finger.
+
+```
+var fingerLifted = true;
+
+LCD.clear();
+require("Touchscreen").connect(function(x,y) {
+  if (x===undefined) {
+    fingerLifted = true;
+  } else {
+    if (fingerLifted) {
+      // first call after finger was lifted
+      fingerLifted = false;
+      LCD.moveTo(x,y);
+    } else {
+      // subsequent calls
+      LCD.lineTo(x,y);
+    }
   }
-};
-onInit();setInterval(touchFunc, 50);
-```
-
-2.8 inch display
---------------
-
-```
-var onInit = function () {
-  SPI1.setup({sck:A5,miso:A6,mosi:A7})
-  SPI1.send([0x90,0],A4); // just wake the controller up
-};
-var touchFunc = function () {
-  if (!digitalRead(C13)) { // touch down
-    var d = SPI1.send([0x90,0,0xD0,0,0],A4);
-    var pos = {x:LCD.getWidth()-(d[1]*256+d[2])*LCD.WIDTH/0x8000, 
-               y:(d[3]*256+d[4])*LCD.getHeight()/0x8000};
-    touchCallback(pos.x, pos.y);
-    lastPos = pos;
-  } else lastPos = null;
-};
-var touchCallback = function (x,y) {
-  if (lastPos!=null) { 
-    LCD.drawLine(x,y,lastPos.x,lastPos.y,0xFFFF);
-  }
-};
-onInit();setInterval(touchFunc, 50);
-```
-
-3.2 inch display
---------------
-
-```
-var onInit = function () {
-  SPI1.setup({sck:A5,miso:A6,mosi:A7})
-  SPI1.send([0x90,0],A4); // just wake the controller up
-};
-var touchFunc = function () {
-  if (!digitalRead(B6)) { // touch down
-    var d = SPI1.send([0x90,0,0xD0,0,0],A4);
-    var pos = {x:(d[1]*256+d[2])*LCD.getWidth()/0x8000, 
-               y:(d[3]*256+d[4])*LCD.getHeight()/0x8000};
-    touchCallback(pos.x, pos.y);
-    lastPos = pos;
-  } else lastPos = null;
-};
-var touchCallback = function (x,y) {
-  if (lastPos!=null) { 
-    LCD.drawLine(x,y,lastPos.x,lastPos.y,0xFFFF);
-  }
-};
-onInit();setInterval(touchFunc, 50);
+});
 ```
