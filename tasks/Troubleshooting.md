@@ -20,3 +20,4 @@ This is the Espruino Bootloader. It starts when  **Button 1** or the pin it is c
 
 ### I typed ```save()``` but my connected device doesn't work at power on
 Some devices (such as LCDs) require their own initialisation code which Espruino can't remember. To do that initialisation at boot time, write a function called ```onInit```. After typing ```save()```, it will be executed at power on or reset. 
+
