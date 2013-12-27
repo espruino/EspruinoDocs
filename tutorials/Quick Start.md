@@ -40,7 +40,7 @@ And after you've got it running you can:
 Set up a Terminal App (Alternative)
 --------------------------------
 
-**Note:** We're putting a lot of functionality into the Chrome Web App (built in tutorials, module loading, syntax highlighting, etc) so we'd really recommend that you use it. However you can still access Espruino in other ways...
+**Note:** We're putting a lot of functionality into the Chrome Web App (built in firmwre updates, tutorials, module loading, syntax highlighting, etc) so we'd really recommend that you use it. However you can still access Espruino in other ways...
 
 ### Windows
 
@@ -91,6 +91,13 @@ Open a shell, then type the following (instead of /dev/tty.yourdevicename, use t
 ```screen /dev/tty.yourdevicename 9600```
 
 **Note:** To copy, highlight the text and press ```Cmd + C```. To paste, press ```Cmd + V```
+ 
+Software Updates
+--------------
+
+Espruino is gaining features and improvements on an almost daily basis. If you get an Espruino board from KickStarter or a preorder, we highly recommend that you update its firmware before you start using it.
+
+When you first use the Espruino Web IDE and connect (see above) you'll probably see a message saying that new firmware is available. Click the **(i)** symbol in the top right of the window, click 'Firware Updates', and follow the instructions. There is no risk of damaging your Espruino board, however the firmware update process will take several minutes to complete.
  
 Start writing code!
 --------------------------
