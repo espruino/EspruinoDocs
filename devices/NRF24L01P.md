@@ -41,4 +41,4 @@ nrf.sendString("LED2.set()", function(r) { print("=="+r); });
 
 To communicate with another Espruino, all you need to do to is to call ```nrf.setTXAddr([1,2,3,4,5])``` on the master, giving the address that you have to the Slave Espruino's nrf.init function.
 
-The usage of ```slaveHandler``` and ```masterHandler``` is not required - if you want, you can call methods such as ```send``` and ``dataReady``` directly.
+The usage of ```slaveHandler``` and ```masterHandler``` is not required - if you want, you can call methods such as ```send``` and ```dataReady``` directly.
