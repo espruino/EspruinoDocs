@@ -57,6 +57,40 @@ Espruino is designed for HC-05 modules. Have a look at the [[Bluetooth]] page fo
 Known Problems
 ------------
 
-* Currently, PWM outputs (via ```analogWrite```) won't work on pin A9
-* You can't setWatch on two pins with the same number (eg. A5 and C5) - it's a limitation of the STM32F1
+* Currently, PWM outputs (via ```analogWrite```) won't work on pin A9 ((bug)[https://github.com/espruino/Espruino/issues/142])
+* You can't setWatch on two pins with the same number (eg. A5 and C5) - it's a limitation of the STM32F1 
 * You can't use ```setWatch``` on B11/C11/D11 and enable ```setDeepSleep```, as A11 is watched in order to wake when USB is plugged in
+* USB 'loses' characters if you send 60 or more at once ((bug)[https://github.com/espruino/Espruino/issues/94])
+
+Troubleshooting
+-------------
+
+### My board doesn't appear as a USB Serial port in Windows XP
+
+Windows XP doesn't come with the correct drivers preinstalled. You'll need to install (ST's VCP drivers)[http://www.st.com/web/en/catalog/tools/PF257938] first. 
+
+### I tried to reflash my Espruino Board, and now it won't work
+
+Just try reflashing again (by holding down BTN1 when RST is released, you should always be able to get the glowing blue LED). As Espruino itself doesn't work, the IDE won't know what type of board it is supposed to flash so you'll have to look up the firmware manually. Just head to (the Espruino binaries site)[http://www.espruino.com/binaries/?C=M;O=D] and look for the most recent (nearest the top) file named ```espruino_1v##_espruino_1r#.bin``` where ```1r#``` is the revision number written on the back of your Espruino board. Copy the link to the file, and paste it into the Espruino Web IDE.
+
+### Reflashing always fails, or sometimes board locks up while sending code
+
+This seems to be a problem on some Windows PCs. Try using a different USB port... If you were using a USB1/2 port (black), try using a blue USB3 port instead (or vice versa). Unfortunately you may have to change computers in order to find one that works. Macs and Linux computers seem to handle USB much more reliably. We're working on a solution to this though ((bug)[https://github.com/espruino/Espruino/issues/94]).
+
+Advanced Reflashing
+-----------------
+
+If you're developing and you want to completely rewrite the bootloader, you can wire up the Espruino board to a USB-TTL convertor as follows:
+
+| USB-TTL | Name | Espruino Pin |
+|----------------|------|--------------|
+| 5V | 5V | VBAT |
+| GND | GND      | GND |
+| TX | USART1_RX        | A10 |
+| RX | USART1_TX      | A9 |
+| - | BOOT0 - 3.3V       | BOOT0 | 
+| GND | BOOT1 - 0V        | B2 |
+
+Note: BOOT0 is in a group of two pins (RST and BOOT0) in the middle of the top edge of the board.
+
+Then, dab reset to enter bootloader mode and use the (STM32 flasher utility)[https://github.com/espruino/Espruino/blob/master/scripts/stm32loader.py] to flash the STM32 chip.
