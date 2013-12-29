@@ -54,7 +54,7 @@ Start PuTTY, and click on 'Session' in the left-hand pane.
 
 Click on the 'Serial' radio button near the top right, then enter COM4 (or whatever port you found above) under 'Serial Line' and 9600 under 'Speed'. Then click the 'Open' button.
 
-**Note:** You can copy text just by dragging over it and releasing th emouse button - and you paste by right-clicking
+**Note:** You can copy text just by dragging over it and releasing the mouse button - and you paste by right-clicking
 
 ### Linux/Raspberry Pi
 
@@ -97,7 +97,7 @@ Software Updates
 
 Espruino is gaining features and improvements on an almost daily basis. If you get an Espruino board from KickStarter or a preorder, we highly recommend that you update its firmware before you start using it.
 
-When you first use the Espruino Web IDE and connect (see above) you'll probably see a message saying that new firmware is available. Click the **(i)** symbol in the top right of the window, click 'Firware Updates', and follow the instructions. There is no risk of damaging your Espruino board, however the firmware update process will take several minutes to complete.
+When you first use the Espruino Web IDE and connect (see above) you'll probably see a message saying that new firmware is available. Click the **(i)** symbol in the top right of the window, click 'Firware Updates', and follow the instructions. There is no risk of damaging your Espruino board, however the firmware update process will take several minutes to complete. If you have problems and you've got the Espruino Board, check out the Troubleshooting section in the [board documentation](EspruinoBoard).
  
 Start writing code!
 --------------------------
