@@ -11,7 +11,7 @@ disp.showNumber(12345);
 */
 
 exports.use = function(lcd) {
-  var bigChars = 
+  var bigChars =
 ["415 431151153 3311411115415415",
  "3 3  3223223323315315  3323723",
  "3 3  33    3  3  33 3  33 3  3",
