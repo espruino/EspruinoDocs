@@ -44,20 +44,21 @@ function NRF(_spi, _csn, _ce, _payload) {
   this.callbacks = []; // array of callbacks
 }
 NRF.prototype.C = {
-CONFIG      :0x00,
-STATUS      :0x07,
-CD          :0x09,
-RX_ADDR_P0  :0x0A,
-RX_ADDR_P1  :0x0B,
-TX_ADDR     :0x10,
-RX_PW_P0    :0x11,
-RX_PW_P1    :0x12,
-R_REGISTER:0x00,
-W_REGISTER:0x20,
-R_RX_PAYLOAD:0x61,
-W_TX_PAYLOAD:0xA0,
-FLUSH_TX:0xE1,
-FLUSH_RX:0xE2 };
+  CONFIG      :0x00,
+  STATUS      :0x07,
+  CD          :0x09,
+  RX_ADDR_P0  :0x0A,
+  RX_ADDR_P1  :0x0B,
+  TX_ADDR     :0x10,
+  RX_PW_P0    :0x11,
+  RX_PW_P1    :0x12,
+  R_REGISTER:0x00,
+  W_REGISTER:0x20,
+  R_RX_PAYLOAD:0x61,
+  W_TX_PAYLOAD:0xA0,
+  FLUSH_TX:0xE1,
+  FLUSH_RX:0xE2
+};
 NRF.prototype.init = function(rxAddr, txAddr) {
   digitalWrite(this.CE,0);
   digitalWrite(this.CSN,1);
@@ -87,9 +88,9 @@ NRF.prototype.getReg = function(reg) {
     return this.spi.send([this.C.R_REGISTER | reg, 0], this.CSN)[1];
 };
 NRF.prototype.getAddr = function(reg) {
-     var data = this.spi.send([this.C.R_REGISTER | reg, 0,0,0,0,0], this.CSN);
-     data.splice(0,1); // remove first
-     return data;
+  var data = this.spi.send([this.C.R_REGISTER | reg, 0,0,0,0,0], this.CSN);
+  data.splice(0,1); // remove first
+  return data;
 };
 NRF.prototype.getStatus = function(reg) {
     return this.getReg(this.C.STATUS);
@@ -178,5 +179,3 @@ NRF.prototype.sendStringTimeout = function(cmd, t) {
 exports.connect = function(_spi, _csn, _ce, _payload) {
   return new NRF(_spi, _csn, _ce, _payload);
 }
-
-

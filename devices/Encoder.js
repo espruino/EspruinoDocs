@@ -23,18 +23,18 @@ function Encoder(/*=PIN*/pina, /*=PIN*/pinb, callback) {
     var b = digitalRead(encoder.PINB);
     var s = 0;
     switch (this.last) {
-     case 0b00 : if (a) s++; if (b) s--; break;
-     case 0b01 : if (!a) s--; if (b) s++; break;
-     case 0b10 : if (a) s--; if (!b) s++; break;
-     case 0b11 : if (!a) s++; if (!b) s--; break;
+      case 0b00 : if (a) s++; if (b) s--; break;
+      case 0b01 : if (!a) s--; if (b) s++; break;
+      case 0b10 : if (a) s--; if (!b) s++; break;
+      case 0b11 : if (!a) s++; if (!b) s--; break;
     }
-   this.last = a | (b<<1);
-   if (s!==0) callback(s);
- };
- pinMode(this.PINA, "input_pulldown");
- pinMode(this.PINB, "input_pulldown");
- setWatch(onChange, this.PINA, { repeat: true });
- setWatch(onChange, this.PINB, { repeat: true });
+    this.last = a | (b<<1);
+    if (s!==0) callback(s);
+  };
+  pinMode(this.PINA, "input_pulldown");
+  pinMode(this.PINB, "input_pulldown");
+  setWatch(onChange, this.PINA, { repeat: true });
+  setWatch(onChange, this.PINB, { repeat: true });
 }
 
 exports.connect = function(pina, pinb, callback) {
