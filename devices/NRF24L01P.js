@@ -70,12 +70,12 @@ NRF.prototype.init = function(rxAddr, txAddr) {
   digitalWrite(this.CE,1); // set active
 };
 NRF.prototype.setReg = function(reg, value) {
-    this.spi.send([this.C.W_REGISTER | reg, value], this.CSN);
+  this.spi.send([this.C.W_REGISTER | reg, value], this.CSN);
 };
 NRF.prototype.setAddr = function(reg, value /* 5 byte array*/) {
-    value = value.clone();
-    value.splice(0,0,this.C.W_REGISTER | reg);
-    this.spi.send(value, this.CSN);
+  value = value.clone();
+  value.splice(0,0,this.C.W_REGISTER | reg);
+  this.spi.send(value, this.CSN);
 };
 NRF.prototype.setRXAddr = function(adr /* 5 byte array*/) {
   this.setAddr(this.C.RX_ADDR_P1,adr);
@@ -85,7 +85,7 @@ NRF.prototype.setTXAddr = function(adr /* 5 byte array*/) {
   this.setAddr(this.C.TX_ADDR,adr);
 };
 NRF.prototype.getReg = function(reg) {
-    return this.spi.send([this.C.R_REGISTER | reg, 0], this.CSN)[1];
+  return this.spi.send([this.C.R_REGISTER | reg, 0], this.CSN)[1];
 };
 NRF.prototype.getAddr = function(reg) {
   var data = this.spi.send([this.C.R_REGISTER | reg, 0,0,0,0,0], this.CSN);
@@ -93,7 +93,7 @@ NRF.prototype.getAddr = function(reg) {
   return data;
 };
 NRF.prototype.getStatus = function(reg) {
-    return this.getReg(this.C.STATUS);
+  return this.getReg(this.C.STATUS);
 };
 NRF.prototype.dataReady = function() {
   return (this.getReg(this.C.STATUS)&14/*RX_P_NO*/)!=14; // next payload
