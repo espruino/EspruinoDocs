@@ -33,7 +33,7 @@ exports.connect = function (columns, rows, callback) {
       for (var j in columns)
         if (v & (1<<j))
           press = j+i*columns.length;
-        }
+    }
     // reset state
     digitalWrite(rows, 0xFFFFFFFF);
     return press;
@@ -66,4 +66,3 @@ exports.connect = function (columns, rows, callback) {
     read: readState
   };
 };
-

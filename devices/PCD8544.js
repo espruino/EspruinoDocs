@@ -31,17 +31,17 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst)
       0x04 | 0x02, // temp control
       0x20, // fnset normal
       0x08 | 0x04], ce); // dispctl normal
-    }, 100);
+  }, 100);
 
   LCD.flip = function () {
-   for (var i=0;i<6;i++) {
-    digitalWrite(dc,0); // cmd
-    spi.send(0x40|i, ce); // Y addr
-    spi.send(0x80, ce); // X addr
-    digitalWrite(dc,1); // data
-    spi.send(new Uint8Array(this.buffer,i*84,84+2), ce);
-   }
-   // Why +2 in SPI.send? Maybe it needs some time to sort itself out
+    for (var i=0;i<6;i++) {
+      digitalWrite(dc,0); // cmd
+      spi.send(0x40|i, ce); // Y addr
+      spi.send(0x80, ce); // X addr
+      digitalWrite(dc,1); // data
+      spi.send(new Uint8Array(this.buffer,i*84,84+2), ce);
+    }
+    // Why +2 in SPI.send? Maybe it needs some time to sort itself out
   };
   return LCD;
 };

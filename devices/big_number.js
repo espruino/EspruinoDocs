@@ -42,7 +42,6 @@ exports.use = function(lcd) {
       if (num>99) showDigit(11,(num/100)%10);
       if (num>999) showDigit(8,(num/1000)%10);
       if (num>9999) showDigit(5,(num/10000)%10);
-	}
+    }
   };
 };
-
