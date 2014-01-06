@@ -16,7 +16,7 @@ This will output something like:
 
 Where the values for joy are between -1 and 1, and values for 'acc' are in G (that is, 1 for normal gravity)
 
-*/ 
+*/
 exports.connect = function(/*=I2C*/_i2c) {
   var i2c = _i2c;
   // initialise
