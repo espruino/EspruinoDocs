@@ -44,37 +44,38 @@ function NRF(_spi, _csn, _ce, _payload) {
   this.callbacks = []; // array of callbacks
 }
 NRF.prototype.C = {
-CONFIG      :0x00,
-STATUS      :0x07,
-CD          :0x09,
-RX_ADDR_P0  :0x0A,
-RX_ADDR_P1  :0x0B,
-TX_ADDR     :0x10,
-RX_PW_P0    :0x11,
-RX_PW_P1    :0x12,
-R_REGISTER:0x00,
-W_REGISTER:0x20,
-R_RX_PAYLOAD:0x61,
-W_TX_PAYLOAD:0xA0,
-FLUSH_TX:0xE1,
-FLUSH_RX:0xE2 };
+  CONFIG      :0x00,
+  STATUS      :0x07,
+  CD          :0x09,
+  RX_ADDR_P0  :0x0A,
+  RX_ADDR_P1  :0x0B,
+  TX_ADDR     :0x10,
+  RX_PW_P0    :0x11,
+  RX_PW_P1    :0x12,
+  R_REGISTER:0x00,
+  W_REGISTER:0x20,
+  R_RX_PAYLOAD:0x61,
+  W_TX_PAYLOAD:0xA0,
+  FLUSH_TX:0xE1,
+  FLUSH_RX:0xE2
+};
 NRF.prototype.init = function(rxAddr, txAddr) {
-  digitalWrite(this.CE,0); 
-  digitalWrite(this.CSN,1); 
+  digitalWrite(this.CE,0);
+  digitalWrite(this.CSN,1);
   this.setRXAddr(rxAddr);
   this.setTXAddr(txAddr);
   this.setReg(this.C.RX_PW_P0, this.PAYLOAD);
-  this.setReg(this.C.RX_PW_P1, this.PAYLOAD); 
+  this.setReg(this.C.RX_PW_P1, this.PAYLOAD);
   this.setReg(this.C.CONFIG, this.BASE_CONFIG | 2/*PWR_UP*/ | 1/*PRIM_RX*/); // RX mode
   digitalWrite(this.CE,1); // set active
 };
 NRF.prototype.setReg = function(reg, value) {
-    this.spi.send([this.C.W_REGISTER | reg, value], this.CSN);
+  this.spi.send([this.C.W_REGISTER | reg, value], this.CSN);
 };
 NRF.prototype.setAddr = function(reg, value /* 5 byte array*/) {
-    value = value.clone();
-    value.splice(0,0,this.C.W_REGISTER | reg);
-    this.spi.send(value, this.CSN);
+  value = value.clone();
+  value.splice(0,0,this.C.W_REGISTER | reg);
+  this.spi.send(value, this.CSN);
 };
 NRF.prototype.setRXAddr = function(adr /* 5 byte array*/) {
   this.setAddr(this.C.RX_ADDR_P1,adr);
@@ -84,15 +85,15 @@ NRF.prototype.setTXAddr = function(adr /* 5 byte array*/) {
   this.setAddr(this.C.TX_ADDR,adr);
 };
 NRF.prototype.getReg = function(reg) {
-    return this.spi.send([this.C.R_REGISTER | reg, 0], this.CSN)[1]; 
+  return this.spi.send([this.C.R_REGISTER | reg, 0], this.CSN)[1];
 };
 NRF.prototype.getAddr = function(reg) {
-     var data = this.spi.send([this.C.R_REGISTER | reg, 0,0,0,0,0], this.CSN); 
-     data.splice(0,1); // remove first
-     return data;
+  var data = this.spi.send([this.C.R_REGISTER | reg, 0,0,0,0,0], this.CSN);
+  data.splice(0,1); // remove first
+  return data;
 };
 NRF.prototype.getStatus = function(reg) {
-    return this.getReg(this.C.STATUS); 
+  return this.getReg(this.C.STATUS);
 };
 NRF.prototype.dataReady = function() {
   return (this.getReg(this.C.STATUS)&14/*RX_P_NO*/)!=14; // next payload
@@ -131,7 +132,7 @@ NRF.prototype.send = function(data/* array of length PAYLOAD */) {
 
 NRF.prototype.slaveHandler = function() {
   while (this.dataReady()) {
-    data = this.getData(); 
+    data = this.getData();
     for (var i in data) {
       var ch = data[i];
       if (ch===0 && this.cmd!=="") {
@@ -178,5 +179,3 @@ NRF.prototype.sendStringTimeout = function(cmd, t) {
 exports.connect = function(_spi, _csn, _ce, _payload) {
   return new NRF(_spi, _csn, _ce, _payload);
 }
-
-

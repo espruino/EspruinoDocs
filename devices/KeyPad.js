@@ -33,9 +33,9 @@ exports.connect = function (columns, rows, callback) {
       for (var j in columns)
         if (v & (1<<j))
           press = j+i*columns.length;
-        }
+    }
     // reset state
-    digitalWrite(rows, 0xFFFFFFFF);    
+    digitalWrite(rows, 0xFFFFFFFF);
     return press;
   };
   var setup = function() {
@@ -57,7 +57,7 @@ exports.connect = function (columns, rows, callback) {
       watches[i] = setWatch(onWatch, columns[i], { repeat:true, edge:"both" });
   };
   var removeWatches = function() {
-    for (var i in watches) 
+    for (var i in watches)
       clearWatch(watches[i]);
   };
   setup();
@@ -66,4 +66,3 @@ exports.connect = function (columns, rows, callback) {
     read: readState
   };
 };
-

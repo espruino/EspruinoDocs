@@ -16,7 +16,7 @@ require("ADS7843").connect(SPI1, A4, B6, 0, 0, 320, 240, function(x,y) {
 
 exports.connect = function(spi, cs, irq, offsetx, offsety, width, height, callback) {
   // wake the controller up
-  spi.send([0x90,0],cs); 
+  spi.send([0x90,0],cs);
   // look for a press
   var watchFunction = function() {
     var interval = setInterval(function () {

@@ -8,7 +8,7 @@ console.log(sensor.getTemp());
 ```
 */
 exports.connect = function(/*=PIN*/pin) {
-  var ow = new OneWire(pin); 
+  var ow = new OneWire(pin);
   ow.device = ow.search()[0];
   if (ow.device===undefined) {
     print("No OneWire devices found");
@@ -16,7 +16,7 @@ exports.connect = function(/*=PIN*/pin) {
   }
   ow.getTemp = function () {
     this.reset();
-    this.select(this.device); 
+    this.select(this.device);
     this.write(0x44, true); // convert
     this.reset();
     this.select(this.device);
