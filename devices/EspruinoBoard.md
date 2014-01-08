@@ -49,6 +49,20 @@ You can usually buy batteries with the 2 pin female JST (PHR-2) connector ready-
 ...
 
 ### Motor Drivers
+To drive motors there are two good options - both of which solder on to the prototype area. The surface mount versions of these will require some soldering skills, so if you only need to turn motors on and off (and not drive them at different speeds) then a [Relay Module](/Relays) might be easier.
+
+#### L293D
+([Datasheet](/datasheets/L293D.pdf))
+
+The L293D is slightly more expensive, but has four outputs, each of which can pull up to a voltage as well as down to 0v. This makes it ideal for driving motors in forwards and reverse, as each side of the motor can be connected to an output. Outputting 0 and 1 will make it turn one way, and outputting 1 and 0 will make it turn the other.
+
+...
+
+#### ULN2003
+([Datasheet](/datasheets/ULN2003.pdf))
+
+The ULN2003 has 7 outputs, but they can only pull down to 0v.
+
 ...
 
 ### Bluetooth
@@ -60,7 +74,7 @@ Known Problems
 * Currently, PWM outputs (via ```analogWrite```) won't work on pin A9 ([bug](https://github.com/espruino/Espruino/issues/142))
 * You can't setWatch on two pins with the same number (eg. A5 and C5) - it's a limitation of the STM32F1 
 * You can't use ```setWatch``` on B11/C11/D11 and enable ```setDeepSleep```, as A11 is watched in order to wake when USB is plugged in
-* USB 'loses' characters if you send 60 or more at once ([bug](https://github.com/espruino/Espruino/issues/94))
+* The USB bootloader as shipped on Espruino KickStarter boards requires the APB1 clock frequency to be changed before it will work reliably ([diff](https://github.com/espruino/EspruinoWebIDE/commit/476c6755cf243b5ac81a559f907d65900b961dde))
 
 Troubleshooting
 -------------
@@ -73,9 +87,6 @@ Windows XP doesn't come with the correct drivers preinstalled. You'll need to in
 
 Just try reflashing again (by holding down BTN1 when RST is released, you should always be able to get the glowing blue LED). As Espruino itself doesn't work, the IDE won't know what type of board it is supposed to flash so you'll have to look up the firmware manually. Just head to [the Espruino binaries site](http://www.espruino.com/binaries/?C=M;O=D) and look for the most recent (nearest the top) file named ```espruino_1v##_espruino_1r#.bin``` where ```1r#``` is the revision number written on the back of your Espruino board. Copy the link to the file, and paste it into the Espruino Web IDE.
 
-### Reflashing always fails, or sometimes board locks up while sending code
-
-This seems to be a problem on some Windows PCs. Try using a different USB port... If you were using a USB1/2 port (black), try using a blue USB3 port instead (or vice versa). Unfortunately you may have to change computers in order to find one that works. Macs and Linux computers seem to handle USB much more reliably. We're working on a solution to this though ([bug](https://github.com/espruino/Espruino/issues/94)).
 
 Advanced Reflashing
 -----------------
