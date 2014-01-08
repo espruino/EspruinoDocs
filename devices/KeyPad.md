@@ -4,6 +4,8 @@ KeyPad Matrix
 
 * KEYWORDS: KeyPad,Key pad,matrix,buttons,button,switch
 
+![Key Pad](4x4.jpg)
+
 A [KeyPad Matrix](http://en.wikipedia.org/wiki/Keyboard_matrix_circuit) is a selection of switches arranged in a grid. One side of each switch is connected with horizontal wires (rows) and one side is connected with vertical wires (columns). By putting a signal on one side (for example the rows) and reading the other side (the columns), you can determine which key is pressed down.
 
 **Note:** this isn't very good at determining when multiple keys are pressed.
@@ -30,3 +32,8 @@ var keypad = require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9]);
 print("123A456B789C*0#D"[keypad.read()]);
 ```
 
+
+Buying
+-----
+
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=matrix+membrane+keypad)

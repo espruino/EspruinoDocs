@@ -4,9 +4,9 @@ Servo Motors
 
 * KEYWORDS: Servo,Motor,Servomotor,Servo motor,RC
 
-RC Servo Motors are great for controlling things from a microcontroller. They're cheap (around $3), and need only power, ground, and a series of pulses between 1ms and 2ms to work - the length of the pulse determines where they move to.
+![9g Servo Motor](9g.jpg)
 
-[Find some on eBay](http://www.ebay.com/sch/i.html?_nkw=9g+servo)
+RC Servo Motors are great for controlling things from a microcontroller. They're cheap (around $3), and need only power, ground, and a series of pulses between 1ms and 2ms to work - the length of the pulse determines where they move to.
 
 Wiring Up
 --------
@@ -85,3 +85,8 @@ setServo(A1, 0.5); // set servo connected to A1 to the halfway position
 ```
 
 Note that some pins don't have hardware timers on them. You can find which ones do by typing: 'analogWrite()'
+
+Buying
+-----
+
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=9g+servo)

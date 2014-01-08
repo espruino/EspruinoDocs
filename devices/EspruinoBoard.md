@@ -4,15 +4,15 @@ Espruino Board
 
 * KEYWORDS: Espruino,Board,PCB
 
-The Espruino board is the officially Supported board - it comes pre-programmed with Espruino, so you just plug it in and it works. You can [[Order]] them from [Espruino.com](http://www.espruino.com).
+![Espruino Board](main.jpg)
 
-You can see the [available pins and peripherals here](http://www.espruino.com/ReferenceESPRUINOBOARD)
+The Espruino board is the officially Supported board - it comes pre-programmed with Espruino, so you just plug it in and it works. You can [[Order]] them from [Espruino.com](http://www.espruino.com).
 
 Features
 -------
 
 * Less than half the size of a business card ( 54mm x 41mm )
-* STM32 32-bit 72MHz ARM Cortex M3 CPU
+* [STM32F103RCT6](/datasheets/STM32F103xC.pdf) 32-bit 72MHz ARM Cortex M3 CPU
 * 256KB of Flash memory, 48KB of RAM
 * Micro USB connector
 * Input Voltage Range of 3.6v to 15v
@@ -25,25 +25,30 @@ Features
 * 44 GPIO Pins, which can handle: 26 PWM Pins, 16 ADC Pins, 3 USARTs, 2 SPI, 2 I2C and 2 DACs
 * Prototype area which can be used in many different configurations, for example: Servo Headers, Up to 14x 500mA outputs, 2x .NET Gadgeteer connectors, or NRF24L01+ wireless transceiver modules
 
-Layout
------
+Information
+----------
 
-[See available pins and peripherals](http://www.espruino.com/ReferenceESPRUINOBOARD)
-
-...
+* [Available pins and peripherals](http://www.espruino.com/ReferenceESPRUINOBOARD)
+* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/pdf/espruino_schematic.pdf)
+* [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/pdf/espruino_pcb.pdf)
+* [STM32F103RCT6 Datasheet](/datasheets/STM32F103xC.pdf)
 
 Power
 ----
 
 Espruino has 3 ways of powering it - a JST PHR-2 battery connector, Micro USB, or pin headers.
 
-...
+Both the Micro USB and battery connector power the device (and pin headers) via a diode and 1000mA fuse. If you power Espruino via the Pin Headers, do not plug a battery in, and do not plug in USB unless you are powering it with 5v or more.
+
+See [Connecting Batteries](#connecting_batteries) below for information on connecting Batteries.
 
 Connecting
 ---------
 
-### Batteries
-You can usually buy batteries with the 2 pin female JST (PHR-2) connector ready-soldered. [Olimex](https://www.olimex.com/Products/Power/) is a good source. Otherwise you can buy JST connectors from places like Farnell ([housing](http://uk.farnell.com/jst-japan-solderless-terminals/phr-2/housing-2way-2mm/dp/3616186?Ntt=361-6186) and [pins](http://uk.farnell.com/jst-japan-solderless-terminals/sph-002t-p0-5s/contact-loose-piece-0-05-0-22mm/dp/3617210?Ntt=361-7210)).
+###<a name="connecting_batteries"></a>Batteries
+You can usually buy batteries with the 2 pin female JST (PHR-2) connector ready-soldered, see [[Battery]].
+
+If you wish to buy the battery connector, you can do it from Farnell ([pins](http://uk.farnell.com/jst-japan-solderless-terminals/sph-002t-p0-5s/contact-loose-piece-0-05-0-22mm/dp/3617210) and [shroud](http://uk.farnell.com/jst-japan-solderless-terminals/phr-2/housing-2way-2mm/dp/3616186))
 
 ### Servos
 ...
@@ -52,7 +57,7 @@ You can usually buy batteries with the 2 pin female JST (PHR-2) connector ready-
 ...
 
 ### Bluetooth
-Espruino is designed for HC-05 modules. Have a look at the [[Bluetooth]] page for more information/
+Espruino is designed for HC-05 modules. Have a look at the [[Bluetooth]] page for more information.
 
 Known Problems
 ------------
