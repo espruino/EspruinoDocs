@@ -3,27 +3,34 @@
 Module for the DS18B20 temperature sensor
 
 ```
-var sensor = require("DS18B20").connect(A1);
-console.log(sensor.getTemp());
+var sensorBus = require("DS18B20").connect(A1);
+console.log(sensorBus.getTemp());
+var kitchen = sensorBus.getSensors()[2];
+console.log(sensorBus.getTemp(kitchen));
 ```
 */
-exports.connect = function(/*=PIN*/pin) {
-  var ow = new OneWire(pin);
-  ow.device = ow.search()[0];
-  if (ow.device===undefined) {
-    print("No OneWire devices found");
-    return undefined;
-  }
-  ow.getTemp = function () {
-    this.reset();
-    this.select(this.device);
-    this.write(0x44, true); // convert
-    this.reset();
-    this.select(this.device);
-    this.write(0xBE);
-    var temp = this.read() + (this.read()<<8);
-    if (temp > 32767) temp -= 65536;
-    return temp / 16.0;
-  };
-  return ow;
+function Bus(pin) {
+  this._ow = new OneWire(pin);
+}
+Bus.prototype.getSensors = function () {
+  return this._ow.search();
 };
+Bus.prototype.getTemp = function (device) {
+  var sensors = this._ow.search();
+  if (device === undefined && sensors.length) {device = sensors[0];}
+  var temp = null;
+  if (sensors.contains(device)) {
+    this._ow.reset();
+    this._ow.select(device);
+    this._ow.write(0x44, true);
+    this._ow.reset();
+    this._ow.select(device);
+    this._ow.write(0xBE);
+    temp = this._ow.read() + (this._ow.read() << 8);
+    if (temp > 32767) {temp -= 65536;}
+    temp = temp/16.0;
+  }
+  return temp;
+};
+
+exports.connect = function(pin) {return new Bus(pin);};
