@@ -4,7 +4,22 @@ NRF24L01+ Wireless Module
 
 * KEYWORDS: Module,NRF,NRF24L01,NRF24L01P,NRF24L01+,Wireless
 
+![NRF24L01+ Wireless Module](module.jpg)
+
 The Nordic [NRF24L01+](http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P) transceiver is very popular and works well with Espruino. It is sold in very inexpensive wireless modules that interface via SPI. They can easily be obtained via [eBay](http://www.ebay.com/sch/i.html?_nkw=NRF24L01%2B) and many other places for prices as low as $2.
+
+Connect as follows:
+
+| NRF24L01+ | Name |  Espruino  |
+|-----------|------|------------|
+| 1 | GND       | GND        |
+| 2 | 3.3V      | 3.3        |
+| 3 | CE        | C5         |
+| 4 | CSN       | C4         |
+| 5 | SCK       | A5         |
+| 6 | MOSI      | A7         |
+| 7 | MISO      | A6         |
+| 8 | IRQ       | unused     |
 
 A driver for it is available in the [[NRF24L01P.js]] module.
 
@@ -30,13 +45,13 @@ Note the two addresses that are given to init - one is the transmit address, one
 
 ```JavaScript
 nrf.sendString("1+2", function(r) { print("=="+r); });
-==3
+=3
 
 nrf.sendString("analogRead(A0)", function(r) { print("=="+r); });
-==0.356694
+=0.356694
 
 nrf.sendString("LED2.set()", function(r) { print("=="+r); });
-==undefined
+=undefined
 ```
 
 To communicate with another Espruino, all you need to do to is to call ```nrf.setTXAddr([1,2,3,4,5])``` on the master, giving the address that you have to the Slave Espruino's nrf.init function.
