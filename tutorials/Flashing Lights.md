@@ -23,7 +23,7 @@ Software
 
 ### Try 1
 
-The example in the Quick Start shows how to flash an LED the 'right' way - but we can actually do it in one simple line. Just copy and paste:
+The example in the [[Quick Start]] shows how to flash an LED the 'right' way - but we can actually do it in one simple line. Just copy and paste:
 
 ```setInterval("digitalWrite(LED1,l=!l);",200);```
 
