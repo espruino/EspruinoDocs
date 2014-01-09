@@ -2,13 +2,13 @@
 Pyroelectric Motion Sensor
 =======================
 
-* KEYWORDS: Pyroelectric Motion Sensor,Motion,Movement,Sensor,HC-SR501
+* KEYWORDS: Pyroelectric Motion Sensor,PIR,Motion,Movement,Sensor,HC-SR501
 
 ![Pyroelectric Motion Sensor Front](front.jpg)
 
 ![Pyroelectric Motion Sensor Back](back.jpg)
 
-Pyroelectric Motion Sensor's are what you'd find in a home burglar alarm or a motion sensitive light. The module shown is the HC-SR501, and it outputs a pulse (of around 0.5 sec) on the output pin whenever movement is detected.
+Pyroelectric Motion Sensor's are what you'd find in a home burglar alarm or a motion sensitive light. The module shown is the HC-SR501, and it outputs a pulse of around 2 sec on the output pin whenever movement is detected.
 
 The HC-SR501 draws less than 50uA when it is on, which means it'll run off a battery for ages.
 
