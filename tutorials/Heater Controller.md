@@ -7,10 +7,16 @@ Heater Controller
 Introduction
 -----------
 
-There are plenty of times that you might need to control the temperature in something:
+There are plenty of times that you might need to control the temperature in something. Just a few are:
 
 * Homebrew
 * Germinating Plants
+* Fancy 'sous-vide' cooking
+* Heating your house
+
+and so on... 
+
+Here we'll show you a very quick, easy way to control the temperature of something. There are plenty of other ways (especially if you have more control over your heater than just On or Off), but this is a good starting point.
 
 
 You'll Need
