@@ -11,9 +11,11 @@ RC Servo Motors are great for controlling things from a microcontroller. They're
 Wiring Up
 --------
 
-Servo motors have 3 wires. Ground, Power, and Signal. For power, they will run off varying voltages. Generally they expect to run off of 4xAA cells, but you can run them off of slightly lower voltages - in which case they move slightly less quickly. While you can run them off of USB 5v power, we'd recommend that you don't because of the electrical noise produced (and current drawn) by them.
+Servo motors have 3 wires. Ground, Power, and Signal. For power, they will run off varying voltages. Generally they expect to run off of 4xAA cells, but you can run them off of slightly lower voltages - in which case they move slightly less quickly and produce less force. While you can run them off of USB 5v power, we'd recommend that you don't because of the electrical noise produced (and current drawn) by them.
 
 Just take a power source (4xAA batteries, or a 3.7v LiPo battery) and connect negative to the black wires of the servos, and to the ground connection on your Espruino board. Connect Positive on the battery to the red wires on the servos. Now connect the each white wire on each servo to a different signal pin on your Espruino board.
+
+For information on wiring up your Espruino Board for Servo Motors, see the [[Pin Strip]] page.
 
  
 Simple Control
