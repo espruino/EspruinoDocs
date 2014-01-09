@@ -12,6 +12,40 @@ Pretty much all relays are electromagnetic - this means that there is a coil of 
 
 **However** many companies supply 'relay modules' that contain one or more relays, screw terminals, and the circuitry needed to drive them easily from Espruino. These can be controlled simply by connecting GND, VBAT (5V), and any signal pin from Espruino.
 
+Relay Module
+----------
+
+You can see the relay module we'd suggest in the image above. To use this as a simple switch, wire up:
+
+* GND, IN1 and VCC to the Espruino board
+* On the blue screw terminals, connect the 2nd pin (marked K1) and the 3rd pin into the circuit that you want to power.
+
+
+The connections are as follows:
+
+### Blue Screw Terminals
+
+| Marking | Function |
+| ------- | -------- |
+|         | Output 1 Normally Closed |
+| K1      | Output 1 Pole |
+|         | Output 1 Normally Open |
+|         | Output 2 Normally Closed |
+| K2      | Output 2 Pole |
+|         | Output 2 Normally Open |
+
+### 4x1 pin srip
+
+| Marking | Function |
+| ------- | -------- |
+| GND     | Ground |
+| IN1     | Control for Output 1 ( 0 = on, 1 = off) |
+| IN2     | Control for Output 2 ( 0 = on, 1 = off) |
+| VCC     | 5V input |
+
+### 3x1 pin srip
+
+This contains a jumper between VCC and VCC-JD. This means that the relay will be powered from the same 5V signal as the Opto-isolators and LEDs.
 
 Buying
 -----
