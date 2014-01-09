@@ -4,105 +4,58 @@ Quick Start
 
 * KEYWORDS: Quick Start,Getting Started
 
+[[http://youtu.be/1DT3lpL3IHo]]
+
 If you're not using the Espruino board, you'll want to see the [[Other Boards]] for details on how to get started first.
+
 
 Plugging in
 ----------
 
 The Espruino board only has one USB connector - just plug it in with a Micro USB cable and you're done.
 
-
 **Windows XP Users:** Windows XP does not to have generic drivers for USB CDC devices installed, so you'll have to get them from ST via http://www.st.com/web/en/catalog/tools/PF257938
 
-**Other Windows Users:** Newer versions of windows have USB CDC devices installed already, however windows may inexplicably take a few minutes or two to install them.
+**Other Windows Users:** Newer versions of windows have USB CDC devices installed already, however Windows may take a few minutes to check with Windows Update and install them.
 
-**Mac OS X and Linux Users:** The board will just plug in and go!
+**Mac OS X, Linux and Chromebook Users:** The board will just plug in and go!
+
 
 Set up a Terminal App
 ------------------
 
-If you have installed the [Chrome Web Browser](https://www.google.com/intl/en/chrome/browser/) you can [go here and get the Espruino Serial Terminal](https://chrome.google.com/webstore/detail/espruino-serial-terminal/bleoifhkdalbjfbobjackfdifdneehpo). This is a Chrome Web App that includes the Terminal, a syntax highlighted editor, and a graphical code editor. To use it:
+**Note:** We recommend that you use our Chrome Web App (it has a bunch of extra features, including firmware updates) but you can access Espruino from any terminal program. See [[Alternative Terminal Apps]] for some examples.
 
-* Run the Web app from Chrome's home screen
-* If you've only just plugged your device in, press the refresh button
-* In the Top Left, make sure the correct serial port is chosen (usually: Highest COM# number on Windows, tty.usbmodem/ttys000 on Mac, ttyUSB0/ttyACM0 on linux)
-* Click the 'Play' (connect) button
-* Click in the terminal window to the left and start typing away!
+* Install the [Chrome Web Browser](https://www.google.com/intl/en/chrome/browser/)
+* [Click here to get the Espruino Web IDE](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo) and click ```+FREE``` in the top right to install it.
+
+Now, to use the Terminal App:
+
+* Run **Espruino Web IDE** from Chrome's home screen (or the App Launcher)
+* If you've only just plugged your device in, press the refresh button (the two arrows in the top left)
+* In the top left, make sure the correct serial port is chosen (usually: Highest COM# number on Windows, tty.usbmodem/ttys000 on Mac, ttyACM0/ttyUSB0 on Linux)
+* Click the Connect button (the 'play' symbol)
 
 And after you've got it running you can:
 
-* Click the button with left/right arrows to transfer the text (or graphics) in the right-hand pane to Espruino
-* Click the button with a picture frame to switch between graphical and text views (the code will not auto-update)
+* Click the button with left/right arrows (top-middle) to transfer the text (or graphics) in the right-hand pane to Espruino
+* Click the button with a picture frame to switch between graphical and text views
 * To copy on the left-hand side, click and drag over the text to copy
 * To paste, press ```Ctrl + V```
-* If you don't want to use the Chrome Web App, you can use the instructions below for your specific platform though:
 
-Set up a Terminal App (Alternative)
---------------------------------
-
-**Note:** We're putting a lot of functionality into the Chrome Web App (built in firmwre updates, tutorials, module loading, syntax highlighting, etc) so we'd really recommend that you use it. However you can still access Espruino in other ways...
-
-### Windows
-
-On versions of Windows earlier than Vista, you can use HyperTerminal, which comes pre-installed. However to keep things simple, we'll just use an excellent free terminal application called [PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/).
-
-Download PuTTY [from here](http://www.chiark.greenend.org.uk/~sgtatham/putty/). You can either download the simple 'PuTTY' (which is a single executable which needs no installer), or you can download an installer.
-
-Go to the Start Menu, open the Control Panel, then click on 'View Devices and Printers. Look for an icon called 'STM32 Virtual COM Port' (if you can't find it, unplug and re-plug Espruino and see which icon appears). After Windows has installed all drivers (which could take several minutes), you should see some text in brackets by the icon saying COM then a number (eg. COM4). This is the name of Espruino's serial port.
-
-Start PuTTY, and click on 'Session' in the left-hand pane.
-
-Click on the 'Serial' radio button near the top right, then enter COM4 (or whatever port you found above) under 'Serial Line' and 9600 under 'Speed'. Then click the 'Open' button.
-
-**Note:** You can copy text just by dragging over it and releasing the mouse button - and you paste by right-clicking
-
-### Linux/Raspberry Pi
-
-In a terminal window, install minicom if it isn't installed already:
-
-```sudo apt-get install minicom```
-
-Type the following:
-
-```ls /dev/ttyACM* /dev/ttyUSB* /dev/ttyAMA*```
-
-This will list all the serial ports that Espruino could be on (it may say 'No such file or directory' - this is ok). If there isn't just one port, unplug Espruino and run the command again, then plug Espruino in and run it yet again. You should be able to see which the 'new' device is.
-
-Then run minicom to connect to the device (instead of /dev/ttyACM0, use the device name you got from Step 3):
-
-```minicom -b 9600 -D /dev/ttyACM0```
-
-(Note that 'picocom' is installed by default on Ubuntu. If you wish to use this, the command you need is: ```picocom --baud 9600 --flow n /dev/ttyACM0```)
-
-If you get an error accessing the port, you may need to run ```sudo minicom ...```
-
-**Note:** To copy, highlight the text and press ```Shift + Ctrl + C```. To paste, press ```Shift + Ctrl + V```
-
-### Mac OS X
-
-Make sure Espruino is unplugged, and type the following in a terminal:
-
-```ls /dev/tty.*```
-
-You should see a list of your available serial devices. Plug Espruino in, wait a few seconds, and run the command again. An new entry should have appeared - and this is Espruino's serial port.
-
-Open a shell, then type the following (instead of /dev/tty.yourdevicename, use the device name you got from Step 3):
-
-```screen /dev/tty.yourdevicename 9600```
-
-**Note:** To copy, highlight the text and press ```Cmd + C```. To paste, press ```Cmd + V```
  
 Software Updates
 --------------
 
-Espruino is gaining features and improvements on an almost daily basis. If you get an Espruino board from KickStarter or a preorder, we highly recommend that you update its firmware before you start using it.
+Espruino is gaining features and improvements on an almost daily basis. If you have an Espruino board from KickStarter or a preorder, we highly recommend that you update the firmware before you start using it.
 
-When you first use the Espruino Web IDE and connect (see above) you'll probably see a message saying that new firmware is available. Click the **(i)** symbol in the top right of the window, click 'Firware Updates', and follow the instructions. There is no risk of damaging your Espruino board, however the firmware update process will take several minutes to complete. If you have problems and you've got the Espruino Board, check out the Troubleshooting section in the [board documentation](EspruinoBoard).
+When you first use the Espruino Web IDE and connect (see above) you'll probably see a message saying that new firmware is available. Click the **(i)** symbol in the top right of the window, click 'Firmware Updates', and follow the instructions there. There is no risk of damaging your Espruino board, however the firmware update process may take a few minutes to complete. If you have problems and you've got the Espruino Board, check out the Troubleshooting section in the [board documentation](EspruinoBoard).
  
+
 Start writing code!
 --------------------------
 
-Now you can type commands and they will be executed (you can also copy+paste them in to the terminal window).
+Now you can type commands and they will be executed (you can also copy and paste them in to the terminal window).
 
 Try typing the following, and press 'Enter' after it:
 
@@ -184,4 +137,4 @@ If you press the reset button on the board, Espruino will also reset. However we
 Note that if you power off or reset Espruino using the reset button, it will also lose all the code that you wrote. You can save the state of Espruino so this doesn't happen using the ```save()``` command!
 
 
-Now you've got an idea how to use Espruino, have a look at the [[Tutorials]], and [[Reference]] pages!
+Now you've got an idea how to use Espruino, have a look at the [[Tutorials]] and [[Reference]] pages! If you have one of the Espruino Kits, you can [click here](/Espruino Kits) to see the kit contents and to get information on how to use them.

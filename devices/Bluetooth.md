@@ -25,7 +25,7 @@ To solder the HC-05 module, do the following:
 Pairing
 ------
 
-The bluetooth module will appear by name as ```linvor```. Simply pair with this module and enter the pairing code ```1234```. Espruino should then appear as a new Serial port, and you will be able to connect to it with the Web IDE.
+The bluetooth module will appear by name as either ```HC-05``` or ```linvor```. Simply pair with this module and enter the pairing code ```1234```. Espruino should then appear as a new Serial port, and you will be able to connect to it with the Web IDE.
 
 Software
 -------
