@@ -197,7 +197,8 @@ markdownFiles.forEach(function (file) {
            '<iframe allowfullscreen="" frameborder="0" height="360" src="http://www.youtube.com/embed/$1" width="640"></iframe>'); // youtube
    contents = contents.replace(/\[\[([a-zA-Z0-9_ ]+).js\]\]/g,"[$1](/modules/$1.js) ([About Modules](/Modules))");
    contents = contents.replace(/\[\[([a-zA-Z0-9_ ]+)\]\]/g,"[$1](/$1)");
-   contents = contents.replace(/(\[.+\]\([^) ]+) ([^) ]+\))/g,"$1+$2");
+   for (var i=0;i<3;i++) // cope with multiple spaces in links (nasty!)
+     contents = contents.replace(/(\[.+\]\([^) ]+) ([^)]+\))/g,"$1+$2"); // spaces in links
    // Hacks for 'broken' markdown parsing
    contents = contents.replace(/\n\n```([^\n]+)```\n\n/g,"\n\n```\n$1\n```\n\n"); // turn in-line code on its own into separate paragraph
    contents = contents.replace(/```([^ \n][^\n]+)```/g,"``` $1 ```"); // need spaces after ```
