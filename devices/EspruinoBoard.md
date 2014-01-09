@@ -45,13 +45,18 @@ See [Connecting Batteries](#connecting_batteries) below for information on conne
 Connecting
 ---------
 
+###Pin Strip
+
+There's a [[Pin Strip]] page covering how to solder Pin Strip onto the Espruino Board
+
 ###<a name="connecting_batteries"></a>Batteries
 You can usually buy batteries with the 2 pin female JST (PHR-2) connector ready-soldered, see [[Battery]].
 
 If you wish to buy the battery connector, you can do it from Farnell ([pins](http://uk.farnell.com/jst-japan-solderless-terminals/sph-002t-p0-5s/contact-loose-piece-0-05-0-22mm/dp/3617210) and [shroud](http://uk.farnell.com/jst-japan-solderless-terminals/phr-2/housing-2way-2mm/dp/3616186))
 
-### Servos
-...
+### Servo Motors
+
+See the [[Pin Strip]] page for ideas on how to connect servos, and the [[Servo Motor]] page on how to control them.
 
 ### Motor Drivers
 To drive motors there are two good options - both of which solder on to the prototype area. The surface mount versions of these will require some soldering skills, so if you only need to turn motors on and off (and not drive them at different speeds) then a [Relay Module](/Relays) might be easier.

@@ -16,7 +16,7 @@ If so, this handy table shows you what you got, and provides links to informatio
 | [[NRF24L01P]] Wireless            | 2                  |                    |         | 0 (or 4)              | 2             | 2             |
 | [[CC3000]] WiFi                   |                    |                    |         |                       | 1             | 1             |
 | [[WS2811]] MultiColour LEDs       |                    | 25                 | 25      |                       |               | 25            |
-| Sockets, Pins and Wires           |                    |                    | Yes     |                       |               | Yes           |
+| [Sockets, Pins and Wires](/Pin Strip) |                |         | Yes     |                       |               | Yes           |
 | Micro [[Servo Motors]]            |                    |                    | 2       |                       |               | 2             |
 | [[DS18B20]] Temperature Sensor    |                    |                    | 1       |                       |               | 1             |
 | Light Sensor ([[LDR]])            |                    |                    | 1       |                       |               | 1             |
