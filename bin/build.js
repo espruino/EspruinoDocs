@@ -195,8 +195,8 @@ markdownFiles.forEach(function (file) {
 //   contents = contents.replace(/\[\[http:\/\/youtu.be\/([a-zA-Z0-9_ ]+)\]\]/g,"[![Video Thumbnail](http://img.youtube.com/vi/$1/0.jpg)](http://www.youtube.com/watch?v=$1)"); // youtube
    contents = contents.replace(/\[\[http:\/\/youtu.be\/([a-zA-Z0-9_ ]+)\]\]/g,
            '<iframe allowfullscreen="" frameborder="0" height="360" src="http://www.youtube.com/embed/$1" width="640"></iframe>'); // youtube
-   contents = contents.replace(/\[\[([a-zA-Z0-9_ ]+).js\]\]/g,"[$1](/modules/$1.js) ([About Modules](/Modules))");
-   contents = contents.replace(/\[\[([a-zA-Z0-9_ ]+)\]\]/g,"[$1](/$1)");
+   contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+).js\]\]/g,"[$1](/modules/$1.js) ([About Modules](/Modules))");
+   contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+)\]\]/g,"[$1](/$1)");
    for (var i=0;i<3;i++) // cope with multiple spaces in links (nasty!)
      contents = contents.replace(/(\[.+\]\([^) ]+) ([^)]+\))/g,"$1+$2"); // spaces in links
    // Hacks for 'broken' markdown parsing
