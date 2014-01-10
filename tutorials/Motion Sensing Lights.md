@@ -49,7 +49,7 @@ Just copy and paste this into the right-hand window, then click the ```Send to E
 
 ```
 // Set up the SPI port (for communications with the lights)
-SPI2.setup({baud:1600000, mosi:B15});
+SPI2.setup({baud:3200000, mosi:B15});
 // stores the timeout used to turn lights off
 var timeout; 
 // stores the RGB data we want to send to our lights
@@ -101,7 +101,7 @@ Copy and paste the following into the right-hand window:
 
 ```
 // Set up the SPI port (for communications with the lights)
-SPI2.setup({baud:1600000, mosi:B15});
+SPI2.setup({baud:3200000, mosi:B15});
 // stores the timeout used to turn lights off
 var timeout; 
 // stores the RGB data we want to send to our lights
