@@ -25,6 +25,28 @@ Features
 * 44 GPIO Pins, which can handle: 26 PWM Pins, 16 ADC Pins, 3 USARTs, 2 SPI, 2 I2C and 2 DACs
 * Prototype area which can be used in many different configurations, for example: Servo Headers, Up to 14x 500mA outputs, 2x .NET Gadgeteer connectors, or NRF24L01+ wireless transceiver modules
 
+Layout
+-----
+
+![Espruino Board](annotated.jpg)
+
+| Name | Function |
+| ---- | -------- |
+| General Purpose IO Pins | See the [pins page](http://www.espruino.com/ReferenceESPRUINOBOARD) for more information about the functionality of these |
+| Status LEDs | Red, Green and Blue lights, controllable from Espruino. Access these using the pin names ```LED1``` (red), ```LED2``` (green) and ```LED3``` (blue) |
+| Buttons | Below SMD prototype area. Reset button (left) and general purpose button (right). Access this using the pin name ```BTN``` |
+| SMD Prototype Area | Area that allows you to solder SMD Integrated Circuits such as ([ULN2003](/datasheets/ULN2003.pdf)) and ([L293D](/datasheets/L293D.pdf)) |
+| Battery | Battery connector, allows any voltage from 3.6v to 15v |
+| Bluetooth | Pads for mounting a [[Bluetooth]] module |
+| Power | Gnd, 3.3v and Battery power pins |
+| Micro SD | A connector for FAT32 formatted Micro SD cards |
+| USB | A Micro SD USB connector, for programming and powering Espruino |
+| #1 | Unpopulated pads for 32kHz crystal. Without this, Espruino will use its internal RC oscillator for timekeeping, which is only accurate to 1-2% |
+| #2 | Pin Headers. Each horizontal pair pins in this 2 x 13 area of pins is connected together, so you can solder on a single line of pin header and can then wire from the Prototype area to the other side  |
+| #3 | cut the shorted link on the right-hand side, solder over the left-hand side, solder a 10k resistor to R17 and you can then use the RST button as a second general purpose button on pin C12 |
+| #4 | An unpopulated resistor that can trickle-charge a battery when fitted (if the battery is less than 4.3v). Only fit this if you're absolutely sure that your battery type can handle it. |
+
+
 Information
 ----------
 
@@ -38,7 +60,13 @@ Power
 
 Espruino has 3 ways of powering it - a JST PHR-2 battery connector, Micro USB, or pin headers.
 
-Both the Micro USB and battery connector power the device (and pin headers) via a diode and 1000mA fuse. If you power Espruino via the Pin Headers, do not plug a battery in, and do not plug in USB unless you are powering it with 5v or more.
+Both the Micro USB and battery connector can power the device (and pin headers), and the source of power will be automatically switched. If you power Espruino via the Pin Headers, do not plug a battery in, and do not plug in USB unless you are powering it with 5v or more.
+
+If you wish to power Espruino from mains, we'd suggest using a Micro USB phone charger. This are widely available as the majority of mobile phones (with the exception of iPhones and low-end Nokias) now use them.
+
+![Charge Circuit](power.png)
+
+In order to protect the Espruino board (and what it is connected to), a 1000mA thermal (self-resetting) fuse is on the board between the pins marked 'Bat' on the board and the power source (USB/Battery).
 
 See [Connecting Batteries](#connecting_batteries) below for information on connecting Batteries.
 
