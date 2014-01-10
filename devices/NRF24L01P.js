@@ -20,16 +20,16 @@ nrf.init([0,0,0,0,2], [0,0,0,0,1]);
 setInterval("nrf.masterHandler()",50);
 ```  
 
-Note the two addresses that are given to init - one is the transmit address, one is a receive address. On a Master all you have to do is use nrf.sendString to send a command to the Slave Espruino, and in a few milliseconds the result will appear:
+Note the two addresses that are given to init - one is the transmit address, one is a receive address. On a Master all you have to do is use nrf.sendCommand to send a command to the Slave Espruino, and in a few milliseconds the result will appear:
 
 ```JavaScript
-nrf.sendString("1+2", function(r) { print("=="+r); });
+nrf.sendCommand("1+2", function(r) { print("=="+r); });
 ==3
 
-nrf.sendString("analogRead(A0)", function(r) { print("=="+r); });
+nrf.sendCommand("analogRead(A0)", function(r) { print("=="+r); });
 ==0.356694
 
-nrf.sendString("LED2.set()", function(r) { print("=="+r); });
+nrf.sendCommand("LED2.set()", function(r) { print("=="+r); });
 ==undefined
 ```
 
@@ -37,7 +37,7 @@ nrf.sendString("LED2.set()", function(r) { print("=="+r); });
 function NRF(_spi, _csn, _ce, _payload) {
   this.CSN = _csn;
   this.CE = _ce;
-  this.PAYLOAD = _payload ? _payload : 4;
+  this.PAYLOAD = _payload ? _payload : 16;
   this.BASE_CONFIG = 8; //EN_CRC
   this.cmd = ""; // for receiving commands
   this.spi = _spi;
@@ -101,7 +101,7 @@ NRF.prototype.dataReady = function() {
 NRF.prototype.getData = function() {
   var data = [this.C.R_RX_PAYLOAD];
   for (var i=0;i<this.PAYLOAD;i++) data.push(0);
-  data = this.SPI.send(data, this.CSN); // RX_DR bit
+  data = this.spi.send(data, this.CSN); // RX_DR bit
   data.splice(0,1); // remove first
   this.setReg(this.C.STATUS, 64/*RX_DR*/); // clear rx flag
   return data;
@@ -110,10 +110,10 @@ NRF.prototype.send = function(data/* array of length PAYLOAD */) {
   this.setReg(this.C.STATUS, 16/*MAX_RT*/|32/*TX_DS*/); // clear flags
   digitalWrite(this.CE,0); // disable
   this.setReg(this.C.CONFIG, this.BASE_CONFIG | 2/*PWR_UP*/ ); // Set TX mode
-  this.SPI.send(this.C.FLUSH_TX, this.CSN);
+  this.spi.send(this.C.FLUSH_TX, this.CSN);
   data = data.clone();
   data.splice(0,0,this.C.W_TX_PAYLOAD);
-  this.SPI.send(data, this.CSN);
+  this.spi.send(data, this.CSN);
   digitalWrite(this.CE,1); // enable
   var n = 1000;
   while ((n--) && !(this.getReg(this.C.STATUS)&(16/*MAX_RT*/|32/*TX_DS*/))); // waiting
@@ -132,7 +132,7 @@ NRF.prototype.send = function(data/* array of length PAYLOAD */) {
 
 NRF.prototype.slaveHandler = function() {
   while (this.dataReady()) {
-    data = this.getData();
+    var data = this.getData();
     for (var i in data) {
       var ch = data[i];
       if (ch===0 && this.cmd!=="") {
@@ -141,7 +141,7 @@ NRF.prototype.slaveHandler = function() {
         print("...>"+c);
         var result = ""+eval(c); // evaluate
         print("...="+result);
-        setStringTimeout(result, 500);
+        this.sendStringTimeout(result, 500);
       } else if (ch!==0) {
         this.cmd += String.fromCharCode(ch);
       }
@@ -150,21 +150,21 @@ NRF.prototype.slaveHandler = function() {
 };
 NRF.prototype.masterHandler = function() {
   while (this.dataReady()) {
-    data = this.getData();
+    var data = this.getData();
     for (var i in data) {
       var ch = data[i];
       if (ch===0 && this.cmd!=="") {
-        var callback = callbacks.splice(0,1)[0]; // pop off the front
-        if (callback) callback(this.cmd);
+        var c = this.cmd;
         this.cmd = "";
+        var callback = this.callbacks.splice(0,1)[0]; // pop off the front
+        if (callback!==undefined) callback(c);
       } else if (ch!==0) {
         this.cmd += String.fromCharCode(ch);
       }
     }
   }
 };
-NRF.prototype.sendString = function(cmd, callback) {
-  callbacks.push(callback);
+NRF.prototype.sendString = function(cmd) {
   for (var i=0;i<=cmd.length;i+=this.PAYLOAD) {
     var data = [];
     for (var n=0;n<this.PAYLOAD;n++) data[n] = Integer.valueOf(cmd[i+n]);
@@ -172,8 +172,15 @@ NRF.prototype.sendString = function(cmd, callback) {
     while ((tries-- > 0) && !this.send(data));
   }
 };
+NRF.prototype.sendCommand = function(cmd, callback) {
+  this.callbacks.push(callback);
+  this.sendString(cmd);
+};
 NRF.prototype.sendStringTimeout = function(cmd, t) {
-  setTimeout(function() { this.sendString(cmd); }, t);
+  var nrf = this;
+  setTimeout(function() {
+    nrf.sendString(cmd);
+  }, t);
 };
 
 exports.connect = function(_spi, _csn, _ce, _payload) {
