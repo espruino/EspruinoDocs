@@ -3,34 +3,44 @@
 Module for the DS18B20 temperature sensor
 
 ```
-var sensorBus = require("DS18B20").connect(A1);
-console.log(sensorBus.getTemp());
-var kitchen = sensorBus.getSensors()[2];
-console.log(sensorBus.getTemp(kitchen));
+var ow = new OneWire(A1);
+var sensor = require("DS18B20").connect(ow);
+console.log(sensor.getTemp());
+var sensor2 = require("DS18B20").connect(ow, 1);
+var sensor3 = require("DS18B20").connect(ow, -8358680895374756824);
 ```
 */
-function Bus(pin) {
-  this._ow = new OneWire(pin);
-}
-Bus.prototype.getSensors = function () {
-  return this._ow.search();
-};
-Bus.prototype.getTemp = function (device) {
-  var sensors = this._ow.search();
-  if (device === undefined && sensors.length) {device = sensors[0];}
-  var temp = null;
-  if (sensors.contains(device)) {
-    this._ow.reset();
-    this._ow.select(device);
-    this._ow.write(0x44, true);
-    this._ow.reset();
-    this._ow.select(device);
-    this._ow.write(0xBE);
-    temp = this._ow.read() + (this._ow.read() << 8);
-    if (temp > 32767) {temp -= 65536;}
-    temp = temp/16.0;
+function DS18B20(oneWire, /*optional*/device) {
+  this.bus = oneWire;
+  if (device === undefined) {
+    this.code = this.bus.search()[0];
+  } else {
+    if (device >= 0 && device <= 126) {
+      this.code = this.bus.search()[device];
+    } else {
+      this.code = device;
+    }
   }
+}
+DS18B20.prototype.isPresent = function () {
+  return this.bus.search().contains(this.code);
+};
+DS18B20.prototype.getTemp = function (/*optional*/verify) {
+  var temp = null;
+  if ((verify && !this.isPresent()) || !this.code) {
+    return temp;
+  }
+  this.bus.reset();
+  this.bus.select(this.code);
+  this.bus.write(0x44, true); //CONVERT_T
+  this.bus.reset();
+  this.bus.select(this.code);
+  this.bus.write(0xBE); //READ_SCRATCHPAD
+  temp = this.bus.read() + (this.bus.read() << 8);
+  if (temp > 32767) {
+    temp -= 65536;
+  }
+  temp = temp / 16.0;
   return temp;
 };
-
-exports.connect = function(pin) {return new Bus(pin);};
+exports.connect = function (pin, device) {return new DS18B20(pin, device);};
