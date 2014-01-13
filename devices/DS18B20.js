@@ -43,4 +43,4 @@ DS18B20.prototype.getTemp = function (/*optional*/verify) {
   temp = temp / 16.0;
   return temp;
 };
-exports.connect = function (pin, device) {return new DS18B20(pin, device);};
+exports.connect = function (oneWire, device) {return new DS18B20(oneWire, device);};
