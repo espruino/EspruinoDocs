@@ -45,7 +45,8 @@ Connect to the transmitting Espruino, copy and paste this into the right-hand wi
 ```
 SPI1.setup({sck:A5, miso:A6, mosi:A7});
 var nrf = require("NRF24L01P").connect( SPI1, B0, B1 );
-var sensor = require("DS18B20").connect(A1);
+var ow = new OneWire(A1);
+var sensor = require("DS18B20").connect(ow);
 function onInit() {
   nrf.init([0,0,0,0,2], [0,0,0,0,1]);
 }
