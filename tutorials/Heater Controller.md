@@ -77,7 +77,8 @@ function setHeater(isOn) {
   digitalWrite(A0, !isOn); // 0 turns the relay on, 1 turns it off
 }
 
-var sensor = require("DS18B20").connect(A1);
+var ow = new OneWire(A1);
+var sensor = require("DS18B20").connect(ow);
 // Target temperature to reach
 var targetTemp = 30;
 

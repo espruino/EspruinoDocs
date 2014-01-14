@@ -25,7 +25,8 @@
 
 SPI1.setup({ baud: 1000000, sck:B3, mosi:B5 });
 var g = require("PCD8544").connect(SPI1,B6,B7,B8);
-var temp = require("DS18B20").connect(B13);
+var ow = new OneWire(B13);
+var temp = require("DS18B20").connect(ow);
 
 setInterval(function() {
   // Get the temperature
