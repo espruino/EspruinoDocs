@@ -14,13 +14,13 @@ setInterval(function() {
 exports.connect = function(/*=PIN*/trig, /*=PIN*/echo, callback) {
   var riseTime = 0;
   setWatch(function(e) { // check for rising edge
-    riseTime=e.time; 
+    riseTime=e.time;
   }, echo, { repeat:true, edge:'rising'  });
   setWatch(function(e) { // check for falling edge
     callback(((e.time-riseTime)*1000000)/57.0);
   },  echo, { repeat:true, edge:'falling' });
-  return { 
-    trigger : function() { 
+  return {
+    trigger : function() {
       digitalPulse(trig, 1, 0.01/*10uS*/);
     }
   };

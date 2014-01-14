@@ -185,4 +185,4 @@ NRF.prototype.sendStringTimeout = function(cmd, t) {
 
 exports.connect = function(_spi, _csn, _ce, _payload) {
   return new NRF(_spi, _csn, _ce, _payload);
-}
+};
