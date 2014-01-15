@@ -37,6 +37,14 @@ DS18B20.prototype._readSpad = function(/*OPTIONAL*/convert_t) {
   }
   return spad;
 };
+DS18B20.prototype._writeSpad = function (th, tl, conf) {
+  this.bus.reset();
+  this.bus.select(this.sCode);
+  this.bus.write(0x4E);
+  for (var i = 0; i < 3; i++) {
+    this.bus.write(arguments[i]);
+  }
+};
 DS18B20.prototype.isPresent = function () {
   return this.bus.search().contains(this.sCode);
 };
