@@ -10,7 +10,7 @@ var sensor2 = require("DS18B20").connect(ow, 1);
 var sensor3 = require("DS18B20").connect(ow, -8358680895374756824);
 ```
 */
-function DS18B20(oneWire, /*optional*/device) {
+function DS18B20(oneWire, /*OPTIONAL*/device) {
   this.bus = oneWire;
   if (device === undefined) {
     this.sCode = this.bus.search()[0];
@@ -22,21 +22,32 @@ function DS18B20(oneWire, /*optional*/device) {
     }
   }
 }
+DS18B20.prototype._readSpad = function(/*OPTIONAL*/convert_t) {
+  var spad = [];
+  this.bus.reset();
+  this.bus.select(this.sCode);
+  if (convert_t) {
+    this.bus.write(0x44, true);
+    this.bus.reset();
+    this.bus.select(this.sCode);
+  }
+  this.bus.write(0xBE);
+  for (var i = 0; i < 9; i++) {
+    spad.push(this.bus.read());
+  }
+  return spad;
+};
 DS18B20.prototype.isPresent = function () {
   return this.bus.search().contains(this.sCode);
 };
-DS18B20.prototype.getTemp = function (/*optional*/verify) {
+DS18B20.prototype.getTemp = function (/*OPTIONAL*/verify) {
+  var spad;
   var temp = null;
   if ((verify && !this.isPresent()) || !this.sCode) {
     return temp;
   }
-  this.bus.reset();
-  this.bus.select(this.sCode);
-  this.bus.write(0x44, true); //CONVERT_T
-  this.bus.reset();
-  this.bus.select(this.sCode);
-  this.bus.write(0xBE); //READ_SCRATCHPAD
-  temp = this.bus.read() + (this.bus.read() << 8);
+  spad = this._readSpad(true);
+  temp = spad[0] + (spad[1] << 8);
   if (temp > 32767) {
     temp -= 65536;
   }
