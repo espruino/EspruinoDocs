@@ -6,6 +6,8 @@ Module for the DS18B20 temperature sensor
 var ow = new OneWire(A1);
 var sensor = require("DS18B20").connect(ow);
 console.log(sensor.getTemp());
+sensor.setRes(9);
+console.log(sensor.getTemp());
 var sensor2 = require("DS18B20").connect(ow, 1);
 var sensor3 = require("DS18B20").connect(ow, -8358680895374756824);
 ```
@@ -44,6 +46,27 @@ DS18B20.prototype._writeSpad = function (th, tl, conf) {
   for (var i = 0; i < 3; i++) {
     this.bus.write(arguments[i]);
   }
+};
+DS18B20.prototype._mapRes = function (value) {
+  switch (value) {
+    case 9: return 0x1F;
+    case 10: return 0x3F;
+    case 11: return 0x5F;
+    case 12: return 0x7F;
+    case 0x1F: return 9;
+    case 0x3F: return 10;
+    case 0x5F: return 11;
+    case 0x7F: return 12;
+    default: return null;
+  }
+};
+DS18B20.prototype.setRes = function (res) {
+  var spad = this._readSpad();
+  res = Math.clip(res, 9, 12);
+  this._writeSpad(spad[2], spad[3], this._mapRes(res));
+};
+DS18B20.prototype.getRes = function () {
+  return this._mapRes(this._readSpad()[4]);
 };
 DS18B20.prototype.isPresent = function () {
   return this.bus.search().contains(this.sCode);
