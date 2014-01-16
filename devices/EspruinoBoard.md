@@ -73,6 +73,8 @@ See [Connecting Batteries](#connecting_batteries) below for information on conne
 Connecting
 ---------
 
+<span style="color:red;">**NOTE:** The Espruino board has no case and so the USB connector is completely unsupported. This means it is relatively delicate. Treat it carefully. Try and pull the connector straight out, and **do not** push down on the board when the connector is inserted, or try and move the board around using the cable.</span>
+
 ###Pin Strip
 
 There's a [[Pin Strip]] page covering how to solder Pin Strip onto the Espruino Board
