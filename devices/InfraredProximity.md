@@ -2,7 +2,7 @@
 Infrared Proximity Sensor
 =========
 
-* KEYWORDS: Infrared,Proximity,Light,Sensor,Phototransistor,TCRT5000
+* KEYWORDS: IR,Infrared,Proximity,Light,Sensor,Phototransistor,TCRT5000
 
 ![Infrared Proximity Sensor](module.jpg)
 
