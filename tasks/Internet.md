@@ -8,6 +8,8 @@ To use the internet in Espruino you need an internet connection. If you're using
 
 Basic internet functionality is handled using the Http class.
 
+**NOTE:** Currently, if you call HTTP functions without having first initialised WiFi, Espruino will crash. We're working on this, but if you're using the Espruino board and want to use the internet, follow the instructions for the TI [[CC3000]] first.
+
 Client
 ------
 
