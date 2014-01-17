@@ -2,7 +2,7 @@
 KeyPad Matrix
 =============
 
-* KEYWORDS: KeyPad,Key pad,matrix,buttons,button,switch
+* KEYWORDS: Module,KeyPad,Key pad,matrix,buttons,button,switch
 
 ![Key Pad](4x4.jpg)
 

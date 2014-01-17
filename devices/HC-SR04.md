@@ -2,7 +2,7 @@
 HC-SR04 Ultrasonic Distance Sensor
 =========
 
-* KEYWORDS: Ultrasonic Distance Sensor,Sound,Distance,Sensor,HC-SR04
+* KEYWORDS: Module,Ultrasonic Distance Sensor,Sound,Distance,Sensor,HC-SR04
 
 ![Ultrasonic Distance Sensor](module.jpg)
 
