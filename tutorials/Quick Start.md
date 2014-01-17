@@ -20,7 +20,10 @@ The Espruino board only has one USB connector - just plug it in with a Micro USB
 
 **Other Windows Users:** Newer versions of windows have USB CDC devices installed already, however Windows may take a few minutes to check with Windows Update and install them.
 
-**Mac OS X, Linux and Chromebook Users:** The board will just plug in and go!
+**Linux users** you'll need to add your user to the 'dialout' group (you can check by typing ```groups```). You add it by typing ```sudo adduser $USER dialout``` and then logging out and back in.
+
+**Mac OS X and Chromebook Users:** The board will just plug in and go!
+
 
 
 Set up a Terminal App

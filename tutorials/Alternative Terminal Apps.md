@@ -35,7 +35,7 @@ Picocom is installed by default in Ubuntu. Try typing ```picocom``` in a shell t
 
 Then run picocom to connect to the device (instead of /dev/ttyACM0, use the device name you got above):
 
-```sudo picocom --baud 9600 --flow n /dev/ttyACM0```
+```picocom --baud 9600 --flow n /dev/ttyACM0```
 
 To copy, highlight the text and press ```Shift + Ctrl + C```. To paste, press ```Shift + Ctrl + V```. Use ```Ctrl+A``` then ```Ctrl+X``` to exit.
 
@@ -47,13 +47,13 @@ In a terminal window, install minicom if it isn't installed already:
 
 Then run minicom to connect to the device (instead of /dev/ttyACM0, use the device name you got above):
 
-```sudo minicom -b 9600 -D /dev/ttyACM0```
+```minicom -b 9600 -D /dev/ttyACM0```
 
 To copy, highlight the text and press ```Shift + Ctrl + C```. To paste, press ```Shift + Ctrl + V```. Use ```Ctrl+A``` then ```X``` to exit.
 
-### Advanced
+### Problems
 
-Usually the Espruino device appears in the ```dialout``` group (for accessing modems), which means your user needs these permissions to access it. Just run the following command to add these permissions:
+Having permission problems? Usually the Espruino device appears in the ```dialout``` group (for accessing modems), which means your user needs these permissions to access it. Type ```groups``` to check if dialout is listed, and run the following if it isn't:
 
 ```sudo adduser $USER dialout```
 
