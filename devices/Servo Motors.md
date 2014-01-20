@@ -88,6 +88,11 @@ setServo(A1, 0.5); // set servo connected to A1 to the halfway position
 
 Note that some pins don't have hardware timers on them. You can find which ones do by typing: 'analogWrite()'
 
+Using 
+-----
+
+* APPEND_USES: Servo Motor
+
 Buying
 -----
 

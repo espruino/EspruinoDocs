@@ -3,3 +3,8 @@ Accelerometers
 ============
 
 * APPEND_KEYWORD: Accelerometer
+
+Using 
+-----
+
+* APPEND_USES: Accelerometer

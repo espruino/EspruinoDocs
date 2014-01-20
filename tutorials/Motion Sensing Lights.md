@@ -3,6 +3,7 @@ Motion Sensing Lights
 =======================
 
 * KEYWORDS: Pyroelectric,Motion,Movement,Sensor,HC-SR501,LED,WS2811
+* USES:WS2811,Pyroelectric
 
 Introduction
 -----------

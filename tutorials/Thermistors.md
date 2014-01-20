@@ -3,6 +3,7 @@ Thermistors
 ===========
 
 * KEYWORDS: Sensor,Temperature,Temp,Analog,ADC
+* USES: ADC,Resistor,Thermistor
 
 This Tutorial assumes that you are able to enter code in Espruino. If you can't do that yet, please follow the steps on the [[Quick Start]] page.
 

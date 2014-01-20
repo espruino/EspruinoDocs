@@ -1,5 +1,6 @@
 /* 
 * KEYWORDS: PCD8544,DS18B20,LCD,Temperature,Graphics,Font,Text
+* USES: PCD8544,DS18B20
 
    Using the Nokia 5110 display and the DS18B20 temperature
    sensor to make a simple temperature display 

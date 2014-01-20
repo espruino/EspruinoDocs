@@ -15,4 +15,4 @@ This returns a value between 0 and 1. Internally ADCs in Espruino devices are us
 Using Analog Inputs
 ------------------------
 
-* APPEND_KEYWORD: ADC
+* APPEND_USES: ADC

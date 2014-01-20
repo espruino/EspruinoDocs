@@ -32,6 +32,10 @@ var keypad = require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9]);
 print("123A456B789C*0#D"[keypad.read()]);
 ```
 
+Using 
+-----
+
+* APPEND_USES: KeyPad
 
 Buying
 -----

@@ -42,4 +42,9 @@ This will output something like:
 ```
 
 Where the values for joy are between -1 and 1, and values for 'acc' are in G (that is, 1 for normal gravity).
+
+Using 
+-----
+
+* APPEND_USES: Wii
  

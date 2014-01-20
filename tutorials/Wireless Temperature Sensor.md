@@ -3,6 +3,7 @@ Wireless Temperature Sensor
 ===============================
 
 * KEYWORDS: Wireless,Temperature,NRF24L01+,DS18B20
+* USES: DS18B20,NRF24L01+,PCD8544
 
 ![Wireless Temperature Sensor](final.jpg)
 

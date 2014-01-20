@@ -47,6 +47,11 @@ The connections are as follows:
 
 This contains a jumper between VCC and VCC-JD. This means that the relay will be powered from the same 5V signal as the Opto-isolators and LEDs.
 
+Using 
+-----
+
+* APPEND_USES: Relay Module
+
 Buying
 -----
 

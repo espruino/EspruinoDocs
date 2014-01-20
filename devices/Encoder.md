@@ -18,3 +18,7 @@ require("Encoder").connect(A1,A2,function (direction) {
 });
 ```
 
+Using 
+-----
+
+* APPEND_USES: Encoder

@@ -3,6 +3,7 @@ Heater Controller
 ===============
 
 * KEYWORDS: Heater,Temperature,Temp,Controller
+* USES: DS18B20,Resistor,4.7k Resistor,Relay Module
 
 Introduction
 -----------

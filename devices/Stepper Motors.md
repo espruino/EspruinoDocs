@@ -65,10 +65,10 @@ var targetStep = 0;
 var steps = [0b0001,0b0011,0b0010,0b0110,0b0100,0b1100,0b1000,0b1001];
 var stepperPins = [D9,D11,D14,D12];
 var stepInterval = setInterval(doStep, 100);
-var doStep = function () {    
+var doStep = function () {
  var d = step - targetStep;
  if (d < 0) 
-   step++;                             
+   step++;
  else if (d > 0)
    step--;
  if (d==0) { // we're there - sleep
@@ -82,3 +82,8 @@ var doStep = function () {
  }
 };
 ```
+
+Using 
+-----
+
+* APPEND_USES: Stepper Motor

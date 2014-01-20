@@ -27,6 +27,11 @@ var light = analogRead(A1);
 console.log(light);
 ```
 
+Using 
+-----
+
+* APPEND_USES: LDR
+
 Buying
 -----
 

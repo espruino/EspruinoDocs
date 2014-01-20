@@ -3,6 +3,7 @@ Flashing Lights
 =============
 
 * KEYWORDS: Flash,Flashing,Blink,Blinky,LED,LEDs,Light
+* USES: LED
 
 This Tutorial assumes that you are able to enter code in Espruino. If you can't do that yet, please follow the steps on the [[Quick Start]] page.
 

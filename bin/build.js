@@ -70,7 +70,7 @@ function getMarkdown(dir) {
 
 var markdownFiles = getMarkdown(BASEDIR);
 
-function addKeyword(keywords, k, fileInfo) {
+function addToList(keywords, k, fileInfo) {
   k = k.toLowerCase();
   //console.log(k);
   if (keywords[k] != undefined)  {
@@ -85,13 +85,13 @@ function addKeyword(keywords, k, fileInfo) {
   }
 }
 
-function grabKeywords(markdownFiles) {
+function grabInfo(markdownFiles) {
   var keywords = {};
+  var parts = {};
 
   if (fs.existsSync(FUNCTION_KEYWORD_FILE))
     keywords = JSON.parse(fs.readFileSync(FUNCTION_KEYWORD_FILE));
 
-  var regex = /KEYWORDS: (.*)/;
   markdownFiles.forEach(function (file) {
 
    // get file info
@@ -106,13 +106,20 @@ function grabKeywords(markdownFiles) {
    // add keyword for directory
    file.split("/").forEach(function (k) {
      if (k.indexOf(".")>0) k = k.substr(0,k.indexOf(".")); // remove file extension
-     addKeyword(keywords, k, fileInfo);
+     addToList(keywords, k, fileInfo);
    });
    // add keywords in file
-   var match = contents.match(regex);
+   var match;
+   match = contents.match(/KEYWORDS: (.*)/);
    if (match!=null) {
      match[1].split(",").forEach(function(k) { 
-       addKeyword(keywords, k, fileInfo);
+       addToList(keywords, k, fileInfo);
+     });
+   }
+   match = contents.match(/USES: (.*)/);
+   if (match!=null) {
+     match[1].split(",").forEach(function(k) { 
+       addToList(parts, k, fileInfo);
      });
    }
   });
@@ -121,7 +128,7 @@ function grabKeywords(markdownFiles) {
   for (keyword in keywords) 
     keywords[keyword].sort(function(a,b){ return (a.title == b.title)?0:(a.title > b.title ? 1 : -1); });
 
-  return keywords;
+  return {keywords:keywords, parts:parts};
 }
 
 // Create a keywords structure that can be used for searching the website
@@ -170,8 +177,8 @@ function handleImages(file, contents) {
 }
 
 //console.log(markdownFiles);
-var keywords = grabKeywords(markdownFiles);
-//console.log(keywords);
+var fileInfo = grabInfo(markdownFiles);
+//console.log(fileInfo.keywords);
 
 htmlFiles = {};
 htmlLinks = {};
@@ -183,7 +190,7 @@ markdownFiles.forEach(function (file) {
   htmlLinks[file] = htmlFile;
 });
 
-fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(keywords))+";");
+fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords))+";");
 
 
 markdownFiles.forEach(function (file) {
@@ -204,28 +211,33 @@ markdownFiles.forEach(function (file) {
    contents = contents.replace(/```([^ \n][^\n]+)```/g,"``` $1 ```"); // need spaces after ```
    // Hide keywords
    contents = contents.replace(/(.*KEYWORDS: .*)/g, "<!---\n$1\n--->");
+   contents = contents.replace(/(.*[^_]USES: .*)/g, "<!---\n$1\n--->");
    // TODO - 'Tutorial 2' -> 'Tutorial+2', recognize pages that are references in docs themselves
    var contentLines = contents.split("\n");
-   var regex = /APPEND_KEYWORD: (.*)/;
-   for (i in contentLines) {
-      var match = contentLines[i].match(regex);
-      if (match!=null) {
-        var kw = match[1].toLowerCase();;
-        if (keywords[kw]!=undefined) {
-          var pages = keywords[kw];
-          var links = [ ];
-          for (j in pages) {
-            var a = pages[j];
-            if (a["path"]!=file && htmlLinks[a.path]!=undefined) // if we don't have links it is probably in the reference
-              links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );
-          }        
-          contentLines[i] = links.join("\n");
-        } else {
-          WARNING("APPEND_KEYWORD for '"+kw+"' in "+file+" found nothing");
-          contentLines[i] = "";
-        }
-      }
+   
+   var appendMatching = function(regex, kwName, infoList, ifNone) {
+     for (i in contentLines) {
+       var match = contentLines[i].match(regex);
+       if (match!=null) {
+         var kw = match[1].toLowerCase();
+         if (infoList[kw]!=undefined) {
+           var pages = infoList[kw];
+           var links = [ ];
+           for (j in pages) {
+             var a = pages[j];
+             if (a["path"]!=file && htmlLinks[a.path]!=undefined) // if we don't have links it is probably in the reference
+               links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );
+           }        
+           contentLines[i] = links.join("\n");
+         } else {
+           WARNING(kwName+" for '"+kw+"' in "+file+" found nothing");
+           contentLines[i] = ifNone;
+         }
+       }
+     }
    }
+   appendMatching(/APPEND_KEYWORD: (.*)/ , "APPEND_KEYWORD", fileInfo.keywords, "");
+   appendMatching(/APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, "No tutorials use this yet.");
    
    contentLines.splice(0,1); // remove first line (copyright)
    

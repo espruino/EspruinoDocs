@@ -3,6 +3,7 @@ Measuring and Controlling Fan Speed
 ===============================
 
 * KEYWORDS: Sensor,Control,Fan,Speed,Motor
+* USES: Fan
 
 This Tutorial assumes that you are able to enter code in Espruino. If you can't do that yet, please follow the steps on the [[Quick Start]] page
 

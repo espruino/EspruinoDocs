@@ -30,6 +30,11 @@ setInterval(function() {
 }, 500);
 ```
 
+Using 
+-----
+
+* APPEND_USES: Ultrasonic
+
 Buying
 -----
 

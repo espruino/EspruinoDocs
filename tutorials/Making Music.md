@@ -3,6 +3,7 @@ Making Sounds and Music
 ====================
 
 * KEYWORDS: Music,Sound,Audio,Speaker,Buzzer
+* USES: Speaker
 
 [[http://youtu.be/Jk5lTqQzoKA]]
 

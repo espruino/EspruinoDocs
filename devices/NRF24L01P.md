@@ -152,3 +152,15 @@ More Advanced Usage
 -----------------
 
 You can send individual packets using ```NRF.send(data)```, where data is an array of numbers of length ```NRF.PAYLOAD```. To receive you can use the same ```NRF.getData()``` function. For more information consult the module ([[NRF24L01P.js]]).
+
+Using 
+-----
+
+* APPEND_USES: NRF24L01+
+
+Buying
+-----
+
+NRF24L01+ modules are usually based on Nordic's own reference design, so can be purchased from many places:
+
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=NRF24L01%2B)

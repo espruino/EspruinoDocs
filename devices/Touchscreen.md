@@ -38,3 +38,8 @@ require("Touchscreen").connect(function(x,y) {
   }
 });
 ```
+
+Using 
+-----
+
+* APPEND_USES: Touchscreen

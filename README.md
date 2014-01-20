@@ -8,6 +8,8 @@ This is basically [GitHub Markdown](https://help.github.com/articles/github-flav
 
     * KEYWORDS: Comma,Separated,List ; Defines keywords for this file
     * APPEND_KEYWORD: Keyword        ; Append a list of pages that match the keyword
+    * USES: Comma,Separated,List  ; Defines parts that are used by the given tutorial
+    * APPEND_USES: part              ; Append a list of pages that have this part in their USES_PARTS list
 
 It also looks for a title (second line, after copyright notices) which it uses to create the title of the HTML page (and of links to it).
 

@@ -39,6 +39,12 @@ Specs
 | Output Voltage | 0 (low), 3.3v (high) |
 | Current Draw | &lt; 50uA |
 
+
+Using 
+-----
+
+* APPEND_USES: Pyroelectric
+
 Buying
 -----
 

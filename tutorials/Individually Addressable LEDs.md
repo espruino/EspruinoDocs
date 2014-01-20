@@ -3,6 +3,7 @@ Individually Addressable LEDs
 ===============================
 
 * KEYWORDS: Individually Addressable LEDs,Light,Lights,LED,LEDs,WS2811,WS2812,WS2812B,Multicolour,Fairy
+* USES: WS2811
 
 ![LED String](string.jpg)
 

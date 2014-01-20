@@ -3,6 +3,7 @@ Water Physics with Servo Motors
 ===============================
 
 * KEYWORDS: Servo Motor,Finite Element,Simulation,Physics
+* USES: Servo Motor
 
 [[http://youtu.be/tn0FTlPr1Wo]]
 

@@ -34,6 +34,11 @@ Software
 
 If there is no USB connection, the Espruino board defaults to using the fist Serial Port (USART1) for the Console at 9600 - which is what the bluetooth module is connected to. This means that just powering Espruino from a USB wall supply, the battery connector, or the GND and VBAT pins will make it work. **Note:** If you power the board from your PC's USB port, it will move the console to USB and you will get no response from the Bluetooth connection.
 
+Using 
+-----
+
+* APPEND_USES: Bluetooth
+
 Buying
 -----
 
