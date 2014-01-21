@@ -58,7 +58,7 @@ Information
 Tutorials
 --------
 
-Links to tutorials that you can do using **only** the Espruino board:
+Links to tutorials that you can do using **just** the Espruino board:
 
 * APPEND_USES: Only Espruino Board
 
