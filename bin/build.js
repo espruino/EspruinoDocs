@@ -220,14 +220,16 @@ markdownFiles.forEach(function (file) {
        var match = contentLines[i].match(regex);
        if (match!=null) {
          var kw = match[1].toLowerCase();
+         var links = [ ];
          if (infoList[kw]!=undefined) {
            var pages = infoList[kw];
-           var links = [ ];
            for (j in pages) {
              var a = pages[j];
              if (a["path"]!=file && htmlLinks[a.path]!=undefined) // if we don't have links it is probably in the reference
                links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );
            }        
+         } 
+         if (links.length>0) {
            contentLines[i] = links.join("\n");
          } else {
            WARNING(kwName+" for '"+kw+"' in "+file+" found nothing");
