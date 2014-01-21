@@ -3,6 +3,7 @@ Quick Start
 ==========
 
 * KEYWORDS: Quick Start,Getting Started
+* USES: Only Espruino Board
 
 [[http://youtu.be/1DT3lpL3IHo]]
 

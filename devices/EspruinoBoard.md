@@ -55,6 +55,13 @@ Information
 * [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/pdf/espruino_pcb.pdf)
 * [STM32F103RCT6 Datasheet](/datasheets/STM32F103xC.pdf)
 
+Tutorials
+--------
+
+Links to tutorials that you can do using **only** the Espruino board:
+
+* APPEND_USES: Only Espruino Board
+
 Power
 ----
 

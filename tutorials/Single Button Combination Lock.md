@@ -3,6 +3,7 @@ Single Button Combination Lock
 ==========================
 
 * KEYWORDS: Combination,Lock,Code,Unlock
+* USES: Only Espruino Board
 
 Introduction
 -----------
