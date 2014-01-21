@@ -19,6 +19,8 @@ If a third argument (a callback function) is supplied, watches will be set up, a
 will be called automatically as soon as a button is pressed. If it isn't, it's up to the user to
 use ```keypad.read()``` to find out what key is pressed. -1 will be returned if no key is pressed.
 
+For example, you could connect the Key Pad in the Ultimate kit to B2,B3,B4,B5,B6,B7,B8 and B9 (they're one long row of pins). The wire nearest the ```D``` key could go to B2, and the wire nearest ```*``` could go to B9. You'd then use the module as follows:
+
 ```
 require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9], function(e) {
   print("123A456B789C*0#D"[e]);

@@ -7,7 +7,7 @@ Single Button Combination Lock
 Introduction
 -----------
 
-If you want to make an electronic lock, the obvious way is to use something like a [[KeyPad]]... But maybe you don't want to wire up the wires, don't have space, or even just want to hide the entry. You could just use one button, and could tap out the code almost like morse code... That's what we'll do here.
+If you want to make an electronic lock, the obvious way is to use something like a [KeyPad](/KeyPad Combination Lock)... But maybe you don't want to wire up the wires, don't have space, or even just want to hide the entry. You could just use one button, and could tap out the code almost like morse code... That's what we'll do here.
 
 You'll Need
 ----------
@@ -22,9 +22,7 @@ There's no wiring up at the moment, we're just using the LED lights and button b
 Software
 -------
 
-The first step is respond when a button is pressed. Let's just 
-
-Connect to the Espruino and copy and paste this into the left-hand window:
+The first step is respond when a button is pressed... Connect to the Espruino and copy and paste this into the left-hand window:
 
 ```
 function buttonWatcher(e) {
@@ -34,7 +32,7 @@ function buttonWatcher(e) {
 setWatch(buttonWatcher, BTN, {edge:"falling", repeat:true});
 ```
 
-Press the button (the one furthest from the USB connector - the other one resets Espruino!). WHen released, it should print out the time (according to Espruino) when the button is pressed. Note that sometimes it outputs the time more that once - this is because of 'bounce' in the button. The button itself is mechanical, and sometimes it physically bounces when it is pressed or released, making it turn on and off very quickly. We want to be able to check for this and avoid it...
+Press the button (the one furthest from the USB connector - the other one resets Espruino!). When released, it should print out the time (according to Espruino) when the button is pressed. Note that sometimes it outputs the time more that once - this is because of 'bounce' in the button. The button itself is mechanical, and sometimes it physically bounces when it is pressed or released, making it turn on and off very quickly. We want to be able to check for this and avoid it...
 
 Now copy and paste the following - this will change the function that is called when the button is pressed so that it checks the time between presses. If the time is greater than 0.1 seconds, it'll write 'Pressed!':
 
