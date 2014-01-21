@@ -89,10 +89,10 @@ If you wish to buy the battery connector, you can do it from Farnell ([pins](htt
 See the [[Pin Strip]] page for ideas on how to connect servos, and the [[Servo Motor]] page on how to control them.
 
 ### Motor Drivers
-To drive motors there are two good options - both of which solder on to the prototype area. The surface mount versions of these will require some soldering skills, so if you only need to turn motors on and off (and not drive them at different speeds) then a [Relay Module](/Relays) might be easier.
+To drive motors there are two good options - both of which solder on to the prototype area (which is designed for SOIC-style chips). The surface mount versions of these will require some soldering skills, so if you only need to turn motors on and off (and not drive them at different speeds) then a [Relay Module](/Relays) might be easier.
 
 #### L293D
-([Datasheet](/datasheets/L293D.pdf))
+([Datasheet](/datasheets/L293D.pdf)) and [product at RS Components](http://uk.rs-online.com/web/p/motor-driver-ics/7140625/)
 
 The L293D is slightly more expensive, but has four outputs, each of which can pull up to a voltage as well as down to 0v. This makes it ideal for driving motors in forwards and reverse, as each side of the motor can be connected to an output. Outputting 0 and 1 will make it turn one way, and outputting 1 and 0 will make it turn the other.
 
