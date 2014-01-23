@@ -2,12 +2,8 @@
 Using BTN1 to turn on an LED
 =======================
 
-<!---
 * KEYWORDS: BTN1,LED1,LED2,LED3,LED,button
---->
-<!---
-* USES: BTN1,LED1,LED2,LED3
---->
+* USES: BTN1,LED1,LED2,LED3,Only Espruino Board
 
 Introduction
 -----------
