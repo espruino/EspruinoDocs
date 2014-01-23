@@ -69,7 +69,7 @@ DS18B20.prototype.getRes = function () {
   return this._mapRes(this._readSpad()[4]);
 };
 DS18B20.prototype.isPresent = function () {
-  return this.bus.search().contains(this.sCode);
+  return this.bus.search().indexOf(this.sCode) !== -1;
 };
 DS18B20.prototype.getTemp = function (/*OPTIONAL*/verify) {
   var spad;
