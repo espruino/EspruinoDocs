@@ -16,11 +16,12 @@ If so, this handy table shows you what you got, and provides links to informatio
 | [[NRF24L01P]] Wireless            | 2                  |                    |         | 0 (or 4)              | 2             | 2             |
 | [[CC3000]] WiFi                   |                    |                    |         |                       | 1             | 1             |
 | [[WS2811]] MultiColour LEDs       |                    | 25                 | 25      |                       |               | 25            |
-| [Sockets, Pins and Wires](/Pin Strip) |                |         | Yes     |                       |               | Yes           |
+| [Sockets, Pins and Wires](/Pin Strip) |                |                    | Yes     |                       |               | Yes           |
 | Micro [[Servo Motors]]            |                    |                    | 2       |                       |               | 2             |
 | [[DS18B20]] Temperature Sensor    |                    |                    | 1       |                       |               | 1             |
 | Light Sensor ([[LDR]])            |                    |                    | 1       |                       |               | 1             |
-| Resistors                         |                    |                    | Yes     |                       |               | Yes           |
+| 4.7k Ohm Resistors                |                    |                    | 4       |                       |               | 4             |
+| 100 Ohm Resistors                 |                    |                    |         |                       |               | 2             |
 | [[Breadboard]]                    |                    |                    |         |                       |               | 1             |
 | [[HC-SR04]] Ultrasonic Distance Sensor |               |                    |         |                       |               | 1             |
 | [IR Proximity](/InfraredProximity) Sensor  |           |                    |         |                       |               | 1             |
