@@ -102,9 +102,10 @@ Since JavaScript is Object-Oriented, and each LED is an instance of ```Pin```, w
 ```
 Pin.prototype.startFlashing = function(period) { 
   var on = false;
+  var pin = this;
   setInterval(function() {
     on = !on;
-    digitalWrite(this, on);
+    digitalWrite(pin, on);
   }, period);
 }
 LED1.startFlashing(100);
@@ -117,9 +118,10 @@ Pin.prototype.startFlashing = function(period) {
   if (Pin.intervals==undefined) Pin.intervals = [];
   if (Pin.intervals[this]) clearInterval(Pin.intervals[this]);
   var on = false;
+  var pin = this;
   Pin.intervals[this] = setInterval(function() {
     on = !on;
-    digitalWrite(this, on);
+    digitalWrite(pin, on);
   }, period);
 }
 ```
@@ -127,8 +129,8 @@ Pin.prototype.startFlashing = function(period) {
 Now, you can call ```startFlashing``` multiple times:
 
 ```
-startFlashing(LED1, 10);
-startFlashing(LED1, 100);
+LED1.startFlashing(10);
+LED1.startFlashing(100);
 ```
 
 ### Try 5
