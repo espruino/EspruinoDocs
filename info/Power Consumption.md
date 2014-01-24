@@ -8,13 +8,18 @@ Power Consumption
 
 Espruino can run in one of 3 different modes.
 
-| Mode | Current | Notes |
+| Mode | Current | Time on 2000mAh battery | Notes |
 | -----|---------|--------|
-| Run | ~30mA | Espruino is executing code, and running at 72Mhz |
-| Sleep | ~12mA | Espruino has stopped the clock to the CPU, but all peripherals are still running and can wake it up |
-| Stop | 0.1mA | Espruino has stopped the clock to everything except the real-time clock (RTC). It can wake up on setInterval/setTimeout or setWatch |
+| Run | ~35mA | 57 hours | Espruino is executing code and running at 72Mhz |
+| Sleep | ~12mA | 7 days | Espruino has stopped the clock to the CPU, but all peripherals are still running and can wake it up |
+| Stop | ~0.11mA | 2 years | Espruino has stopped the clock to everything except the real-time clock (RTC). It can wake up on setInterval/setTimeout or setWatch |
 
-**Note:** Sleep mode is available on the STM32 chip (very low power, but ALL DATA is lost from RAM). It is not currently used in Espruino (for why, see _Other sources of Power Draw_ below).
+**Note:** Sleep mode is available on the STM32 chip (very low power, but ALL DATA is lost from RAM). It is not currently used in Espruino (see _Other sources of Power Draw_ below for why not).
+
+Sleep
+----
+
+This is the normal low-power mode for Espruino. You don't have to do anything to enter this at all, Espruino will enter it whenever it thinks it can.
 
 Stop
 ----
@@ -33,6 +38,8 @@ For deep sleep to work, you must:
 * Not be connected to USB
 * Not have any data waiting to be sent down Serial or USB
 * Have no pending callbacks from setIntervals/setTimeout that are **less than 1.5 seconds** away. Espruino uses the real time clock for wakeups, and the RTC can only wake up on a second by second basis.
+
+  **Note:** Espruino won't enter deep sleep as soon as you execute ```setDeepSleep(1)```. It'll wait until it doesn't have anything to do, and then it'll enter it. For example you can type ```setDeepSleep(1)``` while you're connected to your PC via USB, and Espruino will only enter deep sleep mode once you unplug from USB. 
 
 Examples
 -------
@@ -61,12 +68,12 @@ setWatch(function() {
 setDeepSleep(1);
 ```
 
-As suggested above, we'd advise that you **always** use setWatch on BTN when allowing deep sleep, as this allows you to wake Espruino up so that you can connect to it with USB.
+As suggested above, we'd advise that you **always** add setWatch on BTN when allowing deep sleep, as this allows you to wake Espruino up so that you can connect to it with USB.
 
 Debugging Sleep
 -------------
 
-You can call ```setSleepIndicator(LED1)```. LED1 will then be lit whenever the device is sleeping, allowing you to make sure it is sleeping as much as possible. There is currently no way to see when Espruino has entered Deep Sleep.
+You can call ```setSleepIndicator(LED1)```. LED1 will then be lit whenever the device is **not** sleeping, allowing you to make sure it is sleeping as much as possible. There is currently no way to see when Espruino has entered Deep Sleep.
 
 Note that Espruino won't go to sleep when it is connected via USB, as it knows it has ample power available.
 
@@ -82,4 +89,4 @@ Bear in mind that lighting just one LED light uses about the same amount of powe
 Other sources of Power Draw
 ------------------------
 
-While the STM32 datasheets suggest that the STM32 in Espruino will actually draw around 30uA in Stop mode, the voltage regulator that is on the board (despite being designed for low current) still draws 80uA which means that the board itself will never be able to get down that low.
+While the STM32 datasheets suggest that the STM32 in Espruino will actually draw around 30uA in Stop mode, the voltage regulator that is on the board (despite being designed for low current) still draws 80uA which means that the board itself will never be able to get down that low unless the voltage regulator is removed.
