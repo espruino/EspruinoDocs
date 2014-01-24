@@ -23,10 +23,10 @@ function getAcc() {
   if (accy>127) accy-=256;
   avrx = 0.1*accx + 0.9*avrx;
   avry = 0.1*accy + 0.9*avry;
-  analogWrite(LED2, avrx/128.0);
-  analogWrite(LED4, -avrx/128.0);
-  analogWrite(LED1, avry/128.0);
-  analogWrite(LED3, -avry/128.0);
+  digitalWrite(LED2, avrx > 64);
+  digitalWrite(LED4, avrx < -64);
+  digitalWrite(LED1, avry > 64);
+  digitalWrite(LED3, avry < -64);
 }
 onInit();setInterval(getAcc, 10);
 ```

@@ -138,7 +138,7 @@ function onFanMovement(e) {
   } else {
     if (fanDrive>0) fanDrive -= 0.01;
   }
-  analogWrite(LED1, fanDrive);
+  digitalWrite(LED1, fanDrive>0.5);
   analogWrite(FAN_SPEED_OUT, fanDrive);
 }
 ```
@@ -175,7 +175,7 @@ function onTimer() {
   } else {
     if (fanDrive>0) fanDrive -= 0.01;
   }
-  analogWrite(LED1, fanDrive);
+  digitalWrite(LED1, fanDrive>0.5);
   analogWrite(FAN_SPEED_OUT, fanDrive);
 }
 setInterval(onTimer, 100);
