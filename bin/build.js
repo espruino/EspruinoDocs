@@ -46,7 +46,7 @@ function getFiles(dir) {
   var list = fs.readdirSync(dir);
   for (i in list) {
     var file = list[i];
-    if (file == "node_modules") continue;
+    if (file == "node_modules" || file == "html") continue;
     file = dir + '/' + file;
     var stat = fs.statSync(file);
     if (stat && stat.isDirectory()) {
