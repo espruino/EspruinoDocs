@@ -59,7 +59,7 @@ Note that we're using pin B15 here - if you want to use a different pin (see the
 
 We choose 3200000 baud because we want to transmit 4 bits of information for each real bit, and we want to transmit at 800000 baud. So 800000 * 4 = 3200000. However the STM32 chips can't get exactly the SPI baud rate you request - they'll try to get it right to within +/- 50%. 
 
-**This may mean that if the next command doesn't work, you have to repeat the command above with a baud rate of 1600000**
+  **Note: It seems that some of the WS2811/WS2812 lights expect signals at different frequencies. If the commands below don't work for you, you should try executing the command above again with baud set to 6400000 or 1600000 (instead of 3200000).**
 
 And now, we'll send data to the first light. The data is transmitted as sets of bytes for red, green, and blue:
 
