@@ -1,15 +1,14 @@
 <!--- Copyright (c) 2014 Kim Bauters. See the file LICENSE for copying permission. -->
 Understanding PWM and Implementing it Yourself
-=======================
+========================================
 
-* KEYWORDS: LED1, PWM analogWrite
+* KEYWORDS: LED1,PWM,analogWrite
 * USES: LED1,Only Espruino Board
 
 
 Introduction
 -----------
 PWM or Pulse-Width modulation is an important concept in electronics where you mimic a lower voltage by quickly turning on and off the power to a pin. In this tutorial we'll discuss how PWM works and see how you can implement PWM yourself. This will help you to understand how the `analogWrite()` works on those pins that support PWM.
-
 
 
 Wiring Up
