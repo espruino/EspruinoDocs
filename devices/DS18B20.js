@@ -53,7 +53,7 @@ DS18B20.prototype.setRes = function (res) {
   this._writeSpad(spad[2], spad[3], res);
 };
 DS18B20.prototype.getRes = function () {
-  return [9,10,11,12][(this._readSpad()[4] - 31) / 32];
+  return [0x1F,0x3F,0x5F,0x7F].indexOf(this._readSpad()[4]) + 9;
 };
 DS18B20.prototype.isPresent = function () {
   return this.bus.search().indexOf(this.sCode) !== -1;
