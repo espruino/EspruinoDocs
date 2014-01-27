@@ -12,7 +12,7 @@ In Espruino, you can perform Pulse Width Modulation using the following function
 
 eg. ```analogWrite(A0, 0.2)``` (Pulse high for 10% of the time)
 
-**Note:** Not all pins are capable of PWM. See the [[Reference]] for your board and look for ```PWM```. Some pins are also capable of proper Analog [[DAC]] outputs and for these, analogWrite will use the DAC by dafault.
+**Note:** Not all pins are capable of PWM. See the [[Reference]] for your board and look for ```PWM```. Some pins are also capable of proper Analog [[DAC]] outputs and for these, analogWrite will use the DAC by default.
 
 To force Espruino to use PWM (instead of the DAC) or to specify a certain frequency, use:
 
