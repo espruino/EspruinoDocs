@@ -14,7 +14,7 @@ Espruino can run in one of 3 different modes.
 | Sleep | ~12mA | 7 days | Espruino has stopped the clock to the CPU, but all peripherals are still running and can wake it up |
 | Stop | ~0.11mA | 2 years | Espruino has stopped the clock to everything except the real-time clock (RTC). It can wake up on setInterval/setTimeout or setWatch |
 
-**Note:** Sleep mode is available on the STM32 chip (very low power, but ALL DATA is lost from RAM). It is not currently used in Espruino (see _Other sources of Power Draw_ below for why not).
+**Note:** Standby mode is available on the STM32 chip (very low power, but **all data** is lost from RAM). It is not currently used in Espruino (see _Other sources of Power Draw_ below for why not).
 
 Sleep
 ----
@@ -27,7 +27,7 @@ Stop
 This is the best low-power mode in Espruino, which involves turning off the clock to all peripherals (which stops them) and waking only when an external pin changes state or after a set amount of time. It is only enabled when you run ```setDeepSleep(1)``` (you can turn it off by passing 0). It's not enabled by default because:
 
 * Espruino won't wake when USB is plugged in - after USB is unplugged and plugged back in, it must have been awakened by something. We'd suggest ```setWatch(function() {}, BTN, true)``` so that you can press the button to wake up Espruino and allow you to connect via USB.
-* Espruino can't be woken by USART (and they will not receive data while it is sleeping). This means that if you were using the Bluetooth module for receiving communications then you can't use deep sleep. In reality this isn't such a bit problem because the Bluetooth module draws 30mA when active!
+* Espruino can't be woken by USART (and they will not receive data while it is sleeping). This means that if you were using the Bluetooth module for receiving communications then you can't use deep sleep. In reality this isn't such a big problem because the Bluetooth module draws 30mA when active!
 * All external peripherals (including timers for PWM) will stop. Espruino does not currently detect if any of these timers are in use before sleeping.
 
 ### Conditions for Deep Sleep
