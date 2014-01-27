@@ -47,26 +47,13 @@ DS18B20.prototype._writeSpad = function (th, tl, conf) {
     this.bus.write(arguments[i]);
   }
 };
-DS18B20.prototype._mapRes = function (value) {
-  switch (value) {
-    case 9: return 0x1F;
-    case 10: return 0x3F;
-    case 11: return 0x5F;
-    case 12: return 0x7F;
-    case 0x1F: return 9;
-    case 0x3F: return 10;
-    case 0x5F: return 11;
-    case 0x7F: return 12;
-    default: return null;
-  }
-};
 DS18B20.prototype.setRes = function (res) {
   var spad = this._readSpad();
-  res = Math.clip(res, 9, 12);
-  this._writeSpad(spad[2], spad[3], this._mapRes(res));
+  res = [0x1F,0x3F,0x5F,0x7F][Math.clip(res,9,12) - 9];
+  this._writeSpad(spad[2], spad[3], res);
 };
 DS18B20.prototype.getRes = function () {
-  return this._mapRes(this._readSpad()[4]);
+  return [0x1F,0x3F,0x5F,0x7F].indexOf(this._readSpad()[4]) + 9;
 };
 DS18B20.prototype.isPresent = function () {
   return this.bus.search().indexOf(this.sCode) !== -1;
