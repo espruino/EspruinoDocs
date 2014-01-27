@@ -49,11 +49,11 @@ DS18B20.prototype._writeSpad = function (th, tl, conf) {
 };
 DS18B20.prototype.setRes = function (res) {
   var spad = this._readSpad();
-  res = ((Math.clip(res,9,12) - 8) * 32) - 1;
+  res = [0x1F,0x3F,0x5F,0x7F][Math.clip(res,9,12) - 9];
   this._writeSpad(spad[2], spad[3], res);
 };
 DS18B20.prototype.getRes = function () {
-  return ((this._readSpad()[4] - 31) / 32) + 9;
+  return [9,10,11,12][(this._readSpad()[4] - 31) / 32];
 };
 DS18B20.prototype.isPresent = function () {
   return this.bus.search().indexOf(this.sCode) !== -1;
