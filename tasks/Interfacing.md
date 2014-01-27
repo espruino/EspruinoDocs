@@ -30,7 +30,9 @@ MODE COM10:9600,N,8,1
 On Mac, Linux or Raspberry Pi
 --------------------------
 
-This is very similar to windows as long as you know the device name of Espruino:
+This is very similar to windows as long as you know the device name of Espruino.
+
+  **Note:** On Linux, devices will be `/dev/ttyACM0`, `ttyAMA0` / etc, but on MacOS you'll want to use the `/dev/cu.usmodem1234` device name.
 
 ```Bash
 echo "LED1.set()" > /dev/ttyACM0
