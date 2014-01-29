@@ -77,7 +77,7 @@ def espruino_cmd(command):
  )
  ser.open()
  ser.isOpen()
- ser.write(command+"n")
+ ser.write(command+"\n")
  endtime = time.time()+0.2 # wait 0.2 sec
  result = ""
  while time.time() < endtime:
