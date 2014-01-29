@@ -49,6 +49,6 @@ exports.connect = function(/*=SPI*/_spi,/*=PIN*/_cs) {
     // Turn display off
     off : function() { spi.send([0xC,0],cs); },
     // Set intensity (0 to 1)
-    intensity : function(i) { spi.send([0xA,Math.clip(i*15,0,15)],cs); }
+    intensity : function(i) { spi.send([0xA,E.clip(i*15,0,15)],cs); }
   };
 };

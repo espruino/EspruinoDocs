@@ -35,7 +35,7 @@ You can call it automatically 20 times a second with setInterval:
 
 ```JavaScript
 var servoPos = 0.5;
-var interval = setInterval("digitalPulse(A1,1,1+Math.clip(servoPos,0,1))", 50);
+var interval = setInterval("digitalPulse(A1,1,1+E.clip(servoPos,0,1))", 50);
 ```
 
 Note that we've added the 'clip' function which stops a pulse of the wrong length being sent to the servo if servoPos is out of range.
@@ -65,8 +65,8 @@ function getPositions() {
  servoPos = [ 0.5+Math.sin(t)*0.5, 0.5+Math.cos(t)*0.5 ];
 }
 function moveServos() {
- digitalPulse(A1,1,1+Math.clip(servoPos[0],0,1));
- digitalPulse(A2,1,1+Math.clip(servoPos[1],0,1));
+ digitalPulse(A1,1,1+E.clip(servoPos[0],0,1));
+ digitalPulse(A2,1,1+E.clip(servoPos[1],0,1));
 }
 setInterval("getPositions();moveServos()", 50);
 ```

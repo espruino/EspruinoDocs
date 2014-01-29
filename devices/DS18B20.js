@@ -62,7 +62,7 @@ DS18B20.prototype._mapRes = function (value) {
 };
 DS18B20.prototype.setRes = function (res) {
   var spad = this._readSpad();
-  res = Math.clip(res, 9, 12);
+  res = E.clip(res, 9, 12);
   this._writeSpad(spad[2], spad[3], this._mapRes(res));
 };
 DS18B20.prototype.getRes = function () {

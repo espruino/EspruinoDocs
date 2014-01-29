@@ -119,9 +119,9 @@ function lightsOn() {
     // Work out colours - fade in from one end
     for (var i=0;i<rgb.length;) {
       var a = (i/rgb.length)+(pos*2)-1;
-      rgb[i++] = Math.clip(a*512,0,255); // red
-      rgb[i++] = Math.clip((a*512)-128,0,255); // green
-      rgb[i++] = Math.clip((a*512)-256,0,255); // blue
+      rgb[i++] = E.clip(a*512,0,255); // red
+      rgb[i++] = E.clip((a*512)-128,0,255); // green
+      rgb[i++] = E.clip((a*512)-256,0,255); // blue
     }
     // send data to the lights
     SPI2.send4bit(rgb, 0b0001, 0b0011);
@@ -137,9 +137,9 @@ function lightsOff() {
     pos += 0.05;
     if (pos>=1) clearInterval(interval); 
     // Work out colours - fade all out the same amount
-    var amtr = Math.clip((1-pos)*255,0,255); // red
-    var amtg = Math.clip((1-pos*1.5)*255,0,255); // green
-    var amtb = Math.clip((1-pos*2)*255,0,255); // blue
+    var amtr = E.clip((1-pos)*255,0,255); // red
+    var amtg = E.clip((1-pos*1.5)*255,0,255); // green
+    var amtb = E.clip((1-pos*2)*255,0,255); // blue
     for (var i=0;i<rgb.length;) {
       rgb[i++] = amtr;
       rgb[i++] = amtg;

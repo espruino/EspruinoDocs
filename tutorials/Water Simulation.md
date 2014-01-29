@@ -58,7 +58,7 @@ function step() {
     // work out the new position
     pos[i] += velocity[i];
     // Send the new position to the Servo motor
-    var p = 1.5+Math.clip(pos[i],-0.5,0.5);
+    var p = 1.5+E.clip(pos[i],-0.5,0.5);
     digitalPulse(servos[i],1,p);
   }
 }
