@@ -75,7 +75,6 @@ def espruino_cmd(command):
   bytesize=serial.EIGHTBITS,
   xonxoff=0, rtscts=0, dsrdtr=0,
  )
- ser.open()
  ser.isOpen()
  ser.write(command+"\n")
  endtime = time.time()+0.2 # wait 0.2 sec
@@ -109,4 +108,12 @@ $ ./espruino_command.py "print(analogRead(A0))"
 0.6546
 $ ./espruino_command.py "digitalWrite(LED1,1)"
 [no output, but turns the LED on]
+```
+
+To be able to communicate with the serial port using Python, you will need pySerial: [http://pyserial.sourceforge.net](http://pyserial.sourceforge.net) . If you run into the trouble that the code complains that it cannot find `serial`, you will first need to install pySerial, which is luckily very straightforward (example below assumes you have downloaded version 2.7, update the commands as appropriate):
+
+```
+tar xfvz pyserial-2.7.tar.gz
+cd pyserial-2.7
+sudo python setup.py install
 ```
