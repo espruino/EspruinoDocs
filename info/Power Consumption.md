@@ -89,4 +89,10 @@ Bear in mind that lighting just one LED light uses about the same amount of powe
 Other sources of Power Draw
 ------------------------
 
-While the STM32 datasheets suggest that the STM32 in Espruino will actually draw around 30uA in Stop mode, the voltage regulator that is on the board (despite being designed for low current) still draws 80uA which means that the board itself will never be able to get down that low unless the voltage regulator is removed.
+While the STM32 datasheets suggest that the STM32 in Espruino will actually draw around 30uA in Stop mode, the voltage regulator that is on the board (despite being designed for low current) still draws 80uA, which makes up the majority of the 110uA power draw.
+
+The STM32 itself can run from between 2 and 3.6v though, so you may not need a voltage regulator. If you need the lowest possible power and you are running from a Lithium Ion/Polymer battery that doesn't exceed 4.3v, you can replace the voltage regulator with a single diode - which will drop the voltage by 0.7v. (bringing the voltage to `5v - 0.7v*2 = 3.6v` when on USB, and `4.2v - 0.7v = 3.5v` maximum when on Li-Ion batteries.
+
+![Low power modifications](lowpower.jpg)
+
+To do this, see the image above. Unsolder the small 5-pin IC that is near the battery connector, and then solder a standard diode (the SOD-123 package works well) between the two pins nearest the STM32 chip. The diode should be placed with the white line on the diode towards the pushbuttons.

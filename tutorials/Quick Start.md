@@ -7,13 +7,13 @@ Quick Start
 
 [[http://youtu.be/1DT3lpL3IHo]]
 
-If you're not using the Espruino board, you'll want to see the [[Other Boards]] for details on how to get started first.
 
+If have a kit from KickStarter and want to see what everything is, check out [[Espruino Kits]]...
 
 Plugging in
 ----------
 
-The Espruino board only has one USB connector - just plug it in with a Micro USB cable and you're done.
+The Espruino board only has one USB connector - just plug it in with a Micro USB cable and you're done. If you're not using the Espruino board, you'll want to see the [[Other Boards]] for details on how to get started first.
 
 <span style="color:red;">**NOTE:** The Espruino board has no case and so the USB connector is completely unsupported. This means it is relatively delicate. Treat it carefully. Try and pull the connector straight out, and **do not** push down on the board when the connector is inserted, or try and move the board around using the cable.</span>
 
