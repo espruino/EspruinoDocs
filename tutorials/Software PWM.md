@@ -3,7 +3,7 @@ Understanding PWM and Implementing it Yourself
 ========================================
 
 * KEYWORDS: LED1,PWM,analogWrite
-* USES: LED1,Only Espruino Board
+* USES: LED1,Only Espruino Board,PWM
 
 
 Introduction

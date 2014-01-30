@@ -3,7 +3,7 @@ Making Sounds and Music
 ====================
 
 * KEYWORDS: Music,Sound,Audio,Speaker,Buzzer
-* USES: Speaker
+* USES: Speaker,PWM
 
 [[http://youtu.be/Jk5lTqQzoKA]]
 
@@ -16,7 +16,7 @@ You'll Need
 ----------
 
 * An Espruino Board
-* A small speaker from an old PC
+* A [[Speaker]]
 
 Wiring Up
 --------

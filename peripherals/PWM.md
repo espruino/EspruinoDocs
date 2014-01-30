@@ -21,4 +21,4 @@ To force Espruino to use PWM (instead of the DAC) or to specify a certain freque
 Using PWM
 ---------------
 
-* APPEND_KEYWORD: PWM
+* APPEND_USES: PWM
