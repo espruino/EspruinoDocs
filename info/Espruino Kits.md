@@ -34,6 +34,25 @@ If so, this handy table shows you what you got, and provides links to informatio
 
 Please note, both the Relay Module and Pyroelectric sensor are 'free' extras that were not advertised as being part of the KickStarter kits.
 
+[![thumbnail](battery.jpg)](/Battery)
+[![thumbnail](bluetooth.jpg)](/Bluetooth)
+[![thumbnail](breadboard.jpg)](/Breadboard)
+[![thumbnail](CC3000.jpg)](/CC2000)
+[![thumbnail](DS18B20.jpg)](/DS18B20)
+[![thumbnail](espruino.jpg)](/EspruinoBoard)
+[![thumbnail](GL5537.jpg)](/LDR)
+[![thumbnail](irprox.jpg)](/InfraredProximity)
+[![thumbnail](keypad.jpg)](/KeyPad)
+[![thumbnail](lcd.jpg)](/PCD8544)
+[![thumbnail](NRF24.jpg)](/NRF24L01P)
+[![thumbnail](pyro.jpg)](/Pyroelectric)
+[![thumbnail](relay.jpg)](/Relays)
+[![thumbnail](servo.jpg)](/Servo Motors)
+[![thumbnail](strip.jpg)](/Pin Strip)
+[![thumbnail](ultrasonic.jpg)](/HC-SR04)
+[![thumbnail](WS2811.jpg)](/WS2811)
+
+
 Buying
 -----
 
