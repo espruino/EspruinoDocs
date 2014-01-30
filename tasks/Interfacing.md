@@ -68,7 +68,7 @@ import json
 
 def espruino_cmd(command):
  ser = serial.Serial(
-  port='/dev/ttyUSB0', # or /dev/ttyAMA0 for serial on the Raspberry Pi
+  port='/dev/ttyACM0', # or /dev/ttyAMA0 for serial on the Raspberry Pi
   baudrate=9600,
   parity=serial.PARITY_NONE,
   stopbits=serial.STOPBITS_ONE,
