@@ -37,7 +37,7 @@ Please note, both the Relay Module and Pyroelectric sensor are 'free' extras tha
 [![thumbnail](battery.jpg)](/Battery)
 [![thumbnail](bluetooth.jpg)](/Bluetooth)
 [![thumbnail](breadboard.jpg)](/Breadboard)
-[![thumbnail](CC3000.jpg)](/CC2000)
+[![thumbnail](CC3000.jpg)](/CC3000)
 [![thumbnail](DS18B20.jpg)](/DS18B20)
 [![thumbnail](espruino.jpg)](/EspruinoBoard)
 [![thumbnail](GL5537.jpg)](/LDR)

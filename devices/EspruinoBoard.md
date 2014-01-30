@@ -99,18 +99,12 @@ See the [[Pin Strip]] page for ideas on how to connect servos, and the [[Servo M
 To drive motors there are two good options - both of which solder on to the prototype area (which is designed for SOIC-style chips). The surface mount versions of these will require some soldering skills, so if you only need to turn motors on and off (and not drive them at different speeds) then a [Relay Module](/Relays) might be easier.
 
 #### L293D
-([Datasheet](/datasheets/L293D.pdf)) and [product at RS Components](http://uk.rs-online.com/web/p/motor-driver-ics/7140625/)
 
-The L293D is slightly more expensive, but has four outputs, each of which can pull up to a voltage as well as down to 0v. This makes it ideal for driving motors in forwards and reverse, as each side of the motor can be connected to an output. Outputting 0 and 1 will make it turn one way, and outputting 1 and 0 will make it turn the other.
-
-...
+The [[L293D]] is slightly more expensive, but has four outputs, each of which can pull up to a voltage as well as down to 0v. This makes it ideal for driving motors in forwards and reverse, as each side of the motor can be connected to an output. 
 
 #### ULN2003
-([Datasheet](/datasheets/ULN2003.pdf))
 
-The ULN2003 has 7 outputs, but they can only pull down to 0v.
-
-...
+The [[ULN2003]] has 7 x 500mA outputs, but they can only pull down to 0v. This makes it great for powering relays, solenoids and stepper motors - but only useful for motors if you only need them to run in a single direction.
 
 ### Bluetooth
 Espruino is designed for HC-05 modules. Have a look at the [[Bluetooth]] page for more information.
