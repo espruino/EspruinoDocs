@@ -56,6 +56,8 @@ Software Updates
 Espruino is gaining features and improvements on an almost daily basis. If you have an Espruino board from KickStarter or a preorder, we highly recommend that you update the firmware before you start using it.
 
 When you first use the Espruino Web IDE and connect (see above) you'll probably see a message saying that new firmware is available. Click the **(i)** symbol in the top right of the window, click 'Firmware Updates', and follow the instructions there. There is no risk of damaging your Espruino board, however the firmware update process may take a few minutes to complete. If you have problems and you've got the Espruino Board, check out the Troubleshooting section in the [board documentation](EspruinoBoard).
+
+**Note:** If you're not using the Web IDE, follow the instructions on the [[Download]] page to flash the latest version.
  
 
 Start writing code!
