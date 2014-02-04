@@ -11,7 +11,7 @@ They can currently be used in a few different ways:
 Espruino Web IDE
 --------------
 
-If you're using the Espruino Web IDE, simply write ```require("modulename")``` - as you would have seen in the reference pages on espruino.com. When you click the *Send to Espruino* button, the Web IDE will automatically look online for minified versions of the modules you need, download them, and load them onto the board. You don't need an SD card or an internet connection to the Espruino board itself.
+If you're using the Espruino Web IDE, simply write ```require("modulename")``` on the right-hand side - as you would have seen in the reference pages on espruino.com. When you click the *Send to Espruino* button, the Web IDE will automatically look online for minified versions of the modules you need, download them, and load them onto the board. You don't need an SD card or an internet connection to the Espruino board itself.
 
 Stand-alone Espruino
 ------------------
@@ -27,3 +27,12 @@ Existing Modules
 --------------
 
 * APPEND_KEYWORD: Module
+
+Frequently Asked Questions
+-----------------------
+
+* <a name="repl"></a>Why don't modules work when typing `require` on the left-hand side of the Web IDE (or from a terminal window)?
+
+When you type ```require("modulename")``` on the right-hand side and click *Send to Espruino*, the Espruino Web IDE scans your code for `require` statements and loads the relevant modules off the internet. Because the left-hand side of the Web IDE (or a terminal window) sends each character direct to Espruino, by the time you have pressed enter to exeture your command, it's then too late to load the module.
+
+Instead, Espruino defaults to what is mentioned under the **Stand-alone Espruino** heading above - it looks on an SD card (if inserted) for the module. This is why you might get a `ERROR: Unable to read file : NOT_READY` error written to the console.
