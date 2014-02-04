@@ -39,7 +39,8 @@ like `require("libname")`.
 
         /* Put most of my comments outside the functions... */
         MOD123.prototype.foo = function() {
-
+          // you can use C.PRIVATE
+          // or this.C.PUBLIC
         };
 
         /* Put most of my comments outside the functions... */
