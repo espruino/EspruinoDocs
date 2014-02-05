@@ -24,8 +24,6 @@ You'll Need
 Wiring Up
 --------
 
-### Board 1 (transmitter)
-
 * Follow [the instructions](/CC3000) for wiring up the CC3000 module
 * Connect up the [[DS18B20]] Temperature sensor as follows:
 
