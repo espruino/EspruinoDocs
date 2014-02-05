@@ -2,6 +2,8 @@
 Advanced Debug
 ============
 
+* KEYWORDS: Debug,SWD,JTAG,ICD
+
 If you're developing the Espruino Interpreter itself you'll probably want a proper debugger. We'd suggest using an STM32DISCOVERY board (not the VLDISCOVERY), disconnecting the two ST-LINK jumpers, and connect wires onto the 6 pin SWD connector as follows:
 
 | F3/F4 Discovery Pin  | Espruino Pin |

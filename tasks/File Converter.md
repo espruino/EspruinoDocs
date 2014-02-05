@@ -3,6 +3,7 @@ Converting files to Strings
 ========================
 
 * KEYWORDS: File,String,Conversion,Internet,CC3000
+* USES: Internet,CC3000
 
 This page helps you to convert a file into a quoted JavaScript string of bytes.
 
