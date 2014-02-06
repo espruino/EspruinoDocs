@@ -55,7 +55,7 @@ function getPage(req,res) {
 var wlan;
 function onInit() {
   wlan = require("CC3000").connect();
-  wlan.connect( "AccessPointName", "2f3b5659ad", function (s) { 
+  wlan.connect( "AccessPointName", "WPA2key", function (s) { 
     if (s=="dhcp") {
       console.log("My IP is "+wlan.getIP().ip);
       require("http").createServer(getPage).listen(80);
