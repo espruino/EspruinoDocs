@@ -6,6 +6,8 @@ Troubleshooting
 
 What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Forum](http://forum.espruino.com). If you have a problem that is not listed here and find a solution, please [[Contact Us]] and we'll add it here.
 
+
+
 Getting Started
 -------------
 
@@ -33,6 +35,7 @@ If not, see the first troubleshooting item above.
 Just try reflashing again (by holding down BTN1 when RST is released, you should always be able to get the glowing blue LED).
 
 As Espruino itself won't work, the IDE won't know what type of board it is supposed to flash so you'll have to look up the firmware manually. Just head to [the Espruino binaries site](http://www.espruino.com/binaries/?C=M;O=D) and look for the most recent (nearest the top) file named ```espruino_1v##_espruino_1r#.bin``` where ```1r#``` is the revision number written on the back of your Espruino board. Copy the link to the file, and paste it into the Espruino Web IDE.
+
 
 
 Using Espruino
