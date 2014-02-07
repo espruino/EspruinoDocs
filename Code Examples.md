@@ -24,5 +24,5 @@ Simple Examples
 
 These are programs for Espruino that contain minimal documentation:
 
-* APPEND_KEYWORD: examples
+* APPEND_KEYWORD: examples,-Tutorials
 

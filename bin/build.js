@@ -253,14 +253,30 @@ markdownFiles.forEach(function (file) {
      for (i in contentLines) {
        var match = contentLines[i].match(regex);
        if (match!=null) {
-         var kw = match[1].toLowerCase();
+         var kws = match[1].toLowerCase().split(",");
+         var kw = kws[0];
          var links = [ ];
          if (infoList[kw]!=undefined) {
            var pages = infoList[kw];
            for (j in pages) {
              var a = pages[j];
-             if (a["path"]!=file && htmlLinks[a.path]!=undefined) // if we don't have links it is probably in the reference
-               links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );
+             if (a["path"]!=file && htmlLinks[a.path]!=undefined) { // if we don't have links it is probably in the reference
+               var pageOk = true;
+               // if extra keywords specified, they may be to reject certain pages... check
+               for (var k=1;k<kws.length;k++)
+                 if (kws[k][0]=="-") {
+                   var notkw = kws[k].substr(1);
+                   if (infoList[notkw]!=undefined)                     
+                     for (var notpg in infoList[notkw])
+                       if (infoList[notkw][notpg]["path"]==a.path) {
+                         console.log("REJECTED "+a.path+" from "+file+" because of '-"+notkw+"' keyword");
+                         pageOk = false;
+                       }
+                 } else WARNING("Unknown keyword option '"+kws[k]+"'");
+               // add page link if ok
+               if (pageOk) 
+                 links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );
+             }
            }        
          } 
          if (links.length>0) {
