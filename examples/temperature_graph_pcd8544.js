@@ -1,12 +1,13 @@
 /* 
-Temperature Graph on a PCD8544 display, with DS18B20 tempetarure sensor
+Temperature Graph on a PCD8544 display, with DS18B20 temperature sensor
 =======================================================================
 
 * KEYWORDS: PCD8544,DS18B20,LCD,Temperature,Graphics,Graph
 * USES: PCD8544,DS18B20
 
-   Using the Nokia 5110 display and the DS18B20 temperature
-   sensor to make a simple temperature graph 
+Using the Nokia 5110 display and the DS18B20 temperature sensor to make a simple temperature graph 
+
+LCD Wiring:
 
 | LCD pin | Pin on Espruino Board         |
 |---------|-------------------------------|
@@ -18,6 +19,8 @@ Temperature Graph on a PCD8544 display, with DS18B20 tempetarure sensor
 |  DC     | B6                            |
 |  CE     | B7                            |
 |  RST    | B8                            |
+
+DS18B20 Wiring:
 
 | DS18B20 pin | Pin on Espruino Board     |
 |-------------|---------------------------|
