@@ -2,6 +2,8 @@
 Troubleshooting
 =============
 
+* KEYWORDS: Troubleshooting,Trouble,Help,Broken,Not Working
+
 ## My board doesn't seem to be recognized by my computer
 
 Hold down the RST button. Do the blue and red lights glow dimly? If not, there's a problem with your USB cable as power isn't getting to Espruino.
