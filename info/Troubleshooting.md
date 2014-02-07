@@ -2,9 +2,9 @@
 Troubleshooting
 =============
 
-* KEYWORDS: Troubleshooting,Trouble,Help,Broken,Not Working
+* KEYWORDS: Troubleshooting,Trouble,Problems,Help,Broken,Not Working
 
-What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [[Forum]]. If you have a problem that is not listed here and find a solution, please [[Contact Us]] and we'll add it here.
+What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Forum](http://forum.espruino.com). If you have a problem that is not listed here and find a solution, please [[Contact Us]] and we'll add it here.
 
 Getting Started
 -------------
