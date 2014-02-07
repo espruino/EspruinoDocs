@@ -69,6 +69,7 @@ function getMarkdown(dir) {
 }
 
 var markdownFiles = getMarkdown(BASEDIR);
+var preloadedFiles = {};
 
 function addToList(keywords, k, fileInfo) {
   k = k.toLowerCase();
@@ -85,17 +86,17 @@ function addToList(keywords, k, fileInfo) {
   }
 }
 
-function grabInfo(markdownFiles) {
+function grabInfo(markdownFiles, preloadedFiles) {
   var keywords = {};
   var parts = {};
 
   if (fs.existsSync(FUNCTION_KEYWORD_FILE))
     keywords = JSON.parse(fs.readFileSync(FUNCTION_KEYWORD_FILE));
 
-  markdownFiles.forEach(function (file) {
-
+  markdownFiles.forEach(function (file) {   
    // get file info
-   var contents = fs.readFileSync(file).toString();
+   var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
+//   console.log(file,contents.length); 
    var contentLines = contents.split("\n");
    if (contentLines[0].substr(0,15)!="<!--- Copyright") WARNING(file+" doesn't have a copyright line");
    if (contentLines[2].substr(0,3)!="===") WARNING(file+" doesn't have a title on the first line");
@@ -163,7 +164,7 @@ function handleImages(file, contents) {
       var imagePath = basePath+"/"+imageName;
       if (fs.existsSync(imagePath)) {
         var newPath = IMAGE_DIR+htmlLinks[file]+"_"+imageName;
-        console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
+//        console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
         fs.createReadStream(imagePath).pipe(fs.createWriteStream(HTML_DIR+newPath));
         // now rename the image in the tag
         contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
@@ -176,8 +177,40 @@ function handleImages(file, contents) {
   return contents;
 }
 
+// Now handle our simple 'example' files
+var exampleDir = BASEDIR+"/examples/";
+var exampleFiles = fs.readdirSync(exampleDir);
+for (i in exampleFiles) {
+  var exampleFile = exampleFiles[i];
+  if (exampleFile.substr(-3) != ".js") continue;
+  console.log("Example File "+exampleDir+exampleFile);
+  var contents = fs.readFileSync(exampleDir+exampleFile).toString();
+  var slashStar = contents.indexOf("/*");
+  var starSlash = contents.indexOf("*/",slashStar);
+  if (slashStar>=0 && starSlash>=0) {  
+    var newFile = "<!--- Copyright (c) 2014 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->\n";
+//    newFile += exampleFile+"\n";
+//    newFile += "====================================\n";
+//    newFile += "\n";
+    newFile += contents.substr(slashStar+2, starSlash-(3+slashStar)).trim() + "\n";
+    newFile += "\n\n"
+    newFile += "Source Code\n"
+    newFile += "-----------\n\n"
+    newFile += "```\n"
+    newFile += contents.substr(starSlash+2).trim()+"\n"
+    newFile += "```\n"
+    // add file
+    markdownFiles.push(exampleDir+exampleFile);
+    preloadedFiles[exampleDir+exampleFile] = newFile;
+
+  } else WARNING(exampleFile+" has no comment block at the start");
+  
+}
+
+
+
 //console.log(markdownFiles);
-var fileInfo = grabInfo(markdownFiles);
+var fileInfo = grabInfo(markdownFiles, preloadedFiles);
 //console.log(fileInfo.keywords);
 
 htmlFiles = {};
@@ -194,7 +227,8 @@ fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(
 
 
 markdownFiles.forEach(function (file) {
-   var contents = fs.readFileSync(file).toString();
+   var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
+   //console.log(file,contents.length); 
    // Check over images... ![Image Title](foo.png)
    contents = handleImages(file, contents);
    
@@ -268,7 +302,6 @@ html+
 '</div></div></body>'+
 '</html>';*/
 
-   
    fs.writeFile(htmlFiles[file], html);
 });
 

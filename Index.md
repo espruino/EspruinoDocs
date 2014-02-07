@@ -2,8 +2,13 @@
 Index
 =====
 
+Information
+----------
+
+* APPEND_KEYWORD: info
+
 Tutorials
------
+--------
 
 * APPEND_KEYWORD: tutorials
 
@@ -22,3 +27,7 @@ Peripherals
 
 * APPEND_KEYWORD: peripherals
 
+Simple Examples
+-------------
+
+* APPEND_KEYWORD: examples

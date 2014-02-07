@@ -19,3 +19,10 @@ Tasks
 
 * APPEND_KEYWORD: tasks
 
+Simple Examples
+-------------
+
+These are programs for Espruino that contain minimal documentation:
+
+* APPEND_KEYWORD: examples
+
