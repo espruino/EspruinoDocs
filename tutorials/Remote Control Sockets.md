@@ -214,7 +214,7 @@ function pageHandler(req, res) {
 }
 
 var wlan = require("CC3000").connect();
-wlan.connect( "BTHub4-5ZN2", "2f3b5659ad", function (s) { 
+wlan.connect( "AccessPointName", "WPA2key", function (s) { 
   if (s=="dhcp") {
     console.log("Connect to http://"+wlan.getIP().ip);
     require("http").createServer(pageHandler).listen(80);
