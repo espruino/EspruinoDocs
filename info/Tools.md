@@ -39,7 +39,7 @@ Wire cutters with a simple cutting point - these are extremely useful for cuttin
 
 Just a cheap volt meter with a continuity tester will be extremely useful.
 
-### Oscilloscope
+### <a name="oscilloscope"></a>Oscilloscope
 
 This is just a luxury unless you're routinely dealing with signals, but you may find that some simple hand-held oscilloscopes are very useful. On the cheaper end of things there's:
 
@@ -47,6 +47,7 @@ This is just a luxury unless you're routinely dealing with signals, but you may 
 * [DSO Nano](http://www.seeedstudio.com/depot/dso-nano-v3-p-1358.html?cPath=63_65)
 * [DSO Quad](http://www.seeedstudio.com/depot/dso-quad-4-channel-digital-storage-oscilloscope-p-736.html?cPath=63_65)
 
+While old-style analog Oscilloscopes are useful, Storage Oscilloscopes are massively more helpful for microcontrollers as you can record a non-repetitive signal and can then keep it displayed on the screen.
 
 ## Supplies
 
