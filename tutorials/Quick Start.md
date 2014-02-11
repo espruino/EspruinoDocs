@@ -145,4 +145,11 @@ If you press the reset button on the board, Espruino will also reset. However we
 Note that if you power off or reset Espruino using the reset button, it will also lose all the code that you wrote. You can save the state of Espruino so this doesn't happen using the ```save()``` command!
 
 
-Now you've got an idea how to use Espruino, have a look at the [[Tutorials]] and [[Reference]] pages! If you have one of the Espruino Kits, you can [click here](/Espruino Kits) to see the kit contents and to get information on how to use them.
+Now you've got an idea how to use Espruino:
+
+* Have a look at the [[Tutorials]] and [[Reference]] pages
+* If you have one of the Espruino Kits, you can [click here](/Espruino Kits) to see the kit contents and to get information on how to use them
+* Check [[Code Examples]] for all kinds of devices and peripherals
+* See how to use the more advanced features of the [[Web IDE]]
+* Instantly [[Search]] all the website's documentation
+
