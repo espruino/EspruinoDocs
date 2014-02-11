@@ -15,7 +15,7 @@ Getting Started
 
 Hold down the RST button. Do the blue and red lights glow dimly? If not, there's a problem with your USB cable as power isn't getting to Espruino.
 
-Hold down BTN1, and then press and release RST while keeping BTN1 held. The Blue and Red LEDs should now light brightly for a fraction of a second, and the Blue LED should be pulsing. If not, there is some issue with USB. Try another USB cable and if that doesn't work, see the next troubleshooting headings.
+Hold down BTN1, and then press and release RST while keeping BTN1 held. The Blue and Red LEDs should now light brightly for a fraction of a second, and the Blue LED should be pulsing. If not, there is some issue with USB. Try another USB cable (it's surprising how often this is at fault) and if that doesn't work, see the next troubleshooting headings.
 
 
 ### My board doesn't appear as a USB Serial port in Windows XP / Windows 8.1
@@ -30,9 +30,25 @@ If you use many COM port devices in Windows, you may find that the COM port numb
 If not, see the first troubleshooting item above.
 
 
+### In Windows, the COM port appears in the Web IDE, but I can't connect to it
+
+This is probably because you've reset or unplugged the Espruino board while the Web IDE was connected to it. Chrome hangs on to the serial port and stops Espruino from reconnecting to it.
+
+Try unplugging Espruino and then completely close Chrome (close all windows, not just the Web IDE). However if that doesn't work, try restarting Windows.
+
+In order to stop this happening in the future, click 'Disconnect' before resetting or unplugging the board. We're hoping that a new version of Chrome due out soon will help to fix this problem.
+
+
+### In Windows, Espruino was working and now it won't connect
+
+See above.
+
+
 ### I tried to reflash my Espruino Board, and now it won't work
 
-Just try reflashing again (by holding down BTN1 when RST is released, you should always be able to get the glowing blue LED).
+If you have Windows, check that it's not one of the problems described above.
+
+Try reflashing again (by holding down BTN1 when RST is released, you should always be able to get the glowing blue LED).
 
 As Espruino itself won't work, the IDE won't know what type of board it is supposed to flash so you'll have to look up the firmware manually. Just head to [the Espruino binaries site](http://www.espruino.com/binaries/?C=M;O=D) and look for the most recent (nearest the top) file named ```espruino_1v##_espruino_1r#.bin``` where ```1r#``` is the revision number written on the back of your Espruino board. Copy the link to the file, and paste it into the Espruino Web IDE.
 
@@ -69,6 +85,7 @@ This is the Espruino Bootloader. It starts on the Espruinop Board when *BTN1* or
 
 Some devices (such as LCDs and WiFi) require their own initialisation code which Espruino can't remember. To do that initialisation at boot time, write a function called `onInit` which contains the initialisation code for your device. After typing `save()`, it will be executed at power on or reset.
 
+
 ### I typed `save()` but Espruino won't work (or stops working quickly) when powered from a computer (only a USB power supply, battery, or the computer when the Web IDE is running)
 
 This is because you're printing information to the console.
@@ -76,3 +93,8 @@ This is because you're printing information to the console.
 When you are not connected to a computer via USB, Espruino writes any console data to the Serial port. However when you are connected to a computer, Espruino writes down USB. **If no terminal application is running on your computer**, it won't accept any incoming data down USB. When Espruino fills up its output buffer, it waits for the computer to accept the data rather than throwing it away, and this is what causes your program not to work.
 
 To fix this, either remove your `console.log` and `print` statements, or explicitly set the console to be on the Serial port at startup with `function onInit() { Serial1.setConsole(); }`. However the second option will mean that you will no longer be able to program Espruino from USB unless you reset it.
+
+
+### I get 100% CPU usage in the Web IDE
+
+Sadly we know about this and it appears to be an issue with Chrome's Serial port implementation. A new version of Chrome that is due out in a month should fix this.
