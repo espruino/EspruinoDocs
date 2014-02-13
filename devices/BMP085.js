@@ -31,10 +31,10 @@ var C = {
 
 function BMP085(/*=I2C*/_i2c, _mode) {
   this.i2c = _i2c;
-  this.mode = _mode === undefined ? 3 : _mode;
+  this.oss = _mode === undefined ? 3 : _mode;
 
-  if (mode > C.BMP085_MODE_ULTRAHIGHRES || mode < 0) {
-    mode = C.BMP085_MODE_ULTRAHIGHRES;
+  if (this.oss > C.BMP085_MODE_ULTRAHIGHRES || this.oss < 0) {
+    this.oss = C.BMP085_MODE_ULTRAHIGHRES;
   }
 
   var id = this.read8(C.BMP085_REGISTER_CHIPID);
@@ -45,20 +45,6 @@ function BMP085(/*=I2C*/_i2c, _mode) {
   this.readCoefficients();
 
 }
-
-// BMP085.prototype.Coefficients = {
-//   ac1 : 408,
-//   ac2 : -72,
-//   ac3 : -14383,
-//   ac4 : 32741,
-//   ac5 : 32757,
-//   ac6 : 23153,
-//   b1  : 6190,
-//   b2  : 4,
-//   mb  : -32768,
-//   mc  : -8711,
-//   md  : 2868
-// };
 
 BMP085.prototype.C = {
   MY : 0x013,         // description
@@ -102,14 +88,14 @@ BMP085.prototype.readRawTemperature = function() {
   this.i2c.writeTo(C.BMP085_ADDRESS, [C.BMP085_REGISTER_CONTROL, C.BMP085_REGISTER_READTEMPCMD]);
   var bmp = this;
   setTimeout(function() {
-    bmp.temperature = bmp.read16(C.BMP085_REGISTER_TEMPDATA);
+    bmp.UT = bmp.read16(C.BMP085_REGISTER_TEMPDATA);
   }, 5);
 };
 
 BMP085.prototype.readRawPressure = function() {
-  this.i2c.writeTo(C.BMP085_ADDRESS, [C.BMP085_REGISTER_CONTROL, (C.BMP085_REGISTER_READPRESSURECMD + (this.mode << 6))]);
+  this.i2c.writeTo(C.BMP085_ADDRESS, [C.BMP085_REGISTER_CONTROL, (C.BMP085_REGISTER_READPRESSURECMD + (this.oss << 6))]);
   var delay;
-  switch(this.mode) {
+  switch(this.oss) {
     case C.BMP085_MODE_ULTRALOWPOWER:
       delay = 5;
       break;
@@ -128,13 +114,13 @@ BMP085.prototype.readRawPressure = function() {
     var msb = bmp.read8(C.BMP085_REGISTER_PRESSUREDATA);
     var lsb = bmp.read8(C.BMP085_REGISTER_PRESSUREDATA + 1);
     var xlsb = bmp.read8(C.BMP085_REGISTER_PRESSUREDATA + 2);
-    bmp.pressure = ((msb << 16) + (lsb << 8) + xlsb) >> (8 - bmp.mode);
+    bmp.UP = ((msb << 16) + (lsb << 8) + xlsb) >> (8 - bmp.oss);
   }, delay);
 };
 
 BMP085.prototype.getTemperature = function() {
-  var X1 = Math.round((this.temperature - this.Coefficients.ac6) * this.Coefficients.ac5 / Math.pow(2, 15));
-  var X2 = Math.round((this.Coefficients.mc * Math.pow(2, 11)) / (X1 + this.Coefficients.md));
+  var X1 = Math.round((this.UT - this.ac6) * this.ac5 / Math.pow(2, 15));
+  var X2 = Math.round((this.mc * Math.pow(2, 11)) / (X1 + this.md));
   var B5 = X1 + X2;
   var t = (B5 + 8) / Math.pow(2, 4);
   t /= 10;
@@ -144,21 +130,21 @@ BMP085.prototype.getTemperature = function() {
 
 BMP085.prototype.getPressure = function() {
   // Temperature compensation
-  var X1 = Math.round((this.temperature - this.Coefficients.ac6) * this.Coefficients.ac5 / Math.pow(2, 15));
-  var X2 = Math.round((this.Coefficients.mc * Math.pow(2, 11)) / (X1 + this.Coefficients.md));
+  var X1 = Math.round((this.UT - this.ac6) * this.ac5 / Math.pow(2, 15));
+  var X2 = Math.round((this.mc * Math.pow(2, 11)) / (X1 + this.md));
   var B5 = X1 + X2;
 
   // Pressure calculation
   var B6 = B5 - 4000;
-  X1 = (this.Coefficients.b2 * (B6 * B6 >> 12)) >> 11;
-  X2 = this.Coefficients.ac2 * B6 >> 11;
+  X1 = (this.b2 * (B6 * B6 >> 12)) >> 11;
+  X2 = this.ac2 * B6 >> 11;
   X3 = X1 + X2;
-  var B3 = (((this.Coefficients.ac1 * 4 + X3) << this.mode) + 2) >> 2;
-  X1 = this.Coefficients.ac3 * B6 >> 13;
-  X2 = (this.Coefficients.b1 * (B6 * B6 >> 12)) >> 16;
+  var B3 = (((this.ac1 * 4 + X3) << this.oss) + 2) >> 2;
+  X1 = this.ac3 * B6 >> 13;
+  X2 = (this.b1 * (B6 * B6 >> 12)) >> 16;
   X3 = ((X1 + X2) + 2) >> 2;
-  var B4 = (this.Coefficients.ac4 * (X3 + 32768)) >> 15;
-  var B7 = (this.pressure - B3) * (50000 >> this.mode);
+  var B4 = (this.ac4 * (X3 + 32768)) >> 15;
+  var B7 = (this.UP - B3) * (50000 >> this.oss);
   var p = Math.round(B7 < 0x80000000 ? (B7 << 1) / B4 : (B7 / B4) << 1);
 
   X1 = (p >> 8) * (p >> 8);
