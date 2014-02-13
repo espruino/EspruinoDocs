@@ -1,6 +1,6 @@
 /* Copyright (c) 2014 Lars Toft Jacobsen. See the file LICENSE for copying permission. */
 /*
-Quick description of my module...
+Module to talk to the Bosch BMP085 or BMP180 digital pressure sensors using I2C.
 */
 
 var C = {
@@ -31,7 +31,8 @@ var C = {
 
 function BMP085(/*=I2C*/_i2c, _mode) {
   this.i2c = _i2c;
-  this.oss = _mode === undefined ? 3 : _mode;
+  _mode = typeof _mode !== 'undefined' ? _mode : 3;
+  this.oss = _mode;
 
   if (this.oss > C.BMP085_MODE_ULTRAHIGHRES || this.oss < 0) {
     this.oss = C.BMP085_MODE_ULTRAHIGHRES;
@@ -42,22 +43,20 @@ function BMP085(/*=I2C*/_i2c, _mode) {
     console.log("Bad ID");
   }
 
+  // Calibration coefficients needs to be read
   this.readCoefficients();
-
 }
 
-BMP085.prototype.C = {
-  MY : 0x013,         // description
-  PUBLIC : 0x0541,    // description
-  CONSTANTS : 0x023   // description
-};
-
+/* Read 2 bytes from register reg
+and combine to unsigned integer */
 BMP085.prototype.read16 = function(reg) {
   this.i2c.writeTo(C.BMP085_ADDRESS, reg);
   var d = this.i2c.readFrom(C.BMP085_ADDRESS, 2);
   return (d[0] << 8) | d[1];
 };
 
+/* Read 2 bytes from register reg
+and combine to signed integer */
 BMP085.prototype.readS16 = function(reg) {
   this.i2c.writeTo(C.BMP085_ADDRESS, reg);
   var d = this.i2c.readFrom(C.BMP085_ADDRESS, 2);
@@ -65,11 +64,13 @@ BMP085.prototype.readS16 = function(reg) {
   return (i>=32767) ? i - 65536 : i;
 };
 
+/* Read single byte from register reg*/
 BMP085.prototype.read8 = function(reg) {
   this.i2c.writeTo(C.BMP085_ADDRESS, reg);
   return this.i2c.readFrom(C.BMP085_ADDRESS, 1)[0];
 };
 
+/* Read and store all coefficients stored in the sensor */
 BMP085.prototype.readCoefficients = function() {
   this.ac1 = this.readS16(C.BMP085_REGISTER_CAL_AC1);
   this.ac2 = this.readS16(C.BMP085_REGISTER_CAL_AC2);
@@ -84,17 +85,23 @@ BMP085.prototype.readCoefficients = function() {
   this.md = this.readS16(C.BMP085_REGISTER_CAL_MD);
 };
 
-BMP085.prototype.readRawTemperature = function() {
+/* Get the raw temperature value. Conversion takes approx. 4.5ms
+so we must wait 5ms before the value can be read */
+BMP085.prototype.readRawTemperature = function(convert) {
   this.i2c.writeTo(C.BMP085_ADDRESS, [C.BMP085_REGISTER_CONTROL, C.BMP085_REGISTER_READTEMPCMD]);
   var bmp = this;
   setTimeout(function() {
-    bmp.UT = bmp.read16(C.BMP085_REGISTER_TEMPDATA);
+    //bmp.UT = bmp.read16(C.BMP085_REGISTER_TEMPDATA);
+    convert(bmp.read16(C.BMP085_REGISTER_TEMPDATA));
   }, 5);
 };
 
-BMP085.prototype.readRawPressure = function() {
+/* Get the raw pressure value. Conversion time depends on oversampling
+setting. We must wait a specified amount of ms before it the value can be read */
+BMP085.prototype.readRawPressure = function(convert) {
   this.i2c.writeTo(C.BMP085_ADDRESS, [C.BMP085_REGISTER_CONTROL, (C.BMP085_REGISTER_READPRESSURECMD + (this.oss << 6))]);
   var delay;
+  var bmp = this;
   switch(this.oss) {
     case C.BMP085_MODE_ULTRALOWPOWER:
       delay = 5;
@@ -109,50 +116,63 @@ BMP085.prototype.readRawPressure = function() {
       delay = 26;
       break;
   }
-  var bmp = this;
   setTimeout(function() {
     var msb = bmp.read8(C.BMP085_REGISTER_PRESSUREDATA);
     var lsb = bmp.read8(C.BMP085_REGISTER_PRESSUREDATA + 1);
     var xlsb = bmp.read8(C.BMP085_REGISTER_PRESSUREDATA + 2);
-    bmp.UP = ((msb << 16) + (lsb << 8) + xlsb) >> (8 - bmp.oss);
+    convert(((msb << 16) + (lsb << 8) + xlsb) >> (8 - bmp.oss));
   }, delay);
 };
 
-BMP085.prototype.getTemperature = function() {
-  var X1 = Math.round((this.UT - this.ac6) * this.ac5 / Math.pow(2, 15));
-  var X2 = Math.round((this.mc * Math.pow(2, 11)) / (X1 + this.md));
-  var B5 = X1 + X2;
-  var t = (B5 + 8) / Math.pow(2, 4);
-  t /= 10;
+/* Get the converted temperature in degrees Celsius.
+The temperature is passed as parameter to the callback */
+BMP085.prototype.getTemperature = function(callback) {
+  var bmp = this;
+  this.readRawTemperature(function(UT) {
+    var X1 = Math.round((UT - bmp.ac6) * bmp.ac5 / Math.pow(2, 15));
 
-  return t;
+    var X2 = Math.round((bmp.mc * Math.pow(2, 11)) / (X1 + bmp.md));
+    var B5 = X1 + X2;
+    var t = (B5 + 8) / Math.pow(2, 4);
+    t /= 10;
+    callback(t);
+  });
 };
 
-BMP085.prototype.getPressure = function() {
-  // Temperature compensation
-  var X1 = Math.round((this.UT - this.ac6) * this.ac5 / Math.pow(2, 15));
-  var X2 = Math.round((this.mc * Math.pow(2, 11)) / (X1 + this.md));
-  var B5 = X1 + X2;
+/* Get the converted pressure and temperature in Pascal and
+degrees Celsius respectively. The calculated values are passed
+to callback wrapped in an object */
+BMP085.prototype.getPressure = function(callback) {
+  var bmp = this;
+  this.readRawTemperature(function(UT) {
+    bmp.readRawPressure(function(UP) {
+      // Temperature compensation
+      var X1 = Math.round((UT - bmp.ac6) * bmp.ac5 / Math.pow(2, 15));
+      var X2 = Math.round((bmp.mc * Math.pow(2, 11)) / (X1 + bmp.md));
+      var B5 = X1 + X2;
+      var compt = (B5 + 8) / Math.pow(2, 4);
+      compt /= 10;
 
-  // Pressure calculation
-  var B6 = B5 - 4000;
-  X1 = (this.b2 * (B6 * B6 >> 12)) >> 11;
-  X2 = this.ac2 * B6 >> 11;
-  X3 = X1 + X2;
-  var B3 = (((this.ac1 * 4 + X3) << this.oss) + 2) >> 2;
-  X1 = this.ac3 * B6 >> 13;
-  X2 = (this.b1 * (B6 * B6 >> 12)) >> 16;
-  X3 = ((X1 + X2) + 2) >> 2;
-  var B4 = (this.ac4 * (X3 + 32768)) >> 15;
-  var B7 = (this.UP - B3) * (50000 >> this.oss);
-  var p = Math.round(B7 < 0x80000000 ? (B7 << 1) / B4 : (B7 / B4) << 1);
+      // Pressure calculation
+      var B6 = B5 - 4000;
+      X1 = (bmp.b2 * (B6 * B6 >> 12)) >> 11;
+      X2 = bmp.ac2 * B6 >> 11;
+      X3 = X1 + X2;
+      var B3 = (((bmp.ac1 * 4 + X3) << bmp.oss) + 2) >> 2;
+      X1 = bmp.ac3 * B6 >> 13;
+      X2 = (bmp.b1 * (B6 * B6 >> 12)) >> 16;
+      X3 = ((X1 + X2) + 2) >> 2;
+      var B4 = (bmp.ac4 * (X3 + 32768)) >> 15;
+      var B7 = (UP - B3) * (50000 >> bmp.oss);
+      var p = Math.round(B7 < 0x80000000 ? (B7 << 1) / B4 : (B7 / B4) << 1);
 
-  X1 = (p >> 8) * (p >> 8);
-  X1 = (X1 * 3038) >> 16;
-  X2 = (-7357 * p) >> 16;
-  var compp = p + ((X1 + X2 + 3791) >> 4);
-
-  return compp;
+      X1 = (p >> 8) * (p >> 8);
+      X1 = (X1 * 3038) >> 16;
+      X2 = (-7357 * p) >> 16;
+      var compp = p + ((X1 + X2 + 3791) >> 4);
+      callback({pressure: compp, temperature: compt});
+    });
+  });
 };
 
 exports.connect = function (_i2c, _mode) {
