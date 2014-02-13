@@ -5,17 +5,16 @@ Module for the PCD8544 controller in the Nokia 5110 LCD.
 Just:
 ```
 SPI1.setup({ baud: 1000000, sck:B3, mosi:B5 });
-var g = require("PCD8544").connect(SPI1,B6,B7,B8);
-setTimeout(function() {
+var g = require("PCD8544").connect(SPI1,B6,B7,B8, function() {
   g.clear();
   g.drawString("Hello",0,0);
   g.drawLine(0,10,84,10);
   g.flip();
-}, 200);
+});
 ```  
 
  */
-exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst) {
+exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst, callback) {
   var LCD = Graphics.createArrayBuffer(84,48,1,{vertical_byte:true});
   var spi = _spi;
   var dc = _dc;
@@ -31,6 +30,7 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst)
       0x04 | 0x02, // temp control
       0x20, // fnset normal
       0x08 | 0x04], ce); // dispctl normal
+    if (callback!==undefined) callback();
   }, 100);
 
   LCD.flip = function () {
