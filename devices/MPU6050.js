@@ -142,6 +142,7 @@ MPU6050.prototype.C = {
 MPU6050.prototype.initialize = function() {
   this.setClockSource(C.CLOCK_PLL_XGYRO);
   this.setFullScaleAccelRange(C.ACCEL_FS_2);
+  this.setFullScaleGyroRange(C.GYRO_FS_250);
   this.setSleepEnabled(false);
 };
 
@@ -165,9 +166,16 @@ MPU6050.prototype.setClockSource = function(clock) {
   this.writeBits(R.PWR_MGMT_1, 0, clock);
 };
 
+/* Set full scale for accelerometer*/
 MPU6050.prototype.setFullScaleAccelRange = function(fs) {
   this.writeBits(R.ACCEL_CONFIG, 3, fs);
-  this.acc_lsb_sens = Math.pow(2, 14-fs);
+  this.acc_lsb_sens = Math.pow(2, 14-fs); // Set LSB sensitivity
+};
+
+/* Set full scale for gyro */
+MPU6050.prototype.setFullScaleGyroRange = function(fs) {
+  this.writeBits(R.GYRO_CONFIG, 3, fs);
+  this.gyro_lsb_sens = 131 / Math.pow(2, fs); // Set LSB sensitivity
 };
 
 MPU6050.prototype.setSleepEnabled = function(enable) {
@@ -177,6 +185,27 @@ MPU6050.prototype.setSleepEnabled = function(enable) {
   else {
     this.writeBit(R.PWR_MGMT_1, 6, 0);
   }
+};
+
+/* Get rotation */
+MPU6050.prototype.getRotation = function() {
+  this.i2c.writeTo(this.addr, R.GYRO_XOUT_H);
+  var rot = this.i2c.readFrom(this.addr, 6);
+  var x = (rot[0] << 8) | rot[1];
+  var y = (rot[2] << 8) | rot[3];
+  var z = (rot[4] << 8) | rot[5];
+  x = (x>=32767) ? x - 65536 : x;
+  y = (y>=32767) ? y - 65536 : y;
+  z = (z>=32767) ? z - 65536 : z;
+  return [x, y ,z];
+};
+
+MPU6050.prototype.getDegreesPerSecond = function() {
+  var rot = this.getRotation();
+  var mpu = this;
+  return rot.map(function(e) {
+    return e / mpu.gyro_lsb_sens;
+  });
 };
 
 /* Get acceleration */
@@ -192,6 +221,7 @@ MPU6050.prototype.getAcceleration = function() {
   return [x, y ,z];
 };
 
+/* Get acceleration in G's */
 MPU6050.prototype.getGravity = function() {
   var acc = this.getAcceleration();
   var mpu = this;
