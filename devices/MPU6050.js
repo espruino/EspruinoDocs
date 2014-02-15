@@ -163,6 +163,15 @@ MPU6050.prototype.writeBits = function(reg, shift, val) {
   this.i2c.writeTo(this.addr, [reg, b]);
 };
 
+/* Read 2 bytes from register reg
+and combine to signed integer */
+MPU6050.prototype.readS16 = function(reg) {
+  this.i2c.writeTo(this.addr, reg);
+  var d = this.i2c.readFrom(this.addr, 2);
+  var i = (d[0] << 8) | d[1];
+  return (i>=32767) ? i - 65536 : i;
+};
+
 /* Read 6 bytes and return 3 signed integer values */
 MPU6050.prototype.readSXYZ = function(reg) {
   this.i2c.writeTo(this.addr, reg);
@@ -228,6 +237,11 @@ MPU6050.prototype.getGravity = function() {
   return acc.map(function(e) {
     return e / mpu.acc_lsb_sens;
   });
+};
+
+/* Get temperature in degrees C from built-in sensor */
+MPU.prototype.getTemperature = function() {
+  return this.readS16(R.TEMP_OUT_H) / 340 + 36.53;
 };
 
 exports.connect = function (_i2c) {
