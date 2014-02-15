@@ -139,6 +139,7 @@ function MPU6050(_i2c) {
 MPU6050.prototype.C = {
 };
 
+/* Initialize the chip */
 MPU6050.prototype.initialize = function() {
   this.setClockSource(C.CLOCK_PLL_XGYRO);
   this.setFullScaleAccelRange(C.ACCEL_FS_2);
@@ -162,6 +163,20 @@ MPU6050.prototype.writeBits = function(reg, shift, val) {
   this.i2c.writeTo(this.addr, [reg, b]);
 };
 
+/* Read 6 bytes and return 3 signed integer values */
+MPU6050.prototype.readSXYZ = function(reg) {
+  this.i2c.writeTo(this.addr, reg);
+  var bytes = this.i2c.readFrom(this.addr, 6);
+  var x = (bytes[0] << 8) | bytes[1];
+  var y = (bytes[2] << 8) | bytes[3];
+  var z = (bytes[4] << 8) | bytes[5];
+  x = (x>=32767) ? x - 65536 : x;
+  y = (y>=32767) ? y - 65536 : y;
+  z = (z>=32767) ? z - 65536 : z;
+  return [x, y ,z];
+};
+
+/* Set the clock source */
 MPU6050.prototype.setClockSource = function(clock) {
   this.writeBits(R.PWR_MGMT_1, 0, clock);
 };
@@ -187,19 +202,12 @@ MPU6050.prototype.setSleepEnabled = function(enable) {
   }
 };
 
-/* Get rotation */
+/* Get raw rotation */
 MPU6050.prototype.getRotation = function() {
-  this.i2c.writeTo(this.addr, R.GYRO_XOUT_H);
-  var rot = this.i2c.readFrom(this.addr, 6);
-  var x = (rot[0] << 8) | rot[1];
-  var y = (rot[2] << 8) | rot[3];
-  var z = (rot[4] << 8) | rot[5];
-  x = (x>=32767) ? x - 65536 : x;
-  y = (y>=32767) ? y - 65536 : y;
-  z = (z>=32767) ? z - 65536 : z;
-  return [x, y ,z];
+  return this.readSXYZ(R.GYRO_XOUT_H);
 };
 
+/* Get rotation measuren in degrees/s */
 MPU6050.prototype.getDegreesPerSecond = function() {
   var rot = this.getRotation();
   var mpu = this;
@@ -208,17 +216,9 @@ MPU6050.prototype.getDegreesPerSecond = function() {
   });
 };
 
-/* Get acceleration */
+/* Get raw acceleration */
 MPU6050.prototype.getAcceleration = function() {
-  this.i2c.writeTo(this.addr, R.ACCEL_XOUT_H);
-  var acc = this.i2c.readFrom(this.addr, 6);
-  var x = (acc[0] << 8) | acc[1];
-  var y = (acc[2] << 8) | acc[3];
-  var z = (acc[4] << 8) | acc[5];
-  x = (x>=32767) ? x - 65536 : x;
-  y = (y>=32767) ? y - 65536 : y;
-  z = (z>=32767) ? z - 65536 : z;
-  return [x, y ,z];
+  return this.readSXYZ(R.ACCEL_XOUT_H);
 };
 
 /* Get acceleration in G's */
