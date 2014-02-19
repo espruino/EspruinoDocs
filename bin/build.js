@@ -291,16 +291,17 @@ markdownFiles.forEach(function (file) {
    appendMatching(/APPEND_KEYWORD: (.*)/ , "APPEND_KEYWORD", fileInfo.keywords, "");
    appendMatching(/APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, "No tutorials use this yet.");
 
+   contentLines.splice(0,1); // remove first line (copyright)
+
+   contents = contentLines.join("\n");
+
    // nasty hack to get around regexes above when trying to quote example files
    contents = contents.replace(/(.*[^`]KEYWORDS)_(: .*)/g, "$1$2");
    contents = contents.replace(/(.*[^`_]USES)_(: .*)/g, "$1$2");
    contents = contents.replace(/(.*APPEND_KEYWORD)_(: .*)/g, "$1$2");
    contents = contents.replace(/(.*APPEND_USES)_(: .*)/g, "$1$2");
-
    
-   contentLines.splice(0,1); // remove first line (copyright)
-   
-   html = marked(contentLines.join("\n")).replace(/lang-JavaScript/g, 'sh_javascript');
+   html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
    github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+file;
    html = '<div style="min-height:700px;">' + html + '</div>'+
           '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues/new?title='+file+'">let us know</a>.</p>';

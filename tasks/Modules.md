@@ -16,12 +16,12 @@ If you're using the Espruino Web IDE, simply write ```require("modulename")``` o
 Stand-alone Espruino
 ------------------
 
-If you have an Espruino with an SD card (but you're not using the Web IDE), you can copy the modules you need into a directory called 'node_modules' on the SD card. Now, whenever you write ``` require('modulename') ``` the module will be used.
+If you have an Espruino with an SD card (but you're not using the Web IDE), you can copy the modules you need into a directory called 'node_modules' on the SD card. Now, whenever you write ``` require("modulename") ``` the module will be used.
 
 WiFi-enabled Espruino
 ------------------
 
-**We're working on this - but soon:** If you have a WiFi-enabled Espruino and it is connected to the internet, ```writing require('mymodule')``` will cause it to look on the internet for the module with the name you have given.
+**We're working on this - but soon:** If you have a WiFi-enabled Espruino and it is connected to the internet, writing ```require("mymodule")``` will cause it to look on the internet for the module with the name you have given.
 
 Existing Modules
 --------------
