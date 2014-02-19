@@ -130,7 +130,6 @@ BMP085.prototype.getTemperature = function(callback) {
   var bmp = this;
   this.readRawTemperature(function(UT) {
     var X1 = Math.round((UT - bmp.ac6) * bmp.ac5 / Math.pow(2, 15));
-
     var X2 = Math.round((bmp.mc * Math.pow(2, 11)) / (X1 + bmp.md));
     var B5 = X1 + X2;
     var t = (B5 + 8) / Math.pow(2, 4);
@@ -173,6 +172,18 @@ BMP085.prototype.getPressure = function(callback) {
       callback({pressure: compp, temperature: compt});
     });
   });
+};
+
+/* Returns the absolute altitude from current atmospheric
+pressure and sea level pressure. */
+BMP085.prototype.getAltitude = function(pressure, sealevel) {
+  return 44330 * (1 - Math.pow(pressure/sealevel, 1/5.255));
+};
+
+/* Returns the sea level pressure from current atmospheric
+pressure and altitude. */
+BMP085.prototype.getSeaLevel = function(pressure, altitude) {
+  return pressure / Math.pow(1-(altitude/44330), 5.255);
 };
 
 exports.connect = function (_i2c, _mode) {
