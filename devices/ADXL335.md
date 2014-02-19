@@ -5,7 +5,7 @@ ADXL335 Accelerometer
 * KEYWORDS: Module,ADXL335,Acceleration,Accelerometer,Analog,Sensor
 
 Simple wrapper module for the cheap and readily available analog ADXL335 accelerometer.
-Use the [ADXL335](/modules/ADXL335.js) ([About Modules](/Modules)) module for it.
+Use the [[ADXL335.js]] module for it.
 
 You can wire this up as follows:
 
