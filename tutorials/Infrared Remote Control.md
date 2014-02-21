@@ -143,7 +143,7 @@ Making it do something
 
 Now it's pretty easy to make Espruino do something when it gets a code. As an example, I've got an old Amplifier that I use with speakers connected to the TV. It's got no remote control though so it's a real pain to get up and change the volume - what if that could be done automatically?
 
-Get a model aircraft [[Servo Motor]] and connect it to pin B13 (how to do this is in the previous link). Then you can use the following code:
+Get a model aircraft (Servo Motor)[/Servo Motors] and connect it to pin B13 (how to do this is in the previous link). Then you can use the following code:
 
 
 ```
@@ -168,6 +168,6 @@ function handleCode() {
 }
 ```
 
-And now, all you have to do is make the Servo motor turn your Amp's volume control and you can remote-control it!
+And now, all you have to do is make the servo motor turn your Amp's volume control and you can remote-control it!
 
 

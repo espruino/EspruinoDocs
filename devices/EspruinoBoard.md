@@ -93,7 +93,7 @@ If you wish to buy the battery connector, you can do it from Farnell ([pins](htt
 
 ### Servo Motors
 
-See the [[Pin Strip]] page for ideas on how to connect servos, and the [[Servo Motor]] page on how to control them.
+See the [[Pin Strip]] page for ideas on how to connect servos, and the [[Servo Motors]] page on how to control them.
 
 ### Motor Drivers
 To drive motors there are two good options - both of which solder on to the prototype area (which is designed for SOIC-style chips). The surface mount versions of these will require some soldering skills, so if you only need to turn motors on and off (and not drive them at different speeds) then a [Relay Module](/Relays) might be easier.
