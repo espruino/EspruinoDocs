@@ -240,7 +240,7 @@ MPU6050.prototype.getGravity = function() {
 };
 
 /* Get temperature in degrees C from built-in sensor */
-MPU.prototype.getTemperature = function() {
+MPU6050.prototype.getTemperature = function() {
   return this.readS16(R.TEMP_OUT_H) / 340 + 36.53;
 };
 
