@@ -6,9 +6,9 @@ Analog IO
 
 Espruino contains both Analog Inputs ([[ADC]]) and Analog Outputs ([[DAC]]).
 
-You can also create 'fake' Analog Outputs with [[PWM]]
+You can also create 'fake' Analog Outputs with [[PWM]], you can also record and play back [[Waveform]]s.
 
-Using using Analog IO
+Using Analog IO
 --------------------
 
 * APPEND_KEYWORD: Analog

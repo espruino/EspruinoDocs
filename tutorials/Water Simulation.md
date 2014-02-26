@@ -36,9 +36,9 @@ Just copy and paste this into the right-hand window, then click the ```Send to E
 // we leave space at the beginning and end for stationary points, which don't need servos
 var servos = [undefined,B13,B14,B15,C4,C5,C6,undefined];
 // String position at each point
-var pos = new Float32Array(7);
+var pos = new Float32Array(servos.length);
 // Velocity at each point
-var velocity = new Float32Array(7);
+var velocity = new Float32Array(servos.length);
 
 // This is called quite often to do each step
 // of the simulation
@@ -47,7 +47,7 @@ function step() {
   // Change the end point's position depending on the push button
   pos[0] = digitalRead(BTN) ? 0.5 : 0;
   // For each point...
-  for (i=0;i<servos.length-1;i++) {
+  for (i=1;i<servos.length-1;i++) {
     // The acceleration is dependent on the distance between this point and its neighbors
     var accel = ((pos[i-1]+pos[i+1])/2) - pos[i];
     // Work out the new velocity (there's a bit of friction, and a bit of acceleration)
