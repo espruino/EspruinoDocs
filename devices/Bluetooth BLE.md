@@ -17,6 +17,8 @@ Wiring Up
 
 To use it, just solder the same pins as you used to do for the HC-05.
 
+![HM-10](HM-10.jpg)
+
 However, there's one exception: This board doesn't use pin 34 as key pin, but pin 23. In addition pin 24 gives information whether it is working/connected. For the beginning you might want to connect these as well as the configuration is more complicated than for the HC-05.
 
 In order to use pin 23, connect this pin via a switch to ground (defaul position of the switch is open). Also connect this pin via a resistor of 1k to 3.3V.
@@ -38,6 +40,6 @@ To test if the module works fine just call
     Serial1.print("AT")
     ```
 
-Note: it is important that you use print() and not println(). Also don't add anything like \n or \r as it will not work then.
+**Note:** it is important that you use print() and not println(). Also don't add anything like \n or \r as it will not work then.
 
 With the slave behaviour it should be able to connect to Bluetooth 4.0 devices. However, despite the fact that the bluetooth specification is basically downward compatible, the module does not support the bluetooth 2.1 (or lower) specification. So for example build-in bluetooth devices or older dongles (without dedicated drivers) might not work on operating systems like Windows 7, since Microsoft didn't backported the Bluetooth 4.0 stack. Also note that it is supported from iPhone 4s, so later modules won't work either.
