@@ -34,99 +34,164 @@ nrf.sendCommand("LED2.set()", function(r) { print("=="+r); });
 ```
 
  */
+var C = {
+  // Registers
+  CONFIG      : 0x00,
+  EN_AA       : 0x01,
+  EN_RXADDR   : 0x02,
+  SETUP_AW    : 0x03,
+  SETUP_RETR  : 0x04,
+  RF_CH       : 0x05,
+  RF_SETUP    : 0x06,
+  STATUS      : 0x07,
+  OBSERVE_TX  : 0x08,
+  CD          : 0x09,
+  RX_ADDR_P0  : 0x0A,
+  RX_ADDR_P1  : 0x0B,
+  RX_ADDR_P2  : 0x0C,
+  RX_ADDR_P3  : 0x0D,
+  RX_ADDR_P4  : 0x0E,
+  RX_ADDR_P5  : 0x0F,
+  TX_ADDR     : 0x10,
+  RX_PW_P0    : 0x11,
+  RX_PW_P1    : 0x12,
+  RX_PW_P2    : 0x13,
+  RX_PW_P3    : 0x14,
+  RX_PW_P4    : 0x15,
+  RX_PW_P5    : 0x16,
+  FIFO_STATUS : 0x17,
+
+  // Bits
+  MASK_RX_DR  : 1<<6, // CONFIG
+  MASK_TX_DS  : 1<<5,
+  MASK_MAX_RT : 1<<4,
+  EN_CRC      : 1<<3,
+  CRCO        : 1<<2,
+  PWR_UP      : 1<<1,
+  PRIM_RX     : 1<<0,
+  ENAA_P5     : 1<<5, // EN_AA
+  ENAA_P4     : 1<<4,
+  ENAA_P3     : 1<<3,
+  ENAA_P2     : 1<<2,
+  ENAA_P1     : 1<<1,
+  ENAA_P0     : 1<<0,
+  ERX_P5      : 1<<5, // EN_RXADDR
+  ERX_P4      : 1<<4,
+  ERX_P3      : 1<<3,
+  ERX_P2      : 1<<2,
+  ERX_P1      : 1<<1,
+  ERX_P0      : 1<<0,
+  AW          : 1<<0, // SETUP_AW
+  ARD         : 1<<4, // SETUP_RETR
+  ARC         : 1<<0,
+  PLL_LOCK    : 1<<4, // RF_SETUP
+  RF_DR       : 1<<3,
+  RF_PWR      : 1<<1,
+  RX_DR       : 1<<6, // STATUS
+  TX_DS       : 1<<5,
+  MAX_RT      : 1<<4,
+  RX_P_NO     : 1<<1,
+  RX_P_NO_FIFO_EMPTY : 7<<1,
+  TX_FULL     : 1<<0,
+  PLOS_CNT    : 1<<4, // OBSERVE_TX
+  ARC_CNT     : 1<<0,
+  TX_REUSE    : 1<<6, // FIFO_STATUS
+  FIFO_FULL   : 1<<5,
+  TX_EMPTY    : 1<<4,
+  RX_FULL     : 1<<1,
+  RX_EMPTY    : 1<<0,
+
+  // Instructions
+  R_REGISTER    : 0x00,
+  W_REGISTER    : 0x20,
+  REGISTER_MASK : 0x1F,
+  R_RX_PAYLOAD  : 0x61,
+  W_TX_PAYLOAD  : 0xA0,
+  FLUSH_TX      : 0xE1,
+  FLUSH_RX      : 0xE2,
+  REUSE_TX_PL   : 0xE3,
+  NOP           : 0xFF
+};
+
+var BASE_CONFIG = C.EN_CRC;
+
 function NRF(_spi, _csn, _ce, _payload) {
   this.CSN = _csn;
   this.CE = _ce;
   this.PAYLOAD = _payload ? _payload : 16;
-  this.BASE_CONFIG = 8; //EN_CRC
   this.cmd = ""; // for receiving commands
   this.spi = _spi;
   this.callbacks = []; // array of callbacks
 }
-NRF.prototype.C = {
-  CONFIG      :0x00,
-  STATUS      :0x07,
-  CD          :0x09,
-  RX_ADDR_P0  :0x0A,
-  RX_ADDR_P1  :0x0B,
-  TX_ADDR     :0x10,
-  RX_PW_P0    :0x11,
-  RX_PW_P1    :0x12,
-  R_REGISTER:0x00,
-  W_REGISTER:0x20,
-  R_RX_PAYLOAD:0x61,
-  W_TX_PAYLOAD:0xA0,
-  FLUSH_TX:0xE1,
-  FLUSH_RX:0xE2
-};
+
 NRF.prototype.init = function(rxAddr, txAddr) {
   digitalWrite(this.CE,0);
   digitalWrite(this.CSN,1);
   this.setRXAddr(rxAddr);
   this.setTXAddr(txAddr);
-  this.setReg(this.C.RX_PW_P0, this.PAYLOAD);
-  this.setReg(this.C.RX_PW_P1, this.PAYLOAD);
-  this.setReg(this.C.CONFIG, this.BASE_CONFIG | 2/*PWR_UP*/ | 1/*PRIM_RX*/); // RX mode
+  this.setReg(C.RX_PW_P0, this.PAYLOAD);
+  this.setReg(C.RX_PW_P1, this.PAYLOAD);
+  this.setReg(C.CONFIG, BASE_CONFIG | C.PWR_UP | C.PRIM_RX); // RX mode
   digitalWrite(this.CE,1); // set active
 };
 NRF.prototype.setReg = function(reg, value) {
-  this.spi.send([this.C.W_REGISTER | reg, value], this.CSN);
+  this.spi.send([C.W_REGISTER | reg, value], this.CSN);
 };
 NRF.prototype.setAddr = function(reg, value /* 5 byte array*/) {
   value = value.clone();
-  value.splice(0,0,this.C.W_REGISTER | reg);
+  value.splice(0,0,C.W_REGISTER | reg);
   this.spi.send(value, this.CSN);
 };
 NRF.prototype.setRXAddr = function(adr /* 5 byte array*/) {
-  this.setAddr(this.C.RX_ADDR_P1,adr);
+  this.setAddr(C.RX_ADDR_P1,adr);
 };
 NRF.prototype.setTXAddr = function(adr /* 5 byte array*/) {
-  this.setAddr(this.C.RX_ADDR_P0,adr);
-  this.setAddr(this.C.TX_ADDR,adr);
+  this.setAddr(C.RX_ADDR_P0,adr);
+  this.setAddr(C.TX_ADDR,adr);
 };
 NRF.prototype.getReg = function(reg) {
-  return this.spi.send([this.C.R_REGISTER | reg, 0], this.CSN)[1];
+  return this.spi.send([C.R_REGISTER | reg, 0], this.CSN)[1];
 };
 NRF.prototype.getAddr = function(reg) {
-  var data = this.spi.send([this.C.R_REGISTER | reg, 0,0,0,0,0], this.CSN);
+  var data = this.spi.send([C.R_REGISTER | reg, 0,0,0,0,0], this.CSN);
   data.splice(0,1); // remove first
   return data;
 };
 NRF.prototype.getStatus = function(reg) {
-  return this.getReg(this.C.STATUS);
+  return this.getReg(C.STATUS);
 };
 NRF.prototype.dataReady = function() {
-  return (this.getReg(this.C.STATUS)&14/*RX_P_NO*/)!=14; // next payload
+  return (this.getReg(C.STATUS)&C.RX_P_NO_FIFO_EMPTY)!=C.RX_P_NO_FIFO_EMPTY; // next payload
 };
 NRF.prototype.getData = function() {
-  var data = [this.C.R_RX_PAYLOAD];
+  var data = [C.R_RX_PAYLOAD];
   for (var i=0;i<this.PAYLOAD;i++) data.push(0);
   data = this.spi.send(data, this.CSN); // RX_DR bit
   data.splice(0,1); // remove first
-  this.setReg(this.C.STATUS, 64/*RX_DR*/); // clear rx flag
+  this.setReg(C.STATUS, C.RX_DR); // clear rx flag
   return data;
 };
 NRF.prototype.send = function(data/* array of length PAYLOAD */) {
-  this.setReg(this.C.STATUS, 16/*MAX_RT*/|32/*TX_DS*/); // clear flags
+  this.setReg(C.STATUS, C.MAX_RT | C.TX_DS); // clear flags
   digitalWrite(this.CE,0); // disable
-  this.setReg(this.C.CONFIG, this.BASE_CONFIG | 2/*PWR_UP*/ ); // Set TX mode
-  this.spi.send(this.C.FLUSH_TX, this.CSN);
+  this.setReg(C.CONFIG, BASE_CONFIG | C.PWR_UP ); // Set TX mode
+  this.spi.send(C.FLUSH_TX, this.CSN);
   data = data.clone();
-  data.splice(0,0,this.C.W_TX_PAYLOAD);
+  data.splice(0,0,C.W_TX_PAYLOAD);
   this.spi.send(data, this.CSN);
   digitalWrite(this.CE,1); // enable
   var n = 1000;
-  while ((n--) && !(this.getReg(this.C.STATUS)&(16/*MAX_RT*/|32/*TX_DS*/))); // waiting
+  while ((n--) && !(this.getReg(C.STATUS)&(C.MAX_RT|C.TX_DS))) {}; // waiting
   if (n<=0) print("TX timeout");
   var success = true;
-  if (this.getReg(this.C.STATUS)&16/*MAX_RT*/) {
-    print("TX not received "+this.getReg(this.C.STATUS));
+  if (this.getReg(C.STATUS) & C.MAX_RT) {
+    print("TX not received "+this.getReg(C.STATUS));
     success = false;
   }
   digitalWrite(this.CE,0); // disable
-  this.setReg(this.C.CONFIG, this.BASE_CONFIG | 2/*PWR_UP*/ | 1/*PRIM_RX*/); // RX mode
+  this.setReg(C.CONFIG, BASE_CONFIG | C.PWR_UP | C.PRIM_RX ); // RX mode
   digitalWrite(this.CE,1); // enable
-  this.setReg(this.C.STATUS, 16/*MAX_RT*/|32/*TX_DS*/); // clear flags
+  this.setReg(C.STATUS, C.MAX_RT | C.TX_DS); // clear flags
   return success;
 };
 
@@ -169,7 +234,7 @@ NRF.prototype.sendString = function(cmd) {
     var data = [];
     for (var n=0;n<this.PAYLOAD;n++) data[n] = Integer.valueOf(cmd[i+n]);
     var tries = 3;
-    while ((tries-- > 0) && !this.send(data));
+    while ((tries-- > 0) && !this.send(data)) {};
   }
 };
 NRF.prototype.sendCommand = function(cmd, callback) {
