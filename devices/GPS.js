@@ -31,8 +31,9 @@ exports.connect = function(serial, callback) {
   var gpsLine = "";
   serial.onData(function(d) {
     if (d.data=="\n") {
-      handleGPSLine(gpsLine, callback);
+      var line = gpsLine;
       gpsLine="";
+      handleGPSLine(line, callback);      
     } else gpsLine+=d.data;
   });
 }

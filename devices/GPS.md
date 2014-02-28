@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-CC3000 WiFi Module
-================
+GPS Module
+=========
 
 * KEYWORDS: GPS,Global Positioning System,Location,NEO6MV2,Ublox,NMEA
 
