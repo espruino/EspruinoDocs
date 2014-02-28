@@ -16,9 +16,12 @@ ow.write(42);
 var result = ow.read() 
 ```
 
+**Note:** OneWire devices need a 4.7kOhm pullup resistor on the data line in order to work correctly.
+
 For examples of use, look in the source code for libraries that use OneWire...
 
  OneWire
 ---------------
 
 * APPEND_KEYWORD: OneWire
+
