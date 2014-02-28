@@ -35,20 +35,18 @@ for module in `ls devices/*.js`; do
     echo "Module $BNAME hasn't changed, leaving"
   else
     echo "Module $BNAME is different or doesn't exist"  
+
+    rm -f $MODULEDIR/$MINJS
     cp devices/$BNAME.js $MODULEDIR/$BNAME.js
-    echo Minifying $MODULEDIR/$module to $MINJS  
-    # Minify, and convert binary to a proper number
-    sed "s/0b\([01][01]*\)/parseInt(\"\1\",2)/g" $module | curl -s \
-      -d compilation_level=SIMPLE_OPTIMIZATIONS \
-      -d output_format=text \
-      -d output_info=compiled_code \
-      --data-urlencode "js_code@/dev/fd/0" \
-     http://closure-compiler.appspot.com/compile > $MODULEDIR/$MINJS
-  
+
+    echo min $MODULEDIR/$module -> $MINJS  
+    node bin/minify.js $MODULEDIR/$BNAME.js $MODULEDIR/$MINJS 
+ 
      if [[ -s $MODULEDIR/$MINJS ]] ; then 
        echo "$MODULEDIR/$MINJS compile successful"
      else
-       echo "$MODULEDIR/$MINJS compile FAILED."
+       rm $MODULEDIR/$BNAME.js
+       echo "devices/$BNAME.js compile FAILED."
        exit 1
      fi 
   fi
