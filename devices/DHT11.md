@@ -1,8 +1,8 @@
-  <!--- Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. -->
-  DHT11 Temperature and RH Sensor
-  =====================
+<!--- Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. -->
+DHT11 Temperature and RH Sensor
+===========================
 
-  * KEYWORDS: Module,DHT11,temperature,humidity
+* KEYWORDS: Module,DHT11,temperature,humidity
 
 This module interfaces with the DHT11, a very cheap temperature and relative humidity sensor. 
 
@@ -14,8 +14,10 @@ If it fails 20 times in a row, the callback will be called with {"temp":-1, "rh"
 It is recommended that you do your own sanity-check on the data returned.
 
 
+Wiring
+------
 
-Wiring - from left to right when part is viewed from the front (the side with the ventilation holes) with pins pointing down. (The DHT11 has no pin markings)
+From left to right when part is viewed from the front (the side with the ventilation holes) with pins pointing down. (The DHT11 has no pin markings)
 
   | Device Pin | Espruino |
   | ---------- | -------- |
@@ -27,12 +29,28 @@ Wiring - from left to right when part is viewed from the front (the side with th
 *There are reports of DHT11s on the market where pins 3 and 4 are reversed.
 
 
-Usage:
+Usage
+-----
 
-call require("DHT11").connect(pin) to get a DHT11 object. To read the sensor, the read method is called with a single argument, the function that is called when the read is complete. This function is called with an object containing two properties, temp and rh. Temperature is in C, RH is in %. 
+Call require("DHT11").connect(pin) to get a DHT11 object. To read the sensor, the read method is called with a single argument, the function that is called when the read is complete. This function is called with an object containing two properties, temp and rh. Temperature is in C, RH is in %. 
 
 For example:
+
 ```
-    var dht = require("DHT11").connect(C11);
-    dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
+var dht = require("DHT11").connect(C11);
+dht.read(function (a) {
+  console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());
+});
 ```
+
+
+Using 
+-----
+
+* APPEND_USES: DHT11
+
+
+Buying
+------
+
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=DHT11)

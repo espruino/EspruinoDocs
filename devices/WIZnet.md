@@ -77,4 +77,7 @@ Using
 Buying
 -----
 
-You can buy this module [direct from WIZnet](http://shop.wiznet.eu/w5500-89.html)
+You can buy this module:
+
+* from [WIZnet EU](http://shop.wiznet.eu/w5500-89.html) 
+* from [WIZnet US](http://www.shopwiznet.com/wiz550io)
