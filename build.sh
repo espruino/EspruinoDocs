@@ -39,7 +39,7 @@ for module in `ls devices/*.js`; do
     rm -f $MODULEDIR/$MINJS
     cp devices/$BNAME.js $MODULEDIR/$BNAME.js
 
-    echo min $MODULEDIR/$module -> $MINJS  
+    echo min $MODULEDIR/$module to $MINJS  
     node bin/minify.js $MODULEDIR/$BNAME.js $MODULEDIR/$MINJS 
  
      if [[ -s $MODULEDIR/$MINJS ]] ; then 
