@@ -16,7 +16,7 @@ In order to test this, a single LED (one color) would be enough, but you probabl
 
 As transistor you can use any power NPN or N-Channel MOSFET. However, for this example we have chosen the STP16NF06, which is quite inexpensive but yet powerful enough to drive dozens of LEDs (up to 16A!). 
 
-On the board you can either use the true analogue pins A0..A7, B0..B1, C0..C3 (see [[ADC]]) or any pin supporting [[PWM]] output (which is nearly every pin). In this tutorial we are using the purely PWM pins C7, C8 & C9.
+On the board you can either use the true analogue output pins A4, A5 (see [[DAC]]) or any pin supporting [[PWM]] output (which is nearly every pin). In this tutorial we are using the purely PWM pins C7, C8 & C9.
 
 ![Simple LED Wiring](SimpleLedWiring.jpg)
 
