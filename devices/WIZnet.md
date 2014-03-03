@@ -8,9 +8,9 @@ WIZnet WIZ550io/W5500 Ethernet module
 
 The [WIZnet WIZ550io module](http://wizwiki.net/wiki/doku.php?id=products:wiz550io:allpages) contains a W5500 chip - it implements TCP/IP on-chip, so you just plug an Ethernet cable in one end, and SPI into the other.
 
-Support is provided in Espruino, but currently **you will have to use a special build of Espruino designed for it**. These should be available in [recent Espruino Git builds](www.espruino.com/binaries/git).
+Support is provided in Espruino, but currently **you will have to use a special build of Espruino designed for it**. These should be available in [recent Espruino Git builds](http://www.espruino.com/binaries/git).
 
-To build yourself, follow [the instructions here](www.github.com/espruino/Espruino) and build with:
+To build yourself, follow [the instructions here](http://www.github.com/espruino/Espruino) and build with:
 
 ```
 WIZNET=1 RELEASE=1 ESPRUINO_1V3=1 make

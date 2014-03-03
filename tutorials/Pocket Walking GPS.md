@@ -87,14 +87,10 @@ OsGridRef.latLongToOsGrid = function(point) {
   return new OsGridRef(E, N);
 };
 
-// ----------------------------------- A few wrapper functions to make this work...
+// ----------------------------------- One wrapper function needed to make it work...
 Number.prototype.toRad = function() { 
   return this*Math.PI/180;
 }; 
-Double.prototype.toRad = function() { 
-  return this*Math.PI/180;
-}; // need this because of a bug in 1v55
-Math.tan = function (s) { return Math.sin(s)/Math.cos(s); }; // need this because of a bug in 1v55
 
 
 SPI3.setup({ baud: 1000000, sck:B3, mosi:B5 });
