@@ -10,6 +10,8 @@ Introduction
 
 Wouldn't it be cool if you could control Espruino from an Infrared remote control? You can!
 
+**Note:** There's now [an infrared receiver module](IRReceiver) that you can use to simplify responding to infrared signals.
+
 You'll Need
 ----------
 
@@ -169,5 +171,4 @@ function handleCode() {
 ```
 
 And now, all you have to do is make the servo motor turn your Amp's volume control and you can remote-control it!
-
 
