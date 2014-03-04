@@ -40,7 +40,7 @@ To find the code, just put a print statement in the callback that prints the cod
 If nothing is being reported, it may be that your remote control transmits by varying the pulse length rather than the gap between pulses (small remote control helicopters do this). If this is the case, specify `{usePulseLength:true}` as a third argument:
 
 ```
-require("IRReceiver").cconnect(A0, function(code) {
+require("IRReceiver").connect(A0, function(code) {
   print(code.toString(2));
 }, {usePulseLength:true});
 ```
