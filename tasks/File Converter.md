@@ -15,7 +15,18 @@ It's useful if:
 To use it just click 'Choose File'. Once the file is chosen, the string representation of it will be output in the text area below.
 
 <input type="file" id="fileLoader"/>
-<textarea id="result" style="width:650px;height:500px;"></textarea>
+
+Quoted String
+------------
+
+<p id="sizeQuoted">...</p>
+<textarea id="resultQuoted" style="width:650px;height:300px;"></textarea>
+
+Base64 encoded
+-------------
+
+<p id="sizeBase64">...</p>
+<textarea id="resultBase64" style="width:650px;height:300px;"></textarea>
 
 <script>
   $("#fileLoader").change(function(event) {
@@ -24,18 +35,32 @@ To use it just click 'Choose File'. Once the file is chosen, the string represen
       reader.onload = function(event) {
         var bytes = new Uint8Array(event.target.result);
         var str = "";
-        for (var i=0;i<bytes.length;i++) { 
-          var ch = bytes[i];
-          if (ch>=32 && ch<127 && ch!=34/*quote*/)
-            str += String.fromCharCode(ch);
-          else {
-            if (ch==0 && i+1<bytes.length && bytes[i+1]<32)
-              str += "\\0"; // quick compactness hack
-            else
-              str += "\\x"+(ch+256).toString(16).substr(-2); // hex
+        if (bytes.length>(20*1024)) {
+          str = "File too long - must be less than 20kB";
+        } else {        
+          for (var i=0;i<bytes.length;i++) { 
+            var ch = bytes[i];
+            if (ch==34) str += "\\\"";
+            else if (ch==9) str += "\\t";
+            else if (ch==10) str += "\\n";
+            else if (ch==13) str += "\\r";
+            else if (ch==92) str += "\\\\";
+            else if (ch>=32 && ch<127)
+              str += String.fromCharCode(ch);
+            else { // hex code
+              if (ch<64 && (i+1>=bytes.length || (bytes[i+1]<48/*0*/ || bytes[i+1]>55/*7*/))) 
+                str += "\\"+ch.toString(8/*octal*/); // quick compactness hack
+              else
+                str += "\\x"+(ch+256).toString(16).substr(-2); // hex
+            }
           }
         }
-        $("#result").val('"'+str+'"');
+        var qStr = '"'+str+'"';
+        var b64Str = 'atob("'+btoa(String.fromCharCode.apply(null, bytes))+'")';
+        $("#sizeQuoted").html(qStr.length+" Characters");
+        $("#sizeBase64").html(b64Str.length+" Characters");
+        $("#resultQuoted").val(qStr);
+        $("#resultBase64").val(b64Str);
       };
       reader.readAsArrayBuffer(event.target.files[0]);
     });
