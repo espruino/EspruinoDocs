@@ -6,6 +6,8 @@ Usage (any GPIO pin can be used):
 var dht = require("DHT11").connect(C11);
 dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
 
+3/4/2014 - Code cleanup based on DHT22 work. 
+
   */
 
 exports.connect = function(pin) {
@@ -16,15 +18,15 @@ function DHT11(pin) {
   this.pin = pin;
   this.readfails=0;
 }
-DHT11.prototype.read = function (a) {
+DHT11.prototype.read = read = function (a) {
     this.onreadf=a;
     this.i=0;
-    this.out=0;
-    this.badbits=0;
-    digitalWrite(this.pin,0);
+    this.out=1;
+    pinMode(this.pin);
     var dht = this;
-    setTimeout(function() {pinMode(dht.pin,'input_pullup');dht.watch=setWatch(function(t) {dht.onwatch(t);},dht.pin,{repeat:true});},0.07);
-    setTimeout(function() {dht.onread(dht.endRead());},20);
+    setTimeout(function() {digitalWrite(dht.pin,0);},2)
+    setTimeout(function() {pinMode(dht.pin,'input_pullup');dht.watch=setWatch(function(t) {dht.onwatch(t);},dht.pin,{repeat:true});},5);
+    setTimeout(function() {dht.onread(dht.endRead());},50);
 };
 DHT11.prototype.onread= function(d) {
     var dht=this;
@@ -45,26 +47,18 @@ DHT11.prototype.onwatch = function(t) {
         this.pstart=t.time;
     } else {
         var tt=t.time-this.pstart;
-        if (tt < 0.000044) {
-            this.badbits = 1;
-        }
-        if (this.badbits) {
-            this.out=(this.out<<1) | ((tt > 0.000044) && (tt < 0.0001));
-        }
+        this.out=(this.out<<1) | ((tt > 0.000044) && (tt < 0.0001));
         this.i++;
     }
 };
 DHT11.prototype.endRead = function() {
     clearWatch(this.watch);
-    if (this.badbits && this.i > 32) {
+    if (this.i > 32) {
         rh=(this.out>>(this.i-10))&0xFF;
         temp=(this.out>>(this.i-26))&0xFF;
-        if (rh > 100) {
-            return {temp:-1,rh:-1};
-        } else {
+        if (rh < 100 ) {
             return {"temp":temp,"rh":rh};
         }
-    } else {
-        return {temp:-1,rh:-1};
     }
+    return {"temp":-1,"rh":-1};
 };
