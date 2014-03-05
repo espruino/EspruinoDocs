@@ -18,7 +18,7 @@ function DHT11(pin) {
   this.pin = pin;
   this.readfails=0;
 }
-DHT11.prototype.read = read = function (a) {
+DHT11.prototype.read = function (a) {
     this.onreadf=a;
     this.i=0;
     this.out=1;
