@@ -1,24 +1,22 @@
   /* Copyright (C) 2014 Spence Konde. See the file LICENSE for copying permission. */
   /*
-This module interfaces with a DHT11 temperature and relative humidity sensor.
+This module interfaces with a DHT22 temperature and relative humidity sensor.
 Usage (any GPIO pin can be used):
 
-var dht = require("DHT11").connect(C11);
+var dht = require("DHT22").connect(C11);
 dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
-
-3/4/2014 - Code cleanup based on DHT22 work. 
 
   */
 
 exports.connect = function(pin) {
-    return new DHT11(pin);
+    return new DHT22(pin);
 }
 
-function DHT11(pin) {
+function DHT22(pin) {
   this.pin = pin;
   this.readfails=0;
 }
-DHT11.prototype.read = function (a) {
+DHT22.prototype.read = function (a) {
     this.onreadf=a;
     this.i=0;
     this.out=1;
@@ -28,7 +26,7 @@ DHT11.prototype.read = function (a) {
     setTimeout(function() {pinMode(dht.pin,'input_pullup');dht.watch=setWatch(function(t) {dht.onwatch(t);},dht.pin,{repeat:true});},5);
     setTimeout(function() {dht.onread(dht.endRead());},50);
 };
-DHT11.prototype.onread= function(d) {
+DHT22.prototype.onread= function(d) {
     var dht=this;
     if (d.temp==-1) {
         dht.readfails++
@@ -42,7 +40,7 @@ DHT11.prototype.onread= function(d) {
         dht.onreadf(d);
     }
 };
-DHT11.prototype.onwatch = function(t) {
+DHT22.prototype.onwatch = function(t) {
     if (t.state) {
         this.pstart=t.time;
     } else {
@@ -51,11 +49,15 @@ DHT11.prototype.onwatch = function(t) {
         this.i++;
     }
 };
-DHT11.prototype.endRead = function() {
+//The base rightshift of 3 (ie 32-3) was empirically determined. 
+DHT22.prototype.endRead = function() {
     clearWatch(this.watch);
     if (this.i > 32) {
-        rh=(this.out>>(this.i-10))&0xFF;
-        temp=(this.out>>(this.i-26))&0xFF;
+        rh=((this.out>>(this.i-13))&0x0FFF)*0.1;
+        temp=(this.out>>(this.i-29)&0x7FFF)*0.1;
+        if (this.out>>(this.i-29)&0x8000) {
+            temp=temp*-1;
+        }
         if (rh < 100 ) {
             return {"temp":temp,"rh":rh};
         }
