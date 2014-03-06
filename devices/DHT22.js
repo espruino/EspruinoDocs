@@ -53,8 +53,8 @@ DHT22.prototype.onwatch = function(t) {
 DHT22.prototype.endRead = function() {
     clearWatch(this.watch);
     if (this.i > 32) {
-        rh=((this.out>>(this.i-13))&0x0FFF)*0.1;
-        temp=(this.out>>(this.i-29)&0x7FFF)*0.1;
+        var rh=((this.out>>(this.i-13))&0x0FFF)*0.1;
+        var temp=(this.out>>(this.i-29)&0x7FFF)*0.1;
         if (this.out>>(this.i-29)&0x8000) {
             temp=temp*-1;
         }
