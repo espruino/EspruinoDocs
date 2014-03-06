@@ -5,6 +5,8 @@ WiFi Xively Humidity/Temperature Sensor with Display
 * KEYWORDS: WiFi,Wireless,Xively,IoT
 * USES: CC3000,DHT11,PCD8544,Xively
 
+![WiFi Humidity](wifi_humidity.jpg)
+
 This is a Wireless Humidity/Temperature sensor that displays information as well as uploading it to [Xively](http://xively.com).
 
 To set this up:
@@ -23,7 +25,7 @@ Wiring
 
 The [[CC3000]], [[PCD8544]] and [[DHT11]] have been arranged such that that can all be soldered onto the board.
 
-[[CC3000]] connected as described on that page.
+[[CC3000]] connected as described on that page. An external aerial has been soldered on to increase the range.
 
 [[PCD8544]] LCD connected as follows. This can be done with a single piece of pin strip (with the DIN/DC pins bent so that they swap location):
 

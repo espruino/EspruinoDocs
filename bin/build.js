@@ -154,6 +154,9 @@ function handleImages(file, contents) {
   var basePath = file;
   if (basePath.lastIndexOf(".")>0)
     basePath = basePath.substr(0, basePath.lastIndexOf("."));
+  var directory = file;
+  if (directory.lastIndexOf("/")>0)
+    directory = directory.substr(0, directory.lastIndexOf("/"));
   var tagStart = contents.indexOf("![");
   while (tagStart>=0) {
     var tagMid = contents.indexOf("](", tagStart);
@@ -162,6 +165,9 @@ function handleImages(file, contents) {
       // we've found a tag - do stuff
       var imageName = contents.substring(tagMid+2, tagEnd);
       var imagePath = basePath+"/"+imageName;
+      if (fs.existsSync(directory+"/"+imageName)) {
+        imagePath=directory+"/"+imageName;
+      }
       if (fs.existsSync(imagePath)) {
         var newPath = IMAGE_DIR+htmlLinks[file]+"_"+imageName;
 //        console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
