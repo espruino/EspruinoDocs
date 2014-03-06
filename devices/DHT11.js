@@ -54,8 +54,8 @@ DHT11.prototype.onwatch = function(t) {
 DHT11.prototype.endRead = function() {
     clearWatch(this.watch);
     if (this.i > 32) {
-        rh=(this.out>>(this.i-10))&0xFF;
-        temp=(this.out>>(this.i-26))&0xFF;
+        var rh=(this.out>>(this.i-10))&0xFF;
+        var temp=(this.out>>(this.i-26))&0xFF;
         if (rh < 100 ) {
             return {"temp":temp,"rh":rh};
         }
