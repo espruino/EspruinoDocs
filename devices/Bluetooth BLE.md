@@ -35,11 +35,19 @@ Once wired up, you can test whether the module is working. It uses basically the
 
 To test if the module works fine just call
 
-    ```
-    Serial1.onData(function (d) {console.log(d.data);}); 
-    Serial1.print("AT")
-    ```
+```
+Serial1.onData(function (d) {console.log(d.data);}); 
+Serial1.print("AT")
+```
 
 **Note:** it is important that you use print() and not println(). Also don't add anything like \n or \r as it will not work then.
 
 With the slave behaviour it should be able to connect to Bluetooth 4.0 devices. However, despite the fact that the bluetooth specification is basically downward compatible, the module does not support the bluetooth 2.1 (or lower) specification. So for example build-in bluetooth devices or older dongles (without dedicated drivers) might not work on operating systems like Windows 7, since Microsoft didn't backported the Bluetooth 4.0 stack. Also note that it is supported from iPhone 4s, so later modules won't work either.
+
+In case you want to use the latest commands from your HM-10 module, make sure you are using the latest version. To query the version number, just call:
+
+```
+Serial1.print("AT+VERS?")
+```
+
+and it should read 'HMSoft V522' (eventually scrambled by line breaks) or higher. If not you may want to flash your firmware with the latest version. On the [vendor's website](http://www.jnhuamao.cn/download_rom_en.asp?id=66) further information about this can be found.
