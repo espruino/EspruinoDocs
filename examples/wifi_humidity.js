@@ -27,7 +27,7 @@ The [[CC3000]], [[PCD8544]] and [[DHT11]] have been arranged such that that can 
 
 [[CC3000]] connected as described on that page. An external aerial has been soldered on to increase the range.
 
-[[PCD8544]] LCD connected as follows. This can be done with a single piece of pin strip (with the DIN/DC pins bent so that they swap location):
+[[PCD8544]] LCD connected as follows:
 
 | LCD pin | Pin type | Example pin on Espruino Board |
 |---------|----------|-------------------------------|
@@ -39,6 +39,8 @@ The [[CC3000]], [[PCD8544]] and [[DHT11]] have been arranged such that that can 
 |  DC     | Any      | A6                            |
 |  CE     | Any      | B0                            |
 |  RST    | Any      | B1                            |
+
+**Note:** This can be done with a single piece of pin strip (with the DIN/DC pins bent so that they swap location). See the [Soldering an LCD directly to Espruino](/Onboard+LCD) page.
 
 
 [[DHT11]] connected:

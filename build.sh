@@ -16,6 +16,8 @@ cp datasheets/* $WEBSITE/www/datasheets
 mkdir -p $WEBSITE/www/refimages
 rm $WEBSITE/www/refimages/*
 cp html/refimages/* $WEBSITE/www/refimages
+# Resize any images that might be too big
+mogrify -resize "600x800>" $WEBSITE/www/refimages/*
 
 MODULEDIR=$WEBSITE/www/modules
 mkdir -p $MODULEDIR
