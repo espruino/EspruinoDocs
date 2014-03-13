@@ -105,4 +105,5 @@ Creating Audio Files for Espruino
 Using Waveforms
 --------------
 
-* APPEND_KEYWORD: Waveform
+* APPEND_USES: Waveform
+
