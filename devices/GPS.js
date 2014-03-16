@@ -21,7 +21,7 @@ function handleGPSLine(line, callback) {
       lon : (parseInt(d[4].substr(0,dlon-2),10)+parseFloat(d[4].substr(dlon-2))/60)*(d[5]=="W"?-1:1),
       fix : parseInt(d[6],10),
       satellites : parseInt(d[7],10),
-      altitude : parseFloat(d[8])
+      altitude : parseFloat(d[9])
     });
   }
 }
