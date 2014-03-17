@@ -16,36 +16,38 @@ You'll Need
 ----------
 
 * [Espruino Boards](/EspruinoBoard)
-* A [ILI9341](DSC0556)
+* [ILI9341](DSC0556.jpg)
 
 Wiring Up
 --------
 
 ### Espruino Board
 
-* Follow the wiring instructions for wiring up the [ILI9341](/ILI9341) TFT Display
-* Connect up the [[ILI9341]] TFT Display (SPI2 used in this example) as follows:
+* Follow the wiring instructions for wiring up the ILI9341 TFT Display
+* Connect up the ILI9341 TFT Display (SPI2 used in this example) as follows:
 
-| Display Pin | Espruino                    |
-| ----------- | ------ | ------------------ |
-| GND         |  GND   |                    |
-| VCC         |  3.3v  |                    |
-| LED         |  3.3v  | with Resistor (1k) |
-| SCK         |  B13   |                    |
-| SDO(MISO)   |  B14   |                    |
-| SDI(Mosi)   |  B15   |                    |
-| D/C         |  C6    |                    |
-| CS          |  C7    |                    |
-| RST         |  C8    |                    |
+| Display Pin | Espruino|                    |
+| ----------- | ------- | ------------------ |
+| GND         |  GND    |                    |
+| VCC         |  3.3v   |                    |
+| LED         |         | with Resistor (1k) |
+| SCK         |  B13    |                    |
+| SDO(MISO)   |  B14    |                    |
+| SDI(Mosi)   |  B15    |                    |
+| D/C         |  C6     |                    |
+| CS          |  C7     | named CE in source |
+| RST         |  C8     |                    |
 
 
 Software
 -------
 
 Connect to the transmitting Espruino, copy and paste this into the right-hand window, then click the ```Send to Espruino``` button.
+By using the new drawString, you have to load an additional font. There are 2 fonts available, Font12.txt and Font16.txt.
 
 ```
-ar d,g;
+
+var d,g;
 function ILIDemo(graphics){         //Init returns Graphics object, other option is to use d.graphics
   g = graphics;
   g.setColor(0,1,0);
@@ -74,9 +76,7 @@ d.init(ILIDemo);
 
 ```
 
-```
-
 Attention, I had some problems using the module because of interface problems.
 I had to change Timeout in writeSerial (espruino_serial.js) from 60 to 100 to get it working.
 
-And that's it! A cheap TFT Display is ready to be used.
+And that's it! A cheap TFT Display is ready to be used in your application.
