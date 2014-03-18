@@ -75,6 +75,14 @@ LCD.setColor(0,1,0);
 LCD.drawString("World",40,40); // 60px high in green
 ```
  
+You can then switch back to the bitmap font using:
+
+```
+LCD.setFontBitmap();
+```
+
+For more information, see [[Fonts]]
+
 Circles
 -------
 

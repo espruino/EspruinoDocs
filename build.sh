@@ -25,7 +25,12 @@ mkdir -p $MODULEDIR
 #exit 0
 
 # Minify all modules
-for module in `ls devices/*.js`; do
+MODULES=`ls devices/*.js`
+MODULES+=" "
+MODULES+=`ls modules/*.js`
+
+for module in $MODULES; do
+  echo ">>>>" $module
   BNAME=`basename $module .js`
   MINJS=${BNAME}.min.js
   # if file doesn't exist, write an empty file so diff works
@@ -33,13 +38,13 @@ for module in `ls devices/*.js`; do
     echo > $MODULEDIR/$BNAME.js
   fi
 
-  if diff devices/$BNAME.js $MODULEDIR/$BNAME.js >/dev/null ; then
+  if diff $module $MODULEDIR/$BNAME.js >/dev/null ; then
     echo "Module $BNAME hasn't changed, leaving"
   else
     echo "Module $BNAME is different or doesn't exist"  
 
     rm -f $MODULEDIR/$MINJS
-    cp devices/$BNAME.js $MODULEDIR/$BNAME.js
+    cp $module $MODULEDIR/$BNAME.js
 
     echo min $MODULEDIR/$module to $MINJS  
     node bin/minify.js $MODULEDIR/$BNAME.js $MODULEDIR/$MINJS 
@@ -48,7 +53,7 @@ for module in `ls devices/*.js`; do
        echo "$MODULEDIR/$MINJS compile successful"
      else
        rm $MODULEDIR/$BNAME.js
-       echo "devices/$BNAME.js compile FAILED."
+       echo "$module compile FAILED."
        exit 1
      fi 
   fi
