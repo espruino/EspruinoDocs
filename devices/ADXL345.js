@@ -81,7 +81,7 @@ ADXL345.prototype.getintinfo = function() {
 	return {tap:d[0], interrupt:d[5]};
 }
 ADXL345.prototype.setup = function(rate,power) {
-	this.i2c.writeTo(this.a,[0x2C,rate,(power & 0x37)];
+	this.i2c.writeTo(this.a,[0x2C,rate,(power & 0x37)]);
 }
 
 ADXL345.prototype.measure = function(m) {
