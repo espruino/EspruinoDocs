@@ -56,7 +56,7 @@ Now our wiring is done, to the software! First off, we'll make the two pins eith
 
 ```
 digitalWrite(C0, 0);
-digitalWrite(C2, 0);
+digitalWrite(C2, 1);
 ```
 
 And we can read off the voltage:
