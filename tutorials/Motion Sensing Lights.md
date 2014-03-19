@@ -94,7 +94,7 @@ setWatch(function(e) {
 
 Note, if you want to see what the signal you're getting from the PIR looks like, just add this command and it will use the red LED as an indicator:
 
-``setInterval("digitalWrite(LED1,digitalRead(A1));",50);```
+```setInterval("digitalWrite(LED1,digitalRead(A1));",50);```
 
 The comments in the code describe pretty clearly what it's doing, but it's a bit boring really. It suddenly turns the lights on, and then suddenly turns them off after 15 seconds. Wouldn't it be better if they lit up smoothly?
 
