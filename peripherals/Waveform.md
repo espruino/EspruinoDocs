@@ -8,13 +8,15 @@ Espruino contains both [[Analog]] Inputs ([[ADC]]) and [[Analog Outputs]] ([[DAC
 
 Instead, you can use the [Waveform Class](/Reference#Waveform) to play back or record waveforms.
 
-**Note:** Espruino wasn't designed to handle Audio, and when dealing with Audio's large arrays you will notice significant delays.
+**Note:** Espruino wasn't designed to handle Audio, and when dealing with Audio's large arrays you will notice significant delays. We'd recommend using `E.sum`, `E.variance`, `E.convolve` and `E.FFT` to work on the large arrays wherever possible.
+
+**Waveforms can use up so much CPU that they make render Espruino unresponsive** if you create a repeating Waveform with a frequency that is too high (above 10kHz input or 20kHz output).
 
 
 Input
 -----
 
-Record 128 samples from A0 and then print the result:
+Record 128 x 8 bit samples from A0 and then print the result:
 
 ```
 var w = new Waveform(128);
@@ -22,8 +24,20 @@ w.on("finish", function(buf) {
   for (var i in buf) 
     console.log(buf[i]);
 });
-w.startInput(A0,2000,{repeat:true});
+w.startInput(A0,2000,{repeat:false});
 ```
+
+Do the same, but with 16 bit values:
+
+```
+var w = new Waveform(128, {bits:16});
+w.on("finish", function(buf) { 
+  for (var i in buf) 
+    console.log(buf[i]);
+});
+w.startInput(A0,2000,{repeat:false});
+```
+
 
 Record Audio continuously (with a double buffer) and output a bar graph to the console depending on the variance of the audio signal:
 
@@ -58,7 +72,7 @@ var w = new Waveform(128);
 for (var i=0;i<1024;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/64)*127;
 analogWrite(A0, 0.5, {freq:80000});  // PWM freq above human hearing
 w.startOutput(A0, 4000, {repeat:true});
-setTimeout(function() { w.stop() }, 4000);
+setTimeout(function() { w.stop(); }, 4000);
 ```
 
 You can even output synchronized waveforms on two outputs:
