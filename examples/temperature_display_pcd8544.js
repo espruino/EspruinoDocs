@@ -31,11 +31,20 @@ DS18B20 Wiring:
 */
 
 SPI1.setup({ baud: 1000000, sck:B3, mosi:B5 });
-var g = require("PCD8544").connect(SPI1,B6,B7,B8);
 var ow = new OneWire(B13);
-var temp = require("DS18B20").connect(ow);
 
-setInterval(function() {
+var g, temp;
+
+function onInit() {
+  clearInterval();
+
+  temp = require("DS18B20").connect(ow);
+  g = require("PCD8544").connect(SPI1,B6,B7,B8, function() {
+    setInterval(onTimer, 500);
+  });
+}
+
+function onTimer() {
   // Get the temperature
   var t = temp.getTemp();
   // Round it to the nearest 0.1
@@ -48,4 +57,6 @@ setInterval(function() {
   g.setFontVector(25); // large font
   g.drawString(t, 0, 15);
   g.flip(); // copy this to the screen
-}, 200);
+};
+
+onInit();
