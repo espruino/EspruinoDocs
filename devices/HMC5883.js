@@ -53,9 +53,9 @@ HMC5883.prototype.readc = function() {
 	return {x:x*f, y:y*f, z:z*f, overflow:o};
 }
 
-HMC5883.prototype.setmode = function(mode) {
+HMC5883.prototype.setMode = function(mode) {
 	this.i2c.writeTo(this.a,[2,(mode & 0x03)]);
-    this.mode=mode&0x03;
+    	this.mode=mode&0x03;
 }
 
 HMC5883.prototype.setup = function(sample,dout,ms) {
@@ -65,16 +65,16 @@ HMC5883.prototype.setup = function(sample,dout,ms) {
 	this.i2c.writeTo(this.a,[0,ms|(dout<<2)|(sample<<5)]);
 }
 
-HMC5883.prototype.setgain = function(gain) {
+HMC5883.prototype.setGain = function(gain) {
 	this.i2c.writeTo(this.a,[1,((gain & 7)<<5)]);
 	this.i2c.writeTo(this.a,1);
-    this.ngain=(this.i2c.readFrom(this.a,1))>>5;
-    if (this.mode!=2) {
+    	this.ngain=(this.i2c.readFrom(this.a,1))>>5;
+    	if (this.mode!=2) {
 		this.onwatch=c;
 		var hmc=this;
 		setWatch(function(){hmc.readc();},this.drdy);
 		this.setmode(1);
-    }
+    	}
 }
 
 HMC5883.prototype.reads = function(c) {
