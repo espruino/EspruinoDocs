@@ -1,8 +1,8 @@
-  <!--- Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. -->
-  ADXL345 Accelerometer
-  =====================
+<!--- Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. -->
+ADXL345 Accelerometer
+=====================
 
-  * KEYWORDS: Module,ADXL345,accelerometer,gyroscope
+* KEYWORDS: Module,ADXL345,accelerometer,gyroscope
 
 
 This module interfaces with an ADXL345 accelerometer. This is a low cost digital accelerometer which is widely available online. 

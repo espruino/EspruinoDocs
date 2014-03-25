@@ -99,7 +99,7 @@ function grabInfo(markdownFiles, preloadedFiles) {
 //   console.log(file,contents.length); 
    var contentLines = contents.split("\n");
    if (contentLines[0].substr(0,15)!="<!--- Copyright") WARNING(file+" doesn't have a copyright line");
-   if (contentLines[2].substr(0,3)!="===") WARNING(file+" doesn't have a title on the first line");
+   if (contentLines[1].trim()=="" || contentLines[2].substr(0,3)!="===") WARNING(file+" doesn't have a title on the first line");
    var fileInfo = {
      path : file,
      title : contentLines[1], // second line
