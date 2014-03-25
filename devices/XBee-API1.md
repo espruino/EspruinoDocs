@@ -23,11 +23,11 @@ functions:
 xBee Frame Types implemented
 ----------------------------
 
-08 => AT Command
-88 => AT Command respond
-10 => Transmit request
-8B => Transmit Status
-90 => RX Packet
+* 08 => AT Command
+* 88 => AT Command respond
+* 10 => Transmit request
+* 8B => Transmit Status
+* 90 => RX Packet
 
 Creating an xbee object
 -----------------------
