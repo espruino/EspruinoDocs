@@ -11,14 +11,14 @@ Summary
 ```
 Serial1.setup(38400,{rx:B7,tx:B6,bytesize:8,parity:none,stopbits:1});
 myxbee=requere('XBee-API1'.connect(Serial1);
-
+```
 functions:
 
   XBee-API1.AT(command,value,function(re,data) {} )
   XBee-API1.strtobytes(String)
   XBee-API1.TX(addr64,addr16,options,data,function(re,data) {} )
   XBee-API1.RX(function(data) {} )
-```
+
 
 xBee Frame Types implemented
 ----------------------------
