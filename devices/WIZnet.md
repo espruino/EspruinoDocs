@@ -47,6 +47,18 @@ You can check your IP with:
 eth.getIP()
 ```
 
+The module gets its own IP, however it does not configure DNS by default (for looking up domain names). To do this either:
+
+```
+eth.setIP({ dns : "8.8.8.8" }); // google's DNS
+```
+
+Or use DHCP:
+
+```
+eth.setIP();
+```
+
 Create an HTTP server like this:
 
 ```
@@ -57,15 +69,13 @@ require("http").createServer(function (req, res) {
 }).listen(80);
 ```
 
-And load a webpage like this:
+Or load a webpage like this:
 
 ```
 require("http").get("http://192.168.1.50", function(res) {
     res.on('data', function(data) { console.log(data);	});
   });
 ```
-
-Note that there is no DNS in the current WIZnet implementation so you'll have to supply the IP address of your server.
 
 For more examples, please see the [[Internet]] page.
 
