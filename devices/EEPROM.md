@@ -36,7 +36,7 @@ Setup
 
 Setup I2C, then call:
 
-```
+```JavaScript 
 var eeprom=require("EEPROM").connect(i2c, pagesize, capacity, i2caddress)
 ```
 
@@ -52,7 +52,7 @@ i2caddress is the value of the address pins. 0-3 or 0-7, depending on the part.
 Reading
 ---------------
 
-```
+```JavaScript
 eeprom.read(address,bytes,i2caddress)
 eeprom.readc(bytes,i2caddress)
 ```
@@ -68,7 +68,7 @@ Warning: Both of these return a simple array of values (as I2C.readFrom() does).
 Writing
 ----------------
 
-```
+```JavaScript
 eeprom.writes(address,data,i2caddress)
 eeprom.writeb(address,data,i2caddress)
 ```
@@ -82,7 +82,7 @@ These EEPROMs support "page writes", where as many bytes can be written at once 
 Utility
 ---------------
 
-```
+```JavaScript
 eeprom.arrayToString(array);
 
 ```
@@ -95,7 +95,7 @@ Example
 Write some code to page starting at 0x0100. Then we read() 64 bytes starting from 0x0FC0 (all zeros). Then we use readc() to read another 64 bytes - this time, starting from where the last read left off - in this case at 0x0100, where the code was written to. Then, we convert the result to a string and evaluate it. 
 
 
-```
+```JavaScript
 >I2C1.setup({sda:b7,scl:b6});
 =undefined
 >var eeprom=require("EEPROM").connect(I2C1,64,256,0x02);
