@@ -83,7 +83,7 @@ Utility
 ---------------
 
 ```JavaScript
-eeprom.arrayToString(array);
+eeprom.arrayToString(array)
 
 ```
 
