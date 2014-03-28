@@ -8,7 +8,7 @@ Usage:
 
 Setup I2C, then call:
 
-var eeprom=require("EEPROM").connect(i2c, pagesize, capacity, i2caddress)
+var eeprom=require("AT24").connect(i2c, pagesize, capacity, i2caddress)
 
 i2c is the i2c bus. 
 
