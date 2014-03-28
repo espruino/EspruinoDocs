@@ -136,14 +136,26 @@ And if you want your lights to stop flashing - just type this:
 
 ```clearInterval(interval);```
 
-If you want to start completely from scratch, and wipe out everything you have done, just type:
+If you want to start completely from scratch and wipe out everything you have done, just type:
 
 ```reset()```
 
 If you press the reset button on the board, Espruino will also reset. However we don't recommend this - on most boards this will reset the USB connection as well, so you may need to restart your terminal application, or in some cases even unplug and re-plug the device.
 
-Note that if you power off or reset Espruino using the reset button, it will also lose all the code that you wrote. You can save the state of Espruino so this doesn't happen using the ```save()``` command!
+If you power off or reset Espruino using the reset button, it will lose all the code that you wrote. You can save the state of Espruino so this doesn't happen using the `save()` command. 
 
+The `save()` command saves the current state of the pins and on-chip peripherals, as well as all your functions, variables, watches and timers. The commands that you typed in previously won't be executed again though. If you want to execute some code when Espruino starts (for example you may need to initialise some external bit of hardware like an LCD), create a function called `onInit`. For example this bit of code lights the red, then green, then blue LED each time Espruino starts up:
+
+```
+function onInit() {
+  digitalWrite([LED1,LED2,LED3],0b100);
+  setTimeout("digitalWrite([LED1,LED2,LED3],0b010);", 1000)
+  setTimeout("digitalWrite([LED1,LED2,LED3],0b001);", 2000)
+  setTimeout("digitalWrite([LED1,LED2,LED3],0);", 3000)
+}
+```
+
+If you do manage to save something to Espruino that causes it not to work, don't worry - you can easily fix it. Just see the [[Troubleshooting]] page.
 
 Now you've got an idea how to use Espruino:
 
@@ -151,5 +163,6 @@ Now you've got an idea how to use Espruino:
 * If you have one of the Espruino Kits, you can [click here](/Espruino Kits) to see the kit contents and to get information on how to use them
 * Check [[Code Examples]] for all kinds of devices and peripherals
 * See how to use the more advanced features of the [[Web IDE]]
-* Instantly [[Search]] all the website's documentation
+* Instantly [[Search]] all the Espruino website's documentation
+* If you've got a question, please check out our [[Forum]]
 
