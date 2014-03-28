@@ -93,7 +93,6 @@ EEPROM.prototype.writes= function(add,data,i2ca) {
 		return;
 	}
 	data=this.arrayToString([add>>8&0xff,add&0xff])+data;
-	console.log(data);
 	this.i2c.writeTo(0x50|i2ca,data);	
 }
 EEPROM.prototype.writeb= function(add,data,i2ca) {
@@ -103,6 +102,5 @@ EEPROM.prototype.writeb= function(add,data,i2ca) {
 		return;
 	}
 	data=this.arrayToString([add>>8&0xff,add&0xff])+this.arrayToString(data);
-	console.log(data);
 	this.i2c.writeTo(0x50|i2ca,data);
 }
