@@ -1,0 +1,120 @@
+  <!--- Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. -->
+  I2C EEPROMs (like AT24C256)
+  =====================
+
+  * KEYWORDS: Module,EEPROM,storage,rom,AT24C256,AT24C512,AT24C128,AT24C64,AT24C32
+
+
+Overview
+------------------
+
+This module interfaces to an I2C EEPROM that uses 2 bytes for the address. The table below shows Atmel parts that this moduel should be compatible with. There are also pin compatible EEPROMs available from other manufacturers, for example, the Microchip 24LC512. These should work equally well with this module. 
+
+| Part     | Size (kbit) | Size (kbyte) | Page size |
+|----------|-------------|--------------|-----------|
+| AT24C32  | 32          | 4 KBytes     | 32 bytes  |
+| AT24C64  | 64          | 8 KBytes     | 32 bytes  |
+| AT24C128 | 128         | 16 KBytes    | 64 bytes  |
+| AT24C256 | 256         | 32 KBytes    | 64 bytes  |
+| AT24C512 | 512         | 64 KBytes    | 128 bytes |
+
+This is not compatible with the AT24C01-AT24C16 EEPROMs, as these use a different addressing scheme. These use a 2 byte address to specify memory locations (with the appropriate number of most significant bits being ignored on smaller EEPROMs). 
+
+The I2C address of these devices is set by the three address pins on the EEPROM. This allows you to have up to eight eeproms connected to a single I2C bus. When using this module, the address is specified when connect() is called, but the read and write methods can override this. 
+
+
+Wiring
+-------------------
+
+If using one of the ubiquitous and inexpensive EEPROM breakout boards, just connect VCC to +3.3v, GND to GND, and SCL and SDA to the respective pins on the Espruino. The address bits can be set using the jumpers. 
+
+If working with a bare chip, you will also need to include the two 10k ohm pullup resistors between +3.3v and SCL and SDA. The address pins should be connected either to ground (for a 0) or +3.3v (for a 1). A chip in 8-pin SOIC package can be soldered into the prototyping area on the Espruino board. 
+
+
+Setup
+-------------------
+
+Setup I2C, then call:
+
+```JavaScript 
+var eeprom=require("EEPROM").connect(i2c, pagesize, capacity, i2caddress)
+```
+
+i2c is the i2c bus. 
+
+pagesize is the page size for page writes. 
+
+capacity is the eeprom capacity, in kbits. 
+
+i2caddress is the value of the address pins. 0-3 or 0-7, depending on the part. 
+
+
+Reading
+---------------
+
+```JavaScript
+eeprom.read(address,bytes,i2caddress)
+eeprom.readc(bytes,i2caddress)
+```
+
+read() reads the specified number of bytes, starting at the specified address. 
+
+readc() reads the specified number of bytes, starting where the last read ended. 
+
+
+Warning: Both of these return a simple array of values (as I2C.readFrom() does). This requires 2 memory units per byte, therefor, you will have to break up a large read into smaller parts. This may be changed in a future version of Espruino. 
+
+
+Writing
+----------------
+
+```JavaScript
+eeprom.writes(address,data,i2caddress)
+eeprom.writeb(address,data,i2caddress)
+```
+
+These functions write the specified data to the specified address. writes() writes a string, writeb() writes an array of bytes (either simple or Uint8Array). 
+
+These EEPROMs support "page writes", where as many bytes can be written at once as the page length (See table above for examples). If the write would run off the end of the page, it will wrap around to the beginning of the page. For this reason, it is recommended that all writes start at the beginning of the page being written to. 
+
+
+
+Utility
+---------------
+
+```JavaScript
+eeprom.arrayToString(array)
+
+```
+
+This converts an array (types or simple) to a string. This is used internally, and is also very useful if loading text from the EEPROM. 
+
+Example
+---------------
+
+Write some code to page starting at 0x0100. Then we read() 64 bytes starting from 0x0FC0 (all zeros). Then we use readc() to read another 64 bytes - this time, starting from where the last read left off - in this case at 0x0100, where the code was written to. Then, we convert the result to a string and evaluate it. 
+
+
+```JavaScript
+>I2C1.setup({sda:b7,scl:b6});
+=undefined
+>var eeprom=require("EEPROM").connect(I2C1,64,256,0x02);
+={
+  "i2c":{
+    "_options":{"sda":undefined,"scl":undefined}
+  },
+  "i2ca":2,"pgsz":64,"cap":32768,"ca":0}
+>eeprom.writes(0x1000,"digitalWrite(A15,1);");
+=undefined
+>var temp = eeprom.read(0x0FC0,64); 
+=[0,0,0,0,0, ... 0,0,0,0,0]
+>var temp = eeprom.readc(64);
+=[100,105,103,105,116, ... 0,0,0,0,0]
+>eeprom.arrayToString(temp);
+="digitalWrite(A15," ... "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+>eval(eeprom.arrayToString(temp)); 
+=undefined
+> 
+
+```
+
