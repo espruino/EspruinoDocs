@@ -20,17 +20,19 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst,
   var dc = _dc;
   var ce = _ce;
   var rst = _rst;
-  digitalPulse(rst, 0, 10); // pulse reset low
   setTimeout(function() {
-    digitalWrite(dc,0); // cmd
-    spi.send(
-      [0x21, // fnset extended
-      0x80 | 0x40, // setvop (experiment with 2nd val to get the right contrast)
-      0x14, // setbias 4
-      0x04 | 0x02, // temp control
-      0x20, // fnset normal
-      0x08 | 0x04], ce); // dispctl normal
-    if (callback!==undefined) callback();
+    digitalPulse(rst, 0, 10); // pulse reset low
+    setTimeout(function() {
+      digitalWrite(dc,0); // cmd
+      spi.send(
+        [0x21, // fnset extended
+        0x80 | 0x40, // setvop (experiment with 2nd val to get the right contrast)
+        0x14, // setbias 4
+        0x04 | 0x02, // temp control
+        0x20, // fnset normal
+        0x08 | 0x04], ce); // dispctl normal
+      if (callback!==undefined) callback();
+    }, 100);
   }, 100);
 
   LCD.flip = function () {

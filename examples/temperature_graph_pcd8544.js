@@ -31,14 +31,25 @@ DS18B20 Wiring:
 */
 
 SPI1.setup({ baud: 1000000, sck:B3, mosi:B5 });
-var g = require("PCD8544").connect(SPI1,B6,B7,B8);
 var ow = new OneWire(B13);
-var temp = require("DS18B20").connect(ow);
+
+var g, temp, history;
+
+function onInit() {
+  clearInterval();
+
+  temp = require("DS18B20").connect(ow);
+  g = require("PCD8544").connect(SPI1,B6,B7,B8, function() {
+    setInterval(onTimer, 500);
+  });
+  history = new Int8Array(g.getWidth());
+}
+
 
 // create history points, one for each pixel on the LCD
-var history = new Int8Array(g.getWidth());
 
-setInterval(function() {
+
+function onTimer() {
   // Get the temperature
   var t = temp.getTemp();
   // Move our history back and add our new temperature at the end
@@ -54,4 +65,6 @@ setInterval(function() {
     g.lineTo(i,tempToY(history[i]));
   // display on the screen
   g.flip();
-}, 500);
+};
+
+onInit();
