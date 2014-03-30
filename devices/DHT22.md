@@ -21,7 +21,8 @@ The DHT22 is much more reliable than the DHT11, and it rarely fails to provide d
 Wiring
 -----------------
 
-From left to right when part is viewed from the front (the side with the ventilation holes) with pins pointing down. (The DHT22 has no pin markings)
+From left to right when part is viewed from the front (the side with the ventilation holes) with pins pointing down. (The DHT22 has no pin markings). 
+IMPORTANT: Be sure to get the polarity right! If connected backwards, it will ruin the DHT22. 
 
   | Device Pin | Espruino |
   | ---------- | -------- |
