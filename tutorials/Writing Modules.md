@@ -15,41 +15,41 @@ like `require("libname")`.
 * Name your module after the device you're using (try and keep this really small and concise, like `PCD8544` for the driver chip in the Nokia LCD) and add `.js` to the end, for instance `MOD123.js`.
 * Copy and paste the following template into the file:
 
-        /* Copyright (c) 2014 Your Name. See the file LICENSE for copying permission. */
-        /*
-        Quick description of my module...
-        */
+      /* Copyright (c) 2014 Your Name. See the file LICENSE for copying permission. */
+      /*
+      Quick description of my module...
+      */
 
-        var C = {
-          MY : 0x001,          // description
-          PRIVATE : 0x001,     // description
-          CONSTANTS : 0x00423, // description
-        };
+      var C = {
+        MY : 0x001,          // description
+        PRIVATE : 0x001,     // description
+        CONSTANTS : 0x00423, // description
+      };
 
-        function MOD123(pin1,pin2) {
-          this.pin1 = pin1;
-          this.pin2 = pin2;
-        }
+      function MOD123(pin1,pin2) {
+        this.pin1 = pin1;
+        this.pin2 = pin2;
+      }
 
-        MOD123.prototype.C = {
-          MY : 0x013,         // description
-          PUBLIC : 0x0541,    // description
-          CONSTANTS : 0x023,  // description
-        };
+      MOD123.prototype.C = {
+        MY : 0x013,         // description
+        PUBLIC : 0x0541,    // description
+        CONSTANTS : 0x023,  // description
+      };
 
-        /* Put most of my comments outside the functions... */
-        MOD123.prototype.foo = function() {
-          // you can use C.PRIVATE
-          // or this.C.PUBLIC
-        };
+      /* Put most of my comments outside the functions... */
+      MOD123.prototype.foo = function() {
+        // you can use C.PRIVATE
+        // or this.C.PUBLIC
+      };
 
-        /* Put most of my comments outside the functions... */
-        MOD123.prototype.bar = function() {
-        };
+      /* Put most of my comments outside the functions... */
+      MOD123.prototype.bar = function() {
+      };
 
-        exports.connect = function (pin1, pin2) {
-          return new MOD123(pin1, pin2);
-        };
+      exports.connect = function (pin1, pin2) {
+        return new MOD123(pin1, pin2);
+      };
 
 To test out your module, we'd suggest that you copy it verbatim into the right-hand side of the Web IDE, with the line `var exports={};` at the top, and at the bottom, where you use the module, write `exports.myfunction()` instead of `require('MOD123').myfunction()`.
 
@@ -75,29 +75,29 @@ Check out some of the [other modules](www.espruino.com/modules) for examples (so
 
 * Copy and paste the following template into the file (note that the first keyword of a module should always be `Module`):
 
-        <!--- Copyright (c) 2014 Your Name. See the file LICENSE for copying permission. -->
-        My Module's proper title
-        =====================
+      <!--- Copyright (c) 2014 Your Name. See the file LICENSE for copying permission. -->
+      My Module's proper title
+      =====================
 
-        * KEYWORDS_: Module,Comma,separated,list,of,search,words
+      * KEYWORDS_: Module,Comma,separated,list,of,search,words
 
-        A bit about my module. Use the [[MOD123.js]] module for it.
+      A bit about my module. Use the [[MOD123.js]] module for it.
 
-        You can wire this up as follows:
+      You can wire this up as follows:
 
-        | Device Pin | Espruino |
-        | ---------- | -------- |
-        | 1 (GND)    | GND      |
-        | 2 (VCC)    | 3.3      |
-        | 3 (SIGIN)  | A0       |
-        | 4 (SIGNOUT)| A1       |
+      | Device Pin | Espruino |
+      | ---------- | -------- |
+      | 1 (GND)    | GND      |
+      | 2 (VCC)    | 3.3      |
+      | 3 (SIGIN)  | A0       |
+      | 4 (SIGNOUT)| A1       |
 
-        How to use my module:
+      How to use my module:
 
-        ```
-          var foo = require("MOD123").connect(A0,A1);
-          foo.usingFoo();
-        ```
+      ```
+        var foo = require("MOD123").connect(A0,A1);
+        foo.usingFoo();
+      ```
         
 To get your module's description formatted nicely you just need to write it in a slightly special way, called Markdown. [See this link](https://help.github.com/articles/github-flavored-markdown) for examples of how to use it, and maybe look at the other modules in GitHub.
 

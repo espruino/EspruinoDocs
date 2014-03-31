@@ -14,33 +14,33 @@ Writing and submitting tutorials is really easy, and it's great for the communit
 
 <!-- note use of KEYWORDS_ and USES_ below to stop build.js messing it up -->
 
-        <!--- Copyright (c) 2014 Your Name. See the file LICENSE for copying permission. -->
-        My Tutorial's Proper Title
-        =======================
+    <!--- Copyright (c) 2014 Your Name. See the file LICENSE for copying permission. -->
+    My Tutorial's Proper Title
+    =======================
 
-        * KEYWORDS_: Comma,separated,list,of,search,words
-        * USES_: Comma,separated,list
+    * KEYWORDS_: Comma,separated,list,of,search,words
+    * USES_: Comma,separated,list
 
-        Introduction
-        -----------
+    Introduction
+    -----------
 
-        ...
+    ...
 
-        Wiring Up
-        --------
+    Wiring Up
+    --------
 
-        ...
+    ...
 
-        Software
-        --------
+    Software
+    --------
 
-        ...
+    ...
 
-        ```
-        My().code.in.here
-        ```
+    ```
+    My().code.in.here
+    ```
 
-        ...
+    ...
 
 
 * Start writing your tutorial! To get it formatted nicely you just need to write it in a slightly special way, called Markdown. [See this link](https://help.github.com/articles/github-flavored-markdown) for examples of how to use it, and maybe look at the other tutorials. 
