@@ -8,7 +8,7 @@ Summary
 -------
 
 Serial1.setup(38400,{rx:B7,tx:B6,bytesize:8,parity:none,stopbits:1});
-myxbee=requere('XBee-API1'.connect(Serial1);
+myxbee=require('XBee-API1').connect(Serial1);
 
 function:
 
