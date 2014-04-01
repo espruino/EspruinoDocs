@@ -19,7 +19,7 @@ exports.connect = function(pin, callback, options) {
       pulseGap = false;
   }
   // pullup on the pin - most IR receivers don't have this 
-  pinMode(A0,"input_pullup");
+  pinMode(pin,"input_pullup");
   // the actual code
   var code;
   // the timeout that will trigger the callback after the last bit
