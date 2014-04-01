@@ -41,9 +41,16 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst,
       spi.send(0x40|i, ce); // Y addr
       spi.send(0x80, ce); // X addr
       digitalWrite(dc,1); // data
-      spi.send(new Uint8Array(this.buffer,i*84,84+2), ce);
+      spi.send(new Uint8Array(this.buffer,i*84,84), ce);
     }
-    // Why +2 in SPI.send? Maybe it needs some time to sort itself out
+  };
+  LCD.setContrast = function(c) { // c between 0 and 1. 0.5 is default
+    digitalWrite(dc,0); // cmd
+    spi.send(
+        [0x21, // fnset extended
+        0x80 | Math.clip(c*0x7f,0,0x7f), // setvop
+        0x20, // fnset normal
+        0x08 | 0x04], ce); // dispctl normal
   };
   return LCD;
 };
