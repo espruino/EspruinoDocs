@@ -41,7 +41,7 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst,
       spi.send(0x40|i, ce); // Y addr
       spi.send(0x80, ce); // X addr
       digitalWrite(dc,1); // data
-      spi.send(new Uint8Array(this.buffer,i*84,84), ce);
+      spi.send(new Uint8Array(this.buffer,i*84,84+2*(i<5)), ce);
     }
   };
   LCD.setContrast = function(c) { // c between 0 and 1. 0.5 is default
