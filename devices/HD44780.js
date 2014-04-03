@@ -34,7 +34,7 @@ function HD44780(write) {
     // print text
     print : function(str) {
       for (var i=0;i<str.length;i++)
-        write(Integer.valueOf(str.charAt(i)));
+        write(str.charCodeAt(i));
     },
     // flashing block for the current cursor, or underline
     cursor : function(block) { write(block?0x0F:0x0E,1); },

@@ -187,7 +187,7 @@ var xbee=function(ser) {
     this.atFrame=function(cmd,value) {
         var i;
         // Frame
-        var a=[0x7E,0,0,0x8,this.seq,Integer.valueOf(cmd[0]),Integer.valueOf(cmd[1])];
+        var a=[0x7E,0,0,0x8,this.seq,cmd.charCodeAt(0),cmd.charCodeAt(1))];
         // Proc Value
         for(i=0;i<value.length;i++) {
             a.push(value[i]);
