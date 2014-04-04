@@ -11,19 +11,19 @@ On Windows
 
 You can write to Espruino very easily with the Windows Command Prompt. For instance to turn an LED on, the command is:
 
-```
+```Batchfile
 echo LED1.set() >.COM10
 ```
 
 Where COM10 is the COM port of your device. If you want to wrap this up in a shortcut to go on the desktop, just enter the following as the shortcut location:
 
-```
+```Batchfile
 cmd.exe /c "echo LED1.set() >.COM10"
 ```
 
 If you're not connecting by USB, you may have to set up the baud rate first. You have to do this with: 
 
-```
+```Batchfile
 MODE COM10:9600,N,8,1
 ```
 
@@ -112,7 +112,7 @@ $ ./espruino_command.py "digitalWrite(LED1,1)"
 
 To be able to communicate with the serial port using Python, you will need pySerial: [http://pyserial.sourceforge.net](http://pyserial.sourceforge.net) . If you run into the trouble that the code complains that it cannot find `serial`, you will first need to install pySerial, which is luckily very straightforward (example below assumes you have downloaded version 2.7, update the commands as appropriate):
 
-```
+```Bash
 tar xfvz pyserial-2.7.tar.gz
 cd pyserial-2.7
 sudo python setup.py install
