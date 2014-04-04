@@ -7,6 +7,7 @@ Quick Start
 
 [[http://youtu.be/1DT3lpL3IHo]]
 
+<span style="color:red;">**Please note:** This video is from the **old** Web IDE. We'll be updating it in the next few days to go with the new one.</span>
 
 If have a kit from KickStarter and want to see what everything is, check out [[Espruino Kits]]...
 
@@ -38,16 +39,11 @@ Set up a Terminal App
 Now, to use the Terminal App:
 
 * Run **Espruino Web IDE** from Chrome's home screen (or the App Launcher)
-* If you've only just plugged your device in, press the refresh button (the two arrows in the top left)
-* In the top left, make sure the correct serial port is chosen (usually: Highest COM# number on Windows, tty.usbmodem/ttys000 on Mac, ttyACM0/ttyUSB0 on Linux)
-* Click the Connect button (the 'play' symbol)
+* Click the **Connect/Disconnect** icon in the top left
+* In the window that pops up, make sure the correct serial port is chosen (usually: Highest COM# number on Windows, /dev/tty.usbmodem on Mac, ttyACM0/ttyUSB0 on Linux).
+* If you don't see a port or can't be it working, please see [[Troubleshooting]]
 
-And after you've got it running you can:
-
-* Click the button with left/right arrows (top-middle) to transfer the text (or graphics) in the right-hand pane to Espruino
-* Click the button with a picture frame to switch between graphical and text views
-* To copy on the left-hand side, click and drag over the text to copy
-* To paste, press ```Ctrl + V```
+Please click the 'tour' button in the Web IDE for more information on how to use it.
 
  
 Software Updates
@@ -55,9 +51,9 @@ Software Updates
 
 Espruino is gaining features and improvements on an almost daily basis. If you have an Espruino board from KickStarter or a preorder, we highly recommend that you update the firmware before you start using it.
 
-When you first use the Espruino Web IDE and connect (see above) you'll probably see a message saying that new firmware is available. Click the **(i)** symbol in the top right of the window, click 'Firmware Updates', and follow the instructions there. There is no risk of damaging your Espruino board, however the firmware update process may take a few minutes to complete. If you have problems and you've got the Espruino Board, check out the Troubleshooting section in the [board documentation](EspruinoBoard).
+When you first use the Espruino Web IDE and connect (see above) you'll probably see a message saying that new firmware is available. Click gear symbol in the top right of the window, click 'Flasher', and follow the instructions there. There is no risk of damaging your Espruino board, however the firmware update process may take a few minutes to complete. If you have problems and you've got the Espruino Board, check out the [[Troubleshooting]] section.
 
-**Note:** If you're not using the Web IDE, follow the instructions on the [[Download]] page to flash the latest version.
+**Note:** If you're not using the Web IDE, follow the instructions on the [[Download]] page to flash the latest version (but this is significantly more difficult).
  
 
 Start writing code!
