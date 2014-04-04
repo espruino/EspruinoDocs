@@ -4,7 +4,7 @@ Module for the PCD8544 controller in the Nokia 5110 LCD.
 
 Just:
 ```
-SPI1.setup({ baud: 1000000, sck:B3, mosi:B5 });
+SPI1.setup({ sck:B3, mosi:B5 });
 var g = require("PCD8544").connect(SPI1,B6,B7,B8, function() {
   g.clear();
   g.drawString("Hello",0,0);
@@ -21,9 +21,10 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst,
   var ce = _ce;
   var rst = _rst;
   setTimeout(function() {
+    digitalWrite(dc,0); // cmd
     digitalPulse(rst, 0, 10); // pulse reset low
-    setTimeout(function() {
-      digitalWrite(dc,0); // cmd
+    
+    setTimeout(function() {      
       spi.send(
         [0x21, // fnset extended
         0x80 | 0x40, // setvop (experiment with 2nd val to get the right contrast)
@@ -36,13 +37,10 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst,
   }, 100);
 
   LCD.flip = function () {
-    for (var i=0;i<6;i++) {
-      digitalWrite(dc,0); // cmd
-      spi.send(0x40|i, ce); // Y addr
-      spi.send(0x80, ce); // X addr
-      digitalWrite(dc,1); // data
-      spi.send(new Uint8Array(this.buffer,i*84,84+2*(i<5)), ce);
-    }
+    digitalWrite(dc,0); // cmd
+    spi.send([0x40,0x80],ce); // X + Y addr (0,0)
+    digitalWrite(dc,1); // data
+    spi.send(this.buffer,ce);
   };
   LCD.setContrast = function(c) { // c between 0 and 1. 0.5 is default
     digitalWrite(dc,0); // cmd
