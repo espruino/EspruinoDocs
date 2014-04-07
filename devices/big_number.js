@@ -28,20 +28,20 @@ exports.use = function(lcd) {
     // write a big number num at column number x
     showDigit : function(x, num) {
       for (var y=0;y<4;y++) {
-        this.setCursor(x,y);
+        lcd.setCursor(x,y);
         for (var n=0;n<3;n++) {
-          var c = this.bigChars[y].charAt(num*3+n);
-          this.write(c==" "?32:parseInt(c,10));
+          var c = bigChars[y].charAt(num*3+n);
+          lcd.write(c==" "?32:parseInt(c,10));
         }
       }
     },
     // write the given 5 digit decimal on the LCD screen
     showNumber : function(num) {
-      lcd.clear(); showDigit(17,num%10);
-      if (num>9) showDigit(14,(num/10)%10);
-      if (num>99) showDigit(11,(num/100)%10);
-      if (num>999) showDigit(8,(num/1000)%10);
-      if (num>9999) showDigit(5,(num/10000)%10);
+      lcd.clear(); this.showDigit(17,num%10);
+      if (num>9) this.showDigit(14,(num/10)%10);
+      if (num>99) this.showDigit(11,(num/100)%10);
+      if (num>999) this.showDigit(8,(num/1000)%10);
+      if (num>9999) this.showDigit(5,(num/10000)%10);
     }
   };
 };
