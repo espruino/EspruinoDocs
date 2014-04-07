@@ -63,13 +63,16 @@ exports.connect = function(/*=PIN*/_rs,/*=PIN*/_en,/*=PIN*/_d4,/*=PIN*/_d5,/*=PI
   var data = [_d7,_d6,_d5,_d4];
   var rs = _rs;
   var en = _en;
+  digitalWrite(rs, 1);
   digitalWrite([rs,en], 0);
   var write = function(x, c) {
-    digitalWrite(rs, c===undefined);
+    digitalWrite(rs, !c);
     digitalWrite(data, x>>4);
-    digitalPulse(en, 1, 0.01);
+    digitalWrite(en, 1);
+    digitalWrite(en, 0);
     digitalWrite(data, x);
-    digitalPulse(en, 1, 0.01);
+    digitalWrite(en, 1);
+    digitalWrite(en, 0);
   };
   return new HD44780(write);
 };
