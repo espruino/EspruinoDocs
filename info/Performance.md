@@ -120,4 +120,24 @@ a = new Int32Array(50);
 a = new Float32Array(50);
 ```
 
-And then you can access it like a normal Array. The only thing you can't do is change the length dynamically. There are other formats of typed array too - see the Reference
+And then you can access it like a normal Array. The only thing you can't do is change the length dynamically (See below). There are other formats of typed array too - see the [[Reference]].
+
+While you can't change the length dynamically, you can create 'views' which change how you access the information in the array, without actually copying it. For example:
+
+```
+a = new Uint8Array([1,2,3,4,5,6,7,8,9,10]);
+b = new Uint16Array(a.buffer); // [513,1027,1541,2055,2569]
+c = new Uint8Array(a.buffer, 2, 5); // [3,4,5,6,7]
+```
+
+You can also use `.set` to quickly set elements. For example...
+
+```
+a = new Uint8Array([1,2,3,4,5,6,7,8,9,10]);
+b = new Uint8Array(7); // 0,0,0,0,0,0,0
+c = new Uint8Array(a.buffer, 2, 5); // [3,4,5,6,7]
+b.set(c, 2); // set b with the contents of c starting from index 2
+b; // [0,0,3,4,5,6,7]
+```
+
+
