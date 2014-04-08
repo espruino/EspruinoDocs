@@ -44,7 +44,46 @@ returnType (argType1,argType2,...)
 
 Allowed types are `void`, `bool`, `int`, `long`, `double`, `Pin` (a pin number), `JsVar` (a pointer to a JsVar structure).
 
-Because of the structure of Espruino, you can only use an argument specifier that is already used by one of Espruino's built-in functions. At the moment finding a suitable specifier is a matter of trial and error.
+
+Accessing Data
+------------
+
+By itself, the assembler isn't too useful. What you need is to be able to easily access data. Luckily Espruino makes it pretty easy. Above, we used `Array.map` to call assembler for every element in an array. Often you'll have your data stored in an `ArrayBuffer` like a `Uint8Array` to save on RAM (see the [[Performance]] page), and ArrayBuffers don't have their own `.map` method.
+
+Luckily you can 'borrow' `Array`'s:
+
+```
+> var a = new Uint8Array([1,2,3,4,5]);
+[].map.call(a, adder)
+=[4,5,6,7,8]
+```
+
+However this will still return an Array (which will use up lots of RAM). If you don't want to return anything (maybe you're writing it out to GPIO (see below) ), use `Array.forEach`:
+
+```
+>[].forEach.call(a, adder);
+=undefined
+```
+
+Or you can use `Array.reduce` to pass an argument between calls to the assembler, for instance to sum all the items in the array:
+
+```
+// create and fill up array buffer
+var a = new Int16Array(100);
+for (var i in a) a[i]=i;
+
+// effectively this is `function (a,b) { return a+b; }`
+var adder = E.asm("int(int,int)", 
+  "adds    r0, r0, r1",
+  "bx  lr");
+
+// Call our assembler on every item and return the result
+var sum = [].reduce.call(a, adder);
+
+// prints 4950 
+console.log(sum); 
+```
+
 
 Accessing IO
 -----------
