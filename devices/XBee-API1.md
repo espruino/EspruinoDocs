@@ -15,7 +15,6 @@ myxbee=require('XBee-API1').connect(Serial1);
 functions:
 
 *  `XBee-API1.AT(command,value,function(re,data) {} )`
-*  `XBee-API1.strtobytes(String)`
 *  `XBee-API1.TX(addr64,addr16,options,data,function(re,data) {} )`
 *  `XBee-API1.RX(function(data) {} )`
 
@@ -38,7 +37,6 @@ Initialize a serial object and pass it to the xbee object
 Serial1.setup(38400,{rx:B7,tx:B6,bytesize:8,parity:none,stopbits:1});
 myxbee=require('XBee-API1').connect(Serial1);
 ```
-
 
 
 function XBee-API1.AT
@@ -90,33 +88,9 @@ myxbee.AT('VR',[],function(re,data) {
 Sets the NI to "MyBee":
 
 ```
-myxbee.AT('NI',[0x4D,0x79,0x42,0x65,0x65],function(re,data) {
-    console.log(re);
-    if (re===true) {
-        console.log(data);
-    }
-});
-```
-
-function XBee-API1.strtobytes
---------------------------
-
-### Call type:
-`function XBee-API1.strtobytes(String)`
-    
-### Description:
-    
-Returns an array of bytes representing the string. Can be used to
-pass ASCII values to the AT command
-    
-### Return: 
-
-Array of bytes
-
-### Example:
-
-```
-myxbee.AT('NI',myxbee.strtobytes('MyBee'),function(re,data) {
+value=new Uint8Array(5);
+value.set('MyBee');
+myxbee.AT('NI',value,function(re,data) {
     console.log(re);
     if (re===true) {
         console.log(data);
@@ -161,10 +135,14 @@ No return value (undefined)
     
 ### Example:
 ```
-    addr64=[0x00,0x13,0xA2,0x00,0x40,0xA1,0xF2,0x1D]; // Destination 64 Bit address
-    addr16=[0x0,0x0]; // Destination 16 bit address
+    addr64=new Uint8Array(8);
+    addr64.set([0x00,0x13,0xA2,0x00,0x40,0xA1,0xF1,0xE0]); // Destination 64 Bit address
+    addr16=new Uint8Array(2);// Destination 16 bit address
+    addr16.set([0x48,0xA0]);
+    txdata=new Uint8Array(5);
+    txdata.set('abcde');
 
-    myxbee.TX(addr64,addr16,0,[0x55,0x56,0x44],function(re,data) {
+    myxbee.TX(addr64,addr16,0,txdata,function(re,data) {
     console.log(re);
     if (re===true) {
         console.log(data);
@@ -189,10 +167,10 @@ Register a callback function to receive data from other radios.
 Example of the data array:
 ```
 {
-"addr64":[0,19,162,0,64,161,242,29],  // 64 Bit address of the sender radio
-"addr16":[0,0],                       // 16 Bit address of the sender radio
-"option":1,                           // Options, see xBee API documentation
-"data":[70,114,105,101,110,100,115]   // The data itself
+"addr64":new Uint8Array([0,19,162,0,64,161,241,224]),  // 64 Bit address of the sender radio
+"addr16":new Uint8Array([72,160]),                     // 16 Bit address of the sender radio
+"option":1,                                           // Options, see xBee API documentation
+"data":new Uint8Array([70,114,105,101,110,100,115])   // The data itself
 }
 ```
         

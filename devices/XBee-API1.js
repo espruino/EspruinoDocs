@@ -13,7 +13,6 @@ myxbee=require('XBee-API1').connect(Serial1);
 function:
 
   XBee-API1.AT(command,value,function(re,data) {} )
-  XBee-API1.strtobytes(String)
   XBee-API1.TX(addr64,addr16,options,data,function(re,data) {} )
   XBee-API1.RX(function(data) {} )
 */
@@ -30,7 +29,8 @@ var xbee=function(ser) {
     var f_len=0;
     var f_type=-1;
     var f_id=0;
-    var f_data=[];
+    var f_data=undefined;
+    var f_data_idx=0;
     var f_cs=0;
     
     this.ser=ser;
@@ -56,17 +56,24 @@ var xbee=function(ser) {
             case 'S': // Waiting for Start
                 if (data==0x7E) {
                     f_cs=0; // Clear checksum
-                    f_data=[]; // Clear Data/payload buffer
+                    //f_data=[]; // Clear Data/payload buffer
+                    f_data=undefined;
+                    f_data_idx=0;
                     pstate='LH';
                 }
                 break;
-            case 'LH': f_len=data*256; pstate='LL';  // High Byte
+            case 'LH':  f_len=data*255; pstate='LL';  // High Byte
                 break;
-            case 'LL': f_len+=data; pstate='FT';    // Low Bayte
+            case 'LL':  f_len+=data; pstate='FT';    // Low Bayte
+                        if (f_len<255) {
+                            f_data=new Uint8Array(f_len-1);
+                        }
                 break;
             case 'FT': f_type=data; pstate='D'; f_len--; f_cs+=data;  // Frame type
                 break;
-            case 'D':   f_data.push(data); f_cs+=data;                    // Data
+            case 'D':   // f_data.push(data);
+                        f_data[f_data_idx++]=data;
+                        f_cs+=data;                    // Data
                         if (--f_len===0) { pstate='CS'; }
                 break;
             case 'CS':
@@ -84,7 +91,7 @@ var xbee=function(ser) {
     //
     this.prepCB=function(type,data) {
                 var d={};
-                var i;
+                var i,j;
                 var seq=0; 
                 
                 if (type==0x88) { // AT CMD Response
@@ -102,12 +109,14 @@ var xbee=function(ser) {
                     d['discovery_status']=data[5];
                 }
                 else if (type==0x90) { // RX Transmit Frame
-                    d['addr64']=[];
-                    for(i=0;i<8;i++) { d['addr64'].push(data[i]); }
-                    d['addr16']=[data[8],data[9]];
+                    d['addr64']=new Uint8Array(8);
+                    for(i=0;i<8;i++) { d['addr64'][i]=data[i]; }
+                    d['addr16']=new Uint8Array(2);
+                    d['addr16'][0]=data[8];
+                    d['addr16'][1]=data[9];
                     d['option']=data[10];
-                    d['data']=[];
-                    for(i=11;i<data.length;i++) { d['data'].push(data[i]); }
+                    d['data']=new Uint8Array(data.length-11);
+                    for(i=11,j=0;i<data.length;i++) { d['data'][j++]=data[i]; }
                     if (this.rxcb!==undefined) { // Call CB
                         this.rxcb(d);
                     }
@@ -165,47 +174,48 @@ var xbee=function(ser) {
     // Build an TRANSMIT frame
     //
     this.transmitFrame=function(addr64,addr16,opt,data) {
-        var i;
+        var i,j;
         // Frame
-        var a=[0x7E,0,0,0x10,this.seq];
-        for (i=0;i<addr64.length;i++) {  a.push(addr64[i]); }
-        for (i=0;i<addr16.length;i++) {  a.push(addr16[i]); }
+        var b=new Uint8Array(17+data.length+1);
+        b.set([0x7E,0,0,0x10,this.seq]);
+        j=5;
+        for (i=0;i<addr64.length;i++) {  b[j++]=addr64[i]; }
+        for (i=0;i<addr16.length;i++) {  b[j++]=addr16[i]; } 
+        b[j++]=0x00; // Broadcast Radius 1
+        b[j++]=opt;  // Options 1
+        for (i=0;i<data.length;i++) {  b[j++]=data[i]; } // Payload, data
         
-        a.push(0x00); // Broadcast Radius
-        a.push(opt);  // Options
-        
-        for (i=0;i<data.length;i++) {  a.push(data[i]); } // Payload, data
         // Add length and Cecksum
-        a=this.calcLandC(a);
+        this.calcLandC(b);
+        
         // Sequence Number 
         this.seq++; if (this.seq>255) { this.seq=1; }
-        return(a);
+        return(b);
     };
     //
     // Build an AT frame
     //
     this.atFrame=function(cmd,value) {
-        var i;
+        var i,j;
         // Frame
-        var a=[0x7E,0,0,0x8,this.seq,cmd.charCodeAt(0),cmd.charCodeAt(1)];
-        // Proc Value
-        for(i=0;i<value.length;i++) {
-            a.push(value[i]);
-        }
-        // Add length and Cecksum
-        a=this.calcLandC(a);
+        var b=new Uint8Array(7+value.length+1);
+        b.set([0x7E,0,0,0x8,this.seq,cmd.charCodeAt(0),cmd.charCodeAt(1)]);
+        // Add value
+        for(i=0,j=7;i<value.length;i++) { b[j++]=value[i]; }
+        // Calc CS and LEN
+        this.calcLandC(b);
+        
         // Sequence Number 
         this.seq++; if (this.seq>255) { this.seq=1; }
-        return(a);
+        return(b);
     };
     //
     // Calculate Length and Checksum
     //
     this.calcLandC=function(frame) {
         var i=0;
-        var l=frame.length-3;
+        var l=frame.length-4;
         var c=0;
-        
         // Length
         frame[2]=l&255; // High / Low Byte
         frame[1]=l>>8;
@@ -213,19 +223,6 @@ var xbee=function(ser) {
         for(i=3;i<frame.length;i++) { c+=frame[i]; }
         c=(c&255); c=255-c;
         
-        frame[frame.length]=c;
-        return(frame);
-    };
-    //
-    // Converts a string to array of bytes. Usefull wenn sending ASCII Data
-    // Do not use characters > 256
-    //
-    this.strtobytes=function(str) {
-        var bytes = [];
-        for (var i = 0; i < str.length; ++i)
-        {
-            bytes.push(str.charCodeAt(i));
-        }
-        return(bytes);
+        frame[frame.length-1]=c;
     };
 };
