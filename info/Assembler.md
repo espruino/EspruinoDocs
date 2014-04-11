@@ -33,6 +33,8 @@ This is handled as follows:
 
 **Note:** The assembler is only partially implemented so will only parse some opcodes at the moment.
 
+For an ARM Thumb reference, [see this link](https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf)
+
 Argument Specifiers / Call Signature
 --------------------------------
 
@@ -43,6 +45,16 @@ returnType (argType1,argType2,...)
 ```
 
 Allowed types are `void`, `bool`, `int`, `long`, `double`, `Pin` (a pin number), `JsVar` (a pointer to a JsVar structure).
+
+
+Calling Convention (what you can use!)
+---------------------------------
+
+For a better explaination of this, [see Wikipedia](http://en.wikipedia.org/wiki/Calling_convention#ARM)
+
+The registers r0, r1, r2 and r3 contain the first 4 32 bit arguments, and r0 is used to return the 32 bit result. Other arguments are passed on the stack (which we're not covering here).
+
+Registers r0-r3 are free to use - however any other registers have to be restored to their previous values before the function returns to the caller. This is usually done using `push {r4,r5,r6,...}` and `pop {r4,r5,r6,...}`.
 
 
 Accessing Data
@@ -115,6 +127,40 @@ var pulse = E.asm("void()",
 
 pulse();
 ```
+
+Loops
+-----
+
+You can do loops as follows. This example adds together all the numbers below and including the current one:
+
+```
+var a = E.asm("int(int,int)", 
+  "adds   r0, r0, r1",
+  "sub    r1, r1, #1",
+  "cmp    r1, #0",
+  "bgt    #-10",
+  "bx  lr");
+
+for (var i=1;i<10;i++)
+  console.log(i, a(0,i));
+
+// 1 1
+// 2 3
+// 3 6
+// 4 10
+// 5 15
+// 6 21
+// 7 28
+// 8 36
+// 9 45
+```
+
+### Note:
+
+* This example will crash Espruino for any number less than or equal to zero
+* Until labels are implemented, this is significantly more painful than it needs to be!
+* The program counter is always 4 bytes ahead of the current instruction, and instructions are (usually!) 2 bytes long. That means that to get back to the exact same instruction you must use `-4` and you must subtract another 2 for each instruction you want to jump over (hence `-10`).
+
 
 Compiling C Code
 --------------
