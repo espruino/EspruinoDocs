@@ -57,8 +57,8 @@ Hello World
 Simple Hello World text using a bitmap font:
 
 ```JavaScript
-LCD.clear();
-LCD.drawString("Hello World",0,0);
+g.clear();
+g.drawString("Hello World",0,0);
 ```
 
 The final two arguments are colours (background and foreground)
@@ -66,13 +66,13 @@ The final two arguments are colours (background and foreground)
 Or use vector fonts, which are scaleable!
 
 ```JavaScript
-LCD.clear();
-LCD.setFontVector(40);
-LCD.setColor(1,0,0);
-LCD.drawString("Hello",0,0); // 40px high in red
-LCD.setFontVector(60);
-LCD.setColor(0,1,0);
-LCD.drawString("World",40,40); // 60px high in green
+g.clear();
+g.setFontVector(40);
+g.setColor(1,0,0);
+g.drawString("Hello",0,0); // 40px high in red
+g.setFontVector(60);
+g.setColor(0,1,0);
+g.drawString("World",40,40); // 60px high in green
 ```
  
 You can then switch back to the bitmap font using:
@@ -89,7 +89,7 @@ Circles
 There isn't currently a circle function implemented - but you can just add one!
 
 ```JavaScript
-LCD.fillCircle = function(x,y,rad,col) {
+g.fillCircle = function(x,y,rad,col) {
   var pts = parseInt(rad)/2;
   var a = [];
   for (var i=0;i<pts;i++) {
@@ -97,12 +97,13 @@ LCD.fillCircle = function(x,y,rad,col) {
     a.push(x+Math.sin(t)*rad);
     a.push(y+Math.cos(t)*rad);
   }
-  LCD.fillPoly(a);
+  g.fillPoly(a);
 }
 
-LCD.clear();
-LCD.fillCircle(100,100,50);
+g.clear();
+g.fillCircle(100,100,50);
 ```
+
  
 Random Lines
 ------------
@@ -110,11 +111,84 @@ Random Lines
 Randomly draw lines on the screen!
 
 ```JavaScript
-LCD.clear();
+g.clear();
 while (true) {
-  LCD.setColor(Math.random(),Math.random(),Math.random());
-  LCD.drawLine(
+  g.setColor(Math.random(),Math.random(),Math.random());
+  g.drawLine(
     Math.random()*LCD.getWidth(), Math.random()*LCD.getHeight(),
     Math.random()*LCD.getWidth(),Math.random()*LCD.getHeight()) 
 }
 ```
+
+
+Images / Bitmaps
+----------------
+
+With Espruino, you can define an image as a special kind of object. For instance this is a 8x8 pixel, 1 bit smiley face:
+
+```
+var img = {
+  width : 8, height : 8, bpp : 1,
+  transparent : 0,
+  buffer : new Uint8Array([
+    0b00000000,
+    0b01000100,
+    0b00000000,
+    0b00010000,
+    0b00000000,
+    0b10000001,
+    0b01111110,
+    0b00000000,
+  ]).buffer
+};
+```
+
+See the reference for [`Graphics.drawImage`](/Reference#l_Graphics_drawImage) for more information...
+
+You can then simply draw it to the screen wherever you want:
+
+```
+g.drawImage(img, 10, 10);
+```
+
+If you use a single-bit image, the foreground and background colours will be used instead of the image's colours. Otherwise the colour data will be copied directly so it's an idea to use a bitmap of the same bit depth as your display.
+
+The easiest way to get bitmap image data into Espruino is to convert it to raw pixel data on your PC, and to then convert that to base64 encoding.
+
+**But beware:** Microcontrollers don't have much memory - even a small 128x128 pixel image will be too big to fit in Espruino's memory!
+
+### Creating a raw image
+
+It's best to install the [ImageMagick](http://www.imagemagick.org/) tools. Then you can type commands like:
+
+```Bash
+# Create a 24 bit RGB image called output.raw
+convert myimage.png rgb:output.raw
+
+# Create a 24 bit, 16x16 pixel RGB image called output.raw
+convert myimage.png -resize 16x16\! -depth 8 rgb:output.raw
+
+# Create an 8 bit, 16x16 pixel Greyscale image called output.raw
+convert myimage.png -resize 16x16\! -depth 8  gray:output.raw
+
+# Create a 1 bit, 16x16 pixel black and white image called output.raw
+convert myimage.png -resize 16x16\! -depth 1  gray:output.raw
+```
+
+### Base64 Encoding
+
+On Linux, simply type `base64 --wrap=0 myfilename.raw` - or on other platforms you can use the [[File Converter]] webpage. 
+
+### Loading into Espruino
+
+Once you've got the base64 encoded image, simply decode it with `atob` and create an ArrayBuffer from it. For instance this is the Espruino logo:
+
+```
+var img = {
+  width : 32, height : 32, bpp : 1,
+  transparent : 0,
+  buffer : E.toArrayBuffer(atob("AAAAAAAAeAAAf/4AH/+bAH/ABQBoAAeAaAADwHQAAf5aAfCfS/8/sUXP//1G//AdQ/wAHUAAAB1AAAAdQAAAHWAAABNgAAAeYAAAEOAAABDgAAAQ8AAAGPgAABz4AAAcfAAAnD4AP/A+B//AHz//wA///4AAP+AAABgAAAAAAAA="))
+};
+```
+
+

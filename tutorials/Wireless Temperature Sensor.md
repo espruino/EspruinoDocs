@@ -70,7 +70,6 @@ function onInit() {
   // We set up the LCD here because it needs to initialise at power on
   g = require("PCD8544").connect(SPI3,B6,B7,B8);
 }
-onInit();
 
 // Draw temperature onto the LCD
 function showTemperature(temp) {
@@ -100,6 +99,8 @@ setInterval(function() {
     }
   }
 }, 50);
+
+onInit();
 ```
 
 About 10 seconds later the display should update with the temperature received from the sender...

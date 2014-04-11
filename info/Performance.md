@@ -50,7 +50,8 @@ That square (110x110x32bpp) is using as much RAM as Espruino has **IN TOTAL**, a
 
 JavaScript minification can also provide a good alternative to bytecode. While not as fast, it is still very compact - and is still valid, human-readable JavaScript.
 
- 
+**If you do need high speed for a task, you can now write [inline assembler](/Assembler)**
+
 
 EXECUTING CODE HAS A NOTICABLE OVERHEAD - GIVE AS MUCH WORK TO ESPRUINO IN ONE GO AS YOU CAN
 ---------------------------------------------------------------------------------
@@ -76,6 +77,18 @@ var buf = new Uint8Array([1,2,3]);
 ....
 SPI1.send(buf);
 ```
+
+Unlike Arduino's `digitalWrite`, Espruino's `digitalWrite` can take an array of pins, in which case it sets them in order, LSB first. For example you could send 8 bits and then pulse a clock line as follows:
+
+```
+var pins = [CLK,CLK,A7,A6,A5,A4,A3,A2,A1,A0];
+
+array.forEach(function(data) {
+  digitalWrite(pins, data|256);
+});
+```
+
+This sets `A0`..`A7`, but then sets `CLK` to `1`, and then to `0`.
  
 
 ESPRUINO STORES ARRAYS AND OBJECTS IN LINKED LISTS
@@ -85,6 +98,21 @@ So the number of elements in an array or object will seriously affect the time i
 
 As Espruino becomes more mature the Linked Lists may be replaced with a Tree structure, but for now it is very useful to be aware of this limitation.
 
+To work around this, try and use `Array.map`, `Array.forEach`, and `Array.reduce` wherever possible, as these can iterate over the linked list.
+
+To AND together all values in an array:
+
+```
+var anded = myArray.reduce(function(last, value) { return last & value; }, 0xFFFFFFFF /*initial value*/);
+```
+
+To send the contents of an array:
+
+```
+myArray.forEach(function(value) {
+  digitalWrite([A0,A1,A2,A3], value);
+});
+```
  
 
 EVERY DATATYPE IN ESPRUINO IS BASED ON A SINGLE 20 BYTE STORAGE UNIT

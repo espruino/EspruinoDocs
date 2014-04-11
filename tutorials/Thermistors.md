@@ -164,6 +164,8 @@ function onInit() {
  var lcd = new LCD(A4,A5,A0,A1,A2,A3);
  lcd.bigInit();
 }
+
+onInit();
 ```
 
 You can now type ```save()```, and when the power goes off and back on, onInit will be called and the LCD will be initialised.

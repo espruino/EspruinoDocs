@@ -138,5 +138,5 @@ function onTimer() {
   });
 }
 
-
+onInit();
 

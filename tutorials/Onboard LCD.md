@@ -70,4 +70,6 @@ function onInit() {
     g.flip();
   });
 }
+
+onInit();
 ```
