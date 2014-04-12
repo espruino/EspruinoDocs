@@ -23,8 +23,11 @@ function Midi(uart, speed) {
 	    } else { // command
 				channel = b & 0b1111;
 				message = b & 0b11110000;
-				// console.log("Command: " + message + ' on channel: ' + channel);
-				state = 'P1';
+				if (message == 0xc0 || message == 0xd0) {
+					state = 'P2';
+				} else {
+					state = 'P1';
+				}
 	    }
 		} else if (state == 'P1') {
 			p1 = b;
@@ -37,11 +40,15 @@ function Midi(uart, speed) {
 			} else if (message == 0x80) {
 				emitter.emit('noteOff', { chan: channel, note: p1, velocity: p2 });
 			} else if (message == 0xb0) {
-				emitter.emit('ctrlChange', { chan: channel, ctrl: p1, value: p2 });
+				emitter.emit('controllerChange', { chan: channel, ctrl: p1, value: p2 });
 			} else if (message == 0xe0) {
 				emitter.emit('pitchBend', { chan: channel, value: p1 | (p2 << 7) });
 			} else if (message == '0xa0') {
 				emitter.emit('afterTouch', { chan: channel, note: p1, value: p2 });
+			} else if (message == 0xc0) {
+				emitter.emit('patchChange', { chan: channel, patch: p2 });
+			} else if (message == 0xd0) {
+				emitter.emit('channelPressure', { chan: channel, press: p2 });
 			}
 			state = 'WAITING';
 		}
