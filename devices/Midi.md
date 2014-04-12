@@ -20,14 +20,19 @@ I wired mine like that:
 
 | Device Pin | Espruino |
 | ---------- | -------- |
-| 1 (GND)    | GND      |
-| 2 (VCC)    | 3.3      |
-| 3 (TX)     | A3       |
+| (GND)      | GND      |
+| (VCC)      | 3.3      |
+| (TX)       | A3       |
 
-Obviusly when the module will do midi-out you may want to wire RX to A2, assuming you'll be using
-Serial2.
+Obviusly when the module will do midi-out you may want to add:
 
-== Usage ==
+|------------|----------|
+| (RX)       | A2       |
+
+if you are using Serial2 like I do.
+
+Usage
+=====
 
 ```
  var midi = require('Midi').setup(Serial2, 115200);
@@ -46,3 +51,4 @@ Supported events are:
   * patchChange
   * channelPress
 
+* APPEND_USES
