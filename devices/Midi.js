@@ -1,28 +1,31 @@
+/* Copyright (c) 2014 Luca S.G.de Marinis - loop23-at-gmail.com,
+ * See the file LICENSE for copying permission */
+
+/* This module implements midi input (which is serial after all),
+ *  and generates events based on what it received on the wire */
+
 function Midi(uart, speed) {
 	this.uart = uart;
 	uart.setup(speed, { parity:'none', bytesize:8, stopbits:1 });
-
-	// console.log("Port: " + midi + ' initialized');
 	var state = 'W';
 	var message = '';
 	var p1 = 0;
 	var p2 = 0;
 	var channel = 0;
 	var emitter = this;
-
 	uart.onData(function(d) {
 		var data = d.data;
 		if (data.length != 1) {
 	    console.log("Weird multibyte thing, discarding");
+			return;
 		}
 		var b = data.charCodeAt(0);
-    // console.log("Got data!" + b + ' - I am: ' + this);
 		if (state === 'W') {
 	    if (b < 0x80) {
 				print("Out of order or non-command, discarding");
 	    } else { // command
-				channel = b & 0b1111;
-				message = b & 0b11110000;
+				channel = b & 0xf;
+				message = b & 0xf0;
 				if (message == 0xc0 || message == 0xd0) {
 					state = '2';
 				} else {
@@ -34,7 +37,6 @@ function Midi(uart, speed) {
 	    state = '2';
 		} else if (state == '2') {
 			p2 = b;
-	    // print("So, mess: " + this.message + ' ,p1: ' + this.p1 + ' ,p2: ' + this.p2);
 			if (message === 0x90) {
 				emitter.emit('noteOn', { chan: channel, note: p1, velocity: p2 });
 			} else if (message === 0x80) {
