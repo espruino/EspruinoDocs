@@ -24,12 +24,7 @@ I wired mine like that:
 | (VCC)      | 3.3      |
 | (TX)       | A3       |
 
-Obviusly when the module will do midi-out you may want to add:
-
-|------------|----------|
-| (RX)       | A2       |
-
-if you are using Serial2 like I do.
+Obviusly when the module will do midi-out you may want to add RX => A2, if you are using Serial2 like I do.
 
 Usage
 =====
