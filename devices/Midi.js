@@ -2,7 +2,7 @@ function Midi(uart, speed) {
 	var midi = uart;
 	midi.setup(speed, { parity:'none', bytesize:8, stopbits:1 });
 
-	console.log("Port: " + midi + ' initialized');
+	// console.log("Port: " + midi + ' initialized');
 	var state = 'WAITING';
 	var message = '';
 	var p1 = 0;
@@ -16,14 +16,14 @@ function Midi(uart, speed) {
 	    console.log("Weird multibyte thing, discarding");
 		}
 		var b = data.charCodeAt(0);
-    console.log("Got data!" + b + ' - I am: ' + this);
+    // console.log("Got data!" + b + ' - I am: ' + this);
 		if (state == 'WAITING') {
 	    if (b < 0x80) {
 				print("Out of order or non-command, discarding");
 	    } else { // command
 				channel = b & 0b1111;
 				message = b & 0b11110000;
-				console.log("Command: " + message + ' on channel: ' + channel);
+				// console.log("Command: " + message + ' on channel: ' + channel);
 				state = 'P1';
 	    }
 		} else if (state == 'P1') {
@@ -33,15 +33,15 @@ function Midi(uart, speed) {
 			p2 = b;
 	    // print("So, mess: " + this.message + ' ,p1: ' + this.p1 + ' ,p2: ' + this.p2);
 			if (message == 0x90) {
-				emitter.emit('noteOn', channel, p1, p2);
+				emitter.emit('noteOn', { chan: channel, note: p1, velocity: p2 });
 			} else if (message == 0x80) {
-				emitter.emit('noteOff', channel, p1, p2);
+				emitter.emit('noteOff', { chan: channel, note: p1, velocity: p2 });
 			} else if (message == 0xb0) {
-				emitter.emit('ctrlChange', channel, p1, p2);
+				emitter.emit('ctrlChange', { chan: channel, ctrl: p1, value: p2 });
 			} else if (message == 0xe0) {
-				emitter.emit('pitchBend', p1 | (p2 << 7));
+				emitter.emit('pitchBend', { chan: channel, value: p1 | (p2 << 7) });
 			} else if (message == '0xa0') {
-				emitter.emit('afterTouch', p1, p2);
+				emitter.emit('afterTouch', { chan: channel, note: p1, value: p2 });
 			}
 			state = 'WAITING';
 		}
