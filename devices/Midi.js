@@ -16,7 +16,7 @@ function Midi(uart, speed, noteOn) {
 	    console.log("Weird multibyte thing, discarding");
 		}
 		var b = data.charCodeAt(0);
-    console.log("Got data!" + b);
+    console.log("Got data!" + b + ' - I am: ' + this);
 		if (this.state == 'WAITING') {
 	    if (b < 0x80) {
 				print("Out of order or non-command, discarding");
