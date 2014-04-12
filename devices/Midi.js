@@ -12,11 +12,11 @@ function Midi(uart, speed, noteOn) {
 
 	this.midi.onData(function(d) {
 		var data = d.data;
-    console.log("Got data!");
 		if (data.length != 1) {
 	    console.log("Weird multibyte thing, discarding");
 		}
 		var b = data.charCodeAt(0);
+    console.log("Got data!" + b);
 		if (this.state == 'WAITING') {
 	    if (b < 0x80) {
 				print("Out of order or non-command, discarding");
