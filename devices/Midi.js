@@ -1,6 +1,6 @@
 function Midi(uart, speed) {
-	var midi = uart;
-	midi.setup(speed, { parity:'none', bytesize:8, stopbits:1 });
+	this.uart = uart;
+	uart.setup(speed, { parity:'none', bytesize:8, stopbits:1 });
 
 	// console.log("Port: " + midi + ' initialized');
 	var state = 'W';
@@ -10,7 +10,7 @@ function Midi(uart, speed) {
 	var channel = 0;
 	var emitter = this;
 
-	midi.onData(function(d) {
+	uart.onData(function(d) {
 		var data = d.data;
 		if (data.length != 1) {
 	    console.log("Weird multibyte thing, discarding");
