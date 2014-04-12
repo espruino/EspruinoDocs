@@ -28,6 +28,7 @@ function DS18B20(oneWire, device) {
 
 DS18B20.prototype.C = {
   CONVERT_T: 0x44,
+  COPY: 0x48,
   READ: 0xBE,
   WRITE: 0x4E
 };
@@ -55,6 +56,10 @@ DS18B20.prototype._writeSpad = function (th, tl, conf) {
   for (var i = 0; i < 3; i++) {
     this.bus.write(arguments[i]);
   }
+  this.bus.reset();
+  this.bus.select(this.sCode);
+  this.bus.write(this.C.COPY);
+  this.bus.reset();
 };
 
 DS18B20.prototype.setRes = function (res) {
@@ -72,7 +77,7 @@ DS18B20.prototype.isPresent = function () {
 };
 
 DS18B20.prototype.getTemp = function (verify) {
-  var spad;
+  var spad = null;
   var temp = null;
   if ((verify && !this.isPresent()) || !this.sCode) {
     return temp;
