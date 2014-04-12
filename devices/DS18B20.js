@@ -64,7 +64,7 @@ DS18B20.prototype._writeSpad = function (th, tl, conf) {
 
 DS18B20.prototype.setRes = function (res) {
   var spad = this._readSpad();
-  res = [0x1F, 0x3F, 0x5F, 0x7F][Math.clip(res, 9, 12) - 9];
+  res = [0x1F, 0x3F, 0x5F, 0x7F][E.clip(res, 9, 12) - 9];
   this._writeSpad(spad[2], spad[3], res);
 };
 
