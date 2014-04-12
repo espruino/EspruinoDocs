@@ -1,4 +1,4 @@
-function Midi(uart, speed, noteOn) {
+function Midi(uart, speed) {
 	var midi = uart;
 	midi.setup(speed, { parity:'none', bytesize:8, stopbits:1 });
 
@@ -8,6 +8,7 @@ function Midi(uart, speed, noteOn) {
 	var p1 = 0;
 	var p2 = 0;
 	var channel = 0;
+	var emitter = this;
 
 	midi.onData(function(d) {
 		var data = d.data;
@@ -32,14 +33,22 @@ function Midi(uart, speed, noteOn) {
 			p2 = b;
 	    // print("So, mess: " + this.message + ' ,p1: ' + this.p1 + ' ,p2: ' + this.p2);
 			if (message == 0x90) {
-				noteOn(channel, p1, p2);
+				emitter.emit('noteOn', channel, p1, p2);
+			} else if (message == 0x80) {
+				emitter.emit('noteOff', channel, p1, p2);
+			} else if (message == 0xb0) {
+				emitter.emit('ctrlChange', channel, p1, p2);
+			} else if (message == 0xe0) {
+				emitter.emit('pitchBend', p1 | (p2 << 7));
+			} else if (message == '0xa0') {
+				emitter.emit('afterTouch', p1, p2);
 			}
 			state = 'WAITING';
 		}
 	});
 };
 
-exports.setup = function(uart, speed, noteOn) {
-  return new Midi(uart, speed, noteOn);
+exports.setup = function(uart, speed) {
+  return new Midi(uart, speed);
 };
 
