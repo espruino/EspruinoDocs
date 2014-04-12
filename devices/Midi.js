@@ -2,6 +2,7 @@ function Midi(uart, speed, noteOn) {
 	this.midi = uart,
 	this.midi.setup(speed, { parity:'none', bytesize:8, stopbits:1 });
 
+	console.log("Port: " + this.midi + ' initialized');
 	this.state = 'WAITING';
 	this.message = '';
 	this.p1 = 0;
@@ -11,17 +12,18 @@ function Midi(uart, speed, noteOn) {
 
 	this.midi.onData(function(d) {
 		var data = d.data;
+    console.log("Got data!");
 		if (data.length != 1) {
-	    print("Weird multibyte thing, discarding");
+	    console.log("Weird multibyte thing, discarding");
 		}
 		var b = data.charCodeAt(0);
 		if (this.state == 'WAITING') {
 	    if (b < 0x80) {
-				print("Out of order, non command, discarding");
+				print("Out of order or non-command, discarding");
 	    } else { // command
 				this.channel = b & 0b1111;
 				this.message = b & 0b11110000;
-				print("Command: " + this.message + ' on channel: ' + this.channel);
+				console.log("Command: " + this.message + ' on channel: ' + this.channel);
 				this.state = 'P1';
 	    }
 		} else if (this.state == 'P1') {
