@@ -23,7 +23,7 @@ like `require("libname")`.
       var C = {
         MY : 0x001,          // description
         PRIVATE : 0x001,     // description
-        CONSTANTS : 0x00423, // description
+        CONSTANTS : 0x00423  // description
       };
 
       function MOD123(pin1,pin2) {
@@ -34,7 +34,7 @@ like `require("libname")`.
       MOD123.prototype.C = {
         MY : 0x013,         // description
         PUBLIC : 0x0541,    // description
-        CONSTANTS : 0x023,  // description
+        CONSTANTS : 0x023   // description
       };
 
       /* Put most of my comments outside the functions... */
