@@ -13,6 +13,13 @@ var sensor3 = require("DS18B20").connect(ow, -8358680895374756824);
 ```
 */
 
+var C = {
+  CONVERT_T: 0x44,
+  COPY: 0x48,
+  READ: 0xBE,
+  WRITE: 0x4E
+};
+
 function DS18B20(oneWire, device) {
   this.bus = oneWire;
   if (device === undefined) {
@@ -26,23 +33,16 @@ function DS18B20(oneWire, device) {
   }
 }
 
-DS18B20.prototype.C = {
-  CONVERT_T: 0x44,
-  COPY: 0x48,
-  READ: 0xBE,
-  WRITE: 0x4E
-};
-
 DS18B20.prototype._readSpad = function (convert_t) {
   var spad = [];
   this.bus.reset();
   this.bus.select(this.sCode);
   if (convert_t) {
-    this.bus.write(this.C.CONVERT_T, true);
+    this.bus.write(C.CONVERT_T, true);
     this.bus.reset();
     this.bus.select(this.sCode);
   }
-  this.bus.write(this.C.READ);
+  this.bus.write(C.READ);
   for (var i = 0; i < 9; i++) {
     spad.push(this.bus.read());
   }
@@ -52,13 +52,13 @@ DS18B20.prototype._readSpad = function (convert_t) {
 DS18B20.prototype._writeSpad = function (th, tl, conf) {
   this.bus.reset();
   this.bus.select(this.sCode);
-  this.bus.write(this.C.WRITE);
+  this.bus.write(C.WRITE);
   for (var i = 0; i < 3; i++) {
     this.bus.write(arguments[i]);
   }
   this.bus.reset();
   this.bus.select(this.sCode);
-  this.bus.write(this.C.COPY);
+  this.bus.write(C.COPY);
   this.bus.reset();
 };
 
