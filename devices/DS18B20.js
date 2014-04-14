@@ -12,7 +12,8 @@ var sensor2 = require("DS18B20").connect(ow, 1);
 var sensor3 = require("DS18B20").connect(ow, -8358680895374756824);
 ```
 */
-function DS18B20(oneWire, /*OPTIONAL*/device) {
+
+function DS18B20(oneWire, device) {
   this.bus = oneWire;
   if (device === undefined) {
     this.sCode = this.bus.search()[0];
@@ -24,42 +25,59 @@ function DS18B20(oneWire, /*OPTIONAL*/device) {
     }
   }
 }
-DS18B20.prototype._readSpad = function(/*OPTIONAL*/convert_t) {
+
+DS18B20.prototype.C = {
+  CONVERT_T: 0x44,
+  COPY: 0x48,
+  READ: 0xBE,
+  WRITE: 0x4E
+};
+
+DS18B20.prototype._readSpad = function (convert_t) {
   var spad = [];
   this.bus.reset();
   this.bus.select(this.sCode);
   if (convert_t) {
-    this.bus.write(0x44, true);
+    this.bus.write(this.C.CONVERT_T, true);
     this.bus.reset();
     this.bus.select(this.sCode);
   }
-  this.bus.write(0xBE);
+  this.bus.write(this.C.READ);
   for (var i = 0; i < 9; i++) {
     spad.push(this.bus.read());
   }
   return spad;
 };
+
 DS18B20.prototype._writeSpad = function (th, tl, conf) {
   this.bus.reset();
   this.bus.select(this.sCode);
-  this.bus.write(0x4E);
+  this.bus.write(this.C.WRITE);
   for (var i = 0; i < 3; i++) {
     this.bus.write(arguments[i]);
   }
+  this.bus.reset();
+  this.bus.select(this.sCode);
+  this.bus.write(this.C.COPY);
+  this.bus.reset();
 };
+
 DS18B20.prototype.setRes = function (res) {
   var spad = this._readSpad();
-  res = [0x1F,0x3F,0x5F,0x7F][Math.clip(res,9,12) - 9];
+  res = [0x1F, 0x3F, 0x5F, 0x7F][E.clip(res, 9, 12) - 9];
   this._writeSpad(spad[2], spad[3], res);
 };
+
 DS18B20.prototype.getRes = function () {
-  return [0x1F,0x3F,0x5F,0x7F].indexOf(this._readSpad()[4]) + 9;
+  return [0x1F, 0x3F, 0x5F, 0x7F].indexOf(this._readSpad()[4]) + 9;
 };
+
 DS18B20.prototype.isPresent = function () {
   return this.bus.search().indexOf(this.sCode) !== -1;
 };
-DS18B20.prototype.getTemp = function (/*OPTIONAL*/verify) {
-  var spad;
+
+DS18B20.prototype.getTemp = function (verify) {
+  var spad = null;
   var temp = null;
   if ((verify && !this.isPresent()) || !this.sCode) {
     return temp;
@@ -72,4 +90,5 @@ DS18B20.prototype.getTemp = function (/*OPTIONAL*/verify) {
   temp = temp / 16.0;
   return temp;
 };
+
 exports.connect = function (oneWire, device) {return new DS18B20(oneWire, device);};
