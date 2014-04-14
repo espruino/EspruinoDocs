@@ -1,8 +1,6 @@
-<!--- Copyright (c) 2014 Luca S.G.de Marinis, loop23-at-gmail.com.
-See the file LICENSE for copying permission. -->
-
+<!--- Copyright (c) 2014 Luca S.G.de Marinis, loop23-at-gmail.com. See the file LICENSE for copying permission. -->
 Midi
-=====================
+====
 
 * KEYWORDS: Module,Midi,Serial,Music
 
@@ -16,7 +14,7 @@ using some kind of midi-serial bridge (I'm currently using HairLess Midiserial o
 to a SPP bluetooth serial connection). This mostly affects the speed setting you have to use:
 "real" midi is 31250, bridged is more likely to be 115200.
 
-I wired mine like that:
+I wired mine like:
 
 | Device Pin | Espruino |
 | ---------- | -------- |
@@ -26,13 +24,15 @@ I wired mine like that:
 
 Obviusly when the module will do midi-out you may want to add RX => A2, if you are using Serial2 like I do.
 
-Usage
-=====
+Software
+-----
 
 ```
  var midi = require('Midi').setup(Serial2, 115200);
  midi.on('noteOn', function(i) {
-   console.log('Music is in the air! note: ' + i.note + ' on channel: ' + i.chan + ' with velocity: ' + i.velocity);
+   console.log('Music is in the air! note: ' + i.note + 
+               ' on channel: ' + i.chan + 
+               ' with velocity: ' + i.velocity);
  });
 ```
 
@@ -46,4 +46,7 @@ Supported events are:
   * patchChange
   * channelPress
 
-* APPEND_USES
+Using 
+-----
+
+* APPEND_USES: Midi
