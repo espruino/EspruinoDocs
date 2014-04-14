@@ -22,7 +22,7 @@ How to use my module:
 ```
   var foo = require("ADXL335").connect(C3,A0,A1);
   setInterval(function() {
-    var d= adxl.readG();
+    var d= foo.readG();
     console.log("x " + d[0] + " y " + d[1] + " z " + d[2]);
   }, 1000);
 ```
