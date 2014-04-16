@@ -203,10 +203,16 @@ NRF.prototype.slaveHandler = function() {
       if (ch===0 && this.cmd!=="") {
         var c = this.cmd;
         this.cmd = "";
-        print("...>"+c);
-        var result = ""+eval(c); // evaluate
-        print("...="+result);
-        this.sendStringTimeout(result, 500);
+        var nrf = this;
+        /** evaluate and return a result in the timeout, 
+        so that evaluation errors don't cause the slaveHandler
+        interval to get removed */
+        setTimeout(function() {
+          print("...>"+c);
+          var result = ""+eval(c); // evaluate
+          print("...="+result);
+          nrf.sendStringTimeout(result, 500);
+        }, 1);
       } else if (ch!==0) {
         this.cmd += String.fromCharCode(ch);
       }
