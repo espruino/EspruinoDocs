@@ -232,7 +232,7 @@ NRF.prototype.masterHandler = function() {
 NRF.prototype.sendString = function(cmd) {
   for (var i=0;i<=cmd.length;i+=this.PAYLOAD) {
     var data = [];
-    for (var n=0;n<this.PAYLOAD;n++) data[n] = cmd.fromCharCode(i+n);
+    for (var n=0;n<this.PAYLOAD;n++) data[n] = cmd.charCodeAt(i+n);
     var tries = 3;
     while ((tries-- > 0) && !this.send(data)) {};
   }
