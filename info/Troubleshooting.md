@@ -13,9 +13,15 @@ Getting Started
 
 ### My board doesn't seem to be recognized by my computer
 
+#### On the Espruino Board
+
 Hold down the RST button. Do the blue and red lights glow dimly? If not, there's a problem with your USB cable as power isn't getting to Espruino.
 
 Hold down BTN1, and then press and release RST while keeping BTN1 held. The Blue and Red LEDs should now light brightly for a fraction of a second, and the Blue LED should be pulsing. If not, there is some issue with USB. Try another USB cable (it's surprising how often this is at fault) and if that doesn't work, see the next troubleshooting headings.
+
+#### On other boards
+
+If you've bought a different board, it won't come pre-installed with Espruino. You'll have to go to the [[Download]] page and follow the instructions there in order to flash the correct software onto it.
 
 
 ### My board doesn't appear as a USB Serial port in Windows XP / Windows 8.1
@@ -52,7 +58,9 @@ Try reflashing again (by holding down BTN1 when RST is released, you should alwa
 
 As Espruino itself won't work, the IDE won't know what type of board it is supposed to flash so you'll have to look up the firmware manually. Just head to [the Espruino binaries site](http://www.espruino.com/binaries/?C=M;O=D) and look for the most recent (nearest the top) file named ```espruino_1v##_espruino_1r#.bin``` where ```1r#``` is the revision number written on the back of your Espruino board. Copy the link to the file, and paste it into the Espruino Web IDE.
 
+### My board appears as a mouse or joystick in Windows Control Panel's 'Devices and Printers' page.
 
+This may happen if you are not working with an original Espruino board and haven't yet installed the Espuino firmware. Some boards - especially the Discovery boards are automatically recognized by Windows as a completely different kind of device. Install the firmware as described on the Download page, disconnect the board a reconnect it again. 
 
 Using Espruino
 -------------
@@ -67,6 +75,8 @@ This is actually fine - Espruino writes what your command returned, so if you ex
 You could try typing `dump()` to see if your code has actually been saved. If it hasn't, it's possible that **BTN1** or the pin it is connected to was held down while Espruino boots (as this stops Espruino from loading saved code).
 
 You could try typing `load()` to force Espruino to load its saved program.
+
+If you want to execute certain commands at power-on, put those commands in a function called `onInit` and then type `save()`.
 
 
 ### Espruino stopped working after I typed `save()`
@@ -95,6 +105,3 @@ When you are not connected to a computer via USB, Espruino writes any console da
 To fix this, either remove your `console.log` and `print` statements, or explicitly set the console to be on the Serial port at startup with `function onInit() { Serial1.setConsole(); }`. However the second option will mean that you will no longer be able to program Espruino from USB unless you reset it.
 
 
-### I get 100% CPU usage in the Web IDE
-
-Sadly we know about this and it appears to be an issue with Chrome's Serial port implementation. A new version of Chrome that is due out in a month should fix this.
