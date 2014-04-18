@@ -35,6 +35,7 @@ DHT22.prototype.onread= function(d) {
             dht.read(dht.onreadf);
         } else {
             dht.onreadf(d);
+            dht.readfails=0;
         }
     } else {
         dht.readfails=0;
