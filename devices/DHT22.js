@@ -22,8 +22,9 @@ DHT22.prototype.read = function (a) {
     this.out=1;
     pinMode(this.pin);
     var dht = this;
-    setTimeout(function() {digitalWrite(dht.pin,0);},2)
-    setTimeout(function() {pinMode(dht.pin,'input_pullup');dht.watch=setWatch(function(t) {dht.onwatch(t);},dht.pin,{repeat:true});},5);
+    digitalWrite(this.pin,0);
+    this.watch=setWatch(function(t) {dht.onwatch(t);},dht.pin,{repeat:true});
+    setTimeout(function() {pinMode(dht.pin,'input_pullup');},3);
     setTimeout(function() {dht.onread(dht.endRead());},50);
 };
 DHT22.prototype.onread= function(d) {
@@ -53,9 +54,9 @@ DHT22.prototype.onwatch = function(t) {
 DHT22.prototype.endRead = function() {
     clearWatch(this.watch);
     if (this.i > 32) {
-        var rh=((this.out>>(this.i-13))&0x0FFF)*0.1;
-        var temp=(this.out>>(this.i-29)&0x7FFF)*0.1;
-        if (this.out>>(this.i-29)&0x8000) {
+        var rh=((this.out>>(this.i-18))&0x0FFF)*0.1;
+        var temp=((this.out<<(34-this.i))&0x7FFF)*0.1;
+        if ((this.out<<(35-this.i))&0x8000) {
             temp=temp*-1;
         }
         if (rh < 100 ) {
