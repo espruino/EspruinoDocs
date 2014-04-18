@@ -24,9 +24,10 @@ DHT11.prototype.read = function (a) {
     this.out=1;
     pinMode(this.pin);
     var dht = this;
-    setTimeout(function() {digitalWrite(dht.pin,0);},2)
-    setTimeout(function() {pinMode(dht.pin,'input_pullup');dht.watch=setWatch(function(t) {dht.onwatch(t);},dht.pin,{repeat:true});},5);
-    setTimeout(function() {dht.onread(dht.endRead());},50);
+    digitalWrite(this.pin,0);
+    this.watch=setWatch(function(t) {dht.onwatch(t);},dht.pin,{repeat:true});
+    setTimeout(function() {pinMode(dht.pin,'input_pullup');},3);
+    setTimeout(function() {dht.onread(dht.endRead());},30);
 };
 DHT11.prototype.onread= function(d) {
     var dht=this;
@@ -36,6 +37,7 @@ DHT11.prototype.onread= function(d) {
             dht.read(dht.onreadf);
         } else {
             dht.onreadf(d);
+            dht.readfails=0;
         }
     } else {
         dht.readfails=0;
