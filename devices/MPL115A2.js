@@ -1,16 +1,18 @@
 /* Copyright (c) 2014 Per Ejeklint. See the file LICENSE for copying permission. */
+/*
+ Module to talk to the MPL115A2 pressure sensors using I2C.
+ 
+ Usage:
 
-/* Module to talk to the MPL115A2 pressure sensors using I2C.
-** 
-** Usage:
-**
-** I2C1.setup({scl:B6,sda:B7});
-** var device = require('MPL115A2.connect(I2C1);
-**
-** device.getData(function(obj) {
-**   console.log(obj); // Example {t:22.51, p: 101.68}, t is in Celsius and p is in kPa
-** });
-**
+```
+ I2C1.setup({scl:B6,sda:B7});
+ var device = require('MPL115A2.connect(I2C1);
+
+ device.getData(function(obj) {
+   console.log(obj); // Example {t:22.51, p: 101.68}, t is in Celsius and p is in kPa
+ });
+```
+
 */
 
 var C = {
@@ -27,7 +29,7 @@ var C = {
   MPL115A2_REGISTER_CAL_B2_MSB           : 0x08,
   MPL115A2_REGISTER_CAL_B2_LSB           : 0x09,
   MPL115A2_REGISTER_CAL_C12_MSB          : 0x0A,
-  MPL115A2_REGISTER_CAL_C12_LSB          : 0x0B,
+  MPL115A2_REGISTER_CAL_C12_LSB          : 0x0B
 };
 
 function MPL115A2(_i2c) {
