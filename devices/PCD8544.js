@@ -27,7 +27,7 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst,
     setTimeout(function() {      
       spi.send(
         [0x21, // fnset extended
-        0x80 | 0x40, // setvop (experiment with 2nd val to get the right contrast)
+        0x80 | 0x3F, // setvop (experiment with 2nd val to get the right contrast)
         0x14, // setbias 4
         0x04 | 0x02, // temp control
         0x20, // fnset normal
