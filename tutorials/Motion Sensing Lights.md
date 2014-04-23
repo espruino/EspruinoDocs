@@ -26,7 +26,7 @@ Wiring Up
 
 ![Motion Sensing Lights Wiring](setup.jpg)
 
-Connect the [[Pyroelectic]] sensor as follows:
+Connect the [[Pyroelectric]] sensor as follows:
 
 | HC-SR501 | Espruino   |
 | ------- | ------- |
