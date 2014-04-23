@@ -19,6 +19,7 @@ function DHT11(pin) {
   this.readfails=0;
 }
 DHT11.prototype.read = function (a) {
+    if (this.watch) return; // we were already working, so ignore this
     this.onreadf=a;
     this.i=0;
     this.out=1;
