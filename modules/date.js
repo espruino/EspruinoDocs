@@ -36,7 +36,7 @@ function Date()
   switch(arguments.length)
     {
     case 0:
-      this.setTime(Math.floor(getTime()*1000));
+      this.setTime(Math.floor(getTime()*1000));	
       break;
     case 1:
       var arg=arguments[0];
@@ -116,12 +116,8 @@ Date.prototype.getDaysSinceEpoch=function()
 // of leap year will be simple. Btw, because 2000 IS a leap year and
 // 2100 is out of range, the formlua is simplified
 
-// I know comments below waste memory - sorry.
-
 Date.prototype.setDaysSinceEpoch=function(d_in)
 {
-  print("In setDaysSinceEpoch, d_in=",d_in);
-  
   var y,j,m,w,h,n;
   var mdays=C.DAYS;
   var d=d_in;
@@ -132,8 +128,6 @@ Date.prototype.setDaysSinceEpoch=function(d_in)
   d=d-y*C.FDAY;
   y=y*4+C.BASE_YEAR;
   
-  print("SDSE - y=",y,"d=",d);
-
   if (d>=C.YDAY)
     {
     y=y+1;                  // Second year in four - 1971
@@ -185,8 +179,6 @@ Date.prototype.getTime=function()
 
 Date.prototype.setTime=function(t)
 {
-    print("In setTime, t=",t);
-  
     var d=Math.floor(t/C.MSDAY);
     var ms=t-d*C.MSDAY;
     var s=Math.floor(ms/1000);
@@ -294,6 +286,3 @@ Date.prototype.addTime=function(t)
 };
 
 exports.constructor=Date;
-
-
-
