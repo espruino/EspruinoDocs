@@ -23,10 +23,10 @@ function Encoder(/*=PIN*/pina, /*=PIN*/pinb, callback) {
     var b = digitalRead(encoder.PINB);
     var s = 0;
     switch (this.last) {
-      case 0b00 : if (a) s++; if (b) s--; break;
-      case 0b01 : if (!a) s--; if (b) s++; break;
-      case 0b10 : if (a) s--; if (!b) s++; break;
-      case 0b11 : if (!a) s++; if (!b) s--; break;
+      case 0x00 : if (a) s++; if (b) s--; break;
+      case 0x01 : if (!a) s--; if (b) s++; break;
+      case 0x10 : if (a) s--; if (!b) s++; break;
+      case 0x11 : if (!a) s++; if (!b) s--; break;
     }
     this.last = a | (b<<1);
     if (s!==0) callback(s);
