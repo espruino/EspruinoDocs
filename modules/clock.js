@@ -5,13 +5,10 @@ Clock Module
 
 //var exports={};
 
-print("Clock: Loading Date");
-
 var Date=require("date").constructor;
 
-print("Clock: Done loading Date");
-
-// Constructor
+// Clock constructor.  Apply is used to pass all arguments to the Date
+// constructor
 
 function Clock(arguments) {
 
@@ -23,18 +20,19 @@ function Clock(arguments) {
 Clock.prototype = new Date();          
 Clock.prototype.constructor=Clock;       
 
-Clock.prototype.setClock = function(dt) {
+// setClock(milliseconds since 1/1/1970)
+
+Clock.prototype.setClock = function(ms) {
   
-  var tm=dt.getTime();
-  this.timeOffset=getTime()-tm;
-  
-  this.setTime(tm);
+  this.setTime(ms);
 };
 
-Clock.prototype.tick = function (t) {
+// Return the current clock time, as a date.  We calculate the number
+// of milliseconds since last called, and add this to the current 
+// time.
 
-    this.addTime(1000);
-};
+// This approach is designed to save power - we don't use an interval
+// to increment a clock because this prevents deep sleep
 
 Clock.prototype.getClockTime = function () {
 
@@ -50,6 +48,5 @@ Clock.prototype.getClockTime = function () {
 
 exports.constructor = Clock;
 
-print("Clock: Loaded.");
 
 
