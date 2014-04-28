@@ -25,18 +25,15 @@ var C = {
   MONTHNAME : ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 };
 
-// Constructor - support variable arguments
-// Zero aruguments - initialise from system clock - but this is likely to be the wrong time
-// unless your Espruino booted on Jan 1 1970 :)
-// 1 arguments - pass in a number of milliseconds since 1970 or a date.
-// 7 arguments - pass in year, month, day, hour, min, sec, ms
-
-function Date() 
-{
+/** Constructor - support variable arguments
+  * Zero arguments - initialise at 1970
+  * 1 arguments - pass in a number of milliseconds since 1970 or a date.
+  * 7 arguments - pass in year, month, day, hour, min, sec, ms */
+function Date() {  
   switch(arguments.length)
     {
     case 0:
-      this.setTime(Math.floor(getTime()*1000));	
+      this.setTime(0);	
       break;
     case 1:
       var arg=arguments[0];
@@ -53,7 +50,7 @@ function Date()
       this.set(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4],arguments[5],arguments[6]);
       break;
     default:
-      print("Date constructor called with wrong # args");
+      print("Called with wrong # args");
       break;
     }
 }
@@ -61,8 +58,7 @@ function Date()
 // We do not want to recompute things every time, so we have a flag which is
 // set if someone changes an important field...
 
-Date.prototype.checkDSE=function()
-{
+Date.prototype.checkDSE=function() {
   if (this.epday===-1)
     {
     this.epday=this.getDaysSinceEpoch();
@@ -84,40 +80,34 @@ Date.prototype.checkDSE=function()
 
 // This is zero-based = Jan 1st 1970 is day 0.  (Hence -1 on end of return - 'day' is 1-based)
 
-Date.prototype.getDaysSinceEpoch=function()
-{
-    var y=this.year-C.BASE_YEAR;
-    var f=Math.floor(y/4);
-    var yf=y-f*4;
-    var mdays;
+Date.prototype.getDaysSinceEpoch=function() {   
+  var y=this.year-C.BASE_YEAR;
+  var f=Math.floor(y/4);
+  var yf=y-f*4;
+  var mdays;
 
-    var ydays=yf*C.YDAY;
+  var ydays=yf*C.YDAY;
   
-    if (yf===2) 
-      {
-      mdays=C.LPDAYS;
-      }
-    else
-      {
-      mdays=C.DAYS; 
-      }
+  if (yf===2) {
+    mdays=C.LPDAYS;
+  } else {
+    mdays=C.DAYS; 
+  }
   
-    if (yf>=2)
-      {
-      ydays=ydays+1;
-      }
+  if (yf>=2) {
+    ydays=ydays+1;
+  }
 
-    var d=f*C.FDAY+C.YDAYS[yf]+mdays[this.month]+this.day-1;
+  var d=f*C.FDAY+C.YDAYS[yf]+mdays[this.month]+this.day-1;
   
-    return d;
+  return d;
 };
 
 // First calculate the number of four-year-interval, so calculation
 // of leap year will be simple. Btw, because 2000 IS a leap year and
 // 2100 is out of range, the formlua is simplified
 
-Date.prototype.setDaysSinceEpoch=function(d_in)
-{
+Date.prototype.setDaysSinceEpoch=function(d_in) {
   var y,j,m,w,h,n;
   var mdays=C.DAYS;
   var d=d_in;
@@ -168,8 +158,7 @@ Date.prototype.setDaysSinceEpoch=function(d_in)
 
 // Get the number of milliseconds since 1970 epoch for this date object
 
-Date.prototype.getTime=function()
-{
+Date.prototype.getTime=function() {
     this.checkDSE(); 
 
     return( ((this.hour*60+this.min)*60+this.sec)*1000+this.epday*C.MSDAY+this.ms);
@@ -177,8 +166,7 @@ Date.prototype.getTime=function()
 
 // Set the date/time given time in milliseconds since 1970 epoch
 
-Date.prototype.setTime=function(t)
-{
+Date.prototype.setTime=function(t) {
     var d=Math.floor(t/C.MSDAY);
     var ms=t-d*C.MSDAY;
     var s=Math.floor(ms/1000);
@@ -213,8 +201,9 @@ Date.prototype.setDate=function(d){this.day=d;this.epday=-1;};
 Date.prototype.setMonth=function(m){this.month=m;this.epday=-1;};
 Date.prototype.setFullYear=function(y){this.year=y;this.epday=-1;};
 
-Date.prototype.set=function(y,m,d,h,min,s,ms){this.year=y;this.month=m;this.day=d;this.hour=h;this.min=min;this.sec=s;this.ms=ms;
-                                         this.epday=-1;this.checkDSE();};
+Date.prototype.set=function(y,m,d,h,min,s,ms){
+  this.year=y;this.month=m;this.day=d;this.hour=h;this.min=min;this.sec=s;this.ms=ms;this.epday=-1;this.checkDSE();
+};
 
 function lz2(x) { return (x < 10) ? ("0" + x) : x; }
 
@@ -227,62 +216,53 @@ Date.prototype.toString=function(){return(this.toDateString()+" "+this.toTimeStr
 // to know the time, they call getTime, find how many milliseconds have elapsed and then
 // update the clock date/time.  
 
-Date.prototype.addTime=function(t)
-{
-    var s=Math.floor(t/1000);
-    var ms=t-s*1000;
+Date.prototype.addTime=function(t) {
+  var s=Math.floor(t/1000);
+  var ms=t-s*1000;
 
-    this.ms=this.ms+ms;
-    if (this.ms>1000)
-      {
-      this.ms-=1000;
-      s=s+1;
+  this.ms=this.ms+ms;
+  if (this.ms>1000) {
+    this.ms-=1000;
+    s=s+1;
+  }
+
+  if (s>0) {
+    var min=Math.floor(s/60);
+    s=s-min*60;
+
+    this.sec=this.sec+s;
+    if (this.sec>60) {
+      this.sec-=60;
+      min=min+1;
+    }
+
+    if (min>0) {
+      var hr=Math.floor(min/60);
+      min=min-hr*60;
+
+      this.min=this.min+min;
+      if (this.min>60) {
+        this.min-=60;
+        hr+=1;
       }
 
-    if (s>0)
-      {
-      var min=Math.floor(s/60);
-      s=s-min*60;
+      if (hr>0) {
+        var d=Math.floor(hr/24);
+        hr=hr-d*24;
 
-      this.sec=this.sec+s;
-      if (this.sec>60)
-        {
-        this.sec-=60;
-        min=min+1;
+        this.hour=this.hour+hr;
+        if (this.hour>24) {
+          this.hour-=24;
+          d+=1;
         }
 
-      if (min>0)
-        {
-        var hr=Math.floor(min/60);
-        min=min-hr*60;
-
-        this.min=this.min+min;
-        if (this.min>60)
-          {
-          this.min-=60;
-          hr+=1;
-          }
-
-        if (hr>0)
-          {
-          var d=Math.floor(hr/24);
-          hr=hr-d*24;
-
-          this.hour=this.hour+hr;
-          if (this.hour>24)
-            {
-            this.hour-=24;
-            d+=1;
-            }
-
-          if (d>0)
-            {
-            this.checkDSE();
-            this.setDaysSinceEpoch(this.epday+d);
-          }
+        if (d>0) {
+          this.checkDSE();
+          this.setDaysSinceEpoch(this.epday+d);
         }
       }
+    }
   }
 };
 
-exports.constructor=Date;
+exports.Date=Date;
