@@ -14,7 +14,7 @@ console.log("Minifying ",fileIn,"to",fileOut);
 var js = fs.readFileSync(fileIn).toString();
 
 // first off, replace all binary numbers
-js = js.replace(/0b([01][01]*)/g, "parseInt(\"\1\",2)");
+js = js.replace(/0b([01][01]*)/g, "parseInt(\"$1\",2)");
 
 //console.log(js);
 
@@ -34,6 +34,8 @@ function minify(type, callback) {
   //'warning_level' : 'QUIET',
   'js_code' : js
   });
+
+  //console.log(js);
 
   var post_options = {
   host: 'closure-compiler.appspot.com',
