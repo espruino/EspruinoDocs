@@ -7,8 +7,6 @@ Using the Web IDE
 
 The Web IDE is the preferred way to program Espruino. It's got a syntax-highlighted editor as well as support for dynamically loading modules and for upgrading Espruino's Firmware.
 
-Juergen's provided some videos on how to get started with some of the more advanced features of the Web IDE:
-
 First Steps 
 ----------
 
@@ -16,43 +14,7 @@ This video is from the [[Quick Start]] page, which contains extra information on
 
 [[http://youtu.be/1DT3lpL3IHo]]
 
-Juergen's also made a more in-depth video on some of the features:
-
-[[http://youtu.be/KOHYwK2gBeM]]
-
-
-Advanced
--------
-
-### Setting Options
-
-[[http://youtu.be/-Ve7Q3LZlr8]]
-
-[[http://youtu.be/DpikmSgH1J0]]
-
-### Project Handling
-
-[[http://youtu.be/ZZ96tIFYofA]]
-
-### Supporting boards
-
-[[http://youtu.be/D22i3qVEoDw]]
-
-### Supporting Modules
-
-[[http://youtu.be/bbXIR_ULSCA]]
-
-### Access Examples, Tutorials, datasheets
-
-[[http://youtu.be/AIVGb6vCRiM]]
- 
-### Minify code
-
-[[http://youtu.be/ySplJpZ23jk]]
-
-### Watch Variables
-
-[[http://youtu.be/-THJy1-Rcoc]]
+**Note:** The Web IDE has recently been updated so this video is out of date. We'll be updating it shortly.
 
 ### Installing the development version
 
