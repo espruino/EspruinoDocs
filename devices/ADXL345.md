@@ -36,6 +36,7 @@ var accel = require("ADXL345").connect(i2c,cspin,range)
 i2c is the I2C it is connected to, cspin is the pin that CS is connected to, since the ADXL345 doesn't seem to recognize that CS is high if it's high on startup. 
 Range (default 0, +/- 2 g's) is:
 
+  |   |         |
   | - | ------- |
   | 0 | +/-2 g  |
   | 1 | +/-4 g  |
@@ -99,6 +100,7 @@ bit 4 enables measurements (forced off in setup() per mfg recommendations, use m
 bit 3 enables sleep mode (see datasheet)
 Bits 1 and 2 set how often the device wakes in sleep mode to take a measurement:
 
+  |    |       |
   | -- | ----- |
   | 00 |  8 hz |
   | 01 |  4 hz |
@@ -150,7 +152,16 @@ After configuring your interupts, enable them with this function. The datasheet 
 
 Both arguments are a byte; enable determies whether each interrupt is enabled (1=enabled), and map determines whether it goes to INT1 (0) or INT2 (1) pin. Format is the same on both, with 1 bit per type of interrupt:
 
-|Data Ready|Single Tap|Double Tap|Activity|Inactivity|free fall|watermark|overrun|
+  | Bit | Tyope |
+  |---|------------|
+  | 7 | Data Ready |
+  | 6 | Single Tap |
+  | 5 | Double Tap |
+  | 4 | Activity |
+  | 3 | Inactivity |
+  | 2 | free fall |
+  | 1 | watermark |
+  | 0 | overrun |
 
 ```JavaScript
 accel.getintinfo()
