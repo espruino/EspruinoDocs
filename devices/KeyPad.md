@@ -8,7 +8,6 @@ KeyPad Matrix
 
 A [KeyPad Matrix](http://en.wikipedia.org/wiki/Keyboard_matrix_circuit) is a selection of switches arranged in a grid. One side of each switch is connected with horizontal wires (rows) and one side is connected with vertical wires (columns). By putting a signal on one side (for example the rows) and reading the other side (the columns), you can determine which key is pressed down.
 
-**Note:** this isn't very good at determining when multiple keys are pressed.
 
 KeyPads are handled by the [[KeyPad.js]] module. 
 
@@ -31,8 +30,30 @@ or
 
 ```
 var keypad = require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9]);
-print("123A456B789C*0#D"[keypad.read()]);
+print("123A456B789C*0#D"[keypad.read()]);,
 ```
+
+With the 4x5 KeyPads like these (commonly available on ebay), the four wires nearest the ```F1``` key are the columns. 
+
+![Key Pad](4x5.jpg)
+
+```
+require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9,B12], function(e) {
+  print("AB#*123U456D789CL0RE"[e][e]); //A=F1, B=F2, U/D/L/R = Up/Down/Left/Right, R=ESC, E=Enter
+});
+```
+
+This example uses B12, which also has BTN1 on it - this is fine, as long as you don't also try to use BTN1 for something. 
+
+
+Caveats
+-----
+
+* This module sets watches on the *columns*. The STMF103 chip (used in the Espruino board) does not allow a watch to be put on two pins with the same number at the same time (for example, A0 and C0). This must be taken into account when choosing pins to use, particularly with regards to other modules which set watches. Watches are not set on the *rows*, so there are no special restrictions on those. 
+
+* This module isn't very good at determining when multiple keys are pressed.
+
+
 
 Using 
 -----
