@@ -12,9 +12,9 @@ First Steps
 
 This video is from the [[Quick Start]] page, which contains extra information on installing the Web IDE...
 
-[[http://youtu.be/1DT3lpL3IHo]]
+[[http://youtu.be/32mewNGxax4]]
 
-**Note:** The Web IDE has recently been updated so this video is out of date. We'll be updating it shortly.
+**Note:** The Web IDE has recently been updated. We'll be adding some more information about it here shortly...
 
 ### Installing the development version
 
