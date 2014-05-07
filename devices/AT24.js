@@ -23,7 +23,7 @@ eeprom.readc(bytes,i2caddress)           -Continues read from where it last read
 eeprom.reads(address,bytes,i2caddress)   -works like read(), but reads 64 bytes at a time and converts to string. 
 eeprom.writes(address,data,i2caddress)   -writing a string is faster than an array, as we have to convert the array to a string. 
 eeprom.writeb(address,data,i2caddress)
-eeprom.writel(address,data,i2caddress)   -write long block. 
+eeprom.writel(address,data,i2caddress)   -write long block of data (more than 1 page), supplied as string. 
 
 address: address to start the read at. For example, 0x05c0 
 bytes: number of bytes to read. 
