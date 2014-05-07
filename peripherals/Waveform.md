@@ -2,7 +2,7 @@
 Waveforms
 ========
 
-* KEYWORDS: Analog,ADC,DAC,A2D,D2A
+* KEYWORDS: Analog,ADC,DAC,A2D,D2A,Built-In
 
 Espruino contains both [[Analog]] Inputs ([[ADC]]) and [[Analog Outputs]] ([[DAC]]). Functions such as `analogRead` and `analogWrite` can be used for IO up to around 0.5kHz but Espruino isn't fast enough for Audio.
 

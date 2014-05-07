@@ -2,6 +2,8 @@
 OneWire
 ======
 
+* KEYWORDS: One Wire,1-Wire,Built-In
+
 [OneWire Class](/Reference#OneWire) in the Reference.
 
 Espruino's [1-Wire](http://en.wikipedia.org/wiki/1-Wire) API is designed to be similar to Arduino's OneWire library. Simply instantiate it with the pin to use, search for devices, and start communicating:

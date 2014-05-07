@@ -2,7 +2,7 @@
 Analog IO
 ========
 
-* KEYWORDS: Analog,ADC,DAC,A2D,D2A
+* KEYWORDS: Analog,ADC,DAC,A2D,D2A,Built-In
 
 Espruino contains both Analog Inputs ([[ADC]]) and Analog Outputs ([[DAC]]).
 

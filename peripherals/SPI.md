@@ -2,7 +2,7 @@
 Serial Peripheral Interface (SPI)
 =============================
 
-* KEYWORDS: Serial Peripheral Interface,SPI
+* KEYWORDS: Serial Peripheral Interface,SPI,Built-In
 
 The [Serial Peripheral Interface](http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus) is a Serial Bus for peripherals that uses Clock, Data In, and Data Out (and often a Chip Select pin).
 

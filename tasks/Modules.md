@@ -28,11 +28,32 @@ Existing Modules
 
 * APPEND_KEYWORD: Module
 
+Built-in Functionality
+-------------------
+
+Espruino also contains many built-in modules and classes that provide a lot of functionality:
+
+* APPEND_KEYWORD: Built-In
+
+
 Frequently Asked Questions
 -----------------------
 
-* <a name="repl"></a>Why don't modules work when typing `require` on the left-hand side of the Web IDE (or from a terminal window)?
 
-When you type ```require("modulename")``` on the right-hand side and click *Send to Espruino*, the Espruino Web IDE scans your code for `require` statements and loads the relevant modules off the internet. Because the left-hand side of the Web IDE (or a terminal window) sends each character direct to Espruino, by the time you have pressed enter to exeture your command, it's then too late to load the module.
+### <a name="repl"></a>Why don't modules work when typing `require` on the left-hand side of the Web IDE (or from a terminal window)?
+
+When you type ```require("modulename")``` on the right-hand side and click *Send to Espruino*, the Espruino Web IDE scans your code for `require` statements and loads the relevant modules off the internet. Because the left-hand side of the Web IDE (or a terminal window) sends each character direct to Espruino, by the time you have pressed enter to execute your command, it's then too late to load the module.
 
 Instead, Espruino defaults to what is mentioned under the **Stand-alone Espruino** heading above - it looks on an SD card (if inserted) for the module. This is why you might get a `ERROR: Unable to read file : NOT_READY` error written to the console.
+
+### If I load modules from an SD card, will the SD card always need to be inserted?
+
+No. As long as you have used `require('module')` at least once for each module before you type `save()`, all the information that is needed will be cached inside Espruino.
+
+### Can I dynamically load (and unload) modules?
+
+Yes. By default each module that is loaded will be cached (to avoid loading modules twice). However you can call [`Modules.removeCached('modulename')`](/Reference#l_Modules_removeCached) which will remove the module from the cache and free the memory that it uses.
+
+### How do I make my own modules?
+
+It's easy! See the [[Writing Modules]] page...

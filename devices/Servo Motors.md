@@ -2,7 +2,7 @@
 Servo Motors
 ===========
 
-* KEYWORDS: Servo,Motor,Servomotor,Servo motor,RC
+* KEYWORDS: Servo,Motor,Servomotor,Servo motor,RC,Built-In
 
 ![9g Servo Motor](9g.jpg)
 

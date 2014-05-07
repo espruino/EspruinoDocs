@@ -2,7 +2,7 @@
 Bluetooth
 =========
 
-* KEYWORDS: Bluetooth,Wireless,BT,HC-05,HC05
+* KEYWORDS: Bluetooth,Wireless,BT,HC-05,HC05,Built-In
 
 ![HC-05 front](HC05_front.jpg)
 ![HC-05 back](HC05_back.jpg)

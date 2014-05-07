@@ -2,7 +2,7 @@
 USART / UART / Serial Port
 =======================
 
-* KEYWORDS: Serial,USART,UART,RS232
+* KEYWORDS: Serial,USART,UART,RS232,Built-In
 
 [Serial Class](/Reference#Serial) in the Reference.
 

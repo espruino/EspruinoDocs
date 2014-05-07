@@ -2,7 +2,7 @@
 Analog to Digital Converter
 =======================
 
-* KEYWORDS: Analog,ADC,A2D
+* KEYWORDS: Analog,ADC,A2D,Built-In
 
 Analog inputs are easy to read in Espruino:
 

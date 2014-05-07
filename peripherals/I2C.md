@@ -2,7 +2,7 @@
 I2C
 ===
 
-* KEYWORDS: I2C,I squared C,IIC
+* KEYWORDS: I2C,I squared C,IIC,Built-In
 
 [I2C Class](/Reference#I2C) in the Reference.
 

@@ -2,7 +2,7 @@
 Graphics Library
 ================
 
-* KEYWORDS: Graphics,LCD,Draw,Line,Fill,Color,Circle
+* KEYWORDS: Graphics,LCD,Draw,Line,Fill,Color,Circle,Built-In
 
 Espruino has a built-in graphics library (however on less powerful devices this may have been removed to save on Flash memory).
 

@@ -2,7 +2,7 @@
 Inline Assembler
 =============
 
-* KEYWORDS: Assembler,Asm,ARM,Thumb,Thumb2,Thumb-2,C code,inline C
+* KEYWORDS: Assembler,Asm,ARM,Thumb,Thumb2,Thumb-2,C code,inline C,Built-In
 
 The new Web IDE allows you to write inline assembler in the right-hand pane.
 

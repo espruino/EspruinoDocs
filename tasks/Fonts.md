@@ -2,7 +2,7 @@
 Fonts
 ====
 
-* KEYWORDS: Graphics,Font,Fonts,Text,Typeface
+* KEYWORDS: Graphics,Font,Fonts,Text,Typeface,Module
 
 Espruino has two main fonts built-in. A vector font, and a bitmap font.
 
