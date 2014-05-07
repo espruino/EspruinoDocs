@@ -11,10 +11,12 @@ Using the touchscreen is as easy as writing ```require("Touchscreen").connect( .
 The following example draws a rectangle at each point that is reported when you drag your finger.
 
 ```
-require("Touchscreen").connect(function(x,y) {
+function onTouch(x,y) {
   if (x!==undefined)
     LCD.fillRect(x-1,y-1,x+1,y+1);
-});
+}
+
+require("Touchscreen").connect(onTouch);
 ```
 
 In most cases you'll want to know when the user's finger was first pressed. You can do this by remembering when the user last lifted their finger. The following example shows how to draw lines - note that it uses ```moveTo``` when the user first presses their finger.
@@ -23,7 +25,8 @@ In most cases you'll want to know when the user's finger was first pressed. You 
 var fingerLifted = true;
 
 LCD.clear();
-require("Touchscreen").connect(function(x,y) {
+
+function onTouch(x,y) {
   if (x===undefined) {
     fingerLifted = true;
   } else {
@@ -37,6 +40,8 @@ require("Touchscreen").connect(function(x,y) {
     }
   }
 });
+
+require("Touchscreen").connect(onTouch);
 ```
 
 Using 
