@@ -31,10 +31,10 @@ or
 
 ```
 var keypad = require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9]);
-print("123A456B789C*0#D"[keypad.read()]);,
+print("123A456B789C*0#D"[keypad.read()]);
 ```
 
-With the 4x5 KeyPads (readily availble on ebay), the four wires nearest the ```F1``` key are the columns.
+With the 4x5 KeyPads (readily availble on ebay), the four wires nearest the ```F1``` key are the columns. For example, it might be hooked up like this: 
 
 ```
 require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9,B12], function(e) {
