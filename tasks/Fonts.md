@@ -43,7 +43,9 @@ Often you may want a font that is bigger than the built-in font, but smaller tha
 Current modules are:
 
 * [[Font6x8.js]]
+* [[Font6x12.js]]
 * [[Font8x12.js]]
+* [[Font8x16.js]]
 
 Use these like this:
 
