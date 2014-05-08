@@ -4,11 +4,11 @@ KeyPad Matrix
 
 * KEYWORDS: Module,KeyPad,Key pad,matrix,buttons,button,switch
 
-![Key Pad](4x4.jpg)
+![Key Pad](4x4.jpg) ![Key Pad](4x5.jpg)
+
 
 A [KeyPad Matrix](http://en.wikipedia.org/wiki/Keyboard_matrix_circuit) is a selection of switches arranged in a grid. One side of each switch is connected with horizontal wires (rows) and one side is connected with vertical wires (columns). By putting a signal on one side (for example the rows) and reading the other side (the columns), you can determine which key is pressed down.
 
-**Note:** this isn't very good at determining when multiple keys are pressed.
 
 KeyPads are handled by the [[KeyPad.js]] module. 
 
@@ -33,6 +33,26 @@ or
 var keypad = require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9]);
 print("123A456B789C*0#D"[keypad.read()]);
 ```
+
+With the 4x5 KeyPads (readily availble on ebay), the four wires nearest the ```F1``` key are the columns. For example, it might be hooked up like this: 
+
+```
+require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9,B12], function(e) {
+  print("AB#*123U456D789CL0RE"[e][e]); //A=F1, B=F2, U/D/L/R = Up/Down/Left/Right, R=ESC, E=Enter
+});
+```
+
+This example uses B12, which also has BTN1 on it - this is fine, though pressing BTN1 will result in spurrious keypresses being recorded. 
+
+
+Caveats
+-----
+
+* This module sets watches on the *columns*. The STMF103 chip (used in the Espruino board) does not allow a watch to be put on two pins with the same number at the same time (for example, A0 and C0). This must be taken into account when choosing pins to use, particularly with regards to other modules which set watches. Watches are not set on the *rows*, so there are no special restrictions on those. 
+
+* It is impossible to reliably detect multiple simultaneous keypresses on a switch matrix (without including a diode for each switch, which most keypads don't have). This modules does not try to handle multiple key-presses. 
+
+
 
 Using 
 -----

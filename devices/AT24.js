@@ -23,10 +23,11 @@ eeprom.readc(bytes,i2caddress)           -Continues read from where it last read
 eeprom.reads(address,bytes,i2caddress)   -works like read(), but reads 64 bytes at a time and converts to string. 
 eeprom.writes(address,data,i2caddress)   -writing a string is faster than an array, as we have to convert the array to a string. 
 eeprom.writeb(address,data,i2caddress)
+eeprom.writel(address,data,i2caddress)   -write long block of data (more than 1 page), supplied as string. 
 
 address: address to start the read at. For example, 0x05c0 
 bytes: number of bytes to read. 
-data: Data to write. For writeb(), this is an array of bytes. For writes(), this is a string. wr
+data: Data to write. For writeb(), this is an array of bytes (up to page size). For writes(), this is a string (no longer than page size). For writel(), this is a string of any length that will fit on the eeprom.
 i2caddress: Optional - if specified, this is the value of the address pins, otherwise, uses the value specified in the initial connect call, or 0 if nothing was specified. 
 
 It is recommended to write a page at a time, starting from the start of the page. 
@@ -44,26 +45,26 @@ exports.connect = function(i2c, pgsz, cap, i2ca) {
 		console.log("Unsupported or invalid options");
 		return;
 	}
-    return new EEPROM(i2c, pgsz, cap, i2ca);
+    return new AT24(i2c, pgsz, cap, i2ca);
 };
 
-function EEPROM(i2c, pgsz, cap, i2ca) {
+function AT24(i2c, pgsz, cap, i2ca) {
   this.i2c = i2c;
-  this.i2ca = (i2c==Undefined) ? 0 : i2ca&0x07;
+  this.i2ca = (i2ca===undefined) ? 0 : i2ca&0x07;
   this.pgsz=pgsz;
   this.cap=cap<<7;
   this.ca=0;
 }
 
-EEPROM.prototype.arrayToString= function(a) {
+AT24.prototype.arrayToString= function(a) {
   var s = "";
   for (var i in a)
     s+=String.fromCharCode(a[i]);
   return s;
 };
 
-EEPROM.prototype.read= function(add,bytes,i2ca) {
-	i2ca = (i2ca==undefined) ? this.i2ca : i2ca;
+AT24.prototype.read= function(add,bytes,i2ca_) {
+	var i2ca = (i2ca===undefined) ? this.i2ca : i2ca_;
 	if (add+bytes>this.cap-1) {
 		return;
 	}
@@ -74,8 +75,8 @@ EEPROM.prototype.read= function(add,bytes,i2ca) {
 	return this.i2c.readFrom(0x50|i2ca,bytes);
 };
 
-EEPROM.prototype.readc= function(bytes,i2ca){
-	i2ca = (i2ca==undefined) ? this.i2ca : i2ca;
+AT24.prototype.readc= function(bytes,i2ca_){
+	var i2ca = (i2ca_===undefined) ? this.i2ca : i2ca_;
 	if (i2ca==this.i2ca) {
 		if (this.ca+bytes>this.cap-1) {
 			return;
@@ -85,8 +86,8 @@ EEPROM.prototype.readc= function(bytes,i2ca){
 	return this.i2c.readFrom(0x50|i2ca,bytes);
 };
 
-EEPROM.prototype.reads= function(add,bytes,i2ca) {
-	i2ca = (i2ca==undefined) ? this.i2ca : i2ca;
+AT24.prototype.reads= function(add,bytes,i2ca_) {
+	var i2ca = (i2ca_===undefined) ? this.i2ca : i2ca_;
 	if (add+bytes>this.cap-1) {
 		return;
 	}
@@ -109,8 +110,8 @@ EEPROM.prototype.reads= function(add,bytes,i2ca) {
 };
 
 
-EEPROM.prototype.writes= function(add,data,i2ca) {
-	i2ca = (i2ca==undefined) ? this.i2ca : i2ca;
+AT24.prototype.writes= function(add,data,i2ca_) {
+	var i2ca = (i2ca_===undefined) ? this.i2ca : i2ca_;
 	if (data.length > this.pgsz) {
 		return;
 	}
@@ -118,12 +119,26 @@ EEPROM.prototype.writes= function(add,data,i2ca) {
 	this.i2c.writeTo(0x50|i2ca,data);
 	return 1;	
 }
-EEPROM.prototype.writeb= function(add,data,i2ca) {
-	i2ca = (i2ca==undefined) ? this.i2ca : i2ca;
+AT24.prototype.writeb= function(add,data,i2ca_) {
+	var i2ca = (i2ca_===undefined) ? this.i2ca : i2ca_;
 	if (data.length > this.pgsz) {
 		return;
 	}
 	data=this.arrayToString([add>>8&0xff,add&0xff])+this.arrayToString(data);
 	this.i2c.writeTo(0x50|i2ca,data);
 	return 1;
+}
+AT24.prototype.writel= function(addr,data,i2ca_) {
+	var i2ca = (i2ca_===undefined) ? this.i2ca : i2ca_;
+	var idx=0;
+	while (idx < data.length) {
+		this.writes(addr+idx,data.substr(idx,this.pgsz),i2ca);
+		var et=getTime()+0.01;
+        	var x;
+		while (getTime() < et) { //delay(100)
+			x = 5^5; 
+		}
+		idx+=this.pgsz;
+	}
+	return data.length;
 }
