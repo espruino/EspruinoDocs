@@ -2,7 +2,7 @@
 Clock Module
 ===========
 
-* KEYWORDS: Module, clock
+* KEYWORDS: Module,Clock,RTC
 
 This [[clock.js]] module implements a Clock for Espruino.  It uses the [[date]] module to store 
 both time and date.

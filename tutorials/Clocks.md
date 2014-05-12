@@ -13,6 +13,8 @@ Espruino contains its own Real-Time Clock, which allows it to keep time even whe
 
 If you're serious about keeping accurate time, you'll want to solder on a 32kHz watch crystal which will be significantly more accurate.
 
+**Note:** You could also use an external module like the [[DS3231]].
+
 You'll Need
 ----------
 
@@ -79,3 +81,5 @@ function onSecond() {
 
 setInterval(onSecond,1000);
 ```
+
+However you can also use the [[clock]] and [[date]] modules, which will properly keep track of the time and date for you.
