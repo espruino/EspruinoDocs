@@ -7,7 +7,7 @@ In order to set up the hardware, you must short the two solder-points marked I2C
 Just:
 ```
 I2C2.setup({scl:B10, sda:B11 });
-var g=require("DigoleDB")
+var g=require("DigoleBuf")
 g.drawString("LCD OK",50,26);
 g.flip();
 ```  
@@ -24,7 +24,7 @@ exports.connect = function(i2c,width,height) {
 		this.i2c.writeTo(0x27,d);
 	};
 	LCD.writeByte =function (b) {this.i2c.writeTo(0x27,"DOUT"+String.fromCharCode(b));}; 
-	LCD.setContrast =function(c){this.i2c.writeTo(0x27,"SC"+String.fromCharCode(c));};
-	LCD.setBacklight=function(b){this.i2c.writeTo(0x27,"")+String.fromCharCode(b));}
+	LCD.setContrast =function(c){this.i2c.writeTo(0x27,"CT"+String.fromCharCode(c));};
+	LCD.setBacklight=function(b){this.i2c.writeTo(0x27,"BL"+String.fromCharCode(b));}
 	return LCD;
 };
