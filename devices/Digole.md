@@ -36,8 +36,11 @@ g.writeByte(b)
 ```
 
 `flip()` sends the buffer to the display.
+
 `setContrast(c)` takes an argument from 0 to 255. On most monochrome LCDs, there is a very narrow window in which it is actually viewable.
+
 `setBacklight(s)` takes an argument 0 or 1. If the display has a backlight, this will turn it on (1) or off (0). Untested. 
+
 `writeByte(b)` writes the byte passed to the 8 output pins on the controller board. These can source/sink 25ma, and can be used for any purpose.
 
 
@@ -90,6 +93,7 @@ writeByte(b)
 `moveArea(x,y,w,h,xoff,yoff)` moves a rectangular area of the image on the screen (top left corner at x,y, width w, height h) by (xoff,yoff) pixels.
 
 `setLinePattern(p)` takes a 1 byte argument, this is used as a pattern for the line, to draw dotted or dashed lines.
+
 `setFont(f)` takes an argument of 0, 6, 10, 18, 51, 120, or 123 for the builtin fonts
   
   | Font Number| Size |
@@ -103,7 +107,9 @@ writeByte(b)
   | 123        | 8x10 |
 
 `setContrast(c)` takes an argument from 0 to 255. On most monochrome LCDs, there is a very narrow window in which it is actually viewable.
+
 `setBacklight(s)` takes an argument 0 or 1. If the display has a backlight, this will turn it on (1) or off (0). Untested. 
+
 `writeByte(b)` writes the byte passed to the 8 output pins on the controller board. These can source/sink 25ma, and can be used for any purpose.
 
 Other limitations:
