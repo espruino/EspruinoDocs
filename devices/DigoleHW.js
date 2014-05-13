@@ -12,7 +12,7 @@ Most of the normal graphics commands work. All have an optional last argument, D
 
 setRotation() - second argument ignored. 
 
-drawImage() - rows must by multiple of 8 in length.
+drawImage() - rows must by multiple of 8 in length. Slow. 
 
 setFont() - argument is number 0, 6, 10, 18, 51, 120, 123 for the fonts they have available. 
 
@@ -40,62 +40,49 @@ g.drawString("LCD OK",50,26);
 exports.connect = function(i2c,width,height) {
   var LCD = {}
   LCD.i2c=i2c;
-  i2c.writeTo(0x27,"CL");
-  LCD.width=width;
-  LCD.setColor(1);
-  LCD.height=height;
+  LCD.w=width;
+  LCD.h=height;
+  LCD.dr= function(cmd,dm) {
+    if (dm) {this.i2c.writeTo(0x27,"DM"+dm)}
+      this.s(cmd);
+  };
+  LCD.s=function(cmd) {this.i2c.writeTo(0x27,cmd);};
   LCD.drawString = function(s,x,y,dm) {
-  	if (dm) {this.i2c.writeTo(0x27,"DM"+dm)}
-  	this.i2c.writeTo(0x27,"TP"+String.fromCharCode(x,y));
-  	this.i2c.writeTo(0x27,"TT"+s+"\x00");
+    this.s("TP"+String.fromCharCode(x,y));
+  	this.dr("TT"+s+"\x00",dm);
   };
-  LCD.drawLine = function(x1,y1,x2,y2,dm) {
-  	if (dm) {this.i2c.writeTo(0x27,"DM"+dm)}
-  	this.i2c.writeTo(0x27,"LN"+String.fromCharCode(x1,y1,x2,y2));
-  };
-  LCD.drawRect = function(x1,y1,x2,y2,dm) {
-  	if (dm) {this.i2c.writeTo(0x27,"DM"+dm)}
-  	this.i2c.writeTo(0x27,"DR"+String.fromCharCode(x1,y1,x2,y2));
-  };
-  LCD.fillRect = function(x1,y1,x2,y2,dm) {
-  	if (dm) {this.i2c.writeTo(0x27,"DM"+dm)}
-  	this.i2c.writeTo(0x27,"FR"+String.fromCharCode(x1,y1,x2,y2));
-  };
-  LCD.setColor = function(col) {this.i2c.writeTo(0x27,"SC"+String.fromCharCode(col));this.col=col;};
   LCD.setPixel= function(x,y,col,dm) {
-  	if (dm) {this.i2c.writeTo(0x27,"DM"+dm)}
-  	if (col != this.col){
-  		this.i2c.writeTo(0x27,"SC"+String.fromCharCode(col);
-  	}
-  	this.i2c.writeTo(0x27,"DP"+String.fromCharCode(x,y));
-  	if (col != this.col){
-  		this.i2c.writeTo(0x27,"SC"+String.fromCharCode(this.col);
-  	}
+    if (col != this.col){
+      this.s("SC"+String.fromCharCode(col);
+    }
+    this.dr("DP"+String.fromCharCode(x,y),dm);
+    if (col != this.col){
+      this.s("SC"+String.fromCharCode(this.col);
+    }
   ;}
-  LCD.setRotation=function(ro,re) {
-  	this.i2c.writeTo(0x27,"SD"+String.fromCharCode("ro");
-  }
-  LCD.drawCircle=function(x,y,r,f,dm){
-  	if (dm) {this.i2c.writeTo(0x27,"DM"+dm)}
-	this.i2c.writeTo(0x27,"CC"+String.fromCharCode(x,y,r,f));
-
-  }
-  LCD.setLinePattern = function (p) {
-  	this.i2c.writeTo(0x27,"SLP"+String.fromCharCode(p);
-  }
-  LCD.getWidth = function() {return this.width;};
-  LCD.getHeight=function() {return this.height;};
-  LCD.setFont = function(f) {this.i2c.writeTo(0x72,"SF"+string.fromCharCode(f));};
   LCD.drawImage = function(image,x,y,dm) {
-  	if (dm) {this.i2c.writeTo(0x27,"DM"+dm)}
-  	var d = new Uint8Array(image.buffer.length+7);
+    var d = new Uint8Array(image.buffer.length+7);
     d.set(E.toArrayBuffer("DIM"+string.fromCharCode(x,y,image.width,image.height)),0);
     d.set(new Uint8Array(this.buffer).map(E.reverseByte), 7);
-    this.i2c.writeTo(0x27,d);
+    this.dr(d,dm);
   };
-  LCD.clear()=function() {i2c.writeTo(0x27,"CL");};
-  LCD.moveArea=function(x,y,w,h,xo,yo) {this.i2c.writeTo(0x27,"MAA"+String.fromCharCode(x,y,w,h,xo,yo));}
-  LCD.writeByte =function (b) {this.i2c.writeTo(0x27,"DOUT"+String.fromCharCode(b));}; 
-  LCD.setContrast =function(c){this.i2c.writeTo(0x27,"SC"+String.fromCharCode(c));};
+  LCD.drawLine = function(x1,y1,x2,y2,dm) {this.dr("LN"+String.fromCharCode(x1,y1,x2,y2),dm);};
+  LCD.drawRect = function(x1,y1,x2,y2,dm) {this.dr("DR"+String.fromCharCode(x1,y1,x2,y2),dm);};
+  LCD.fillRect = function(x1,y1,x2,y2,dm) {this.dr("FR"+String.fromCharCode(x1,y1,x2,y2),dm);};
+  LCD.lineTo = function(x,y,dm) {this.dr("LT"+String.fromCharCode(x,y),dm);};
+  LCD.drawCircle=function(x,y,r,f,dm){this.dr("CC"+String.fromCharCode(x,y,r,f),dm);};
+  LCD.setColor = function(col) {this.s("SC"+String.fromCharCode(col));this.col=col;};
+  LCD.moveArea=function(x,y,w,h,xo,yo) {this.s("MA"+String.fromCharCode(x,y,w,h,xo,yo));}
+  LCD.setRotation=function(ro,re) {this.s("SD"+String.fromCharCode("ro");};
+  LCD.setLinePattern = function (p) {this.s("SLP"+String.fromCharCode(p));};
+  LCD.getWidth = function() {return this.w;};
+  LCD.getHeight=function() {return this.h;};
+  LCD.setFont = function(f) {this.s("SF"+String.fromCharCode(f));};
+  LCD.moveTo = function(x,y) {this.s("GP"+String.fromCharCode(x,y));}
+  LCD.clear=function() {i2c.writeTo(0x27,"CL");};
+  LCD.writeByte =function (b) {this.s("DOUT"+String.fromCharCode(b));}; 
+  LCD.setContrast =function(c){this.s("CT"+String.fromCharCode(c));};
+  LCD.setBacklight =function(c){this.s("BL"+String.fromCharCode(c));};
+  LCD.clear();
   return LCD;
 };
