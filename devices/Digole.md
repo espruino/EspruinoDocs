@@ -81,7 +81,7 @@ Other methods:
 setRotation(rotation) //second option (reflect) not available. 
 drawCircle(x,y,r,f,dm) //r is radius, f is 1 or 0 (filled or non). 
 drawImage(image,x,y) //On monochrome displays, image width must be multiple of 8.
-drawString(string,x,y,dm) //X and Y are in CHARACTERS not pixels! See table below for character sizes, note that fonts 51, 120 are not fixed width.  
+drawString(string,x,y,dm)  
 moveArea(x,y,w,h,xoff,yoff)
 setLinePattern(p)
 setFont(f) 
