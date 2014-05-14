@@ -48,7 +48,7 @@ exports.connect = function(i2c,width,height) {
   };
   LCD.s=function(cmd) {this.i2c.writeTo(0x27,cmd);};
   LCD.drawString = function(s,x,y,dm) {
-    this.s("TP"+String.fromCharCode(x,y));
+    this.s("ETP"+String.fromCharCode(x,y));
   	this.dr("TT"+s+"\x00",dm);
   };
   LCD.setPixel= function(x,y,col,dm) {
