@@ -132,6 +132,26 @@ function grabInfo(markdownFiles, preloadedFiles) {
   return {keywords:keywords, parts:parts};
 }
 
+function grabWebsiteKeywords(keywords) {
+  getFiles(BASEDIR+"/../espruinowebsite/cms").forEach(function(f) { 
+    if (f.substr(-5) != ".html") return;
+    var fileName = f.substring(f.lastIndexOf("/")+1,f.length-5);
+    var fileInfo = {
+      path : "/"+fileName,
+      title : fileName.replace(/\+/g, " ")
+    };
+
+    var contents = fs.readFileSync(f).toString();
+    var match = contents.match(/KEYWORDS: (.*)/);
+     if (match!=null) {
+       match[1].split(",").forEach(function(k) { 
+         addToList(keywords, k, fileInfo);
+     });
+   }
+  });
+}
+
+
 // Create a keywords structure that can be used for searching the website
 function createKeywordsJS(keywords) {
   var kw = {};
@@ -142,7 +162,7 @@ function createKeywordsJS(keywords) {
     for (idx in keywordPages) {
       var data = keywordPages[idx];
       var f = (data["path"].substr(0,1)=="/") ? data["path"] : htmlLinks[data["path"]];
-      if (f==undefined) warn("No file info for "+data["path"]);
+      if (f==undefined) WARNING("No file info for "+data["path"]);
       kwd.push({ title : data["title"],
                  file : f });
     }
@@ -218,6 +238,7 @@ for (i in exampleFiles) {
 //console.log(markdownFiles);
 var fileInfo = grabInfo(markdownFiles, preloadedFiles);
 //console.log(fileInfo.keywords);
+grabWebsiteKeywords(fileInfo.keywords);
 
 htmlFiles = {};
 htmlLinks = {};
