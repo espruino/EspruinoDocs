@@ -43,21 +43,21 @@ exports.connect = function(i2c,width,height) {
   LCD.w=width;
   LCD.h=height;
   LCD.dr= function(cmd,dm) {
-    if (dm) {this.i2c.writeTo(0x27,"DM"+dm)}
-      this.s(cmd);
+    if (dm) this.i2c.writeTo(0x27,"DM"+dm)
+    this.s(cmd);
   };
   LCD.s=function(cmd) {this.i2c.writeTo(0x27,cmd);};
   LCD.drawString = function(s,x,y,dm) {
     this.s("ETP"+String.fromCharCode(x,y));
-  	this.dr("TT"+s+"\x00",dm);
+    this.dr("TT"+s+"\x00",dm);
   };
   LCD.setPixel= function(x,y,col,dm) {
     if (col != this.col){
-      this.s("SC"+String.fromCharCode(col);
+      this.s("SC"+String.fromCharCode(col));
     }
     this.dr("DP"+String.fromCharCode(x,y),dm);
     if (col != this.col){
-      this.s("SC"+String.fromCharCode(this.col);
+      this.s("SC"+String.fromCharCode(this.col));
     }
   ;}
   LCD.drawImage = function(image,x,y,dm) {
@@ -73,7 +73,7 @@ exports.connect = function(i2c,width,height) {
   LCD.drawCircle=function(x,y,r,f,dm){this.dr("CC"+String.fromCharCode(x,y,r,f),dm);};
   LCD.setColor = function(col) {this.s("SC"+String.fromCharCode(col));this.col=col;};
   LCD.moveArea=function(x,y,w,h,xo,yo) {this.s("MA"+String.fromCharCode(x,y,w,h,xo,yo));}
-  LCD.setRotation=function(ro,re) {this.s("SD"+String.fromCharCode("ro");};
+  LCD.setRotation=function(ro,re) {this.s("SD"+String.fromCharCode(ro));};
   LCD.setLinePattern = function (p) {this.s("SLP"+String.fromCharCode(p));};
   LCD.getWidth = function() {return this.w;};
   LCD.getHeight=function() {return this.h;};
