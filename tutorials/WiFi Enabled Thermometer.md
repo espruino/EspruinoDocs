@@ -3,7 +3,7 @@ Wifi Enabled Thermometer
 ===============================
 
 * KEYWORDS: Wifi,Thermometer,Web Server
-* USES: DS18B20,CC3000
+* USES: Internet,DS18B20,CC3000
 
 ![Temperature Graph](graph.png)
 

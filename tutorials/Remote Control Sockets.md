@@ -3,7 +3,7 @@ Remote Control Sockets
 ======================
 
 * KEYWORDS: Remote Control,RCT-08,Socket,Mains
-* USES: Espruino Board,433Mhz,CC3000
+* USES: Espruino Board,433Mhz,CC3000,Internet
 
 ![Status RCT-08 Sockets](sockets.jpg)
 

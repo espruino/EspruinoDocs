@@ -3,7 +3,7 @@ Favourite Icon on Web Server
 ========================
 
 * KEYWORDS: Wifi,Web Server
-* USES: CC3000
+* USES: Internet,CC3000
 
 Introduction
 -----------
