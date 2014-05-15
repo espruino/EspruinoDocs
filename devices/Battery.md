@@ -16,10 +16,12 @@ Espruino itself will run from a wide range of voltages (3.6v to 15v) and hence b
 * Model car/aircraft batteries (4.8v)
 * 4xAA or 4xAAA batteries
 
+Adafruit [has a good tutorial on different kinds of Lithium Battery](https://learn.adafruit.com/li-ion-and-lipoly-batteries?view=all)
+
 Charging
 -------
 
-The Espruino Board does not contain a battery charger circuit. There is an unpopulated resistor for a trickle charge, and an unpopulated zener diode for a 4.2v voltage clamp for LiPo, however we'd recommend buying a general purpose charger.
+The Espruino Board does not contain a battery charger circuit. There is an unpopulated resistor for a trickle charge, and you can solder a 4.2v zener diode to the JST connector in order to clamp the voltage to 4.2v for LiPo batteries, however we'd recommend buying a general purpose charger.
 
 Buying
 -----

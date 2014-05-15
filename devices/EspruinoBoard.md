@@ -44,7 +44,7 @@ Layout
 | #1 | Unpopulated pads for 32kHz crystal. Without this, Espruino will use its internal RC oscillator for timekeeping, which is only accurate to 1-2% |
 | #2 | Pin Headers. Each horizontal pair pins in this 2 x 13 area of pins is connected together, so you can solder on a single line of pin header and can then wire from the Prototype area to the other side  |
 | #3 | cut the shorted link on the right-hand side, solder over the left-hand side, solder a 10k resistor to R17 and you can then use the RST button as a second general purpose button on pin C12 |
-| #4 | An unpopulated resistor that can trickle-charge a battery when fitted (if the battery is less than 4.3v). Only fit this if you're absolutely sure that your battery type can handle it. |
+| #4 | An unpopulated resistor that can trickle-charge a battery when fitted (if the battery is less than 4.3v). See the [[Battery]] page for more information - only fit this if you're absolutely sure that your battery type can handle it. |
 
 
 Information
