@@ -42,7 +42,7 @@ function onInit() {
     g.flip();
     // setup wlan
     wlan = require("CC3000").connect();
-    wlan.connect( "BTHub4-5ZN2", "2f3b5659ad", function (s) { 
+    wlan.connect( "YOUR_WIFI_NAME", "YOUR_WIFI_KEY", function (s) { 
       g.clear();
       g.drawString(">"+s,0,0);
       g.flip();
