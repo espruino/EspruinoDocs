@@ -153,11 +153,22 @@ g.drawImage(img, 10, 10);
 
 If you use a single-bit image, the foreground and background colours will be used instead of the image's colours. Otherwise the colour data will be copied directly so it's an idea to use a bitmap of the same bit depth as your display.
 
-The easiest way to get bitmap image data into Espruino is to convert it to raw pixel data on your PC, and to then convert that to base64 encoding.
+**Beware:** Microcontrollers don't have much memory - even a small 128x128 pixel image will be too big to fit in Espruino's memory!
 
-**But beware:** Microcontrollers don't have much memory - even a small 128x128 pixel image will be too big to fit in Espruino's memory!
+### Loading images from SD card
 
-### Creating a raw image
+There are a few ways to load images from SD card, but the easiest is to use the [[BMPLoader]] module:
+
+```
+var img = require("BMPLoader").load(require('fs').readFileSync("foo.bmp"));
+g.drawImage(img, 10, 10);
+```
+
+### Loading images as code
+
+If you don't want to load images off an SD card, the easiest way is to convert them to raw pixel data on your PC, and to then convert that to base64 encoding.
+
+#### Creating a raw image
 
 It's best to install the [ImageMagick](http://www.imagemagick.org/) tools. Then you can type commands like:
 
@@ -175,11 +186,11 @@ convert myimage.png -resize 16x16\! -depth 8  gray:output.raw
 convert myimage.png -resize 16x16\! -depth 1  gray:output.raw
 ```
 
-### Base64 Encoding
+#### Base64 Encoding
 
 On Linux, simply type `base64 --wrap=0 myfilename.raw` - or on other platforms you can use the [[File Converter]] webpage. 
 
-### Loading into Espruino
+#### Loading into Espruino
 
 Once you've got the base64 encoded image, simply decode it with `atob` and create an ArrayBuffer from it. For instance this is the Espruino logo:
 
