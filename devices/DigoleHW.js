@@ -79,10 +79,11 @@ exports.connect = function(i2c,width,height) {
   LCD.getHeight=function() {return this.h;};
   LCD.setFont = function(f) {this.s("SF"+String.fromCharCode(f));};
   LCD.moveTo = function(x,y) {this.s("GP"+String.fromCharCode(x,y));}
-  LCD.clear=function() {i2c.writeTo(0x27,"CL");};
+  LCD.clear=function() {this.s("CL");};
   LCD.writeByte =function (b) {this.s("DOUT"+String.fromCharCode(b));}; 
   LCD.setContrast =function(c){this.s("CT"+String.fromCharCode(c));};
   LCD.setBacklight =function(c){this.s("BL"+String.fromCharCode(c));};
+  LCD.setColor(1);
   LCD.clear();
   return LCD;
 };
