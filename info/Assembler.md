@@ -10,9 +10,9 @@ The new Web IDE allows you to write inline assembler in the right-hand pane.
 var adder = E.asm("long(long)",
 "movs    r2, #3",
 "movs    r3, #0",
-"adds    r0, r0, r2",
-"adc.w   r1, r1, r3",
-"bx  lr");
+"adds    r0, r0, r2", // add bottom 32 bits
+"adc.w   r1, r1, r3", // add top 32 bits
+"bx  lr"); // return
 ```
 
 Which can then be used like a normal function:
@@ -50,7 +50,7 @@ Allowed types are `void`, `bool`, `int`, `long`, `double`, `Pin` (a pin number),
 Calling Convention (what you can use!)
 ---------------------------------
 
-For a better explaination of this, [see Wikipedia](http://en.wikipedia.org/wiki/Calling_convention#ARM)
+For a better explanation of this, [see Wikipedia](http://en.wikipedia.org/wiki/Calling_convention#ARM)
 
 The registers r0, r1, r2 and r3 contain the first 4 32 bit arguments, and r0 is used to return the 32 bit result. Other arguments are passed on the stack (which we're not covering here).
 
@@ -60,20 +60,18 @@ Registers r0-r3 are free to use - however any other registers have to be restore
 Accessing Data
 ------------
 
-By itself, the assembler isn't too useful. What you need is to be able to easily access data. Luckily Espruino makes it pretty easy. Above, we used `Array.map` to call assembler for every element in an array. Often you'll have your data stored in an `ArrayBuffer` like a `Uint8Array` to save on RAM (see the [[Performance]] page), and ArrayBuffers don't have their own `.map` method.
-
-Luckily you can 'borrow' `Array`'s:
+By itself, the assembler isn't too useful. What you need is to be able to access your data. Luckily Espruino makes it pretty easy. Above, we used `Array.map` to call assembler for every element in an array - you can use this on `ArrayBuffer`s like `Uint8Array` too. This is not part of the EcmaScript 5 spec (but is in EcmaScript 6).
 
 ```
-> var a = new Uint8Array([1,2,3,4,5]);
-[].map.call(a, adder)
+>var a = new Uint8Array([1,2,3,4,5]);
+a.map(adder)
 =[4,5,6,7,8]
 ```
 
-However this will still return an Array (which will use up lots of RAM). If you don't want to return anything (maybe you're writing it out to GPIO (see below) ), use `Array.forEach`:
+However this will still return an ArrayBuffer (which will use up more RAM). If you don't want to return anything (maybe you're writing it out to GPIO (see below) ), use `forEach`:
 
 ```
->[].forEach.call(a, adder);
+>a.forEach(adder);
 =undefined
 ```
 
@@ -90,12 +88,72 @@ var adder = E.asm("int(int,int)",
   "bx  lr");
 
 // Call our assembler on every item and return the result
-var sum = [].reduce.call(a, adder);
+var sum = a.reduce(adder);
 
 // prints 4950 
 console.log(sum); 
 ```
 
+Constants
+--------
+
+In ARM Thumb, you can't store full 32 bit literal values in assembler, so loading big constants is a bit harder than you'd expect. Instead of directly specifying the constant, you must define an area of memory that will contain it, and then you must reference that area (relative to the current instruction). This is even more painful because the program counter is 4 bytes ahead of current execution:
+
+```
+var getConst = E.asm("int()",
+"ldr	r0, [pc, #0]", // 2*2 - 4 = 0
+"bx lr",
+".word	0x1234BEEF"
+);
+
+console.log(getConst().toString(16));
+```
+
+In reality, you'll want to use labels and let the assembler sort this out for you:
+
+```
+var getConst = E.asm("int()",
+"  ldr	r0, my_data",
+"  bx lr",
+"my_data:",
+"  .word	0x1234BEEF"
+);
+
+console.log(getConst().toString(16));
+```
+
+Even this can cause some problems. You can only access an address that is a multiple of 4 bytes *ahead of the current instruction*. If you get an error when assembling, you'll need to pad out the constants with a `nop`:
+
+```
+var getConst = E.asm("int()",
+"  ldr	r1, my_data",
+"  mov  r0,r1", // extra instruction makes non-2 aligned
+"  bx lr",
+"  nop", // must pad
+"my_data:",
+"  .word	0x1234BEEF"
+);
+
+console.log(getConst().toString(16));
+```
+
+**Note:** If you just need a small constant then you may be ok. You can use `mov` to load a value between 0 and 255:
+
+```
+var getConst = E.asm("int()",
+"mov	r0, #254",
+"bx lr",
+);
+```
+
+Or you can use `movw` to load a 16 bit values (between 0 and 65535) but *movw is a double-length instruction that takes 4 bytes in total*.
+
+```
+var getConst = E.asm("int()",
+"movw	r0, #65535",
+"bx lr",
+);
+```
 
 Accessing IO
 -----------
@@ -110,18 +168,19 @@ So you could write the following code to give the 3 LEDs (on A13,A14 and A15) a 
 digitalWrite([LED1,LED2,LED3],0); // set up th eoutput state (easier done in JS!)
 
 var pulse = E.asm("void()",
-"ldr	r2, [pc, #8]", // 0-1
+" ldr	r2, gpioa_addr", // 0-1
 // get the data from the end a put it in r2. 
 // pc has already moved on by 4, so we need to add 12-4 = 8 to it to get the address
-"movw	r3, #57344", // 2-5
+" movw	r3, #57344", // 2-5
 // the bit mask for A13,A14,A15 - 0b1110000000000000 = 57344
-"str	r3, [r2, #0]", // 6-7
+" str	r3, [r2, #0]", // 6-7
 // set *0x40010810 = 57344 (set pins A13-A15)
-"str	r3, [r2, #4]", // 8-9
+" str	r3, [r2, #4]", // 8-9
 // set *0x40010814 = 57344 (clear pins A13-A15)
-"bx	lr", // 10-11
+" bx	lr", // 10-11
 // Return
-".word	0x40010810" // 12-5
+"gpioa_addr:"
+" .word	0x40010810" // 12-5
 // Our data
 );
 
@@ -135,11 +194,12 @@ You can do loops as follows. This example adds together all the numbers below an
 
 ```
 var a = E.asm("int(int,int)", 
-  "adds   r0, r0, r1",
-  "sub    r1, r1, #1",
-  "cmp    r1, #0",
-  "bgt    #-10",
-  "bx  lr");
+  "loopStart:"
+  " adds   r0, r0, r1",
+  " sub    r1, r1, #1",
+  " cmp    r1, #0",
+  " bgt    loopStart",
+  " bx  lr");
 
 for (var i=1;i<10;i++)
   console.log(i, a(0,i));
@@ -158,8 +218,7 @@ for (var i=1;i<10;i++)
 ### Note:
 
 * This example will crash Espruino for any number less than or equal to zero
-* Until labels are implemented, this is significantly more painful than it needs to be!
-* The program counter is always 4 bytes ahead of the current instruction, and instructions are (usually!) 2 bytes long. That means that to get back to the exact same instruction you must use `-4` and you must subtract another 2 for each instruction you want to jump over (hence `-10`).
+* Labels take some of the pain out of this. `bgt loopStart` is actually equivalent to `bgt #-10`: The program counter is always 4 bytes ahead of the current instruction, and instructions are (usually!) 2 bytes long. That means that to get back to the exact same instruction you must use `-4` and you must subtract another 2 for each instruction you want to jump over (hence `-10`).
 
 
 Compiling C Code
@@ -198,5 +257,3 @@ var ASM_BASE1=ASM_BASE+1/*thumb*/;
 [0x4a02,0xf44f,0x4360,0x6013,0x6053,0x4770,0x0810,0x4001].forEach(function(v) { poke16((ASM_BASE+=2)-2,v); }); 
 var pulse = E.nativeCall(ASM_BASE1, "void()")
 ```
-
-If anyone has any success with the [output of TCC](http://bellard.org/tcc/) then please get in touch. I've been able to compile this to JavaScript with Emscripten, so we may be able to use it compile C code *inside the Web IDE*.
