@@ -31,7 +31,7 @@ http.get("http://www.espruino.com", function(res) {
 });
 ```
 
-You can also handle the `close` event so that you can deal with the contents of the webpage on one go - be careful you don't run out of RAM for larger webpages though!
+You can also handle the `close` event so that you can process with the contents of the webpage in one go - be careful you don't run out of RAM for larger webpages though!
 
 ```JavaScript
 require("http").get("http://www.espruino.com", function(res) {
