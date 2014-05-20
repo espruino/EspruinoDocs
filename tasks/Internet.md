@@ -25,9 +25,19 @@ The example below will just output the contents of the Espruino website:
 ```JavaScript
 var http = require("http");
 http.get("http://www.espruino.com", function(res) {
- res.on('data', function(data) {
-  console.log(data);
- });
+  res.on('data', function(data) {
+    console.log(data);
+  });
+});
+```
+
+You can also handle the `close` event so that you can deal with the contents of the webpage on one go - be careful you don't run out of RAM for larger webpages though!
+
+```JavaScript
+require("http").get("http://www.espruino.com", function(res) {
+  var contents = "";
+  res.on('data', function(data) { contents += data; });
+  res.on('close', function() { console.log(contents); });
 });
 ```
 
