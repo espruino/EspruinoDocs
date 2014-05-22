@@ -2,7 +2,7 @@
 Servo Motors
 ===========
 
-* KEYWORDS: Servo,Motor,Servomotor,Servo motor,RC,Built-In
+* KEYWORDS: Servo,Motor,Servomotor,Servo motor,RC,Built-In,Module
 
 ![9g Servo Motor](9g.jpg)
 
@@ -17,6 +17,24 @@ Just take a power source (4xAA batteries, or a 3.7v LiPo battery) and connect ne
 
 For information on wiring up your Espruino Board for Servo Motors, see the [[Pin Strip]] page.
 
+Servo Motor Module
+----------
+
+If you just want to move servo motors around in the simplest possible way, use the [[servo.js]] module. 
+
+Just use `require("servo").connect` with the pin the servo motor is attached to, and call `move` with a position between 0 and 1, and an optional parameter specifying the time taken to move:
+
+```
+var s = require("servo").connect(C7);
+
+s.move(0); // move to position 0 over 1 second
+s.move(1); // move to position 1 over 1 second
+s.move(0.5, 3000); // move to position 0.5 over 3 seconds
+```
+
+The module will handle everything else, making sure that the Servo motor is not being continually pulsed when it has had time to reach the correct position.
+
+However there are other ways of controlling servos...
  
 Simple Control
 ------------
