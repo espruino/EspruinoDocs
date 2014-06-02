@@ -129,10 +129,12 @@ var R = {
 };
 
 /* MPU6050 Object */
-function MPU6050(_i2c) {
+function MPU6050(_i2c, _addr) {
   this.i2c = _i2c;
-  this.addr = C.ADDRESS_AD0_LOW;
-
+  this.addr =
+    (undefined===_addr || false===_addr) ? C.ADDRESS_AD0_LOW :
+    (true===_addr) ? C.ADDRESS_AD0_HIGH :
+    _addr;
   this.initialize();
 }
 
@@ -244,6 +246,6 @@ MPU6050.prototype.getTemperature = function() {
   return this.readS16(R.TEMP_OUT_H) / 340 + 36.53;
 };
 
-exports.connect = function (_i2c) {
-  return new MPU6050(_i2c);
+exports.connect = function (_i2c,_addr) {
+  return new MPU6050(_i2c,_addr);
 };
