@@ -85,7 +85,8 @@ var C = {
   ARD         : 1<<4, // SETUP_RETR
   ARC         : 1<<0,
   PLL_LOCK    : 1<<4, // RF_SETUP
-  RF_DR       : 1<<3,
+  RF_DR_HIGH  : 1<<3,
+  RF_DR_LOW   : 1<<5,
   RF_PWR      : 1<<1,
   RX_DR       : 1<<6, // STATUS
   TX_DS       : 1<<5,
@@ -129,10 +130,13 @@ NRF.prototype.init = function(rxAddr, txAddr) {
   digitalWrite(this.CSN,1);
   this.setRXAddr(rxAddr);
   this.setTXAddr(txAddr);
-  this.setReg(C.RX_PW_P0, this.PAYLOAD);
-  this.setReg(C.RX_PW_P1, this.PAYLOAD);
+  for (var i=C.RX_PW_P0;i<=C.RX_PW_P5;i++) this.setReg(i, this.PAYLOAD);
   this.setReg(C.CONFIG, BASE_CONFIG | C.PWR_UP | C.PRIM_RX); // RX mode
+  this.setReg(C.SETUP_RETR, 0b01011111); // setup ARD 0101 (6*250uS retransmit delay) and ARC 1111 (15 retransmit count)
   digitalWrite(this.CE,1); // set active
+};
+NRF.prototype.setEnabled = function(isEnabled) {
+  digitalWrite(this.CE, isEnabled);
 };
 NRF.prototype.setReg = function(reg, value) {
   this.spi.send([C.W_REGISTER | reg, value], this.CSN);
@@ -142,8 +146,11 @@ NRF.prototype.setAddr = function(reg, value /* 5 byte array*/) {
   value.splice(0,0,C.W_REGISTER | reg);
   this.spi.send(value, this.CSN);
 };
-NRF.prototype.setRXAddr = function(adr /* 5 byte array*/) {
-  this.setAddr(C.RX_ADDR_P1,adr);
+/** Set receive address. Optional pipe argument. Note that pipes>1 share pipe 1's last 4 address digits */
+NRF.prototype.setRXAddr = function(adr /* 5 byte array*/, pipe) {
+  if (pipe===undefined) pipe=1;
+  else this.setReg(C.EN_RXADDR, this.getReg(C.EN_RXADDR) | 1<<pipe); // enable RX addr
+  this.setAddr(C.RX_ADDR_P0+pipe,(pipe<2) ? adr : [adr[0]]);
 };
 NRF.prototype.setTXAddr = function(adr /* 5 byte array*/) {
   this.setAddr(C.RX_ADDR_P0,adr);
@@ -160,8 +167,15 @@ NRF.prototype.getAddr = function(reg) {
 NRF.prototype.getStatus = function(reg) {
   return this.getReg(C.STATUS);
 };
-NRF.prototype.dataReady = function() {
-  return (this.getReg(C.STATUS)&C.RX_P_NO_FIFO_EMPTY)!=C.RX_P_NO_FIFO_EMPTY; // next payload
+NRF.prototype.setDataRate = function(rate) {
+  var rates = { 250000:C.RF_DR_LOW, 1000000:0,2000000:C.RF_DR_HIGH };
+  if (!rate in rates) console.log("Unknown rate");
+  this.setReg(C.RF_SETUP, (this.getReg(C.RF_SETUP)&~(C.RF_DR_LOW|C.RF_DR_HIGH))|rates[rate]);
+};
+// return undefined (if no data) or the pipe number of the data we're expecting
+NRF.prototype.getDataPipe = function() {
+  var r = this.getReg(C.STATUS)&C.RX_P_NO_FIFO_EMPTY;
+  return (r==C.RX_P_NO_FIFO_EMPTY) ? undefined : (r>>1); 
 };
 NRF.prototype.getData = function() {
   var data = [C.R_RX_PAYLOAD];
@@ -171,6 +185,7 @@ NRF.prototype.getData = function() {
   this.setReg(C.STATUS, C.RX_DR); // clear rx flag
   return data;
 };
+/** Send a single packet (of length PAYLOAD). Returns true on success */
 NRF.prototype.send = function(data/* array of length PAYLOAD */) {
   this.setReg(C.STATUS, C.MAX_RT | C.TX_DS); // clear flags
   digitalWrite(this.CE,0); // disable
@@ -196,7 +211,7 @@ NRF.prototype.send = function(data/* array of length PAYLOAD */) {
 };
 
 NRF.prototype.slaveHandler = function() {
-  while (this.dataReady()) {
+  while (this.getDataPipe()!==undefined) {
     var data = this.getData();
     for (var i in data) {
       var ch = data[i];
@@ -220,7 +235,7 @@ NRF.prototype.slaveHandler = function() {
   }
 };
 NRF.prototype.masterHandler = function() {
-  while (this.dataReady()) {
+  while (this.getDataPipe()!==undefined) {
     var data = this.getData();
     for (var i in data) {
       var ch = data[i];
@@ -235,13 +250,14 @@ NRF.prototype.masterHandler = function() {
     }
   }
 };
+/** Send a string in one or more packets. Returns true on success */
 NRF.prototype.sendString = function(cmd) {
   for (var i=0;i<=cmd.length;i+=this.PAYLOAD) {
     var data = [];
     for (var n=0;n<this.PAYLOAD;n++) data[n] = cmd.charCodeAt(i+n);
-    var tries = 3;
-    while ((tries-- > 0) && !this.send(data)) {};
+    if (!this.send(data)) return false; // stop sending string if we had an error
   }
+  return true;
 };
 NRF.prototype.sendCommand = function(cmd, callback) {
   this.callbacks.push(callback);
