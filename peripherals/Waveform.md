@@ -101,7 +101,31 @@ analogWrite(A4, 0.5);
 w.startOutput(A4,4000);
 ```
 
-**Note:** It's not advisable to load files more than 8kB long in one go, as you will quickly start to fill up all of Espruino's available RAM.
+It's not advisable to load files more than 8kB long in one go, as you will quickly start to fill up all of Espruino's available RAM.
+
+However if you want to play longer files, you can use the double buffer and can then stream data directly off the SD card:
+
+```
+var f = E.openFile("music11025.raw","r");
+
+var w = new Waveform(2048, {doubleBuffer:true});
+// load first bits of sound file
+w.buffer.set(f.read(w.buffer.length));
+w.buffer2.set(f.read(w.buffer.length));
+var fileBuf = f.read(w.buffer.length);
+// when one buffer finishes playing, load the next one
+w.on("buffer", function(buf) {
+  buf.set(fileBuf);
+  fileBuf = f.read(buf.length);
+  if (fileBuf===undefined) w.stop(); // end of file
+});
+// start output
+analogWrite(A4, 0.5);
+w.startOutput(A4,11025,{repeat:true});
+```
+
+In the example above, we use a third buffer: `fileBuf`. This helps to remove any glitches that might be caused by delays reading the file.
+
 
 Creating Audio Files for Espruino
 ---------------------------------
