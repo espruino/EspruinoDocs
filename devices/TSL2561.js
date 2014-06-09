@@ -123,6 +123,10 @@ TSL2561.prototype.init = function (address, timing, gain, irq_pin) {
     return this;
 };
 
+/*
+// Lux conversion is incomplete.  Refer to the Adafruit_TSL2561 Arduino
+// module to see how this should work.
+
 var LUX = {
 
 LUXSCALE: (14), // Scale by 2^14
@@ -261,6 +265,9 @@ TSL2561.prototype.calculateLux = function (ch0, ch1) {
 
     return temp >> LUX.LUXSCALE;
 };
+*/
+
+
 
 // getLuminosity is asynchronous, as after triggering, the sensor
 // needs a short time to integrate the data together before it can be
