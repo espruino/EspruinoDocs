@@ -2,7 +2,7 @@
 Thermistor Temperature Sensor.
 =====================
 
-* KEYWORDS: thermistor, sensor
+* KEYWORDS: Module, thermistor, sensor
 
 This module uses the following common thermistor characteristics found in most off the shelf thermistor based temperature sensors.
 
