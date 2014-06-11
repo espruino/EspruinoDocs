@@ -1,8 +1,10 @@
 <!--- Copyright (c) 2014 Peter Clarke. See the file LICENSE for copying permission. -->
-Thermistor Temperature Sensor.
+Thermistor Temperature Sensor
 =====================
 
-* KEYWORDS: thermistor, sensor
+* KEYWORDS: Module,Temperature,Temp,thermistor,sensor,10K3A1,10K4A1,20K6A1,PT100,NI1000,LAN1,SAT1,STA1,TAC1,2.2K3A1
+
+**Note:** If you want to see how this module works internally, check out the [[Thermistors]] tutorial.
 
 This module uses the following common thermistor characteristics found in most off the shelf thermistor based temperature sensors.
 
