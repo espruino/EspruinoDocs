@@ -32,10 +32,11 @@ exports.connect = function(serial, callback) {
   serial.on('data', function(d) {
     gps.line += d.data;
     var idx = gps.line.indexOf("\n");
-    if (idx>=0) {
+    while (idx>=0) {
       var line = gps.line.substr(0, idx);
       gps.line = gps.line.substr(idx+1);
-      handleGPSLine(line, callback);      
+      handleGPSLine(line, callback); 
+      idx = gps.line.indexOf("\n");     
     }
   });
   return gps;

@@ -15,12 +15,13 @@ Serial1.on('data', function (e) {
   Serial1.print(e.data); 
   cmd+=e.data;
   var idx = cmd.indexOf("\r");
-  if (idx>=0) { 
+  while (idx>=0) { 
     var line = cmd.substr(0,idx);
     cmd = cmd.substr(idx+1);
     var s = "'"+line+"' = "+eval(line); 
     print(s);
     Serial1.println(s);
+    idx = cmd.indexOf("\r");
   }
 });
 ```
