@@ -28,12 +28,15 @@ function handleGPSLine(line, callback) {
 
 
 exports.connect = function(serial, callback) {
-  var gpsLine = "";
-  serial.onData(function(d) {
-    if (d.data=="\n") {
-      var line = gpsLine;
-      gpsLine="";
+  var gps = {line:""};
+  serial.on('data', function(d) {
+    gps.line += d.data;
+    var idx = gps.line.indexOf("\n");
+    if (idx>=0) {
+      var line = gps.line.substr(0, idx);
+      gps.line = gps.line.substr(idx+1);
       handleGPSLine(line, callback);      
-    } else gpsLine+=d.data;
+    }
   });
+  return gps;
 }

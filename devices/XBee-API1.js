@@ -44,12 +44,13 @@ var xbee=function(ser) {
     this.rxcb=undefined;
     
     //
-    // process incomming data
+    // process incoming data
     //
-    ser.onData(function (e) {
+    ser.on('data', function (e) {
+      for (var i in e.data) {
         //console.log('S:'+pstate);
-        // console.log(e.data.charCodeAt(0).toString(16));
-        var data=e.data.charCodeAt(0);
+        // console.log(e.data.charCodeAt(i).toString(16));
+        var data=e.data.charCodeAt(i);
         
         switch(pstate)
         {
@@ -85,6 +86,7 @@ var xbee=function(ser) {
                         pstate='S'; // Start over
                 break;
         }
+      }
     });
     //
     // Prep. Callback

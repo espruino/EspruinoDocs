@@ -75,7 +75,7 @@ You can reconfigure the name and passkey by connecting to the HC-05 Bluetooth mo
 
 ```
 Serial1.setup(38400);
-Serial1.onData(function (d) {console.log(d.data);});
+Serial1.on('data', function (d) {console.log(d.data);});
 Serial1.println('AT+PSWD:1701');
 Serial1.println('AT+NAME:Espruino1');
 ```

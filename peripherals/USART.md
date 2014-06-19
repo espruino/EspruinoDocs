@@ -11,14 +11,17 @@ Espruino can respond to information on serial ports or USB. If you're plugged in
 ```JavaScript
 var cmd="";
 Serial1.setup(9600/*baud*/);
-Serial1.onData(function (e) { 
+Serial1.on('data', function (e) { 
   Serial1.print(e.data); 
-  if (e.data=="r") { 
-    var s = "'"+cmd+"' = "+eval(cmd); 
+  cmd+=e.data;
+  var idx = cmd.indexOf("\r");
+  if (idx>=0) { 
+    var line = cmd.substr(0,idx);
+    cmd = cmd.substr(idx+1);
+    var s = "'"+line+"' = "+eval(line); 
     print(s);
     Serial1.println(s);
-    cmd="";
-  } else cmd+=e.data;
+  }
 });
 ```
  
@@ -26,7 +29,7 @@ Or you can do a quick 'loopback' test. Connect the RX and TX pins together for o
 
 ```JavaScript
 Serial4.setup(9600);
-Serial4.onData(function (e) { print("<Serial4> "+e.data); });
+Serial4.on('data', function (e) { print("<Serial4> "+e.data); });
 Serial4.print("Hello World");
 ```
  
