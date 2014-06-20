@@ -36,7 +36,7 @@ Once wired up, you can test whether the module is working. It uses basically the
 To test if the module works fine just call
 
 ```
-Serial1.on('data', function (d) {console.log(d.data);}); 
+Serial1.on('data', function (data) {console.log(data);}); 
 Serial1.print("AT")
 ```
 

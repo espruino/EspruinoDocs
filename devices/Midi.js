@@ -13,9 +13,9 @@ function Midi(uart, speed) {
     var p2 = 0;
     var channel = 0;
     var emitter = this;
-    uart.on('data', function(d) {
-      for (var i in d.data) {
-        var b = d.data.charCodeAt(i);
+    uart.on('data', function(data) {
+      for (var i in data) {
+        var b = data.charCodeAt(i);
         if (state === 'W') {
            if (b < 0x80) {
                 print("Out of order or non-command, discarding");

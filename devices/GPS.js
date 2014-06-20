@@ -29,8 +29,8 @@ function handleGPSLine(line, callback) {
 
 exports.connect = function(serial, callback) {
   var gps = {line:""};
-  serial.on('data', function(d) {
-    gps.line += d.data;
+  serial.on('data', function(data) {
+    gps.line += data;
     var idx = gps.line.indexOf("\n");
     while (idx>=0) {
       var line = gps.line.substr(0, idx);
