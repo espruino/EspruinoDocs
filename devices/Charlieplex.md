@@ -27,6 +27,23 @@ g.drawLine(0,0,g.getWidth()-1,g.getHeight()-1);
 g.flip();
 ```
 
+The following code will create simple scrolling text saying "Hello World":
+
+```
+var g = require("Charlieplex").connect([C0,C1,C2,C3,A0]);
+g.setRotation(1);
+
+var n = -g.getWidth();
+setInterval(function() {
+  var s = "Hello World";
+  g.clear();
+  g.drawString(s,-n,0);
+  n++;
+  if (n>g.stringWidth(s)) n=-g.getWidth();
+  g.flip();
+},200);
+```
+
 Using 
 -----
 
@@ -36,6 +53,8 @@ Buying
 -----
 
 You can buy Charlieplexed LEDs from the places below (and many others), or it's easy enough to wire up your own.
+
+**Note:** You won't get very good results with large matrices - we'd suggest using only matrices with less than 8 pins.
 
 * [Phenoptix](http://www.phenoptix.com/products/adafruit-jprodgers-lol-shield-lots-of-leds-for-arduino-charlieplexed-display)
 * [eBay](http://www.ebay.com/sch/i.html?_nkw=Charlieplexed)

@@ -20,7 +20,8 @@ exports.connect = function(pins) {
       var r=[],w=[];
       for (var y=0;y<pins.length-1;y++) {
         var i = y + (y>=x?1:0);
-        if (g.getPixel(x,y))
+        var n = x+y*pins.length;
+        if (g.buffer[n>>3]>>(n&7) & 1)
           w.push(pins[i]);
         else {
           r.push(pins[i]);
