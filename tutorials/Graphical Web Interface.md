@@ -19,7 +19,7 @@ You'll Need
 
 * One [Espruino Board](/EspruinoBoard)
 * A [[CC3000]] WiFi module
-* A model house
+* A [model house](http://www.hazelwilliams.net/)
 * A string of 8 [[WS2811]] Lights
 
 Wiring Up
