@@ -12,3 +12,4 @@ The Espruino board doesn't have any mounting holes on it (there just isn't space
 * Tape Espruino down with double-sided tape ('Servo Tape' is designed for this kind of thing)
 * Use Cable ties
 * Drill though some of the holes in Espruino's Prototyping area (check that no wires go past them on the PCB)
+* Solder a mount onto some of the pins that you're not using - for example you could solder on [a ring crimp connector](http://uk.rs-online.com/web/p/crimp-ring-terminals/6881439/) and could then screw through it.
