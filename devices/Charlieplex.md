@@ -54,7 +54,8 @@ Buying
 
 You can buy Charlieplexed LEDs from the places below (and many others), or it's easy enough to wire up your own.
 
-**Note:** You won't get very good results with large matrices - we'd suggest using only matrices with less than 8 pins.
+**Note:** You won't get very good results with large matrices - we'd suggest using only matrices with less than 8 pins (less than 8x7 LEDs).
 
+* [5x4 led matrix on Tindie](https://www.tindie.com/products/bobricius/charlieplex-5x4-charlieplexed-color-0603-led-matrix-for-arduino-micro-lol/)
 * [Phenoptix](http://www.phenoptix.com/products/adafruit-jprodgers-lol-shield-lots-of-leds-for-arduino-charlieplexed-display)
 * [eBay](http://www.ebay.com/sch/i.html?_nkw=Charlieplexed)
