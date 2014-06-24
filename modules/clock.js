@@ -3,31 +3,26 @@
 /** Clock constructor.  Apply is used to pass all arguments to the Date
   * constructor */
 function Clock() {
-  this.lastTime = 0;  
-  this.date = new (require("date").Date)();
-  this.date.constructor.apply(this.date, arguments);
+  this.lastTime = getTime();  
+  if (arguments.length>1)
+    this.date = new Date(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4],arguments[5],arguments[6]);
+  else if (arguments.length==1)
+    this.date = new Date(arguments[0]);
+  else
+    this.date = new Date();
 }
 
-/**  setClock(milliseconds since 1/1/1970) */
+/** setClock(milliseconds since 1/1/1970) */
 Clock.prototype.setClock = function(ms) {  
-  this.date.setTime(ms);
+  this.lastTime = getTime();  
+  this.date = new Date(ms);
 };
 
-/** Return the current clock time, as a date.  We calculate the number
-  * of milliseconds since last called, and add this to the current 
-  * time.
-  *
-  * This approach is designed to save power - we don't use an interval
-  * to increment a clock because this prevents deep sleep */
-Clock.prototype.getClockTime = function () {
-  var t = getTime();
-  var diff = t-this.lastTime;
-  
-  this.date.addTime(diff*1000);
-  
-  this.lastTime = t;
-  
-  return this.date;
+/** Return the current clock time, as a date object.  We calculate the number
+  * of milliseconds since setClock or the constructor was called, and 
+  * add this to the date that was set at that time. */
+Clock.prototype.getDate = function () {
+  return new Date((getTime()-this.lastTime)*1000 + this.date.getTime());
 };
 
 exports.Clock = Clock;
