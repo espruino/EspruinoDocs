@@ -150,6 +150,7 @@ NRF.prototype.setAddr = function(reg, value /* 5 byte array*/) {
 NRF.prototype.setRXAddr = function(adr /* 5 byte array*/, pipe) {
   if (pipe===undefined) pipe=1;
   else this.setReg(C.EN_RXADDR, this.getReg(C.EN_RXADDR) | 1<<pipe); // enable RX addr
+  // addresses > 1 use the last 4 bytes from ADDR_P1
   this.setAddr(C.RX_ADDR_P0+pipe,(pipe<2) ? adr : [adr[0]]);
 };
 NRF.prototype.setTXAddr = function(adr /* 5 byte array*/) {
@@ -162,6 +163,12 @@ NRF.prototype.getReg = function(reg) {
 NRF.prototype.getAddr = function(reg) {
   var data = this.spi.send([C.R_REGISTER | reg, 0,0,0,0,0], this.CSN);
   data.splice(0,1); // remove first
+  if (reg>C.RX_ADDR_P1) {
+    // addresses > 1 use the last 4 bytes from ADDR_P1
+    var fullAddr = this.getAddr(C.RX_ADDR_P1);
+    fullAddr.splice(0,1,data[0]);
+    return fullAddr;
+  }
   return data;
 };
 NRF.prototype.getStatus = function(reg) {
