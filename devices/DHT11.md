@@ -7,7 +7,7 @@ DHT11 Temperature and RH Sensor
 Overview
 -----------------
 
-This module interfaces with the DHT11, a very cheap (and cheaply made) temperature and relative humidity sensor. 
+This module interfaces with the DHT11, a very cheap (and cheaply made) temperature and relative humidity sensor. Support is included in the [[DHT11.js]] module.
 
 Key Specifications:
   | Temperature Range | 0 ~ 50 C |
@@ -16,10 +16,9 @@ Key Specifications:
   | Humidity Accuracy | +/- 4%   |
 
 
-The DHT11 sometimes fails to recognize the trigger pulse. Occasionally it also returns bad data. Despite the datasheet claiming that the DHT11 sends an 8 bit checksum (40 bits total), the DHT11s I had only returned the 32 data bits. If the DHT11 were to send the full 40 bits, this module would handle it, however, the checksum would not be used for validation.
+The DHT11 sometimes fails to recognize the trigger pulse, and occasionally the module fails to properly read the data. The checksum is used to validate all data received. 
 
-This module will retry if it doesn't get any response, or if relative humidity is given as >100 (indicating bad data). 
-If it fails 20 times in a row, the callback will be called with {"temp":-1, "rh":-1}, indicating a likely problem with the sensor or wiring.
+The module will retry if it doesn't get any response, or if other sanity checks fail. If it fails 20 times in a row, the callback will be called with {"temp":-1, "rh":-1}, indicating a likely problem with the sensor or wiring.
 It is recommended that you do your own sanity-check on the data returned.
 
 

@@ -15,11 +15,16 @@ exports.connect = function(pin) {
 function DHT22(pin) {
   this.pin = pin;
   this.readfails=0;
+  this.tout=0;
+  this.hout=0;
+  this.cks=0; 
 }
 DHT22.prototype.read = function (a) {
     this.onreadf=a;
     this.i=0;
-    this.out=1;
+    this.tout=0;
+    this.hout=0;
+    this.cks=0; 
     pinMode(this.pin);
     var dht = this;
     digitalWrite(this.pin,0);
@@ -47,17 +52,31 @@ DHT22.prototype.onwatch = function(t) {
         this.pstart=t.time;
     } else {
         var tt=t.time-this.pstart;
-        this.out=(this.out<<1) | ((tt > 0.000044) && (tt < 0.0001));
-        this.i++;
+        if (tt < 0.0002) {
+            this.recbit(tt,this.i);
+            this.i++;
+        }
     }
 };
-//The base rightshift of 3 (ie 32-3) was empirically determined. 
+DHT22.prototype.recbit = function(plen,bit) {
+    if (bit==0){} else if (bit < 17) {
+        this.hout=(this.hout<<1) | (plen > 0.0000382);
+    } else if (bit < 33) {
+        this.tout=(this.tout<<1) | (plen > 0.0000382);
+    } else {
+        this.cks=(this.cks<<1) | (plen > 0.0000382);
+    }
+}
 DHT22.prototype.endRead = function() {
     clearWatch(this.watch);
-    if (this.i > 32) {
-        var rh=((this.out>>(this.i-18))&0x0FFF)*0.1;
-        var temp=((this.out<<(34-this.i))&0x7FFF)*0.1;
-        if ((this.out<<(35-this.i))&0x8000) {
+    var tcks = this.hout&0xFF;
+    tcks+= (this.hout>>8)&0xFF;
+    tcks+= (this.tout&0xFF);
+    tcks+= (this.tout>>8)&0xFF;
+    if (tcks==this.cks && this.hout > 0 && this.tout > 0) {
+        var rh=this.hout*0.1;
+        var temp=this.tout*0.1;
+        if (this.tout&0x8000) {
             temp=temp*-1;
         }
         if (rh < 100 ) {
