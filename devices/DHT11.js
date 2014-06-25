@@ -17,12 +17,17 @@ exports.connect = function(pin) {
 function DHT11(pin) {
   this.pin = pin;
   this.readfails=0;
+  this.tout=0;
+  this.hout=0;
+  this.cks=0; 
 }
 DHT11.prototype.read = function (a) {
-    if (this.watch) return; // we were already working, so ignore this
+    if (this.watch) return;
     this.onreadf=a;
     this.i=0;
-    this.out=1;
+    this.tout=0;
+    this.hout=0;
+    this.cks=0; 
     pinMode(this.pin);
     var dht = this;
     digitalWrite(this.pin,0);
@@ -50,17 +55,32 @@ DHT11.prototype.onwatch = function(t) {
         this.pstart=t.time;
     } else {
         var tt=t.time-this.pstart;
-        this.out=(this.out<<1) | ((tt > 0.000044) && (tt < 0.0001));
-        this.i++;
+        if (tt < 0.0002) {
+            this.recbit(tt,this.i);
+            this.i++;
+        }
     }
 };
+DHT11.prototype.recbit = function(plen,bit) {
+    if (bit==0){} else if (bit < 17) {
+        this.hout=(this.hout<<1) | (plen > 0.000035);
+    } else if (bit < 33) {
+        this.tout=(this.tout<<1) | (plen > 0.000035);
+    } else {
+        this.cks=(this.cks<<1) | (plen > 0.000035);
+    }
+}
 DHT11.prototype.endRead = function() {
     if (this.watch) clearWatch(this.watch);
     this.watch = undefined;
-    if (this.i > 32) {
-        var rh=(this.out>>(this.i-10))&0xFF;
-        var temp=(this.out>>(this.i-26))&0xFF;
-        if (rh < 100 ) {
+    var tcks = this.hout&0xFF;
+    tcks+= (this.hout>>8)&0xFF;
+    tcks+= (this.tout&0xFF);
+    tcks+= (this.tout>>8)&0xFF;
+    if (this.cks==tcks) {
+        var rh=(this.hout>>8)&0xFF;
+        var temp=(this.tout>>8)&0xFF;
+        if (rh < 100 && rh > 0) {
             return {"temp":temp,"rh":rh};
         }
     }
