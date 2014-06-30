@@ -1,4 +1,6 @@
 // Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. 
+// Generate keywords.js, and convert Markdown into HTML
+
 var fs = require('fs');
 var path = require('path');
 if (fs.existsSync==undefined) fs.existsSync = path.existsSync;
