@@ -20,40 +20,36 @@ var LCD_HEIGHT = 320;
 
 exports.connect = function(spi, dc, ce, rst, callback) { 
   function writeCMD(d){
-    dc.write(0);
     ce.write(0);
-    spi.send(d);
-    dc.write(1);
+    spi.write(d,dc);
   }
   function writeCD(c,d){
-    dc.write(0);
     ce.write(0);
-    spi.send(c);
-    dc.write(1);
+    spi.write(c,dc);
     spi.send(d);
     ce.write(1);
   }
 
   var LCD = Graphics.createCallback(LCD_WIDTH, LCD_HEIGHT, 16, {
     setPixel:function(x,y,c){
-      writeCD(0x2A,[x>>8,x,(x+1)>>8,x+1]);
-      writeCD(0x2B,[y>>8,y,(y+1)>>8,y+1]);
-      writeCD(0x2C,[c>>8,c]);
+      ce.reset();
+      spi.write(0x2A,dc);
+      spi.write(x>>8,x,(x+1)>>8,x+1);
+      spi.write(0x2B,dc);
+      spi.write(y>>8,y,(y+1)>>8,y+1);
+      spi.write(0x2C,dc);
+      spi.write(c>>8,c);
+      ce.set();
     },
     fillRect:function(x1,y1,x2,y2,c){
-      var cnt = (x2 - x1 + 1) * (y2 - y1 + 1);
-      writeCD(0x2A,[x1>>8,x1,x2>>8,x2]);
-      writeCD(0x2B,[y1>>8,y1,y2>>8,y2]);
-      writeCMD(0x2C);
-      c = String.fromCharCode(c>>8)+String.fromCharCode(c);
-      var cl = c+c+c+c;
-      cl = cl+cl;
-      var cn = cnt>>3;
-      while (cn--)spi.send(cl);
-      cl = [c>>8,c,c>>8];
-      cn = cnt&7;
-      while (cn--)spi.send(c);
-      ce.write(1);
+      ce.reset();
+      spi.write(0x2A,dc);
+      spi.write(x1>>8,x1,x2>>8,x2);
+      spi.write(0x2B,dc);
+      spi.write(y1>>8,y1,y2>>8,y2);
+      spi.write(0x2C,dc);
+      spi.write({data:String.fromCharCode(c>>8)+String.fromCharCode(c), count:(x2-x1+1)*(y2-y1+1)});
+      ce.set();
     }
   });
 
