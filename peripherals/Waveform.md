@@ -132,13 +132,14 @@ Creating Audio Files for Espruino
 
 * Install [Audacity](http://audacity.sourceforge.net/)
 * Open it and open a sound file
-* Down the bottom-left, change `Project Rate (Hz)` to 4000
+* Down the bottom-left, change `Project Rate (Hz)` to 4000 or whatever your target playback rate is
 * Click `Tracks` -> `Stereo Track to Mono` if the track is stereo
 * Highlight the bit of sound you want to export
 * Click `File` -> `Export Selection`
 * Choose `Other Uncompressed files`
 * Choose `Options` then `RAW (header-less)` and `Unsigned 8 bit PCM`
-* And save to the SD card...
+* And save to the SD card
+* If you don't want to use an SD card, you can load small sound snippets (less than 8kB) directly into Espruino's memory using the [[File Converter]] page.
 
 Using Waveforms
 --------------

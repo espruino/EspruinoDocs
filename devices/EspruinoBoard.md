@@ -112,10 +112,10 @@ Espruino is designed for HC-05 modules. Have a look at the [[Bluetooth]] page fo
 Known Problems
 ------------
 
-* Currently, PWM outputs (via ```analogWrite```) won't work on pin A9 ([bug](https://github.com/espruino/Espruino/issues/142))
+* PWM output (via ```analogWrite```) on B4 and A6 at the same time is not possible (as they share timer hardware)
 * You can't setWatch on two pins with the same number (eg. A5 and C5) - it's a limitation of the STM32F1 
 * You can't use ```setWatch``` on B11/C11/D11 and enable ```setDeepSleep```, as A11 is watched in order to wake when USB is plugged in
-* The USB bootloader as shipped on Espruino KickStarter boards requires the APB1 clock frequency to be changed before it will work reliably. This is handled by the Web IDE's flasher ([diff](https://github.com/espruino/EspruinoWebIDE/commit/476c6755cf243b5ac81a559f907d65900b961dde)) and also Espruino's version of [stm32loader.py](https://github.com/espruino/Espruino/blob/master/scripts/stm32loader.py).
+* The USB bootloader as shipped on Espruino KickStarter boards requires the APB1 clock frequency to be changed before it will work reliably. This is automatically handled by the Web IDE's flasher ([diff](https://github.com/espruino/EspruinoWebIDE/commit/476c6755cf243b5ac81a559f907d65900b961dde)), and also Espruino's version of [stm32loader.py](https://github.com/espruino/Espruino/blob/master/scripts/stm32loader.py) *if* you supply the `-k` switch.
 
 Troubleshooting
 -------------
@@ -139,3 +139,5 @@ If you're developing and you want to completely rewrite the bootloader, you can 
 Note: BOOT0 is in a group of two pins (RST and BOOT0) in the middle of the top edge of the board.
 
 Then, dab reset to enter bootloader mode and use the [STM32 flasher utility](https://github.com/espruino/Espruino/blob/master/scripts/stm32loader.py) to flash the STM32 chip.
+
+You might also want to see the [Advanced Debug](/AdvancedDebug) page for details on how to debug the Espruino Interpreter using an ST-link debugger.
