@@ -3,8 +3,9 @@ MeArm Robotic Arm
 ===============
 
 * KEYWORDS: Me Arm,Robot Arm,Robotics
+* USES: Servo Motor,MeArm,IRReceiver
 
-![Robot Arm](arm.jpg)
+[[http://youtu.be/WRMF7wJ57Ak]]
 
 Introduction
 -----------
