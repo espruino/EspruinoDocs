@@ -153,6 +153,11 @@ More Advanced Usage
 
 You can send individual packets using ```NRF.send(data)```, where data is an array of numbers of length ```NRF.PAYLOAD```. To receive you can use the same ```NRF.getData()``` function. For more information consult the module ([[NRF24L01P.js]]).
 
+Reference
+--------------
+ 
+* APPEND_JSDOC: NRF24L01P.js
+
 Using 
 -----
 

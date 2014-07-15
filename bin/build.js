@@ -1,6 +1,8 @@
 // Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. 
 // Generate keywords.js, and convert Markdown into HTML
 
+// needs marked + jsdoc
+
 var fs = require('fs');
 var path = require('path');
 if (fs.existsSync==undefined) fs.existsSync = path.existsSync;
@@ -316,9 +318,23 @@ markdownFiles.forEach(function (file) {
          }
        }
      }
-   }
+   };
+   
    appendMatching(/APPEND_KEYWORD: (.*)/ , "APPEND_KEYWORD", fileInfo.keywords, "");
    appendMatching(/APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, "No tutorials use this yet.");
+   // try and handle module documentation
+   for (i in contentLines) {
+     var match = contentLines[i].match(/APPEND_JSDOC: (.*)/);
+     if (match!=null) {
+       var jsfilename = file.substr(0, file.lastIndexOf("/")+1) + match[1];       
+       var js = fs.readFileSync(jsfilename).toString();
+       console.log("APPEND_JSDOC "+jsfilename);
+       var doc = require("./common.js").getJSDocumentation(js);
+       /* setting the language to Java lets it be highlighted correctly
+       while not adding the 'send to Espruino' icon */
+       contentLines[i] = "```Java\n"+doc+"```\n";
+     }
+   }
 
    contentLines.splice(0,1); // remove first line (copyright)
 

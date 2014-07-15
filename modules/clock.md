@@ -23,3 +23,9 @@ How to use the module:
   // You can also update the current time
   clk.setClock(Date.parse("Jun 23, 2014 12:18:02"));
 ```
+
+Reference
+--------------
+ 
+* APPEND_JSDOC: clock.js
+

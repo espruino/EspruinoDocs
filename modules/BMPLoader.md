@@ -13,6 +13,12 @@ var img = require("BMPLoader").load(require('fs').readFileSync("foo.bmp"));
 g.drawImage(img, 10, 10);
 ```
 
+Reference
+--------------
+ 
+* APPEND_JSDOC: BMPLoader.js
+
+
 Using 
 -----
 

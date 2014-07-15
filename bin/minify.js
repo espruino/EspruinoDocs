@@ -14,7 +14,7 @@ console.log("Minifying ",fileIn,"to",fileOut);
 var js = fs.readFileSync(fileIn).toString();
 
 // first off, replace all binary numbers
-js = js.replace(/0b([01][01]*)/g, "parseInt(\"$1\",2)");
+js = require("./common.js").makeECMA5(js);
 
 //console.log(js);
 

@@ -1,7 +1,7 @@
 /* Copyright (c) 2014 Martin Green. See the file LICENSE for copying permission. */
 
 /** Clock constructor.  Apply is used to pass all arguments to the Date
-  * constructor */
+ constructor */
 function Clock() {
   this.lastTime = getTime();  
   if (arguments.length>1)
@@ -19,8 +19,8 @@ Clock.prototype.setClock = function(ms) {
 };
 
 /** Return the current clock time, as a date object.  We calculate the number
-  * of milliseconds since setClock or the constructor was called, and 
-  * add this to the date that was set at that time. */
+ of milliseconds since setClock or the constructor was called, and 
+ add this to the date that was set at that time. */
 Clock.prototype.getDate = function () {
   return new Date((getTime()-this.lastTime)*1000 + this.date.getTime());
 };

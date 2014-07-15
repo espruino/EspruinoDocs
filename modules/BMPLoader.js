@@ -10,7 +10,11 @@ g.drawImage(img, 10, 10);
 
 */
 
-// see http://en.wikipedia.org/wiki/BMP_file_format
+/** Load a bitmap (supplied as a string), and return an image object that
+ can be used by the Graphics library
+
+ see http://en.wikipedia.org/wiki/BMP_file_format
+*/
 exports.load = function(bmpString) {
   var bmp = E.toArrayBuffer(bmpString);
   if (bmp[0]!=66 && bmp[1]!=77) { console.log("Not a bitmap file"); return; }

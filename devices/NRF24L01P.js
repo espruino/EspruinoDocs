@@ -125,6 +125,18 @@ function NRF(_spi, _csn, _ce, _payload) {
   this.callbacks = []; // array of callbacks
 }
 
+/** Public constants */
+NRF.C = {
+  RX_ADDR_P0  : 0x0A,
+  RX_ADDR_P1  : 0x0B,
+  RX_ADDR_P2  : 0x0C,
+  RX_ADDR_P3  : 0x0D,
+  RX_ADDR_P4  : 0x0E,
+  RX_ADDR_P5  : 0x0F,
+  TX_ADDR     : 0x10
+};
+
+/** Initialise the NRF module. Takes a 5 byte array for both RX and TX addresses */
 NRF.prototype.init = function(rxAddr, txAddr) {
   digitalWrite(this.CE,0);
   digitalWrite(this.CSN,1);
@@ -135,31 +147,37 @@ NRF.prototype.init = function(rxAddr, txAddr) {
   this.setReg(C.SETUP_RETR, 0b01011111); // setup ARD 0101 (6*250uS retransmit delay) and ARC 1111 (15 retransmit count)
   digitalWrite(this.CE,1); // set active
 };
+/** Set whether the NRF module is enabled */
 NRF.prototype.setEnabled = function(isEnabled) {
   digitalWrite(this.CE, isEnabled);
 };
+/** Set an register (for internal use only) */
 NRF.prototype.setReg = function(reg, value) {
   this.spi.send([C.W_REGISTER | reg, value], this.CSN);
 };
+/** Set an address (for internal use only) */
 NRF.prototype.setAddr = function(reg, value /* 5 byte array*/) {
   value = value.clone();
   value.splice(0,0,C.W_REGISTER | reg);
   this.spi.send(value, this.CSN);
 };
-/** Set receive address. Optional pipe argument. Note that pipes>1 share pipe 1's last 4 address digits */
-NRF.prototype.setRXAddr = function(adr /* 5 byte array*/, pipe) {
+/** Set receive address (a 5 byte array). Optional pipe argument. Note that pipes>1 share pipe 1's last 4 address digits */
+NRF.prototype.setRXAddr = function(adr, pipe) {
   if (pipe===undefined) pipe=1;
   else this.setReg(C.EN_RXADDR, this.getReg(C.EN_RXADDR) | 1<<pipe); // enable RX addr
   // addresses > 1 use the last 4 bytes from ADDR_P1
   this.setAddr(C.RX_ADDR_P0+pipe,(pipe<2) ? adr : [adr[0]]);
 };
+/** Set the transmit address (a 5 byte array) */
 NRF.prototype.setTXAddr = function(adr /* 5 byte array*/) {
   this.setAddr(C.RX_ADDR_P0,adr);
   this.setAddr(C.TX_ADDR,adr);
 };
+/** Get the value of the given register (for internal use only) */
 NRF.prototype.getReg = function(reg) {
   return this.spi.send([C.R_REGISTER | reg, 0], this.CSN)[1];
 };
+/** Get the configured address. reg should be NRF.C.TX_ADDR,C.RX_ADDR_P0..4 */
 NRF.prototype.getAddr = function(reg) {
   var data = this.spi.send([C.R_REGISTER | reg, 0,0,0,0,0], this.CSN);
   data.splice(0,1); // remove first
@@ -171,19 +189,23 @@ NRF.prototype.getAddr = function(reg) {
   }
   return data;
 };
+/** Get the contents of the status register */
 NRF.prototype.getStatus = function(reg) {
   return this.getReg(C.STATUS);
 };
+/** Set the data rate, Either 250000, 1000000 or 2000000 */
 NRF.prototype.setDataRate = function(rate) {
   var rates = { 250000:C.RF_DR_LOW, 1000000:0,2000000:C.RF_DR_HIGH };
   if (!rate in rates) console.log("Unknown rate");
   this.setReg(C.RF_SETUP, (this.getReg(C.RF_SETUP)&~(C.RF_DR_LOW|C.RF_DR_HIGH))|rates[rate]);
 };
-// return undefined (if no data) or the pipe number of the data we're expecting
+/** return undefined (if no data) or the pipe number of the data we're expecting */
 NRF.prototype.getDataPipe = function() {
   var r = this.getReg(C.STATUS)&C.RX_P_NO_FIFO_EMPTY;
   return (r==C.RX_P_NO_FIFO_EMPTY) ? undefined : (r>>1); 
 };
+
+/** If there is data available, return an array if PAYLOAD size containing it */
 NRF.prototype.getData = function() {
   var data = [C.R_RX_PAYLOAD];
   for (var i=0;i<this.PAYLOAD;i++) data.push(0);
@@ -192,6 +214,7 @@ NRF.prototype.getData = function() {
   this.setReg(C.STATUS, C.RX_DR); // clear rx flag
   return data;
 };
+
 /** Send a single packet (of length PAYLOAD). Returns true on success */
 NRF.prototype.send = function(data/* array of length PAYLOAD */) {
   this.setReg(C.STATUS, C.MAX_RT | C.TX_DS); // clear flags
@@ -217,6 +240,7 @@ NRF.prototype.send = function(data/* array of length PAYLOAD */) {
   return success;
 };
 
+/** Slave handler - for slaves this should be called roughly every 50ms */
 NRF.prototype.slaveHandler = function() {
   while (this.getDataPipe()!==undefined) {
     var data = this.getData();
@@ -233,7 +257,11 @@ NRF.prototype.slaveHandler = function() {
           print("...>"+c);
           var result = ""+eval(c); // evaluate
           print("...="+result);
-          nrf.sendStringTimeout(result, 500);
+          // send the result back after a timeout
+          var nrf = this;
+          setTimeout(function() {
+            nrf.sendString(result);
+          }, 500);
         }, 1);
       } else if (ch!==0) {
         this.cmd += String.fromCharCode(ch);
@@ -241,6 +269,8 @@ NRF.prototype.slaveHandler = function() {
     }
   }
 };
+
+/** Master handler - for masters this should be called roughly every 50ms */
 NRF.prototype.masterHandler = function() {
   while (this.getDataPipe()!==undefined) {
     var data = this.getData();
@@ -257,6 +287,7 @@ NRF.prototype.masterHandler = function() {
     }
   }
 };
+
 /** Send a string in one or more packets. Returns true on success */
 NRF.prototype.sendString = function(cmd) {
   for (var i=0;i<=cmd.length;i+=this.PAYLOAD) {
@@ -266,17 +297,14 @@ NRF.prototype.sendString = function(cmd) {
   }
   return true;
 };
+
+/** Send a command as a master. The callback is then called when data is received back. */
 NRF.prototype.sendCommand = function(cmd, callback) {
   this.callbacks.push(callback);
   this.sendString(cmd);
 };
-NRF.prototype.sendStringTimeout = function(cmd, t) {
-  var nrf = this;
-  setTimeout(function() {
-    nrf.sendString(cmd);
-  }, t);
-};
 
+/** Create a new NRF class */
 exports.connect = function(_spi, _csn, _ce, _payload) {
   return new NRF(_spi, _csn, _ce, _payload);
 };
