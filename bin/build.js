@@ -8,7 +8,7 @@ var path = require('path');
 if (fs.existsSync==undefined) fs.existsSync = path.existsSync;
 var common = require("./common.js");
 
-var BASEDIR = path.resolve(__dirname, "..");;
+var BASEDIR = path.resolve(__dirname, "..");
 var HTML_DIR = path.resolve(BASEDIR, "html");
 var IMAGE_DIR = "refimages/";
 
@@ -49,6 +49,7 @@ function WARNING(s) {
 
 var markdownFiles = common.getMarkdown(BASEDIR);
 var preloadedFiles = {};
+var fileTitles = {};
 
 function addToList(keywords, k, fileInfo) {
   k = k.toLowerCase();
@@ -83,6 +84,7 @@ function grabInfo(markdownFiles, preloadedFiles) {
      path : file,
      title : contentLines[1], // second line
    };
+   fileTitles[fileInfo.path] = fileInfo.title; 
    // add keyword for directory
    file.split("/").forEach(function (k) {
      if (k.indexOf(".")>0) k = k.substr(0,k.indexOf(".")); // remove file extension
@@ -273,15 +275,14 @@ function inferFile(filename, fileContents, baseLineNumber) {
          var link = "/"+htmlLinks[filename]+"#line=";
          var found = false;
          for (var i in urls[url]) {
-           if (urls[url][i].indexOf(link)==0) {
-             urls[url][i] += ","+lineNumber;
+           if (urls[url][i].url.indexOf(link)==0) {
+             urls[url][i].url += ","+lineNumber;
              found = true;
            }
          }
              
          if (!found)
-           urls[url].push(link+lineNumber);
-         // lineInfo.col?
+           urls[url].push({ url : link+lineNumber, title : fileTitles[filename]});
        }
      }
     }});
@@ -290,7 +291,7 @@ function inferFile(filename, fileContents, baseLineNumber) {
 
 function inferMarkdownFile(filename, fileContents) {
   var baseLineNumber = 0;
-  var codeBlocks = fileContents.match( /```[^`]+```| `[^`]+`/g );
+  var codeBlocks = fileContents.match( /```[^`]+```|[ \n\t]`[^`]+`/g );
   if (codeBlocks)
     codeBlocks.forEach(function(code) {
       if (code.indexOf("```\n")==0 || code.indexOf("```JavaScript\n")==0) {
