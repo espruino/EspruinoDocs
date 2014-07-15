@@ -31,22 +31,24 @@ like `require("libname")`.
         this.pin2 = pin2;
       }
 
+      /** 'public' constants here */
       MOD123.prototype.C = {
         MY : 0x013,         // description
         PUBLIC : 0x0541,    // description
         CONSTANTS : 0x023   // description
       };
 
-      /* Put most of my comments outside the functions... */
+      /** Put most of my comments outside the functions... */
       MOD123.prototype.foo = function() {
         // you can use C.PRIVATE
         // or this.C.PUBLIC
       };
 
-      /* Put most of my comments outside the functions... */
+      /** Put most of my comments outside the functions... */
       MOD123.prototype.bar = function() {
       };
 
+      /** This is 'exported' so it can be used with `require('MOD123.js').connect(pin1,pin2)` */
       exports.connect = function (pin1, pin2) {
         return new MOD123(pin1, pin2);
       };
@@ -79,7 +81,7 @@ Check out some of the [other modules](www.espruino.com/modules) for examples (so
       My Module's proper title
       =====================
 
-      * KEYWORDS_: Module,Comma,separated,list,of,search,words
+      * KEYWORDS: Module,Comma,separated,list,of,search,words
 
       A bit about my module. Use the [[MOD123.js]] module for it.
 
@@ -98,17 +100,23 @@ Check out some of the [other modules](www.espruino.com/modules) for examples (so
         var foo = require("MOD123").connect(A0,A1);
         foo.usingFoo();
       ```
-        
-To get your module's description formatted nicely you just need to write it in a slightly special way, called Markdown. [See this link](https://help.github.com/articles/github-flavored-markdown) for examples of how to use it, and maybe look at the other modules in GitHub.
 
+To get your module's description formatted nicely you just need to write it in a slightly special way, called Markdown. [See this link](https://help.github.com/articles/github-flavored-markdown) for examples of how to use it, and maybe look at the other modules in GitHub.
+      
+You'll probably also want to add this to the end of the file if your module has more than one function. This will scan the JavaScript file for exported functions and comments of the form `/** ... */` - which will then be included as a reference for your module.
+
+      Reference
+      ---------
+
+      * APPEND_JSOC: MOD123.js
+
+        
 You can also add `APPEND_USES` so that if others [Write Tutorials](Writing Tutorials) that say `USES: MOD123` at the top, they will be listed on your module's page:
 
-```
-Using
------
-
-* APPEND_USES_: MOD123
-```
+      Using
+      -----
+      
+      * APPEND_USES: MOD123
 
 * And that's it! Click `Commit New File`.
 

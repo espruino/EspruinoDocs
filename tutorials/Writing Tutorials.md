@@ -18,8 +18,8 @@ Writing and submitting tutorials is really easy, and it's great for the communit
     My Tutorial's Proper Title
     =======================
 
-    * KEYWORDS_: Comma,separated,list,of,search,words
-    * USES_: Comma,separated,list
+    * KEYWORDS: Comma,separated,list,of,search,words
+    * USES: Comma,separated,list
 
     Introduction
     -----------

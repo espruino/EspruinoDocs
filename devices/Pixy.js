@@ -26,6 +26,7 @@ function Pixy(spi) {
   this.outBuf = undefined;
 }
   
+/** For internal use - get a work and send out any queued up data */
 Pixy.prototype.getWord = function() {
   // ordering is different because Pixy is sending 16 bits through SPI 
   // instead of 2 bytes in a 16-bit word as with I2C
@@ -43,9 +44,12 @@ Pixy.prototype.getWord = function() {
   return (w<<8) | this.spi.send(cout);
 };
   
+/** For internal use - get a single byte */
 Pixy.prototype.getByte = function() {
   return this.spi.send(0x00);
 };
+
+/** For internal use - queue the given data to be sent */
 Pixy.prototype.send = function(data) {
   if (outBuf) return -1;
   outBuf = data;
@@ -53,6 +57,7 @@ Pixy.prototype.send = function(data) {
   return len;
 };
 
+/** For internal use - get the start of a frame */
 Pixy.prototype.getStart = function() {
   var lastw = 0xffff;
   while(true) {
@@ -71,6 +76,10 @@ Pixy.prototype.getStart = function() {
   }
 };
 
+/** Get an array of tracked blocks in the form:
+
+  { id: number, x: number, y: number, width: number, height: number }
+*/
 Pixy.prototype.getBlocks = function() {
   var blocks = [];
   
@@ -109,6 +118,7 @@ Pixy.prototype.getBlocks = function() {
   return blocks;
 };
   
+/** Return a new Pixy object that's connected to the given SPI port */
 exports.connect = function(spi) {
   return new Pixy(spi);
 };

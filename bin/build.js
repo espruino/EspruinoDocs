@@ -115,13 +115,13 @@ function grabInfo(markdownFiles, preloadedFiles) {
    });
    // add keywords in file
    var match;
-   match = contents.match(/KEYWORDS: (.*)/);
+   match = contents.match(/^\* KEYWORDS: (.*)/);
    if (match!=null) {
      match[1].split(",").forEach(function(k) { 
        addToList(keywords, k, fileInfo);
      });
    }
-   match = contents.match(/USES: (.*)/);
+   match = contents.match(/^\* USES: (.*)/);
    if (match!=null) {
      match[1].split(",").forEach(function(k) { 
        addToList(parts, k, fileInfo);
@@ -146,7 +146,7 @@ function grabWebsiteKeywords(keywords) {
     };
 
     var contents = fs.readFileSync(f).toString();
-    var match = contents.match(/KEYWORDS: (.*)/);
+    var match = contents.match(/^\* KEYWORDS: (.*)/);
      if (match!=null) {
        match[1].split(",").forEach(function(k) { 
          addToList(keywords, k, fileInfo);
@@ -275,8 +275,8 @@ markdownFiles.forEach(function (file) {
    contents = contents.replace(/\n\n```([^\n]+)```\n\n/g,"\n\n```\n$1\n```\n\n"); // turn in-line code on its own into separate paragraph
    contents = contents.replace(/```([^ \n][^\n]+)```/g,"``` $1 ```"); // need spaces after ```
    // Hide keywords
-   contents = contents.replace(/(.*[^`]KEYWORDS: .*)/g, "<!---\n$1\n--->");
-   contents = contents.replace(/(.*[^`_]USES: .*)/g, "<!---\n$1\n--->");
+   contents = contents.replace(/\n\* (KEYWORDS: .*)/g, "<!---\n$1\n--->");
+   contents = contents.replace(/\n\* (USES: .*)/g, "<!---\n$1\n--->");
    // TODO - 'Tutorial 2' -> 'Tutorial+2', recognize pages that are references in docs themselves
    var contentLines = contents.split("\n");
    
@@ -320,11 +320,11 @@ markdownFiles.forEach(function (file) {
      }
    };
    
-   appendMatching(/APPEND_KEYWORD: (.*)/ , "APPEND_KEYWORD", fileInfo.keywords, "");
-   appendMatching(/APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, "No tutorials use this yet.");
+   appendMatching(/^\* APPEND_KEYWORD: (.*)/ , "APPEND_KEYWORD", fileInfo.keywords, "");
+   appendMatching(/^\* APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, "No tutorials use this yet.");
    // try and handle module documentation
    for (i in contentLines) {
-     var match = contentLines[i].match(/APPEND_JSDOC: (.*)/);
+     var match = contentLines[i].match(/^\* APPEND_JSDOC: (.*)/);
      if (match!=null) {
        var jsfilename = file.substr(0, file.lastIndexOf("/")+1) + match[1];       
        var js = fs.readFileSync(jsfilename).toString();
@@ -340,12 +340,7 @@ markdownFiles.forEach(function (file) {
 
    contents = contentLines.join("\n");
 
-   // nasty hack to get around regexes above when trying to quote example files
-   contents = contents.replace(/(.*[^`]KEYWORDS)_(: .*)/g, "$1$2");
-   contents = contents.replace(/(.*[^`_]USES)_(: .*)/g, "$1$2");
-   contents = contents.replace(/(.*APPEND_KEYWORD)_(: .*)/g, "$1$2");
-   contents = contents.replace(/(.*APPEND_USES)_(: .*)/g, "$1$2");
-   
+  
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
    github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+file;
    html = '<div style="min-height:700px;">' + html + '</div>'+

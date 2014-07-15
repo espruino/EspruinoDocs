@@ -53,6 +53,11 @@ returns something like:
 
 **Note:** There may currently be issues with the minified version of this module. To use the unminified version, change `.min.js|.js` to `.js|.min.js` in the Web IDE's settings menu.
 
+Reference
+--------
+ 
+* APPEND_JSDOC: Pixy.js
+
 Using 
 -----
 
