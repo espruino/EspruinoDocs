@@ -9,7 +9,7 @@ if (fs.existsSync==undefined) fs.existsSync = path.existsSync;
 var common = require("./common.js");
 
 var BASEDIR = path.resolve(__dirname, "..");
-var HTML_DIR = path.resolve(BASEDIR, "html");
+var HTML_DIR = BASEDIR+"/html/";
 var IMAGE_DIR = "refimages/";
 
 var FUNCTION_KEYWORD_FILE = path.resolve(BASEDIR, "../Espruino/function_keywords.js");
@@ -47,7 +47,10 @@ function WARNING(s) {
   console.log("WARNING: "+s);
 }
 
-var markdownFiles = common.getMarkdown(BASEDIR);
+var markdownFiles = common.getMarkdown(BASEDIR).map(function (file) {
+  return path.relative(BASEDIR, file);
+});
+
 var preloadedFiles = {};
 var fileTitles = {};
 
@@ -73,9 +76,9 @@ function grabInfo(markdownFiles, preloadedFiles) {
   if (fs.existsSync(FUNCTION_KEYWORD_FILE))
     keywords = JSON.parse(fs.readFileSync(FUNCTION_KEYWORD_FILE));
 
-  markdownFiles.forEach(function (file) {   
+  markdownFiles.forEach(function (file) { 
    // get file info
-   var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
+   var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(BASEDIR+"/"+file).toString();
 //   console.log(file,contents.length); 
    var contentLines = contents.split("\n");
    if (contentLines[0].substr(0,15)!="<!--- Copyright") WARNING(file+" doesn't have a copyright line");
@@ -188,10 +191,10 @@ function handleImages(file, contents) {
 var exampleDir = path.resolve(BASEDIR,"examples");
 var exampleFiles = fs.readdirSync(exampleDir);
 for (i in exampleFiles) {
-  var exampleFile = exampleFiles[i];
+  var exampleFile = path.relative(BASEDIR, path.resolve(exampleDir,exampleFiles[i]));
   if (exampleFile.substr(-3) != ".js") continue;
-  console.log("Example File "+exampleDir+exampleFile);
-  var contents = fs.readFileSync(path.resolve(exampleDir,exampleFile)).toString();
+  console.log("Example File "+exampleFile);
+  var contents = fs.readFileSync(exampleFile).toString();
   var slashStar = contents.indexOf("/*");
   var starSlash = contents.indexOf("*/",slashStar);
   if (slashStar>=0 && starSlash>=0) {  
@@ -207,8 +210,8 @@ for (i in exampleFiles) {
     newFile += contents.substr(starSlash+2).trim()+"\n";
     newFile += "```\n";
     // add file
-    markdownFiles.push(exampleDir+exampleFile);
-    preloadedFiles[exampleDir+exampleFile] = newFile;
+    markdownFiles.push(exampleFile);
+    preloadedFiles[exampleFile] = newFile;
 
   } else WARNING(exampleFile+" has no comment block at the start");
   
@@ -227,11 +230,11 @@ markdownFiles.forEach(function (file) {
   var htmlFile = file.substring(file.lastIndexOf("/")+1);
   htmlFile = htmlFile.replace(/ /g,"+");
   htmlFile = htmlFile.substring(0,htmlFile.lastIndexOf("."));
-  htmlFiles[file] = path.resolve(HTML_DIR,htmlFile+".html");
+  htmlFiles[file] = HTML_DIR+htmlFile+".html";
   htmlLinks[file] = htmlFile;
 });
 
-fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords))+";");
+fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,0)+";");
 
 
 // ---------------------------------------------- Inference code
@@ -298,7 +301,7 @@ function inferMarkdownFile(filename, fileContents) {
         code = code.slice(code.indexOf("\n")+1,-3);
         inferFile(filename, code, baseLineNumber);
       } else {
-        console.log("Ignoring code block because first line is "+JSON.stringify(code.split("\n")[0]));        
+        //console.log("Ignoring code block because first line is "+JSON.stringify(code.split("\n")[0]));        
       }
       // increment line counter
       // ... multi-line code has ``` at the end which takes up a line
@@ -398,7 +401,7 @@ markdownFiles.forEach(function (file) {
 
   
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
-   github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+file;
+   github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+path.relative(BASEDIR, file);
    html = '<div style="min-height:700px;">' + html + '</div>'+
           '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues/new?title='+file+'">let us know</a>.</p>';
 

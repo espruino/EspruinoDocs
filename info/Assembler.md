@@ -82,7 +82,7 @@ Or you can use `Array.reduce` to pass an argument between calls to the assembler
 var a = new Int16Array(100);
 for (var i in a) a[i]=i;
 
-// effectively this is `function (a,b) { return a+b; }`
+// effectively this is 'function (a,b) { return a+b; }'
 var adder = E.asm("int(int,int)", 
   "adds    r0, r0, r1",
   "bx  lr");
