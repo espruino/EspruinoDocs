@@ -115,13 +115,13 @@ function grabInfo(markdownFiles, preloadedFiles) {
    });
    // add keywords in file
    var match;
-   match = contents.match(/^\* KEYWORDS: (.*)/);
+   match = contents.match(/\n\* KEYWORDS: (.*)/);
    if (match!=null) {
      match[1].split(",").forEach(function(k) { 
        addToList(keywords, k, fileInfo);
      });
    }
-   match = contents.match(/^\* USES: (.*)/);
+   match = contents.match(/\n\* USES: (.*)/);
    if (match!=null) {
      match[1].split(",").forEach(function(k) { 
        addToList(parts, k, fileInfo);
@@ -275,8 +275,8 @@ markdownFiles.forEach(function (file) {
    contents = contents.replace(/\n\n```([^\n]+)```\n\n/g,"\n\n```\n$1\n```\n\n"); // turn in-line code on its own into separate paragraph
    contents = contents.replace(/```([^ \n][^\n]+)```/g,"``` $1 ```"); // need spaces after ```
    // Hide keywords
-   contents = contents.replace(/\n\* (KEYWORDS: .*)/g, "<!---\n$1\n--->");
-   contents = contents.replace(/\n\* (USES: .*)/g, "<!---\n$1\n--->");
+   contents = contents.replace(/\n(\* KEYWORDS: .*)/g, "<!---\n$1\n--->");
+   contents = contents.replace(/\n(\* USES: .*)/g, "<!---\n$1\n--->");
    // TODO - 'Tutorial 2' -> 'Tutorial+2', recognize pages that are references in docs themselves
    var contentLines = contents.split("\n");
    
