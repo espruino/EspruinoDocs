@@ -2,6 +2,10 @@
 
 // sudo npm install -g acorn
 
+var fs = require('fs');
+var path = require('path');
+if (fs.existsSync==undefined) fs.existsSync = path.existsSync;
+
 /** Make Espruino code ECMA5 compatible (remove binary numbers, etc */
 exports.makeECMA5 = function(code) {
   code = code.replace(/0b([01][01]*)/g, "parseInt(\"$1\",2)");
@@ -45,3 +49,31 @@ exports.getJSDocumentation = function(js) {
   });
   return result;
 };
+
+
+exports.getFiles = function(dir) {
+  var results = [];
+  var list = fs.readdirSync(dir);
+  for (i in list) {
+    var file = list[i];
+    if (file == "node_modules" || file == "html") continue;
+    file = dir + '/' + file;
+    var stat = fs.statSync(file);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(exports.getFiles(file));
+    } else {
+      results.push(file);
+    }
+  }
+  return results;
+};
+
+exports.getMarkdown = function(dir) {
+  var results = [];
+  exports.getFiles(dir).forEach(function(f) { 
+    if (f.substr(-3) == ".md" && f.substr(-9)!="README.md") {
+      results.push(f);
+    }
+  });
+  return results;
+}

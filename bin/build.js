@@ -6,12 +6,14 @@
 var fs = require('fs');
 var path = require('path');
 if (fs.existsSync==undefined) fs.existsSync = path.existsSync;
+var common = require("./common.js");
 
-var BASEDIR = ".";
-var HTML_DIR = "html/";
+var BASEDIR = path.resolve(__dirname, "..");;
+var HTML_DIR = path.resolve(BASEDIR, "html");
 var IMAGE_DIR = "refimages/";
-var FUNCTION_KEYWORD_FILE = "../Espruino/function_keywords.js";
-var KEYWORD_JS_FILE = HTML_DIR+"keywords.js";
+
+var FUNCTION_KEYWORD_FILE = path.resolve(BASEDIR, "../Espruino/function_keywords.js");
+var KEYWORD_JS_FILE = path.resolve(HTML_DIR, "keywords.js");
 
 var marked = require('marked');
 //var pygmentize = require('pygmentize-bundled')
@@ -45,34 +47,7 @@ function WARNING(s) {
   console.log("WARNING: "+s);
 }
 
-function getFiles(dir) {
-  var results = [];
-  var list = fs.readdirSync(dir);
-  for (i in list) {
-    var file = list[i];
-    if (file == "node_modules" || file == "html") continue;
-    file = dir + '/' + file;
-    var stat = fs.statSync(file);
-    if (stat && stat.isDirectory()) {
-      results = results.concat(getFiles(file));
-    } else {
-      results.push(file);
-    }
-  }
-  return results;
-};
-
-function getMarkdown(dir) {
-  var results = [];
-  getFiles(dir).forEach(function(f) { 
-    if (f.substr(-3) == ".md" && f.substr(-9)!="README.md") {
-      results.push(f);
-    }
-  });
-  return results;
-}
-
-var markdownFiles = getMarkdown(BASEDIR);
+var markdownFiles = common.getMarkdown(BASEDIR);
 var preloadedFiles = {};
 
 function addToList(keywords, k, fileInfo) {
@@ -137,7 +112,7 @@ function grabInfo(markdownFiles, preloadedFiles) {
 }
 
 function grabWebsiteKeywords(keywords) {
-  getFiles(BASEDIR+"/../espruinowebsite/cms").forEach(function(f) { 
+  common.getFiles(path.resolve(BASEDIR,"../espruinowebsite/cms")).forEach(function(f) { 
     if (f.substr(-5) != ".html") return;
     var fileName = f.substring(f.lastIndexOf("/")+1,f.length-5);
     var fileInfo = {
@@ -195,7 +170,7 @@ function handleImages(file, contents) {
       if (fs.existsSync(imagePath)) {
         var newPath = IMAGE_DIR+htmlLinks[file]+"_"+imageName;
 //        console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
-        fs.createReadStream(imagePath).pipe(fs.createWriteStream(HTML_DIR+newPath));
+        fs.createReadStream(imagePath).pipe(fs.createWriteStream(path.resolve(HTML_DIR, newPath)));
         // now rename the image in the tag
         contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
       } else {
@@ -208,13 +183,13 @@ function handleImages(file, contents) {
 }
 
 // Now handle our simple 'example' files
-var exampleDir = BASEDIR+"/examples/";
+var exampleDir = path.resolve(BASEDIR,"examples");
 var exampleFiles = fs.readdirSync(exampleDir);
 for (i in exampleFiles) {
   var exampleFile = exampleFiles[i];
   if (exampleFile.substr(-3) != ".js") continue;
   console.log("Example File "+exampleDir+exampleFile);
-  var contents = fs.readFileSync(exampleDir+exampleFile).toString();
+  var contents = fs.readFileSync(path.resolve(exampleDir,exampleFile)).toString();
   var slashStar = contents.indexOf("/*");
   var starSlash = contents.indexOf("*/",slashStar);
   if (slashStar>=0 && starSlash>=0) {  
@@ -223,12 +198,12 @@ for (i in exampleFiles) {
 //    newFile += "====================================\n";
 //    newFile += "\n";
     newFile += contents.substr(slashStar+2, starSlash-(3+slashStar)).trim() + "\n";
-    newFile += "\n\n"
-    newFile += "Source Code\n"
-    newFile += "-----------\n\n"
-    newFile += "```\n"
-    newFile += contents.substr(starSlash+2).trim()+"\n"
-    newFile += "```\n"
+    newFile += "\n\n";
+    newFile += "Source Code\n";
+    newFile += "-----------\n\n";
+    newFile += "```\n";
+    newFile += contents.substr(starSlash+2).trim()+"\n";
+    newFile += "```\n";
     // add file
     markdownFiles.push(exampleDir+exampleFile);
     preloadedFiles[exampleDir+exampleFile] = newFile;
@@ -250,7 +225,7 @@ markdownFiles.forEach(function (file) {
   var htmlFile = file.substring(file.lastIndexOf("/")+1);
   htmlFile = htmlFile.replace(/ /g,"+");
   htmlFile = htmlFile.substring(0,htmlFile.lastIndexOf("."));
-  htmlFiles[file] = HTML_DIR+htmlFile+".html";
+  htmlFiles[file] = path.resolve(HTML_DIR,htmlFile+".html");
   htmlLinks[file] = htmlFile;
 });
 
@@ -329,7 +304,7 @@ markdownFiles.forEach(function (file) {
        var jsfilename = file.substr(0, file.lastIndexOf("/")+1) + match[1];       
        var js = fs.readFileSync(jsfilename).toString();
        console.log("APPEND_JSDOC "+jsfilename);
-       var doc = require("./common.js").getJSDocumentation(js);
+       var doc = common.getJSDocumentation(js);
        /* setting the language to Java lets it be highlighted correctly
        while not adding the 'send to Espruino' icon */
        contentLines[i] = "```Java\n"+doc+"```\n";
@@ -345,19 +320,6 @@ markdownFiles.forEach(function (file) {
    github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+file;
    html = '<div style="min-height:700px;">' + html + '</div>'+
           '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues/new?title='+file+'">let us know</a>.</p>';
-/*   html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'+
-'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">'+
-'<head>'+
-'        <link rel="stylesheet" href="css/sitewide.css" type="text/css" />'+
-'        <link rel="stylesheet" href="css/sh_style.css" type="text/css" />'+		
-'        <script type="text/javascript" src="js/sh_main.min.js"></script>'+
-'        <script type="text/javascript" src="js/sh_javascript.min.js"></script>'+
-'        <title>'+contentLines[0]+'</title>'+
-'</head>'+
-'<body onload="sh_highlightDocument();"><div id="wrap"><div id="main">'+
-html+
-'</div></div></body>'+
-'</html>';*/
 
    fs.writeFile(htmlFiles[file], html);
 });
