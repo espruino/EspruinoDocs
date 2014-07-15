@@ -5,6 +5,8 @@ mkdir -p html/refimages
 rm -f html/*.html
 rm -f html/*.js
 rm -f html/refimages/*
+
+# Built reference docs and references.json
 node bin/build.js
 
 WEBSITE=~/workspace/espruinowebsite

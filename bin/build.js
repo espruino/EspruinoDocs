@@ -232,6 +232,83 @@ markdownFiles.forEach(function (file) {
 fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords))+";");
 
 
+// ---------------------------------------------- Inference code
+/* Works out which of Espruino's built-in commands are used in which
+ files */
+//Load tern inference thingybob
+var infer = require("./tern/infer.js");
+// require("../../tern/plugin/node.js"); // for handling node.js 'require'?
+var defs = [JSON.parse(fs.readFileSync(path.resolve(BASEDIR, "bin/espruino.json")))];
+// Our list of Reference URLs that are used
+var urls = {};
+
+function inferFile(filename, fileContents, baseLineNumber) {
+  var cx = new infer.Context(defs, this);
+  infer.withContext(cx, function() {
+    //console.log(JSON.stringify(filename));
+    var ast = infer.parse(fileContents);
+    infer.analyze(ast, "file:"+filename /* just an id */);
+    // find all calls
+    require("acorn/util/walk").simple(ast, { "CallExpression" : function(n) {
+     var expr = infer.findExpressionAt(n.callee);
+     var type = infer.expressionType(expr);
+     // search prototype chain of type to try and find our call
+     if (type.forward && type.types) {
+       var name = type.forward[0].propName;
+       type.types.forEach(function(t) {
+         var def = undefined;
+         while (t && !def) {
+           if (t.props && name in t.props)
+             def = t.props[name];
+           t = t.proto;
+         }
+         if (def) type = def;
+       });
+     }
+     if (type && type.types && type.types.length>0) {
+       var url = type.types[0].url;
+       if (url) {
+         if (!(url in urls)) urls[url] = [];
+         var lineNumber = baseLineNumber + require("acorn").getLineInfo(fileContents, n.start).line;
+         var link = "/"+htmlLinks[filename]+"#line=";
+         var found = false;
+         for (var i in urls[url]) {
+           if (urls[url][i].indexOf(link)==0) {
+             urls[url][i] += ","+lineNumber;
+             found = true;
+           }
+         }
+             
+         if (!found)
+           urls[url].push(link+lineNumber);
+         // lineInfo.col?
+       }
+     }
+    }});
+  });
+}
+
+function inferMarkdownFile(filename, fileContents) {
+  var baseLineNumber = 0;
+  var codeBlocks = fileContents.match( /```[^`]+```| `[^`]+`/g );
+  if (codeBlocks)
+    codeBlocks.forEach(function(code) {
+      if (code.indexOf("```\n")==0 || code.indexOf("```JavaScript\n")==0) {
+        code = code.slice(code.indexOf("\n")+1,-3);
+        inferFile(filename, code, baseLineNumber);
+      } else {
+        console.log("Ignoring code block because first line is "+JSON.stringify(code.split("\n")[0]));        
+      }
+      // increment line counter
+      // ... multi-line code has ``` at the end which takes up a line
+      var lines = code.split("\n").length;
+      if (lines>1) lines--;
+      //console.log(code, "--->",lines);
+      baseLineNumber += lines;      
+    });
+}
+
+// -------------------------------------------------------------
 markdownFiles.forEach(function (file) {
    var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
    //console.log(file,contents.length); 
@@ -314,6 +391,9 @@ markdownFiles.forEach(function (file) {
    contentLines.splice(0,1); // remove first line (copyright)
 
    contents = contentLines.join("\n");
+   
+   // Do inference on Markdown file
+   inferMarkdownFile(file, contents);
 
   
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
@@ -325,3 +405,9 @@ markdownFiles.forEach(function (file) {
 });
 
 
+// -----------------------------------------------------------
+// Finally write out the references
+var refPath = path.resolve(BASEDIR, "references.json");
+console.log("---------------------");
+console.log("Writing references to "+refPath);
+fs.writeFileSync(refPath, JSON.stringify(urls,null,1));
