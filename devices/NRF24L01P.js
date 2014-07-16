@@ -258,7 +258,6 @@ NRF.prototype.slaveHandler = function() {
           var result = ""+eval(c); // evaluate
           print("...="+result);
           // send the result back after a timeout
-          var nrf = this;
           setTimeout(function() {
             nrf.sendString(result);
           }, 500);
