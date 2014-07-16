@@ -38,6 +38,8 @@ exports.connect = function(serial, callback) {
       handleGPSLine(line, callback); 
       idx = gps.line.indexOf("\n");     
     }
+    if (gps.line.length > 80)
+      gps.line = gps.line.substr(-80);
   });
   return gps;
 }
