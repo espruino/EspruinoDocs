@@ -7,11 +7,9 @@ Inline Assembler
 The new Web IDE allows you to write inline assembler in the right-hand pane.
 
 ```
-var adder = E.asm("long(long)",
-"movs    r2, #3",
-"movs    r3, #0",
-"adds    r0, r0, r2", // add bottom 32 bits
-"adc.w   r1, r1, r3", // add top 32 bits
+var adder = E.asm("int(int)",
+"movs    r1, #3",
+"adds    r0, r0, r1", // add two 32 bit values
 "bx  lr"); // return
 ```
 
@@ -44,7 +42,7 @@ The first argument of `E.asm` (and `E.nativeCall`) is the signature of the call,
 returnType (argType1,argType2,...)
 ```
 
-Allowed types are `void`, `bool`, `int`, `long`, `double`, `Pin` (a pin number), `JsVar` (a pointer to a JsVar structure).
+Allowed types are `void`, `bool`, `int`, `double`, `Pin` (a pin number), `JsVar` (a pointer to a JsVar structure).
 
 
 Calling Convention (what you can use!)
