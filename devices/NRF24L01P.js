@@ -199,6 +199,10 @@ NRF.prototype.setDataRate = function(rate) {
   if (!rate in rates) console.log("Unknown rate");
   this.setReg(C.RF_SETUP, (this.getReg(C.RF_SETUP)&~(C.RF_DR_LOW|C.RF_DR_HIGH))|rates[rate]);
 };
+/** Set the transmit power - takes a value from 0 (lowest) to 3 (highest) */
+NRF.prototype.setTXPower = function(pwr) {
+  this.setReg(C.RF_SETUP, (this.getReg(C.RF_SETUP)&~(3*C.RF_PWR))|((pwr&3)*C.RF_PWR));
+};
 /** return undefined (if no data) or the pipe number of the data we're expecting */
 NRF.prototype.getDataPipe = function() {
   var r = this.getReg(C.STATUS)&C.RX_P_NO_FIFO_EMPTY;
