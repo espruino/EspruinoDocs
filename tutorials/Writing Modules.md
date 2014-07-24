@@ -108,7 +108,7 @@ You'll probably also want to add this to the end of the file if your module has 
       Reference
       ---------
 
-      * APPEND_JSOC: MOD123.js
+      * APPEND_JSDOC: MOD123.js
 
         
 You can also add `APPEND_USES` so that if others [Write Tutorials](Writing Tutorials) that say `USES: MOD123` at the top, they will be listed on your module's page:
