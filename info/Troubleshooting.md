@@ -104,4 +104,32 @@ When you are not connected to a computer via USB, Espruino writes any console da
 
 To fix this, either remove your `console.log` and `print` statements, or explicitly set the console to be on the Serial port at startup with `function onInit() { Serial1.setConsole(); }`. However the second option will mean that you will no longer be able to program Espruino from USB unless you reset it.
 
+### When I type `dump()` the code that is displayed isn't exactly the code that I entered
+
+When you send code to Espruino, it is executed immediately. That means if you say:
+
+```
+var foo = 1+2;
+```
+
+Then `foo` will forever be set to `3`, and **not** the expression `1+2`. In this case it's not a problem, but you might write `var foo = analogRead(A0);` and then `foo` will be set to whatever the value of A0 was *when you uploaded the program*. 
+
+When you type `dump()`, Espruino tries to reconstruct the code that you wrote based on its current state (by adding `setWatch`, `setInterval`, `digitalWrite`, etc) - and sometimes there is not enough information available for it to get it correct.
+
+It's most noticeable for `setInterval` and `setWatch`, which return integers - so Espruino has no way of knowing that a given number goes with a given `setInterval`. In this case:
+
+```
+var x = setInterval("print('Hello')", 10000);
+```
+
+will turn into:
+
+```
+var x = 1;
+setInterval("print('Hello')", 10000);
+```
+
+To get around this, it's best to put code that you intend to run every time Espruino starts into a function called `onInit()`.
+
+**Note:** The problem with `setInterval` happens because Espruino is trying to turn its internal state back into a human readable form. If you just type `save()` then the correct state will still be saved.
 
