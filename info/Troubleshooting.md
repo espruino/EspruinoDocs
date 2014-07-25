@@ -133,3 +133,13 @@ To get around this, it's best to put code that you intend to run every time Espr
 
 **Note:** The problem with `setInterval` happens because Espruino is trying to turn its internal state back into a human readable form. If you just type `save()` then the correct state will still be saved.
 
+
+### I'm using an unofficial board and some of the examples don't work
+
+This could be for several reasons:
+
+* The pins and wiring in the examples are designed for the Espruino board. On other boards those pins often conflict with other on-board devices.
+* Many of the other boards don't have enough memory for all the functionality of the Espruino Board, so things (such as Waveform, HTTP, and sometimes even Graphics) have had to be removed.
+* As we only make any money from the Espruino Boards, we can't afford to spend time implementing functionality on other boards - so even if the board you have has enough memory, the functionality the example is using may still not be implemented.
+
+In short, if you want to be sure that all the functionality you want is implemented, support us and buy an Espruino board.
