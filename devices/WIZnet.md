@@ -8,13 +8,20 @@ WIZnet WIZ550io/W5500 Ethernet module
 
 The [WIZnet WIZ550io module](http://wizwiki.net/wiki/doku.php?id=products:wiz550io:allpages) contains a W5500 chip - it implements TCP/IP on-chip, so you just plug an Ethernet cable in one end, and SPI into the other.
 
-Support is provided in Espruino, but currently **you will have to use a special build of Espruino designed for it**. These should be available in [recent Espruino Git builds](http://www.espruino.com/binaries/git).
+Support is provided in Espruino, but **you will have to use a special build of Espruino designed for it** as there isn't enough space in flash to hold both CC3000 and WIZnet drivers.
 
-To build yourself, follow [the instructions here](http://www.github.com/espruino/Espruino) and build with:
+To get the latest WIZnet binary:
 
-```
-WIZNET=1 RELEASE=1 ESPRUINO_1V3=1 make
-```
+* Go to http://www.espruino.com/binaries and look for a file titled `espruino_XXX_espruino_1r3_wiznet.bin`, where `XXX` is the latest version
+* Right-click on it, and click `Copy Link Address`
+* Open the Web IDE, and click on Settings in the top-right
+* Click on `Flasher`
+* Paste the link into the `Advanced Firmware Update` text box
+* Click the `Advanced Firmware Update` button and follow the instructions.
+
+You can also [get a recent Espruino Git build](http://www.espruino.com/binaries/git) or can build it yourself.
+
+To build yourself, follow [the instructions here](http://www.github.com/espruino/Espruino) and build with `WIZNET=1 RELEASE=1 ESPRUINO_1V3=1 make`.
 
 Wiring Up
 --------
