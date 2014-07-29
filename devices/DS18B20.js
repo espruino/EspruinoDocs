@@ -33,6 +33,7 @@ function DS18B20(oneWire, device) {
   }
 }
 
+/** For internal use - read the scratchpad region */
 DS18B20.prototype._readSpad = function (convert_t) {
   var spad = [];
   this.bus.reset();
@@ -49,6 +50,7 @@ DS18B20.prototype._readSpad = function (convert_t) {
   return spad;
 };
 
+/** For internal use - write the scratchpad region */
 DS18B20.prototype._writeSpad = function (th, tl, conf) {
   this.bus.reset();
   this.bus.select(this.sCode);
@@ -62,20 +64,24 @@ DS18B20.prototype._writeSpad = function (th, tl, conf) {
   this.bus.reset();
 };
 
+/** Set the resolution in bits. From 8 to 12 bits */
 DS18B20.prototype.setRes = function (res) {
   var spad = this._readSpad();
   res = [0x1F, 0x3F, 0x5F, 0x7F][E.clip(res, 9, 12) - 9];
   this._writeSpad(spad[2], spad[3], res);
 };
 
+/** Return the resolution in bits. From 8 to 12 bits */
 DS18B20.prototype.getRes = function () {
   return [0x1F, 0x3F, 0x5F, 0x7F].indexOf(this._readSpad()[4]) + 9;
 };
 
+/** Return true if this device is present */
 DS18B20.prototype.isPresent = function () {
   return this.bus.search().indexOf(this.sCode) !== -1;
 };
 
+/** Get a temperature reading, in degrees C */
 DS18B20.prototype.getTemp = function (verify) {
   var spad = null;
   var temp = null;
@@ -91,4 +97,22 @@ DS18B20.prototype.getTemp = function (verify) {
   return temp;
 };
 
+/** Return a list of all DS18B20 sensors with the alarms set */
+DS18B20.prototype.searchAlarm = function() { 
+  return this.bus.search(0xEC); 
+};
+
+/** Set alarm low and high values in degrees C - see DS18B20.prototype.searchAlarm */
+DS18B20.prototype.setAlarm = function(lo,hi) {
+  if (lo<0) lo+=256;
+  if (hi<0) hi+=256;
+  var spad = this._readSpad();
+  this._writeSpad(hi,lo,spad[4]);
+};
+
+/** Initialise a DS18B20 device. Use either as:
+  connect(new OneWire(pin)) - use the first found DS18B20 device
+  connect(new OneWire(pin), N) - use the Nth DS18B20 device
+  connect(new OneWire(pin), ID) - use the DS18B20 device with the given ID
+ */
 exports.connect = function (oneWire, device) {return new DS18B20(oneWire, device);};
