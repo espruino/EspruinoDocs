@@ -10,6 +10,8 @@ The Ultimate Espruino kits come with a [1400mAh Lithium Polymer battery](https:/
 
 If you don't have one of these, the Espruino boards come with a JST PHR-2 2 Pin connector for batteries, so you can buy either the battery we included (link below), find another, or buy the battery connector (see [[EspruinoBoard]]) and connect a different type of battery.
 
+![JST wiring](jst.jpg)
+
 Espruino itself will run from a wide range of voltages (3.6v to 15v) and hence batteries. Some types of small batteries that could be used are:
 
 * Replacement phone batteries (~3.7v)

@@ -16,7 +16,7 @@ Features
 * 256KB of Flash memory, 48KB of RAM
 * Micro USB connector
 * Input Voltage Range of 3.6v to 15v
-* Battery connector (JST PHR-2 2 Pin)
+* [[Battery]] connector (JST PHR-2 2 Pin)
 * Built-in SD card connector
 * Red, Green and Blue LEDs
 * Pads to allow HC-05 Bluetooth modules to be added
@@ -36,9 +36,9 @@ Layout
 | Status LEDs | Red, Green and Blue lights, controllable from Espruino. Access these using the pin names ```LED1``` (red), ```LED2``` (green) and ```LED3``` (blue) |
 | Buttons | Below SMD prototype area. Reset button (left) and general purpose button (right). Access this using the pin name ```BTN``` |
 | SMD Prototype Area | Area that allows you to solder SMD Integrated Circuits such as ([ULN2003](/datasheets/ULN2003.pdf)) and ([L293D](/datasheets/L293D.pdf)) |
-| Battery | Battery connector, allows any voltage from 3.6v to 15v |
+| [[Battery]] | Battery connector, allows any voltage from 3.6v to 15v |
 | Bluetooth | Pads for mounting a [[Bluetooth]] module |
-| Power | Gnd, 3.3v and Battery power pins |
+| Power | Gnd, 3.3v and Battery power pins (see below) |
 | Micro SD | A connector for FAT32 formatted Micro SD cards |
 | USB | A Micro SD USB connector, for programming and powering Espruino |
 | #1 | Unpopulated pads for 32kHz crystal. Without this, Espruino will use its internal RC oscillator for timekeeping, which is only accurate to 1-2% |
@@ -65,9 +65,9 @@ Links to tutorials that you can do using **just** the Espruino board:
 Power
 ----
 
-Espruino has 3 ways of powering it - a JST PHR-2 battery connector, Micro USB, or pin headers.
+Espruino has 3 ways of powering it - a JST PHR-2 [[Battery]] connector, Micro USB, or pin headers.
 
-Both the Micro USB and battery connector can power the device (and pin headers), and the source of power will be automatically switched. If you power Espruino via the Pin Headers, do not plug a battery in, and do not plug in USB unless you are powering it with 5v or more.
+Both the Micro USB and [[Battery]] connector can power the device (and pin headers), and the source of power will be automatically switched. If you power Espruino via the Pin Headers, do not plug a battery in, and do not plug in USB unless you are powering it with 5v or more.
 
 If you wish to power Espruino from mains, we'd suggest using a Micro USB phone charger. This are widely available as the majority of mobile phones (with the exception of iPhones and low-end Nokias) now use them.
 
@@ -90,6 +90,10 @@ There's a [[Pin Strip]] page covering how to solder Pin Strip onto the Espruino 
 You can usually buy batteries with the 2 pin female JST (PHR-2) connector ready-soldered, see [[Battery]].
 
 If you wish to buy the battery connector, you can do it from Farnell ([pins](http://uk.farnell.com/jst-japan-solderless-terminals/sph-002t-p0-5s/contact-loose-piece-0-05-0-22mm/dp/3617210) and [shroud](http://uk.farnell.com/jst-japan-solderless-terminals/phr-2/housing-2way-2mm/dp/3616186))
+
+The wiring is as follows:
+
+![JST wiring](jst.jpg)
 
 ### Servo Motors
 
