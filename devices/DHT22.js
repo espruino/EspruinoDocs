@@ -73,6 +73,7 @@ DHT22.prototype.endRead = function() {
     tcks+= (this.hout>>8)&0xFF;
     tcks+= (this.tout&0xFF);
     tcks+= (this.tout>>8)&0xFF;
+    tcks=tcks&0xFF;
     if (tcks==this.cks && this.hout > 0 && this.tout > 0) {
         var rh=this.hout*0.1;
         var temp=this.tout*0.1;
