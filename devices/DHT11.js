@@ -77,6 +77,7 @@ DHT11.prototype.endRead = function() {
     tcks+= (this.hout>>8)&0xFF;
     tcks+= (this.tout&0xFF);
     tcks+= (this.tout>>8)&0xFF;
+    tcks=tcks&0xFF;
     if (this.cks==tcks) {
         var rh=(this.hout>>8)&0xFF;
         var temp=(this.tout>>8)&0xFF;
