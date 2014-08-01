@@ -102,8 +102,10 @@ DS18B20.prototype.searchAlarm = function() {
   return this.bus.search(0xEC); 
 };
 
-/** Set alarm low and high values in degrees C - see DS18B20.prototype.searchAlarm */
+/** Set alarm low and high values in degrees C - see DS18B20.prototype.searchAlarm. 
+  If the temperature goes below `lo` or above `hi` the alarm will be set. */
 DS18B20.prototype.setAlarm = function(lo,hi) {
+  lo--; // DS18B20 alarms if (temp<=lo || temp>hi), but we want (temp<lo || temp>hi)
   if (lo<0) lo+=256;
   if (hi<0) hi+=256;
   var spad = this._readSpad();
