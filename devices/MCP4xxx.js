@@ -122,12 +122,12 @@ MCP4xxx.prototype.getStatus = function() {
 	if (this.pots > 2) {
 		this.i2c.writeTo(this.i2ca,0xAC);
 		var tcon1=this.i2c.readFrom(this.i2ca,2);
-		retobj.pot3=(tcon1[1]&0xF0)>>4;
-		retobj.pot4=(tcon1[1]&0x0F);
+		retobj.pot2=(tcon1[1]&0xF0)>>4;
+		retobj.pot3=(tcon1[1]&0x0F);
 	}
 	retobj.status=status;
-	retobj.pot1=(tcon0[1]&0xF0)>>4;
-	retobj.pot2=(tcon0[1]&0x0F);
+	retobj.pot0=(tcon0[1]&0xF0)>>4;
+	retobj.pot1=(tcon0[1]&0x0F);
 	return retobj;
 }
 
