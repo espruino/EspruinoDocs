@@ -5,11 +5,12 @@ This module interfaces with I2C Digital Potentiometers from Microchip. It is int
 Usage:
 
 
-var digipot=require("modulename").connect(I2C2,taps,pots,addr)
+var digipot=require("MCP4xxx").connect(I2C2,pots,taps,addr)
 
-addr: Supported digipots may dedicate 0, 1, 2, or 3 pins to setting the address. If using a device with fewer than 3, consult the datasheet to make sure you are passing the right address. Typically, if there is no address pin present for an address bit, that bit is a 1, not a zero. 
-taps: Number of taps on the pot. 129 or 257.
 pots: Number of pots in the package. 1, 2, or 4.
+taps: Number of taps on the pot. 129 or 257.
+addr: Supported digipots may dedicate 0, 1, 2, or 3 pins to setting the address. If using a device with fewer than 3, consult the datasheet to make sure you are passing the right address. Typically, if there is no address pin present for an address bit, that bit is a 1, not a zero. 
+
 
 
 digipot.setVal(pot,value,nv) //set the current wiper position. 
@@ -33,7 +34,7 @@ a, w, b: Controls whether the 3 pins are connected to the resistor ladder. 1 (de
 */
 
 
-exports.connect = function(i2c,taps,pots,addr) {
+exports.connect = function(i2c,pots,taps,addr) {
 	if ((taps==129 || taps == 257)&& pots < 5 && pots > 0)
 	{
 	    return new MCP4xxx(i2c, pots,taps,addr );
