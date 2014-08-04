@@ -34,7 +34,7 @@ exports.connect = function(spi,cs) {
   }
 
   MAX31855.prototype.getTemp = function () {
-    var d = SPI1.send("\0\0\0\0",this.cs); 
+    var d = this.spi.send("\0\0\0\0",this.cs); 
     if (d.charCodeAt(1) & 1)  {
       var trtn = {fault: (d.charCodeAt(3) & 7)};
       switch (trtn.fault) {
