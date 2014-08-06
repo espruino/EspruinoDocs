@@ -4,14 +4,14 @@ Modules
 
 * KEYWORDS: Modules,Libraries
 
-In Espruino, Modules are bits of pre-written code (libraries) that perform common tasks, such as interfacing to different bits of hardware.
+In Espruino, Modules are pieces of pre-written code (libraries) that perform common tasks, such as interfacing to different bits of hardware.
 
 They can currently be used in a few different ways:
 
 Espruino Web IDE
 --------------
 
-If you're using the Espruino Web IDE, simply write ```require("modulename")``` on the right-hand side - as you would have seen in the reference pages on espruino.com. When you click the *Send to Espruino* button, the Web IDE will automatically look online for minified versions of the modules you need, download them, and load them onto the board. You don't need an SD card or an internet connection to the Espruino board itself.
+If you're using the Espruino Web IDE, simply write ```require("modulename")``` on the right-hand side - as you would have seen in the reference pages. When you click the *Send to Espruino* button, the Web IDE will automatically look online for minified versions of the modules you need, download them, and load them onto the board. You don't need an SD card or an internet connection to the Espruino board itself.
 
 Stand-alone Espruino
 ------------------

@@ -8,7 +8,8 @@ Reaction Timer using RGB123
 
 This uses an [[RGB123]] 16x8 display (on B15), and scrolls the text "Test your reaction time!". When a button is pressed, it goes to a short timer `3..2..1..` and then after a random time period it lights up bright red and you have to press the button... It then tells you your reaction time and goes back to the start.
 
-Wiring:
+Wiring Up
+---------
 
 | Espruino | Connection |
 |----------|------------|

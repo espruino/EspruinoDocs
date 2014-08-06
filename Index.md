@@ -2,32 +2,5 @@
 Index
 =====
 
-Information
-----------
-
-* APPEND_KEYWORD: info
-
-Tutorials
---------
-
-* APPEND_KEYWORD: tutorials
-
-Tasks
------
-
-* APPEND_KEYWORD: tasks
-
-Devices
-------
-
-* APPEND_KEYWORD: devices
-
-Peripherals
-----------
-
-* APPEND_KEYWORD: peripherals
-
-Simple Examples
--------------
-
-* APPEND_KEYWORD: examples
+This page has moved...
+<script>window.location = "/";</script>
