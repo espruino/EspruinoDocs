@@ -7,12 +7,14 @@ Quick Start
 
 [[http://youtu.be/32mewNGxax4]]
 
+For the best experience, please use one of our [Espruino Boards](/Order). Please [click here](/Order) to get one.
+
 If you have a kit from KickStarter and want to see what everything is, check out [[Espruino Kits]]...
 
 Plugging in
 ----------
 
-The Espruino board only has one USB connector - just plug it in with a Micro USB cable and you're done. If you're not using the Espruino board, you'll want to see the page on [[Other Boards]] for details on how to get started first.
+The Espruino board only has one USB connector - just plug it in with a Micro USB cable and you're done. If you're not using the Espruino board it may be more tricky. Please [see this page](/Other Boards) for more information.
 
 <span style="color:red;">**NOTE:** The Espruino board has no case and so the USB connector is completely unsupported. This means it is relatively delicate. Treat it carefully. Try and pull the connector straight out, and **do not** push down on the board when the connector is inserted, or try and move the board around using the cable.</span>
 
@@ -29,7 +31,7 @@ The Espruino board only has one USB connector - just plug it in with a Micro USB
 Set up a Terminal App
 ------------------
 
-**Note:** We recommend that you use our Chrome Web App (it has a bunch of extra features, including firmware updates) but you can access Espruino from any terminal program. See [[Alternative Terminal Apps]] for some examples.
+**Note:** We recommend that you use our [Chrome Web App](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo) (it has a bunch of extra features, including firmware updates). However you can access Espruino from any terminal program. See [[Alternative Terminal Apps]] for some examples.
 
 * Install the [Chrome Web Browser](https://www.google.com/intl/en/chrome/browser/)
 * [Click here to get the Espruino Web IDE](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo) and click ```+FREE``` in the top right to install it.
@@ -38,7 +40,7 @@ Now, to use the Terminal App:
 
 * Run **Espruino Web IDE** from Chrome's home screen (or the App Launcher)
 * Click the **Connect/Disconnect** icon in the top left
-* In the window that pops up, make sure the correct serial port is chosen (usually: Highest COM# number on Windows, /dev/tty.usbmodem on Mac, ttyACM0/ttyUSB0 on Linux).
+* In the window that pops up, make sure the correct serial port is chosen (usually: Highest `COM#` number on Windows, `/dev/tty.usbmodem1234` on Mac, `ttyACM0/ttyUSB0` on Linux).
 * If you don't see a port or can't get it working, please see [[Troubleshooting]]
 
 Please click the 'tour' button in the top right of the Web IDE for more information on how to get started.
@@ -49,7 +51,7 @@ Software Updates
 
 Espruino is gaining features and improvements on an almost daily basis. If you've just got your Espruino Board, we *highly* recommend that you update the firmware before you start using it.
 
-When you first use the Espruino Web IDE and connect (see above) you'll probably see a warning marker in the top right saying that new firmware is available. Click on it (or click 'Settings', then 'Flasher'), click 'Flash Firmware', and follow the instructions. There is no risk of damaging your Espruino board, however the firmware update process may take a few minutes to complete. If you have problems, check out the [[Troubleshooting]] section.
+When you first use the Espruino Web IDE and connect (see above) you'll probably see a yellow warning marker in the top right saying that new firmware is available. Click on it (or click 'Settings', then 'Flasher'), click 'Flash Firmware', and follow the instructions. There is no risk of damaging your Espruino board, however the firmware update process may take a few minutes to complete. If you have problems, check out the [[Troubleshooting]] section.
 
 **Note:** If you're not using the Web IDE, follow the instructions on the [[Download]] page to flash the latest version (but this is significantly more difficult).
  
@@ -155,7 +157,7 @@ Now you've got an idea how to use Espruino:
 
 * Have a look at the [[Tutorials]] and [[Reference]] pages
 * If you have one of the Espruino Kits, you can [click here](/Espruino Kits) to see the kit contents and to get information on how to use them
-* Check [[Code Examples]] for all kinds of devices and peripherals
+* Check out [[Modules]] to see which libraries of code are available to use
 * See how to use the more advanced features of the [[Web IDE]]
 * Instantly [[Search]] all the Espruino website's documentation
 * If you've got a question, please check out our [[Forum]]

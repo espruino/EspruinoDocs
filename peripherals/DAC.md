@@ -4,7 +4,7 @@ Digital to Analog Converter
 
 * KEYWORDS: Analog,DAC,D2A,Built-In
 
-**Note:** Very few pins (usually only 2) are capable of Analog Output. See the [[Reference]] for your board and look for ```DAC```.
+**Note:** Very few pins (usually only 2) are capable of Analog Output, and some boards don't have any. See the [[Reference]] for your board and look for ```DAC```.
 
 Analog outputs are easy to write in Espruino:
 

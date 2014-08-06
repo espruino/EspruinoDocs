@@ -35,6 +35,8 @@ Espruino also contains many built-in modules and classes that provide a lot of f
 
 * APPEND_KEYWORD: Built-In
 
+You don't need a module to be able to interface to hardware - sometimes it just makes it easier. If you want to interface to a device that isn't listed here, please check out the [[Tutorials]] page, or [[Search]] for it.
+
 
 Frequently Asked Questions
 -----------------------
