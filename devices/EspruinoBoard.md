@@ -91,6 +91,8 @@ You can usually buy batteries with the 2 pin female JST (PHR-2) connector ready-
 
 If you wish to buy the battery connector, you can do it from Farnell ([pins](http://uk.farnell.com/jst-japan-solderless-terminals/sph-002t-p0-5s/contact-loose-piece-0-05-0-22mm/dp/3617210) and [shroud](http://uk.farnell.com/jst-japan-solderless-terminals/phr-2/housing-2way-2mm/dp/3616186))
 
+You can by [prewired connectors from Adafruit](http://www.adafruit.com/products/261) as well.
+
 The wiring is as follows:
 
 ![JST wiring](jst.jpg)
