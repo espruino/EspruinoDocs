@@ -301,10 +301,10 @@ NRF.prototype.sendString = function(cmd) {
   return true;
 };
 
-/** Send a command as a master. The callback is then called when data is received back. */
+/** Send a command as a master. The callback is then called when data is received back. Returns true on success */
 NRF.prototype.sendCommand = function(cmd, callback) {
   this.callbacks.push(callback);
-  this.sendString(cmd);
+  return this.sendString(cmd);
 };
 
 /** Create a new NRF class */
