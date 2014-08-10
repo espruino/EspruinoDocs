@@ -3,3 +3,4 @@ html/*.html
 html/refimages/*
 html/keywords.js
 node_modules
+.idea
