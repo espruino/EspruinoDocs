@@ -91,7 +91,6 @@ MCP4xxx.prototype.getVal= function(pot,nv) {
 		this.CMD(padr,3);
 	}
 	var temp= this.i2c.readFrom(this.i2ca,2);
-	console.log(temp);
 	return temp[1]+(temp[0]<<8);
 };
 MCP4xxx.prototype.setTCON = function(pot,sdwn,a,w,b) {
