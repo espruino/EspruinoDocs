@@ -87,7 +87,6 @@ MCP4xxx.prototype.getVal= function(pot,nv) {
 		throw "Invalid value provided";
 	} else {
 		var padr=this.getReg(pot,nv);
-		console.log(padr);
 		this.CMD(padr,3);
 	}
 	var temp= this.i2c.readFrom(this.i2ca,2);
