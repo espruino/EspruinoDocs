@@ -5,7 +5,7 @@ This module interfaces with I2C Digital Potentiometers from Microchip. It is int
 Usage:
 
 
-var digipot=require("MCP4xxx").connect(I2C2,pots,taps,addr)
+var digipot=require("MCP4xxxI2C").connect(I2C2,pots,taps,addr)
 
 pots: Number of pots in the package. 1, 2, or 4.
 taps: Number of taps on the pot. 129 or 257.
