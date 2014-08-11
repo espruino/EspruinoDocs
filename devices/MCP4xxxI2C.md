@@ -12,7 +12,7 @@ A digital potentiometer is a potentiometer that can be controlled via digital me
 Supported Parts
 ------------------
 
-This module [[MCP4xxx.js]] interfaces with a wide variety of I2C digital potentiometers and rheostats made by Microchip. Supported devices have either 129 or 257 taps, 1, 2, or 4 potentiometers (or rheostats), and may or may not have non-volitile memory.  Many of these devices have multiple pins available to set the I2C address. This module does not work with MCP401x devices. 
+This module [[MCP4xxxI2C.js]] interfaces with a wide variety of I2C digital potentiometers and rheostats made by Microchip. Supported devices have either 129 or 257 taps, 1, 2, or 4 potentiometers (or rheostats), and may or may not have non-volitile memory.  Many of these devices have multiple pins available to set the I2C address. This module does not work with MCP401x devices. 
 
 Supported parts will have part numbers of the form MCP4abc
 a - Indicates number of pots. 4 -> 4 pots, 5 -> 1 pot, 6 -> 2 pots. 
@@ -38,7 +38,7 @@ Usage
 Setup I2C, and then call
 
 ```
-var digipot=require("MCP4xxx").connect(i2c,pots,taps,addr);
+var digipot=require("MCP4xxxI2C").connect(i2c,pots,taps,addr);
 ```
 
 `i2c` is the I2C interface it is connected to
