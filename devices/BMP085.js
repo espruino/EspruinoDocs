@@ -139,32 +139,19 @@ BMP085.prototype.getPressure = function(callback) {
   var bmp = this;
   this.readRawTemperature(function(UT) {
     bmp.readRawPressure(function(UP) {
-      // Temperature compensation
       var X1 = Math.round((UT - bmp.ac6) * bmp.ac5 / 32768);
-      var X2 = Math.round((bmp.mc * 2048) / (X1 + bmp.md));
-      var B5 = X1 + X2;
-      var compt = (B5 + 8) / 160;
-      // Pressure calculation
+      var B5 = X1 + Math.round((bmp.mc * 2048) / (X1 + bmp.md));
       var B6 = B5 - 4000;
-      X1 = (bmp.b2 * (B6 * B6 >> 12)) >> 11;
-      X2 = bmp.ac2 * B6 >> 11;
-      var X3 = X1 + X2;
-      var B3 = (((bmp.ac1 * 4 + X3) << bmp.oss) + 2) >> 2;
-      X1 = bmp.ac3 * B6 >> 13;
-      X2 = (bmp.b1 * (B6 * B6 >> 12)) >> 16;
-      X3 = ((X1 + X2) + 2) >> 2;
-      var B4 = (bmp.ac4 * (X3 + 32768)) >> 15;
-      var B7 = (UP - B3) * (50000 >> bmp.oss);
-      var p = Math.round(B7 < 0x80000000 ? (B7 << 1) / B4 : (B7 / B4) << 1);
-
-      X1 = (p >> 8) * (p >> 8);
-      X1 = (X1 * 3038) >> 16;
-      X2 = (-7357 * p) >> 16;
-      var compp = p + ((X1 + X2 + 3791) >> 4);
-      callback({pressure: compp, temperature: compt});
+      var B3 = (((bmp.ac1 * 4 + ((bmp.b2 * (B6 * B6 >> 12)) >> 11) + (bmp.ac2 * B6 >> 11)) << bmp.oss) + 2) >> 2;
+      var B4 = (bmp.ac4 * ((((bmp.ac3 * B6 >> 13) + ((bmp.b1 * (B6 * B6 >> 12)) >> 16) + 2) >> 2) + 32768)) >> 15;
+      var B7 = ((UP - B3) / B4) * (50000 >> bmp.oss);
+      var p=Math.round(B7) << 1;
+      var compp = p + (((((p >> 8)*(p >> 8)*3038) >> 16) + ((-7357 * p) >> 16) + 3791) >> 4);
+      callback({pressure: compp, temperature: (B5 + 8) / 160});
     });
   });
 };
+
 
 /* Returns the absolute altitude from current atmospheric
 pressure and sea level pressure. */

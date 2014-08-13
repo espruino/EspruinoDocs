@@ -24,12 +24,27 @@ It then converts the markdown to HTML and shoves it on the Espruino website. lov
 Building
 -------
 
+You just need node.js... For Linux (Debian/Ubuntu) you can do this with:
+
 ```
-sudo apt-add-repository ppa:richarvey/nodejs
+# Get newer node.js - you'll only need this on earlier Linux versions
+sudo apt-add-repository ppa:richarvey/nodejs 
 sudo apt-get update
 
+# Install node
 sudo apt-get install npm nodejs
-#npm install marked pygmentize-bundled --save
+```
+
+Finally you need to install a node module for highlighting:
+
+```
 npm install marked highlight.js --save
 ```
 
+You can then run it with:
+
+```
+node bin/build.js
+```
+
+and the output will be placed in the `html` directory...
