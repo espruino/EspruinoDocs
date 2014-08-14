@@ -1,10 +1,7 @@
 var express = require('express');
 var app = express();
 
-//app.use();
-
 app.all('/*', function(req, res, next) {
-  // 
   if (!req.url.match(/.*\/?\./)) {
     req.url += '.html';
   }
