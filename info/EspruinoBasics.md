@@ -19,7 +19,7 @@ You won't be able to do much more than executing some javascript without these b
 
 **Good soldering iron with a sharp tip** You'll need to attach your gizmos to the Espruino board for them to work.  The better iron you have, the easier this will be.  You can pick these up at any decent electronics store (or Ebay, Amazon, Parts Express, etc) for about US$15-25.
 
-**Pin Headers** You'll notice that the board has holes everywhere for attaching your components.  For wires, this can be a bit dodgy if you need to move things around later.  The best solution is to add pin headers to the board.  Basically, the idea is to solder pins into the holes, which allows you to use connectors to attach things rather than solder.  You should get the pin headers and a bunch of pre-wired connectors.  Pin headers are [discussed here][[Pin Strip].
+**Pin Headers** You'll notice that the board has holes everywhere for attaching your components.  For wires, soldering things on directly can be a bit dodgy, especially if you need to move things around later.  The best solution is to add pin headers to the board.  Basically, the idea is to solder pins into the holes, which allows you to use connectors to attach things rather than solder.  You should get the pin headers and a bunch of pre-wired connectors.  Pin headers are [discussed here](/Pin Strip).
 
 **Voltmeter** Many times you'll attach something and it won't work right away.  The best way to troubleshoot is to use a voltmeter on your connections to verify that you have power.  This will save you a lot of time and frustration.  These can also be picked up at any decent electronics store for about US$15-25. 
 
