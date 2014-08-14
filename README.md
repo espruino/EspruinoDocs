@@ -34,11 +34,28 @@ sudo apt-get update
 # Install node
 sudo apt-get install npm nodejs
 ```
+# Set Maximum Open Files
+On OSX, most likely the default amount of open files will be set too low.  This may cause
+an error during the build, like: "Error: EMFILE, too many open files 'tasks/File Converter.md'"
+
+Make sure you have at least 1024 for the value of open files.
+
+```
+$ ulimit -n       # see current limit
+```
+
+Increase the limit:
+
+```
+$ ulimit -n 1024  # increase to 1024
+```
+
+# Install Required Modules
 
 Finally you need to install a node module for highlighting:
 
 ```
-npm install marked highlight.js --save
+npm install marked highlight.js acorn --save
 ```
 
 You can then run it with:
