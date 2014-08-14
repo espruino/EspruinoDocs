@@ -55,7 +55,7 @@ $ ulimit -n 1024  # increase to 1024
 Finally you need to install a node module for highlighting:
 
 ```
-npm install marked highlight.js acorn --save
+npm install marked highlight.js acorn express --save
 ```
 
 You can then run it with:
