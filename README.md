@@ -52,6 +52,8 @@ $ ulimit -n 1024  # increase to 1024
 
 # Install Required Modules
 
+For OSX, go to [http://nodejs.org/](http://nodejs.org/) and click "Install".
+
 Finally you need to install a node module for highlighting:
 
 ```
