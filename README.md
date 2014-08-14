@@ -67,3 +67,15 @@ node bin/build.js
 ```
 
 and the output will be placed in the `html` directory...
+
+
+## Run the Website Locally
+
+You can load a dev version of the website locally.  It will not look exactly like the production site but you can test your build and links.
+
+```
+node app.js
+```
+
+Then load up a page in a browser: [http://localhost:3040/EspruinoBoard](http://localhost:3040/EspruinoBoard)
+
