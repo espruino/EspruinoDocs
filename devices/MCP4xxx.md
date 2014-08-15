@@ -1,5 +1,5 @@
 <!--- Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. -->
-MCP4xxx I2C digital potentiometers
+MCP4xxx I2C and SPI digital potentiometers
 ======================
 
 * KEYWORDS: Module,I2C,SPI,digipot,digital potentiometer,ADC,rheostat
