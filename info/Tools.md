@@ -17,7 +17,7 @@ A thin tip is useful. Generally speaking:
 * Soldering irons with a separate power supply are going to be the best ones, but then they're also more expensive
 * Soldering irons with a pistol-grip won't be good enough - you need one that you hold a bit like a massive pen
 
-### Suldering Iron stand
+### Soldering Iron stand
 
 Get one of these with a sponge in it. When wet, it can be used to get any oxidised solder off of the tip of the soldering iron, which makes soldering much easier.
 
@@ -99,3 +99,4 @@ As with other passive components, assortment packs are available online at very 
 ### Diodes
 
 Everyone should have some basic diodes in stock - particularly since they're so cheap. The 1N4001 is a cheap and ubiquitious 1 amp diode. The rest of the 1N400x series is also perfectly suitable. Normal diodes have a forward voltage drop of around 0.7v. Schottky diodes have a lower forward voltage drop (0.3-0.5v), but are more expensive.
+
