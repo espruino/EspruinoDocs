@@ -15,24 +15,23 @@ digipot.shutdown(pot)
 
 /*
 
-
-exports.connect = function(spi,pots,cs) {
+exports.connect = function(spi,cs,pots) {
 	if ( pots < 3 && pots > 0)
 	{
-	    return new MCP4xxx0(spi, pots,cs);
+	    return new MCP4xxx0(spi,cs,pots);
 	} else { throw "Invalid number of pots";}
 };
 
-function MCP4xxx0(spi,pots,cs) {
+function MCP4xxx0(spi,cs,pots) {
   this.pots = pots;
   this.spi=spi;
   this.cs=cs;
 }
 
-MCP4xxx0.prototype.setVal  = function (value,pot) {
-  this.spi.send([0x10+pot,value],cs]);
+MCP4xxx0.prototype.setVal  = function (pot,value) {
+  this.spi.send([0x10+pot+1,value],this.cs);
 };
 
 MCP4xxx0.prototype.shutdown  = function (pot) {
-  this.spi.send([0x20+pot,value],cs]);
+  this.spi.send([0x20+pot+1,value],this.cs);
 };
