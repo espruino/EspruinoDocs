@@ -22,7 +22,7 @@ Servo Motor Module
 
 If you just want to move servo motors around in the simplest possible way, use the [[servo.js]] module. 
 
-Just use `require("servo").connect` with the pin the servo motor is attached to, and call `move` with a position between 0 and 1, and an optional parameter specifying the time taken to move:
+Just use `require("servo").connect` with the pin the servo motor is attached to, and call `move` with a position between 0 and 1, and an optional parameter specifying the time taken to move, and another parameter that is a function to call when the movement is finished:
 
 ```
 var s = require("servo").connect(C7);
@@ -30,6 +30,11 @@ var s = require("servo").connect(C7);
 s.move(0); // move to position 0 over 1 second
 s.move(1); // move to position 1 over 1 second
 s.move(0.5, 3000); // move to position 0.5 over 3 seconds
+
+// move to position 0 over 1 second, then move to position 1
+s.move(0, 1000, function() {
+  s.move(1, 1000);
+}); 
 ```
 
 The module will handle everything else, making sure that the Servo motor is not being continually pulsed when it has had time to reach the correct position.
