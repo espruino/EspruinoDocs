@@ -1,5 +1,5 @@
-  /* Copyright (C) 2014 Spence Konde. See the file LICENSE for copying permission. */
-  /*
+/* Copyright (C) 2014 Spence Konde. See the file LICENSE for copying permission. */
+/*
 This module interfaces with 256-tap serial digital potentiometers from Microchip, 41xx0 series of single potentiometers, and the 42xx0 series of dual potentiometers. 
 
 
@@ -13,7 +13,7 @@ digipot.setVal(value, pot)
 
 digipot.shutdown(pot)
 
-/*
+*/
 
 exports.connect = function(spi,cs,pots) {
 	if ( pots < 3 && pots > 0)
