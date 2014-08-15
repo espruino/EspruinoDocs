@@ -53,16 +53,18 @@ exports.getJSDocumentation = function(js) {
 
 exports.getFiles = function(dir) {
   var results = [];
-  var list = fs.readdirSync(dir);
-  for (i in list) {
-    var file = list[i];
-    if (file == "node_modules" || file == "html") continue;
-    file = dir + '/' + file;
-    var stat = fs.statSync(file);
-    if (stat && stat.isDirectory()) {
-      results = results.concat(exports.getFiles(file));
-    } else {
-      results.push(file);
+  if (fs.existsSync(dir)) {
+    var list = fs.readdirSync(dir);
+    for (i in list) {
+      var file = list[i];
+      if (file == "node_modules" || file == "html") continue;
+      file = dir + '/' + file;
+      var stat = fs.statSync(file);
+      if (stat && stat.isDirectory()) {
+        results = results.concat(exports.getFiles(file));
+      } else {
+        results.push(file);
+      }
     }
   }
   return results;
@@ -76,4 +78,4 @@ exports.getMarkdown = function(dir) {
     }
   });
   return results;
-}
+};

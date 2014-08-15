@@ -28,23 +28,54 @@ You just need node.js... For Linux (Debian/Ubuntu) you can do this with:
 
 ```
 # Get newer node.js - you'll only need this on earlier Linux versions
-sudo apt-add-repository ppa:richarvey/nodejs 
-sudo apt-get update
+$ sudo apt-add-repository ppa:richarvey/nodejs 
+$ sudo apt-get update
 
 # Install node
-sudo apt-get install npm nodejs
+$ sudo apt-get install npm nodejs
 ```
+# Set Maximum Open Files
+On OSX, most likely the default amount of open files will be set too low.  This may cause
+an error during the build, like: "Error: EMFILE, too many open files 'tasks/File Converter.md'"
+
+Make sure you have at least 1024 for the value of open files.
+
+```
+$ ulimit -n       # see current limit
+```
+
+Increase the limit:
+
+```
+$ ulimit -n 1024  # increase to 1024
+```
+
+# Install Required Modules
+
+For OSX, go to [http://nodejs.org/](http://nodejs.org/) and click "Install".
 
 Finally you need to install a node module for highlighting:
 
 ```
-npm install marked highlight.js --save
+$ npm install marked highlight.js acorn express --save
 ```
 
 You can then run it with:
 
 ```
-node bin/build.js
+$ node bin/build.js
 ```
 
 and the output will be placed in the `html` directory...
+
+
+## Run the Website Locally
+
+You can load a dev version of the website locally.  It will not look exactly like the production site but you can test your build and links.
+
+```
+$ node app.js
+```
+
+Then load up a page in a browser: [http://localhost:3040/EspruinoBoard](http://localhost:3040/EspruinoBoard)
+
