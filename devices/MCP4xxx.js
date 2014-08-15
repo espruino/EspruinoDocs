@@ -5,11 +5,11 @@ This module interfaces with I2C and SPI Digital Potentiometers from Microchip. I
 Usage:
 
 
-var digipot=require("MCP4xxx").connectI2C(i2c,taps,pots,addr)
+var digipot=require("MCP4xxx").connectI2C(i2c,pots,taps,addr)
 
 or
 
-var digipot=require("MCP4xxx").connectSPI(spi,cs,pots,addr)
+var digipot=require("MCP4xxx").connectSPI(spi,cs,pots,taps)
 
 
 i2c:  (I2C only) The I2C interface to use
@@ -42,7 +42,7 @@ a, w, b: Controls whether the 3 pins are connected to the resistor ladder. 1 (de
 */
 
 
-exports.connectI2C = function(i2c,taps,pots,addr) {
+exports.connectI2C = function(i2c,pots,taps,addr) {
 	if ((taps==129 || taps == 257)&& pots < 5 && pots > 0)
 	{
 	    return new MCP4xxx(pots,taps,undefined,undefined,i2c,(addr==undefined ? 0x28 : 0x28|addr));
@@ -102,13 +102,13 @@ MCP4xxx.prototype.setTCON = function(pot,sdwn,a,w,b) {
 
 MCP4xxx.prototype.getStatus = function() {
 	var retobj={};
-	var tcon0=this.spi.send([0x4C,0x00],this.cs);
+	var tcon0=this.CMD(4,3,0);
 	if (this.pots > 2) {
-		var tcon1=this.spi.send([0xAC,0x00],this.cs);
+		var tcon1=this.CMD(10,3,0);
 		retobj.pot2=(tcon1[1]&0xF0)>>4;
 		retobj.pot3=(tcon1[1]&0x0F);
 	}
-	status=this.spi.send([0x5C,0x00],this.cs);
+	status=this.CMD(5,3,0)
 	retobj.status=status[1]+((status[0]&3)<<8);
 	retobj.pot0=(tcon0[1]&0xF0)>>4;
 	retobj.pot1=(tcon0[1]&0x0F);
@@ -122,7 +122,6 @@ MCP4xxx.prototype.CMD= function(pad,cmd,data) {
 		dout=(pad<<4)|(cmd<<2);
 	} else {
 		dout=[(pad << 4)|(cmd << 2)|(data>>8),(cmd==3?0:data&255)];
-		console.log(dout);
 	}
 	if (this.spi!=undefined) {
 		return this.spi.send(dout,this.cs);
