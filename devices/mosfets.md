@@ -42,3 +42,4 @@ N-Channel:
 P-Channel: 
 ![P-Channel MOSFET](pchmosfet.jpg)
 
+note the 10k resistors between the gates and sources. 
