@@ -105,7 +105,7 @@ To communicate with another Espruino, all you need to do to is to call ```nrf.se
 Advanced Usage
 ------------
 
-The usage of ```slaveHandler``` and ```masterHandler``` is not required - if you want, you can call methods such as ```send``` and ```dataReady``` directly. For instance you could make a simple wireless sensor:
+The usage of ```slaveHandler``` and ```masterHandler``` is not required - if you want, you can call methods such as ```send``` and ```getDataPipe()``` directly. For instance you could make a simple wireless sensor:
 
 ```
 SPI1.setup({sck:A5, miso:A6, mosi:A7});
@@ -132,7 +132,7 @@ onInit();
 
 dataLine = "";
 setInterval(function() {
-  while (nrf.dataReady()) {
+  while (nrf.nrf.getDataPipe() !== undefined) {
     var data = nrf.getData();
     for (var i in data) {
       var ch = data[i];

@@ -85,7 +85,7 @@ function showTemperature(temp) {
 // Keep checking to see if we have any new data...
 dataLine = "";
 setInterval(function() {
-  while (nrf.dataReady()) {
+  while (nrf.getDataPipe() !== undefined) {
     var data = nrf.getData();
     for (var i in data) {
       var ch = data[i];
