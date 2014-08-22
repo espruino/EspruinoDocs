@@ -6,7 +6,11 @@ MOSFETs
 
 ![Several MOSFETs on an Espruino board](onboard.jpg)
 
-A MOSFET (Metal Oxide-Semiconductor Field Effect Transistor) is a semiconductor device that can be used as a solid state switch. These are useful for controlling loads that draw more current, or require higher voltage, than a GPIO pin can supply. MOSFETs have three pins, Source, Drain, and Gate. The source is connected to ground (or the positive voltage, in a p-channel MOSFET), the drain is connected to the load, and the gate is connected to a GPIO pin on the Espruino. The *voltage* on the gate determines whether current can flow from the drain to the load - no current flows to or from the gate (unlike a bipolar junction transistor) - this means that if the gate is allowed to float, the FET may turn on, or off, in response to ambient electrical fields. Therefor, it is recommended that a pulldown resistor be placed between the gate and the drain. In their on state, modern MOSFETs have very low resistance. 
+A MOSFET (Metal Oxide-Semiconductor Field Effect Transistor) is a semiconductor device that can be used as a solid state switch. These are useful for controlling loads that draw more current, or require higher voltage, than a GPIO pin can supply. In their off state, MOSFETs are non-conducting, while in their on state, they have an extremely low resistance - often measured in milliohms. 
+
+MOSFETs have three pins, Source, Drain, and Gate. The source is connected to ground (or the positive voltage, in a p-channel MOSFET), the drain is connected to the load, and the gate is connected to a GPIO pin on the Espruino. The *voltage* on the gate determines whether current can flow from the drain to the load - no current flows to or from the gate (unlike a bipolar junction transistor) - this means that if the gate is allowed to float, the FET may turn on, or off, in response to ambient electrical fields, or very tiny currents. As demonstration, one can wire up a MOSFET normally, except connecting nothing to the drain, and then touch the gate while holding either ground or a positive voltage - even through your body's resistance, you can turn the FET on and off! Therefor, it is recommended that a pulldown resistor be placed between the gate and the drain.  
+
+MOSFETs can only be used as a switch in one direction; they have a diode between source and drain in the other direction (in other words, if the drain (on an N-channel device) falls below the voltage on the source, current will flow from the source to the drain). This diode, the "body diode" is a consequence of the manufacturing process. This is not to be confused with the diode sometimes placed between the drain and the power supply for the load - this is separate, and should be included if you are driving an inductive load. 
 
 Except where noted, this section assumes use of an N-channel enhancement mode MOSFET. 
 
@@ -23,7 +27,9 @@ Selection of MOSFETs
 
 `Gate-to-Source voltage (Vgs)` One of the most important specs is the voltage required to turn the FET completely on. This is not the threshold voltage - that's the voltage at which it first starts to turn on. Since the Espruino can only output 3.3v, for the simplest connection, we need a part that provides good performance with a 3.3v gate drive. In the datasheet for a MOSFET, a graph will typically be included showing on-state properties at various gate voltages. The key specification here will typically be given as a graph of the the drain current (Id) vs drain-source voltage (Vds - this is the voltage drop across the MOSFET), with several lines for different gate voltages. Make sure that, at the current your load requires, the voltage drop is acceptable with a 3.3v gate drive. 
 
-Unfortunately, there are not many MOSFETs available in convenient through-hole packages that will work with a 3.3v gate drive. The [IRF3708PBF](http://www.irf.com/product-info/datasheets/data/irfr3708pbf.pdf) is a good choice in the large TO-220 package - it's current handling capacity is sufficient for almost any purpose, even at 3.3v on the gate. There is  a very wide variety of low-voltage MOSFETs available in surface mount packages with excellent specs, often at very low prices. The popular SOT-23 package can be soldered onto the Espruino's SMD prototyping area as shown in the included pictures - note that the traces between the SMD pads and the pins on the Espruino are fairly thin, so this should not be used for currents much over an amp. 
+Unfortunately, there are not many MOSFETs available in convenient through-hole packages that will work with a 3.3v gate drive. The [IRF3708PBF](http://www.irf.com/product-info/datasheets/data/irfr3708pbf.pdf) is a good choice in the large TO-220 package - it's current handling capacity is sufficient for almost any purpose, even at 3.3v on the gate. 
+
+There is  a very wide variety of low-voltage MOSFETs available in surface mount packages with excellent specs, often at very low prices. The popular SOT-23 package can be soldered onto the Espruino's SMD prototyping area as shown in the pictures below. 
 
 `Continuous Current` Make sure that the continuous current rating of the part is sufficient for the load - many parts have both a peak current and continuous current rating, and naturally, the former is often the headline spec. 
 
@@ -32,16 +38,30 @@ Unfortunately, there are not many MOSFETs available in convenient through-hole p
 `Maximum Gate-Source Voltage (Vgs)` This is the maximum voltage that can be applied on the gate. This is particularly relevant in the case of a p-channel MOSFET switching a fairly high voltage, when you pull the voltage down with another transistor or FET to turn it on.
 
 
+Pinouts
+------------------
+
+![Typical MOSFET pinouts](pinouts.jpg)
+
+These show the pinout of typical TO-220 and SOT-23 MOSFETs. However, ALWAYS consult the datasheet before connecting anything, in case you find yourself using a wierdo part. 
+
+
 Connection
 ------------------
 
 N-Channel:
+![N-Channel MOSFET TO-220](nchmosfet220.jpg)
+Here, we see an Espruino being used to switch a 100W load using an IRF3708. Note the 10k resistor between gate and source. The load is a 100W 660nm LED array, pulling ~3.8A (per specs) at 22v (yes, that's more like 85W) - it is outside the picture, becuase it was so bright, it overloaded the camera and made a big red line . We have the +22v connected to the 
+
+
 ![N-Channel MOSFET](nchmosfet.jpg)
 
+This shows two N-channel MOSFETs on the surface mount prototyping area on an Espruino. On the right, one in the SOT-23 package. On the left, one in the SOIC-8 package. Note that the traces between the SMD pads and the pins on the Espruino are fairly thin, so this should not be used for currents much over an amp. 
 
 P-Channel: 
 ![P-Channel MOSFET](pchmosfet.jpg)
 
+This shows an N-channel MOSFET being used to turn on a P-channel MOSFET - this configuration is useful when you need to switch the high side of a circuit powered by something above 5 volts. Note that the traces between the SMD pads and the pins on the Espruino are fairly thin, so this should not be used for currents much over an amp.
 
 Schematics
 ------------------
@@ -55,3 +75,11 @@ Enhancement vs Depletion mode
 The majority of MOSFETs used are so-called enhancement mode devices, and the above writeup has assumed use of an enhancement mode MOSFET. Again, in an enhancement mode MOSFET, when the gate is at the same voltage as the source (Vgs=0), the MOSFET does not conduct. 
 
 In a depletion mode MOSFET, when Vgs = 0, the MOSFET is on, and a voltage must be applied to the gate in order to stop conduction. The supplied voltage is the opposite of what would turn on an enhancement mode MOSFET - so for an N-channel enhancement mode MOSFET, a negative voltage must be applied to turn it off. 
+
+
+Buying
+---------------------
+
+[Digikey](http://digikey.com)
+[Mouser](http://mouser.com)
+[eBay](http://ebay.com) for the lowest prices on extremely common MOSFETs. This is not usually a good place to buy high-spec parts, though.
