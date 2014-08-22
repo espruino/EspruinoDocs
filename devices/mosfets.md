@@ -4,7 +4,7 @@ MOSFETs
 
 * KEYWORDS: MOSFET,Transitor
 
-![Several MOSFETs on an Espruino board](onboard.jpg)
+![Selection of MOSFETs incl LED being switched by one](mosfetheader.jpg)
 
 A MOSFET (Metal Oxide-Semiconductor Field Effect Transistor) is a semiconductor device that can be used as a solid state switch. These are useful for controlling loads that draw more current, or require higher voltage, than a GPIO pin can supply. In their off state, MOSFETs are non-conducting, while in their on state, they have an extremely low resistance - often measured in milliohms. 
 
