@@ -92,11 +92,14 @@ Assortment packs of resistors are readily available online, and are highly recom
 
 The most important value of capacitor to have is 0.1uf, in a ceramic capacitor. Many parts require a 0.1uf ceramic capacitor between power and ground right next to the part to ensure stable power to the part, so you should have some of these on hand. 
 
-If you're using voltage regulators in your project, each of these will need a higher value capacitor across the output to provide a stable voltage - typically a 10-100uf tantalum or electrolytic. For such filtering applications, the exact value is not critical, as long as it's big enough.
+If you're using voltage regulators in your project, each of these will need a higher value capacitor across the output to provide a stable voltage - typically a 10-100uf tantalum or electrolytic. For such filtering applications, the exact value is not critical, as long as it's big enough that the voltage regulator is able to supply a stable enough voltage for your purpose.
 
-As with other passive components, assortment packs are available online at very low prices - however, an assortment of capacitors is nowhere near as important as an assortment of resistors. 
+As with other passive components, assortment packs of capacitors are available online at very low prices - however, an assortment of capacitors is nowhere near as important as an assortment of resistors. 
 
 ### Diodes
 
-Everyone should have some basic diodes in stock - particularly since they're so cheap. The 1N4001 is a cheap and ubiquitious 1 amp diode. The rest of the 1N400x series is also perfectly suitable. Normal diodes have a forward voltage drop of around 0.7v. Schottky diodes have a lower forward voltage drop (0.3-0.5v), but are more expensive.
+Everyone who plays with electronics should have some basic diodes in stock - particularly since they're so cheap. The 1N4001 is a cheap and ubiquitious 1 amp diode. The rest of the 1N400x series is also perfectly suitable. Normal diodes have a forward voltage drop of around 0.7v. Schottky diodes have a lower forward voltage drop (0.3-0.5v), but are more expensive.
 
+### LEDs
+
+Generic through-hole LEDs can come in very handy as indicators when debugging.  Be sure you have appropriate resistors to put in series with them. Assortments of around 100 basic, through-hole LEDs are available on eBay for a few bucks, and they can also often be scavenged from discarded electronics (whether this is worth doing is another matter). 
