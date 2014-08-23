@@ -8,7 +8,7 @@ MOSFETs
 
 A MOSFET (Metal Oxide-Semiconductor Field Effect Transistor) is a semiconductor device that can be used as a solid state switch. These are useful for controlling loads that draw more current, or require higher voltage, than a GPIO pin can supply. In their off state, MOSFETs are non-conducting, while in their on state, they have an extremely low resistance - often measured in milliohms. 
 
-MOSFETs have three pins, Source, Drain, and Gate. The source is connected to ground (or the positive voltage, in a p-channel MOSFET), the drain is connected to the load, and the gate is connected to a GPIO pin on the Espruino. The *voltage* on the gate determines whether current can flow from the drain to the load - no current flows to or from the gate (unlike a bipolar junction transistor) - this means that if the gate is allowed to float, the FET may turn on, or off, in response to ambient electrical fields, or very tiny currents. As demonstration, one can wire up a MOSFET normally, except connecting nothing to the drain, and then touch the gate while holding either ground or a positive voltage - even through your body's resistance, you can turn the FET on and off! Therefor, it is recommended that a pulldown resistor be placed between the gate and the drain.  
+MOSFETs have three pins, Source, Drain, and Gate. The source is connected to ground (or the positive voltage, in a p-channel MOSFET), the drain is connected to the load, and the gate is connected to a GPIO pin on the Espruino. The *voltage* on the gate determines whether current can flow from the drain to the load - no current flows to or from the gate (unlike a bipolar junction transistor) - this means that if the gate is allowed to float, the FET may turn on, or off, in response to ambient electrical fields, or very tiny currents. As demonstration, one can wire up a MOSFET normally, except connecting nothing to the gate pin, and then touch the gate while holding either ground or a positive voltage - even through your body's resistance, you can turn the FET on and off! To ensure that a MOSFET remains off even if the pin is not connected (ex, after Espruino is reset), a pull-down resistor can be placed between gate and source.
 
 MOSFETs can only be used as a switch in one direction; they have a diode between source and drain in the other direction (in other words, if the drain (on an N-channel device) falls below the voltage on the source, current will flow from the source to the drain). This diode, the "body diode" is a consequence of the manufacturing process. This is not to be confused with the diode sometimes placed between the drain and the power supply for the load - this is separate, and should be included if you are driving an inductive load. 
 
@@ -50,16 +50,16 @@ Connection
 ------------------
 
 N-Channel:
-![N-Channel MOSFET TO-220](nchmosfet220.jpg)
-Here, we see an Espruino being used to switch a 100W load using an IRF3708. Note the 10k resistor between gate and source. The load is a 100W 660nm LED array, pulling ~3.8A (per specs) at 22v (yes, that's more like 85W) - it is outside the picture, becuase it was so bright, it overloaded the camera and made a big red line . We have the +22v connected to the 
+![N-Channel MOSFET TO-220](TO-220MOSFET.jpg)
+Here, we see an Espruino being used to switch a 100W load using an IRF3708. Note the 10k resistor between gate and source. The load is a 100W 660nm LED array, pulling ~3.8A (per specs) at 22v (more like 85W) - it is outside the picture (it's rather bright). 
 
 
-![N-Channel MOSFET](nchmosfet.jpg)
+![N-Channel MOSFET](N-Ch.jpg)
 
 This shows two N-channel MOSFETs on the surface mount prototyping area on an Espruino. On the right, one in the SOT-23 package. On the left, one in the SOIC-8 package. Note that the traces between the SMD pads and the pins on the Espruino are fairly thin, so this should not be used for currents much over an amp. 
 
 P-Channel: 
-![P-Channel MOSFET](pchmosfet.jpg)
+![P-Channel MOSFET](P-Ch.jpg)
 
 This shows an N-channel MOSFET being used to turn on a P-channel MOSFET - this configuration is useful when you need to switch the high side of a circuit powered by something above 5 volts. Note that the traces between the SMD pads and the pins on the Espruino are fairly thin, so this should not be used for currents much over an amp.
 
