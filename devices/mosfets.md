@@ -4,8 +4,6 @@ MOSFETs
 
 * KEYWORDS: MOSFET,Transitor
 
-![Selection of MOSFETs incl LED being switched by one](mosfetheader.jpg)
-
 A MOSFET (Metal Oxide-Semiconductor Field Effect Transistor) is a semiconductor device that can be used as a solid state switch. These are useful for controlling loads that draw more current, or require higher voltage, than a GPIO pin can supply. In their off state, MOSFETs are non-conducting, while in their on state, they have an extremely low resistance - often measured in milliohms. 
 
 MOSFETs have three pins, Source, Drain, and Gate. The source is connected to ground (or the positive voltage, in a p-channel MOSFET), the drain is connected to the load, and the gate is connected to a GPIO pin on the Espruino. The *voltage* on the gate determines whether current can flow from the drain to the load - no current flows to or from the gate (unlike a bipolar junction transistor) - this means that if the gate is allowed to float, the FET may turn on, or off, in response to ambient electrical fields, or very tiny currents. As demonstration, one can wire up a MOSFET normally, except connecting nothing to the gate pin, and then touch the gate while holding either ground or a positive voltage - even through your body's resistance, you can turn the FET on and off! To ensure that a MOSFET remains off even if the pin is not connected (ex, after Espruino is reset), a pull-down resistor can be placed between gate and source.
@@ -67,7 +65,7 @@ Schematics
 ------------------
 These schematics show a few common configurations for MOSFETs as they would be used with the Espruino. The exact values of the resistors is not essential; a higher value resistor will work fine (and may be desirable where power usage is of particular concern). As can be seen below, using a P-channel MOSFET to switch voltages above 5v involves a more complicated circuit. This is not the case when using an N-channel MOSFET to switch high voltages; since the source is grounded, the gate doesn't need to go up to the voltage being switched, like it does on a P-channel MOSFET, where the source is the positive voltage. 
 
-![MOSFET schematics](mosfetsc.jpg)
+![MOSFET schematics](mosfetschematic.jpg)
 
 
 Enhancement vs Depletion mode
