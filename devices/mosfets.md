@@ -23,11 +23,11 @@ In a P-channel MOSFET, the source is connected to a positive voltage, and the FE
 Selection of MOSFETs
 --------------------
 
-`Gate-to-Source voltage (Vgs)` One of the most important specs is the voltage required to turn the FET completely on. This is not the threshold voltage - that's the voltage at which it first starts to turn on. Since the Espruino can only output 3.3v, for the simplest connection, we need a part that provides good performance with a 3.3v gate drive. In the datasheet for a MOSFET, a graph will typically be included showing on-state properties at various gate voltages. The key specification here will typically be given as a graph of the the drain current (Id) vs drain-source voltage (Vds - this is the voltage drop across the MOSFET), with several lines for different gate voltages. Make sure that, at the current your load requires, the voltage drop is acceptable with a 3.3v gate drive. 
+`Gate-to-Source voltage (Vgs)` One of the most important specs is the voltage required to turn the FET completely on. This is not the threshold voltage - that's the voltage at which it first starts to turn on. Since the Espruino can only output 3.3v, for the simplest connection, we need a part that provides good performance with a 3.3v gate drive. Unfortunately, there are not many MOSFETs available in convenient through-hole packages that will work with a 3.3v gate drive. The [IRF3708PBF](http://www.irf.com/product-info/datasheets/data/irfr3708pbf.pdf) is a good choice in the large TO-220 package - it's current handling capacity is sufficient for almost any purpose, even at 3.3v on the gate.
 
-Unfortunately, there are not many MOSFETs available in convenient through-hole packages that will work with a 3.3v gate drive. The [IRF3708PBF](http://www.irf.com/product-info/datasheets/data/irfr3708pbf.pdf) is a good choice in the large TO-220 package - it's current handling capacity is sufficient for almost any purpose, even at 3.3v on the gate. 
+In the datasheet for a MOSFET, a graph will typically be included showing on-state properties at various gate voltages. The key specification here will typically be given as a graph of the the drain current (Id) vs drain-source voltage (Vds - this is the voltage drop across the MOSFET), with several lines for different gate voltages. For the example of the IRF3708PBF, this graph is Figure 1. Notice how how at an Id of 10 amps, the voltage drop (Vds) is barely above 0.1v with a 3.3v gate drive, and one can barely tell the lines for 3.3v and higher voltages apart. 
 
-There is  a very wide variety of low-voltage MOSFETs available in surface mount packages with excellent specs, often at very low prices. The popular SOT-23 package can be soldered onto the Espruino's SMD prototyping area as shown in the pictures below. 
+There is a very wide variety of low-voltage MOSFETs available in surface mount packages with excellent specs, often at very low prices. The popular SOT-23 package can be soldered onto the Espruino's SMD prototyping area as shown in the pictures below, or used with one of many low-cost breakout boards available from eBay and many electronics hobby vendors.
 
 `Continuous Current` Make sure that the continuous current rating of the part is sufficient for the load - many parts have both a peak current and continuous current rating, and naturally, the former is often the headline spec. 
 
@@ -67,6 +67,21 @@ These schematics show a few common configurations for MOSFETs as they would be u
 
 ![MOSFET schematics](mosfetschematic.jpg)
 
+MOSFETs vs Relays
+----------------
+
+* MOSFETs consume essentially no power, while relays use a significant amount of power when turned on, to maintain the magnetic field in the coil. 
+* MOSFETs can be driven with PWM. Relays can't. 
+* MOSFETs require a shared ground (or supply for p-channel), while relays completely isolate the circuit being driven.
+
+MOSFETs vs Bipolar Junction Transistors
+------------------
+
+* MOSFETs are controlled by voltage, not current. There is negligible gate current, whereas a BJT has a non-negligible base current. 
+* MOSFETs often have a lower voltage drop in their on state.
+* MOSFETs will turn themselves on if the gate is allowed to float, BJTs require current to flow, so they will not..
+* MOSFETs are often more expensive, and were historically more vulnerable to static damage
+
 
 Enhancement vs Depletion mode
 ----------------------
@@ -80,4 +95,4 @@ Buying
 
 [Digikey](http://digikey.com)
 [Mouser](http://mouser.com)
-[eBay](http://ebay.com) for the lowest prices on extremely common MOSFETs. This is not usually a good place to buy high-spec parts, though.
+[eBay](http://ebay.com) for the lowest prices on the most common MOSFETS.
