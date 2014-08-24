@@ -48,7 +48,9 @@ Connection
 ------------------
 
 N-Channel:
+
 ![N-Channel MOSFET TO-220](TO-220MOSFET.jpg)
+
 Here, we see an Espruino being used to switch a 100W load using an IRF3708. Note the 10k resistor between gate and source. The load is a 100W 660nm LED array, pulling ~3.8A (per specs) at 22v (more like 85W) - it is outside the picture (it's rather bright). 
 
 
@@ -57,9 +59,10 @@ Here, we see an Espruino being used to switch a 100W load using an IRF3708. Note
 This shows two N-channel MOSFETs on the surface mount prototyping area on an Espruino. On the right, one in the SOT-23 package. On the left, one in the SOIC-8 package. Note that the traces between the SMD pads and the pins on the Espruino are fairly thin, so this should not be used for currents much over an amp. 
 
 P-Channel: 
+
 ![P-Channel MOSFET](P-Ch.jpg)
 
-This shows an N-channel MOSFET being used to turn on a P-channel MOSFET - this configuration is useful when you need to switch the high side of a circuit powered by something above 5 volts. Note that the traces between the SMD pads and the pins on the Espruino are fairly thin, so this should not be used for currents much over an amp.
+This shows an N-channel MOSFET being used to turn on a P-channel MOSFET - this configuration is useful when you need to switch the high side of a circuit powered by something above 5 volts - this example assumes the Espruino's VBat is the power source. Note that the traces between the SMD pads and the pins on the Espruino are fairly thin, so this should not be used for currents much over an amp.
 
 Schematics
 ------------------
@@ -93,6 +96,6 @@ In a depletion mode MOSFET, when Vgs = 0, the MOSFET is on, and a voltage must b
 Buying
 ---------------------
 
-[Digikey](http://digikey.com)
-[Mouser](http://mouser.com)
-[eBay](http://ebay.com) for the lowest prices on the most common MOSFETS.
+* [Digikey](http://digikey.com)
+* [Mouser](http://mouser.com)
+* [eBay](http://ebay.com) for the lowest prices on the most common MOSFETS.
