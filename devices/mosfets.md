@@ -4,11 +4,11 @@ MOSFETs
 
 * KEYWORDS: MOSFET,Transitor
 
-A MOSFET (Metal Oxide-Semiconductor Field Effect Transistor) is a semiconductor device that can be used as a solid state switch. These are useful for controlling loads that draw more current, or require higher voltage, than a GPIO pin can supply. In their off state, MOSFETs are non-conducting, while in their on state, they have an extremely low resistance - often measured in milliohms. 
+A MOSFET (Metal Oxide-Semiconductor Field Effect Transistor) is a semiconductor device that can be used as a solid state switch. These are useful for controlling loads that draw more current, or require higher voltage, than a GPIO pin can supply. In their off state, MOSFETs are non-conducting, while in their on state, they have an extremely low resistance - often measured in milliohms. MOSFETs can only be used to switch DC loads. 
 
 MOSFETs have three pins, Source, Drain, and Gate. The source is connected to ground (or the positive voltage, in a p-channel MOSFET), the drain is connected to the load, and the gate is connected to a GPIO pin on the Espruino. The *voltage* on the gate determines whether current can flow from the drain to the load - no current flows to or from the gate (unlike a bipolar junction transistor) - this means that if the gate is allowed to float, the FET may turn on, or off, in response to ambient electrical fields, or very tiny currents. As demonstration, one can wire up a MOSFET normally, except connecting nothing to the gate pin, and then touch the gate while holding either ground or a positive voltage - even through your body's resistance, you can turn the FET on and off! To ensure that a MOSFET remains off even if the pin is not connected (ex, after Espruino is reset), a pull-down resistor can be placed between gate and source.
 
-MOSFETs can only be used as a switch in one direction; they have a diode between source and drain in the other direction (in other words, if the drain (on an N-channel device) falls below the voltage on the source, current will flow from the source to the drain). This diode, the "body diode" is a consequence of the manufacturing process. This is not to be confused with the diode sometimes placed between the drain and the power supply for the load - this is separate, and should be included if you are driving an inductive load. 
+MOSFETs only switch current flowing in one direction; they have a diode between source and drain in the other direction (in other words, if the drain (on an N-channel device) falls below the voltage on the source, current will flow from the source to the drain). This diode, the "body diode" is a consequence of the manufacturing process. This is not to be confused with the diode sometimes placed between the drain and the power supply for the load - this is separate, and should be included when driving an inductive load. 
 
 Except where noted, this section assumes use of an N-channel enhancement mode MOSFET. 
 
@@ -51,7 +51,7 @@ N-Channel:
 
 ![N-Channel MOSFET TO-220](TO-220MOSFET.jpg)
 
-Here, we see an Espruino being used to switch a 100W load using an IRF3708. Note the 10k resistor between gate and source. The load is a 100W 660nm LED array, pulling ~3.8A (per specs) at 22v (more like 85W) - it is outside the picture (it's rather bright). 
+An Espruino being used to switch a 100W load using an IRF3708. Note the 10k resistor between gate and source. The load is a 100W 660nm LED array, pulling ~3.8A (per specs) at 22v (more like 85W) - it is outside the picture (it's rather bright). 
 
 
 ![N-Channel MOSFET](N-Ch.jpg)
@@ -62,7 +62,7 @@ P-Channel:
 
 ![P-Channel MOSFET](P-Ch.jpg)
 
-This shows an N-channel MOSFET being used to turn on a P-channel MOSFET - this configuration is useful when you need to switch the high side of a circuit powered by something above 5 volts - this example assumes the Espruino's VBat is the power source. Note that the traces between the SMD pads and the pins on the Espruino are fairly thin, so this should not be used for currents much over an amp.
+This shows an N-channel MOSFET being used to turn on a P-channel MOSFET - this configuration is useful when you need to switch the high side of a circuit powered by something above 5 volts - this example assumes the Espruino's VBat is the power source.
 
 Schematics
 ------------------
@@ -73,9 +73,10 @@ These schematics show a few common configurations for MOSFETs as they would be u
 MOSFETs vs Relays
 ----------------
 
-* MOSFETs consume essentially no power, while relays use a significant amount of power when turned on, to maintain the magnetic field in the coil. 
+* MOSFETs consume essentially no power, while relays use a significant amount of power when turned on. 
 * MOSFETs can be driven with PWM. Relays can't. 
 * MOSFETs require a shared ground (or supply for p-channel), while relays completely isolate the circuit being driven.
+* MOSFETs can only switch DC loads, while relays, being isolated, can switch AC as well. 
 
 MOSFETs vs Bipolar Junction Transistors
 ------------------
@@ -83,7 +84,7 @@ MOSFETs vs Bipolar Junction Transistors
 * MOSFETs are controlled by voltage, not current. There is negligible gate current, whereas a BJT has a non-negligible base current. 
 * MOSFETs often have a lower voltage drop in their on state.
 * MOSFETs will turn themselves on if the gate is allowed to float, BJTs require current to flow, so they will not..
-* MOSFETs are often more expensive, and were historically more vulnerable to static damage
+* MOSFETs are often more expensive, and were historically more vulnerable to static damage.
 
 
 Enhancement vs Depletion mode
