@@ -116,19 +116,23 @@ MCP4xxx.prototype.getStatus = function() {
 }
 
 MCP4xxx.prototype.CMD= function(pad,cmd,data) {
-	var b1=(pad << 4)|(cmd << 2);
-	var dout;
-	if (cmd==1||cmd==2) {
-		dout=(pad<<4)|(cmd<<2);
+	if (pad+cmd+data==NaN) {
+		throw "Invalid parameter";
 	} else {
-		dout=[(pad << 4)|(cmd << 2)|(data>>8),(cmd==3?0:data&255)];
-	}
-	if (this.spi!=undefined) {
-		return this.spi.send(dout,this.cs);
-	} else {
-		this.i2c.writeTo(this.i2ca,b1);
-		if (cmd==3) {
-			return this.i2c.readFrom(this.i2ca,2);
+		var b1=(pad << 4)|(cmd << 2);
+		var dout;
+		if (cmd==1||cmd==2) {
+			dout=(pad<<4)|(cmd<<2);
+		} else {
+			dout=[(pad << 4)|(cmd << 2)|(data>>8),(cmd==3?0:data&255)];
+		}
+		if (this.spi!=undefined) {
+			return this.spi.send(dout,this.cs);
+		} else {
+			this.i2c.writeTo(this.i2ca,b1);
+			if (cmd==3) {
+				return this.i2c.readFrom(this.i2ca,2);
+			}
 		}
 	}
 };
