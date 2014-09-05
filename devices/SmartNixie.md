@@ -11,14 +11,14 @@ This module interfaces with the Smart Nixie Tube, from [Switchmode Design](http:
 
 These consist of two PCBs, containing an IN-14 Nixie Tube, RGB LED, a boost converter to generate the high voltage for the tubes, and a serial interface to control it. They include connectors to daisy chain multiple units together, with the data being passed from left to right (like a shift register). They use an ATmega328P microcontroller, and are Arduino-compatible. The warm glow of a Nixie tube offers a unique retro aesthetic. 
 
-The Smart Nixie Tube modules require a separate power supply at 9-12V.
+The Smart Nixie Tube modules require a separate power supply at 9-12V. 
 
 Wiring
 -----------------
 
 Connect the Espruino ground to the Smart Nixie Tube ground (pin on the 6-pin header closest to the power connector). 
 
-Connect any 5V-tolerant UART TX pin on the Espruino to the Smart Nixie Tube RX pin (4th pin from the power connector on the 6-pin header) on the left-most Smart Nixie Tube.
+Connect any 5V-tolerant UART TX pin on the Espruino to the Smart Nixie Tube RX pin (4th pin from the power connector on the 6-pin header) on the left-most Smart Nixie Tube. Although the Smart Nixie Tube logic runs at 5v, no level shifter is required to use with the Espruino, as long as the pin used is 5v tolerant. 
 
 Usage
 -----------------
