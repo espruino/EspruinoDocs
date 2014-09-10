@@ -116,7 +116,7 @@ function grabInfo(markdownFiles, preloadedFiles) {
   return {keywords:keywords, parts:parts};
 }
 
-function grabWebsiteKeywords(keywords) {
+function grabWebsiteKeywords(keywords) {        
   common.getFiles(path.resolve(BASEDIR,"../espruinowebsite/cms")).forEach(function(f) { 
     if (f.substr(-5) != ".html") return;
     var fileName = f.substring(f.lastIndexOf("/")+1,f.length-5);
@@ -124,10 +124,14 @@ function grabWebsiteKeywords(keywords) {
       path : "/"+fileName,
       title : fileName.replace(/\+/g, " ")
     };
+    addToList(keywords, fileName.replace("+"," "), fileInfo); // add filename
+    console.log("Checking Website file "+fileName);
 
     var contents = fs.readFileSync(f).toString();
-    var match = contents.match(/^\* KEYWORDS: (.*)/);
+
+    var match = contents.match(/\* KEYWORDS: (.*)/);
      if (match!=null) {
+       console.log("  found keywords "+match[1]);
        match[1].split(",").forEach(function(k) { 
          addToList(keywords, k, fileInfo);
      });

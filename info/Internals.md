@@ -30,7 +30,7 @@ The parser is a hand-written recursive-descent parser, and code to be executed i
 Variable Storage
 --------------
 
-Variables are usually stored in fixed-size 20 byte blocks. In small devices this can get down to 15 (8 bit addresses) and on PCs it's 30 (32 bit addresses). 
+Variables are usually stored in fixed-size 16 byte blocks. In small devices this can get down to 12 (10 bit addresses) and on PCs it's 32 (32 bit addresses). 
 
 This has several implications:
 
@@ -39,27 +39,21 @@ This has several implications:
 * Memory fragmentation is not a problem
 * Malloc would generally have a 4 byte allocation overhead for each memory block - we can do without this.
 
-Each block has optional links to children and siblings, which allows a tree structure to be built. However in many cases these references aren't needed and are used to store extra String Data if it is required. This allows variable names of up to 12 characters to be stored without having to allocate extra variable blocks.
+Each block has optional links to children and siblings, which allows a tree structure to be built. However in many cases these references aren't needed and can be used to store other data.
+
+What follows are the basic variable bytes. Note that NAME_INT_INT, NAME_INT_BOOL, and NAME_STRING_INT follow the same pattern as NAME_STR/NAME_INT - they just use `child` to store a value rather than a reference:
 
 
-| Bytes | Type         | Normal | Variable Name | String Data |
-|--|--|--|--|--|
-| 2 | Flags + Lock Count | F | F | F | 
-| 8 | Value              | V | V | V | 
-| 2 | Next Sibling       | R | V | V | 
-| 2 | Previous Sibling   | R | V | V | 
-| 2 | Reference Count    | C | C | V | 
-| 2 | First Child        | R | R (variable ref) | V | 
-| 2 | Last Child         | R | R (string data) | R (string data) | 
+| Byte  | Name    | STRING | STR_EXT  | NAME_STR | NAME_INT | INT  | DOUBLE | OBJ/FUNC/ARRAY | ARRAYBUFFER |
+|-------|---------|--------|----------|----------|----------|------|--------|----------------|-------------|
+| 0 - 3 | varData | data   | data     |  data    | data     | data | data   | nativePtr      | size        |
+| 4 - 5 | next    | -      | data     |  next    | next     | -    | data   | argTypes       | format      |
+| 6 - 7 | prev    | -      | data     |  prev    | prev     | -    | data   | argTypes       | format      |
+| 8 - 9 | refs    | refs   | data     |  refs    | refs     | refs | refs   | refs           | refs        |
+| 10-11 | first   | -      | data     |  child   | child    |  -   |  -     | first          | stringPtr   |
+| 12-13 | last    | nextPtr| nextPtr  |  nextPtr |  -       |  -   |  -     | last           | -           |
+| 14-15 | Flags   | Flags  | Flags    |  Flags   | Flags    | Flags| Flags  | Flags          | Flags       |
 
-...
-
-| Key | Meaning |
-|--|--|
-| F | Flags |
-| V | Value Data |
-| R | Reference to another var |
-| C | Reference Count |
 
 
 

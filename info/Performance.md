@@ -98,15 +98,15 @@ So the number of elements in an array or object will seriously affect the time i
 
 As Espruino becomes more mature the Linked Lists may be replaced with a Tree structure, but for now it is very useful to be aware of this limitation.
 
-To work around this, try and use `Array.map`, `Array.forEach`, and `Array.reduce` wherever possible, as these can iterate over the linked list.
+To work around this, try and use `Array.map`, `Array.forEach`, and `Array.reduce` wherever possible, as these can iterate over the linked list very efficiently.
 
-To AND together all values in an array:
+For example to AND together all values in an array:
 
 ```
 var anded = myArray.reduce(function(last, value) { return last & value; }, 0xFFFFFFFF /*initial value*/);
 ```
 
-To send the contents of an array:
+Or to send the contents of an array to digital outputs:
 
 ```
 myArray.forEach(function(value) {
@@ -115,28 +115,33 @@ myArray.forEach(function(value) {
 ```
  
 
-EVERY DATATYPE IN ESPRUINO IS BASED ON A SINGLE 20 BYTE STORAGE UNIT
+EVERY DATATYPE IN ESPRUINO IS BASED ON A SINGLE 16 BYTE STORAGE UNIT
 ------------------------------------------------------------
 
-This makes allocation and deallocation very fast for Espruino and avoids memory fragmentation. However, if you allocate a single boolean it will still take up 20 bytes of memory. 
+This makes allocation and deallocation very fast for Espruino and avoids memory fragmentation. However, if you allocate a single boolean it will still take up 16 bytes of memory. 
 
 This may seem inefficient, but if you compare this with a naive malloc/free implementation you'll realise that it saves a significant amount of RAM.
 
-Note: on smaller devices (with less than 256 variables) Espruino uses 16 bytes per storage unit (not 20).
+Note: on smaller devices (with less than 256 variables) Espruino uses 12 bytes per storage unit (not 16).
 
  
 
-ARRAYS AND OBJECTS USE TWO STORAGE UNITS PER ELEMENT (ONE FOR THE KEY, AND ONE FOR THE VALUE).
-----------------------------------------------------------------------------------
+ARRAYS AND OBJECTS USE TWO STORAGE UNITS PER ELEMENT (ONE FOR THE KEY, AND ONE FOR THE VALUE)
+---------------------------------------------------------------------------------
 
-This means that Sparse Arrays are relatively efficient, but Dense arrays are not. For these you should use [Typed Arrays](Reference#l_Uint8Array_Uint8Array). See below.
+This means that Sparse Arrays are relatively efficient, but Dense arrays are not. For dense arrays you should use [Typed Arrays](Reference#l_Uint8Array_Uint8Array). See the next heading.
 
+**There are a few cases when both key and value can be packed into an array.** These are:
+
+* An integer index with a boolean value
+* An integer index with an integer value between -32768 and 32767 (on parts with 12 byte storage units, the range of allowable values may be less)
+* A short string index with an integer value between -32768 and 32767
  
 
 STRINGS OR TYPED ARRAYS ARE THE MOST EFFICIENT WAY TO STORE DATA
 --------------------------------------------------------
 
-Strings and Typed Arrays use the same storage format, where you get on average 16 bytes of data per 20 byte Storage unit. So for an array of bytes, it's 32 times more efficient to use a String or Typed Array than a normal (sparse) Array. It's also faster too!
+Strings and Typed Arrays use the same storage format, where you get on average 12 bytes of data per 16 byte Storage unit. So for an array of bytes, it's 24 times more efficient to use a String or Typed Array than a normal (sparse) Array. It's also faster too!
 
 You create a Typed Array with a simple command:
 
@@ -150,12 +155,13 @@ a = new Float32Array(50);
 
 And then you can access it like a normal Array. The only thing you can't do is change the length dynamically (See below). There are other formats of typed array too - see the [[Reference]].
 
-While you can't change the length dynamically, you can create 'views' which change how you access the information in the array, without actually copying it. For example:
+While you can't change the length dynamically, you can create 'views' which change how you access the information in the array without actually copying it. For example:
 
 ```
 a = new Uint8Array([1,2,3,4,5,6,7,8,9,10]);
 b = new Uint16Array(a.buffer); // [513,1027,1541,2055,2569]
 c = new Uint8Array(a.buffer, 2, 5); // [3,4,5,6,7]
+(new Uint8Array(a.buffer, 2, 3)).forEach(function(x) { console.log(x); }); // prints 3,4,5 on different lines
 ```
 
 You can also use `.set` to quickly set elements. For example...
