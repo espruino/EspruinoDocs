@@ -26,10 +26,8 @@ Usage
 Setup the Serial interface to use 115200 baud, and call connect:
 
 ```
-
 Serial3.setup(115200,{tx:B10});
 var nixie=require("SmartNixie").connect(Serial3,digits);
-
 ```
 
 `digits` is the number of Smart Nixie Tubes chained together. 
@@ -37,7 +35,6 @@ var nixie=require("SmartNixie").connect(Serial3,digits);
 The following functions are provided to set the options for the tube. Note that in all cases, *no* *error* *checking* is performed, in order to reduce the memory footprint of the module. 
 
 ```
-
 nixie.send()
 nixie.setTube(digit,number,ldot,rdot,brightness,red,green,blue)  
 nixie.setString(string)
@@ -45,7 +42,6 @@ nixie.setLED(digit,red,green,blue)
 nixie.setBright(digit,brightness) 
 nixie.setAllLED(red,green,blue)
 nixie.setAllBright(brightness) 
-
 ```
 
 `nixie.send()` sends the data to the Smart Nixie Tubes. No changes are sent to the Smart Nixie Tube devices until this is called. This allows you to make multiple changes, and then apply them all at once. 
@@ -63,12 +59,12 @@ nixie.setAllBright(brightness)
 `nixie.setAllBright(brightness) sets the brightness for all digits (default 128).
 
 
-Example:
+Example
+-----------------
 
 This simple example connects to a bank of 6 Smart Nixie Tubes and displays the first 6 digits of Pi - with one wrong digit - and highlights the correct digits in green, and the error in red:
 
 ```
-
 Serial3.setup(115200,{tx:B10});
 var nixie=require("SmartNixie").connect(Serial3,6);
 
@@ -76,7 +72,6 @@ nixie.setString("4.16159");
 nixie.setAllLED(0,255,0);
 nixie.setLED(2,255,0,0);
 nixie.send();
-
 ```
 
 
