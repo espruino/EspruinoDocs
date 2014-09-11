@@ -1,3 +1,5 @@
+/* node.js script that creates a webserver to serve up the pages from the html directory */
+
 var express = require('express');
 var app = express();
 
