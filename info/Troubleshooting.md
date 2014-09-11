@@ -81,9 +81,18 @@ If you want to execute certain commands at power-on, put those commands in a fun
 
 ### Espruino stopped working after I typed `save()`
 
-You might have written some code that stops Espruino from working, and Espruino loads it at power on and breaks itself each time. To stop this, press the **RST** button, and right after you release it hold down **BTN1** for about 2 seconds. This will make Espruino start without loading your saved code, and you can then type `save()` to overwrite your saved program. 
+You might have written some code that stops Espruino from working, and Espruino loads it at power on and breaks itself each time. To stop this:
+
+* Press the **RST** button
+* Release the **RST** button and immediately press **BTN!**
+* Wait 2 seconds
+* Release **BTN1** 
+
+This will make Espruino start without loading your saved code. You can then connect with the Web IDE and type `save()` to overwrite your saved program. 
 
 If you get a glowing blue LED, it's because you pressed **BTN1** too quickly after pressing **RST**. Try again and leave a bit more of a gap.
+
+There's [a video of how to do this on your board here](https://www.youtube.com/watch?v=N4ueQTHDrcs)
 
 
 ### When powered on, Espruino just shows a glowing blue LED
