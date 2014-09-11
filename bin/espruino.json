@@ -454,6 +454,16 @@
         "!doc": "Set the background color to use for subsequent drawing operations",
         "!url": "http://www.espruino.com/Reference#l_Graphics_setBgColor"
       },
+      "setColorHSV": {
+        "!type": "fn(h: ?, s: ?, v: ?)",
+        "!doc": "Set the HSV color to use for subsequent drawing operations",
+        "!url": "http://www.espruino.com/Reference#l_Graphics_setColorHSV"
+      },
+      "setBgColorHSV": {
+        "!type": "fn(h: ?, s: ?, v: ?)",
+        "!doc": "Set the background HSV color to use for subsequent drawing operations",
+        "!url": "http://www.espruino.com/Reference#l_Graphics_setBgColorHSV"
+      },
       "getColor": {
         "!type": "fn() -> number",
         "!doc": "Get the color to use for subsequent drawing operations",
@@ -523,7 +533,7 @@
   },
   "File": {
     "!type": "fn()",
-    "!doc": "This is the File object - it allows you to stream data to and from files (As opposed to the `require('fs').readFile(..)` style functions that read an entire file).\n\nTo create a File object, you must type ```var fd = E.openFile('filepath','mode')``` - see [E.openFile](#l_E_openFile) for more information.",
+    "!doc": "This is the File object - it allows you to stream data to and from files (As opposed to the `require('fs').readFile(..)` style functions that read an entire file).\n\nTo create a File object, you must type ```var fd = E.openFile('filepath','mode')``` - see [E.openFile](#l_E_openFile) for more information.\n\n**Note:** If you want to remove an SD card after you have started using it, you *must* call `E.unmountSD()` or you may cause damage to the card.",
     "!url": "http://www.espruino.com/Reference#l_File_undefined",
     "prototype": {
       "close": {
@@ -671,12 +681,12 @@
         "!url": "http://www.espruino.com/Reference#l_I2C_setup"
       },
       "writeTo": {
-        "!type": "fn(address: number, data: ?)",
+        "!type": "fn(address: ?, data: ?)",
         "!doc": "Transmit to the slave device with the given address. This is like Arduino's beginTransmission, write, and endTransmission rolled up into one.",
         "!url": "http://www.espruino.com/Reference#l_I2C_writeTo"
       },
       "readFrom": {
-        "!type": "fn(address: number, quantity: number) -> ?",
+        "!type": "fn(address: ?, quantity: number) -> ?",
         "!doc": "Request bytes from the given slave device, and return them as an array. This is like using Arduino Wire's requestFrom, available and read functions.  Sends a STOP",
         "!url": "http://www.espruino.com/Reference#l_I2C_readFrom"
       }
@@ -728,7 +738,7 @@
         "!url": "http://www.espruino.com/Reference#l_OneWire_read"
       },
       "search": {
-        "!type": "fn() -> ?",
+        "!type": "fn(command: number) -> ?",
         "!doc": "Search for devices",
         "!url": "http://www.espruino.com/Reference#l_OneWire_search"
       }
@@ -766,7 +776,7 @@
   },
   "Array": {
     "!type": "fn(args: ?) -> ?",
-    "!doc": "Create an Array. Either give it one integer argument (>=0) which is the length of the array, or any number of arguments ",
+    "!doc": "Create an Array. Either give it one integer argument (>=0) which is the length of the array, or any number of arguments",
     "!url": "http://www.espruino.com/Reference#l_Array_Array",
     "prototype": {
       "!stdProto": "Array",
@@ -950,7 +960,7 @@
     },
     "parse": {
       "!type": "fn(str: ?) -> number",
-      "!doc": "Parse a date string and return milliseconds since 1970. Data can be either '2011-10-20T14:48:00', '2011-10-20' or 'Mon, 25 Dec 1995 13:30:00 +0430' ",
+      "!doc": "Parse a date string and return milliseconds since 1970. Data can be either '2011-10-20T14:48:00', '2011-10-20' or 'Mon, 25 Dec 1995 13:30:00 +0430'",
       "!url": "http://www.espruino.com/Reference#l_Date_parse"
     }
   },
@@ -1513,6 +1523,11 @@
     "!type": "fn()",
     "!doc": "This is the built-in JavaScript class for Espruino utility functions.",
     "!url": "http://www.espruino.com/Reference#E",
+    "unmountSD": {
+      "!type": "fn()",
+      "!doc": "Unmount the SD card, so it can be removed. If you remove the SD card without calling this you may cause corruption, and you will be unable to access another SD card until you reset Espruino or call `E.unmountSD()`.",
+      "!url": "http://www.espruino.com/Reference#l_E_unmountSD"
+    },
     "openFile": {
       "!type": "fn(path: ?, mode: ?) -> +File",
       "!doc": "Open a file",
@@ -1520,12 +1535,12 @@
     },
     "getTemperature": {
       "!type": "fn() -> number",
-      "!doc": "Use the STM32's internal thermistor to work out the temperature.\n\n**Note:** This is not entirely accurate and varies by a few degrees from chip to chip. It measures the **die temperature**, so when connected to USB it could be reading 10 over degrees C above ambient temperature. When running from battery with `setDeepSleep(true)` it is much more accurate though.",
+      "!doc": "Use the STM32's internal thermistor to work out the temperature.\n\nWhile this is implemented on Espruino boards, it may not be implemented on other devices. If so it'll return NaN.\n\n**Note:** This is not entirely accurate and varies by a few degrees from chip to chip. It measures the **die temperature**, so when connected to USB it could be reading 10 over degrees C above ambient temperature. When running from battery with `setDeepSleep(true)` it is much more accurate though.",
       "!url": "http://www.espruino.com/Reference#l_E_getTemperature"
     },
     "getAnalogVRef": {
       "!type": "fn() -> number",
-      "!doc": "Check the internal voltage reference. To work out an actual voltage of an input pin, you can use `analogRead(pin)*E.getAnalogVRef()` ",
+      "!doc": "Check the internal voltage reference. To work out an actual voltage of an input pin, you can use `analogRead(pin)*E.getAnalogVRef()` \n\nWhile this is implemented on Espruino boards, it may not be implemented on other devices. If so it'll return NaN.",
       "!url": "http://www.espruino.com/Reference#l_E_getAnalogVRef"
     },
     "nativeCall": {
@@ -1592,6 +1607,11 @@
       "!type": "fn()",
       "!doc": "Output the current list of Utility Timer Tasks - for debugging only",
       "!url": "http://www.espruino.com/Reference#l_E_dumpTimers"
+    },
+    "getSizeOf": {
+      "!type": "fn(v: ?) -> number",
+      "!doc": "Return the number of Variable Blocks used by the supplied variable. This is useful if you're running out of memory and you want to be able to see what is taking up most of the available space.\n\nSee http://www.espruino.com/Internals for more information",
+      "!url": "http://www.espruino.com/Reference#l_E_getSizeOf"
     }
   },
   "process": {
@@ -1675,12 +1695,12 @@
     "!url": "http://www.espruino.com/Reference#l__global_LOW"
   },
   "setBusyIndicator": {
-    "!type": "fn(pin: ?)",
+    "!type": "fn(pin: +Pin)",
     "!doc": "When Espruino is busy, set the pin specified here high. Set this to undefined to disable the feature.",
     "!url": "http://www.espruino.com/Reference#l__global_setBusyIndicator"
   },
   "setSleepIndicator": {
-    "!type": "fn(pin: ?)",
+    "!type": "fn(pin: +Pin)",
     "!doc": "When Espruino is asleep, set the pin specified here low (when it's awake, set it high). Set this to undefined to disable the feature.\n\nPlease see http://www.espruino.com/Power+Consumption for more details on this.",
     "!url": "http://www.espruino.com/Reference#l__global_setSleepIndicator"
   },
@@ -1733,6 +1753,11 @@
     "!type": "fn() -> number",
     "!doc": "Return the current system time in Seconds (as a floating point number)",
     "!url": "http://www.espruino.com/Reference#l__global_getTime"
+  },
+  "setTime": {
+    "!type": "fn(time: number)",
+    "!doc": "Set the current system time in seconds (to the nearest second)",
+    "!url": "http://www.espruino.com/Reference#l__global_setTime"
   },
   "getSerial": {
     "!type": "fn() -> ?",
@@ -1810,12 +1835,12 @@
     "!url": "http://www.espruino.com/Reference#l__global_digitalPulse"
   },
   "digitalWrite": {
-    "!type": "fn(pin: ?, value: number)",
+    "!type": "fn(pin: +Pin, value: number)",
     "!doc": "Set the digital value of the given pin\n\nIf pin is an array of pins, eg. ```[A2,A1,A0]``` the value will be treated as an integer where the first array element is the MSB.\n\nIn the case of an array of pins, pin values are set LSB first (from the right-hand side of the array of pins).",
     "!url": "http://www.espruino.com/Reference#l__global_digitalWrite"
   },
   "digitalRead": {
-    "!type": "fn(pin: ?) -> number",
+    "!type": "fn(pin: +Pin) -> number",
     "!doc": "Get the digital value of the given pin\n\nIf pin is an array of pins, eg. ```[A2,A1,A0]``` the value will be treated as an integer where the first array element is the MSB",
     "!url": "http://www.espruino.com/Reference#l__global_digitalRead"
   },
