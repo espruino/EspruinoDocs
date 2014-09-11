@@ -80,8 +80,8 @@ Or load a webpage like this:
 
 ```
 require("http").get("http://192.168.1.50", function(res) {
-    res.on('data', function(data) { console.log(data);	});
-  });
+  res.on('data', function(data) { console.log(data);	});
+});
 ```
 
 For more examples, please see the [[Internet]] page.

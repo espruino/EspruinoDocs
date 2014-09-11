@@ -34,10 +34,10 @@ Serial4.on('data', function (data) { print("<Serial4> "+data); });
 Serial4.print("Hello World");
 ```
  
-STM32 chips can have the same Serial port on different pins, for example Serial4 TX is available on A0 or C10 on the STM32F4 (look at the datasheets for the board you have). Espruino will choose the first available pins by default - if you wish to use an alternate set of pins, you can specify them when you set up the Serial port:
+Most chips can also have the same Serial port on different pins, for example Serial1 TX is available on A9 or B6 on the Espruino Board (look at the datasheets for the board you have). Espruino will choose the first available pins by default - if you wish to use an alternate set of pins, you can specify them when you set up the Serial port:
 
 ```JavaScript
-Serial4.setup(9600, {rx:C11,tx:C10});
+Serial1.setup(9600, {tx:B6,rx:B7});
 ```
 
-For more information, please see the reference.
+For more information, please see the [reference](/Reference) for your board.
