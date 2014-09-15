@@ -9,9 +9,11 @@ Introduction
 
 Often you might want to keep the current time - either for a clock, or maybe for Data Logging.
 
-Espruino contains its own Real-Time Clock, which allows it to keep time even when it is saving power by being in Deep Sleep. However it doesn't have a low-speed oscillator on-board, so it uses its own internal, 40kHz oscillator. Unfortunately this isn't very accurate (+/- 1%) so over the course of a day, the time may drift off.
+Espruino contains its own Real-Time Clock which allows it to keep time even when it is saving power by being in Deep Sleep. **Revision 1v4 and later contain their own accurate 32kHz Oscillator** but revision 1v3 (the KickStarter board) uses an internal 40kHz oscillator. Unfortunately the 40kHz oscillator isn't very accurate (+/- 1%) so over the course of a day the time may drift off.
 
-If you're serious about keeping accurate time, you'll want to solder on a 32kHz watch crystal which will be significantly more accurate.
+If you're serious about keeping accurate time **and you have a revision 1v3 board**, you'll want to solder on a 32kHz watch crystal which will be significantly more accurate. If you have a revision 1v4 everything works already, and you can skip right to the **Software** section below.
+
+When you use the 32kHz internal oscillator, please note that pin C15 on the pin header will not be usable for normal IO.
 
 **Note:** You could also use an external module like the [[DS3231]].
 
