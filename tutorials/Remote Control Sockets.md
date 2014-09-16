@@ -12,7 +12,7 @@ Introduction
 
 You can now buy remote controlled sockets [very cheaply](http://www.ebay.co.uk/sch/i.html?_nkw=remote+control+socket). If you want to turn some mains-powered things on and off with your computer but don't want to get involved with [[Relays]] and wiring up mains then controlling these could be a great idea.
 
-We're going to use 'status'-branded sockets.
+We're going to use 'Status'-branded sockets.
 
 With these sorts of remote-controlled devices there are two ways of controlling them.
 
@@ -24,7 +24,7 @@ Open up the remote control and then connect wires from Espruino to each pushbutt
 
 Or, you can buy a radio transmitter and can then try and duplicate the remote control's functionality. This is harder, but more flexible (you could control lots of sockets), and obviously more fun!
 
-The sockets I'm using are [433.92](/433Mhz)Mhz ones (it's written on the back). This band is an 'open' band - you don't need a license to use it, and it's a complete free for all. Every device has its own protocol, and they all transmit whenever they want. This means that there is quite a large likelihood that the signal that you send will not arrive intact.
+The sockets I'm using are [433.92](/433Mhz)Mhz ones (it's written on the back). This band is an 'open' band - you don't need a license to use it, and it's a complete free for all. Every device has its own protocol, and they all transmit whenever they want. This means that there is quite a large likelihood that the signal that you send will not arrive intact so most devices send the same signal several times.
 
 The Protocol
 ----------
@@ -89,6 +89,39 @@ function sigOff(e) {
 
 setWatch(sigOn,A0,{repeat:true,edge:"rising"});
 setWatch(sigOff,A0,{repeat:true,edge:"falling"});
+```
+
+The function `sigOff` is quite hard to understand. It has been written such that the code executes relatively quickly, so it is explained in more detail (with comments) below:
+
+```
+function sigOff(e) {
+  /* Here, we work out the length of the pulse and save it to 'd'.
+  'e.time' is the time of the signal turning off, and 't' was
+  set in 'sigOn', last time the signal turned on */
+  var d = e.time-t;
+  /* we update the value of 't', so we can measure the pulse length
+  in 'sigOn' as well */
+  t = e.time;
+  // Now, we check that the pulse length is what we expect
+  if (d>0.0001 && d<0.001) {
+    /* Ok, the pulse length is what we expect (between 0.1 and 1 ms).
+       Now, we do three things:
+         * We work out if the pulse length represents a 1 ( > 0.4 ms) or a 0. 
+           'd>=0.0004' returns either true or false.
+         * We use a ternary operator (A ? B : C) to turn that boolean 
+           value into a 1 or a 0.
+         * We use 'shift' and 'or' operators to shift the bits in 'n' to the
+           left by 1, and then to add in the new bit of data we got.
+       This means that at the end of all the bits, 'n' will contain
+       a number representing the data we received.
+     */
+    n = (n<<1) | ((d>=0.0004)?1:0);
+  } else {
+    /* if the pulse length isn't right, we got a corrupted signal, so
+       just delete everything we got so far */
+    n=0;
+  }
+}
 ```
 
 Put the transmitter right next to the receiver and press one of the buttons. You should see a bunch of lines that are all the same (and a few corrupted ones!). They'll look something like:

@@ -25,6 +25,8 @@ Connect as follows:
 | 7 | MISO      | A6         | SPI MISO |
 | 8 | IRQ       | unused     | GPIO In |
 
+We'd also suggest that you add a 10nF - 100nF decoupling capacitor between GND and 3.3v. Some modules can be unrelible without this.
+
 **Note:** You don't have to use the pins we've given, but these pins are all on the middle part of the board, leaving the edges free for IO.
 
 You can either connect the module with wires and mount it separately, or you can solder it into the prototype area, and run wires as follows on the back of the board. We'd recommend using thin, solid core wire for this.
@@ -42,6 +44,7 @@ Notes
 * Devices have a transmit and a receive address
 * Devices can only transmit **or** receive. They can't do both at the same time
 * Transmits are acknowledged - a module knows if the data it sent was received
+* The NRF24 module can be unreliable at the higher 
 
 The Espruino module allows you to send and receive strings. It does this by sending enough packets to contain the string plus a terminating zero. It will retry, but it is possible for parts of the string to get missed out.
 
