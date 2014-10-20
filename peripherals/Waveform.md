@@ -60,7 +60,7 @@ To output a sine wave to the DAC on A4:
 
 ```
 var w = new Waveform(256);
-for (var i=0;i<1024;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/128)*127;
+for (var i=0;i<256;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/128)*127;
 analogWrite(A4, 0.5); 
 w.startOutput(A4, 4000);
 ```
@@ -69,7 +69,7 @@ Or to output via PWM, and repeat for 4 seconds:
 
 ```
 var w = new Waveform(128);
-for (var i=0;i<1024;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/64)*127;
+for (var i=0;i<128;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/64)*127;
 analogWrite(A0, 0.5, {freq:80000});  // PWM freq above human hearing
 w.startOutput(A0, 4000, {repeat:true});
 setTimeout(function() { w.stop(); }, 4000);
@@ -80,7 +80,7 @@ You can even output synchronized waveforms on two outputs:
 ```
 var w = new Waveform(128);
 var w2 = new Waveform(128);
-for (var i=0;i<1024;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/64)*127;
+for (var i=0;i<128;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/64)*127;
 w2.buffer.set(w.buffer); // copy w's signal to w2
 
 analogWrite(A4, 0.5);
