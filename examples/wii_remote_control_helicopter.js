@@ -65,7 +65,11 @@ function sendIR() {
 }
 
 setInterval(sendIR, 100);
-
 I2C1.setup({scl:B6,sda:B7});
-var wii = require("wii_nunchuck").connect(I2C1);
-console.log(JSON.stringify());
+
+var wii;
+
+function onInit() {
+  wii = require("wii_nunchuck").connect(I2C1);
+}
+
