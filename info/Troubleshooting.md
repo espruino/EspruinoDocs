@@ -142,6 +142,42 @@ To get around this, it's best to put code that you intend to run every time Espr
 
 **Note:** The problem with `setInterval` happens because Espruino is trying to turn its internal state back into a human readable form. If you just type `save()` then the correct state will still be saved.
 
+### I've pasted code into the left-hand side of the Web IDE and it doesn't work
+
+There could be several reasons for this, but the likely one is that you have formatted your code in a way that doesn't work well with a command-line interface. 
+
+Each time you press enter, Espruino's command-line interface counts brackets to see if the statement you've entered is complete. If it is, it'll try and execute it. For instance:
+
+```
+if (true) {
+  console.log("Hello");
+}
+```
+
+That is a complete statement, so when you hit enter at the end it'll be executed immediately. However if you type:
+
+```
+if (true) {
+  console.log("Hello");
+}
+else {
+  console.log("Oh No!");
+}
+```
+
+Then now we have a problem. Halfway through, Espruino sees that the first statement is complete and executes, and it's now given a line that starts `else {` that isn't a valid statement.
+
+The easiest way to fix this is to write code in the [K&R style](http://en.wikipedia.org/wiki/Indent_style#K.26R_style):
+
+```
+if (true) {
+  console.log("Hello");
+} else {
+  console.log("Oh No!");
+}
+```
+
+If you're writing code in the right-hand side of the Web IDE, the Web IDE should try and detect the different formatting and insert a special newline character (Alt-Enter) which will fix it for you. If you're using other tools to send data to Espruino then this may not automatically happen for you though.
 
 ### I'm using an unofficial board and some of the examples don't work
 
