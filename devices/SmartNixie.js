@@ -17,7 +17,7 @@ Functions are:
 
 nixie.send() //Send current data to nixies. Nothing will be sent to the nixies until this is called. 
 nixie.setTube(digit,number,ldot,rdot,brightness,red,green,blue) //set all options for one digit. ldot and rdot should be 0 or 1, brightness, red, green and blue from 0 to 255. All arguments must be supplied, no error checking is performed. 
-nixie.setString(string) //set values from a string. Any characters other than 0-9, decimal points, and commas are treated as a blank tube. Decimal points turn on left decimal point, commas turn on right decimal point. Does not change brightness or LEDs
+nixie.setString(string) //set values from a string. Valid characters are space, 0-9, decimal points, and commas. Decimal points turn on left decimal point, commas turn on right decimal point. Does not change brightness or LEDs
 nixie.setLED(digit,red,green,blue) //set LED for the specified digit to this value. 
 nixie.setBright(digit,brightness) //set tube brightness for specified digit.
 nixie.setAllLED(red,green,blue) //set LEDs for all nixies.
@@ -72,7 +72,9 @@ NIXIE.prototype.setString = function(data) {
 		switch (data.charAt(y)) {
 			case "." : {this.data[dig*5]=this.data[dig*5]|0x10;break;}
 			case "," : {this.data[dig*5]=this.data[dig*5]|0x20;break;}
+			case " " : {this.data[dig*5]=this.data[dig*5]|0x0A;dig++;break;}
 			default : {
+
 				this.data[dig*5]=(this.data[dig*5]&0xF0)+parseInt(data.charAt(y));
 				dig++;
 			}

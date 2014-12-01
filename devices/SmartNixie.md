@@ -48,7 +48,7 @@ nixie.setAllBright(brightness)
 
 `nixie.setTube(digit,number,ldot,rdot,brightness,red,green,blue)` sets ALL the options for the specified digit. Number is the numeral to display (should be a number between 0 and 9, ldot and rdot set the status of the left and right decimal places - these should be 0 or 1. Brightness, red, green, and blue should be a number from 0 to 255. 
 
-`nixie.setString(string)` sets the provided string to be displayed. Characters other than 0-9, comma, and period will be treated as a blank space. Periods and commas control the left and right decimal places respectively, and apply to the following digit, not the preceeding one. LED and brightness are not effected. 
+`nixie.setString(string)` sets the provided string to be displayed. Valid characters are space, 0-9, comma, and period. Periods and commas control the left and right decimal places respectively, and apply to the following digit, not the preceeding one. LED and brightness are not effected. 
 
 `nixie.setLED(digit,red,green,blue) sets the LED color for the specified digit. 
 
