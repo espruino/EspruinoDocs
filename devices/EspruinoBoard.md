@@ -4,6 +4,8 @@ Espruino Board
 
 * KEYWORDS: Espruino,Board,PCB
 
+Were you looking for the [Espruino Pico](/Pico)?
+
 ![Espruino Board](main.jpg)
 
 The Espruino board is the officially Supported board - it comes pre-programmed with Espruino, so you just plug it in and it works. You can [[Order]] them from [Espruino.com](http://www.espruino.com).

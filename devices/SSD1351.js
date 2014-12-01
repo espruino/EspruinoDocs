@@ -21,10 +21,10 @@ exports.connect = function(/*=SPI*/spi, /*=PIN*/dc, /*=PIN*/cs, /*=PIN*/rst, cal
   rst.write(0); // reset
   var cd = function (c,d) {
     dc.write(0); // command
-    spi.send(c);
+    spi.write(c);
     if (d!==undefined) {
       dc.write(1); // data
-      spi.send(d);
+      spi.write(d);
     }
   };
   setTimeout(function() { // 20ms delay
@@ -56,29 +56,24 @@ exports.connect = function(/*=SPI*/spi, /*=PIN*/dc, /*=PIN*/cs, /*=PIN*/rst, cal
     }, 50);
   }, 20);
 
-  return Graphics.createCallback(128,128,16,{ setPixel : function(x,y,col) {
+  return Graphics.createCallback(128,128,16,{ setPixel : function(x,y,c) {
     cs.write(0); 
-    dc.write(0);spi.send(0x15);
-    dc.write(1);spi.send([x,127]);
-    dc.write(0);spi.send(0x75);
-    dc.write(1);spi.send([y,127]);
-    dc.write(0);spi.send(0x5c);
-    dc.write(1);spi.send([col>>8,col]);
+    dc.write(0);spi.write(0x15);
+    dc.write(1);spi.write([x,127]);
+    dc.write(0);spi.write(0x75);
+    dc.write(1);spi.write([y,127]);
+    dc.write(0);spi.write(0x5c);
+    dc.write(1);spi.write([c>>8,c]);
     cs.write(1);
-  }, fillRect : function(x1,y1,x2,y2,col) {
+  }, fillRect : function(x1,y1,x2,y2,c) {
     cs.write(0); 
-    dc.write(0);spi.send(0x15);
-    dc.write(1);spi.send([x1,x2]);
-    dc.write(0);spi.send(0x75);
-    dc.write(1);spi.send([y1,y2]);
-    dc.write(0);spi.send(0x5c);
+    dc.write(0);spi.write(0x15);
+    dc.write(1);spi.write([x1,x2]);
+    dc.write(0);spi.write(0x75);
+    dc.write(1);spi.write([y1,y2]);
+    dc.write(0);spi.write(0x5c);
     dc.write(1);
-    var p = [col>>8,col, col>>8,col, col>>8,col, col>>8,col,
-             col>>8,col, col>>8,col, col>>8,col, col>>8,col];
-    var i=(1+x2-x1)*(1+y2-y1)+8;
-    while ((i-=8)>8) spi.send(p);
-    p = [col>>8,col];
-    while (i-->0) spi.send(p);
+    spi.write({data:String.fromCharCode(c>>8,c), count:(x2-x1+1)*(y2-y1+1)});
     cs.write(1);
   }});
 };

@@ -48,7 +48,7 @@ exports.connect = function(spi, dc, ce, rst, callback) {
       spi.write(0x2B,dc);
       spi.write(y1>>8,y1,y2>>8,y2);
       spi.write(0x2C,dc);
-      spi.write({data:String.fromCharCode(c>>8)+String.fromCharCode(c), count:(x2-x1+1)*(y2-y1+1)});
+      spi.write({data:String.fromCharCode(c>>8,c), count:(x2-x1+1)*(y2-y1+1)});
       ce.set();
     }
   });

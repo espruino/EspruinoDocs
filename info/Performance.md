@@ -131,11 +131,13 @@ ARRAYS AND OBJECTS USE TWO STORAGE UNITS PER ELEMENT (ONE FOR THE KEY, AND ONE F
 
 This means that Sparse Arrays are relatively efficient, but Dense arrays are not. For dense arrays you should use [Typed Arrays](Reference#l_Uint8Array_Uint8Array). See the next heading.
 
+If the name (index) of an element is a string that is greater than 4 characters then another variable will have to be allocated to store the remaining characters. The number of variables needed for the index is: `Math.ceil((characters-4)/12)`
+
 **There are a few cases when both key and value can be packed into an array.** These are:
 
 * An integer index with a boolean value
 * An integer index with an integer value between -32768 and 32767 (on parts with 12 byte storage units, the range of allowable values may be less)
-* A short string index with an integer value between -32768 and 32767
+* A short (4 chars or less) string index with an integer value between -32768 and 32767
  
 
 STRINGS OR TYPED ARRAYS ARE THE MOST EFFICIENT WAY TO STORE DATA
