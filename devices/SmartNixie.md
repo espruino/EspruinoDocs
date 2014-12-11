@@ -75,3 +75,9 @@ nixie.send();
 ```
 
 
+Buying
+-----
+
+You can get the Nixie from several different places, including:
+
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=nixie)

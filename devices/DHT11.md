@@ -48,3 +48,11 @@ For example:
     var dht = require("DHT11").connect(C11);
     dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
 ```
+
+
+Buying
+-----
+
+DHT11 modules can be purchased from many places:
+
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=dht11)

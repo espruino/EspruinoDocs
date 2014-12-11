@@ -26,3 +26,4 @@ Buying
 * [eBay Jumper wires](http://www.ebay.com/sch/i.html?_nkw=female+dupont+jumper+wire)
 * [Sparkfun **solderless** headers](https://www.sparkfun.com/products/10527)
 * [Proto-pic **solderless** headers](http://proto-pic.co.uk/solderless-headers-10-pin-straight/)
+* [digitalmeans.co.uk headers](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=pin-header)

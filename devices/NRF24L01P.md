@@ -172,3 +172,4 @@ Buying
 NRF24L01+ modules are usually based on Nordic's own reference design, so can be purchased from many places:
 
 * [eBay](http://www.ebay.com/sch/i.html?_nkw=NRF24L01%2B)
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=nrf24l01)
