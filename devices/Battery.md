@@ -8,7 +8,7 @@ Battery
 
 The Ultimate Espruino kits come with a [1400mAh Lithium Polymer battery](https://www.olimex.com/Products/Power/BATTERY-LIPO1400mAh/) and a [USB-powered charger](https://www.olimex.com/Products/Power/USB-uLiPo/).
 
-If you don't have one of these, the Espruino boards come with a JST PHR-2 2 Pin connector for batteries, so you can buy either the battery we included (link below), find another, or buy the battery connector (see [[EspruinoBoard]]) and connect a different type of battery.
+If you don't have one of these, the Espruino boards come with a JST PHR-2 2 Pin connector for batteries, so you can buy either the battery we included (link below), find another, or buy the [battery connector](/EspruinoBoard#connecting_batteries) and connect a different type of battery.
 
 ![JST wiring](jst.jpg)
 
@@ -30,3 +30,4 @@ Buying
 
 * Olimex [battery](https://www.olimex.com/Products/Power/BATTERY-LIPO1400mAh/) and [charger](https://www.olimex.com/Products/Power/USB-uLiPo/), or [selection of batteries](https://www.olimex.com/Products/Power/)
 * Buy general purpose charger on [eBay](http://www.ebay.com/sch/i.html?_nkw=b6+imax) 
+* See [this page](/EspruinoBoard#connecting_batteries) for details on where to buy the connectors
