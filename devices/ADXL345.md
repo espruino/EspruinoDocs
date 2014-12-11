@@ -169,3 +169,10 @@ accel.getintinfo()
 
 This gets information on the last interrupt triggered. It returns an object with two properties: tap (tap axes), and interrupt (containing the current status of interrupts - same format as for interrupts())
 
+
+Buying
+-----
+
+ADXL345 modules can be purchased from many places:
+
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=adxl345)
