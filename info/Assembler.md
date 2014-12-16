@@ -153,6 +153,27 @@ var getConst = E.asm("int()",
 );
 ```
 
+Storing Data
+-----------
+
+While ARM Thumb has a `LDR` instruction that will load from a label, there is no such thing for a store. Instead, you need to use the `ADR` pseudo-instruction to store the address in a register which you can then use in the store instruction.
+
+For example the following section of code will return a value that increments after each call:
+
+```
+var inc = E.asm("int()",
+"adr    r1, data", // Get address of 'data'
+"ldr    r0, [r1]", // Load the value of data into R0
+"add    r0, #1",   // Add one to it
+"str    r0, [r1]", // Save the value of R0 into 'data'
+"bx lr",           // Return (R0 is the value)
+"nop",
+"data:",           // ... padding
+".word    0x0"     // the word that we'll increment
+);
+```
+
+
 Accessing IO
 -----------
 
@@ -217,6 +238,44 @@ for (var i=1;i<10;i++)
 
 * This example will crash Espruino for any number less than or equal to zero
 * Labels take some of the pain out of this. `bgt loopStart` is actually equivalent to `bgt #-10`: The program counter is always 4 bytes ahead of the current instruction, and instructions are (usually!) 2 bytes long. That means that to get back to the exact same instruction you must use `-4` and you must subtract another 2 for each instruction you want to jump over (hence `-10`).
+
+
+setWatch
+--------
+
+As of Espruino 1v72, `setWatch` can now call native code from within the interrupt - which is much faster than if the code was executed from the event loop.
+
+For instance the following code measures the number of state changes every second on BTN:
+
+```
+// inc function from above
+var inc = E.asm("void()",
+"adr    r1, data",
+"ldr    r0, [r1]",
+"add    r0, #1",
+"str    r0, [r1]",
+"bx lr",
+"nop",
+"data:",
+".word    0x0"
+);
+var dataPtr = ASM_BASE-4; // the address of 'data'
+
+// Now call inc when the button is pressed - in an IRQ
+setWatch(inc, BTN, { irq:true });
+
+// every second...
+setInterval(function() { 
+  console.log(peek32(dataPtr)); // print the value of the counter
+  poke32(dataPtr,0); // reset the counter
+}, 1000);
+```
+
+In order to be properly useful you'll probably want to access the current time:
+
+* Low precision 16 bit (32/40 kHz) on Espruino (F103): RTC DIVL (0x40002814)
+* Low precision 16 bit (32 kHz) on Espruino Pico (F401): RTC_SSR (0x40002828)
+* Higher precision 32 bit (72/80 Mhz) use SYSTICK (0xE000E018), which stops when the device sleeps.
 
 
 Compiling C Code
