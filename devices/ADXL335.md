@@ -26,3 +26,10 @@ How to use my module:
     console.log("x " + d[0] + " y " + d[1] + " z " + d[2]);
   }, 1000);
 ```
+
+Buying
+-----
+
+ADXL335 modules can be purchased from many places:
+
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=adxl335)

@@ -78,3 +78,11 @@ i.e. : If the thermistor is a 10K3A1 temperature sensor connected to Pin C0 then
 **Troubleshooting.**
 
 If you find the code returns NaN.  Check that you have used ``" " ``around the thermistor type.
+
+
+Buying
+-----
+
+You can get this sensor from several different places, including:
+
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=thermistor)
