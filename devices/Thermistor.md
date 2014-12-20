@@ -8,7 +8,7 @@ Thermistor Temperature Sensor
 
 This module uses the following common thermistor characteristics found in most off the shelf thermistor based temperature sensors.
 
-The module has been written to match the characteristics and codes in this [thermistor datasheet](http://www.sontay.com/sites/default/files/productdownloads/Thermistor%20Types%20and%20Compatibility%20Charts_10.pdf).
+The module has been written to match the characteristics and codes in this [thermistor datasheet](https://www.sontay.com/media/specs/Thermistor_Types_and_Compatibility_Charts.pdf).
 
 Use the [Thermistor](/modules/Thermistor.js) ([About Modules](/Modules)) module for it.
 
