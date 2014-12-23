@@ -66,20 +66,16 @@ AT24.prototype.read= function(add,bytes) {
 	if (add+bytes>this.cap-1) {
 		return;
 	}
-	if (i2ca==this.i2ca) {
-		this.ca=add+bytes;
-	}
-	this.i2c.writeTo(0x50|i2ca,[add>>8&0xff,add&0xff]);
+	this.ca=add+bytes;
+	this.i2c.writeTo(0x50|this.i2ca,[add>>8&0xff,add&0xff]);
 	return this.i2c.readFrom(0x50|this.i2ca,bytes);
 };
 
 AT24.prototype.readc= function(bytes){
-	if (i2ca==this.i2ca) {
-		if (this.ca+bytes>this.cap-1) {
-			return;
-		}
-		this.ca+=bytes;
-	} 
+	if (this.ca+bytes>this.cap-1) {
+		return;
+	}
+	this.ca+=bytes; 
 	return this.i2c.readFrom(0x50|this.i2ca,bytes);
 };
 
@@ -87,10 +83,8 @@ AT24.prototype.reads= function(add,bytes) {
 	if (add+bytes>this.cap-1) {
 		return;
 	}
-	if (i2ca==this.i2ca) {
-		this.ca=add+bytes;
-	}
-	this.i2c.writeTo(0x50|i2ca,[add>>8&0xff,add&0xff]);
+	this.ca=add+bytes;
+	this.i2c.writeTo(0x50|this.i2ca,[add>>8&0xff,add&0xff]);
 	var outval="";
 	while (bytes > 0) {
 		var b=64;
