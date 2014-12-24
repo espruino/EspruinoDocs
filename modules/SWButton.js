@@ -1,23 +1,21 @@
 /* Copyright (c) 2014 Markus Muetschard. See the file LICENSE for copying permission. */
 
 /*
-Software Button(s) - Many buttons from just one hardware button
-
 SWBtn class - instances of SWBtn makes many buttons out of 
 just one hardware button by detecting sequences of short and 
 long presses and passing them on to a user defined, dispatching 
 callback function.
 
-For example, one long press turns LED1 on, and one long and 
-one short turn it off. Two long presses and two long presses 
-followd by a short one do the same to LED2, etc.
+For example, one long press of Espruino onboard BTN1 turns LED1 
+on, and one long and one short turn it off. Two long presses and 
+two long presses followed by a short one do the same to LED2, etc.
 
 Each detected sequence is passed in form of a string of "S"s 
 and "L"s to the user provided callback function. The callback 
 function uses the string as a key to call assigned functions
 like dispatcher.
 
-NOTE: Works on 1v72+ due to export pattern
+NOTE: Works on 1v72+ due to export and usage pattern
 
 Usage examples:
 
