@@ -112,7 +112,7 @@ AT24.prototype.writeb= function(add,data) {
 	if (data.length > this.pgsz) {
 		return;
 	}
-	data=this.aToS([add>>8&0xff,add&0xff])+this.arrayToString(data);
+	data=this.aToS([add>>8&0xff,add&0xff])+this.aToS(data);
 	this.i2c.writeTo(0x50|this.i2ca,data);
 	return 1;
 }
