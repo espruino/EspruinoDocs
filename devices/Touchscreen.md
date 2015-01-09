@@ -39,7 +39,7 @@ function onTouch(x,y) {
       LCD.lineTo(x,y);
     }
   }
-});
+};
 
 require("Touchscreen").connect(onTouch);
 ```
