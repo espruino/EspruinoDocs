@@ -2,7 +2,8 @@
   /*
 This module interfaces with I2C EEPROMs, like the AT24C256. 
 
-This only supports EEPROMs with 16-bit addressing (up to 512kbit/64kbyte), not the low-capacity ones that use part of the device address for addressing. 
+This only supports EEPROMs with 16-bit addressing (up to 2mbit/256kbyte), not the low-capacity ones that use part of the device address for addressing. 1 mbit devices use the low bit of address for the memory address, and 2mbit devices use the two low bits; on these parts, the address pins control the high bits of i2c address. 
+
 
 Usage: 
 
@@ -40,7 +41,7 @@ eeprom.aToS(array);
 
 
 exports.connect = function(i2c, pgsz, cap, i2ca) {
-	if (cap > 512 || !cap || !pgsz || pgsz > cap) {
+	if (cap > 2048 || !cap ||!pgsz||pgsz > cap|| (cap=1024&&(i2ca&1)) || (cap=2048&&(i2ca&3)) {
 		console.log("Unsupported or invalid options");
 		return;
 	}
@@ -49,7 +50,7 @@ exports.connect = function(i2c, pgsz, cap, i2ca) {
 
 function AT24(i2c, pgsz, cap, i2ca) {
   this.i2c = i2c;
-  this.i2ca = (i2ca===undefined) ? 0 : i2ca&0x07;
+  this.i2ca = (i2ca===undefined) ? 0 : 50|(i2ca&0x07);
   this.pgsz=pgsz;
   this.cap=cap<<7;
   this.ca=0;
@@ -67,8 +68,8 @@ AT24.prototype.read= function(add,bytes) {
 		return;
 	}
 	this.ca=add+bytes;
-	this.i2c.writeTo(0x50|this.i2ca,[add>>8&0xff,add&0xff]);
-	return this.i2c.readFrom(0x50|this.i2ca,bytes);
+	this.i2c.writeTo(this.i2ca|(add>>16),[add>>8&0xff,add&0xff]);
+	return this.i2c.readFrom(this.i2ca,bytes);
 };
 
 AT24.prototype.readc= function(bytes){
@@ -76,7 +77,7 @@ AT24.prototype.readc= function(bytes){
 		return;
 	}
 	this.ca+=bytes; 
-	return this.i2c.readFrom(0x50|this.i2ca,bytes);
+	return this.i2c.readFrom(this.i2ca,bytes);
 };
 
 AT24.prototype.reads= function(add,bytes) {
@@ -84,7 +85,7 @@ AT24.prototype.reads= function(add,bytes) {
 		return;
 	}
 	this.ca=add+bytes;
-	this.i2c.writeTo(0x50|this.i2ca,[add>>8&0xff,add&0xff]);
+	this.i2c.writeTo(this.i2ca|(add>>16),[add>>8&0xff,add&0xff]);
 	var outval="";
 	while (bytes > 0) {
 		var b=64;
@@ -105,7 +106,7 @@ AT24.prototype.writes= function(add,data) {
 		return;
 	}
 	data=this.aToS([add>>8&0xff,add&0xff])+data;
-	this.i2c.writeTo(0x50|this.i2ca,data);
+	this.i2c.writeTo(this.i2ca|(add>>16),data);
 	return 1;	
 }
 AT24.prototype.writeb= function(add,data) {
@@ -113,7 +114,7 @@ AT24.prototype.writeb= function(add,data) {
 		return;
 	}
 	data=this.aToS([add>>8&0xff,add&0xff])+this.aToS(data);
-	this.i2c.writeTo(0x50|this.i2ca,data);
+	this.i2c.writeTo(this.i2ca|(add>>16),data);
 	return 1;
 }
 AT24.prototype.writel= function(addr,data) {
