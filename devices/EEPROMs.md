@@ -10,6 +10,58 @@ An EEPROM is a form of byte-addressable non-volatile storage, allowing a project
 
 The operating principle of EEPROM is much like that of modern flash memory.  It is non-volatile memory, meaning that data is retained while the power is off. Those who have used AVR devices (like Arduino) will already be familiar with EEPROMs, as almost all AVR processors have built in EEPROMs. Unfortunately, the ARM processors used in the Espruino do not - however external EEPROM chips are widely available. Each page of an EEPROM can only be erased and rewritten a limited number of times before it stops working - this is typically in the range of 100,000 to 1,000,000 rewrite cycles, and is specified in the datasheet.
 
+![Espruino with multiple EEPROMs](eeproms.jpg)
+An Espruino board with multiple EEPROMs connected to it:
+* I2C EEPROM DIP-8 package on breakout board (these typically sell for $2-5 on ebay)
+* I2C EEPROM SOIC-8 package soldered onto Espruino's prototyping area
+* SPI EEPROM SOIC-8 package in an SOIC socket
+* OneWire EEPROM TO-92 package connected with the two clipleads. The pullup resistor has been connected between 3.3v and C4 on the underside of the board. 
+
+
+
+Using EEPROMs
+-------
+The EEPROM modules contain two main functions, read and write. To use this in your project, after wiring up the EEPROM (see the appropriate module documentation for details), simply setup the interface (I2C, SPI, or OneWire), and call 'connect()' (again, see module doc, as the arguments vary by interface).
+
+`write(address,data)` writes the supplied data to the specified address. Data can be an array of bytes or string. This handles page boundaries and waiting out the write cycle for long writes 
+
+`read(address,length,asStr)` reads data from the EEPROM starting from the supplied address. If asStr is supplied and true, the result will be returned as a string, otherwise, it will be supplied as a Uint8Array. 
+
+####Example
+
+```javascript
+
+//pick one:
+I2C2.setup({scl:B10,sda:B11}); //I2C
+SPI1.setup({sck:B3,miso:B4,mosi:B5}); //SPI
+var OW=new OneWire(C4);//OneWire
+
+//Pick one:
+var eeprom=require("AT24").connect(I2C2,64,128,2); //I2C2, 64 byte pages, 128 (16 kbyte) kbit capacity, with the A1 pin high, and A0 and A2 low. 
+
+var eeprom=require("AT25").connect(SPI1,0,64,B2); //SPI, 64 kbit FRAM (no pages).
+
+var eeprom=require("DS2xxx").connect(OW,32,20); //OneWire, 32 byte pages, 20kbit - DS28EC20. 
+
+console.log(eeprom.read(0,25,1)); //Read the beginning of the EEPROM. 
+eeprom.write(10,[12,23,240,192,245]) //write some numbers;
+console.log(eeprom.read(0,16); //this will show the 5 bytes we wrote above, surrounded on both sides by whatever we wrote ontop of. 
+var a;
+var l=eeprom.write(0x64,"digitalWrite(LED1,!a);a=!a;digitalWrite(LED3,!a);)"); //write a bit of JS to the EEPROM at position 100
+
+eval(eeprom.read(0x64,l,1); //read it back and run the code;
+
+var interval=setInterval("eval(eeprom.read(0x64,l,1);",333); //Oh noes! It's the police!
+
+```
+
+Applications
+------
+* Saving user settings, presets, defaults
+* Remembering WiFi access point SSID and password for use with CC3000 or ESP8266. 
+* Recording recent history of sensor data
+* Storing snippets of code that are used infrequently (in order to reduce usage of memory). 
+
 Interfaces and Capacities
 ------
 EEPROMs are available with almost every interface imaginable. Module support ([About Modules](/Modules)) is available for three of the most common interfaces: I2C, SPI, and OneWire. These interfaces all have their own considerations. 
@@ -51,10 +103,6 @@ OneWire EEPROMs are manufactured only by Dallas Semiconductor, and are available
 | Max # per bus| 1-8 | Many w/CS wires | Many |
 | Speed    | up to 400khz | 1mhz+ | 15.6kbit/s |
 | IO pins needed | 2 | 3+1 per eeprom| 1 |
-
-
-Using EEPROMs
--------
 
 
 EEPROMs vs SD Cards
