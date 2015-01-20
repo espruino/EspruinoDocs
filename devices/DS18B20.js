@@ -55,9 +55,9 @@ DS18B20.prototype._writeSpad = function (th, tl, conf) {
   this.bus.reset();
   this.bus.select(this.sCode);
   this.bus.write(C.WRITE);
-  for (var i = 0; i < 3; i++) {
-    this.bus.write(arguments[i]);
-  }
+  this.bus.write(th);
+  this.bus.write(tl);
+  this.bus.write(conf);
   this.bus.reset();
   this.bus.select(this.sCode);
   this.bus.write(C.COPY);
