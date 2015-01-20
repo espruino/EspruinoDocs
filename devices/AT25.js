@@ -2,7 +2,7 @@
   /*
 This module interfaces with SPI EEPROMs, like the AT24C256. 
 
-This only supports EEPROMs with 16-bit addressing (up to 512kbit/64kbyte), not the low-capacity ones that use part of the device address for addressing. 
+This supports all AT25-compatible SPI eeproms, as well as compatible FRAM devices.
 
 Usage: 
 
@@ -18,30 +18,21 @@ capacity is the eeprom capacity, in kbits.
 
 cspin is the pin connected to CS on the EEPROM
 
-eeprom.read(address,bytes)
-eeprom.reads(address,bytes)   -works like read(), but reads 64 bytes at a time and converts to string. 
-eeprom.writes(address,data)   -writing a string is faster than an array, as we have to convert the array to a string. 
-eeprom.writeb(address,data)
-eeprom.writel(address,data)   -write long block of data (more than 1 page), supplied as string. 
+eeprom.read(address,bytes,asStr)
+Read the specified number of bytes. If asStr is true, it will return the value as a string, and will perform the read in chunks of 64 bytes to control memory usage. Unlike I2C EEPROMs, address must be supplied. 
 
-address: address to start the read at. For example, 0x05c0 
-bytes: number of bytes to read. 
-data: Data to write. For writeb(), this is an array of bytes (up to page size). For writes(), this is a string (no longer than page size). For writel(), this is a string of any length that will fit on the eeprom.
+eeprom.write(address,data)
+Write the specified data starting at the specified address. Writes that cross page boundaries are handled transparently.  
 
-It is recommended to write a page at a time, starting from the start of the page. 
-
-WARNING: SPI.send() returns data as a simple array, which takes up 1 memory units per byte - for this reason, read operations must be done in chunks.
-
-Additionally, this includes the helper function:
+Additionally, this includes the helper function, which converts arrays of bytes to strings:
 eeprom.aToS(array);
 
 */
 
 
 exports.connect = function(spi, pgsz, cap, cspin) {
-	if (cap > 512 || !cap || !pgsz || pgsz > cap || !cspin) {
-		console.log("Unsupported or invalid options");
-		return;
+	if (cap > 4096 || !cap || pgsz > cap || !cspin) {
+		throw "Unsupported or invalid options";
 	}
     return new AT25(spi, pgsz, cap, cspin);
 };
@@ -61,58 +52,45 @@ AT25.prototype.aToS= function(a) {
   return s;
 };
 
-AT25.prototype.read= function(add,bytes) {
-	if (add+bytes>this.cap-1) {
-		throw "Bad address"
+
+AT25.prototype.read= function(add,bytes,asStr) {
+	if (add===undefined) {
+		add=this.ca;
+	}
+	t=new Uint8Array(bytes+(this.cap>65536?4:3));
+	t[0]=3;//READ
+	if (this.cap>65536){t[1]=add>>16&0xff;t[2]=add>>8&0xff;t[3]=add&0xff;} else {t[1]=add>>8&0xff;t[2]=add&0xff;}
+	var ov=this.spi.send(t,this.cspin);
+	var o=new Uint8Array(ov.buffer,(this.cap>65536?4:3),bytes);
+	this.ca=add+bytes;
+	return (asStr)?this.aToS(o):o;
+}
+
+
+AT25.prototype.write= function(add,data,num) {
+	if(typeof data=="object"){data=this.aToS(data);}
+	if (data.length > (this.pgsz-(add%this.pgsz))) {
+		var idx=0;
+		while (idx < data.length) {
+			this.spi.send(6,this.cspin); //WREN
+			var i=(this.pgsz-(add%this.pgsz))
+  			t=new Uint8Array((this.cap>65536)?4:3);
+  			console.log(this.spi.send([5,0],this.cspin));
+			t[0]=2;//WRITE
+			if (this.cap>65536){t[1]=add>>16&0xff;t[2]=add>>8&0xff;t[3]=add&0xff;} else {t[1]=add>>8&0xff;t[2]=add&0xff;}
+			t=this.aToS(t)+data.substr(idx,i);
+			this.spi.send(t,this.cspin)
+			var et=getTime()+0.012;
+			while (getTime() < et) {"";}
+			idx+=i; add+=i;
+		}
 	} else {
-		var cmd=new Uint8Array(bytes+3);
-		cmd[0]=3;
-		cmd[1]=add>>8;
-		cmd[2]=add&0xff;
-		var ret=this.spi.send(cmd,this.cspin);
-		return new Uint8Array(ret.buffer,3,bytes);
-	}
-};
-
-AT25.prototype.reads= function(add,bytes) {
-	var outval="";
-	while (bytes > 0) {
-		var b=64;
-		if (bytes >= 64) {
-			bytes-=64;
-		} else {
-			b=bytes;
-			bytes=0;
-		}
-		outval=outval+this.aToS(this.read(add,b));
-		add+=b;
-	}
-	return outval;
-};
-
-
-AT25.prototype.writes= function(add,data) {
-	if (data.length > this.pgsz) {
-		throw "data too big";
-	} else { 
-		this.spi.send(6,this.cspin); //WREN
-		var cmd=this.aToS([0x02,add>>8,add&0xFF])+data;
-		this.spi.send(cmd,this.cspin);
-		return 1;
-	}
-}
-AT25.prototype.writeb= function(add,data) {
-	return this.writes(add,this.aToS(data));
-}
-AT25.prototype.writel= function(addr,data) {
-	var idx=0;
-	while (idx < data.length) {
-		this.writes(addr+idx,data.substr(idx,this.pgsz));
-		var et=getTime()+0.01;
-        	var x;
-		while (getTime() < et) { //delay(100)
-		}
-		idx+=this.pgsz;
+		this.sp .send(6,this.cspin); //WREN
+		t=new Uint8Array((this.cap>65536)?4:3);
+		t[0]=2;//WRITE
+		if (this.cap>65536){t[1]=add>>16&0xff;t[2]=add>>8&0xff;t[3]=add&0xff;} else {t[1]=add>>8&0xff;t[2]=add&0xff;}
+		this.spi.send(this.aToS(t)+data,this.cspin)
 	}
 	return data.length;
 }
+
