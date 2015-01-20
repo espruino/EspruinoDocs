@@ -18,7 +18,7 @@ The Espruino board only has one USB connector - just plug it in with a Micro USB
 
 <span style="color:red;">**NOTE:** The Espruino board has no case and so the USB connector is completely unsupported. This means it is relatively delicate. Treat it carefully. Try and pull the connector straight out, and **do not** push down on the board when the connector is inserted, or try and move the board around using the cable.</span>
 
-**Windows 8.1 and XP Users:** Windows XP and 8.1 do not to have generic drivers for USB CDC devices installed, so you'll have to get them from ST via http://www.st.com/web/en/catalog/tools/PF257938
+**Windows 8.1 and XP Users:** Windows XP and 8.1 do not appear to have generic drivers for USB CDC devices, so you'll have to get them from ST via http://www.st.com/web/en/catalog/tools/PF257938
 
 **Other Windows Users:** Newer versions of windows have USB CDC devices installed already, however Windows may take a few minutes to check with Windows Update and install them.
 

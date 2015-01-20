@@ -4,7 +4,7 @@ Inline Assembler
 
 * KEYWORDS: Assembler,Asm,ARM,Thumb,Thumb2,Thumb-2,C code,inline C,Built-In
 
-The new Web IDE allows you to write inline assembler in the right-hand pane.
+The Web IDE allows you to write inline assembler in the right-hand pane.
 
 ```
 var adder = E.asm("int(int)",
@@ -26,10 +26,13 @@ This is handled as follows:
 
 * When you click `Send to Espruino` the Web IDE pulls out the `E.asm` call
 * It runs the strings you supplied through [its assembler](https://github.com/espruino/EspruinoWebIDE/blob/master/js/plugins/assembler.js) (which doesn't support all the ARM's opCodes yet)
-* It then creates code to load the assembler into Espruino using the `poke16` command
-* It creates a call to [`E.nativeCall`](http://www.espruino.com/Reference#l_E_nativeCall) which creates a JavaScript function using the code that was generated.
+* It then creates code to load the assembler into Espruino as a String
+* It uses [`E.nativeCall`](http://www.espruino.com/Reference#l_E_nativeCall) to create a JavaScript function using the code that was generated.
 
-**Note:** The assembler is only partially implemented so will only parse some opcodes at the moment.
+**Note:**
+
+* The assembler is only partially implemented so will only parse some opcodes at the moment. If you find something missing [please let us know!](https://github.com/espruino/EspruinoTools/issues)
+* If this is a bit hardcore for you, there's now the option of [Compiled JavaScript](/Compilation)
 
 For an ARM Thumb reference, [see this link](https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf)
 
@@ -314,3 +317,11 @@ var ASM_BASE1=ASM_BASE+1/*thumb*/;
 [0x4a02,0xf44f,0x4360,0x6013,0x6053,0x4770,0x0810,0x4001].forEach(function(v) { poke16((ASM_BASE+=2)-2,v); }); 
 var pulse = E.nativeCall(ASM_BASE1, "void()")
 ```
+
+**Note:** The best method is now to convert the raw opcodes to a base64 encoded string, and to then use the following:
+
+```
+var pulse = E.nativeCall(0, "void ()", atob("w4D...my...base64...encoded...data...AAAg"))
+```
+
+This will save the program code into Espruino's variable storage, so `save()` will store it along with everything else.
