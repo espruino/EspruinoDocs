@@ -164,13 +164,13 @@ MQTT.prototype.disconnect = function(topic, message) {
 
 /** Publish message using specified topic */
 MQTT.prototype.publish = function(topic, message, qos) {
-  var _qos = qos || this.C.DEF_QOS;
+  var _qos = qos || this.C.DEF_QOS;
   this.client.write(this.mqttPublish(topic, message, _qos));
 };
 
 /** Subscribe to topic (filter) */
 MQTT.prototype.subscribe = function(topic, qos) {
-  var _qos = qos || this.C.DEF_QOS;
+  var _qos = qos || this.C.DEF_QOS;
   this.client.write(this.mqttSubscribe(topic, _qos));
 };
 
