@@ -24,8 +24,6 @@ Read the specified number of bytes. If asStr is true, it will return the value a
 eeprom.write(address,data)
 Write the specified data starting at the specified address. Writes that cross page boundaries are handled transparently.  
 
-Additionally, this includes the helper function, which converts arrays of bytes to strings:
-eeprom.aToS(array);
 
 */
 
@@ -45,51 +43,38 @@ function AT25(spi, pgsz, cap, cspin) {
   this.ca=0;
 }
 
-AT25.prototype.aToS= function(a) {
-  var s = "";
-  for (var i in a)
-    s+=String.fromCharCode(a[i]);
-  return s;
-};
-
 
 AT25.prototype.read= function(add,bytes,asStr) {
 	if (add===undefined) {
 		add=this.ca;
 	}
-	t=new Uint8Array(bytes+(this.cap>65536?4:3));
-	t[0]=3;//READ
-	if (this.cap>65536){t[1]=add>>16&0xff;t[2]=add>>8&0xff;t[3]=add&0xff;} else {t[1]=add>>8&0xff;t[2]=add&0xff;}
+	t=(this.cap>65536)?E.toString(3,add>>16&0xff,add>>8&0xff,add&0xff):E.toString(3,add>>8&0xff,add&0xff)
 	var ov=this.spi.send(t,this.cspin);
 	var o=new Uint8Array(ov.buffer,(this.cap>65536?4:3),bytes);
 	this.ca=add+bytes;
-	return (asStr)?this.aToS(o):o;
+	return (asStr)?E.toString(o):o;
 }
 
 
 AT25.prototype.write= function(add,data,num) {
-	if(typeof data=="object"){data=this.aToS(data);}
+	if(typeof data!="string"){data=E.toString(data);}
 	if (data.length > (this.pgsz-(add%this.pgsz))) {
 		var idx=0;
 		while (idx < data.length) {
 			this.spi.send(6,this.cspin); //WREN
 			var i=(this.pgsz-(add%this.pgsz))
-  			t=new Uint8Array((this.cap>65536)?4:3);
   			console.log(this.spi.send([5,0],this.cspin));
-			t[0]=2;//WRITE
-			if (this.cap>65536){t[1]=add>>16&0xff;t[2]=add>>8&0xff;t[3]=add&0xff;} else {t[1]=add>>8&0xff;t[2]=add&0xff;}
-			t=this.aToS(t)+data.substr(idx,i);
+			t=(this.cap>65536)?E.toString(2,add>>16&0xff,add>>8&0xff,add&0xff):E.toString(2,add>>8&0xff,add&0xff)
+			t=t+data.substr(idx,i);
 			this.spi.send(t,this.cspin)
 			var et=getTime()+0.012;
 			while (getTime() < et) {"";}
 			idx+=i; add+=i;
 		}
 	} else {
-		this.sp .send(6,this.cspin); //WREN
-		t=new Uint8Array((this.cap>65536)?4:3);
-		t[0]=2;//WRITE
-		if (this.cap>65536){t[1]=add>>16&0xff;t[2]=add>>8&0xff;t[3]=add&0xff;} else {t[1]=add>>8&0xff;t[2]=add&0xff;}
-		this.spi.send(this.aToS(t)+data,this.cspin)
+		this.spi.send(6,this.cspin); //WREN
+		t=(this.cap>65536)?E.toString(2,add>>16&0xff,add>>8&0xff,add&0xff):E.toString(2,add>>8&0xff,add&0xff)
+		this.spi.send(t+data,this.cspin)
 	}
 	return data.length;
 }
