@@ -44,7 +44,7 @@ function AT25(spi, pgsz, cap, cspin) {
 }
 
 
-AT25.prototype.read= function(add,bytes,asStr) {
+AT25.prototype.read= function(add,bytes) {
 	if (add===undefined) {
 		add=this.ca;
 	}
@@ -52,7 +52,7 @@ AT25.prototype.read= function(add,bytes,asStr) {
 	var ov=this.spi.send(t,this.cspin);
 	var o=new Uint8Array(ov.buffer,(this.cap>65536?4:3),bytes);
 	this.ca=add+bytes;
-	return (asStr)?E.toString(o):o;
+	return o;
 }
 
 
