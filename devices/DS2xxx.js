@@ -65,8 +65,8 @@ DS2xxx.prototype.write= function (addr, data) {
         }
     }
 }
-DS2xxx.prototype.read = function (addr, cnt, asStr) {
+DS2xxx.prototype.read = function (addr, cnt) {
     this.s([0xF0,addr&0xFF,addr>>8]);//selec­t address
     var res = this.ow.read(cnt);
-    return (asStr?E.toString(res):res);
+    return res;
 }
