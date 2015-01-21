@@ -25,8 +25,6 @@ Read the specified number of bytes. If asStr is true, it will return the value a
 eeprom.write(address,data)
 Write the specified data starting at the specified address. Writes that cross page boundaries are handled transparently.  
 
-Additionally, this includes the helper function, which converts arrays of bytes to strings:
-eeprom.aToS(array);
 
 */
 
@@ -46,14 +44,7 @@ function AT24(i2c, pgsz, cap, i2ca) {
   this.ca=0;
 }
 
-AT24.prototype.aToS= function(a) {
-  var s = "";
-  for (var i in a)
-    s+=String.fromCharCode(a[i]);
-  return s;
-};
-
-AT24.prototype.a=function(b) {return (this.cap>2048)?this.aToS([b>>8&0xff,b&0xff]):String.fromCharCode(b&0xff);}; //
+AT24.prototype.a=function(b) {return (this.cap>2048)?E.toString([b>>8&0xff,b&0xff]):E.toString(b&0xff);}; //
 AT24.prototype.i=function(a) {return this.i2ca|(a>>((this.cap>2048)?16:8))}; //get the i2c address from the address
 
 AT24.prototype.read= function(add,bytes,asStr) {
@@ -65,15 +56,15 @@ AT24.prototype.read= function(add,bytes,asStr) {
 	} else {
 		var ov="";
 		while (bytes > 0) {
-			ov=ov+this.aToS(this.i2c.readFrom(this.i(add),E.clip(bytes,1,64)));
+			ov=ov+E.toString(this.i2c.readFrom(this.i(add),E.clip(bytes,1,64)));
 			bytes-=64;
 		}
 		return ov;
 	}
 };
 
-AT24.prototype.write= function(add,data,num) {
-	if(typeof data=="object"){data=this.aToS(data);}
+AT24.prototype.write= function(add,data) {
+	if(typeof data!="string"){data=E.toString(data);}
 	if (data.length > (this.pgsz-(add%this.pgsz))) {
 		var idx=0;
 		while (idx < data.length) {
