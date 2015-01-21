@@ -122,6 +122,12 @@ MQTT.prototype.connect = function() {
       else if(type === TYPE.PUBACK) {
         // implement puback
       }
+      else if(type === TYPE.SUBACK) {
+        // implement suback
+      }
+      else if(type === TYPE.UNSUBACK) {
+        // implement unsuback
+      }
       else if(type === TYPE.PINGREQ) {
         // silently reply to pings
         client.write(TYPE.PINGRESP+"\x00"); // reply to PINGREQ
