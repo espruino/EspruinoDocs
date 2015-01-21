@@ -140,8 +140,8 @@ MQTT.prototype.connect = function() {
         }
       }
       else {
-        Console.log("MQTT unsupported packet type: "+type);
-        Console.log("[MQTT]"+data.split("").map(function(c) { return c.charCodeAt(0); }));
+        console.log("MQTT unsupported packet type: "+type);
+        console.log("[MQTT]"+data.split("").map(function(c) { return c.charCodeAt(0); }));
       }
     });
 
