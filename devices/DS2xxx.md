@@ -67,15 +67,3 @@ eeprom.write(address,data)
 `write()` writes the supplied data to the specified address. The data can be a string or an array of bytes. Address may be undefined, in this case, it will read from where last read ended. This handles breaking the write up into pages, and waiting for the write delay period. The write delay is 5ms per page (This means that large writes can be quite slow). 
 
 
-Utility
----------------
-See the eeprom page (TODO: Link it) for information on adding utility functions for packing numbers to save to EEPROM. 
-
-
-```JavaScript
-eeprom.aToS(array)
-```
-
-This converts an array (types or simple) to a string. This is used internally to convert arrays to text. 
-
-
