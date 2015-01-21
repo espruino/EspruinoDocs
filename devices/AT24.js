@@ -51,16 +51,9 @@ AT24.prototype.read= function(add,bytes,asStr) {
 	if (add!==undefined) {
 		this.i2c.writeTo(this.i(add),this.a(add));
 	}
-	if (!asStr){
-		return this.i2c.readFrom(this.i(add),bytes);
-	} else {
-		var ov="";
-		while (bytes > 0) {
-			ov=ov+E.toString(this.i2c.readFrom(this.i(add),E.clip(bytes,1,64)));
-			bytes-=64;
-		}
-		return ov;
-	}
+	var ov=this.i2c.readFrom(this.i(add),bytes);
+	return (asStr)?E.toString(ov):ov;
+	
 };
 
 AT24.prototype.write= function(add,data) {
