@@ -62,6 +62,102 @@ Applications
 * Recording recent history of sensor data
 * Storing snippets of code that are used infrequently (in order to reduce usage of memory). 
 
+Converting values
+------
+
+When working with EEPROMs it is often necessary to convert 16 or 32 bit integers, or floating point numbers, into an array of bytes. This can be expediently achieved using array buffers:
+
+```javascript
+
+function F32ToA(a) {
+	a=new Float32Array([a]);
+	return new Uint8Array(a.buffer,0,4);
+}
+
+function F64ToA(a) {
+	a=new Float64Array([a]);
+	return new Uint8Array(a.buffer,0,8);
+}
+
+function int32ToA(a) {
+	a=new Int32Array([a]);
+	return new Uint8Array(a.buffer,0,4);
+}
+
+function uint32ToA(a) {
+	a=new Uint32Array([a]);
+	return new Uint8Array(a.buffer,0,4);
+}
+
+function int16ToA(a) {
+	a=new Int16Array([a]);
+	return new Uint8Array(a.buffer,0,2);
+}
+
+function uint16ToA(a) {
+	a=new Uint16Array([a]);
+	return new Uint8Array(a.buffer,0,2);
+}
+
+function int8ToU(a) {
+	a=new Int8Array([a]);
+	a= new Uint8Array(a.buffer,0,1);}
+	return a[0];
+}
+
+function Uint8ToI(a) {
+	a=new Uint8Array([a]);
+	a= new Int8Array(a.buffer,0,1);}
+	return a[0];
+}
+
+```
+
+Similarly, to go the other direction:
+
+```javascript
+
+
+function aToFloat32(a) {
+	a=E.toUint8Array([a]);
+	a=new Float32Array(a.buffer,0,1);
+	return a[0];
+}
+
+function aToFloat64(a) {
+	a=E.toUint8Array([a]);
+	a=new Float64Array(a.buffer,0,1);
+	return a[0];
+}
+
+
+function aToInt32(a) {
+	a=E.toUint8Array([a]);
+	a=new Int32Array(a.buffer,0,1);
+	return a[0];
+}
+
+function aToUint32(a) {
+	a=E.toUint8Array([a]);
+	a=new Uint32Array(a.buffer,0,1);
+	return a[0];
+}
+
+function aToInt16(a) {
+	a=E.toUint8Array([a]);
+	a=new Int16Array(a.buffer,0,1);
+	return a[0];
+}
+
+function aToUint16(a) {
+	a=E.toUint8Array([a]);
+	a=new Uint16Array(a.buffer,0,1);
+	return a[0];
+}
+
+```
+
+
 Interfaces and Capacities
 ------
 EEPROMs are available with almost every interface imaginable. Module support ([About Modules](/Modules)) is available for three of the most common interfaces: I2C, SPI, and OneWire. These interfaces all have their own considerations. 
