@@ -55,10 +55,10 @@ Reading and Writing
 These support the same interface as the SPI (AT25) and I2C (AT24) EEPROM modules
 
 ```JavaScript
-eeprom.read(address,bytes,asStr)
+eeprom.read(address,bytes)
 ```
 
-`read()` reads the specified number of bytes, starting at the specified address. If asStr is true, the result will be returned as a string, instead of an array of bytes, and will break the read up into 64-byte chunks to reduce memory usage. 
+`read()` reads the specified number of bytes, starting at the specified address, returned as a Uint8Array.
 
 ```JavaScript
 eeprom.write(address,data)
