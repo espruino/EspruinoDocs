@@ -58,17 +58,13 @@ AT24.prototype.read= function(add,bytes) {
 
 AT24.prototype.write= function(add,data) {
 	if(typeof data!="string"){data=E.toString(data);}
-	if (data.length > (this.pgsz-(add%this.pgsz))) {
-		var idx=0;
-		while (idx < data.length) {
-			var i=(this.pgsz-(add%this.pgsz))
-			this.i2c.writeTo(this.i(add),this.a(add)+data.substr(idx,i));
-			var et=getTime()+0.012;
-			while (getTime() < et) {"";}
-			idx+=i; add+=i;
-		}
-	} else {
-		this.i2c.writeTo(this.i(add),this.a(add)+data);
+	var idx=0;
+	while (idx < data.length) {
+		var i=(this.pgsz-(add%this.pgsz))
+		this.i2c.writeTo(this.i(add),this.a(add)+data.substr(idx,i));
+		var et=getTime()+0.012;
+		while (getTime() < et) {"";}
+		idx+=i; add+=i;
 	}
 	return data.length;
 }
