@@ -61,13 +61,13 @@ AT25.prototype.write= function(add,data,num) {
 	var idx=0;
 	while (idx < data.length) {
 		this.spi.send(6,this.cspin); //WREN
-		var i=(this.pgsz-(add%this.pgsz))
+		var i=this.pgsz?(this.pgsz-(add%this.pgsz)):data.length;
   		console.log(this.spi.send([5,0],this.cspin));
 		t=(this.cap>65536)?E.toString(2,add>>16&0xff,add>>8&0xff,add&0xff):E.toString(2,add>>8&0xff,add&0xff)
 		t=t+data.substr(idx,i);
 		this.spi.send(t,this.cspin)
 		var et=getTime()+0.012;
-		while (getTime() < et) {"";}
+		while (getTime() < et && this.pgsz) {"";}
 		idx+=i; add+=i;
 	}
 	return data.length;
