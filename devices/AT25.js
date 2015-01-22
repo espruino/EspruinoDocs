@@ -58,23 +58,17 @@ AT25.prototype.read= function(add,bytes) {
 
 AT25.prototype.write= function(add,data,num) {
 	if(typeof data!="string"){data=E.toString(data);}
-	if (data.length > (this.pgsz-(add%this.pgsz))) {
-		var idx=0;
-		while (idx < data.length) {
-			this.spi.send(6,this.cspin); //WREN
-			var i=(this.pgsz-(add%this.pgsz))
-  			console.log(this.spi.send([5,0],this.cspin));
-			t=(this.cap>65536)?E.toString(2,add>>16&0xff,add>>8&0xff,add&0xff):E.toString(2,add>>8&0xff,add&0xff)
-			t=t+data.substr(idx,i);
-			this.spi.send(t,this.cspin)
-			var et=getTime()+0.012;
-			while (getTime() < et) {"";}
-			idx+=i; add+=i;
-		}
-	} else {
+	var idx=0;
+	while (idx < data.length) {
 		this.spi.send(6,this.cspin); //WREN
+		var i=(this.pgsz-(add%this.pgsz))
+  		console.log(this.spi.send([5,0],this.cspin));
 		t=(this.cap>65536)?E.toString(2,add>>16&0xff,add>>8&0xff,add&0xff):E.toString(2,add>>8&0xff,add&0xff)
-		this.spi.send(t+data,this.cspin)
+		t=t+data.substr(idx,i);
+		this.spi.send(t,this.cspin)
+		var et=getTime()+0.012;
+		while (getTime() < et) {"";}
+		idx+=i; add+=i;
 	}
 	return data.length;
 }
