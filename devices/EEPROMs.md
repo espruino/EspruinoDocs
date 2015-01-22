@@ -25,7 +25,7 @@ The EEPROM modules contain two main functions, read and write. To use this in yo
 
 `write(address,data)` writes the supplied data to the specified address. Data can be an array of bytes or string. This handles page boundaries and waiting out the write cycle for long writes 
 
-`read(address,length,asStr)` reads data from the EEPROM starting from the supplied address. If asStr is supplied and true, the result will be returned as a string, otherwise, it will be supplied as a Uint8Array. 
+`read(address,length)` reads data from the EEPROM starting from the supplied address, as a Uint8Array.
 
 ####Example
 
@@ -43,15 +43,15 @@ var eeprom=require("AT25").connect(SPI1,0,64,B2); //SPI, 64 kbit FRAM (no pages)
 
 var eeprom=require("DS2xxx").connect(OW,32,20); //OneWire, 32 byte pages, 20kbit - DS28EC20. 
 
-console.log(eeprom.read(0,25,1)); //Read the beginning of the EEPROM. 
+console.log(E.toString(eeprom.read(0,25)); //Read the beginning of the EEPROM. 
 eeprom.write(10,[12,23,240,192,245]) //write some numbers;
 console.log(eeprom.read(0,16); //this will show the 5 bytes we wrote above, surrounded on both sides by whatever we wrote ontop of. 
 var a;
 var l=eeprom.write(0x64,"digitalWrite(LED1,!a);a=!a;digitalWrite(LED3,!a);)"); //write a bit of JS to the EEPROM at position 100
 
-eval(eeprom.read(0x64,l,1); //read it back and run the code;
+eval(E.toString(eeprom.read(0x64,l)); //read it back and run the code;
 
-var interval=setInterval("eval(eeprom.read(0x64,l,1);",333); //Oh noes! It's the police!
+var interval=setInterval("eval(E.toString(eeprom.read(0x64,l));",333); //Oh noes! It's the police!
 
 ```
 
@@ -65,7 +65,7 @@ Applications
 Converting values
 ------
 
-When working with EEPROMs it is often necessary to convert 16 or 32 bit integers, or floating point numbers, into an array of bytes. This can be expediently achieved using array buffers:
+When working with EEPROMs it is often necessary to convert strings, 16 or 32 bit integers, or floating point numbers, into an array of bytes. Conversions to strings can be done with the E.toString() function. Conversion of other types can be done with array buffers (these can easily be extended to handle arrays as input):
 
 ```javascript
 
@@ -157,6 +157,17 @@ function aToUint16(a) {
 
 ```
 
+Alternately, without arrayBuffers, types can be converted like this - this may be more reasonable for integers (particularly unsigned ones):
+
+```javascript
+function uint16ToA(a) { //another way of doing it
+	return new Uint8Array([a>>8,a&255])
+}
+
+function aToUint16(a) {
+	return a[0]+(a[1]<<8)//watch out for order of operations
+}
+```
 
 Interfaces and Capacities
 ------
