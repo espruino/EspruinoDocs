@@ -140,6 +140,7 @@ MQTT.prototype.connect = function() {
         if(data.charCodeAt(3) === 0) {
           mqo.connected = true;
           console.log("MQTT connection accepted");
+          mqo.emit('connected');
         }
         else {
           console.log("MQTT connection error");
@@ -154,6 +155,7 @@ MQTT.prototype.connect = function() {
     client.on('end', function() {
       console.log('MQTT client disconnected');
       clearInterval(mqo.pintr);
+      mqo.emit('disconnected');
     });
     
     mqo.client = client;
