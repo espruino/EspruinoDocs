@@ -230,16 +230,26 @@ Compared to EEPROM, an SD card:
 
 For purposes involving storing large amounts of data - such as logging - or where reading or writing of the non-volatile storage by a computer is desired, an SD card is probably a better choice. However, when the data to be saved is small, 
 
-EEPROMs vs FRAM
+EEPROMs vs FRAM and MRAM
 -----
 
-FRAM (ferroelectric RAM) is another type of non-volatile memory, which can be used in similar ways to EEPROMs, however, there are several important differences. They are produced in pin compatible form, and use the same instructionset as EEPROMs.
+FRAM (ferroelectric RAM) and MRAM (magnetoresisive RAM) are two other types of non-volatile memory, based on magnetic effects. These can be used in similar ways to EEPROMs, however, there are several important differences. They are produced in pin compatible form, and use the same instruction set as EEPROMs.
 
-* FRAM has no concept of pages, and writes are instantaneous; there is no internally timed write cycle. 
-* The write endurance is effectively unlimited (Fugitsu claims 1 trillion writes). 
-* FRAM for SPI can be extremely fast, and is often spec'ed at speeds to 20mhz or more (I2C FRAM is limited by the speed of the I2C bus). 
-* FRAM is exorbitantly expensive, with a cost per byte several times higher than EEPROMs. 
-* FRAM is not available in DIP packages. 
+* FRAM/MRAM has no concept of pages, and writes are instantaneous; there is no internally timed write cycle. 
+* The write endurance is effectively unlimited (1 trillion for Fugitsu FRAM, Everspin claims unlimited writes for MRAM). 
+* FRAM and MRAM for SPI can be extremely fast, and is often spec'ed at speeds to 20mhz or more (I2C FRAM is limited by the speed of the I2C bus). 
+* FRAM and MRAM is exorbitantly expensive, with a cost per byte several times higher than EEPROMs. 
+* FRAM selection in DIP packages is very limited, while MRAM is only available in DFN package. 
+
+EEPROMs vs CBRAM
+-----
+
+CBRAM (conductive bridge RAM) is a new type of non-volatile memory, based on forming or breaking metalic bridges. It is available in 8-pin SPI and I2C packages which are intended as a low cost drop-in replacement for EEPROM for use cases that involve little write activity. 
+
+* Sizes are limited to 128kbit and below 
+* The write endurance is very poor - around 100 write cycles
+* Prices are about half that of EEPROM of same size. 
+
 
 Related Documents
 ------
