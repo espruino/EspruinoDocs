@@ -119,15 +119,15 @@ MQTT.prototype.connect = function(client) {
       if(type === TYPE.PUBLISH) {
         mqo.emit('publish', mqo.parsePublish(data));
       }
-      // else if(type === TYPE.PUBACK) {
-      //   // implement puback
-      // }
-      // else if(type === TYPE.SUBACK) {
-      //   // implement suback
-      // }
-      // else if(type === TYPE.UNSUBACK) {
-      //   // implement unsuback
-      // }
+      else if(type === TYPE.PUBACK) {
+        // implement puback
+      }
+      else if(type === TYPE.SUBACK) {
+        // implement suback
+      }
+      else if(type === TYPE.UNSUBACK) {
+        // implement unsuback
+      }
       else if(type === TYPE.PINGREQ) {
         // silently reply to pings
         client.write(TYPE.PINGRESP+"\x00"); // reply to PINGREQ
@@ -160,7 +160,7 @@ MQTT.prototype.connect = function(client) {
     
     mqo.client = client;
   };
-  if (client) onConnect(client);
+  if (client) onConnect();
   else client = require("net").connect({host : mqo.server, port: mqo.port}, onConnect);
 };
 
