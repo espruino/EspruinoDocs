@@ -244,5 +244,5 @@ MQTT.prototype.mqttUnsubscribe = function(topic) {
 
 /** This is 'exported' so it can be used with `require('MQTT.js').create(server, options)` */
 exports.create = function (server, options) {
-  return Object.create(new MQTT(server, options));
+  return new MQTT(server, options);
 };
