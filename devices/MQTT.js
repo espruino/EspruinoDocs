@@ -95,9 +95,9 @@ MQTT.prototype.mqttUid = (function() {
 /* Public interface ****************************/
 
 /** Establish connection and set up keep_alive ping */
-MQTT.prototype.connect = function() {
+MQTT.prototype.connect = function(client) {
   var mqo = this;
-  var client = require("net").connect({host : mqo.server, port: mqo.port}, function() {
+  var onConnect = function() {
     console.log('Client connected');
     client.write(mqo.mqttConnect(mqo.client_id));
 
@@ -119,15 +119,15 @@ MQTT.prototype.connect = function() {
       if(type === TYPE.PUBLISH) {
         mqo.emit('publish', mqo.parsePublish(data));
       }
-      else if(type === TYPE.PUBACK) {
-        // implement puback
-      }
-      else if(type === TYPE.SUBACK) {
-        // implement suback
-      }
-      else if(type === TYPE.UNSUBACK) {
-        // implement unsuback
-      }
+      // else if(type === TYPE.PUBACK) {
+      //   // implement puback
+      // }
+      // else if(type === TYPE.SUBACK) {
+      //   // implement suback
+      // }
+      // else if(type === TYPE.UNSUBACK) {
+      //   // implement unsuback
+      // }
       else if(type === TYPE.PINGREQ) {
         // silently reply to pings
         client.write(TYPE.PINGRESP+"\x00"); // reply to PINGREQ
@@ -159,7 +159,9 @@ MQTT.prototype.connect = function() {
     });
     
     mqo.client = client;
-  });
+  };
+  if (client) onConnect(client);
+  else client = require("net").connect({host : mqo.server, port: mqo.port}, onConnect);
 };
 
 /** Disconnect from server */
