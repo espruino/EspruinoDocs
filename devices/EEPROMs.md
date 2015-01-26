@@ -241,15 +241,10 @@ FRAM (ferroelectric RAM) and MRAM (magnetoresisive RAM) are two other types of n
 * FRAM and MRAM is exorbitantly expensive, with a cost per byte several times higher than EEPROMs. 
 * FRAM selection in DIP packages is very limited, while MRAM is only available in DFN package. 
 
-EEPROMs vs CBRAM
+CBRAM
 -----
 
-CBRAM (conductive bridge RAM) is a new type of non-volatile memory, based on forming or breaking metalic bridges. It is available in 8-pin SPI and I2C packages which are intended as a low cost drop-in replacement for EEPROM for use cases that involve little write activity. 
-
-* Sizes are limited to 128kbit and below 
-* The write endurance is very poor - around 100 write cycles
-* Prices are about half that of EEPROM of same size. 
-
+CBRAM (conductive bridge RAM) is a new type of non-volatile memory, based on forming or breaking metalic bridges. It is available in 8-pin SPI and I2C packages which are intended as a low cost replacement for EEPROM for use cases that involve little write activity. The parts are currently available in sizes up to 128 kbit (16 kbyte), at around half the cost of EEPROMs; however, their write endurance is only ~100 write cycles. Although they use the same format for reading and writing data, CBRAM requires pages to be manually erased prior to writing (requiring the erase to be manually initiated allows the application to fully control the limited number of write cycles supported by CBRAM). So, while AT24/AT25 modules will support reading from these parts, and writing if previously erased, additional coding would be needed to support erasing (and hence re-writing already-written addresses). 
 
 Related Documents
 ------
