@@ -64,6 +64,7 @@ DS2xxx.prototype.write= function (addr, data) {
             addr+=l;m=0; //if write doesn't end on page boundary, the write is finished and m no longer matters, otherwise, it's aligned on page boundary and m=0;
         }
     }
+    return data.length;
 }
 DS2xxx.prototype.read = function (addr, cnt) {
     this.s([0xF0,addr&0xFF,addr>>8]);//selec­t address
