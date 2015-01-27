@@ -45,8 +45,8 @@ A few helper functions can handle modifying the stored functions in the code, an
 
 ```javascript
 
-maxid=192;
-ftst=256;
+maxid=192; //max number of stored functions
+ftst=256; //index starts at
 
 //getList() returns an object containing one property for each function listed in the function index on the rom, and also prints out it's progress in human readable format to assist the operator in loading the rom.
 
@@ -114,5 +114,31 @@ function deleteFunction(id) {
 
 ```
 
-Taking it one step further, we probably don't want those helper functions wasting memory - during normal operation, they won't be used at all, and a system offloading code to an EEPROM to save memory likely cannot spare the memory anyway. 
+Taking it one step further, we probably don't want those helper functions wasting memory - during normal operation, they won't be used at all, and a system offloading code to an EEPROM to save memory likely cannot spare the memory anyway. Wouldn't it be nice if we could load those functions off the ROM when we needed them? 
+
+```javascript
+
+//we'll need a function like this too, to get rid of the helper functions when we're done. 
+function cleanup() {
+  delete getFunction;
+  delete isSafe;
+  delete deleteFunction;
+  delete getList;
+  delete addFunction;
+  delete maxid;
+  delete getFunction;
+  delete ftst;
+  delete cleanup;
+}
+
+addFunction(191,0x0400,'maxid=192;ftst=256;deleteFunction=function(a){console.log("del func: "+a);rom.write(ftst+4*a,"ÿÿÿÿ")};getList=function(){for(var a=0,d={},b=0;b<maxid;b++){var c=rom.read(ftst+4*b,4);if(255!=c[2]){a++;var e=c[1]+(c[0]<<8),c=c[3]+(c[2]<<8);d[b]=[e,c];console.log(b+". 0x"+e.toString(16)+" "+c+" bytes.")}}console.log("Scan: "+a+"");return d};getFunction=function(a){a=rom.read(ftst+4*a,4);if(255!=a[2])return E.toString(rom.read(a[1]+(a[0]<<8),a[3]+(a[2]<<8)))};isSafe=function(a,d,b){d+=a;for(var c=0;c<maxid;c++)if(void 0!=b[c]){var e=b[c][0],f=b[c][1];if(e<a&&e+f>a||e>a&&e<d)return console.log("Conflict w/"+c),0}return 1};cleanup=function(){delete getFunction;delete isSafe;delete deleteFunction;delete getList;delete addFunction;delete maxid;delete getFunction;delete ftst;delete cleanup};addFunction=function(a,d,b){console.log("Add func: L="+b.length+" @ "+d+" ID: "+a);isSafe(d,b.length,getList())?(rom.write(d,b),rom.write(ftst+4*a,E.toString(d>>8,d&255,b.length>>8,b.length&255))):console.log("Location conflict")};')
+
+```
+
+This stores a block of code that recreates all of the helper functions written above, as well as cleanup(). That code has been minified, and the console logging has been shortened - bringing the length to exactly 1024 characters. This places the end at 0x0800, making the address easy to remember. This leaves 62KBytes of EEPROM (assuming a 512kbit one was used) free for code. 
+
+Conclusions and extensions
+--------
+
+This is an example of a very basic system for running snippets of code from an EEPROM. There is much room for improvement in addFunction(), which could be extended to look for an empty memory location to store the code in. Particularly with large EEPROMs, the index could be expanded, allowing a short string to "name" each entry. The data could be read as strings, and combined with named entries, you could have a string indexed data store on an EEPROM. You could store the index and data on different EEPROM chips, or add support for using multiple EEPROMs to store data - maybe you want to read the index quickly, and not worry about write endurance from regularly rewriting the index, and choose to use an FRAM chip for the index, instead of a traditional EEPROM. The possibilities are endless!
 
