@@ -10,7 +10,7 @@ An EEPROM is a form of byte-addressable non-volatile storage, allowing a project
 
 The operating principle of EEPROM is much like that of modern flash memory.  It is non-volatile memory, meaning that data is retained while the power is off. Those who have used AVR devices (like Arduino) will already be familiar with EEPROMs, as almost all AVR processors have built in EEPROMs. Unfortunately, the ARM processors used in the Espruino do not - however external EEPROM chips are widely available. Each page of an EEPROM can only be erased and rewritten a limited number of times before it stops working - this is typically in the range of 100,000 to 1,000,000 rewrite cycles, and is specified in the datasheet.
 
-![Espruino with multiple EEPROMs](eeproms.jpg)
+![Espruino with multiple EEPROMs](EEPROMs.jpg)
 An Espruino board with multiple EEPROMs connected to it:
 * I2C EEPROM DIP-8 package on breakout board (these typically sell for $2-5 on ebay)
 * I2C EEPROM SOIC-8 package soldered onto Espruino's prototyping area
