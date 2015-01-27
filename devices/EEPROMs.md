@@ -23,7 +23,7 @@ Using EEPROMs
 -------
 The EEPROM modules contain two main functions, read and write. To use this in your project, after wiring up the EEPROM (see the appropriate module documentation for details), simply setup the interface (I2C, SPI, or OneWire), and call 'connect()' (again, see module doc, as the arguments vary by interface).
 
-`write(address,data)` writes the supplied data to the specified address. Data can be an array of bytes or string. This handles page boundaries and waiting out the write cycle for long writes 
+`write(address,data)` writes the supplied data to the specified address. Data can be an array of bytes or string. This handles page boundaries and waiting out the write cycle for long writes, and returns the length of the data written. 
 
 `read(address,length)` reads data from the EEPROM starting from the supplied address, as a Uint8Array.
 
