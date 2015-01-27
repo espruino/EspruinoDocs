@@ -32,6 +32,7 @@ exports.connect = function(spi, pgsz, cap, cspin) {
 	if (cap > 4096 || !cap || pgsz > cap || !cspin) {
 		throw "Unsupported or invalid options";
 	}
+	cspin.set(); //pull the CS line high. 
     return new AT25(spi, pgsz, cap, cspin);
 };
 
