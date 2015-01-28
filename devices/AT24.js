@@ -44,7 +44,7 @@ function AT24(i2c, pgsz, cap, i2ca) {
   this.ca=0;
 }
 
-AT24.prototype.a=function(b) {return (this.cap>2048)?E.toString([b>>8&0xff,b&0xff]):E.toString(b&0xff);}; //
+AT24.prototype.a=function(b) {return (this.cap>2048)?E.toString([b>>8,b]):E.toString(b);}; //
 AT24.prototype.i=function(a) {return this.i2ca|(a>>((this.cap>2048)?16:8))}; //get the i2c address from the address
 
 AT24.prototype.read= function(add,bytes) {

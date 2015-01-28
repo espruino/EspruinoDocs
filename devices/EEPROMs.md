@@ -189,7 +189,7 @@ I2C EEPROMs are manufactured by almost every major semiconductor manufacturer, e
 ####SPI
 SPI is the second most common interface for EEPROMs, and the chips are only modestly more expensive than comparable I2C ones, and available in many of the same capacities as I2C EEPROMs. Support is provided by the [AT25](/modules/AT25.js) module, which supports devices with a capacity of 32 kbit up to 4 mbit. Smaller sizes exist, but the module does not support them.  
 
-SPI EEPROMs are available in 8-pin DIP, SOIC, and TSSOP packages, as well as larger packages with several not-connected pins. While breakout boards/modules are not available on ebay as is the case for I2C EEPROMs. SPI EEPROMs in SOIC package can be soldered onto the prototyping area on the Espruino Board. Connection requires 6 wires (Vcc, Ground, SCK, MISO, MOSI, and CS); The other two pins should be tied to Vcc, unless you want to write protect the chip. Many SPI EEPROMs can be connected to the same SPI bus, as long as a separate CS line is run for each chip. 
+SPI EEPROMs are available in 8-pin DIP, SOIC, and TSSOP packages, as well as larger packages with several not-connected pins. While breakout boards/modules are not available on ebay as is the case for I2C EEPROMs. SPI EEPROMs in SOIC package can be soldered onto the prototyping area on the Espruino Board. Connection requires 6 wires (Vcc, Ground, SCK, MISO, MOSI, and CS); The other two pins should be tied to Vcc, unless you want to write protect the chip. Many SPI EEPROMs can be connected to the same SPI bus, as long as a separate CS line is run for each chip. SPI EEPROMs can be used with software SPI.
 
 Like I2C EEPROMs, compatible SPI EEPROMs are available from many manufacturers:
 

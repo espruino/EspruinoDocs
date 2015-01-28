@@ -32,6 +32,7 @@ exports.connect = function(spi, pgsz, cap, cspin) {
 	if (cap > 4096 || !cap || pgsz > cap || !cspin) {
 		throw "Unsupported or invalid options";
 	}
+	cspin.set(); //pull the CS line high. 
     return new AT25(spi, pgsz, cap, cspin);
 };
 
@@ -48,28 +49,31 @@ AT25.prototype.read= function(add,bytes) {
 	if (add===undefined) {
 		add=this.ca;
 	}
-	t=(this.cap>65536)?E.toString(3,add>>16&0xff,add>>8&0xff,add&0xff):E.toString(3,add>>8&0xff,add&0xff)
+	var t=new Uint8Array(bytes+(this.cap>65536?4:3));
+	var i=0;
+	t[i++]=3;
+	if(this.cap>65536){t[i++]=add>>16;}
+	t[i++]=add>>8; 
+	t[i]=add;
 	var ov=this.spi.send(t,this.cspin);
-	var o=new Uint8Array(ov.buffer,(this.cap>65536?4:3),bytes);
 	this.ca=add+bytes;
-	return o;
+	return new Uint8Array(ov.buffer,(this.cap>65536?4:3),bytes);
 }
 
 
 AT25.prototype.write= function(add,data,num) {
+	var l=data.length;
 	if(typeof data!="string"){data=E.toString(data);}
 	var idx=0;
-	while (idx < data.length) {
+	while (idx < l) {
 		this.spi.send(6,this.cspin); //WREN
-		var i=this.pgsz?(this.pgsz-(add%this.pgsz)):data.length;
-  		console.log(this.spi.send([5,0],this.cspin));
-		t=(this.cap>65536)?E.toString(2,add>>16&0xff,add>>8&0xff,add&0xff):E.toString(2,add>>8&0xff,add&0xff)
+		var i=this.pgsz?(this.pgsz-(add%this.pgsz)):l;
+		var t=(this.cap>65536)?E.toString(2,add>>16,add>>8,add):E.toString(2,add>>8,add);
 		t=t+data.substr(idx,i);
-		this.spi.send(t,this.cspin)
+		this.spi.send(t,this.cspin);
 		var et=getTime()+0.012;
 		while (getTime() < et && this.pgsz) {"";}
 		idx+=i; add+=i;
 	}
-	return data.length;
+	return l;
 }
-
