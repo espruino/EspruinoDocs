@@ -1957,6 +1957,11 @@
     "!doc": "Load the given module, and return the exported functions",
     "!url": "http://www.espruino.com/Reference#l__global_require"
   },
+  "Boolean": {
+    "!type": "fn(value: ?) -> bool",
+    "!doc": "Creates a number",
+    "!url": "http://www.espruino.com/Reference#l_Boolean_Boolean"
+  },
   "NaN": {
     "!type": "number",
     "!doc": "",
