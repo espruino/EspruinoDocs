@@ -142,3 +142,6 @@ Conclusions and extensions
 
 This is an example of a very basic system for running snippets of code from an EEPROM. There is much room for improvement in addFunction(), which could be extended to look for an empty memory location to store the code in. Particularly with large EEPROMs, the index could be expanded, allowing a short string to "name" each entry. The data could be read as strings, and combined with named entries, you could have a string indexed data store on an EEPROM. You could store the index and data on different EEPROM chips, or add support for using multiple EEPROMs to store data - maybe you want to read the index quickly, and not worry about write endurance from regularly rewriting the index, and choose to use an FRAM chip for the index, instead of a traditional EEPROM. The possibilities are endless!
 
+Related Documents
+------
+* APPEND_KEYWORD: EEPROM
