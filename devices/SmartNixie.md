@@ -78,6 +78,6 @@ nixie.send();
 Buying
 -----
 
-You can get the Nixie from several different places, including:
+SmartNixie build kits can be purchased from the manufacturer:
 
-* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=nixie)
+* [switchmodedesign.com](http://switchmodedesign.com/collections/arduino-shields/products/smart-nixie-tube)
