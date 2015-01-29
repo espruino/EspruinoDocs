@@ -18,8 +18,8 @@ capacity is the eeprom capacity, in kbits.
 
 cspin is the pin connected to CS on the EEPROM
 
-eeprom.read(address,bytes,asStr)
-Read the specified number of bytes. If asStr is true, it will return the value as a string, and will perform the read in chunks of 64 bytes to control memory usage. Unlike I2C EEPROMs, address must be supplied. 
+eeprom.read(address,bytes)
+Read the specified number of bytes as a Uint8Array. Presently this requires enough memory to fit the output array twice over due to limitations of SPI.send()
 
 eeprom.write(address,data)
 Write the specified data starting at the specified address. Writes that cross page boundaries are handled transparently.  
