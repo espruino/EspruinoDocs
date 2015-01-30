@@ -97,6 +97,6 @@ In a depletion mode MOSFET, when Vgs = 0, the MOSFET is on, and a voltage must b
 Buying
 ---------------------
 
-* [Digikey](http://digikey.com)
+* [Digikey](http://www.digikey.com/product-search/en/discrete-semiconductor-products/fets-single/1376381?stock=1) 
 * [Mouser](http://mouser.com)
-* [eBay](http://ebay.com) for the lowest prices on the most common MOSFETS.
+* [eBay](http://ebay.com) (common parts only)
