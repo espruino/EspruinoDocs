@@ -59,7 +59,7 @@ var digipot=require("MCP4xxx").connectI2C(i2c,pots,taps,addr);
 
 or
 
-```
+```javascript
 var digipot=require("MCP4xxx").connectSPI(spi,cs,pots,taps);
 
 `i2c` is the I2C interface it is connected to (I2C only)
@@ -69,11 +69,12 @@ var digipot=require("MCP4xxx").connectSPI(spi,cs,pots,taps);
 `taps` is the number of taps on each pot (129 or 257)
 `addr` is the value of the address pins (if omitted, 0 is assumed, I2C only)
 
+```
 
 
 Control it using:
 
-```
+```javascript
 digipot.setValue(pot,value,nv)
 digipot.getValue(pot,nv)
 digipot.getStatus()
@@ -94,7 +95,14 @@ Applications
 ----------------
 
 
-* Extra analog outputs (connect one side to VCC and the other side to ground, and you have a simple DAC)
+* Extra analog outputs (connect one side to VCC and the other side to ground, and you have a simple DAC - you can't draw any significant amount of current from it withyout changing the voltage, but you can't do that with a proper DAC either)
 * Replacing resistors used to set behavior of parts - for example, many constant current source chips (LED drivers, et al) have a resistor to set the current (and hence brightness). 
 * Replacing analog pots on external devices, allowing them to be digitally controlled
 * Controlling voltage or current adjustments on a power supply, creating a digitally controlled power supply. Be aware of the limits on the analog voltages applied across the potentiometer - the MCP41HVx1 line supports voltages as high as 36 volts on the analog pins, and may be best suited to this purpose.
+
+
+Buying
+-------------
+
+* [Digikey](http://www.digikey.com/product-search/en?FV=fff40027%2Cfff801be%2Cfffc0096)
+* Farnell 
