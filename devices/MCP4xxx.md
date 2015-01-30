@@ -105,4 +105,4 @@ Buying
 -------------
 
 * [Digikey](http://www.digikey.com/product-search/en?FV=fff40027%2Cfff801be%2Cfffc0096)
-* Farnell 
+* [Mouser](http://mouser.com)
