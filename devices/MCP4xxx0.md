@@ -58,5 +58,5 @@ Buying
 -------------
 
 * [Digikey](http://www.digikey.com/product-search/en?FV=fff40027%2Cfff801be%2Cfffc0096)
-* Farnell 
+* [Mouser](http://mouser.com)
 * eBay (search for the part number, only common ones, like 10k ohm)
