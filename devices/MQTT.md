@@ -29,6 +29,22 @@ First of load the module and create a MQTT object using ```require("MQTT").creat
   });
 ```
 
+### Connection Options
+
+The options you can pass to `MQTT#connect` are as follows.
+
+```js
+mqtt.connect({
+  keep_alive: 60, // keep_alive[seconds]
+  port: 1883, // port number
+  clean_session: 1883, // port number
+  username: "username", 
+  password: "password", 
+  protocol_name: "MQTT", // or MQIsdp, etc..
+  protocol_level: 4, // protocol_level
+  });
+```
+
 Disconnect
 -----------
 
