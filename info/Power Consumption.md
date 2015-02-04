@@ -12,9 +12,11 @@ Espruino can run in one of 3 different modes.
 | -----|---------|--------|
 | Run | ~35mA | 57 hours | Espruino is executing code and running at 72Mhz |
 | Sleep | ~12mA | 7 days | Espruino has stopped the clock to the CPU, but all peripherals are still running and can wake it up |
-| Stop | ~0.11mA | 2 years | Espruino has stopped the clock to everything except the real-time clock (RTC). It can wake up on setInterval/setTimeout or setWatch |
+| Stop | ~0.03mA | > 2 years | Espruino has stopped the clock to everything except the real-time clock (RTC). It can wake up on setInterval/setTimeout or setWatch |
 
-**Note:** Standby mode is available on the STM32 chip (very low power, but **all data** is lost from RAM). It is not currently used in Espruino (see _Other sources of Power Draw_ below for why not).
+These figures are for the Espruino rev 1v4. The rev 1v3 has a slightly higher 'Stop' power consumption of 0.11mA.
+
+**Note:** Standby mode is available on the STM32 chip (very low power, but **all data** is lost from RAM). It is not currently used in Espruino.
 
 Sleep
 ----
@@ -89,9 +91,11 @@ Bear in mind that lighting just one LED light uses about the same amount of powe
 Other sources of Power Draw
 ------------------------
 
-While the STM32 datasheets suggest that the STM32 in Espruino will actually draw around 30uA in Stop mode, the voltage regulator that is on the board (despite being designed for low current) still draws 80uA, which makes up the majority of the 110uA power draw.
+On the Espruino Board rev 1v3 the voltage regulator draws 80uA, which makes up the majority of the 110uA power draw. The rev 1v4 has a much more efficient regulator, which allows a power draw of just 30uA.
 
-The STM32 itself can run from between 2 and 3.6v though, so you may not need a voltage regulator. If you need the lowest possible power and you are running from a Lithium Ion/Polymer battery that doesn't exceed 4.3v, you can replace the voltage regulator with a single diode - which will drop the voltage by 0.7v. (bringing the voltage to `5v - 0.7v*2 = 3.6v` when on USB, and `4.2v - 0.7v = 3.5v` maximum when on Li-Ion batteries.
+**What follows is not relevant for Espruino Boards rev 1v4 and later**
+
+The STM32 itself can run from between 2 and 3.6v, so you may not need a voltage regulator. If you need the lowest possible power and you are running from a Lithium Ion/Polymer battery that doesn't exceed 4.3v, you can replace the voltage regulator with a single diode - which will drop the voltage by 0.7v. (bringing the voltage to `5v - 0.7v*2 = 3.6v` when on USB, and `4.2v - 0.7v = 3.5v` maximum when on Li-Ion batteries.
 
 ![Low power modifications](lowpower.jpg)
 
