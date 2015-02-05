@@ -224,7 +224,7 @@ MQTT.prototype.createFlagsForConnection = function( options ){
 MQTT.prototype.mqttConnect = function(clean) {
   var cmd = TYPE.CONNECT << 4;
   var flags = this.createFlagsForConnection({
-    clean_session: clean,
+    clean_session: clean
   });
 
   var keep_alive = String.fromCharCode(this.keep_alive>>8, this.keep_alive&255);
