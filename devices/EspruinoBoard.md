@@ -22,15 +22,20 @@ Features
 * Built-in SD card connector
 * Red, Green and Blue LEDs
 * Pads to allow HC-05 Bluetooth modules to be added
-* Extremely low profile
 * 0.1" Pin spacing
-* 44 GPIO Pins, which can handle: 26 PWM Pins, 16 ADC Pins, 3 USARTs, 2 SPI, 2 I2C and 2 DACs
+* 44 GPIO Pins, capable of: 26 PWM Pins, 16 ADC Pins, 3 USARTs, 2 SPI, 2 I2C and 2 DACs
 * Prototype area which can be used in many different configurations, for example: Servo Headers, Up to 14x 500mA outputs, 2x .NET Gadgeteer connectors, or NRF24L01+ wireless transceiver modules
 
 Layout
 -----
 
-![Espruino Board](annotated.jpg)
+### Revision 1.4
+
+![Espruino Board](annotated_1v4.jpg)
+
+### Revision 1.3
+
+![Espruino Board](annotated_1v3.jpg)
 
 | Name | Function |
 | ---- | -------- |
@@ -43,10 +48,11 @@ Layout
 | Power | Gnd, 3.3v and Battery power pins (see below) |
 | Micro SD | A connector for FAT32 formatted Micro SD cards |
 | USB | A Micro SD USB connector, for programming and powering Espruino |
-| #1 | Unpopulated pads for 32kHz crystal. Without this, Espruino will use its internal RC oscillator for timekeeping, which is only accurate to 1-2% |
+| #1 | (r1.3 only) Unpopulated pads for 32kHz crystal. Without this, Espruino will use its internal RC oscillator for timekeeping, which is only accurate to 1-2%. (r1.4 has a 32k crystal preinstalled) |
 | #2 | Pin Headers. Each horizontal pair pins in this 2 x 13 area of pins is connected together, so you can solder on a single line of pin header and can then wire from the Prototype area to the other side  |
 | #3 | cut the shorted link on the right-hand side, solder over the left-hand side, solder a 10k resistor to R17 and you can then use the RST button as a second general purpose button on pin C12 |
-| #4 | An unpopulated resistor that can trickle-charge a battery when fitted (if the battery is less than 4.3v). See the [[Battery]] page for more information - only fit this if you're absolutely sure that your battery type can handle it. |
+| #4 | (r1.3 only) An unpopulated resistor that can trickle-charge a battery when fitted (if the battery is less than 4.3v). See the [[Battery]] page for more information - only fit this if you're absolutely sure that your battery type can handle it. |
+| #5 | (r1.4 only) An unpopulated area for a MAX1551 LiPo charger IC |
 
 
 Information
@@ -82,7 +88,7 @@ See [Connecting Batteries](#connecting_batteries) below for information on conne
 Connecting
 ---------
 
-<span style="color:red;">**NOTE:** The Espruino board has no case and so the USB connector is completely unsupported. This means it is relatively delicate. Treat it carefully. Try and pull the connector straight out, and **do not** push down on the board when the connector is inserted, or try and move the board around using the cable.</span>
+<span style="color:red;">**NOTE:** The Espruino board has no case and so the USB connector is completely unsupported. This means it is relatively delicate (especially on rev 1v3 boards) and needs to be treated carefully. Try and pull the connector straight out, and **do not** push down on the board when the connector is inserted, or try and move the board around using the cable.</span>
 
 ###Pin Strip
 
@@ -125,7 +131,7 @@ Known Problems
 ------------
 
 * PWM output (via ```analogWrite```) on B4 and A6 at the same time is not possible (as they share timer hardware)
-* You can't setWatch on two pins with the same number (eg. A5 and C5) - it's a limitation of the STM32F1 
+* You can't setWatch on two pins with the same number (eg. A5 and C5) - this is a limitation of the STM32F1 
 * You can't use ```setWatch``` on B11/C11/D11 and enable ```setDeepSleep```, as A11 is watched in order to wake when USB is plugged in
 * The USB bootloader as shipped on Espruino KickStarter boards requires the APB1 clock frequency to be changed before it will work reliably. This is automatically handled by the Web IDE's flasher ([diff](https://github.com/espruino/EspruinoWebIDE/commit/476c6755cf243b5ac81a559f907d65900b961dde)), and also Espruino's version of [stm32loader.py](https://github.com/espruino/Espruino/blob/master/scripts/stm32loader.py) *if* you supply the `-k` switch.
 
