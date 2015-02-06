@@ -86,6 +86,7 @@ What works and what doesn't?
 
 ### Doesn't Work
 
+* 'Big' functions. If a label is too far away to be referenced/jumped to then assembly will fail
 * Function/method calls that need `this` - eg. `SPI1.send`
 * Logical operators with control flow, eg: `&&`, `||` and `A ? B : C`
 * DO..WHILE
