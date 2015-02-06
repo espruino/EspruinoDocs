@@ -64,11 +64,11 @@ Pin.positions = {};
 Pin.prototype.goto = function(pos) { // -1 .. 1
   Pin.positions[this] = pos;
   console.log(this,pos);
-  analogWrite(this, Math.clip(0.5*pos+1.5,1,2)*0.05, {freq:50});
+  analogWrite(this, E.clip(0.5*pos+1.5,1,2)*0.05, {freq:50});
 };
 // This will just move one step in the direction that is given
 Pin.prototype.move = function(dir) {
-  Pin.positions[this] = Math.clip(Pin.positions[this]+dir,-1,1);
+  Pin.positions[this] = E.clip(Pin.positions[this]+dir,-1,1);
   this.goto(Pin.positions[this]);
 };
 
