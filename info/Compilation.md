@@ -79,6 +79,7 @@ What works and what doesn't?
 ### Works
 
 * Maths, string operations
+* `a++`, `a+=`, etc.
 * IF, FOR, WHILE
 * Member and array access
 * Function/method calls that don't require `this` - eg. `console.log`
@@ -90,6 +91,7 @@ What works and what doesn't?
 * DO..WHILE
 * Exceptions
 * Creating new variables
+* Preincrement, eg. `++a`
 
 Can I help?
 -----------
