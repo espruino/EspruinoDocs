@@ -92,6 +92,7 @@ What works and what doesn't?
 * Exceptions
 * Creating new variables
 * Preincrement, eg. `++a`
+* The result of postincrement may be broken (`b=a;a++ == b+1`)
 
 Can I help?
 -----------
