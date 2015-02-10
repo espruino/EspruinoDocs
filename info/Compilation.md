@@ -71,6 +71,29 @@ Performance Notes
 ---------------
 
 * If you access global variables, Espruino will still have to search the symbol table to find them each time the function runs, which will be slow. To speed things up, use local variables or function arguments wherever possible.
+* There's no type inference right now - which means that every maths operation is performed with a general-purpose JsVar, regardless of whether it's an integer or not
+
+What works and what doesn't?
+----------------------------
+
+### Works
+
+* Maths, string operations
+* `a++`, `a+=`, etc.
+* IF, FOR, WHILE
+* Member and array access
+* Function/method calls that don't require `this` - eg. `console.log`
+
+### Doesn't Work
+
+* 'Big' functions. If a label is too far away to be referenced/jumped to then assembly will fail
+* Function/method calls that need `this` - eg. `SPI1.send`
+* Logical operators with control flow, eg: `&&`, `||` and `A ? B : C`
+* DO..WHILE
+* Exceptions
+* Creating new variables
+* Preincrement, eg. `++a`
+* The result of postincrement may be broken (`b=a;a++ == b+1`)
 
 Can I help?
 -----------
