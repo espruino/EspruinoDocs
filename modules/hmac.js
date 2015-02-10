@@ -97,6 +97,6 @@ hmac.prototype.hexdigest = function() {
   return s;
 };
 
-exports.new = function(key, message, digestmod) {
+exports.create = function(key, message, digestmod) {
   return new hmac(key, message, digestmod);
 }
