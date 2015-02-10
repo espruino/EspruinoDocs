@@ -10,6 +10,7 @@ How to use the module:
 
 ```
   var hmac = require("hmac");
+  var hashlib = require("hashlib");
   var foo = hmac.new("secret", "message", hashlib.sha256);
   var bar = hmac.new("secret", "another message", hashlib.sha256);
 
