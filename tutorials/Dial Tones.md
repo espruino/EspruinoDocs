@@ -34,7 +34,7 @@ Wiring Up
 --------
 
 * Wire up the two wires of the [[Speaker]] to pins C6 and C9
-* Wire up the [[Keypad]] as described [here](/KeyPad)
+* Wire up the [[KeyPad]] as described [here](/KeyPad)
 
 Software
 -------
