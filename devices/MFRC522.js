@@ -16,17 +16,17 @@ var R = {
   PRESCALER : 0x2B<<1,
   RELOADH : 0x2C<<1,
   RELOADL : 0x2D<<1,
-  VERSION : 0x37<<1,
+  VERSION : 0x37<<1
 };
 
 var PICC = {
   REQA : 0x26,
-  SELECT1 : 0x93,
+  SELECT1 : 0x93
 };
 
 var PCD = { 
   IDLE : 0x00,
-  TRANSCIEVE : 0x0C,
+  TRANSCIEVE : 0x0C
 };
 
 function MFRC522(spi, cs) {
