@@ -66,7 +66,6 @@ MFRC522.prototype.init = function() {
 };
 
 MFRC522.prototype.req = function(data) {  
-  //w(R.COLLISION, r(R.COLLISION &~0x80));
   this.w(R.COMMAND, PCD.IDLE);
   this.w(R.COMIEN, 0x80 | 0x77);
   this.w(R.COMIRQ, 0x7F); // clear IRQs
