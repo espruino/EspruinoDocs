@@ -32,4 +32,5 @@ Buying
 
 ADXL335 modules can be purchased from many places:
 
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=ADXL335&_sacat=92074)
 * [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=adxl335)

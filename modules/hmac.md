@@ -10,8 +10,9 @@ How to use the module:
 
 ```
   var hmac = require("hmac");
-  var foo = hmac.new("secret", "message", hashlib.sha256);
-  var bar = hmac.new("secret", "another message", hashlib.sha256);
+  var hashlib = require("hashlib");
+  var foo = hmac.create("secret", "message", hashlib.sha256);
+  var bar = hmac.create("secret", "another message", hashlib.sha256);
 
   foo.digest() // raw digest
   foo.hexdigest() // hex encoded digest

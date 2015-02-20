@@ -6,8 +6,8 @@ Simple MQTT protocol wrapper for Espruino sockets.
 /** 'private' costants */
 var C = {
   PACKET_ID      : 1,     // Bad...fixed packet id
-  PROTOCOL_LEVEL : "\x04" // MQTT protocol level
-}
+  PROTOCOL_LEVEL : 4 // MQTT protocol level
+};
 
 /** Control packet types */
 var TYPE = {
@@ -35,10 +35,14 @@ function MQTT(server, options) {
   this.client_id = options.client_id || this.mqttUid();
   this.keep_alive = options.keep_alive || this.C.DEF_KEEP_ALIVE;
   this.clean_session = options.clean_session || true;
+  this.username = options.username;
+  this.password = options.password;
   this.client = false;
   this.connected = false;
   this.ping_interval = 
     this.keep_alive < this.C.PING_INTERVAL ? (this.keep_alive - 5) : this.C.PING_INTERVAL;
+  this.protocol_name = options.protocol_name || "MQTT";
+  this.protocol_level = this.createEscapedHex( options.protocol_level || C.PROTOCOL_LEVEL );
 }
 
 /** 'public' constants here */
@@ -91,6 +95,11 @@ MQTT.prototype.mqttUid = (function() {
     return s4() + '-' + s4();
   };
 })();
+
+/** Create escpae hex value from number */
+MQTT.prototype.createEscapedHex = function( number ){
+  return String.fromCharCode(parseInt( number.toString(16) , 16));
+};
 
 /* Public interface ****************************/
 
@@ -196,20 +205,45 @@ MQTT.prototype.ping = function() {
 
 /* Packet specific functions *******************/
 
+/** Create connection flags 
+
+*/
+MQTT.prototype.createFlagsForConnection = function( options ){
+  var flags = 0;
+  flags |= ( this.username )? 0x80 : 0; 
+  flags |= ( this.password )? 0x40 : 0; 
+  flags |= ( options.clean_session )? 0x02 : 0;
+  return this.createEscapedHex( flags );
+};
+
 /** CONNECT control packet 
-    Clean Session is currently only supported
-    connect flag. Wills and user/pass is not
+    Clean Session and Userid/Password are currently only supported
+    connect flag. Wills  is not
     currently supported.
 */
 MQTT.prototype.mqttConnect = function(clean) {
   var cmd = TYPE.CONNECT << 4;
-  var flags = clean !== undefined && clean ? "\x02" : "\x00"; 
+  var flags = this.createFlagsForConnection({
+    clean_session: clean
+  });
+
   var keep_alive = String.fromCharCode(this.keep_alive>>8, this.keep_alive&255);
+
+  /* payload */
+  var payload = this.mqttStr(this.client_id); 
+  if( this.username ){
+    payload += this.mqttStr( this.username );
+  }
+  if( this.password ){
+    payload += this.mqttStr( this.password );
+  }
+
   return this.mqttPacket(cmd, 
-           this.mqttStr("MQTT")/*protocol name*/+
-           C.PROTOCOL_LEVEL/*protocol level*/+
+           this.mqttStr( this.protocol_name )/*protocol name*/+
+           this.protocol_level /*protocol level*/+
            flags+
-           keep_alive, this.mqttStr(this.client_id));
+           keep_alive,
+           payload);
 };
 
 /** PUBLISH control packet */

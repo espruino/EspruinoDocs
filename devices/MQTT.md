@@ -10,7 +10,7 @@ The module exports the function create(server, options) that returns a new MQTT 
 
 Setting up and connecting:
 
-First of load the module and create a MQTT object using ```require("MQTT").create(server)```. The module can oly be used with a network connection. In the example below th CC3000 is used to setup a network connection and get a DHCP address. Upon a successful connection connect to the MQTT broker by calling ```connect()```. This will open a socket connection to the server and establish MQTT communications. The client will ping the server every 40 seconds to keep the connection alive in case no other control packets are sent. The connected event can be used to set up subscriptions etc. upon sucessful connection.
+First of load the module and create a MQTT object using ```require("MQTT").create(server)```. The module can only be used with a network connection. In the example below th CC3000 is used to setup a network connection and get a DHCP address. Upon a successful connection connect to the MQTT broker by calling ```connect()```. This will open a socket connection to the server and establish MQTT communications. The client will ping the server every 40 seconds to keep the connection alive in case no other control packets are sent. The connected event can be used to set up subscriptions etc. upon sucessful connection.
 
 ```
   var server = "192.168.1.10"; // the ip of your MQTT broker
@@ -26,6 +26,22 @@ First of load the module and create a MQTT object using ```require("MQTT").creat
       console.log("My IP is "+wlan.getIP().ip);
       mqtt.connect();
     }
+  });
+```
+
+### Connection Options
+
+The options you can pass to `MQTT#connect` are as follows.
+
+```js
+mqtt.connect({
+  keep_alive: 60, // keep_alive[seconds]
+  port: 1883, // port number
+  clean_session: 1883, // port number
+  username: "username", 
+  password: "password", 
+  protocol_name: "MQTT", // or MQIsdp, etc..
+  protocol_level: 4, // protocol_level
   });
 ```
 

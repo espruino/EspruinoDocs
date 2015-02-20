@@ -46,7 +46,7 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst,
     digitalWrite(dc,0); // cmd
     spi.send(
         [0x21, // fnset extended
-        0x80 | Math.clip(c*0x7f,0,0x7f), // setvop
+        0x80 | E.clip(c*0x7f,0,0x7f), // setvop
         0x20, // fnset normal
         0x08 | 0x04], ce); // dispctl normal
   };

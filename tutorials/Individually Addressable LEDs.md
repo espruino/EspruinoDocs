@@ -82,7 +82,7 @@ And we can then control a second or third LED by just sending more data:
 So now, we could make a function with a for loop that would create colours for every LED. This one just makes all 50 LEDs progressively brighter white (the first LED will be off) :
 
 ```
-var rgb = new Uint8Array(25*3);
+var rgb = new Uint8ClampedArray(25*3);
 
 function getPattern() {
   for (var i=0;i<rgb.length;i+=3) {
@@ -93,7 +93,8 @@ function getPattern() {
 }
 ```
 
-Note that we define the array `rgb` once, as a Uint8Array (you can use a normal array, but Uint8Arrays are faster and more memory efficient when all you need to store are values between 0 and 255).
+Note that we define the array `rgb` once, as a `Uint8ClampedArray`. You could use a normal array, but Typed Arrays are faster and more memory efficient when all you need to store are values between 0 and 255.
+Using `Uint8ClampedArray` also means that any values greater than 255 or less than 0 are 'clamped'. If you used `Uint8Array` instead than a value would just have the top bits removed, turning 256 into 0, 257 to 1 and so on.
  
 Then we can make a function which will send this information to the lights - and can call it:
 
@@ -201,7 +202,7 @@ The full code (if you just want to copy it in all at once) is:
 
 ```
 SPI2.setup({baud:3200000, mosi:B15});
-var rgb = new Uint8Array(25*3);
+var rgb = new Uint8ClampedArray(25*3);
 
 var pos=0;
 
