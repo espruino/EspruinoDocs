@@ -5,8 +5,8 @@ Simple MQTT protocol wrapper for Espruino sockets.
 
 /** 'private' costants */
 var C = {
-  PACKET_ID      : 1,     // Bad...fixed packet id
-  PROTOCOL_LEVEL : 4 // MQTT protocol level
+  PACKET_ID      : 1, // Bad...fixed packet id
+  PROTOCOL_LEVEL : 4  // MQTT protocol level
 };
 
 /** Control packet types */
@@ -92,11 +92,11 @@ MQTT.prototype.mqttUid = (function() {
                .substring(1);
   }
   return function() {
-    return s4() + '-' + s4();
+    return s4() + s4() + s4();
   };
 })();
 
-/** Create escpae hex value from number */
+/** Create escaped hex value from number */
 MQTT.prototype.createEscapedHex = function( number ){
   return String.fromCharCode(parseInt( number.toString(16) , 16));
 };
@@ -211,14 +211,14 @@ MQTT.prototype.ping = function() {
 MQTT.prototype.createFlagsForConnection = function( options ){
   var flags = 0;
   flags |= ( this.username )? 0x80 : 0; 
-  flags |= ( this.password )? 0x40 : 0; 
+  flags |= ( this.username && this.password )? 0x40 : 0; 
   flags |= ( options.clean_session )? 0x02 : 0;
   return this.createEscapedHex( flags );
 };
 
 /** CONNECT control packet 
     Clean Session and Userid/Password are currently only supported
-    connect flag. Wills  is not
+    connect flag. Wills are not
     currently supported.
 */
 MQTT.prototype.mqttConnect = function(clean) {
@@ -233,9 +233,9 @@ MQTT.prototype.mqttConnect = function(clean) {
   var payload = this.mqttStr(this.client_id); 
   if( this.username ){
     payload += this.mqttStr( this.username );
-  }
-  if( this.password ){
-    payload += this.mqttStr( this.password );
+    if( this.password ){
+      payload += this.mqttStr( this.password );
+    }
   }
 
   return this.mqttPacket(cmd, 
