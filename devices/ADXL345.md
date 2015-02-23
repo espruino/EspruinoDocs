@@ -174,5 +174,5 @@ Buying
 -----
 
 ADXL345 modules can be purchased from many places:
-
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=ADXL345&_sacat=92074)
 * [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=adxl345)

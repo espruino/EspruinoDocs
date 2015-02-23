@@ -83,6 +83,6 @@ If you find the code returns NaN.  Check that you have used ``" " ``around the t
 Buying
 -----
 
-You can get this sensor from several different places, including:
-
+Thermistors are readily available from any electronics supplier, as well as other hobby sources like eBay.
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=thermistor&_sacat=92074)
 * [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=thermistor)

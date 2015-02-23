@@ -53,6 +53,6 @@ For example:
 Buying
 -----
 
-DHT11 modules can be purchased from many places:
-
+DHT11 parts and modules can be purchased from many places:
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=DHT11&_sacat=92074)
 * [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=dht11)
