@@ -57,18 +57,21 @@ Because the display is now powered directly from Espruino's GPIO pins, they must
 
 ```
 A2.write(0); // GND
+// A3.write(1); // light on
 A4.write(1); // VCC
 SPI1.setup({ baud: 1000000, sck:A5, mosi:A7 });
 
 var g;
 
 function onInit() {
-  g = require("PCD8544").connect(SPI1,A6,B0,B1, function() {
-    g.clear();
-    g.drawString("Hello",0,0);
-    g.drawLine(0,10,84,10);
-    g.flip();
-  });
+  setTimeout(function() {
+    g = require("PCD8544").connect(SPI1,A6,B0,B1, function() {
+      g.clear();
+      g.drawString("Hello",0,0);
+      g.drawLine(0,10,84,10);
+      g.flip();
+    });
+  }, 200);
 }
 
 onInit();
