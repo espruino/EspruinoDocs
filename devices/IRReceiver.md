@@ -2,7 +2,7 @@
 Infrared Remote Control Receiver Module
 ==================================
 
-* KEYWORDS: IR,Infrared,Received,Remote Control,TSOP34838,TSOP322,TSOP324,TSOP344,TSOP348
+* KEYWORDS: IR,Infrared,Received,Remote Control,TSOP34838,TSOP322,TSOP324,TSOP344,TSOP348,VS1838B
 
 Remove controls are handled by the [[IRReceiver.js]] module.
 
@@ -15,7 +15,7 @@ Wiring Up
 
 Just wire up as follows:
 
-| TSOP348, TSOP344 | TSOP322, TSOP324 | Espruino |
+| TSOP348, TSOP344, VS1838B | TSOP322, TSOP324 | Espruino |
 |--|--|--|
 | 1 (OUT) | 1 (OUT) | A0 |
 | 2 (GND) | 3 (GND) | GND |
@@ -26,22 +26,22 @@ Just wire up as follows:
 Software
 -------
 
-Simply use it as follows and it will return an integer code representing the button pressed on the Remote Control.
+Simply use it as follows and it will return a string representing the button pressed on the Remote Control.
 
 ```
 require("IRReceiver").connect(A0, function(code) {
-  if (code==351861118902700) ...
-  if (code==351861118886252) ...
+  if (code=="100000000000010001100001000111101") ...
+  if (code=="100000000000010000010100011010111") ...
 });
 ```
 
-To find the code, just put a print statement in the callback that prints the code, and point your remote at the Espruino board!
+To find the code, just put a `console.log` statement in the callback that prints the code, and point your remote at the Espruino board!
 
 If nothing is being reported, it may be that your remote control transmits by varying the pulse length rather than the gap between pulses (small remote control helicopters do this). If this is the case, specify `{usePulseLength:true}` as a third argument:
 
 ```
 require("IRReceiver").connect(A0, function(code) {
-  print(code.toString(2));
+  console.log(code);
 }, {usePulseLength:true});
 ```
 

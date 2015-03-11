@@ -11,17 +11,17 @@ After using the [[IRReceiver]] to look at the Infrared signals from the Helicopt
 
 ```
 require("IRReceiver").connect(A0, function(code) {
-  print(code.toString(2));
+  print(code);
 }, {usePulseLength:true});
 ```
 
 I worked out that the signals (after a start pulse) are as follows:
 
 ```
-0b111011100000000000 // on
-0b111000000000000000 // off
-0b111011100000011110 // left
-0b111011100000101000 // right
+111011100000000000 // on
+111000000000000000 // off
+111011100000011110 // left
+111011100000101000 // right
 ```
 
 So a 6 bit signed signal for left and right (bits 0-5) and a 3 bit unsigned signal for rotor power (bits 11-13), as well as 3 bits set at the top.

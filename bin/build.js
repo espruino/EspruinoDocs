@@ -178,7 +178,9 @@ function handleImages(file, contents) {
       }
       if (fs.existsSync(imagePath)) {
         var newPath = IMAGE_DIR+htmlLinks[file]+"_"+imageName;
-//        console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
+        newPath = newPath.replace(/\+/g,"_");
+        newPath = newPath.replace(/ /g,"_");
+        //console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
         fs.createReadStream(imagePath).pipe(fs.createWriteStream(path.resolve(HTML_DIR, newPath)));
         // now rename the image in the tag
         contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
