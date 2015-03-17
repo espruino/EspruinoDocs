@@ -3,10 +3,12 @@
  * AT commands with timeouts, and also to listen for their responses. It 
  * greatly simplifies the task of writing drivers for ESP8266 or GSM */
 
+/* TODO: something odd about Espruino on linux seems to mean that
+ * extra '\n' get inserted */
 exports.connect = function (ser) {
   var line = "";  
   var lineCallback;
-  var delim = "\r\n";
+  var delim = "\r";
   var handlers = {};
   var lineHandlers = {};
   ser.on("data", function(d) {    
@@ -20,10 +22,11 @@ exports.connect = function (ser) {
         }
       }
     }
+    if (line[0]=="\n") line=line.substr(1);
     var i = line.indexOf(delim);
     while (i>=0) {
       var l = line.substr(0,i);
-      console.log("]>"+JSON.stringify(l));
+      //console.log("]>"+JSON.stringify(l));
       if (l.length>0) {
         var handled = false;
         for (var h in lineHandlers)
@@ -34,10 +37,11 @@ exports.connect = function (ser) {
         if (!handled) {
           if (lineCallback) { 
             lineCallback(l); 
-          } else console.log(":"+JSON.stringify(l));
+          }// else console.log(":"+JSON.stringify(l));
         }
       }
       line = line.substr(i+delim.length);
+      if (line[0]=="\n") line=line.substr(1);
       if (line.length && handlers) {
         for (var h in handlers)
           if (line.substr(0,h.length)==h) {
@@ -61,7 +65,7 @@ exports.connect = function (ser) {
     /* send command - if timeout is set, we wait for a response. The callback may return 
      * a function if it wants that more data. Eg 'return this;' */
     "cmd" : function(command, timeout, callback) {
-      console.log("["+JSON.stringify(command));
+      //console.log("["+JSON.stringify(command));
       if (lineCallback) throw new Error("Command in progress");      
       ser.write(command);
       if (timeout) {
@@ -72,7 +76,7 @@ exports.connect = function (ser) {
         var cb = function(d) {          
           lineCallback = undefined;     
           var n;
-          if (callback && n=callback(d)) {
+          if (callback && (n=callback(d))) {
             // if callback returned a function, keep listening
             // and call it from lineCallback
             lineCallback = cb;
