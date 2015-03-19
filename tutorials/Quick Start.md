@@ -7,26 +7,25 @@ Quick Start
 
 [[http://youtu.be/32mewNGxax4]]
 
-For the best experience, please use one of our [Espruino Boards](/Order). Please [click here](/Order) to get one.
+For the best experience, please use one of [our Espruino Boards](/Order).
 
 If you have a kit from KickStarter and want to see what everything is, check out [[Espruino Kits]]...
 
 Plugging in
 ----------
 
-The Espruino board only has one USB connector - just plug it in with a Micro USB cable and you're done. If you're not using the Espruino board it may be more tricky. Please [see this page](/Other Boards) for more information.
 
-<span style="color:red;">**NOTE:** The Espruino board has no case and so the USB connector is completely unsupported. This means it is relatively delicate. Treat it carefully. Try and pull the connector straight out, and **do not** push down on the board when the connector is inserted, or try and move the board around using the cable.</span>
+* **Espruino Pico** - the Pico is designed to plug right into you computer's USB type A connector, or a USB extension lead. The components (not the text) should usually be facing upwards (so the 4 gold strips are facing the plastic in the USB socket).
+* **Original Espruino** - just plug the board in with a Micro USB cable and you're done. 
+* **Other Boards** - please [see this page](/Other Boards) for more information.
 
 **Windows 8.1 and XP Users:** Windows XP and 8.1 do not appear to have generic drivers for USB CDC devices, so you'll have to get them from ST via http://www.st.com/web/en/catalog/tools/PF257938
 
-**Other Windows Users:** Newer versions of windows have USB CDC devices installed already, however Windows may take a few minutes to check with Windows Update and install them.
+**Other Windows Users:** Most versions of Windows have USB CDC devices installed already, however it may take a few minutes to check with Windows Update and install them.
 
-**Linux users** to ensure that you have the the correct permissions to connect you'll need to copy [the file 45-espruino.rules](https://github.com/espruino/Espruino/blob/master/misc/45-espruino.rules) to `/etc/udev/rules.d`, and to ensure your user is in the 'plugdev' group (you can check by typing ```groups```). You add it by typing ```sudo adduser $USER plugdev``` and then logging out and back in.
+**Linux users** to ensure that you have the the correct permissions to connect as a normal user you'll need to copy [the file 45-espruino.rules](https://github.com/espruino/Espruino/blob/master/misc/45-espruino.rules) to `/etc/udev/rules.d` and to ensure your user is in the 'plugdev' group (you can check by typing ```groups```). You add it by typing ```sudo adduser $USER plugdev``` and then logging out and back in.
 
-**Mac OS X and Chromebook Users:** The board will just plug in and go!
-
-
+**Mac OS X and Chromebook Users:** The board will just plug in and work, without drivers!
 
 Set up a Terminal App
 ------------------
@@ -40,7 +39,7 @@ Now, to use the Terminal App:
 
 * Run **Espruino Web IDE** from Chrome's home screen (or the App Launcher)
 * Click the **Connect/Disconnect** icon in the top left
-* In the window that pops up, make sure the correct serial port is chosen (usually: Highest `COM#` number on Windows, `/dev/tty.usbmodem1234` on Mac, `ttyACM0/ttyUSB0` on Linux).
+* In the window that pops up, make sure the correct serial port is chosen (Usually the highest `COM#` number on Windows, `/dev/tty.usbmodem1234` on Mac, or `ttyACM0/ttyUSB0` on Linux).
 * If you don't see a port or can't get it working, please see [[Troubleshooting]]
 
 Please click the 'tour' button in the top right of the Web IDE for more information on how to get started.
@@ -61,7 +60,7 @@ Start writing code!
 
 Now you can type commands and they will be executed (you can also copy and paste them in to the terminal window).
 
-Try typing the following, and press 'Enter' after it:
+Try typing the following in the left-hand side of the Web IDE, and press 'Enter' after it:
 
 ```1+2```
 
@@ -71,9 +70,9 @@ Every time you type a command and press enter, it will be executed immediately. 
 
 ```digitalWrite(LED1,1)```
 
-Remember to enter capital letters where they appear above - JavaScript (and so Espruino) is case-sensitive, so for instance `digitalwrite` is different to `digitalWrite`.
+Remember to enter capital letters where they appear above - JavaScript (and so Espruino) is case-sensitive, so for instance `digitalwrite` won't work while `digitalWrite` will.
 
-```=undefined``` will be displayed, however the LED1 light on the board will light up. This allows you to set voltages that come out of the processor (1=3.3 volts, 0=0 volts). Instead of LED1, you can use any pin name, such as ```A1``` or ```C5```.
+```=undefined``` will be displayed, however the LED1 light on the board will light up. This allows you to set voltages that come out of the processor (1=3.3 volts, 0=0 volts). Instead of LED1, you can use any pin name, such as ```A1``` or ```B5```.
 
 Now, press the 'up' arrow. This will display the last command you ran, and will show the text ```digitalWrite(LED1,1)``` again. Press the left arrow until the cursor moves to the end of ```1```, press delete, then press ```0```. You can now step back to the end of the line (using the right arrow, or the 'end' key) and can press enter to execute the command (which will turn the LED off). If you press enter before the cursor is on the end of the line, it won't execute the command, but will split it on to two lines.
 
@@ -90,13 +89,13 @@ function toggle() {
 }
 ```
 
-When you hit 'enter' after the first line, the command wasn't executed, but instead Espruino just created a new line because there was an unclosed open bracket. If you don't define functions with an open bracket on the end of the line then they will be executed immediately, which is probably not what you want (If you really want to put your brackets on a new line, press 'alt-enter' at the end of the line `function toggle()` - but we don't recommend this).
+When you hit 'enter' after the first line, the command wasn't executed, but instead Espruino just created a new line because there was an unclosed open bracket. If you don't define functions with an open bracket on the end of the line then they will be executed immediately, which is probably not what you want (If you really want to put your brackets on a new line, press `Alt-Enter` at the end of the line `function toggle()` - but we don't recommend this).
 
-What if you created a new line by mistake? Just hit backspace. Or if you're totally confused and just want to start again, press Ctrl+C and the text you typed will be deleted.
+What if you created a new line by mistake? Just hit backspace. Or if you're totally confused and just want to start again, press `Ctrl+C` and the text you typed will be deleted.
 
-Once you've finally hit enter, the text ```=function () { ... }``` will be displayed in the terminal window. This means that your function (called 'toggle') is defined. So what does it do? The 'on' variable stores a value which is either true or false. The command ```on = !on;``` makes the value of 'on' true if it was false before, or false if it was true before. If you pronounce ```=``` as becomes, and ```!``` as 'not', reading the line makes much more sense.
+Once you've finally hit enter, the text `=function () { ... }` will be displayed in the terminal window. This means that your function (called `toggle`) is defined. So what does it do? The `on` variable stores a value which is either `true` or `false`. The command `on = !on;` makes the value of `on` true if it was false before, or false if it was true before. If you pronounce `=` as 'becomes', and `!` as 'not', reading the line makes much more sense.
 
-The next line takes the changed value of 'on' (either true of false) and applies it to the digital output (in this case LED number 1). Every time you use the toggle function, the value of 'on' toggles between true and false, and so turns the LED on or off.
+The next line takes the changed value of `on` (either true of false) and applies it to the digital output (in this case LED number 1). Every time you use the toggle function, the value of `on` toggles between true and false, and so turns the LED on or off.
 
 Now we can try it, type the following and hit enter:
 
@@ -126,34 +125,37 @@ function toggle() {
 
 Now, move the cursor to the end of the last line using the arrow keys, and press enter. This will execute the command, which will redefine the function - and now LED1 will light, then LED2, then LED1 - and so on.
 
-You can now change the speed to the lights, using this command:
+You can now change the speed the lights flash, using this command:
 
-```changeInterval(interval, 200);```
+```changeInterval(interval, 200)```
+
+This is the same as if you originally called `setInterval( ... , 200)` - `toggle` is now called every 200ms (5 times a second)
 
 And if you want your lights to stop flashing - just type this:
 
-```clearInterval(interval);```
+```clearInterval(interval)```
+
+Note that just typing `clearInterval()` without any arguments will clear *all* active intervals.
 
 If you want to start completely from scratch and wipe out everything you have done, just type:
 
 ```reset()```
 
-If you press the reset button on the board, Espruino will also reset. However we don't recommend this - on most boards this will reset the USB connection as well, so you may need to restart your terminal application, or in some cases even unplug and re-plug the device.
+If you press the reset button on the board (if your board has one), Espruino will also reset. However we don't recommend this - on most boards this will reset the USB connection as well, so you may need to restart your terminal application, or in some cases even unplug and re-plug the device.
 
 If you power off or reset Espruino using the reset button, it will lose all the code that you wrote. You can save the state of Espruino so this doesn't happen using the `save()` command. 
 
-The `save()` command saves the current state of the pins and on-chip peripherals, as well as all your functions, variables, watches and timers. The commands that you typed in previously won't be executed again though. If you want to execute some code when Espruino starts (for example you may need to initialise some external bit of hardware like an LCD), create a function called `onInit`. For example this bit of code lights the red, then green, then blue LED each time Espruino starts up:
+The `save()` command saves the current state of the pins and on-chip peripherals, as well as all your functions, variables, watches and timers. The commands that you typed in previously *won't be executed again though*. If you want to execute some code when Espruino starts (for example you may need to initialise some external bit of hardware like an LCD), create a function called `onInit`. For example this bit of code lights the red, then green LEDs each time Espruino starts up:
 
 ```
 function onInit() {
-  digitalWrite([LED1,LED2,LED3],0b100);
-  setTimeout("digitalWrite([LED1,LED2,LED3],0b010);", 1000)
-  setTimeout("digitalWrite([LED1,LED2,LED3],0b001);", 2000)
-  setTimeout("digitalWrite([LED1,LED2,LED3],0);", 3000)
+  digitalWrite([LED1,LED2], 2);
+  setTimeout("digitalWrite([LED1,LED2], 1);", 1000)
+  setTimeout("digitalWrite([LED1,LED2], 0);", 2000)
 }
 ```
 
-If you do manage to save something to Espruino that causes it not to work, don't worry - you can easily fix it. Just see the [[Troubleshooting]] page.
+If you do manage to save something to Espruino that causes it not to work, don't worry - you can easily recover it. Just see the [[Troubleshooting]] page.
 
 Now you've got an idea how to use Espruino:
 
@@ -161,6 +163,5 @@ Now you've got an idea how to use Espruino:
 * If you have one of the Espruino Kits, you can [click here](/Espruino Kits) to see the kit contents and to get information on how to use them
 * Check out [[Modules]] to see which libraries of code are available to use
 * See how to use the more advanced features of the [[Web IDE]]
-* Instantly [[Search]] all the Espruino website's documentation
+* Instantly [[Search]] all the Espruino website's documentation (using the box in the top right)
 * If you've got a question, please check out our [[Forum]]
-

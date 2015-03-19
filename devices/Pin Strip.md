@@ -2,7 +2,7 @@
 Pin and Socket Strip
 ====================
 
-* KEYWORDS: Pin,Socket,Strip,0.1,Dupont
+* KEYWORDS: Pin,Pins,Socket,Strip,0.1,Dupont,Header
 
 ![Pin Strip](strip.jpg)
 
