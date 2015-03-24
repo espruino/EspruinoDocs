@@ -6,8 +6,44 @@ Espruino Kits
 
 If you supported the Espruino KickStarter campaign, you may have pledged for one of the kits of parts.
 
-If so, this handy table shows you what you got, and provides links to information on how to use it.
+If so, these handy tables show you what you got, and provides links to information on how to use it.
 
+Espruino Pico KickStarter
+----------------------
+
+|                                   | Starter Kit | Geek's Toy Kit | Ultimate Toy Kit |
+|-----------------------------------|-------------|----------------|------------------|
+| [Espruino Pico](/Pico)            | 1           |  3             |  10              |
+| [[Breadboard]]                    | 1           |                |  1               |
+| Jumper Wires                      | 10          |                |  140             |
+| Terminal Block                    | 2           |                |  2               |
+| [[PCD8544]] LCD Screen            | 1           |  1             |  2               |
+| [[WS2811]] MultiColour LEDs       | 10          |  10            |  20              |
+| Double [Relay](Relays) Module     | 1           |  1             |  1               |
+| Jumpers                           | 4           |                |  4               |
+| [Infrared Receiver](/IRReceiver)  | 1           |  1             |  2               |
+| Infrared LED                      | 1           |  1             |  5               |
+| Red LED                           | 1           |  1             |  1               |
+| Resistors                         | 1           |  1             |  1               |
+| Light Sensor ([[LDR]])            | 1           |  1             |  2               |
+| Piezo [[Speaker]]                 | 1           |  1             |  1               |
+| [Pushbutton](/Button)             | 2           |  2             |  2               |
+| [[Vibration]] Sensor              | 1           |  2             |  2               |
+| [[433Mhz]] Radio TX + RX          |             |  1             |  2               |
+| [[DS18B20]] Temperature Sensor    |             |  1             |  1               |
+| Micro [[Servo Motors]]            |             |  2             |  2               |
+| [[Pyroelectric]] Sensor           |             |  1             |  1               |
+| [[HC-SR04]] Ultrasonic Distance Sensor |        |  1             |  1               |
+| [FET](/mosfets)                   |             |  1             |  1               |
+| [[MFRC522]] NFC                   |             |  1             |  1               |
+| [Stepper Motor](/Stepper+Motors)  |             |  1             |  1               |
+| [[ESP8266]] WiFi                  |             |                |  1               |
+| [[WIZnet]] W550io Ethernet        |             |                |  1               |
+| [[KeyPad]]                        |             |                |  1               |
+
+
+Original Espruino KickStarter
+-------------------------
 
 |                                   | Low Power Wireless | Multicolour Lights | Starter | Wireless Experimenter | WiFi Wireless | Ultimate WiFi |
 |-----------------------------------|--------------------|--------------------|---------|-----------------------|---------------|---------------|
@@ -30,7 +66,7 @@ If so, this handy table shows you what you got, and provides links to informatio
 | [[KeyPad]]                        |                    |                    |         |                       |               | 1             |
 | LiPo [[Battery]] and Charger      |                    |                    |         |                       |               | 1             |
 | [Relay](Relays) Module            |                    |                    | 1       |                       |               | 1             |
-| [[Pyroelectric]] Sensor               |                    |                    |         |                       |               | 1             |
+| [[Pyroelectric]] Sensor           |                    |                    |         |                       |               | 1             |
 
 Please note, both the Relay Module and Pyroelectric sensor are 'free' extras that were not advertised as being part of the KickStarter kits.
 
@@ -51,6 +87,9 @@ Please note, both the Relay Module and Pyroelectric sensor are 'free' extras tha
 [![thumbnail](strip.jpg)](/Pin Strip)
 [![thumbnail](ultrasonic.jpg)](/HC-SR04)
 [![thumbnail](WS2811.jpg)](/WS2811)
+[![thumbnail](piezo.jpg)](/Speaker)
+[![thumbnail](vibration.jpg)](/Vibration)
+[![thumbnail](button.jpg)](/Button)
 
 
 Buying

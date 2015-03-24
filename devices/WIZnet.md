@@ -36,7 +36,20 @@ Just wire up J1 as follows. J2 does not need wiring up.
 | 4 | MISO | B4 |
 | 5 | SCK | B3 |
 | 6 | CS | B2 |
-| 7 | 3V3 | 3V3|
+| 7 | 3V3 | 3V3 |
+| 8 | 3V3 |   &nbsp; |
+
+On the Espruino Pico, the [adaptor shim](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Adaptors) uses the following connections:
+
+| WIZ550io J1 | Name | Espruino |
+|-------------|------|----------|
+| 1 | GND |     |
+| 2 | GND | GND |
+| 3 | MOSI | B15 |
+| 4 | MISO | B14 |
+| 5 | SCK | B13 |
+| 6 | CS | B10 |
+| 7 | 3V3 | 3V3 |
 | 8 | 3V3 |   &nbsp; |
 
 Software
@@ -46,6 +59,13 @@ Just connect as follows:
 
 ```
 var eth = require("WIZnet").connect();
+```
+
+Or for the Espruino Pico adaptor:
+
+```
+SPI2.setup({ mosi:B15, miso:B14, sck:B13 });
+var eth = require("WIZnet").connect(SPI2, B10);
 ```
 
 You can check your IP with:
