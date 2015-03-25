@@ -47,9 +47,9 @@ This will create a 1kHz beep. You can stop the beeping by setting the output to 
 Next, we'll create a function that plays whatever frequency we give it. If we give it 0, it will stop the buzzing.
 
 ```
-function freq(freq) { 
-  if (freq==0) digitalWrite(BUZZER,0);
-  else analogWrite(BUZZER, 0.5, { freq: freq } );
+function freq(f) { 
+  if (f===0) digitalWrite(BUZZER,0);
+  else analogWrite(BUZZER, 0.5, { freq: f } );
 }
 ```
  
@@ -69,24 +69,28 @@ But now, we want to play some music! We'll need the following 2 websites:
 The second website uses the letters a-g for lower pitch notes, and A-G for higher-pitch notes. We'll make a function which goes through a string of characters, one at a time, and plays the corresponding pitch note:
  
 ```
+var pitches = {
+  'a':220.00,
+  'b':246.94,
+  'c':261.63,
+  'd':293.66,
+  'e':329.63,
+  'f':349.23,
+  'g':392.00,
+  'A':440.00,
+  'B':493.88,
+  'C':523.25,
+  'D':587.33,
+  'E':659.26,
+  'F':698.46,
+  'G':783.99
+};
+
 function step() {
   var ch = tune[pos];
-  if (ch!=undefined) pos++;
-  if (ch==' ' || ch==undefined) freq(0); // off
-  else if (ch=='a') freq(220.00);
-  else if (ch=='b') freq(246.94);
-  else if (ch=='c') freq(261.63);
-  else if (ch=='d') freq(293.66);
-  else if (ch=='e') freq(329.63);
-  else if (ch=='f') freq(349.23);
-  else if (ch=='g') freq(392.00);
-  else if (ch=='A') freq(440.00);
-  else if (ch=='B') freq(493.88);
-  else if (ch=='C') freq(523.25);
-  else if (ch=='D') freq(587.33);
-  else if (ch=='E') freq(659.26);
-  else if (ch=='F') freq(698.46);
-  else if (ch=='G') freq(783.99);
+  if (ch !== undefined) pos++;
+  if (ch in pitches) freq(pitches[ch]);
+  else freq(0); // off
 }
 ```
  
