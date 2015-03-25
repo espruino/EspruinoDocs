@@ -2,7 +2,31 @@
 Espruino Kits
 ==============
 
-* KEYWORDS: Espruino,Kit,Kits,KickStarter,Reward
+* KEYWORDS: Espruino,Kit,Kits,KickStarter,Reward,Ultimate,Geek,Starter
+
+[![thumbnail](battery.jpg)](/Battery)
+[![thumbnail](bluetooth.jpg)](/Bluetooth)
+[![thumbnail](breadboard.jpg)](/Breadboard)
+[![thumbnail](CC3000.jpg)](/CC3000)
+[![thumbnail](DS18B20.jpg)](/DS18B20)
+[![thumbnail](espruino.jpg)](/EspruinoBoard)
+[![thumbnail](GL5537.jpg)](/LDR)
+[![thumbnail](irprox.jpg)](/InfraredProximity)
+[![thumbnail](keypad.jpg)](/KeyPad)
+[![thumbnail](lcd.jpg)](/PCD8544)
+[![thumbnail](NRF24.jpg)](/NRF24L01P)
+[![thumbnail](pyro.jpg)](/Pyroelectric)
+[![thumbnail](relay.jpg)](/Relays)
+[![thumbnail](servo.jpg)](/Servo Motors)
+[![thumbnail](strip.jpg)](/Pin Strip)
+[![thumbnail](ultrasonic.jpg)](/HC-SR04)
+[![thumbnail](WS2811.jpg)](/WS2811)
+[![thumbnail](piezo.jpg)](/Speaker)
+[![thumbnail](vibration.jpg)](/Vibration)
+[![thumbnail](button.jpg)](/Button)
+[![thumbnail](apa106.jpg)](/WS2811)
+[![thumbnail](irreceiver.jpg)](/IRReceiver)
+
 
 If you supported the Espruino KickStarter campaign, you may have pledged for one of the kits of parts.
 
@@ -69,27 +93,6 @@ Original Espruino KickStarter
 | [[Pyroelectric]] Sensor           |                    |                    |         |                       |               | 1             |
 
 Please note, both the Relay Module and Pyroelectric sensor are 'free' extras that were not advertised as being part of the KickStarter kits.
-
-[![thumbnail](battery.jpg)](/Battery)
-[![thumbnail](bluetooth.jpg)](/Bluetooth)
-[![thumbnail](breadboard.jpg)](/Breadboard)
-[![thumbnail](CC3000.jpg)](/CC3000)
-[![thumbnail](DS18B20.jpg)](/DS18B20)
-[![thumbnail](espruino.jpg)](/EspruinoBoard)
-[![thumbnail](GL5537.jpg)](/LDR)
-[![thumbnail](irprox.jpg)](/InfraredProximity)
-[![thumbnail](keypad.jpg)](/KeyPad)
-[![thumbnail](lcd.jpg)](/PCD8544)
-[![thumbnail](NRF24.jpg)](/NRF24L01P)
-[![thumbnail](pyro.jpg)](/Pyroelectric)
-[![thumbnail](relay.jpg)](/Relays)
-[![thumbnail](servo.jpg)](/Servo Motors)
-[![thumbnail](strip.jpg)](/Pin Strip)
-[![thumbnail](ultrasonic.jpg)](/HC-SR04)
-[![thumbnail](WS2811.jpg)](/WS2811)
-[![thumbnail](piezo.jpg)](/Speaker)
-[![thumbnail](vibration.jpg)](/Vibration)
-[![thumbnail](button.jpg)](/Button)
 
 
 Buying

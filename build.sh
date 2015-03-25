@@ -1,13 +1,23 @@
 #!/bin/bash
 # Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. 
 cd `dirname $0`
+DIR=`pwd`
 mkdir -p html/refimages
+mkdir -p html/boards
 rm -f html/*.html
 rm -f html/*.js
 rm -f html/refimages/*
+rm -f html/boards/*
+
+cd ../Espruino
+python scripts/build_board_docs.py PICO_R1_3 pinout
+mv boards/PICO_R1_3.html $DIR/html/boards
+python scripts/build_board_docs.py ESPRUINOBOARD pinout
+mv boards/ESPRUINOBOARD.html $DIR/html/boards
+cd $DIR
 
 # Built reference docs and references.json
-node bin/build.js
+node bin/build.js || exit 1
 
 WEBSITE=~/workspace/espruinowebsite
 

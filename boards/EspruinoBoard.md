@@ -26,6 +26,11 @@ Features
 * 44 GPIO Pins, capable of: 26 PWM Pins, 16 ADC Pins, 3 USARTs, 2 SPI, 2 I2C and 2 DACs
 * Prototype area which can be used in many different configurations, for example: Servo Headers, Up to 14x 500mA outputs, 2x .NET Gadgeteer connectors, or NRF24L01+ wireless transceiver modules
 
+Pinout
+------
+
+* APPEND_PINOUT: ESPRUINOBOARD
+
 Layout
 -----
 

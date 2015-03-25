@@ -1,6 +1,7 @@
 *~
 html/*.html
 html/refimages/*
+html/boards/*
 html/keywords.js
 node_modules
 .idea
