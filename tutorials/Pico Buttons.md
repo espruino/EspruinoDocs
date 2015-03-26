@@ -3,7 +3,7 @@ Pico Buttons
 ===========
 
 * KEYWORDS: Pico,LCD,Hello World
-* USES: Pico,Button
+* USES: Pico,Button,PicoStarterKit
 
 Introduction
 -----------

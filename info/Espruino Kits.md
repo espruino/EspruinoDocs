@@ -65,6 +65,14 @@ Espruino Pico KickStarter
 | [[WIZnet]] W550io Ethernet        |             |                |  1               |
 | [[KeyPad]]                        |             |                |  1               |
 
+### Starter Kit tutorials
+
+These are suitable for the Ultimate Toy Kit, as well as the Geek Kit (if you own breadboard and Jumper Wires).
+
+* APPEND_USES: PicoStarterKit
+
+There are plenty of other [[Tutorials]] that can be used with the Pico, but those above deal with exactly the contents of the Starter Kit.
+
 
 Original Espruino KickStarter
 -------------------------

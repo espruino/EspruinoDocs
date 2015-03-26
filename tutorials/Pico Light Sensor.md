@@ -3,7 +3,7 @@ Pico Light Sensor
 ===============
 
 * KEYWORDS: Pico,LDR,Light,Brightness
-* USES: Pico,LDR
+* USES: Pico,LDR,PicoStarterKit
 
 Introduction
 -----------
@@ -27,8 +27,8 @@ Wiring Up
 We're going to set up a very simple [Voltage Divider](http://en.wikipedia.org/wiki/Voltage_divider) circuit, with a known resistor on one side and the [Light Dependent Resistor](/LDR) on the other.
 
 * Plug your Espruino Pico into a breadboard with the USB connector on the left-hand side. 
-* With a Jumper wire, connect the bottom left pin to the '-' rail of the breadboard
-* With a Jumper wire, connect the bottom pin 3rd from the left to the '+' rail of the breadboard
+* With a Black Jumper wire, connect the bottom left pin (GND) to the '-' rail of the breadboard
+* With a Red Jumper wire, connect the bottom pin 3rd from the left (3.3v) to the '+' rail of the breadboard
 * Connect the [LDR](/LDR) between the top right pin (A5) and the '-' rail
 * Connect the 10,000 Ohm resistor between the top right pin (A5) and the '+' rail
 

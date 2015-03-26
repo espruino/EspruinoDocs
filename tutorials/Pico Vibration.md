@@ -3,7 +3,7 @@ Pico Vibration
 ===============
 
 * KEYWORDS: Pico,Vibration,SW18010P,Shake
-* USES: Pico,Vibration,SW18010P
+* USES: Pico,Vibration,SW18010P,PicoStarterKit
 
 Introduction
 -----------

@@ -3,7 +3,7 @@ Pico Piano
 =========
 
 * KEYWORDS: Pico,Piano,Sound,Music,Stylophone,Waveform
-* USES: Pico,Speaker,Waveform
+* USES: Pico,Speaker,Waveform,PicoStarterKit
 
 Introduction
 -----------

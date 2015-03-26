@@ -75,6 +75,10 @@ Links to tutorials that you can do using **just** the Espruino board:
 
 * APPEND_USES: Only Espruino Board
 
+Tutorials using the Espruino Board:
+
+* APPEND_USES: EspruinoBoard
+
 Power
 ----
 

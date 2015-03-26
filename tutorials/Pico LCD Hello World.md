@@ -3,7 +3,7 @@ Pico LCD Display Hello World
 =========================
 
 * KEYWORDS: Pico,LCD,Hello World
-* USES: Pico,PCD8544
+* USES: Pico,PCD8544,PicoStarterKit
 
 Introduction
 -----------

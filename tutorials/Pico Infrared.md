@@ -3,7 +3,7 @@ Pico Infrared Transmit and Receive
 ===============
 
 * KEYWORDS: Pico,Infrared,IR,VS1838B
-* USES: Pico,IRReceiver,VS1838B
+* USES: Pico,IRReceiver,VS1838B,PicoStarterKit
 
 Introduction
 -----------

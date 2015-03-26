@@ -23,6 +23,15 @@ Pinout
 
 * APPEND_PINOUT: PICO_R1_3
 
+<span style="color: red">**Note:** There is no built-in fuse on the Espruino Pico. You should check that your circuit does not contain shorts with a volt meter *before you plug it into USB*, or you may damage your board.</span>
+
+Tutorials
+--------
+
+Tutorials using the Pico Board:
+
+* APPEND_USES: Pico
+
 Layout
 -----
 
