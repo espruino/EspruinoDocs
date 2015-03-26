@@ -64,6 +64,8 @@ In order to connect to a battery, you can use either the pins marked `Bat` and `
 <a name="usb"></a>Alternate USB connectors
 -------------------------
 
+![Micro and Mini USB](microusb.jpg)
+
 On the rear of the Pico Board under the while block of silkscreen, there are pads for both Micro and Mini USB connectors. To use these, *carefully* scratch off the silkscreen until you have copper tracks, and solder on the connector. 
 
 The connectors you need are very standard parts. While some parts are listed below, many other parts from many different manufacturers would work perfectly well.
