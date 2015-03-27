@@ -2,7 +2,7 @@
 Interfacing to a PC
 =================
 
-* KEYWORDS: Interfacing,PC,Computer,Connect,USB
+* KEYWORDS: Interfacing,PC,Computer,Connect,Control,USB
 
 You can use Espruino directly from your PC, Mac or Raspberry Pi to turn things on and off or measure values.
 
@@ -32,7 +32,7 @@ On Mac, Linux or Raspberry Pi
 
 This is very similar to windows as long as you know the device name of Espruino.
 
-  **Note:** On Linux, devices will be `/dev/ttyACM0`, `ttyAMA0` / etc, but on MacOS you'll want to use the `/dev/cu.usmodem1234` device name.
+  **Note:** On Linux, devices will be `/dev/ttyACM0`, `ttyAMA0`, etc, but on MacOS you'll want to use the `/dev/cu.usmodem1234` device name.
 
 ```Bash
 echo "LED1.set()" > /dev/ttyACM0
