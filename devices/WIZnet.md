@@ -23,6 +23,15 @@ You can also [get a recent Espruino Git build](http://www.espruino.com/binaries/
 
 To build yourself, follow [the instructions here](http://www.github.com/espruino/Espruino) and build with `WIZNET=1 RELEASE=1 ESPRUINO_1V3=1 make`.
 
+Espruino Pico Shim
+----------------
+
+![WIZnet W550io shim](shim.jpg)
+
+The Shim available for the Espruino Pico helps to adapt the W550io to fit onto the Pico. Please see the video below:
+
+[[http://youtu.be/YZzKH_41WUU]]
+
 Wiring Up
 --------
 

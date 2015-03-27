@@ -12,13 +12,13 @@ On Windows
 You can write to Espruino very easily with the Windows Command Prompt. For instance to turn an LED on, the command is:
 
 ```Batchfile
-echo LED1.set() > //./.COM10
+echo LED1.set() > \\.\COM10
 ```
 
 Where COM10 is the COM port of your device. If you want to wrap this up in a shortcut to go on the desktop, just enter the following as the shortcut location:
 
 ```Batchfile
-cmd.exe /c "echo LED1.set() > //./.COM10"
+cmd.exe /c "echo LED1.set() > \\.\COM10"
 ```
 
 If you're not connecting by USB, you may have to set up the baud rate first. You have to do this with: 
