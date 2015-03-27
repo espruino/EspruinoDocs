@@ -113,6 +113,8 @@ digitalRead(B0); // turn off the output (also check if USB powered)
 pinMode(B0, "af_opendrain");analogWrite(B0, 0.5, {freq:100}); // output a 100Hz 50% duty cycle square wave
 ```
 
+The jumper can be shorted by scribbling over it with a normal HB pencil. See the [[Pico FET Output]] tutorial for an example.
+
 Buying
 ------
 

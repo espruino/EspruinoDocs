@@ -82,7 +82,9 @@ require("IRReceiver").connect(B6, function(code) {
 });
 ```
 
-If you `Send to Espruino` now, you should be able to turn LED1 on and off using the two buttons on the remote control. You can now write any code you want that'll be executed when you press the buttons on the remote control!
+If you `Send to Espruino` now, you should be able to turn LED1 on and off using the two buttons on the remote control. 
+
+You could add more `if` statements to turn different things on and off. You could change `LED1` to `A8`, connect a [Relay Module](/Relays) to pin `A8`, and then turn anything on and off from your remote control.
 
 
 Software - Transmitting
