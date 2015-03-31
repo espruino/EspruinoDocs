@@ -28,43 +28,66 @@ var wifi = require("ESP8266").connect(Serial2, function() {
 
 var at;
 var socks = [];
-var sockData = [];
+var sockData = ["","","","",""];
+var MAXSOCKETS = 5;
 
 var netCallbacks = {
-  create : function(host,port) {
+  create : function(host, port) {
     /* Create a socket and return its index, host is a string, port is an integer.
-    If host isn't defined, create a server socket */    
-    var sckt = 0;
-    while (socks[sckt]!==undefined) sckt++; // find free socket
-    socks[sckt] = "Wait";
-    sockData[sckt] = "";
-    at.cmd('AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n',10000, function(d) {      
-      if (d=="OK") {
-        at.registerLine("Linked", function() {
-          at.unregisterLine("Linked");        
+    If host isn't defined, create a server socket */  
+    if (host===undefined) {
+      sckt = MAXSOCKETS;
+      socks[sckt] = "Wait";
+      sockData[sckt] = "";
+      at.cmd("AT+CIPSERVER=1,"+port+"\r\n", 10000, function(d) {
+        if (d=="OK") {
           socks[sckt] = true;
-        });
-        at.registerLine("Unlink", function() {
-          at.unregisterLine("Unlink");
+        } else {
           socks[sckt] = undefined;
-        });        
-      } else {
-        socks[sckt] = undefined;
-        throw new Error("CIPSTART failed");
-      }
-    });
+          throw new Error("CIPSERVER failed");
+        }
+      });
+      return MAXSOCKETS;
+    } else {  
+      var sckt = 0;
+      while (socks[sckt]!==undefined) sckt++; // find free socket
+      if (sckt>=MAXSOCKETS) throw new Error("No free sockets");
+      socks[sckt] = "Wait";
+      sockData[sckt] = "";
+      at.cmd('AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n',10000, function(d) {      
+        if (d=="OK") {
+          at.registerLine("Linked", function() {
+            at.unregisterLine("Linked");        
+            socks[sckt] = true;
+          });
+          at.registerLine("Unlink", function() {
+            at.unregisterLine("Unlink");
+            socks[sckt] = undefined;
+          });        
+        } else {
+          socks[sckt] = undefined;
+          throw new Error("CIPSTART failed");
+        }
+      });
+    }
     return sckt;
   },
   /* Close the socket. returns nothing */
   close : function(sckt) {    
     at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(d) {
-      //console.log("?"+JSON.stringify(d));
+      socks[i] = undefined;
+      console.log("?"+JSON.stringify(d));
     });
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
   accept : function(sckt) {
-    
-    console.log("Accept",sckt);
+    // console.log("Accept",sckt);
+    for (var i=0;i<MAXSOCKETS;i++)
+      if (sockData[i] && socks[i]===undefined) {
+        console.log("Socket accept "+i,JSON.stringify(sockData[i]),socks[i]);
+        socks[i] = true;
+        return i;
+      }
     return -1;
   },
   /* Receive data. Returns a string (even if empty).
