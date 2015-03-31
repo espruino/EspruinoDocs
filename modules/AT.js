@@ -11,9 +11,10 @@ exports.connect = function (ser) {
   var delim = "\r";
   var handlers = {};
   var lineHandlers = {};
+  var waiting = [];  
   ser.on("data", function(d) {    
     line += d;
-    //console.log("] "+JSON.stringify(line)+" <--- "+JSON.stringify(d));
+    console.log("] "+JSON.stringify(line)+" <--- "+JSON.stringify(d));
     if (handlers) {
       for (var h in handlers) {
         if (line.substr(0,h.length)==h) {
@@ -59,14 +60,18 @@ exports.connect = function (ser) {
         line:line,
         lineCallback:lineCallback,
         handlers:handlers,
-        lineHandlers:lineHandlers
+        lineHandlers:lineHandlers,
+        waiting:waiting,
       };
     },
     /* send command - if timeout is set, we wait for a response. The callback may return 
      * a function if it wants that more data. Eg 'return this;' */
     "cmd" : function(command, timeout, callback) {
-      //console.log("["+JSON.stringify(command));
-      if (lineCallback) throw new Error("Command in progress");      
+      if (lineCallback) {
+        waiting.push([command, timeout, callback])
+        return;
+      }
+      console.log("["+JSON.stringify(command));
       ser.write(command);
       if (timeout) {
         var tmr = setTimeout(function() {
@@ -82,6 +87,10 @@ exports.connect = function (ser) {
             lineCallback = cb;
             callback = n;
           } else clearTimeout(tmr);
+          if (lineCallback===undefined && waiting.length>0) {
+            var w = waiting.shift();
+            at.cmd(w[0], w[1], w[2]);
+          }
         };
         lineCallback = cb;
       }
