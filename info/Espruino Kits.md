@@ -43,6 +43,7 @@ Espruino Pico KickStarter
 | Terminal Block                    | 2           |                |  2               |
 | [[PCD8544]] LCD Screen            | 1           |  1             |  2               |
 | [[WS2811]] MultiColour LEDs       | 10          |  10            |  20              |
+| 47uF Capacitor                    | 1           |  1             |  1               |
 | Double [Relay](Relays) Module     | 1           |  1             |  1               |
 | Jumpers                           | 4           |                |  4               |
 | [Infrared Receiver](/IRReceiver)  | 1           |  1             |  2               |
