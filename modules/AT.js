@@ -61,7 +61,7 @@ exports.connect = function (ser) {
         lineCallback:lineCallback,
         handlers:handlers,
         lineHandlers:lineHandlers,
-        waiting:waiting,
+        waiting:waiting
       };
     },
     /* send command - if timeout is set, we wait for a response. The callback may return 
