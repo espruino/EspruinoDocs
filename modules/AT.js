@@ -6,6 +6,7 @@
 /* TODO: something odd about Espruino on linux seems to mean that
  * extra '\n' get inserted */
 exports.connect = function (ser) {
+  var dbg = false;
   var line = "";  
   var lineCallback;
   var delim = "\r";
@@ -14,7 +15,7 @@ exports.connect = function (ser) {
   var waiting = [];  
   ser.on("data", function(d) {    
     line += d;
-    console.log("] "+JSON.stringify(line)+" <--- "+JSON.stringify(d));
+    if (dbg) console.log("] "+JSON.stringify(line)+" <--- "+JSON.stringify(d));
     if (handlers) {
       for (var h in handlers) {
         if (line.substr(0,h.length)==h) {
@@ -56,6 +57,7 @@ exports.connect = function (ser) {
   
   var at = {
     "debug" : function() {
+      dbg = true;
       return {
         line:line,
         lineCallback:lineCallback,
@@ -65,13 +67,13 @@ exports.connect = function (ser) {
       };
     },
     /* send command - if timeout is set, we wait for a response. The callback may return 
-     * a function if it wants that more data. Eg 'return this;' */
+     * a function if it wants more data. Eg 'return function(d) {};' */
     "cmd" : function(command, timeout, callback) {
       if (lineCallback) {
         waiting.push([command, timeout, callback])
         return;
       }
-      console.log("["+JSON.stringify(command));
+      if (dbg) console.log("["+JSON.stringify(command));
       ser.write(command);
       if (timeout) {
         var tmr = setTimeout(function() {
@@ -95,11 +97,11 @@ exports.connect = function (ser) {
         lineCallback = cb;
       }
     },
-    // send a command, but also register for a certain type of response (key)
+    // send a command, but also register for a certain type of response lines (key)
     "cmdReg" : function(command, timeout, key, keyCallback, finalCallback) {
-      at.register(key, keyCallback);
+      at.registerLine(key, keyCallback);
       at.cmd(command, timeout, function(d) {
-        at.unregister(key);
+        at.unregisterLine(key);
         finalCallback(d);
       });
     },

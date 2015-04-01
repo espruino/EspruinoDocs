@@ -3,7 +3,7 @@ Quick Start
 ==========
 
 * KEYWORDS: Quick Start,Getting Started
-* USES: Only Espruino Board
+* USES: Only Espruino Board,Pico
 
 [[http://youtu.be/32mewNGxax4]]
 
@@ -50,9 +50,9 @@ Software Updates
 
 Espruino is gaining features and improvements on an almost daily basis. If you've just got your Espruino Board, we *highly* recommend that you update the firmware before you start using it.
 
-When you first use the Espruino Web IDE and connect (see above) you'll probably see a yellow warning marker in the top right saying that new firmware is available. Click on it (or click 'Settings', then 'Flasher'), click 'Flash Firmware', and follow the instructions. There is no risk of damaging your Espruino board, however the firmware update process may take a few minutes to complete. If you have problems, check out the [[Troubleshooting]] section.
+When you first use the Espruino Web IDE and connect (see above) you'll probably see a yellow warning marker in the top right saying that new firmware is available. Click on it (or click the `Settings` icon, then `Flasher`), click 'Flash Firmware' and follow the instructions. If you're given a drop-down list of different firmwares to choose from and you don't need network support, you can choose any firmware. There is no risk of damaging your Espruino board, however the firmware update process may take a few minutes to complete. If you have problems, check out the [[Troubleshooting]] guide.
 
-**Note:** If you're not using the Web IDE, follow the instructions on the [[Download]] page to flash the latest version (but this is significantly more difficult).
+**Note:** If you're not using the Web IDE, follow the instructions on the [[Download]] page to flash the latest version (however this is significantly more difficult).
  
 
 Start writing code!

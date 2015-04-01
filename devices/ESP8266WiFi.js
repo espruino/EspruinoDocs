@@ -30,6 +30,7 @@ var at;
 var socks = [];
 var sockData = ["","","","",""];
 var MAXSOCKETS = 5;
+var ENCR_FLAGS = ["open","wep","wpa_psk","wpa2_psk","wpa_wpa2_psk"];
 
 var netCallbacks = {
   create : function(host, port) {
@@ -76,7 +77,7 @@ var netCallbacks = {
   close : function(sckt) {    
     at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(d) {
       socks[i] = undefined;
-      console.log("?"+JSON.stringify(d));
+      //console.log("?"+JSON.stringify(d));
     });
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
@@ -157,56 +158,73 @@ var wifiFuncs = {
       if (d=="ATE0") return cb;
       if (d=="OK") {
         at.cmd("AT+CIPMUX=1\r\n",1000,function(d) { // turn on multiple sockets
-          if (d!="OK") throw Error("CIPMUX failed: "+d);
-          if (callback) callback();
+          if (d!="OK") callback("CIPMUX failed: "+d);
+          else callback(null);
         });
       }
-      else throw Error("ATE0 failed: "+d);
+      else callback("ATE0 failed: "+d);
     }
     at.cmd("ATE0\r\n",1000,cb);
   },  
   "reset" : function(callback) {
     var cb = function(d) {
       //console.log(">>>>>"+JSON.stringify(d));
-      if (d=="ready") wifiFuncs.init(callback);
-      else if (d===undefined) throw new Error("No 'ready' after AT+RST");
+      if (d=="ready") setTimeout(function() { wifiFuncs.init(callback); }, 1000);      
+      else if (d===undefined) callback("No 'ready' after AT+RST");
       else return cb;
     }
     at.cmd("AT+RST\r\n", 10000, cb);
   },
   "getVersion" : function(callback) {
     at.cmd("AT+GMR\r\n", 1000, function(d) {
-      callback(d);
+      callback(null,d);
     });
   },
   "connect" : function(ssid, key, callback) {
     at.cmd("AT+CWMODE=1\r\n", 1000, function(cwm) {
-      if (cwm!="no change" && cwm!="OK") throw new Error("CWMODE failed: "+cwm);
-      at.cmd("AT+CWJAP="+JSON.stringify(ssid)+","+JSON.stringify(key)+"\r\n", 20000, function(d) {
-        if (d!="OK") throw new Error("WiFi connect failed: "+d);
-        callback();        
+      if (cwm!="no change" && cwm!="OK") callback("CWMODE failed: "+cwm);
+      else at.cmd("AT+CWJAP="+JSON.stringify(ssid)+","+JSON.stringify(key)+"\r\n", 20000, function(d) {
+        if (d!="OK") callback("WiFi connect failed: "+d);
+        else callback(null);        
       });
     });
   },
   "getAPs" : function (callback) {
     var aps = [];
     at.cmdReg("AT+CWLAP\r\n", 5000, "+CWLAP:",
-              function(d) { aps.push(d.slice(8,-1).split(",")); },
-              function(d) { callback(aps); });
+              function(d) { 
+                var ap = d.slice(8,-1).split(","); 
+                aps.push({ ssid : JSON.parse(ap[1]),
+                           enc: ENCR_FLAGS[ap[0]],                           
+                           signal: parseInt(ap[2]),
+                           mac : JSON.parse(ap[3]) }); 
+              },
+              function(d) { callback(null, aps); });
   },
   "getConnectedAP" : function(callback) {
     var con;
     at.cmdReg("AT+CWJAP?\r\n", 1000, "+CWJAP:",
-              function(d) { con=d.slice(7); },
-              function(d) { callback(con); });
+              function(d) { con=JSON.parse(d.slice(7)); },
+              function(d) { callback(null, con); });
+  },
+  "createAP" : function(ssid, key, channel, enc, callback) {
+    var encn = enc ? ENCR_FLAGS.indexOf(enc) : 0;
+    if (encn<0) callback("Encryption type "+enc+" not known - "+ENCR_FLAGS);
+    else at.cmd("AT+CWSAP="+JSON.stringify(ssid)+","+JSON.stringify(key)+","+channel+","+encn+"\r\n", 5000, function(cwm) {
+      if (cwm!="OK") callback("CWSAP failed: "+cwm);
+      else callback(null);        
+    });
   },
   "getIP" : function(callback) {
-     at.cmd("AT+CIFSR\r\n", 1000, function(d) {
-       var ip = d;
-       return function(d) {
-         if (d!="OK") throw new Error("CIFSR failed: "+d); 
-         return callback(ip);
-       }
+    at.cmd("AT+CWMODE=2\r\n", 1000, function(cwm) {
+      if (cwm!="no change" && cwm!="OK") callback("CWMODE failed: "+cwm);
+       at.cmd("AT+CIFSR\r\n", 1000, function(d) {
+         var ip = d;
+         return function(d) {
+           if (d!="OK") return callback("CIFSR failed: "+d); 
+           return callback(null, ip);
+         }
+       });
      });
    }
 };
