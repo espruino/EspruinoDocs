@@ -47,7 +47,7 @@ Espruino Pico KickStarter
 | Double [Relay](Relays) module     | 1           |  1             |  1               |
 | Jumpers (for use with [Relay](Relays) module) | 4 |              |  4               |
 | [Infrared Receiver](/IRReceiver)  | 1           |  1             |  2               |
-| Infrared LED                      | 1           |  1             |  5               |
+| Infrared LED                      | 1           |  1             |  4               |
 | Red LED                           | 1           |  1             |  1               |
 | Resistors                         | 1           |  1             |  1               |
 | Light Sensor ([[LDR]])            | 1           |  1             |  2               |
