@@ -30,7 +30,7 @@ Espruino Kits
 
 If you supported the Espruino KickStarter campaign, you may have pledged for one of the kits of parts.
 
-If so, these handy tables show you what you got, and provides links to information on how to use it.
+If so, these tables show you what you got and provide links to information on how to use each part.
 
 Espruino Pico KickStarter
 ----------------------
@@ -44,8 +44,8 @@ Espruino Pico KickStarter
 | [[PCD8544]] LCD Screen            | 1           |  1             |  2               |
 | [[WS2811]] MultiColour LEDs       | 10          |  10            |  20              |
 | 47uF Capacitor                    | 1           |  1             |  1               |
-| Double [Relay](Relays) Module     | 1           |  1             |  1               |
-| Jumpers                           | 4           |                |  4               |
+| Double [Relay](Relays) module     | 1           |  1             |  1               |
+| Jumpers (for use with [Relay](Relays) module) | 4 |              |  4               |
 | [Infrared Receiver](/IRReceiver)  | 1           |  1             |  2               |
 | Infrared LED                      | 1           |  1             |  5               |
 | Red LED                           | 1           |  1             |  1               |
@@ -68,7 +68,9 @@ Espruino Pico KickStarter
 
 ### Starter Kit tutorials
 
-These are suitable for the Ultimate Toy Kit, as well as the Geek Kit (if you own breadboard and Jumper Wires).
+**Note:** In the reference card that comes with your starter kit, the [IR Receiver](/IRReceiver) is incorrectly referred to as a transmitter.
+
+These are suitable for the Starter Kit, Ultimate Toy Kit, as well as the Geek Kit (if you own breadboard and Jumper Wires).
 
 * APPEND_USES: PicoStarterKit
 
