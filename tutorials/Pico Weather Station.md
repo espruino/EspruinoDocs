@@ -19,7 +19,7 @@ You'll Need
 
 * An Espruino [[Pico]]
 * A [Nokia 5110 LCD](/PCD8544)
-* An [Nokia 5110 LCD](/PCD8544)
+* An [ESP8266 WiFi module](/ESP8266)
 * [[Breadboard]] (unless soldering)
 
 Wiring Up
