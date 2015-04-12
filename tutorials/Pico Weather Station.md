@@ -2,7 +2,7 @@
 Pico Weather Station
 =================
 
-* KEYWORDS: Pico,LCD,Weather
+* KEYWORDS: Pico,LCD,Weather,RSS,Feed
 * USES: Pico,PCD8544,ESP8266
 
 Introduction
