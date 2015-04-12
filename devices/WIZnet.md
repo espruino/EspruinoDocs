@@ -48,7 +48,7 @@ Just wire up J1 as follows. J2 does not need wiring up.
 | 7 | 3V3 | 3V3 |
 | 8 | 3V3 |   &nbsp; |
 
-On the Espruino Pico, the [adaptor shim](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Adaptors) uses the following connections:
+On the Espruino Pico, the [adaptor shim](/Shims) uses the following connections:
 
 | WIZ550io J1 | Name | Espruino |
 |-------------|------|----------|

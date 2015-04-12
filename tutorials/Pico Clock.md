@@ -14,6 +14,8 @@ Both the [[Pico]] and the original [Espruino Board](/EspruinoBoard) have one bui
 
 **Note:** While the Pico has an RTC built in, by default it doesn't have an accurate watch crystal and so uses its internal oscillator which isn't that accurate. It won't keep proper time over a month, but in conjunction with some other time source (an internet connection, or [the NPL time signal](http://en.wikipedia.org/wiki/Time_from_NPL)) it'll be just fine.
 
+![Pico Clock](Pico Clock.jpg)
+
 You'll Need
 ----------
 
