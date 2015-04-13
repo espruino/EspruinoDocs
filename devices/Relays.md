@@ -34,7 +34,7 @@ The connections are as follows:
 | K2      | Output 2 Pole |
 |         | Output 2 Normally Open |
 
-### 4x1 pin srip
+### 4x1 pin strip
 
 | Marking | Function |
 | ------- | -------- |
@@ -46,6 +46,16 @@ The connections are as follows:
 ### 3x1 pin srip
 
 This contains a jumper between VCC and VCC-JD. This means that the relay will be powered from the same 5V signal as the Opto-isolators and LEDs.
+
+### Connecting to the Pico
+
+![Relay Module on Pico](pico.jpg)
+
+![Jumpers on Relay Module](jumperwire.jpg)
+
+The Espruino Pico [Starter Kit](/Espruino+Kits) comes with breadboard and male Jumper Wires. To connect to the relay, take the 4 supplied black jumpers and place them on the 4 male pins of the Relay Module. You can then push the Jumper Wires into the top of them.
+
+We'd suggest that you connect Relay GND to Espruino `GND`, and relay VCC to Espruino `VBAT`. The two inputs can then be connected to any of the IO pins.
 
 Using 
 -----

@@ -23,6 +23,15 @@ You can also [get a recent Espruino Git build](http://www.espruino.com/binaries/
 
 To build yourself, follow [the instructions here](http://www.github.com/espruino/Espruino) and build with `WIZNET=1 RELEASE=1 ESPRUINO_1V3=1 make`.
 
+Espruino Pico Shim
+----------------
+
+![WIZnet W550io shim](shim.jpg)
+
+The Shim available for the Espruino Pico helps to adapt the W550io to fit onto the Pico. Please see the video below:
+
+[[http://youtu.be/YZzKH_41WUU]]
+
 Wiring Up
 --------
 
@@ -36,7 +45,20 @@ Just wire up J1 as follows. J2 does not need wiring up.
 | 4 | MISO | B4 |
 | 5 | SCK | B3 |
 | 6 | CS | B2 |
-| 7 | 3V3 | 3V3|
+| 7 | 3V3 | 3V3 |
+| 8 | 3V3 |   &nbsp; |
+
+On the Espruino Pico, the [adaptor shim](/Shims) uses the following connections:
+
+| WIZ550io J1 | Name | Espruino |
+|-------------|------|----------|
+| 1 | GND |     |
+| 2 | GND | GND |
+| 3 | MOSI | B15 |
+| 4 | MISO | B14 |
+| 5 | SCK | B13 |
+| 6 | CS | B10 |
+| 7 | 3V3 | 3V3 |
 | 8 | 3V3 |   &nbsp; |
 
 Software
@@ -46,6 +68,13 @@ Just connect as follows:
 
 ```
 var eth = require("WIZnet").connect();
+```
+
+Or for the Espruino Pico adaptor:
+
+```
+SPI2.setup({ mosi:B15, miso:B14, sck:B13 });
+var eth = require("WIZnet").connect(SPI2, B10);
 ```
 
 You can check your IP with:

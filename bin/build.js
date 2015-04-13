@@ -12,6 +12,7 @@ var BASEDIR = path.resolve(__dirname, "..");
 var HTML_DIR = BASEDIR+"/html/";
 var IMAGE_DIR = "refimages/";
 
+var ESPRUINO_DIR = path.resolve(BASEDIR, "../Espruino");
 var FUNCTION_KEYWORD_FILE = path.resolve(BASEDIR, "../Espruino/function_keywords.js");
 var KEYWORD_JS_FILE = path.resolve(HTML_DIR, "keywords.js");
 
@@ -178,7 +179,9 @@ function handleImages(file, contents) {
       }
       if (fs.existsSync(imagePath)) {
         var newPath = IMAGE_DIR+htmlLinks[file]+"_"+imageName;
-//        console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
+        newPath = newPath.replace(/\+/g,"_");
+        newPath = newPath.replace(/ /g,"_");
+        //console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
         fs.createReadStream(imagePath).pipe(fs.createWriteStream(path.resolve(HTML_DIR, newPath)));
         // now rename the image in the tag
         contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
@@ -384,7 +387,8 @@ markdownFiles.forEach(function (file) {
    appendMatching(/^\* APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, "No tutorials use this yet.");
    // try and handle module documentation
    for (i in contentLines) {
-     var match = contentLines[i].match(/^\* APPEND_JSDOC: (.*)/);
+     var match;
+     match = contentLines[i].match(/^\* APPEND_JSDOC: (.*)/);
      if (match!=null) {
        var jsfilename = file.substr(0, file.lastIndexOf("/")+1) + match[1];       
        var js = fs.readFileSync(jsfilename).toString();
@@ -400,11 +404,23 @@ markdownFiles.forEach(function (file) {
 
    contents = contentLines.join("\n");
    
-   // Do inference on Markdown file
+   // Get Markdown
    inferMarkdownFile(file, contents);
-
-  
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
+
+   // Check for Pinouts
+        
+   if (file=="boards/Pico.md") console.log("############################################################### PICO");
+   var regex = /<ul>\n<li>APPEND_PINOUT: (.*)<\/li>\n<\/ul>/;
+   var match = html.match(regex);
+   if (match!=null) {
+     var htmlfilename = HTML_DIR+"boards/" + match[1] + ".html";       
+     console.log("APPEND_PINOUT "+htmlfilename);       
+     var pinout = fs.readFileSync(htmlfilename).toString();
+     html = html.replace(regex, pinout);
+   }
+
+   //
    github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+path.relative(BASEDIR, file);
    html = '<div style="min-height:700px;">' + html + '</div>'+
           '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues/new?title='+file+'">let us know</a>.</p>';

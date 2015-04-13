@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2013 Spence Konde. See the file LICENSE for copying permission. -->
 EEPROMs (and related technologies)
-----
+==============================
 * KEYWORDS: EEPROM, eeprom, fram, FRAM, memory, rom, storage
 
 An EEPROM is a form of byte-addressable non-volatile storage, allowing a project based on Espruino to save small amounts of persistant data. 

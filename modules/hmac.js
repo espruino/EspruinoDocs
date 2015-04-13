@@ -90,10 +90,9 @@ hmac.prototype.digest = function() {
 };
 
 hmac.prototype.hexdigest = function() {
-  var i, s = "", h = this.digest();
-  for(i = 0; i < h.length; i++) {
-    s += h[i].charCodeAt(0).toString(16);
-  }
+  var i, v, s = "", h = this.digest();
+  for(i = 0; i < h.length; i++)
+    s += (256+h.charCodeAt(i)).toString(16).substr(-2);
   return s;
 };
 
