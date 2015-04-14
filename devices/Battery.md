@@ -29,5 +29,5 @@ Buying
 -----
 
 * Olimex [battery](https://www.olimex.com/Products/Power/BATTERY-LIPO1400mAh/) and [charger](https://www.olimex.com/Products/Power/USB-uLiPo/), or [selection of batteries](https://www.olimex.com/Products/Power/)
-* Buy general purpose charger on [eBay](http://www.ebay.com/sch/i.html?_nkw=b6+imax) 
+* Buy general purpose charger on [eBay](http://www.ebay.com/sch/i.html?_nkw=genuine+b6+imax) 
 * See [this page](/EspruinoBoard#connecting_batteries) for details on where to buy the connectors
