@@ -208,25 +208,25 @@ var wifiFuncs = {
               function(d) { callback(null, con); });
   },
   "createAP" : function(ssid, key, channel, enc, callback) {
-    var encn = enc ? ENCR_FLAGS.indexOf(enc) : 0;
-    if (encn<0) callback("Encryption type "+enc+" not known - "+ENCR_FLAGS);
-    else at.cmd("AT+CWSAP="+JSON.stringify(ssid)+","+JSON.stringify(key)+","+channel+","+encn+"\r\n", 5000, function(cwm) {
-      if (cwm!="OK") callback("CWSAP failed: "+cwm);
-      else callback(null);        
+    at.cmd("AT+CWMODE=2\r\n", 1000, function(cwm) {
+      if (cwm!="no change" && cwm!="OK") callback("CWMODE failed: "+cwm);
+      var encn = enc ? ENCR_FLAGS.indexOf(enc) : 0;
+      if (encn<0) callback("Encryption type "+enc+" not known - "+ENCR_FLAGS);
+      else at.cmd("AT+CWSAP="+JSON.stringify(ssid)+","+JSON.stringify(key)+","+channel+","+encn+"\r\n", 5000, function(cwm) {
+        if (cwm!="OK") callback("CWSAP failed: "+cwm);
+        else callback(null);        
+      });
     });
   },
   "getIP" : function(callback) {
-    at.cmd("AT+CWMODE=2\r\n", 1000, function(cwm) {
-      if (cwm!="no change" && cwm!="OK") callback("CWMODE failed: "+cwm);
-       at.cmd("AT+CIFSR\r\n", 1000, function(d) {
-         var ip = d;
-         return function(d) {
-           if (d!="OK") return callback("CIFSR failed: "+d); 
-           return callback(null, ip);
-         }
-       });
-     });
-   }
+    at.cmd("AT+CIFSR\r\n", 1000, function(d) {
+      var ip = d;
+      return function(d) {
+        if (d!="OK") return callback("CIFSR failed: "+d); 
+        return callback(null, ip);
+      }
+    });
+  }
 };
 
 
