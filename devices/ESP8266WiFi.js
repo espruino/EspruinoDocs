@@ -76,7 +76,7 @@ var netCallbacks = {
   /* Close the socket. returns nothing */
   close : function(sckt) {    
     at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(d) {
-      socks[i] = undefined;
+      socks[sckt] = undefined;
       //console.log("?"+JSON.stringify(d));
     });
   },
