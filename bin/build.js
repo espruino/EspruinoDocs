@@ -249,12 +249,29 @@ fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(
  files */
 //Load tern inference thingybob
 var infer = require("./tern/infer.js");
+
 // require("../../tern/plugin/node.js"); // for handling node.js 'require'?
 var defs = [JSON.parse(fs.readFileSync(path.resolve(BASEDIR, "bin/espruino.json")))];
 // Our list of Reference URLs that are used
 var urls = {};
 
+
 function inferFile(filename, fileContents, baseLineNumber) {
+  function addLink(url, node) {
+    if (!(url in urls)) urls[url] = [];
+    var lineNumber = baseLineNumber + require("acorn").getLineInfo(fileContents, node.start).line;
+    var link = "/"+htmlLinks[filename]+"#line=";
+    var found = false;
+    for (var i in urls[url]) {
+      if (urls[url][i].url.indexOf(link)==0) {
+        urls[url][i].url += ","+lineNumber;
+        found = true;
+      }
+    }
+    if (!found)
+      urls[url].push({ url : link+lineNumber, title : fileTitles[filename]});
+  }
+
   var cx = new infer.Context(defs, this);
   infer.withContext(cx, function() {
     //console.log(JSON.stringify(filename));
@@ -264,6 +281,24 @@ function inferFile(filename, fileContents, baseLineNumber) {
     require("acorn/util/walk").simple(ast, { "CallExpression" : function(n) {
      var expr = infer.findExpressionAt(n.callee);
      var type = infer.expressionType(expr);
+
+     // Try and handle 'require(...).foo) - this doesn't work for 
+     // var fs = require("fs") though.
+     if (n.callee.type=="MemberExpression" && 
+         n.callee.object.type=="CallExpression" &&
+         n.callee.object.callee.type=="Identifier" &&
+         n.callee.object.callee.name=="require" &&
+         n.callee.object.arguments.length==1 &&
+         n.callee.object.arguments[0].type=="Literal") {
+       var lib = n.callee.object.arguments[0].value;
+       var name = n.callee.property.name;       
+       if (defs[0][lib] && defs[0][lib][name] && defs[0][lib][name]["!url"]) { 
+//         console.log(">>>>>>>>>>>>>>>"+lib+":"+name);       
+//         console.log(defs[0][lib][name], defs[0][lib][name]["!url"]);
+         addLink(defs[0][lib][name]["!url"], n);
+       }
+     }
+
      // search prototype chain of type to try and find our call
      if (type.forward && type.types) {
        var name = type.forward[0].propName;
@@ -279,21 +314,7 @@ function inferFile(filename, fileContents, baseLineNumber) {
      }
      if (type && type.types && type.types.length>0) {
        var url = type.types[0].url;
-       if (url) {
-         if (!(url in urls)) urls[url] = [];
-         var lineNumber = baseLineNumber + require("acorn").getLineInfo(fileContents, n.start).line;
-         var link = "/"+htmlLinks[filename]+"#line=";
-         var found = false;
-         for (var i in urls[url]) {
-           if (urls[url][i].url.indexOf(link)==0) {
-             urls[url][i].url += ","+lineNumber;
-             found = true;
-           }
-         }
-             
-         if (!found)
-           urls[url].push({ url : link+lineNumber, title : fileTitles[filename]});
-       }
+       if (url) addLink(url, n);
      }
     }});
   });

@@ -32,6 +32,7 @@ function minify(type, callback) {
   'output_format': 'text',
   'output_info': type,
   //'warning_level' : 'QUIET',
+  "warning_level":"VERBOSE",
   'js_code' : js
   });
 
