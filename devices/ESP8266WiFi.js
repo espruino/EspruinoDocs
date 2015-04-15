@@ -75,7 +75,7 @@ var netCallbacks = {
   },
   /* Close the socket. returns nothing */
   close : function(sckt) {    
-    at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(d) {
+    at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(/*d*/) {
       socks[sckt] = undefined;
       //console.log("?"+JSON.stringify(d));
     });
@@ -85,7 +85,7 @@ var netCallbacks = {
     // console.log("Accept",sckt);
     for (var i=0;i<MAXSOCKETS;i++)
       if (sockData[i] && socks[i]===undefined) {
-        console.log("Socket accept "+i,JSON.stringify(sockData[i]),socks[i]);
+        //console.log("Socket accept "+i,JSON.stringify(sockData[i]),socks[i]);
         socks[i] = true;
         return i;
       }
