@@ -1,5 +1,5 @@
 <!--- Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. -->
-I2C EEPROMs (like AT24C256)
+EasyVR Voice Recognition Board
 ========================
 
 * KEYWORDS: Module,EasyVR,Voice
