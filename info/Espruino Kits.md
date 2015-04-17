@@ -70,7 +70,7 @@ Espruino Pico KickStarter
 
 **Note:** In the reference card that comes with your starter kit, the [IR Receiver](/IRReceiver) is incorrectly referred to as a transmitter.
 
-These are suitable for the Starter Kit, Ultimate Toy Kit, as well as the Geek Kit (if you own breadboard and Jumper Wires).
+<a name="pico_tutorials"></a>These are suitable for the Starter Kit, Ultimate Toy Kit, as well as the Geek Kit (if you own breadboard and Jumper Wires).
 
 * APPEND_USES: PicoStarterKit
 
