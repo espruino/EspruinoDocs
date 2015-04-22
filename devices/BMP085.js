@@ -39,11 +39,9 @@ function BMP085(/*=I2C*/_i2c, _mode) {
   var id = this.read8(0xD0);
   if(id != 0x55) {
     console.log("Bad ID of: " + id);
+    return null;
   }
-  else
-  {
     this.readCoefficients();
-  }
 }
 
 /* Read 2 bytes from register reg
