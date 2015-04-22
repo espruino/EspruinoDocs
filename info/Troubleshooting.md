@@ -9,34 +9,46 @@ What follows is a quick list of potential problems and solutions. If your proble
 
 
 Getting Started
--------------
+=============
 
-### My board doesn't seem to be recognized by my computer
+## My board doesn't seem to be recognized by my computer
 
-#### On the Espruino Board
+### On the Espruino Pico Board
+
+Hold down the button, and then plug the board in while keeping it held (then release):
+
+* **If the Red and Green LEDs lit brightly for a fraction of a second, then they start 'pulsing'** everything is fine - you're now in bootloader mode
+* **If the Red LED flashes briefly when plugging in**, the button wasn't pressed, or isn't working.
+* **If nothing lights up at all**, there is a bad USB cable/connection, so no power
+* **If the Red and Green LEDs stay lit brightly** the bootloader has started, but no USB connection could be made. This could be due to a bad cable (try plugging the board in directly), or if that doesn't work it could be drivers - see the next troubleshooting headings.
+
+
+### On the Original Espruino Board
 
 Hold down the RST button. Do the blue and red lights glow dimly? If not, there's a problem with your USB cable as power isn't getting to Espruino.
 
 Hold down BTN1, and then press and release RST while keeping BTN1 held. The Blue and Red LEDs should now light brightly for a fraction of a second, and the Blue LED should be pulsing. If not, there is some issue with USB. Try another USB cable (it's surprising how often this is at fault, *even if it works for other devices*) and if that doesn't work, see the next troubleshooting headings.
 
-#### On other boards
+### On other boards
 
 If you've bought a different board, it won't come pre-installed with Espruino. You'll have to go to the [[Download]] page and follow the instructions there in order to flash the correct software onto it.
 
 
-### My board doesn't appear as a USB Serial port in Windows XP / Windows 8.1
+## My board doesn't appear as a USB Serial port in Windows XP / Windows 8.1
 
-These versions of Windows don't come with the correct drivers preinstalled. You'll need to install [ST's VCP drivers](http://www.st.com/web/en/catalog/tools/PF257938) first. 
+These versions of Windows don't come with the correct drivers preinstalled. You'll need to install [ST's VCP drivers](http://www.st.com/web/en/catalog/tools/PF257938) first.
+
+**NOTE:** It's not enough to just open the ZIP file and run the installer, you have to then go to the installation directory and run the correct installer as well. See the readme file in the ZIP above for more information.
 
 
-### My board doesn't appear in Windows Control Panel's 'Devices and Printers' page.
+## My board doesn't appear in Windows Control Panel's 'Devices and Printers' page.
 
 If you use many COM port devices in Windows, you may find that the COM port numbers quickly get so high that Windows refuses to add more. If this is the case, you'll have to follow the instructions here: [http://superuser.com/questions/408976/how-do-i-clean-up-com-ports-in-use]
 
 If not, see the first troubleshooting item above.
 
 
-### In Windows, the COM port appears in the Web IDE, but I can't connect to it
+## In Windows, the COM port appears in the Web IDE, but I can't connect to it
 
 This is probably because you've reset or unplugged the Espruino board while the Web IDE was connected to it. Chrome hangs on to the serial port and stops Espruino from reconnecting to it.
 
@@ -45,32 +57,40 @@ Try unplugging Espruino and then completely close Chrome (close all windows, not
 In order to stop this happening in the future, click 'Disconnect' before resetting or unplugging the board. We're hoping that a new version of Chrome due out soon will help to fix this problem.
 
 
-### In Windows, Espruino was working and now it won't connect
+## In Windows, Espruino was working and now it won't connect
 
 See above.
 
 
-### I tried to reflash my Espruino Board, and now it won't work
+## I tried to reflash my Espruino Board, and now it won't work
 
 If you have Windows, check that it's not one of the problems described above.
 
-Try reflashing again (by holding down BTN1 when RST is released, you should always be able to get the glowing blue LED).
+| Board |   |
+|-------|---|
+| Pico | Try reflashing again by holding down BTN1 as the board is plugged in. You should always be able to get the pulsing Green and Red LEDs. |
+| Espruino Board | Try reflashing again by holding down BTN1 and pressing and releasing RST. You should always be able to get the pulsing Blue LED. |
 
-As Espruino itself won't work, the IDE won't know what type of board it is supposed to flash so you'll have to look up the firmware manually. Just head to [the Espruino binaries site](http://www.espruino.com/binaries/?C=M;O=D) and look for the most recent (nearest the top) file named ```espruino_1v##_espruino_1r#.bin``` where ```1r#``` is the revision number written on the back of your Espruino board. Copy the link to the file, and paste it into the Espruino Web IDE.
+As Espruino itself won't work, the IDE won't know what type of board it is supposed to flash so you'll have to choose the correct board from the list of available boards when flashing.
 
-### My board appears as a mouse or joystick in Windows Control Panel's 'Devices and Printers' page.
+## My board appears as a mouse or joystick in Windows Control Panel's 'Devices and Printers' page.
 
-This may happen if you are not working with an original Espruino board and haven't yet installed the Espuino firmware. Some boards - especially the Discovery boards are automatically recognized by Windows as a completely different kind of device. Install the firmware as described on the Download page, disconnect the board a reconnect it again. 
+This may happen if you are using an ST Discovery board and haven't yet installed the Espuino firmware. Some of these boards are automatically recognized by Windows as a completely different kind of device (because of the 'demo software' that comes installed). Install the firmware as described on the Download page, disconnect the board a reconnect it again. 
 
 Using Espruino
--------------
+============
 
-### Espruino keeps responding `=undefined` to my commands
+## Espruino keeps responding `=undefined` to my commands
 
 This is actually fine - Espruino writes what your command returned, so if you execute a command that doesn't return a value, `=undefined` gets returned.
 
+## I typed a command and Espruino says `Function --- not found!`
 
-### I typed `save()` and it succeeded, but my code isn't loaded at power on
+Have you got the capitalisation correct?
+
+ JavaScript is case sensitive, so `digitalWrite(LED1,1)` will work, but commands like `DigitalWrite(LED1,1)` or `digitalwrite(LED1,1)` won't.
+
+## I typed `save()` and it succeeded, but my code isn't loaded at power on
 
 You could try typing `dump()` to see if your code has actually been saved. If it hasn't, it's possible that **BTN1** or the pin it is connected to was held down while Espruino boots (as this stops Espruino from loading saved code).
 
@@ -79,41 +99,62 @@ You could try typing `load()` to force Espruino to load its saved program.
 If you want to execute certain commands at power-on, put those commands in a function called `onInit` and then type `save()`.
 
 
-### Espruino stopped working after I typed `save()`
+## Espruino stopped working after I typed `save()`
 
 You might have written some code that stops Espruino from working, and Espruino loads it at power on and breaks itself each time. To stop this:
 
+
+### On Espruino Pico
+
+* Unplug the board from USB
+* Plug the board in and immediately press the button (but not *before* you've plugged the board in)
+* Wait 2 seconds
+* Release the button
+
+If you get pulsing Red/Green LEDs, it's because you actually pressed the button too soon. Try again and leave a bit more of a gap.
+
+### On Original Espruino Board
+
 * Press the **RST** button
-* Release the **RST** button and immediately press **BTN!**
+* Release the **RST** button and immediately press **BTN1**
 * Wait 2 seconds
 * Release **BTN1** 
 
-This will make Espruino start without loading your saved code. You can then connect with the Web IDE and type `save()` to overwrite your saved program. 
-
 If you get a glowing blue LED, it's because you pressed **BTN1** too quickly after pressing **RST**. Try again and leave a bit more of a gap.
 
-There's [a video of how to do this on your board here](https://www.youtube.com/watch?v=N4ueQTHDrcs)
+### Finally
+
+This will make Espruino start without loading your saved code. You can then connect with the Web IDE and type `save()` to overwrite your saved program with the 'empty' state that Espruino is now in.
+
+There's [a video of how to do this on the original Espruino board here](https://www.youtube.com/watch?v=N4ueQTHDrcs)
 
 
-### When powered on, Espruino just shows a glowing blue LED
+## When powered on, Espruino just shows a pulsing LED (blue on the Original Espruino board, or red/green LEDs on the Pico)
 
-This is the Espruino Bootloader. It starts on the Espruinop Board when *BTN1* or the pin it is connected to is held down while the reset button is released. To enter normal mode, just press and release **RST** while **BTN1** is not pressed.
+This is the Espruino Bootloader. It starts on the Espruino Board when *BTN1* or the pin it is connected to is held down while the reset button is released. 
+
+To enter normal mode, just:
+
+| Board |    |
+|-------|----|
+| Pico | Unplug from USB and re-plug, without pressing the button. |
+| Espruino Board | Press and release **RST** while **BTN1** is not pressed. |
 
 
-### I typed `save()` but my connected device doesn't work at power on
+## I typed `save()` but my connected device doesn't work at power on
 
 Some devices (such as LCDs and WiFi) require their own initialisation code which Espruino can't remember. To do that initialisation at boot time, write a function called `onInit` which contains the initialisation code for your device. After typing `save()`, it will be executed at power on or reset.
 
 
-### I typed `save()` but Espruino won't work (or stops working quickly) when powered from a computer (only a USB power supply, battery, or the computer when the Web IDE is running)
+## I typed `save()` but Espruino won't work (or stops working quickly) when powered from a computer (it only works from a USB power supply, battery, or the computer when the Web IDE is running)
 
-This is because you're printing information to the console.
+This is because you're printing information to the console (on the Pico this may happen even without printing information - it'll be fixed soon).
 
 When you are not connected to a computer via USB, Espruino writes any console data to the Serial port. However when you are connected to a computer, Espruino writes down USB. **If no terminal application is running on your computer**, it won't accept any incoming data down USB. When Espruino fills up its output buffer, it waits for the computer to accept the data rather than throwing it away, and this is what causes your program not to work.
 
 To fix this, either remove your `console.log` and `print` statements, or explicitly set the console to be on the Serial port at startup with `function onInit() { Serial1.setConsole(); }`. However the second option will mean that you will no longer be able to program Espruino from USB unless you reset it.
 
-### When I type `dump()` the code that is displayed isn't exactly the code that I entered
+## When I type `dump()` the code that is displayed isn't exactly the code that I entered
 
 When you send code to Espruino, it is executed immediately. That means if you say:
 
@@ -142,7 +183,7 @@ To get around this, it's best to put code that you intend to run every time Espr
 
 **Note:** The problem with `setInterval` happens because Espruino is trying to turn its internal state back into a human readable form. If you just type `save()` then the correct state will still be saved.
 
-### I've pasted code into the left-hand side of the Web IDE and it doesn't work
+## I've pasted code into the left-hand side of the Web IDE and it doesn't work
 
 There could be several reasons for this, but the likely one is that you have formatted your code in a way that doesn't work well with a command-line interface. 
 
@@ -179,7 +220,9 @@ if (true) {
 
 If you're writing code in the right-hand side of the Web IDE, the Web IDE should try and detect the different formatting and insert a special newline character (Alt-Enter) which will fix it for you. If you're using other tools to send data to Espruino then this may not automatically happen for you though.
 
-### I'm using an unofficial board and some of the examples don't work
+**Note:** If you use `require(...)` on the left-hand side and the module is not already part of Espruino, you may find that you get a 'Module not found' error. In this case, you should add the `require(...)` command to the right-hand pane of the Web IDE and click `Send to Espruino`. This will automatically load the module into Espruino, allowing you to use it from the left hand side.
+
+## I'm using an unofficial board and some of the examples don't work
 
 This could be for several reasons:
 
@@ -187,4 +230,4 @@ This could be for several reasons:
 * Many of the other boards don't have enough memory for all the functionality of the Espruino Board, so things (such as Waveform, HTTP, and sometimes even Graphics) have had to be removed.
 * As we only make any money from the Espruino Boards, we can't afford to spend time implementing functionality on other boards - so even if the board you have has enough memory, the functionality the example is using may still not be implemented.
 
-In short, if you want to be sure that all the functionality you want is implemented, support us and buy an Espruino board.
+In short, if you want to be sure that all the functionality you want is implemented, support us and [buy an Espruino board!](/Order)

@@ -50,6 +50,7 @@ function onInit() {
   
 function draw(usage) {
   if (!initialised || usage===undefined) return;
+  usage = parseFloat(usage.toString().replace(",",".")); // deal with numbers in the format `1,234` as opposed to `1.234`
   g.clear();
   g.drawString("CPU Usage: "+usage+"%");
   // draw 'needle'
@@ -67,7 +68,6 @@ function draw(usage) {
   }
   g.flip(); 
 }
-
 ```
 
 When it is sent, type `save()` on the right-hand side. This will save the code into Espruino itself so it always gets run when it powers on. You should see a little CPU usage meter!
@@ -86,21 +86,23 @@ Unforunately every Operating system is different - pick yours from below:
 Open a command prompt and try and run the following:
 
 ```
-echo -e "draw(`ps -A -o pcpu | tail -n+2 | paste -sd+ - | bc`)\n"
+echo -e "draw(\"`ps -A -o pcpu | tail -n+2 | paste -sd+ - | bc`\")\n"
 ```
 
-This should print something like `draw(13.0338)` - it's looking at the file `/proc/stat` and working out what your current CPU usage is. Next step is to 'pipe' the data straight to Espruino:
+This should print something like `draw("13.0338")` - it's looking at the file `/proc/stat` and working out what your current CPU usage is. We're putting the number in a string so that even if your computer's language uses `,` as a decimal point, the Pico will still be able to parse it.
+
+Next step is to 'pipe' the data straight to Espruino:
 
 On Linux:
 
 ```
-echo -e "draw(`ps -A -o pcpu | tail -n+2 | paste -sd+ | bc`)\n" > /dev/ttyACM0
+echo -e "draw(\"`ps -A -o pcpu | tail -n+2 | paste -sd+ | bc`\")\n" > /dev/ttyACM0
 ```
 
 On Mac:
 
 ```
-echo -e "draw(`ps -A -o pcpu | tail -n+2 | paste -sd+ | bc`)\n" > /dev/cu.usmodem*
+echo -e "draw(\"`ps -A -o pcpu | tail -n+2 | paste -sd+ - | bc`\")\n" > /dev/cu.usbmodem*
 ```
 
 If a different device name was listed when you connected with the Web IDE, you may need to change it (note that on Mac, the device that you echo too should begin with `/dev/cu.`
@@ -111,9 +113,9 @@ So now you just need to call it repeatedly:
 
 ```
 ;Linux
-while :; do echo -e "draw(`ps -A -o pcpu | tail -n+2 | paste -sd+ | bc`)\n" > /dev/ttyACM0; sleep 1; done
+while :; do echo -e "draw(\"`ps -A -o pcpu | tail -n+2 | paste -sd+ | bc`\")\n" > /dev/ttyACM0; sleep 1; done
 ;Mac
-while :; do echo -e "draw(`ps -A -o pcpu | tail -n+2 | paste -sd+ | bc`)\n" > /dev/cu.usmodem*; sleep 1; done
+while :; do echo -e "draw(\"`ps -A -o pcpu | tail -n+2 | paste -sd+ - | bc`\")\n" > /dev/cu.usbmodem*; sleep 1; done
 ```
 
 And you're done - an external CPU usage meter!
