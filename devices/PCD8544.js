@@ -25,7 +25,7 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst,
     digitalPulse(rst, 0, 10); // pulse reset low
     
     setTimeout(function() {      
-      spi.send(
+      spi.write(
         [0x21, // fnset extended
         0x80 | 0x3F, // setvop (experiment with 2nd val to get the right contrast)
         0x14, // setbias 4
@@ -38,13 +38,13 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst,
 
   LCD.flip = function () {
     digitalWrite(dc,0); // cmd
-    spi.send([0x40,0x80],ce); // X + Y addr (0,0)
+    spi.write([0x40,0x80],ce); // X + Y addr (0,0)
     digitalWrite(dc,1); // data
-    spi.send(this.buffer,ce);
+    spi.write(this.buffer,ce);
   };
   LCD.setContrast = function(c) { // c between 0 and 1. 0.5 is default
     digitalWrite(dc,0); // cmd
-    spi.send(
+    spi.write(
         [0x21, // fnset extended
         0x80 | E.clip(c*0x7f,0,0x7f), // setvop
         0x20, // fnset normal
