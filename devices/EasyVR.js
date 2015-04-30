@@ -50,7 +50,9 @@ EasyVR.prototype.onData=function(data) {
 		if (this.sts_idx[data]["len"]) {
 			this.stsr=data;
 			this.ser.print(' ');
+			console.log("need to get data")
 		} else {
+			console.log("no data to get")
 			this.sts_idx[data]["cb"].bind(this)();
 		}
 	} else {
@@ -71,11 +73,11 @@ EasyVR.prototype.onData=function(data) {
 EasyVR.prototype.sts_idx={
 	"o":{len:0,cb:function(){
 		console.log('STS_SUCCESS');
-		//console.log(this.lstC);
-		if (this.lstC=='o')  {//timeout set - which means we're in setRecognize
-
+		console.log(this.lstC);
+		if (this.lstC=='o')  { 
+			console.log(this.vrstate);
 			if (this.vrstate!=-1) {
-				console.log("kicking off recognize")
+				console.log("kicking off recognize");
 				this.sendCmd('d',this.vrstate);
 			}
 		}
@@ -104,16 +106,18 @@ EasyVR.prototype.sts_idx={
 		console.log('STS_ERROR '+this.rcvv);
 		if (this.vrstate!=-1){
 			console.log("calling onErr callback");
-			this.onErr(this.vrstate);
+			var tem=this.vrstate;
 			this.vrstate=-1;
+			this.onErr(tem);
 		}
 	}},
 	"s":{len:1,cb:function() {
 		console.log('STS_SIMILAR '+this.rcvv);
 		if (this.vrstate!=-1){
 			console.log("calling onErr callback");
-			this.onErr(this.vrstate);
+			var tem=this.vrstate;
 			this.vrstate=-1;
+			this.onErr(tem);
 		}
 	}},
 	"r":{len:1,cb:function() {
