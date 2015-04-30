@@ -128,7 +128,7 @@ var logFile;
 var logInterval;
 function doLog() {
   digitalPulse(LED2,1,50); // pulse green led as indicator
-  f.write(getTime()+","+E.getTemperature()+"\r\n"); // write the time and temperature for example
+  logFile.write(getTime()+","+E.getTemperature()+"\r\n"); // write the time and temperature for example
 }
 setWatch(function() {
   if (logFile===undefined) {
@@ -143,7 +143,7 @@ setWatch(function() {
     E.unmountSD(); // card can now be pulled out
     digitalWrite(LED1,0); // red indicator off
   }
-}, BTN,  { repeat:true, debounce:50 });
+}, BTN,  { repeat:true, edge:'rising', debounce:50 });
 setDeepSleep(1);
 ```
 
