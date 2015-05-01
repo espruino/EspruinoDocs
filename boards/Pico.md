@@ -92,6 +92,15 @@ The connectors you need are very standard parts. While some parts are listed bel
 <a name="power"></a>Power, and the FET/B0 Jumper
 -------------
 
+| Pico Board | Quick Reference | Circuit Diagram (below) | Description |
+|-----------|-----------|-------|----------|
+| USB Plug | | VUSB  | USB voltage in |
+| VCC      | 5V | 5V | USB voltage output (minus diode drop) if connected, Battery voltage if not |
+| Bat (also pad marked `+`) | BAT_IN | VBAT | Battery voltage input (connect battery here) |
+| 3.3V     | VDD     | VDD | Regulated 3.3v output (~200mA continuous) |
+
+Currently the labelling for the Pico's pins is quite confusing (it's different on the circuit diagram, PCB silkscreen, and the Pinout diagram). Hopefully the table above will help to clear it up slightly.
+
 ![Power circuitry](power.png)
 
 Espruino's power circuitry is as above. When USB is connected the device is powered through a Schottky diode with 0.3v voltage drop. However when USB is disconnected then Espruino can be powered from a battery with no voltage drop. This is done by turning on the PFET Q1.
