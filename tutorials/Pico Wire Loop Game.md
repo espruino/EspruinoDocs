@@ -21,7 +21,7 @@ You'll Need
 * A [Nokia 5110 LCD](/PCD8544)
 * A [[Speaker]]
 * [[Breadboard]]
-* Solid core wire a(round 0.6mm/22 AWG)
+* Solid core wire (around 0.6mm/22 AWG)
 
 Wiring Up
 --------
@@ -34,7 +34,7 @@ Wiring up is pretty simple - see the picture above:
 * Put the LCD directly above it, aligned to the right (so the pin on the Pico nearest the USB connector should not be connected to anything)
 * Put the Piezo [[Speaker]] below the Pico, with one pin as far left as possible (so the other pin is on pin B4)
 * Take a 20cm long piece of solid code wire and strip the final 5cm off one end, and 0.5cm off the other. Fold the long end around into a loop and twist it closed, and then plug the other end into the breadboard at the bottom right of the Espruino Pico (pin A8).
-* Take a 30cm piece of solid code wire and strip the middle 20cm (you can do this carefully with a knife, or can pull all of the insulation off and then push some back on the end.
+* Take a 30cm piece of solid core wire and strip the middle 20cm (you can do this carefully with a knife, or can pull all of the insulation off and then push some back on the end.
 * Strip 0.5cm off each end, and bend the wire into whatever pattern you want (leaving some insulation at each end for the loop to rest on at the beginning and end of the game).
 * Thread the loop onto the bent wire, then push it into the pin at the very bottom left of the Pico (GND), and into the right-hand side of the breadboard where it won't be connected to anything else.
 
@@ -44,7 +44,7 @@ And that's it!
 Software
 -------
 
-Now just copy and paste the following code into the right-hand side of the Web IDE and click `Send to Espruino`:
+Now just copy and paste the following code into the right-hand side of the Web IDE and click `Send to Espruino`. Some comments are in the code to explain how it works:
 
 ```
 A5.write(0); // LCD GND
