@@ -200,7 +200,7 @@
     "!url": "http://www.espruino.com/Reference#l_NetworkJS_undefined",
     "create": {
       "!type": "fn(obj: ?) -> ?",
-      "!doc": "Initialise the WIZnet module and return an Ethernet object. For instance:\n\n```\nrequire(\"NetworkJS\").create({\n  create : function(host,port) {\n    // Create a socket and return its index, host is a string, port is an integer.\n    // If host isn't defined, create a server socket\n    console.log(\"Create\",host,port);\n    return 1;\n  },\n  close : function(sckt) {\n    // Close the socket. returns nothing\n  },\n  accept : function(sckt) {\n    // Accept the connection on the server socket. Returns socket number or -1 if no connection\n    return -1;\n  },\n  recv : function(sckt, maxLen) {\n    // Receive data. Returns a string (even if empty).\n    // If non-string returned, socket is then closed\n    return null;//or \"\";\n  },\n  send : function(sckt, data) {\n    // Send data (as string). Returns the number of bytes sent - 0 is ok.\n    // Less than 0\n    return data.length;\n  }\n});\n```",
+      "!doc": "Initialise the network using the callbacks given and return the first argument. For instance:\n\n```\nrequire(\"NetworkJS\").create({\n  create : function(host,port) {\n    // Create a socket and return its index, host is a string, port is an integer.\n    // If host isn't defined, create a server socket\n    console.log(\"Create\",host,port);\n    return 1;\n  },\n  close : function(sckt) {\n    // Close the socket. returns nothing\n  },\n  accept : function(sckt) {\n    // Accept the connection on the server socket. Returns socket number or -1 if no connection\n    return -1;\n  },\n  recv : function(sckt, maxLen) {\n    // Receive data. Returns a string (even if empty).\n    // If non-string returned, socket is then closed\n    return null;//or \"\";\n  },\n  send : function(sckt, data) {\n    // Send data (as string). Returns the number of bytes sent - 0 is ok.\n    // Less than 0\n    return data.length;\n  }\n});\n```",
       "!url": "http://www.espruino.com/Reference#l_NetworkJS_create"
     }
   },
@@ -295,12 +295,12 @@
     "prototype": {
       "getIP": {
         "!type": "fn() -> ?",
-        "!doc": "Get the current IP address",
+        "!doc": "Get the current IP address, subnet, gateway and mac address.",
         "!url": "http://www.espruino.com/Reference#l_Ethernet_getIP"
       },
       "setIP": {
         "!type": "fn(options: ?) -> bool",
-        "!doc": "Set the current IP address for get an IP from DHCP (if no options object is specified)",
+        "!doc": "Set the current IP address or get an IP from DHCP (if no options object is specified)\n\nIf 'mac' is specified as an option, it must be a string of the form `\"00:01:02:03:04:05\"`",
         "!url": "http://www.espruino.com/Reference#l_Ethernet_setIP"
       }
     }
@@ -1621,7 +1621,7 @@
     }
   },
   "Function": {
-    "!type": "fn(code: ?) -> ?",
+    "!type": "fn(args: ?) -> ?",
     "!doc": "Creates a function",
     "!url": "http://www.espruino.com/Reference#l_Function_Function",
     "prototype": {
@@ -1640,6 +1640,11 @@
         "!type": "fn(this: ?, args: ?) -> ?",
         "!doc": "This executes the function with the supplied 'this' argument and parameters",
         "!url": "http://www.espruino.com/Reference#l_Function_apply"
+      },
+      "bind": {
+        "!type": "fn(this: ?, params: ?) -> ?",
+        "!doc": "This executes the function with the supplied 'this' argument and parameters",
+        "!url": "http://www.espruino.com/Reference#l_Function_bind"
       }
     }
   },
@@ -1812,6 +1817,11 @@
         "!type": "fn() -> ?",
         "!doc": "",
         "!url": "http://www.espruino.com/Reference#l_String_toUpperCase"
+      },
+      "trim": {
+        "!type": "fn() -> +String",
+        "!doc": "Return the integer value of a single character at the given position in the String.\n\nNote that this returns 0 not 'NaN' for out of bounds characters",
+        "!url": "http://www.espruino.com/Reference#l_String_trim"
       }
     },
     "fromCharCode": {
@@ -1928,6 +1938,11 @@
       "!type": "fn(v: ?) -> number",
       "!doc": "Return the number of Variable Blocks used by the supplied variable. This is useful if you're running out of memory and you want to be able to see what is taking up most of the available space.\n\nSee http://www.espruino.com/Internals for more information",
       "!url": "http://www.espruino.com/Reference#l_E_getSizeOf"
+    },
+    "mapInPlace": {
+      "!type": "fn(from: ?, to: ?, map: ?, bits: number)",
+      "!doc": "Take each element of the `from` array, look it up in `map` (or call the \nfunction with it as a first argument), and write it into the corresponding\nelement in the `to` array.",
+      "!url": "http://www.espruino.com/Reference#l_E_mapInPlace"
     }
   },
   "process": {

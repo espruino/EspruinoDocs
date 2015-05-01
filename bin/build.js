@@ -1,7 +1,7 @@
 // Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. 
 // Generate keywords.js, and convert Markdown into HTML
 
-// needs marked + jsdoc
+// needs marked + jsdoc + tern + acorn
 
 var fs = require('fs');
 var path = require('path');
@@ -248,9 +248,8 @@ fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(
 /* Works out which of Espruino's built-in commands are used in which
  files */
 //Load tern inference thingybob
-var infer = require("./tern/infer.js");
+var infer = require("tern/lib/infer");
 
-// require("../../tern/plugin/node.js"); // for handling node.js 'require'?
 var defs = [JSON.parse(fs.readFileSync(path.resolve(BASEDIR, "bin/espruino.json")))];
 // Our list of Reference URLs that are used
 var urls = {};
@@ -272,13 +271,13 @@ function inferFile(filename, fileContents, baseLineNumber) {
       urls[url].push({ url : link+lineNumber, title : fileTitles[filename]});
   }
 
-  var cx = new infer.Context(defs, this);
+  var cx = new infer.Context(defs, null);
   infer.withContext(cx, function() {
     //console.log(JSON.stringify(filename));
     var ast = infer.parse(fileContents);
     infer.analyze(ast, "file:"+filename /* just an id */);
     // find all calls
-    require("acorn/util/walk").simple(ast, { "CallExpression" : function(n) {
+    require("acorn/dist/walk").simple(ast, { "CallExpression" : function(n) {
      var expr = infer.findExpressionAt(n.callee);
      var type = infer.expressionType(expr);
 
