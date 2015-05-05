@@ -41,30 +41,30 @@ EasyVR.prototype.chararg=function(chr) {
 EasyVR.prototype.onData=function(data) {
 	//this=evr;
 	
-	console.log("serial data watch: "+data);
+	//console.log("serial data watch: "+data);
 	var rcv=data.charCodeAt(0);
-	console.log("serial data: "+rcv);
+	//console.log("serial data: "+rcv);
 	if (rcv>0x60) {
-		console.log("status");
+		//console.log("status");
 		//console.log("serial lookup: "+temp);
 		if (this.sts_idx[data]["len"]) {
 			this.stsr=data;
 			this.ser.print(' ');
-			console.log("need to get data")
+			//console.log("need to get data")
 		} else {
-			console.log("no data to get")
+		//	console.log("no data to get")
 			this.sts_idx[data]["cb"].bind(this)();
 		}
 	} else {
-		console.log("data");
+		//console.log("data");
 		this.rcvv+=data;
 		if (this.rcvv.length>=this.sts_idx[this.stsr]["len"]){
-		    console.log("running callback "+this.sts_idx[this.stsr]["cb"]);
+		    //console.log("running callback "+this.sts_idx[this.stsr]["cb"]);
 			this.sts_idx[this.stsr]["cb"].bind(this)();
 			this.rcvv="";
 			this.stsr='o';
 		} else {
-		    console.log("need more data");
+		    //console.log("need more data");
 			this.ser.print(' ');
 		}
 	}
@@ -72,59 +72,59 @@ EasyVR.prototype.onData=function(data) {
 };
 EasyVR.prototype.sts_idx={
 	"o":{len:0,cb:function(){
-		console.log('STS_SUCCESS');
-		console.log(this.lstC);
+		//console.log('STS_SUCCESS');
+		//console.log(this.lstC);
 		if (this.lstC=='o')  { 
-			console.log(this.vrstate);
+			//console.log(this.vrstate);
 			if (this.vrstate!=-1) {
-				console.log("kicking off recognize");
+				//console.log("kicking off recognize");
 				this.sendCmd('d',this.vrstate);
 			}
 		}
 	}},
 	"t":{len:0,cb:function() {
-		console.log('STS_TIMEOUT');
+		//console.log('STS_TIMEOUT');
 		if (this.vrstate!=-1){
-			console.log("calling onTimeout callback");
+			//console.log("calling onTimeout callback");
 			this.onTimeout(this.vrstate);
 			this.vrstate=-1;
 		}
 	}},
 	"v":{len:0,cb:function() {
-		console.log('STS_INVALID '+this.rcvv);
+		//console.log('STS_INVALID '+this.rcvv);
 		if (this.vrstate!=-1){
 			this.vrstate=-1;
 		}
 	}},
 	"i":{len:0,cb:function() {
-		console.log('STS_INTERR '+this.rcvv);
+		//console.log('STS_INTERR '+this.rcvv);
 		if (this.vrstate!=-1){
 			this.vrstate=-1;
 		}
 	}},
 	"e":{len:2,cb:function() {
-		console.log('STS_ERROR '+this.rcvv);
+		//console.log('STS_ERROR '+this.rcvv);
 		if (this.vrstate!=-1){
-			console.log("calling onErr callback");
+			//console.log("calling onErr callback");
 			var tem=this.vrstate;
 			this.vrstate=-1;
 			this.onErr(tem);
 		}
 	}},
 	"s":{len:1,cb:function() {
-		console.log('STS_SIMILAR '+this.rcvv);
+		//console.log('STS_SIMILAR '+this.rcvv);
 		if (this.vrstate!=-1){
-			console.log("calling onErr callback");
+			//console.log("calling onErr callback");
 			var tem=this.vrstate;
 			this.vrstate=-1;
 			this.onErr(tem);
 		}
 	}},
 	"r":{len:1,cb:function() {
-		console.log('STS_RESULT '+this.rcvv);
+		//console.log('STS_RESULT '+this.rcvv);
 		if (this.vrstate!=-1){
-			console.log("calling onCommand");
-			console.log(r);
+			//console.log("calling onCommand");
+			//console.log(r);
 			var rt = this.onCommand(this.vrstate,this.chararg(this.rcvv));
 			this.vrstate=-1;
 			if (rt.type!==undefined) {
@@ -147,9 +147,10 @@ EasyVR.prototype.setRecognize=function(type,to) {
 EasyVR.prototype.sendCmd=function(cmd,arg) {
 	//lastCmd=[cmd,arg];
 	this.ser.print(cmd);
-	console.log("Sending command: "+cmd);
+	//console.log("Sending command: "+cmd);
 	this.lstC=cmd;
-	if (arg!==undefined){console.log("With arg: "+this.argchar(arg));this.ser.print(this.argchar(arg));}
+	//if (arg!==undefined){console.log("With arg: "+this.argchar(arg));this.ser.print(this.argchar(arg));}
+	if (arg!==undefined){this.ser.print(this.argchar(arg));}
 };
 
 EasyVR.prototype.stop=function(){
