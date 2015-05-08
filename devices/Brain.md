@@ -1,8 +1,13 @@
-Brain.js
-========
+<!--- Copyright (c) 2015 Dennis Bemmann. See the file LICENSE for copying permission. -->
+NeuroSky ThinkGear ASIC module
+===========================
+
+* KEYWORDS: Module,NeuroSky,ThinkGear,TGAM,Brain,Mind Control,EEG
+
 This module interfaces the NeuroSky ThinkGear ASIC module (TGAM) for use with Espruino.
 
 The module returns the following information:
+
 - signal quality
 - attention value
 - meditation value
@@ -25,13 +30,14 @@ Usage:
 
 1. Wire TGAM board to Espruino board
 
-  TGAM pin   | Espruino pin
-  ---------- | ------------
-  `-`        | GND
-  `+`        | 3.3
-  `T`        | Any Serial RX pin, for example A3
+|  TGAM pin   | Espruino pin   |
+|-------------|----------------|
+|  `-`        | GND            |
+|  `+`        | 3.3            | 
+|  `T`        | Any Serial RX pin, for example A3  |
 
-2) Write some code
+2. Write some code
+
 ```javascript
    // event handler that just dumps data
    function processBrainData(data) {
@@ -45,9 +51,10 @@ Usage:
    brain.on('data', processBrainData);
 ```
 
-Disclaimer: use at your own risk.
+**Disclaimer:** use at your own risk.
 
 Useful links:
+-----------
 
 - TGAM Datasheet: http://www.seeedstudio.com/document/pdf/TGAM%20Datasheet.pdf
 - TGAM Protocol: http://developer.neurosky.com/docs/doku.php?id=thinkgear_communications_protocol
