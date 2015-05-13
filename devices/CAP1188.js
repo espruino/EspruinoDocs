@@ -80,8 +80,8 @@ CAP1188.prototype.readTouches = function() {
 };
 
 /*  */
-CAP1188.prototype.getBit = function(byte, position) {
-  return (1 == ((byte >> position) & 1));
+CAP1188.prototype.getBit = function(byt, position) {
+  return (1 == ((byt >> position) & 1));
 };
 
 /* Set a single bit in a register */
