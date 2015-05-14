@@ -13,10 +13,20 @@ Features
 * 2 rows of 9 0.1" pins, with a third 0.05" row of 8 pins on the end
 * On-board USB Type A connector
 * Two on-board LEDs and one button.
-* STM32F401CDU6 CPU - ARM Cortex M4, 384kb flash, 96kb RAM
+* [STM32F401CDU6](/datasheets/STM32F401xD.pdf) CPU - ARM Cortex M4, 384kb flash, 96kb RAM
 * On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 16v
-* Current draw in sleep: <0.05mA - over 2.5 years on a 2500mAh battery
+* Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
 * On-board FET can be used to drive high-current outputs
+
+<a name="signup"></a>Buying
+------
+
+We're currently sold out and are waiting for a new batch of boards to be produced.
+
+If you're interested then please add your email address below, and we'll let you know when the boards are in distributors.
+
+<iframe frameborder="0" height="500" marginheight="0" marginwidth="0" src="https://docs.google.com/forms/d/1kCVo9aPfLjNR0VJ0WSYsfSwSCY3pttf7axKsMhnpn64/viewform?embedded=true" width="600">Loading...</iframe>
+
 
 Pinout
 ------
@@ -24,6 +34,12 @@ Pinout
 * APPEND_PINOUT: PICO_R1_3
 
 <span style="color: red">**Note:** There is no built-in fuse on the Espruino Pico. You should check that your circuit does not contain shorts with a volt meter *before you plug it into USB*, or you may damage your board.</span>
+
+Information
+-----------
+
+* [STM32F401CD Datasheet](/datasheets/STM32F401xD.pdf)
+* [STM32F401CD Reference Manual](/datasheets/STM32F401xD_ref.pdf)
 
 Tutorials
 --------
@@ -49,6 +65,19 @@ Layout
 | FET Jumper | Shorting this jumper allows the PFET to be controlled from pin B0 (see [below](#power)) |
 
 **Note:** The two jumpers can be shorted out just by scribbling over them with an HB pencil.
+
+Known Problems
+------------
+
+These are known issues that will be fixed via firmware updates soon.
+
+* The terminal on the left-hand side of the Web IDE may occasionally react only to the second-last key pressed. To fix this, try shutting down Chrome, unplugging the Pico, replugging, and then starting it again.
+* In Deep Sleep, the Pico is unable to turn off the USB hardware (as it can't re-initialise it). This results in 0.6mA power draw, whereas it should draw less than 0.01mA.
+
+Troubleshooting
+-------------
+
+Please see the [[Troubleshooting]] section.
 
 <a name="battery"></a>Battery
 -------
@@ -124,12 +153,26 @@ pinMode(B0, "af_opendrain");analogWrite(B0, 0.5, {freq:100}); // output a 100Hz 
 
 The jumper can be shorted by scribbling over it with a normal HB pencil. See the [[Pico FET Output]] tutorial for an example.
 
-<a name="signup"></a>Buying
-------
+Advanced Reflashing
+-----------------
 
-We're currently sold out and are waiting for a new batch of boards to be produced.
+In very rare cases (if you are experimenting with writing to Flash Memory), you may be able to damage the bootloader, which will effecitively 'brick' the Pico.
 
-If you're interested then please add your email address below, and we'll let you know when the boards are in distributors.
+To fix this, you'll have to use the hard-wired USB DFU (Device Firmware Upgrade) bootloader. You can also use this method for flashing non-Espruino firmwares to Espruino.
 
-<iframe frameborder="0" height="500" marginheight="0" marginwidth="0" src="https://docs.google.com/forms/d/1kCVo9aPfLjNR0VJ0WSYsfSwSCY3pttf7axKsMhnpn64/viewform?embedded=true" width="600">Loading...</iframe>
+Just:
+
+* Short out the `BOOT0/BTN` solder jumper on the back of the board - you can do this by drawing over it with a pencil.
+* Install [ST's DFU utility](http://www.st.com/web/en/catalog/tools/FM147/CL1794/SC961/SS1533/PF257916) on Windows, or [dfu-util](http://dfu-util.sourceforge.net/) for Mac or Linux
+* Download the latest Espruino Pico binary from [espruino.com/binaries](http://www.espruino.com/binaries/)
+* Hold down the Pico's button while plugging it into USB
+* Use the DFU tool to flash the firmware
+* Un-short the `BOOT0/BTN` jumper to re-use the original Espruino Bootloader. If you used a Pencil mark then you may need to use cleaning fluid and a small brush to totally clear out the graphite.
+
+Advanced Debugging
+----------------
+
+The Pico also has SWD Debug connections on the back of it. An ST-Link debugger (or ST Discovery/Nucleo board) can be connected to these connections for fast firmware uploads and source-level debugging of the interpreter itself.
+
+See the [[AdvancedDebug]] page for more information.
 
