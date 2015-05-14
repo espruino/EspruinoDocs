@@ -57,19 +57,16 @@ var flipCmds = [0x21, // columns
 
 exports.connect = function(i2c, callback) {
  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,C.OLED_HEIGHT,1,{vertical_byte : true});
- var w = function(c) {
-   c.forEach(function(d) {i2c.writeTo(C.OLED_ADDRESS, [0,d]);});
- };
 
  // configure the OLED
- w(initCmds);
+ initCmds.forEach(function(d) {i2c.writeTo(C.OLED_ADDRESS, [0,d]);});;
  // if there is a callback, call it now(ish)
  if (callback !== undefined) setTimeout(callback, 10);
   
  // write to the screen
  oled.flip = function() { 
    // set how the data is to be sent (whole screen)
-   w(flipCmds);
+   flipCmds.forEach(function(d) {i2c.writeTo(C.OLED_ADDRESS, [0,d]);});;
    var chunk = new Uint8Array(C.OLED_CHUNK+1);
 
    chunk[0] = C.OLED_CHAR;
