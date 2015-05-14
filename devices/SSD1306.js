@@ -12,17 +12,15 @@ function go(){
 
 // I2C
 I2C1.setup({scl:B6,sda:B7});
-var g = exports.connect(I2C1, go);
+var g = require("SSD1306").connect(I2C1, go);
 
 // SPI
 var s = new SPI();
 s.setup({mosi: B6, sck:B5});
-var g = exports.connectSPI(s, A8, B7, go);
+var g = require("SSD1306").connectSPI(s, A8, B7, go);
 ```
 
 */
-var exports = {};
-
 var C = {
  OLED_ADDRESS               : 0x3C,
  OLED_WIDTH                 : 128,
@@ -56,7 +54,7 @@ var flipCmds = [0x21, // columns
      0x22, // rows
      0, 7];
 
-// export
+
 exports.connect = function(i2c, callback) {
  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,C.OLED_HEIGHT,1,{vertical_byte : true});
  var w = function(c) {
