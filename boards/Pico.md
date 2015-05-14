@@ -124,12 +124,12 @@ pinMode(B0, "af_opendrain");analogWrite(B0, 0.5, {freq:100}); // output a 100Hz 
 
 The jumper can be shorted by scribbling over it with a normal HB pencil. See the [[Pico FET Output]] tutorial for an example.
 
-Buying
+<a name="signup"></a>Buying
 ------
 
-We're now working hard to get the boards to our supporters, but until that is done we won't be putting them on general sale.
+We're currently sold out and are waiting for a new batch of boards to be produced.
 
-If you're interested then please add your email below, and we'll let you know when the boards are in distributors.
+If you're interested then please add your email address below, and we'll let you know when the boards are in distributors.
 
 <iframe frameborder="0" height="500" marginheight="0" marginwidth="0" src="https://docs.google.com/forms/d/1kCVo9aPfLjNR0VJ0WSYsfSwSCY3pttf7axKsMhnpn64/viewform?embedded=true" width="600">Loading...</iframe>
 

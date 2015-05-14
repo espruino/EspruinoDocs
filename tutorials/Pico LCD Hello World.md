@@ -81,9 +81,9 @@ function onInit() {
 }
 ```
 
-If you send this over in the same way as the last code, nothing will happen - because 'onInit()' hasn't been run.
+**Note:** If you send this over in the same way as the last code, nothing will happen - because `onInit()` hasn't been run.
 
-You can run `onInit()` manually by typing `onInit()` on the left hand side or adding it to the right hand side, but this time, just type `save()`. Your code will be saved to flash, reloaded, and the LCD will display `Hello World!` again.
+You can run `onInit()` manually by typing `onInit()` on the left hand side or adding it to the end of the right hand side before sending code over. However this time, just type `save()`. Your code will be saved to flash, reloaded, and the LCD will display `Hello World!` again.
 
 Try unplugging the board from USB and re-plugging it - it'll still display `Hello World!`.
 
