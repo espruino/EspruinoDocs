@@ -61,7 +61,7 @@ Layout
 | Button | Button accessible using the built-in variable BTN |
 | SWD Debug | (Advanced) SWD debug connections for firmware debugging |
 | BOOT0 Jumper | (Advanced) Short this jumper out to connect the button to BOOT0. Plugging the device in with the button pressed will the cause the DFU bootloader to be started, allowing you to change absolutely all of Espruino's firmware. |
-| JST Battery | Pads for a surface mount JST battery connector (see [below](#battery)) |
+| JST Battery | Pads for a surface mount JST PHR-2 [[Battery]] connector (see [below](#battery)) |
 | Micro/Mini USB | Under the white silkscreen are pads for Mini USB and Micro USB sockets (see [below](#usb)) |
 | FET Jumper | Shorting this jumper allows the PFET to be controlled from pin B0 (see [below](#power)) |
 
@@ -83,13 +83,13 @@ Please see the [[Troubleshooting]] section.
 <a name="battery"></a>Battery
 -------
 
-Espruino Pico contains the circuitry needed to power itself from a battery without the voltage drop of a diode. This means that it will happily run off of normal 3.7v LiPo batteries.
+![JST connector positioning](jst.jpg)
 
-In order to connect to a battery, you can use either the pins marked `Bat` and `GND` (on opposite sides of the board, nearest the USB connector), or you can solder a JST S2B-PH-SM4-TB battery connector onto the underside of the board. These (or clones of them) are readily available:
+Espruino Pico contains the circuitry needed to power itself from a battery without the voltage drop of a diode. This means that it will run off of normal 3.7v LiPo batteries (or any voltage up to 16v).
 
-* Octopart [list of distributors](https://octopart.com/s2b-ph-sm4-tb%28lf%29%28sn%29-jst-248913)
-* [Farnell](http://uk.farnell.com/jst-japan-solderless-terminals/s2b-ph-sm4-tb-lf-sn/connector-header-smt-r-a-2mm-2way/dp/9492615)
-* [RS](http://uk.rs-online.com/web/p/products/6881353/)
+In order to connect to a battery, you can use either the pins marked `Bat` and `GND` (on opposite sides of the board, nearest the USB connector), or you can solder a JST S2B-PH-SM4-TB [[Battery]] connector connector onto the underside of the board.
+
+Please see the [[Battery]] page for information on connectors and where to buy them.
 
 <a name="usb"></a>Alternate USB connectors
 -------------------------
