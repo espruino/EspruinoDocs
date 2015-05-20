@@ -18,15 +18,16 @@ Features
 * Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
 * On-board FET can be used to drive high-current outputs
 
-<a name="signup"></a>Buying
+<a name="buy"></a>Buying
 ------
 
-We're currently sold out and are waiting for a new batch of boards to be produced.
+We're still waiting for more Pico boards to be manufactured before we can send them to distributors, however there were a few boards from the first batch that got slightly damaged, and these are now [being sold on Tindie](https://www.tindie.com/products/gfwilliams/espruino-pico-cosmetic-damage/):
 
-If you're interested then please add your email address below, and we'll let you know when the boards are in distributors.
+[![Tindie Shop](/images/logo_tindie.png)](https://www.tindie.com/products/gfwilliams/espruino-pico-cosmetic-damage/)
 
+<a name="signup"></a>If you'd like to know when Espruino Pico boards will be available to buy from distributors, just enter your e-mail address below:
+ 
 <iframe frameborder="0" height="500" marginheight="0" marginwidth="0" src="https://docs.google.com/forms/d/1kCVo9aPfLjNR0VJ0WSYsfSwSCY3pttf7axKsMhnpn64/viewform?embedded=true" width="600">Loading...</iframe>
-
 
 Pinout
 ------
