@@ -17,6 +17,9 @@ exports.connect = function (ser) {
     line += d;
     if (dbg) console.log("] "+JSON.stringify(line)+" <--- "+JSON.stringify(d));
     if (handlers) {
+      // hack - when bug #540 gets fixed we won't need this:
+      if (handlers[">"] && line[0]==">")
+        line = handlers[">"](line);
       for (var h in handlers) {
         if (line.substr(0,h.length)==h) {
           line = handlers[h](line);
@@ -96,6 +99,10 @@ exports.connect = function (ser) {
         };
         lineCallback = cb;
       }
+    },
+    // Just write to the device - nothing else
+    "write" : function(command) {
+      ser.write(command);
     },
     // send a command, but also register for a certain type of response lines (key)
     "cmdReg" : function(command, timeout, key, keyCallback, finalCallback) {
