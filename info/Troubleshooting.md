@@ -231,3 +231,29 @@ This could be for several reasons:
 * As we only make any money from the Espruino Boards, we can't afford to spend time implementing functionality on other boards - so even if the board you have has enough memory, the functionality the example is using may still not be implemented.
 
 In short, if you want to be sure that all the functionality you want is implemented, support us and [buy an Espruino board!](/Order)
+
+Electrical
+=========
+
+## I've connected a [[Serial]] device like a GPS, but I'm not getting a signal.
+
+For normal [[Serial]] communications, you have two wires - RX and TX. However these are relative to the device - for instance TX on the Espruino transmits data out of Espruino, and TX on a GPS transmits data out of the GPS. That means that for the devices to communicate you must connect RX to TX and vice versa.
+
+[[Serial]] ports also have to have a communications speed (baud rate) set up - you'll need to make sure that each device has exactly the same baud rate or they won't be able to communicate. For devices such as a GPS, you should find the baud rate in the datasheet.
+
+If you're still having problems, look at the next item too.
+
+
+## I've connected an external device but I'm not getting a reliable signal
+
+This could be because your devices aren't sharing the same ground. For example if you have [[Serial]] communications set up, two wires will get mentioned a lot - RX and TX. However you *also* need to have ground connected, meaning you actually need 3 wires. Ground is required for pretty much everything: [[Serial]], [[I2C]], [[SPI]], [[OneWire]], and even simple logic signals from something like a [[Pyroelectric]] sensor.
+
+## I've connected an I2C device, but I get 'timeout' errors
+
+This is usually one of four reasons:
+
+* There are no pull-up resistors. I2C needs resistors between each of its data lines and 3.3v (or 5v) - these are usually in the 4-10 kOhm range. Many modules already have them in, but if you have a module without one then you need to add them before I2C will work.
+* The device's address is incorrect - sometimes people quote the address as being twice as large as it actually is. If in doubt, try dividing the address by two or multiplying it by two.
+* The device isn't powered or ground isn't shared (see the point above)
+* The SDA and SCL wires are mixed up. SDA should be connected to SDA, and SCL to SCL.
+
