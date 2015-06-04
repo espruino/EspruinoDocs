@@ -12,7 +12,7 @@ function go(){
 
 // I2C
 I2C1.setup({scl:B6,sda:B7});
-var g = require("SSD1306").connect(I2C1, 0x3C, go);
+var g = require("SSD1306").connect(I2C1, { address: 0x3C, callback: go});
 
 // SPI
 var s = new SPI();
@@ -55,9 +55,14 @@ var flipCmds = [0x21, // columns
      0, 7];
 
 
-exports.connect = function(i2c, oled_address, callback) {
+exports.connect = function(i2c, callback) {
  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,C.OLED_HEIGHT,1,{vertical_byte : true});
-
+ var oled_address = 0x3C;
+ if("object"===typeof(callback)) {
+  if (callback.address) oled_address = callback.address;
+   callback = callback.callback;
+ }
+ 
  // configure the OLED
  initCmds.forEach(function(d) {i2c.writeTo(oled_address, [0,d]);});
  // if there is a callback, call it now(ish)
