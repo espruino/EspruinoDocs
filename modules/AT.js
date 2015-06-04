@@ -13,6 +13,7 @@ exports.connect = function (ser) {
   var handlers = {};
   var lineHandlers = {};
   var waiting = [];  
+
   ser.on("data", function(d) {    
     line += d;
     if (dbg) console.log("] "+JSON.stringify(line)+" <--- "+JSON.stringify(d));
@@ -48,6 +49,9 @@ exports.connect = function (ser) {
       line = line.substr(i+delim.length);
       if (line[0]=="\n") line=line.substr(1);
       if (line.length && handlers) {
+        // hack - when bug #540 gets fixed we won't need this:
+        if (handlers[">"] && line[0]==">")
+          line = handlers[">"](line);
         for (var h in handlers)
           if (line.substr(0,h.length)==h) {
             line = handlers[h](line);
