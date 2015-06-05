@@ -25,6 +25,7 @@ var C = {
  OLED_ADDRESS               : 0x3C,
  OLED_WIDTH                 : 128,
  OLED_HEIGHT                : 64,
+ OLED_CHAR                  : 0x40,
  OLED_CHUNK                 : 128,
  OLED_LENGTH                : 1024 // OLED_WIDTH*OLED_HEIGHT / 8
 };
