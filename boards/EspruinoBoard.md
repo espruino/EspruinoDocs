@@ -2,7 +2,7 @@
 Espruino Board
 =============
 
-* KEYWORDS: Espruino,Board,PCB
+* KEYWORDS: Espruino,Board,PCB,Pinout
 
 Were you looking for the [Espruino Pico](/Pico)?
 
@@ -59,12 +59,12 @@ Layout
 | #4 | (r1.3 only) An unpopulated resistor that can trickle-charge a battery when fitted (if the battery is less than 4.3v). See the [[Battery]] page for more information - only fit this if you're absolutely sure that your battery type can handle it. |
 | #5 | (r1.4 only) An unpopulated area for a MAX1551 LiPo charger IC |
 
-
 Information
 ----------
 
 * [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/pdf/espruino_schematic.pdf)
 * [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/pdf/espruino_pcb.pdf)
+* [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
 * [STM32F103RCT6 Datasheet](/datasheets/STM32F103xC.pdf)
 * [STM32F103RCT6 Reference Manual](/datasheets/STM32F103xC_Ref.pdf)
 

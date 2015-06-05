@@ -15,7 +15,7 @@ Original Espruino Board
 
 Connect wires onto the 6 pin SWD connector as follows:
 
-| F3/F4 Discovery Pin  | Espruino Pin |
+| Pin No. | F3/F4 Discovery Pin  | Espruino Pin |
 |----------------|------|--------------|
 | 1 | VDD Target | |
 | 2 | SWCLK      | A14 |
@@ -44,19 +44,21 @@ Gotchas
 
 Phew. Finally (if you have the [st-link tools](https://github.com/texane/stlink) installed and on your path), you can flash Espruino, with:
 
-```
-DEBUG=1 ESPRUINO_1V3=1 make flash```
+```Bash
+DEBUG=1 ESPRUINO_1V3=1 make flash
 # or
 DEBUG=1 PICO_1V3=1 make flash
 ```
 
 You can then debug by running:
 
-```st-util```
+```Bash
+st-util
+```
 
 in one window, and:
 
-```
+```Bash
 DEBUG=1 ESPRUINO_1V3=1 make gdb
 #or
 DEBUG=1 PICO_1V3=1 make gdb

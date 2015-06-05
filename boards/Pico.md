@@ -2,6 +2,8 @@
 Espruino Pico
 ============
 
+* KEYWORDS: Espruino Pico,Board,PCB,Pinout
+
 ![Espruino Pico](angled.jpg)
 
 Features
@@ -41,6 +43,7 @@ Information
 
 * [STM32F401CD Datasheet](/datasheets/STM32F401xD.pdf)
 * [STM32F401CD Reference Manual](/datasheets/STM32F401xD_ref.pdf)
+* [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
 
 Tutorials
 --------
@@ -66,6 +69,28 @@ Layout
 | FET Jumper | Shorting this jumper allows the PFET to be controlled from pin B0 (see [below](#power)) |
 
 **Note:** The two jumpers can be shorted out just by scribbling over them with an HB pencil.
+
+Embedding the Pico
+----------------
+
+![Surface mount Pico](smd.jpg)
+
+The Pico is designed to be easy to include in your designs. The 0.01" pins are easy to fit in to sockets, and castellated edges mean that unpinned Picos can easily be surface-mounted directly to a PCB.
+
+To make it even easier, we've provided [a part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component) that includes the Pico's footprint in several different configurations:
+
+![Eagle CAD Footrpints](footprint.png)
+
+| Library Name | Description |
+|--------------|-------------|
+| PICO_PIN     | Through-hole connections for all of the Pico's pins |
+| PICO_SMD     | Through-hole connections that can also be used to surface-mount a Pico |
+| PICO_HALFSMD | 0.01" Through-hole connections, with surface-mount pads for 0.05" pins. This often helps with routing small boards (wires can be run under the 0.05" pads) |
+| PICO_SMDONLY | Surface mount-only pads for a Pico. Good for double-sided boards with large SMD components on the other side |
+| PICO_0.05    | Through-hole pads for just 0.05" pins (including power) - useful for very small add-on boards |
+
+These parts are also used for a variety of [[Shims]] that allow the Pico to be easily attached to other hardware.
+
 
 Known Problems
 ------------
