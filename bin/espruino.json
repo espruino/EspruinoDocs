@@ -1856,7 +1856,7 @@
     },
     "getAnalogVRef": {
       "!type": "fn() -> number",
-      "!doc": "Check the internal voltage reference. To work out an actual voltage of an input pin, you can use `analogRead(pin)*E.getAnalogVRef()` \n\nWhile this is implemented on Espruino boards, it may not be implemented on other devices. If so it'll return NaN.",
+      "!doc": "Check the internal voltage reference. To work out an actual voltage of an input pin, you can use `analogRead(pin)*E.getAnalogVRef()`\n\n**Note:** This value is calculated by reading the voltage on an internal voltage reference with the ADC.\nIt will be slightly noisy, so if you need this for accurate measurements we'd recommend that you call\nthis function several times and average the results.\n\nWhile this is implemented on Espruino boards, it may not be implemented on other devices. If so it'll return NaN.",
       "!url": "http://www.espruino.com/Reference#l_E_getAnalogVRef"
     },
     "nativeCall": {
@@ -1943,6 +1943,16 @@
       "!type": "fn(from: ?, to: ?, map: ?, bits: number)",
       "!doc": "Take each element of the `from` array, look it up in `map` (or call the \nfunction with it as a first argument), and write it into the corresponding\nelement in the `to` array.",
       "!url": "http://www.espruino.com/Reference#l_E_mapInPlace"
+    },
+    "srand": {
+      "!type": "fn(v: number)",
+      "!doc": "Set the seed for the random number generator used by `Math.random()`.",
+      "!url": "http://www.espruino.com/Reference#l_E_srand"
+    },
+    "hwRand": {
+      "!type": "fn() -> number",
+      "!doc": "Unlike 'Math.random()' which uses a pseudo-random number generator, this\nmethod reads from the internal voltage reference several times, xoring and\nrotating to try and make a relatively random value from the noise in the\nsignal.",
+      "!url": "http://www.espruino.com/Reference#l_E_hwRand"
     }
   },
   "process": {
@@ -2106,13 +2116,13 @@
     "!url": "http://www.espruino.com/Reference#l__global_getSerial"
   },
   "setInterval": {
-    "!type": "fn(function: ?, timeout: number) -> ?",
-    "!doc": "Call the function specified REPEATEDLY after the timeout in milliseconds.\n\nThe function that is being called may also take an argument, which is an object containing a field called 'time' (the time in seconds at which the timer happened)\n\nfor example: ```setInterval(function (e) { print(e.time); }, 1000);```\n\nThis can also be removed using clearInterval\n\n**Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
+    "!type": "fn(function: ?, timeout: number, args: ?) -> ?",
+    "!doc": "Call the function specified REPEATEDLY after the timeout in milliseconds.\n\nYou can also specify extra arguments that will be sent to the function when it is executed. For example:\n\n```\nsetInterval(function (a,b) {\n  console.log(a+\" \"+b);\n}, 1000, \"Hello\", \"World\");\n// prints 'Hello World'\n```\n\nIf you want to stop your function from being called, pass the number that\nwas returned by `setInterval` into the `clearInterval` function.\n\n**Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
     "!url": "http://www.espruino.com/Reference#l__global_setInterval"
   },
   "setTimeout": {
-    "!type": "fn(function: ?, timeout: number) -> ?",
-    "!doc": "Call the function specified ONCE after the timeout in milliseconds.\n\nThe function that is being called may also take an argument, which is an object containing a field called 'time' (the time in seconds at which the timer happened)\n\nfor example: ```setTimeout(function (e) { print(e.time); }, 1000);```\n\nThis can also be removed using clearTimeout\n\n**Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
+    "!type": "fn(function: ?, timeout: number, args: ?) -> ?",
+    "!doc": "Call the function specified ONCE after the timeout in milliseconds.\n\nYou can also specify extra arguments that will be sent to the function when it is executed. For example:\n\n```\nsetTimeout(function (a,b) {\n  console.log(a+\" \"+b);\n}, 1000, \"Hello\", \"World\");\n// prints 'Hello World'\n```\n\nIf you want to stop the function from being called, pass the number that\nwas returned by `setTimeout` into the `clearInterval` function.\n\n**Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
     "!url": "http://www.espruino.com/Reference#l__global_setTimeout"
   },
   "clearInterval": {

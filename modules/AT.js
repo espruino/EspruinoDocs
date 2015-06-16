@@ -17,6 +17,7 @@ exports.connect = function (ser) {
   ser.on("data", function(d) {    
     line += d;
     if (dbg) console.log("] "+JSON.stringify(line)+" <--- "+JSON.stringify(d));
+    if (line[0]=="\n") line=line.substr(1);
     if (handlers) {
       // hack - when bug #540 gets fixed we won't need this:
       if (handlers[">"] && line[0]==">")
@@ -27,8 +28,7 @@ exports.connect = function (ser) {
           //console.log("HANDLER] "+JSON.stringify(line));
         }
       }
-    }
-    if (line[0]=="\n") line=line.substr(1);
+    }    
     var i = line.indexOf(delim);
     while (i>=0) {
       var l = line.substr(0,i);
