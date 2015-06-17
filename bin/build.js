@@ -241,7 +241,7 @@ markdownFiles.forEach(function (file) {
   htmlLinks[file] = htmlFile;
 });
 
-fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,0)+";");
+fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,1)+";");
 
 
 // ---------------------------------------------- Inference code
