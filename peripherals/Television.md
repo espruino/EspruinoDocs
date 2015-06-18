@@ -37,25 +37,25 @@ VGA
 
 ### Wiring
 
-The VGA specification requires that video signals be 0.7v peak-to-peak. The signals that come out of Espruino will be 3.3v peak to peak, so if you don't want to risk damage your VGA display then you will need to use resistors to reduce the voltage.
+The VGA specification requires that the video signal is 0.7v peak-to-peak (Hsync and Vsync are 5v). The signals that come out of Espruino will be 3.3v peak to peak, so if you don't want to risk damage your VGA display then you will need to use resistors to reduce the voltage of the video (monitors will be fine with the 3.3v Hsync and Vsync signals).
 
 You'll need:
 
 * A VGA connector (or old VGA cable)
-* 3x 100 Ohm resistors
-* 3x 330 Ohm resistors
+* 1x 100 Ohm resistor
+* 1x 330 Ohm resistor
 
 Connect:
 
 * A7 to one end of a 330 Ohm resistor, and the other end to VGA pin 1,2, or 3 (or all 3 - these are the Red, Green and Blue wires). Also connect this to GND via the 100 Ohm resistor.
-* A6 to one end of a 330 Ohm resistor, and the other end to VGA pin 13 (HSYNC). Also connect this to GND via the 100 Ohm resistor.
-* A5 to one end of a 330 Ohm resistor, and the other end to VGA pin 14 (VSYNC). Also connect this to GND via the 100 Ohm resistor.
 * All the grounds (pins 5,6,7,8,9) together, and to Espruino's ground.
 
 ![VGA Connections](VGA.png)
 
 
 ### Software
+
+Full resolution:
 
 ```
 var g = require('tv').setup({ type : "vga",
@@ -64,12 +64,31 @@ var g = require('tv').setup({ type : "vga",
   vsync : A5, // Pin - pin to use for video vertical sync
   width : 220,
   height : 480,
+  repeat : 1, // amount of times to repeat each line
 });
 
 g.drawLine(0,0,100,100);
 ```
 
-**Note:** at the moment the horizontal refresh rate is fixed, which means that heights other than 480 may not be accepted by your monitor.
+Or line doubling:
+
+```
+var g = require('tv').setup({ type : "vga",
+  video : A7, // Pin - SPI MOSI Pin for Video output (MUST BE SPI1)
+  hsync : A6, // Pin - pin to use for video horizontal sync
+  vsync : A5, // Pin - pin to use for video vertical sync
+  width : 220,
+  height : 240,
+  repeat : 2, // amount of times to repeat each line
+});
+
+g.drawLine(0,0,100,100);
+```
+
+**Note:**
+
+* At the moment the horizontal refresh rate is fixed, which means that heights other than 480 may not be accepted by your monitor.
+* The idle state of the video signal currently depends on the last byte that is transmitted. In order to get the best video signal it's worth making sure you leave the last 8 columns of the graphics buffer blank.
 
 
 Using TV Out
