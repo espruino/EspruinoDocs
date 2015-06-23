@@ -23,13 +23,7 @@ Features
 <a name="buy"></a>Buying
 ------
 
-We're still waiting for more Pico boards to be manufactured before we can send them to distributors, however there were a few boards from the first batch that got slightly damaged, and these are now [being sold on Tindie](https://www.tindie.com/products/gfwilliams/espruino-pico-cosmetic-damage/):
-
-[![Tindie Shop](/images/logo_tindie.png)](https://www.tindie.com/products/gfwilliams/espruino-pico-cosmetic-damage/)
-
-<a name="signup"></a>If you'd like to know when Espruino Pico boards will be available to buy from distributors, just enter your e-mail address below:
- 
-<iframe frameborder="0" height="500" marginheight="0" marginwidth="0" src="https://docs.google.com/forms/d/1kCVo9aPfLjNR0VJ0WSYsfSwSCY3pttf7axKsMhnpn64/viewform?embedded=true" width="600">Loading...</iframe>
+You can now get an Espruino Pico from several different distributors. Check out page on [Ordering Espruino](/Order)
 
 Pinout
 ------
