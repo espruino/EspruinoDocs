@@ -6,8 +6,10 @@ Internet (HTTP)
 
 To use the internet in Espruino you need an internet connection. If you're using Espruino under Linux (for example Raspberry Pi or OpenWRT) then you're sorted and can use the examples below directly, otherwise you'll need a module to connect to the internet. Currently your choices are:
 
-* The TI [[CC3000]] WiFi Module
-* The [[WIZnet]] W5500 Wired Ethernet Module
+* EspressIf [[ESP8266]] WiFi Module
+* TI [[CC3000]] WiFi Module
+* [[WIZnet]] W5500 Wired Ethernet Module
+* SIMCom [[SIM900]] GSM/GPRS Module
 
 You'll need to follow the instructions on those pages first in order to get connected to the net.
 
