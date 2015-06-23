@@ -1,18 +1,20 @@
-<!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Graphics Library
 ================
 
 * KEYWORDS: Graphics,LCD,Draw,Line,Fill,Color,Circle,Built-In
 
-Espruino has a built-in graphics library (however on less powerful devices this may have been removed to save on Flash memory).
+Espruino has a built-in graphics library, exposed via the [Graphics](/Reference#Graphics) class. 
 
-This Library is handled with the Graphics class. On some boards that have an LCD built in, there will be a predefined variable called 'LCD' (an instance of the Graphics Object) - and this is what is used in the examples below.
+On most boards (without built in displays) you can create your own instance(s) of the Graphics class using a module that is designed to interface to a display (see 'Graphics Drivers' below), or you can manually create you own using one of the `Graphics.createXYZ` functions.
 
-If you have a board without an in-build LCD, you can create your own instance(s) of the Graphics class for LCDs, or your own use.
+On the few boards that do contain LCDs, there is a predefined variable called 'LCD' (which is an instance of the Graphics Object). 
 
-### LCD Drivers
+**Note:** All coordinates in the Graphics library treat 0,0 as the top left corner of the display. However you can rotate or mirror what you draw using the [Graphics.setRotation](/Reference#l_Graphics_setRotation) method.
 
-Below are a list of currently available LCD drivers:
+### Graphics Drivers
+
+Below are a list of currently available modules that will interface to hardware and create a Graphics object for you:
 
 * APPEND_KEYWORD: Graphics Driver
 
