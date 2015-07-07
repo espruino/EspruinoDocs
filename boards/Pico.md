@@ -35,6 +35,8 @@ Pinout
 Information
 -----------
 
+* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/Pico/pdf/schematic_1v3.pdf)
+* [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/Pico/pdf/board_1v3.pdf)
 * [STM32F401CD Datasheet](/datasheets/STM32F401xD.pdf)
 * [STM32F401CD Reference Manual](/datasheets/STM32F401xD_ref.pdf)
 * [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)

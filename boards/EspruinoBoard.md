@@ -62,8 +62,8 @@ Layout
 Information
 ----------
 
-* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/pdf/espruino_schematic.pdf)
-* [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/pdf/espruino_pcb.pdf)
+* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/Original/pdf/espruino_schematic.pdf)
+* [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/Original/pdf/espruino_pcb.pdf)
 * [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
 * [STM32F103RCT6 Datasheet](/datasheets/STM32F103xC.pdf)
 * [STM32F103RCT6 Reference Manual](/datasheets/STM32F103xC_Ref.pdf)

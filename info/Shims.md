@@ -19,6 +19,6 @@ WIZnet W550io Ethernet
 Where can I get one?
 ------------------
 
-We will be selling them soon, however all the shims we've designed are Open Source.
+We're now selling a selection of shims [on Tindie](https://www.tindie.com/stores/gfwilliams/). However all the shims we've designed are Open Source.
 
-You can [view and download them here](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Adaptors) and can then send the designs to someone like [OSHPark](https://www.oshpark.com/) who will manufacture them to order for a very reasonable price.
+You can [view and download them here](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Adaptors) and can then send the designs (`.brd` files) to someone like [OSHPark](https://www.oshpark.com/) who will manufacture them to order for a very reasonable price.
