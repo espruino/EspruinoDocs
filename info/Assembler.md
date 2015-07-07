@@ -321,7 +321,7 @@ var pulse = E.nativeCall(ASM_BASE1, "void()")
 **Note:** The best method is now to convert the raw opcodes to a base64 encoded string, and to then use the following:
 
 ```
-var pulse = E.nativeCall(0, "void ()", atob("w4D...my...base64...encoded...data...AAAg"))
+var myFn = E.nativeCall(1, "void ()", atob("w4D...my...base64...encoded...data...AAAg"))
 ```
 
-This will save the program code into Espruino's variable storage, so `save()` will store it along with everything else.
+This will save the program code into Espruino's variable storage, so `save()` will store it along with everything else. Note that we're passing `1` as the offset, because it is Thumb assembly.
