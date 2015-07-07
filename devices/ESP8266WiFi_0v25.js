@@ -2,9 +2,11 @@
 /* 
 Library for interfacing to the EspressIF ESP8266. Uses the 'NetworkJS'
 library to provide a JS endpoint for HTTP.
- 
+
+For EspressIF ESP8266 firmware 0.25
+
 ```
-Serial2.setup(9600, { rx: A3, tx : A2 });
+Serial2.setup(115200, { rx: A3, tx : A2 });
 
 console.log("Connecting to ESP8266");
 var wifi = require("ESP8266").connect(Serial2, function() {
@@ -27,7 +29,6 @@ var wifi = require("ESP8266").connect(Serial2, function() {
 var at;
 var socks = [];
 var sockData = ["","","","",""];
-var lastSocket= 0;
 var MAXSOCKETS = 5;
 var ENCR_FLAGS = ["open","wep","wpa_psk","wpa2_psk","wpa_wpa2_psk"];
 
@@ -54,12 +55,16 @@ var netCallbacks = {
       if (sckt>=MAXSOCKETS) throw new Error("No free sockets");
       socks[sckt] = "Wait";
       sockData[sckt] = "";
-      at.cmd('AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n',10000, function(d) {      
-        if (d=="OK") {
-          at.registerLine("Linked", function() {
-            at.unregisterLine("Linked");        
-            socks[sckt] = true;
-          });              
+      at.cmd('AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n',10000, function cb(d) {
+        if (d==sckt+",CONNECT") {
+          socks[sckt] = true;
+          return cb;
+        }
+        if (d=="OK") {          
+          at.registerLine(sckt+",CLOSED", function() {
+            at.unregisterLine(sckt+",CLOSED");
+            socks[sckt] = undefined;
+          });        
         } else {
           socks[sckt] = undefined;
           throw new Error("CIPSTART failed");
@@ -72,10 +77,10 @@ var netCallbacks = {
   close : function(sckt) {    
     if (socks[sckt]=="Wait")
       socks[sckt]="WaitClose";
-    else {
-      lastSocket = sckt;
-      at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(/*d*/) { socks[sckt] = undefined; });
-    }
+    else
+      at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(/*d*/) {
+        socks[sckt] = undefined;
+      });
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
   accept : function(sckt) {
@@ -112,22 +117,30 @@ var netCallbacks = {
     if (at.isBusy() || socks[sckt]=="Wait") return 0;
     if (!socks[sckt]) return -1; // error - close it
     //console.log("Send",sckt,data);
-    at.register('>', function() {
-      at.unregister('>');
-      at.write(data);          
-      return "";
-    });
-    socks[sckt]="Wait";
-    lastSocket = sckt;
-    at.cmd('AT+CIPSEND='+sckt+','+data.length+'\r\n', 10000, function cb(d) {
-      if (d=="SEND OK") {
+   
+    var cmd = 'AT+CIPSEND='+sckt+','+data.length+'\r\n';
+    at.cmd(cmd, 10000, function cb(d) {       
+      if (d=="OK") {
+        at.register('>', function() {
+          at.unregister('>');
+          at.write(data);          
+          return "";
+        });
+        return cb;
+      } else if (d=="Recv "+data.length+" bytes") {
+        // all good, we expect this
+        return cb;
+      } else if (d=="SEND OK") {
+        // we're ready for more data now
         if (socks[sckt]=="WaitClose") netCallbacks.close(sckt);
-        socks[sckt]=true;    
-      } else {       
-        socks[sckt]=undefined; // a problem?
-        at.unregister('>');
+        socks[sckt]=true;
+      } else {
+        socks[sckt]=undefined; // uh-oh. Error.      
+        at.unregister('>'); 
       }
     });
+    // if we obey the above, we shouldn't get the 'busy p...' prompt
+    socks[sckt]="Wait"; // wait for data to be sent
     return data.length;
   }
 };
@@ -138,7 +151,6 @@ function ipdHandler(line) {
   var colon = line.indexOf(":");
   if (colon<0) return line; // not enough data here at the moment
   var parms = line.substring(5,colon).split(",");
-  lastSocket = parms[0];
   parms[1] = 0|parms[1];
   var len = line.length-(colon+1);
   if (len>=parms[1]) {
@@ -183,13 +195,15 @@ var wifiFuncs = {
   },
   "getVersion" : function(callback) {
     at.cmd("AT+GMR\r\n", 1000, function(d) {
+      // works ok, but we could get more data
       callback(null,d);
     });
   },
   "connect" : function(ssid, key, callback) {
     at.cmd("AT+CWMODE=1\r\n", 1000, function(cwm) {
       if (cwm!="no change" && cwm!="OK") callback("CWMODE failed: "+cwm);
-      else at.cmd("AT+CWJAP="+JSON.stringify(ssid)+","+JSON.stringify(key)+"\r\n", 20000, function(d) {
+      else at.cmd("AT+CWJAP="+JSON.stringify(ssid)+","+JSON.stringify(key)+"\r\n", 20000, function cb(d) {
+        if (["WIFI CONNECTED","WIFI GOT IP"].indexOf(d)>=0) return cb;
         if (d!="OK") callback("WiFi connect failed: "+d);
         else callback(null);        
       });
@@ -215,7 +229,7 @@ var wifiFuncs = {
   },
   "createAP" : function(ssid, key, channel, enc, callback) {
     at.cmd("AT+CWMODE=2\r\n", 1000, function(cwm) {
-      if (cwm!="no change" && cwm!="OK") callback("CWMODE failed: "+cwm);
+      if (cwm!="no change" && cwm!="OK" && cwm!="WIFI DISCONNECT") callback("CWMODE failed: "+cwm);
       var encn = enc ? ENCR_FLAGS.indexOf(enc) : 0;
       if (encn<0) callback("Encryption type "+enc+" not known - "+ENCR_FLAGS);
       else at.cmd("AT+CWSAP="+JSON.stringify(ssid)+","+JSON.stringify(key)+","+channel+","+encn+"\r\n", 5000, function(cwm) {
@@ -225,12 +239,12 @@ var wifiFuncs = {
     });
   },
   "getIP" : function(callback) {
-    at.cmd("AT+CIFSR\r\n", 1000, function(d) {
-      var ip = d;
-      return function(d) {
-        if (d!="OK") return callback("CIFSR failed: "+d); 
-        return callback(null, ip);
-      }
+    var ip;
+    at.cmdReg("AT+CIFSR\r\n", 1000, "+CIFSR", function(d) { 
+      if (!ip && d.indexOf(',')>=0) ip=JSON.parse(d.slice(d.indexOf(',')+1)); 
+    }, function(d) { 
+      if (d!="OK") callback("CIFSR failed: "+d); 
+      else callback(null, ip); 
     });
   }
 };
@@ -241,7 +255,6 @@ exports.connect = function(usart, connectedCallback) {
   require("NetworkJS").create(netCallbacks);
   
   at.register("+IPD", ipdHandler);
-  at.registerLine("Unlink", function() { socks[lastSocket] = undefined; });    
   
   wifiFuncs.reset(connectedCallback);
 
