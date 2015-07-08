@@ -26,7 +26,7 @@ You'll Need
 Buying a Crystal
 ----------------
 
-![32.768kHz crystal](crystal.jpg)
+![32.768kHz crystal](Clocks/crystal.jpg)
 
 You can get these from pretty much any electronic component supplier, for instance:
 
@@ -38,14 +38,14 @@ You need something that looks like the above - roughly 8mm long and 2mm wide, wi
 Wiring Up
 --------
 
-![32.768kHz crystal position](crystalpos.jpg)
+![32.768kHz crystal position](Clocks/crystalpos.jpg)
 
 * Apply two small blobs of solder to the two pads indicated above
 * Cut your crystal's wires to length, and tin them.
 * Solder the crystal on to the board (it doesn't matter which way around it is)
 * Fold it down on to the ARM chip, and apply some Super Glue to hold it in place
 
-![Finished crystal](final.jpg)
+![Finished crystal](Clocks/final.jpg)
 
 **Note:** The other four empty pads nearby are for two capacitors for the crystal. These crystals require around 12pF for each capacitor - however in reality there is enough capacitance in the PCB, and the crystal will work perfectly well without them.
 

@@ -11,7 +11,7 @@ Note that there are [several different types of protocol](http://en.wikipedia.or
 Wiring Up
 --------
 
-![TSOP34838 IR Receiver](module.png)
+![TSOP34838 IR Receiver](IRReceiver/module.png)
 
 Just wire up as follows:
 

@@ -5,7 +5,7 @@ Word Clock
 * KEYWORDS: Clock,Time
 * USES: WS2811
 
-![The clock](final.jpg)
+![The clock](Word Clock/final.jpg)
 
 This is an LED word clock. It light up letters in a grid to spell out the time.
 
@@ -14,7 +14,7 @@ In order to use a sensible number of LEDs and keep the cost down, the clock will
 You'll Need
 ----------
 
-![Parts](parts.jpg)
+![Parts](Word Clock/parts.jpg)
 
 * A deep picture frame (we used an Ikea one)
 * 88 [[WS2811]] LED lights - for an 8 x 11 grid
@@ -26,27 +26,27 @@ You'll Need
 Assembly
 -------
 
-![Card](card.jpg)
+![Card](Word Clock/card.jpg)
 
-![Grid](grid.jpg)
+![Grid](Word Clock/grid.jpg)
 
 Measure and cut the card into 10 x 7 strips as above (measure them to fit the picture frame that you have), and assemble them. 
 
 We've left gaps for the WS2811 LEDs and their wires- however we used a string of LEDs. If you buy your LEDs in flat strip you won't need to cut out any large gaps.
 
-![fitting LEDs](leds_part.jpg)
+![fitting LEDs](Word Clock/leds_part.jpg)
 
 Fit in the LEDs in an 'S' shape, and glue them securely with hot glue. Make sure know which end of the LED chain is the input and which is the output! Consult the [[WS2811]] page if you're not sure.
 
-![glued LEDs](leds_glued.jpg)
+![glued LEDs](Word Clock/leds_glued.jpg)
 
-![letter pattern](letters.jpg)
+![letter pattern](Word Clock/letters.jpg)
 
 Print out a pattern of letters that matches your grid. We did this on plan paper and mirrored it, so that the white paper faces the viewer. However you could do it the other way, or could use acetate and a diffuser.
 
 If you print out the text as we've done, try and do it on a laser printer or photocopier. Printing lots of black on thin paper with a normal inkjet printer will cause it to warp slightly and look ugly.
 
-![assembled](assembled_back.jpg)
+![assembled](Word Clock/assembled_back.jpg)
 
 Now assemble everything, and wire up to the Espruino board as follows:
 
@@ -58,7 +58,7 @@ Now assemble everything, and wire up to the Espruino board as follows:
 
 And you're done! On to the software...
 
-![The clock](clock.jpg)
+![The clock](Word Clock/clock.jpg)
 
 Software
 --------

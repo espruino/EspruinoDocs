@@ -17,7 +17,7 @@ You'll need a single [RCA Connector](http://en.wikipedia.org/wiki/RCA_connector)
 * Attach a 1k Ohm resistor between pin A6 and the signal pin on the RCA connector
 * Also attach a 470 Ohm resistor between pin A7 and the signal pin on the RCA connector
 
-![Composite PAL Connections](Composite.png)
+![Composite PAL Connections](Television/Composite.png)
 
 ### Software
 
@@ -50,7 +50,7 @@ Connect:
 * A7 to one end of a 330 Ohm resistor, and the other end to VGA pin 1,2, or 3 (or all 3 - these are the Red, Green and Blue wires). Also connect this to GND via the 100 Ohm resistor.
 * All the grounds (pins 5,6,7,8,9) together, and to Espruino's ground.
 
-![VGA Connections](VGA.png)
+![VGA Connections](Television/VGA.png)
 
 
 ### Software

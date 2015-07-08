@@ -4,7 +4,7 @@ Espruino Pico
 
 * KEYWORDS: Espruino Pico,Board,PCB,Pinout
 
-![Espruino Pico](angled.jpg)
+![Espruino Pico](Pico/angled.jpg)
 
 Features
 -------
@@ -51,7 +51,7 @@ Tutorials using the Pico Board:
 Layout
 -----
 
-![Espruino Pico diagram](diagram.png)
+![Espruino Pico diagram](Pico/diagram.png)
 
 | Name | Function |
 |------|----------|
@@ -69,13 +69,13 @@ Layout
 Embedding the Pico
 ----------------
 
-![Surface mount Pico](smd.jpg)
+![Surface mount Pico](Pico/smd.jpg)
 
 The Pico is designed to be easy to include in your designs. The 0.01" pins are easy to fit in to sockets, and castellated edges mean that unpinned Picos can easily be surface-mounted directly to a PCB.
 
 To make it even easier, we've provided [a part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component) that includes the Pico's footprint in several different configurations:
 
-![Eagle CAD Footrpints](footprint.png)
+![Eagle CAD Footrpints](Pico/footprint.png)
 
 | Library Name | Description |
 |--------------|-------------|
@@ -104,7 +104,7 @@ Please see the [[Troubleshooting]] section.
 <a name="battery"></a>Battery
 -------
 
-![JST connector positioning](jst.jpg)
+![JST connector positioning](Pico/jst.jpg)
 
 Espruino Pico contains the circuitry needed to power itself from a battery without the voltage drop of a diode. This means that it will run off of normal 3.7v LiPo batteries (or any voltage up to 16v).
 
@@ -115,7 +115,7 @@ Please see the [[Battery]] page for information on connectors and where to buy t
 <a name="usb"></a>Alternate USB connectors
 -------------------------
 
-![Micro and Mini USB](microusb.jpg)
+![Micro and Mini USB](Pico/microusb.jpg)
 
 On the rear of the Pico Board under the while block of silkscreen, there are pads for both Micro and Mini USB connectors. To use these, *carefully* scratch off the silkscreen until you have copper tracks, and solder on the connector. 
 
@@ -152,7 +152,7 @@ The connectors you need are very standard parts. While some parts are listed bel
 
 Currently the labelling for the Pico's pins is quite confusing (it's different on the circuit diagram, PCB silkscreen, and the Pinout diagram). Hopefully the table above will help to clear it up slightly.
 
-![Power circuitry](power.png)
+![Power circuitry](Pico/power.png)
 
 Espruino's power circuitry is as above. When USB is connected the device is powered through a Schottky diode with 0.3v voltage drop. However when USB is disconnected then Espruino can be powered from a battery with no voltage drop. This is done by turning on the PFET Q1.
 

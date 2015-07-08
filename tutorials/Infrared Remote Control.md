@@ -21,7 +21,7 @@ You'll Need
 Getting an Infrared Receiver
 -------------------------
 
-![IR Sensor](sensor.jpg)
+![IR Sensor](Infrared Remote Control/sensor.jpg)
 
 You have a few options here:
 
@@ -36,7 +36,7 @@ Scavenging
 
 Find an old remote-controlled set top box that you were going to throw out, and crack it open. What you're looking for is something like this:
 
-![IR Sensor on PCB](pcb.jpg)
+![IR Sensor on PCB](Infrared Remote Control/pcb.jpg)
 
 It'll have 3 wires, will be at the front of the case and will have a black plastic lens somewhere to let the IR light in.
 

@@ -4,7 +4,7 @@ CMUcam5 Pixy
 
 * KEYWORDS: Camera,CMUcam5,Pixy,Computer Vision
 
-![CMUcam5 Pixy](module.jpg)
+![CMUcam5 Pixy](Pixy/module.jpg)
 
 The Pixy is a computer vision camera that does all the hard work on-board. It can recognize coloured objects that it 'sees', and will then report their size and position back to a connected microcontroller.
 
@@ -15,7 +15,7 @@ There's an Espruino module called [[Pixy.js]] which will interface to it.
 Wiring Up
 ---------
 
-![Pixy Pins](pins.jpg)
+![Pixy Pins](Pixy/pins.jpg)
 
 Use SPI (the default for Pixy), and connect as follows:
 

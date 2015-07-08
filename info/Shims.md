@@ -9,12 +9,12 @@ Espruino Pico 'Shims'
 ESP8266 WiFi
 -----------
 
-[![ESP8266](shim_esp8266.jpg)](/ESP8266)
+[![ESP8266](Shims/shim_esp8266.jpg)](/ESP8266)
 
 WIZnet W550io Ethernet
 --------------------
 
-[![WIZnet W550io](shim_wiznet.jpg)](/WIZnet)
+[![WIZnet W550io](Shims/shim_wiznet.jpg)](/WIZnet)
 
 Where can I get one?
 ------------------

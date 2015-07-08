@@ -4,7 +4,7 @@ Pin and Socket Strip
 
 * KEYWORDS: Pin,Pins,Socket,Strip,0.1,Dupont,Header
 
-![Pin Strip](strip.jpg)
+![Pin Strip](Pin Strip/strip.jpg)
 
 If you're trying to prototype something, it's often handy to be able to plug and unplug it. The video below shows you how to solder Pin Strip on to the Espruino Board.
 

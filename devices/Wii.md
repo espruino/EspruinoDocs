@@ -4,7 +4,7 @@ Wii Nunchuck
 
 * KEYWORDS: Module,Accelerometer,I2C,Sensor,Wii,Nunchuck,Joystick,Joy Stick,Button
 
-![Wii Nunchuck](nunchuck.jpg)
+![Wii Nunchuck](Wii/nunchuck.jpg)
 
 The Wii Nunchuck is an optional accessory that plugs into the Wiimote for for the Wii games console. It is a small, rugged, hand-held device that contains two buttons, a JoyStick, and a 3 axis accelerometer. While the original is relatively expensive, cheap copies are available for less than $10.
 

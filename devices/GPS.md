@@ -4,7 +4,7 @@ GPS Module
 
 * KEYWORDS: GPS,Global Positioning System,Location,NEO6MV2,Ublox,NMEA
 
-![Ublox GPS Module](ublox.jpg)
+![Ublox GPS Module](GPS/ublox.jpg)
 
 GPS devices are getting very small and very cheap, and they pretty much all use the [NMEA standard](http://www.gpsinformation.org/dale/nmea.htm). This transfers simple human-readable serial data at 9600 baud.
 

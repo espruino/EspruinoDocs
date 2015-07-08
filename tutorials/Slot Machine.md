@@ -22,7 +22,7 @@ You'll Need
 Wiring Up
 --------
 
-![Final wiring](final.jpg)
+![Final wiring](Slot Machine/final.jpg)
 
 * Plug your Espruino Pico into a breadboard with the USB connector on the left-hand side. 
 * With a Black Jumper wire, connect the bottom left pin (GND) to the '-' rail of the breadboard
@@ -32,7 +32,7 @@ Wiring Up
 
 Now the tricky part... The LED lights need wiring up to GND and VCC, and also need their data pins connected together.
 
-![APA106 pinout](apa106.jpg)
+![APA106 pinout](Slot Machine/apa106.jpg)
 
 * Take the first LED, and figure out which pins are which using the diagram above. Hold it so the plastic part is facing up, and the two shorter pins are on the left. The slightly flat side of the plastic bit should be on the right-hand side.
 
@@ -46,7 +46,7 @@ Now the tricky part... The LED lights need wiring up to GND and VCC, and also ne
 
 Now check the wiring is correct and that the pins of the LEDs are not shorted out (see the picture below). *If 5v and GND are the wrong way around, you could destroy your LEDs.*
 
-![Wiring up](wiring.jpg)
+![Wiring up](Slot Machine/wiring.jpg)
 
 
 Software

@@ -4,7 +4,7 @@ Battery
 
 * KEYWORDS: Battery,Charger,LiPo,Li-ion,Power
 
-![Battery and Charger](olimex.jpg)
+![Battery and Charger](Battery/olimex.jpg)
 
 If you plan to use Espruino with a battery, a small LiPo cell and charger like those above are probably the best things to use - see [below](#buying) for where to find them.
 
@@ -13,7 +13,7 @@ If you plan to use Espruino with a battery, a small LiPo cell and charger like t
 
 The JST connector wiring is as follows:
 
-![JST wiring](jst.jpg)
+![JST wiring](Battery/jst.jpg)
 
 Espruino itself will run from a wide range of batteries and voltages (3.6v to 15v). Some types of small batteries that can be used are:
 

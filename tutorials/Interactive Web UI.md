@@ -5,7 +5,7 @@ Interactive Web-based UI
 * KEYWORDS: Wifi,Web Server,Graphical,SVG
 * USES: Internet,ESP8266,Pico,WIZnet
 
-![Web Page](mobile.png)
+![Web Page](Interactive Web UI/mobile.png)
 
 Introduction
 -----------
@@ -37,7 +37,7 @@ Software
 
 First off, you need to run [Inkscape](http://www.inkscape.org/en/) and design some graphics. I just created a simple temperature dial with some basic parts - a ring, text, up/down arrows, and a needle (shown in grey).
 
-![inkscape](inkscape.png) 
+![inkscape](Interactive Web UI/inkscape.png) 
 
 When you have something like this, make sure you right-click on each item, go to `Object Properties`, and set the `id` to something simple. I've chosen `ring`, `label`, `up`, `dn`, and `needle`. Then, save the file as a `Plain SVG` file using `Save As`. This will remove any Inkscape-specific tags that aren't needed. Finally, create a simple HTML file and paste it in (I've already removed a few extra tags):
 

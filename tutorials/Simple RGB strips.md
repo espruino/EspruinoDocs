@@ -7,7 +7,7 @@ Simple LED wiring
 Introduction
 -----------
 
-In order to power simple (analog) RGB LED strips, you need to translate between different voltage and/or want to have finer control over the output voltage to allow some dimming. Also, you may want to keep it simpler than with the WS2811 LEDs and only have one single color selectable for the entire strip. In this case a simple wiring with some transistors can be useful.  
+In order to power simple (analog) RGB LED strips, you need to translate between different voltage and/or want to have finer control over the output voltage to allow some dimming. Also, you may want to keep it simpler than with the WS2811 LEDs and only have one single color selectable for the entire strip. In this case a simple wiring with some transistors can be useful.
 
 Wiring Up
 --------
@@ -18,7 +18,7 @@ As transistor you can use any power NPN or N-Channel MOSFET. However, for this e
 
 On the board you can either use the true analogue output pins A4, A5 (see [[DAC]]) or any pin supporting [[PWM]] output (which is nearly every pin). In this tutorial we are using the purely PWM pins C7, C8 & C9.
 
-![Simple LED Wiring](SimpleLedWiring.jpg)
+![Simple LED Wiring](Simple RGB strips/SimpleLedWiring.jpg)
 
 The MOSFETs can also be soldered directly onto the board as there are plenty of pins left on the prototype area.
 

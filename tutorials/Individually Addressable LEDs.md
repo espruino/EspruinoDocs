@@ -5,14 +5,14 @@ Individually Addressable LEDs
 * KEYWORDS: Individually Addressable LEDs,Light,Lights,LED,LEDs,WS2811,WS2812,WS2812B,Multicolour,Fairy
 * USES: WS2811
 
-![LED String](string.jpg)
+![LED String](Individually Addressable LEDs/string.jpg)
 
 Introduction
 -----------
 
 In the last few years, individually addressable RGB lights have been getting cheaper and cheaper. These lights contain a small controller chip alongside the RGB LED which makes it show a certain colour. The controller chips have a serial data input and output, and can be daisy-chained together. In this way you can control many different lights using just a few control wires (rather than needing wires going to each individual light).
 
-![LED String](use_england.jpg) ![LED String](use_celebrate.jpg)
+![LED String](Individually Addressable LEDs/use_england.jpg) ![LED String](Individually Addressable LEDs/use_celebrate.jpg)
 
 It seems that the most popular type of controller at the moment is the [WS2801](/datasheets/WS2801.pdf). This has 4 wires - ground, power, clock and data. It can be controlled using SPI, which is available on most microcontrollers. There are some small disadvantages though:
 

@@ -5,7 +5,7 @@ Time Lapse Camera
 * KEYWORDS: Camera,Time,Time Lapse
 * USES: Battery,Camera
 
-![The 808 Camera](camera.jpg)
+![The 808 Camera](Time Lapse Camera/camera.jpg)
 
 While the Espruino board doesn't have enough memory to take proper pictures, nothing stops it from controlling other devices. In many cases this is a cheaper and more power efficient way to get the same result!
 
@@ -23,19 +23,19 @@ You'll Need
 Wiring
 ------
 
-![The 808 Camera Disassembled](disasm.jpg)
+![The 808 Camera Disassembled](Time Lapse Camera/disasm.jpg)
 
 * Take the camera to pieces - there are two screws on the 'keyring' end of the camera
 * Remove the PCB from the case (there are 3 screws), and disconnect the battery
 
-![Wiring](wiring.jpg)
+![Wiring](Time Lapse Camera/wiring.jpg)
 
 * Connect the wires as shown in the picture. You need:
   * One wire to the battery's positive terminal (red)
   * One wire to each side of the 'shutter' switch. The (green) wire nearest the camera sensor is ground, the other (yellow) wire is the shutter signal.
   * One wire to the power button nearest the edge of the board (orange) 
 
-![The 808 Camera re-assembled](assembled.jpg)
+![The 808 Camera re-assembled](Time Lapse Camera/assembled.jpg)
 
 * Re-assemble everything. If your wires are thick then you may need to leave out the two plastic buttons and the three internal screws.
 * Now connect to Espruino:
@@ -47,7 +47,7 @@ Wiring
 | Yellow | Shutter   | A7                |
 | Orange | Power     | A5 and A6         |
 
-![Connected up](finish.jpg)
+![Connected up](Time Lapse Camera/finish.jpg)
 
 The image above shows an Espruino Pico prototype, but you can also use a 'classic' Espruino board for this.
 
@@ -56,7 +56,7 @@ How it works
 
 The manual says the following:
 
-![Manual](manual.png)
+![Manual](Time Lapse Camera/manual.png)
 
 So (while Espruino can't check the SD card!), we need to follow the steps given which we'll do using timeouts and callbacks.
 
