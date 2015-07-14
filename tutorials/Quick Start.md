@@ -19,9 +19,7 @@ Plugging in
 * **Original Espruino** - just plug the board in with a Micro USB cable and you're done. 
 * **Other Boards** - please [see this page](/Other Boards) for more information.
 
-**Windows 8.1 and XP Users:** Windows XP and 8.1 do not appear to have generic drivers for USB CDC devices, so you'll have to get them from ST via [st.com/web/en/catalog/tools/PF257938](http://www.st.com/web/en/catalog/tools/PF257938). You'll have to unzip the file, run the executable, and *then* go to `C:\Program Files (x86)\STMicroelectronics\Software\Virtual comport driver` in Windows Explorer and double-click either `dpinst_amd64.exe` for 64 bit systems, or `dpinst_x86.exe` for 32 bit.
-
-**Other Windows Users:** Most versions of Windows have USB CDC devices installed already, however it may take a few minutes to check with Windows Update and install them.
+**Windows Users:** Most versions of Windows won't automatically load the built-in driver for USB com ports (Windows 10 finally fixes this). You'll have to download the driver from ST via [st.com/web/en/catalog/tools/PF257938](http://www.st.com/web/en/catalog/tools/PF257938). Unzip the file, run the executable, **and then go to** `C:\Program Files (x86)\STMicroelectronics\Software\Virtual comport driver` in Windows Explorer and double-click either `dpinst_amd64.exe` for 64 bit systems, or `dpinst_x86.exe` for 32 bit.
 
 **Linux users** to ensure that you have the the correct permissions to connect as a normal user you'll need to copy [the file 45-espruino.rules](https://github.com/espruino/Espruino/blob/master/misc/45-espruino.rules) to `/etc/udev/rules.d` and to ensure your user is in the 'plugdev' group (you can check by typing ```groups```). You add it by typing ```sudo adduser $USER plugdev``` and then logging out and back in.
 
