@@ -8,8 +8,8 @@ Power Consumption
 
 Espruino can run in one of 3 different modes.
 
-| Mode  | [Original Espruino](/EspruinoBoard) 1v4 | [[Pico]] | Notes |
-|-------|---------|--------|
+| Mode  | [Original Espruino](/EspruinoBoard) 1v4 | [[Pico]]  | Notes |
+|-------|---------------------------------|-------------------|------|
 | Run   | ~35mA (57 hours)                | 32mA              | Espruino is executing code and running at 72Mhz |
 | Sleep | ~12mA (7 days)                  | ~11mA             | Espruino has stopped the clock to the CPU, but all peripherals are still running and can wake it up |
 | Stop  | ~0.03mA<sup>1</sup> (> 2 years) | 0.6mA<sup>2</sup> | Espruino has stopped the clock to everything except the real-time clock (RTC). It can wake up on setInterval/setTimeout or setWatch |
