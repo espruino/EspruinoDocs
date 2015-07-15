@@ -61,7 +61,7 @@ AT25.prototype.read= function(add,bytes) {
 }
 
 
-AT25.prototype.write= function(add,data,num) {
+AT25.prototype.write= function(add,data) {
 	var l=data.length;
 	if(typeof data!="string"){data=E.toString(data);}
 	var idx=0;
