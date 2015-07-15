@@ -32,7 +32,7 @@ You'll Need
 Wiring Up
 --------
 
-![Heater Setup](setup.jpg)
+![Heater Setup](Heater Controller/setup.jpg)
 
 We need to wire up 3 things:
 

@@ -39,7 +39,7 @@ There is a very wide variety of low-voltage MOSFETs available in surface mount p
 Pinouts
 ------------------
 
-![Typical MOSFET pinouts](pinouts.jpg)
+![Typical MOSFET pinouts](mosfets/pinouts.jpg)
 
 These show the pinout of typical TO-220 and SOT-23 MOSFETs. However, ALWAYS consult the datasheet before connecting anything, in case you find yourself using a wierdo part. 
 
@@ -49,18 +49,18 @@ Connection
 
 N-Channel:
 
-![N-Channel MOSFET TO-220](TO-220MOSFET.jpg)
+![N-Channel MOSFET TO-220](mosfets/TO-220MOSFET.jpg)
 
 An Espruino being used to switch a 100W load using an IRF3708. Note the 10k resistor between gate and source. The load is a 100W 660nm LED array, pulling ~3.8A (per specs) at 22v (more like 85W) - it is outside the picture (it's rather bright). 
 
 
-![N-Channel MOSFET](N-Ch.jpg)
+![N-Channel MOSFET](mosfets/N-Ch.jpg)
 
 This shows two N-channel MOSFETs on the surface mount prototyping area on an Espruino, one in SOT-23 (right) and the other in SOIC-8 (left). Note that the traces between the SMD pads and the pins on the Espruino are fairly thin, so this should not be used for currents much over an amp.
 
 P-Channel: 
 
-![P-Channel MOSFET](P-Ch.jpg)
+![P-Channel MOSFET](mosfets/P-Ch.jpg)
 
 This shows an N-channel MOSFET being used to turn on a P-channel MOSFET - this configuration is useful when you need to switch the high side of a circuit powered by something above 5 volts - this example assumes the Espruino's VBat is the power source.
 
@@ -68,7 +68,7 @@ Schematics
 ------------------
 These schematics show a few common configurations for MOSFETs as they would be used with the Espruino. The exact values of the resistors are not essential; a higher value resistor will work fine (and may be desirable where power usage is of particular concern). As can be seen below, using a P-channel MOSFET to switch voltages above 5v involves a more complicated circuit. This is not the case when using an N-channel MOSFET to switch high voltages; since the source is grounded, the gate doesn't need to go up to the voltage being switched, like it does on a P-channel MOSFET, where the source is the positive voltage. 
 
-![MOSFET schematics](mosfetschematic.jpg)
+![MOSFET schematics](mosfets/mosfetschematic.jpg)
 
 MOSFETs vs Relays
 ----------------

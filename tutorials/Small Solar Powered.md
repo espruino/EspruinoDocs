@@ -5,7 +5,7 @@ Small Solar Powered Espruino
 * KEYWORDS: Power,Solar,Light,Energy Harvesting
 * USES: Espruino Board,Solar Panel,Battery
 
-![Solar Powered Espruino](final.jpg)
+![Solar Powered Espruino](Small Solar Powered/final.jpg)
 
 Introduction
 -----------
@@ -22,7 +22,7 @@ You'll Need
 * An old Mobile phone battery (see below)
 * A JST battery connector (see [[EspruinoBoard]] for where to get these)
 
-![Solar Powered Torch](torch.jpg)
+![Solar Powered Torch](Small Solar Powered/torch.jpg)
 
 The Torch
 --------
@@ -31,13 +31,13 @@ For $2, a little device containing a battery and solar panel sounds too good to 
 
 Crack the device open by sticking a knife in the seam around the side and levering. It may help to bend and remove the metal loop that holds the keychain.
 
-![Inside the Solar Powered Torch](torch_inside.jpg)
+![Inside the Solar Powered Torch](Small Solar Powered/torch_inside.jpg)
 
 Inside we seem to be off to a good start. There's a little PCB with 3 LEDs, a switch, and a circular plastic battery helpfully named with 'charge'.
 
 However looking a bit closer there are some problems.
 
-![Inside the Solar Powered Torch](torch_panel.jpg)
+![Inside the Solar Powered Torch](Small Solar Powered/torch_panel.jpg)
 
 * Right at the bottom of this picture, you can just see the dark red solar panel with two metal pads on it. They're not attached to anything. This torch is not solar powered at all - but they have still fitted a working solar panel onto it!
 * If you take the plastic disc labelled 'charge' off, you'll see that there are two CR2016 batteries inside. This makes 6v, not 3.6v, and **they are not rechargeable**.
@@ -48,14 +48,14 @@ Fixing it
 
 If your torch is actually as described (with a rechargable battery and a connected panel) [please let us know!](http://forum.espruino.com) If not, you're going to have to fit a proper rechargeable battery to it. 
 
-![Attaching a battery](panel.jpg)
+![Attaching a battery](Small Solar Powered/panel.jpg)
 
 * Carefully unsolder all the components from the board
 * Put two blobs of solder between the solar panel and the PCB - finally connecting everything up!
 * Get your old phone battery and figure out which pin is **+** and which is **-**. Often it will be marked, but you could use a voltmeter. Check the solar panel as well.
 * Get some wire and solder the panel and the JST battery connector to the battery. For more information about the JST connector, see [[EspruinoBoard]]
 
-![All attached](battery.jpg)
+![All attached](Small Solar Powered/battery.jpg)
 
 Now, you should have a solar-powered battery! You can always glue the torch's top back onto the top of the battery to help protect the panel (as in the image at the top of this page).
 

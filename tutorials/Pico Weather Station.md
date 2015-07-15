@@ -12,7 +12,7 @@ We'll connect the Pico up to an LCD and WiFi module, and use it to grab the curr
 
 This is basically the code from the [[Pico LCD Hello World]] tutorial plus the code on the [[ESP8266]] page, with one extra function `parseWeather` which grabs the weather data out of the website's response and puts in on the LCD.
 
-![Wiring](finished.jpg)
+![Wiring](Pico Weather Station/finished.jpg)
 
 You'll Need
 ----------
@@ -27,7 +27,7 @@ Wiring Up
 
 To connect the ESP8266 module up, see the [[ESP8266]] page for instructions. 4 wires are needed, or you can use the [adaptor shim](/Shims)
 
-![Wiring](back.jpg)
+![Wiring](Pico Weather Station/back.jpg)
 
 The LCD draws so little power that we can power it from Espruino's GPIO lines... Follow the instructions on the [[Pico LCD Hello World]] tutorial if using breadboard, but if you're soldering you can make exactly the same connections by soldering the LCD straight to the Pico as shown in the picture above.
 

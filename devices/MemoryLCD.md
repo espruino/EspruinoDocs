@@ -4,7 +4,7 @@ Sharp Memory LCD
 
 * KEYWORDS: Module,SPI,Graphics,Graphics Driver,LCD,Monochrome,LS013B7DH03,LS027B7DH01,Memory LCD,PNLC,HR-TFT
 
-![2.7" Memory LCD module](400x240.jpg)
+![2.7" Memory LCD module](MemoryLCD/400x240.jpg)
 
 [Sharp Memory LCDs](http://www.sharpmemorylcd.com/aboutmemorylcd.html) are high pixel density, low power displays that don't need backlights. They draw in the region of 100uA while idle, so are perfect for always-on, battery-powered applications.
 

@@ -4,7 +4,7 @@ Espruino Pico
 
 * KEYWORDS: Espruino Pico,Board,PCB,Pinout
 
-![Espruino Pico](angled.jpg)
+![Espruino Pico](Pico/angled.jpg)
 
 Features
 -------
@@ -23,13 +23,7 @@ Features
 <a name="buy"></a>Buying
 ------
 
-We're still waiting for more Pico boards to be manufactured before we can send them to distributors, however there were a few boards from the first batch that got slightly damaged, and these are now [being sold on Tindie](https://www.tindie.com/products/gfwilliams/espruino-pico-cosmetic-damage/):
-
-[![Tindie Shop](/images/logo_tindie.png)](https://www.tindie.com/products/gfwilliams/espruino-pico-cosmetic-damage/)
-
-<a name="signup"></a>If you'd like to know when Espruino Pico boards will be available to buy from distributors, just enter your e-mail address below:
- 
-<iframe frameborder="0" height="500" marginheight="0" marginwidth="0" src="https://docs.google.com/forms/d/1kCVo9aPfLjNR0VJ0WSYsfSwSCY3pttf7axKsMhnpn64/viewform?embedded=true" width="600">Loading...</iframe>
+You can now get an Espruino Pico from several different distributors. Check out page on [Ordering Espruino](/Order)
 
 Pinout
 ------
@@ -41,6 +35,8 @@ Pinout
 Information
 -----------
 
+* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/Pico/pdf/schematic_1v3.pdf)
+* [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/Pico/pdf/board_1v3.pdf)
 * [STM32F401CD Datasheet](/datasheets/STM32F401xD.pdf)
 * [STM32F401CD Reference Manual](/datasheets/STM32F401xD_ref.pdf)
 * [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
@@ -55,7 +51,7 @@ Tutorials using the Pico Board:
 Layout
 -----
 
-![Espruino Pico diagram](diagram.png)
+![Espruino Pico diagram](Pico/diagram.png)
 
 | Name | Function |
 |------|----------|
@@ -73,13 +69,13 @@ Layout
 Embedding the Pico
 ----------------
 
-![Surface mount Pico](smd.jpg)
+![Surface mount Pico](Pico/smd.jpg)
 
 The Pico is designed to be easy to include in your designs. The 0.01" pins are easy to fit in to sockets, and castellated edges mean that unpinned Picos can easily be surface-mounted directly to a PCB.
 
 To make it even easier, we've provided [a part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component) that includes the Pico's footprint in several different configurations:
 
-![Eagle CAD Footrpints](footprint.png)
+![Eagle CAD Footrpints](Pico/footprint.png)
 
 | Library Name | Description |
 |--------------|-------------|
@@ -108,7 +104,7 @@ Please see the [[Troubleshooting]] section.
 <a name="battery"></a>Battery
 -------
 
-![JST connector positioning](jst.jpg)
+![JST connector positioning](Pico/jst.jpg)
 
 Espruino Pico contains the circuitry needed to power itself from a battery without the voltage drop of a diode. This means that it will run off of normal 3.7v LiPo batteries (or any voltage up to 16v).
 
@@ -119,7 +115,7 @@ Please see the [[Battery]] page for information on connectors and where to buy t
 <a name="usb"></a>Alternate USB connectors
 -------------------------
 
-![Micro and Mini USB](microusb.jpg)
+![Micro and Mini USB](Pico/microusb.jpg)
 
 On the rear of the Pico Board under the while block of silkscreen, there are pads for both Micro and Mini USB connectors. To use these, *carefully* scratch off the silkscreen until you have copper tracks, and solder on the connector. 
 
@@ -156,7 +152,7 @@ The connectors you need are very standard parts. While some parts are listed bel
 
 Currently the labelling for the Pico's pins is quite confusing (it's different on the circuit diagram, PCB silkscreen, and the Pinout diagram). Hopefully the table above will help to clear it up slightly.
 
-![Power circuitry](power.png)
+![Power circuitry](Pico/power.png)
 
 Espruino's power circuitry is as above. When USB is connected the device is powered through a Schottky diode with 0.3v voltage drop. However when USB is disconnected then Espruino can be powered from a battery with no voltage drop. This is done by turning on the PFET Q1.
 

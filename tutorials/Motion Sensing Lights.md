@@ -24,7 +24,7 @@ You'll Need
 Wiring Up
 --------
 
-![Motion Sensing Lights Wiring](setup.jpg)
+![Motion Sensing Lights Wiring](Motion Sensing Lights/setup.jpg)
 
 Connect the [[Pyroelectric]] sensor as follows:
 

@@ -4,7 +4,7 @@ WIZnet WIZ550io/W5500 Ethernet module
 
 * KEYWORDS: Wireless,WIZnet,WIZ550io,W5500,Ethernet,Internet,LAN,Web Server,HTTP,Built-In
 
-![WIZnet WIZ550io module](module.jpg)
+![WIZnet WIZ550io module](WIZnet/module.jpg)
 
 The [WIZnet WIZ550io module](http://wizwiki.net/wiki/doku.php?id=products:wiz550io:allpages) contains a W5500 chip - it implements TCP/IP on-chip, so you just plug an Ethernet cable in one end, and SPI into the other.
 
@@ -26,7 +26,7 @@ To build yourself, follow [the instructions here](http://www.github.com/espruino
 Espruino Pico Shim
 ----------------
 
-![WIZnet W550io shim](shim.jpg)
+![WIZnet W550io shim](WIZnet/shim.jpg)
 
 The Shim available for the Espruino Pico helps to adapt the W550io to fit onto the Pico. Please see the video below:
 

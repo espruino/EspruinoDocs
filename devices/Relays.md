@@ -4,7 +4,7 @@ Relays
 
 * KEYWORDS: Relay,Switch
 
-![Relay Module](2x.jpg)
+![Relay Module](Relays/2x.jpg)
 
 [Relays](http://en.wikipedia.org/wiki/Relay) are electrically operated switches. A small current passing through one side will operate a physical switch. This means that you can control almost anything with a relay that you would turn on and off with a physical switch (batteries, motors, even mains-powered electic lights).
 
@@ -49,9 +49,9 @@ This contains a jumper between VCC and VCC-JD. This means that the relay will be
 
 ### Connecting to the Pico
 
-![Relay Module on Pico](pico.jpg)
+![Relay Module on Pico](Relays/pico.jpg)
 
-![Jumpers on Relay Module](jumperwire.jpg)
+![Jumpers on Relay Module](Relays/jumperwire.jpg)
 
 The Espruino Pico [Starter Kit](/Espruino+Kits) comes with breadboard and male Jumper Wires. To connect to the relay, take the 4 supplied black jumpers and place them on the 4 male pins of the Relay Module. You can then push the Jumper Wires into the top of them.
 

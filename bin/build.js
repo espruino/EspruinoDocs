@@ -160,9 +160,6 @@ function createKeywordsJS(keywords) {
 }
 
 function handleImages(file, contents) {
-  var basePath = file;
-  if (basePath.lastIndexOf(".")>0)
-    basePath = basePath.substr(0, basePath.lastIndexOf("."));
   var directory = file;
   if (directory.lastIndexOf("/")>0)
     directory = directory.substr(0, directory.lastIndexOf("/"));
@@ -173,20 +170,19 @@ function handleImages(file, contents) {
     if (tagMid>=0 && tagEnd>=0) {
       // we've found a tag - do stuff
       var imageName = contents.substring(tagMid+2, tagEnd);
-      var imagePath = basePath+"/"+imageName;
-      if (fs.existsSync(directory+"/"+imageName)) {
-        imagePath=directory+"/"+imageName;
-      }
+      var imagePath = directory+"/"+imageName;
       if (fs.existsSync(imagePath)) {
-        var newPath = IMAGE_DIR+htmlLinks[file]+"_"+imageName;
+        var newPath = htmlLinks[file]+"_"+imageName;
+        newPath = newPath.replace(/\//g,"_");
         newPath = newPath.replace(/\+/g,"_");
         newPath = newPath.replace(/ /g,"_");
+        newPath = IMAGE_DIR+newPath
         //console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
         fs.createReadStream(imagePath).pipe(fs.createWriteStream(path.resolve(HTML_DIR, newPath)));
         // now rename the image in the tag
         contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
       } else {
-        WARNING("Image '"+imagePath+"' does not exist");
+        WARNING(file+": Image '"+imagePath+"' does not exist");
       }
     }
     tagStart = contents.indexOf("![", tagStart+1);
@@ -241,7 +237,7 @@ markdownFiles.forEach(function (file) {
   htmlLinks[file] = htmlFile;
 });
 
-fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,0)+";");
+fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,1)+";");
 
 
 // ---------------------------------------------- Inference code

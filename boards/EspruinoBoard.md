@@ -6,7 +6,7 @@ Espruino Board
 
 Were you looking for the [Espruino Pico](/Pico)?
 
-![Espruino Board](main.jpg)
+![Espruino Board](EspruinoBoard/main.jpg)
 
 The Espruino board is the officially Supported board - it comes pre-programmed with Espruino, so you just plug it in and it works. You can [[Order]] them from [Espruino.com](http://www.espruino.com).
 
@@ -36,11 +36,11 @@ Layout
 
 ### Revision 1.4
 
-![Espruino Board](annotated_1v4.jpg)
+![Espruino Board](EspruinoBoard/annotated_1v4.jpg)
 
 ### Revision 1.3
 
-![Espruino Board](annotated_1v3.jpg)
+![Espruino Board](EspruinoBoard/annotated_1v3.jpg)
 
 | Name | Function |
 | ---- | -------- |
@@ -62,8 +62,8 @@ Layout
 Information
 ----------
 
-* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/pdf/espruino_schematic.pdf)
-* [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/pdf/espruino_pcb.pdf)
+* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/Original/pdf/espruino_schematic.pdf)
+* [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/Original/pdf/espruino_pcb.pdf)
 * [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
 * [STM32F103RCT6 Datasheet](/datasheets/STM32F103xC.pdf)
 * [STM32F103RCT6 Reference Manual](/datasheets/STM32F103xC_Ref.pdf)
@@ -88,7 +88,7 @@ Both the Micro USB and [[Battery]] connector can power the device (and pin heade
 
 If you wish to power Espruino from mains, we'd suggest using a Micro USB phone charger. This are widely available as the majority of mobile phones (with the exception of iPhones and low-end Nokias) now use them.
 
-![Charge Circuit](power.png)
+![Charge Circuit](EspruinoBoard/power.png)
 
 In order to protect the Espruino board (and what it is connected to), a 1000mA thermal (self-resetting) fuse is on the board between the pins marked 'Bat' on the board and the power source (USB/Battery).
 

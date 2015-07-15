@@ -5,7 +5,7 @@ Graphical Web Interface
 * KEYWORDS: Wifi,Web Server,Graphical,SVG
 * USES: Internet,CC3000,WS2811
 
-![Web Page](chrome.png)
+![Web Page](Graphical Web Interface/chrome.png)
 
 Introduction
 -----------
@@ -34,7 +34,7 @@ Software
 
 First off, you need to run [Inkscape](http://www.inkscape.org/en/) and design some graphics. I just drew around a photo of the model house:
 
-![Inkscape](inkscape.png)
+![Inkscape](Graphical Web Interface/inkscape.png)
 
 Then, save the file as a `Plain SVG` file using `Save As`. This will remove any Inkscape-specific tags that aren't needed. The source to the picture I made was:
 
@@ -246,5 +246,5 @@ The CC3000 takes a while to initialise so you may have to wait a minute or two. 
 
 When you connect, you should see a picture of the house - and clicking on the windows will turn the relevant lights on and off!
 
-![Web Page](chrome.png)
+![Web Page](Graphical Web Interface/chrome.png)
 

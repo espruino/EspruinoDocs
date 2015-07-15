@@ -4,7 +4,7 @@ HC-SR04 Ultrasonic Distance Sensor
 
 * KEYWORDS: Module,Ultrasonic Distance Sensor,Sound,Distance,Sensor,HC-SR04
 
-![Ultrasonic Distance Sensor](module.jpg)
+![Ultrasonic Distance Sensor](HC-SR04/module.jpg)
 
 The HC-SR04 Ultrasonic distance sensor measures distance by sending out a 40kHz pulse of sound and then listening for the echo. It's got just 4 pins: Vcc, GND, Trig and Echo. Trig triggers a pulse and Echo gives a pulse whenever an echo is heard.
 

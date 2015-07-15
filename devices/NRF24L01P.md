@@ -4,9 +4,9 @@ NRF24L01+ Wireless Module
 
 * KEYWORDS: Module,NRF,NRF24L01,NRF24L01P,NRF24L01+,Wireless
 
-![NRF24L01+ Wireless Module](module.jpg)
+![NRF24L01+ Wireless Module](NRF24L01P/module.jpg)
 
-![NRF24L01+ Wireless Module on Espruino](espruino_front.jpg)
+![NRF24L01+ Wireless Module on Espruino](NRF24L01P/espruino_front.jpg)
 
 The Nordic [NRF24L01+](http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P) transceiver is very popular and works well with Espruino. It is sold in very inexpensive wireless modules that interface via SPI. They can easily be obtained via [eBay](http://www.ebay.com/sch/i.html?_nkw=NRF24L01%2B) and many other places for prices as low as $2.
 
@@ -31,11 +31,11 @@ We'd also suggest that you add a 10nF - 100nF decoupling capacitor between GND a
 
 You can either connect the module with wires and mount it separately, or you can solder it into the prototype area, and run wires as follows on the back of the board. We'd recommend using thin, solid core wire for this.
 
-![NRF24L01+ Wireless Module connections on Espruino](espruino_wiring.jpg)
+![NRF24L01+ Wireless Module connections on Espruino](NRF24L01P/espruino_wiring.jpg)
 
 The finished wiring might look like this:
 
-![NRF24L01+ Wireless Module wired up to Espruino](espruino_back.jpg)
+![NRF24L01+ Wireless Module wired up to Espruino](NRF24L01P/espruino_back.jpg)
 
 Notes
 -----

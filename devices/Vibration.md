@@ -4,14 +4,14 @@ Vibration Sensor
 
 * KEYWORDS: Vibration,Switch,Shake,Movement,SW18010P,SW18015P,SW18020P
 
-![SW18010P outside](outside.jpg)
+![SW18010P outside](Vibration/outside.jpg)
 
 The SW18010P, SW18015P, SW18020P, etc Vibration sensors are effectively just a
 delicate spring with a sturdy piece of metal in the middle. When moved, the
 spring wobbles around and touches the metal, momentarily making 
 contact.
 
-![SW18010P inside](inside.jpg)
+![SW18010P inside](Vibration/inside.jpg)
 
 These are very useful little devices as they draw absolutely no power. They
 could easily be used in something like a toy, causing it to be activated

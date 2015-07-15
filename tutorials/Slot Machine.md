@@ -22,17 +22,17 @@ You'll Need
 Wiring Up
 --------
 
-![Final wiring](final.jpg)
+![Final wiring](Slot Machine/final.jpg)
 
 * Plug your Espruino Pico into a breadboard with the USB connector on the left-hand side. 
 * With a Black Jumper wire, connect the bottom left pin (GND) to the '-' rail of the breadboard
 * With a Red Jumper wire, connect the bottom pin 2nd from the left (5v) to the '+' rail of the breadboard
 * With a Yellow Jumper wire, connect the the top pin 2nd from the left (B15) to a column of pins to the right of the Pico
-* Connect the capacitor across the '+' and '-' rails on the bottom 2 rows. Make your you get it th eright way around ('-' is marked with a stripe)
+* Connect the capacitor across the '+' and '-' rails on the bottom 2 rows. Make your you get it the right way around ('-' is marked with a stripe)
 
 Now the tricky part... The LED lights need wiring up to GND and VCC, and also need their data pins connected together.
 
-![APA106 pinout](apa106.jpg)
+![APA106 pinout](Slot Machine/apa106.jpg)
 
 * Take the first LED, and figure out which pins are which using the diagram above. Hold it so the plastic part is facing up, and the two shorter pins are on the left. The slightly flat side of the plastic bit should be on the right-hand side.
 
@@ -46,7 +46,7 @@ Now the tricky part... The LED lights need wiring up to GND and VCC, and also ne
 
 Now check the wiring is correct and that the pins of the LEDs are not shorted out (see the picture below). *If 5v and GND are the wrong way around, you could destroy your LEDs.*
 
-![Wiring up](wiring.jpg)
+![Wiring up](Slot Machine/wiring.jpg)
 
 
 Software
@@ -142,4 +142,4 @@ setInterval(step, 20);
 setWatch(spin, BTN, {repeat:true, edge:"rising", debounce: 100});
 ```
 
-Now you can just rpess the button to 'spin' the Slot machine. If your LEDs flicker initially, I'm afraid this will be because your 
+Now you can just press the button to 'spin' the Slot machine.

@@ -4,8 +4,8 @@ Speaker
 
 * KEYWORDS: Speaker,Sound,Buzzer,Audio,Piezo
 
-![Speaker](speaker.jpg)
-![Piezo Speaker](piezo.jpg)
+![Speaker](Speaker/speaker.jpg)
+![Piezo Speaker](Speaker/piezo.jpg)
 
 Espruino can either output square waves using [[PWM]], or low sample rate can be output using the [[Waveform]] class.
 

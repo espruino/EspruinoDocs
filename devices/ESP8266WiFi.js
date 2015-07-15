@@ -3,8 +3,6 @@
 Library for interfacing to the EspressIF ESP8266. Uses the 'NetworkJS'
 library to provide a JS endpoint for HTTP.
  
-No server support yet 
- 
 ```
 Serial2.setup(9600, { rx: A3, tx : A2 });
 
@@ -29,6 +27,7 @@ var wifi = require("ESP8266").connect(Serial2, function() {
 var at;
 var socks = [];
 var sockData = ["","","","",""];
+var lastSocket= 0;
 var MAXSOCKETS = 5;
 var ENCR_FLAGS = ["open","wep","wpa_psk","wpa2_psk","wpa_wpa2_psk"];
 
@@ -60,11 +59,7 @@ var netCallbacks = {
           at.registerLine("Linked", function() {
             at.unregisterLine("Linked");        
             socks[sckt] = true;
-          });
-          at.registerLine("Unlink", function() {
-            at.unregisterLine("Unlink");
-            socks[sckt] = undefined;
-          });        
+          });              
         } else {
           socks[sckt] = undefined;
           throw new Error("CIPSTART failed");
@@ -75,10 +70,12 @@ var netCallbacks = {
   },
   /* Close the socket. returns nothing */
   close : function(sckt) {    
-    at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(/*d*/) {
-      socks[sckt] = undefined;
-      //console.log("?"+JSON.stringify(d));
-    });
+    if (socks[sckt]=="Wait")
+      socks[sckt]="WaitClose";
+    else {
+      lastSocket = sckt;
+      at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(/*d*/) { socks[sckt] = undefined; });
+    }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
   accept : function(sckt) {
@@ -115,12 +112,22 @@ var netCallbacks = {
     if (at.isBusy() || socks[sckt]=="Wait") return 0;
     if (!socks[sckt]) return -1; // error - close it
     //console.log("Send",sckt,data);
-    var f = function(d) {
-      // TODO: register for '>'
-      //console.log("?"+JSON.stringify(d));      
-      if (d=="> ") return f;
-    };
-    at.cmd('AT+CIPSEND='+sckt+','+data.length+'\r\n'+data, 10000, f);
+    at.register('>', function() {
+      at.unregister('>');
+      at.write(data);          
+      return "";
+    });
+    socks[sckt]="Wait";
+    lastSocket = sckt;
+    at.cmd('AT+CIPSEND='+sckt+','+data.length+'\r\n', 10000, function cb(d) {
+      if (d=="SEND OK") {
+        if (socks[sckt]=="WaitClose") netCallbacks.close(sckt);
+        socks[sckt]=true;    
+      } else {       
+        socks[sckt]=undefined; // a problem?
+        at.unregister('>');
+      }
+    });
     return data.length;
   }
 };
@@ -131,6 +138,7 @@ function ipdHandler(line) {
   var colon = line.indexOf(":");
   if (colon<0) return line; // not enough data here at the moment
   var parms = line.substring(5,colon).split(",");
+  lastSocket = parms[0];
   parms[1] = 0|parms[1];
   var len = line.length-(colon+1);
   if (len>=parms[1]) {
@@ -154,7 +162,7 @@ var wifiFuncs = {
   },
   // initialise the ESP8266
   "init" : function(callback) { 
-    var cb = function(d) { // turn off echo    
+    at.cmd("ATE0\r\n",1000,function cb(d) { // turn off echo    
       if (d=="ATE0") return cb;
       if (d=="OK") {
         at.cmd("AT+CIPMUX=1\r\n",1000,function(d) { // turn on multiple sockets
@@ -163,17 +171,15 @@ var wifiFuncs = {
         });
       }
       else callback("ATE0 failed: "+d);
-    }
-    at.cmd("ATE0\r\n",1000,cb);
+    });
   },  
   "reset" : function(callback) {
-    var cb = function(d) {
+    at.cmd("\r\nAT+RST\r\n", 10000, function cb(d) {
       //console.log(">>>>>"+JSON.stringify(d));
       if (d=="ready") setTimeout(function() { wifiFuncs.init(callback); }, 1000);      
       else if (d===undefined) callback("No 'ready' after AT+RST");
       else return cb;
-    }
-    at.cmd("AT+RST\r\n", 10000, cb);
+    });
   },
   "getVersion" : function(callback) {
     at.cmd("AT+GMR\r\n", 1000, function(d) {
@@ -235,6 +241,7 @@ exports.connect = function(usart, connectedCallback) {
   require("NetworkJS").create(netCallbacks);
   
   at.register("+IPD", ipdHandler);
+  at.registerLine("Unlink", function() { socks[lastSocket] = undefined; });    
   
   wifiFuncs.reset(connectedCallback);
 

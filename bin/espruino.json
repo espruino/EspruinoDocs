@@ -311,7 +311,7 @@
     "!url": "http://www.espruino.com/Reference#l_tv_undefined",
     "setup": {
       "!type": "fn(options: ?, width: number) -> ?",
-      "!doc": "This initialises the TV output. Options for PAL are as follows:\n\n```\nvar g = require('tv').setup({ type : \"pal\",\n  video : A7, // Pin - SPI MOSI Pin for Video output (MUST BE SPI1)\n  sync : A6, // Pin - Timer pin to use for video sync\n  width : 384,\n  height : 270, // max 270\n});\n```\n\nand for VGA:\n\n\n```\nvar g = require('tv').setup({ type : \"vga\",\n  video : A7, // Pin - SPI MOSI Pin for Video output (MUST BE SPI1)\n  hsync : A6, // Pin - Timer pin to use for video sync\n  vsync : A5, // Pin - pin to use for video sync\n  width : 220,\n  height : 480,\n});\n```\n\nSee the [[Television]] page for more information.",
+      "!doc": "This initialises the TV output. Options for PAL are as follows:\n\n```\nvar g = require('tv').setup({ type : \"pal\",\n  video : A7, // Pin - SPI MOSI Pin for Video output (MUST BE SPI1)\n  sync : A6, // Pin - Timer pin to use for video sync\n  width : 384,\n  height : 270, // max 270\n});\n```\n\nand for VGA:\n\n```\nvar g = require('tv').setup({ type : \"vga\",\n  video : A7, // Pin - SPI MOSI Pin for Video output (MUST BE SPI1)\n  hsync : A6, // Pin - Timer pin to use for video sync\n  vsync : A5, // Pin - pin to use for video sync\n  width : 220,\n  height : 240,\n  repeat : 2, // amount of times to repeat each line\n});\n```\n\nor\n\n```\nvar g = require('tv').setup({ type : \"vga\",\n  video : A7, // Pin - SPI MOSI Pin for Video output (MUST BE SPI1)\n  hsync : A6, // Pin - Timer pin to use for video sync\n  vsync : A5, // Pin - pin to use for video sync\n  width : 220,\n  height : 480,\n  repeat : 1, // amount of times to repeat each line\n});\n```\n\nSee the [[Television]] page for more information.",
       "!url": "http://www.espruino.com/Reference#l_tv_setup"
     }
   },
@@ -544,7 +544,7 @@
   },
   "Graphics": {
     "!type": "fn()",
-    "!doc": "This class provides Graphics operations that can be applied to a surface.\n\nUse Graphics.createXXX to create a graphics object that renders in the way you want.\n\nNOTE: On boards that contain an LCD, there is a built-in 'LCD' object of type Graphics. For instance to draw a line you'd type: ```LCD.drawLine(0,0,100,100)```",
+    "!doc": "This class provides Graphics operations that can be applied to a surface.\n\nUse Graphics.createXXX to create a graphics object that renders in the way you want. See [the Graphics page](/Graphics) for more information.\n\n**Note:** On boards that contain an LCD, there is a built-in 'LCD' object of type Graphics. For instance to draw a line you'd type: ```LCD.drawLine(0,0,100,100)```",
     "!url": "http://www.espruino.com/Reference#Graphics",
     "createArrayBuffer": {
       "!type": "fn(width: number, height: number, bpp: number, options: ?) -> +Graphics",
@@ -913,7 +913,7 @@
       },
       "send": {
         "!type": "fn(data: ?, nss_pin: +Pin) -> ?",
-        "!doc": "Send data down SPI, and return the result\n\nSending multiple bytes in one call to send is preferable as they can then be transmitted end to end. Using multiple calls to send() will result in significantly slower transmission speeds.\n\nFor maximum speeds, please pass either Strings or Typed Arrays as arguments.",
+        "!doc": "Send data down SPI, and return the result. Sending an integer will return an integer, a String will return a String, and anything else will return a Uint8Array.\n\nSending multiple bytes in one call to send is preferable as they can then be transmitted end to end. Using multiple calls to send() will result in significantly slower transmission speeds.\n\nFor maximum speeds, please pass either Strings or Typed Arrays as arguments. Note that you can even pass arrays of arrays, like `[1,[2,3,4],5]`",
         "!url": "http://www.espruino.com/Reference#l_SPI_send"
       },
       "write": {
@@ -1856,7 +1856,7 @@
     },
     "getAnalogVRef": {
       "!type": "fn() -> number",
-      "!doc": "Check the internal voltage reference. To work out an actual voltage of an input pin, you can use `analogRead(pin)*E.getAnalogVRef()` \n\nWhile this is implemented on Espruino boards, it may not be implemented on other devices. If so it'll return NaN.",
+      "!doc": "Check the internal voltage reference. To work out an actual voltage of an input pin, you can use `analogRead(pin)*E.getAnalogVRef()`\n\n**Note:** This value is calculated by reading the voltage on an internal voltage reference with the ADC.\nIt will be slightly noisy, so if you need this for accurate measurements we'd recommend that you call\nthis function several times and average the results.\n\nWhile this is implemented on Espruino boards, it may not be implemented on other devices. If so it'll return NaN.",
       "!url": "http://www.espruino.com/Reference#l_E_getAnalogVRef"
     },
     "nativeCall": {
@@ -1943,6 +1943,16 @@
       "!type": "fn(from: ?, to: ?, map: ?, bits: number)",
       "!doc": "Take each element of the `from` array, look it up in `map` (or call the \nfunction with it as a first argument), and write it into the corresponding\nelement in the `to` array.",
       "!url": "http://www.espruino.com/Reference#l_E_mapInPlace"
+    },
+    "srand": {
+      "!type": "fn(v: number)",
+      "!doc": "Set the seed for the random number generator used by `Math.random()`.",
+      "!url": "http://www.espruino.com/Reference#l_E_srand"
+    },
+    "hwRand": {
+      "!type": "fn() -> number",
+      "!doc": "Unlike 'Math.random()' which uses a pseudo-random number generator, this\nmethod reads from the internal voltage reference several times, xoring and\nrotating to try and make a relatively random value from the noise in the\nsignal.",
+      "!url": "http://www.espruino.com/Reference#l_E_hwRand"
     }
   },
   "process": {
@@ -2106,13 +2116,13 @@
     "!url": "http://www.espruino.com/Reference#l__global_getSerial"
   },
   "setInterval": {
-    "!type": "fn(function: ?, timeout: number) -> ?",
-    "!doc": "Call the function specified REPEATEDLY after the timeout in milliseconds.\n\nThe function that is being called may also take an argument, which is an object containing a field called 'time' (the time in seconds at which the timer happened)\n\nfor example: ```setInterval(function (e) { print(e.time); }, 1000);```\n\nThis can also be removed using clearInterval\n\n**Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
+    "!type": "fn(function: ?, timeout: number, args: ?) -> ?",
+    "!doc": "Call the function specified REPEATEDLY after the timeout in milliseconds.\n\nYou can also specify extra arguments that will be sent to the function when it is executed. For example:\n\n```\nsetInterval(function (a,b) {\n  console.log(a+\" \"+b);\n}, 1000, \"Hello\", \"World\");\n// prints 'Hello World'\n```\n\nIf you want to stop your function from being called, pass the number that\nwas returned by `setInterval` into the `clearInterval` function.\n\n**Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
     "!url": "http://www.espruino.com/Reference#l__global_setInterval"
   },
   "setTimeout": {
-    "!type": "fn(function: ?, timeout: number) -> ?",
-    "!doc": "Call the function specified ONCE after the timeout in milliseconds.\n\nThe function that is being called may also take an argument, which is an object containing a field called 'time' (the time in seconds at which the timer happened)\n\nfor example: ```setTimeout(function (e) { print(e.time); }, 1000);```\n\nThis can also be removed using clearTimeout\n\n**Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
+    "!type": "fn(function: ?, timeout: number, args: ?) -> ?",
+    "!doc": "Call the function specified ONCE after the timeout in milliseconds.\n\nYou can also specify extra arguments that will be sent to the function when it is executed. For example:\n\n```\nsetTimeout(function (a,b) {\n  console.log(a+\" \"+b);\n}, 1000, \"Hello\", \"World\");\n// prints 'Hello World'\n```\n\nIf you want to stop the function from being called, pass the number that\nwas returned by `setTimeout` into the `clearInterval` function.\n\n**Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
     "!url": "http://www.espruino.com/Reference#l__global_setTimeout"
   },
   "clearInterval": {

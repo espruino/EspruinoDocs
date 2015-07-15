@@ -5,7 +5,7 @@ Robots
 * KEYWORDS: Robot,Buggy,Wheeled
 * USES: L293D
 
-![Olimex Robot](olimex.jpg)
+![Olimex Robot](Robot/olimex.jpg)
 
 In the KickStarter video we used an Espruino-controlled Robot, this is available from Olimex (see links below).
 

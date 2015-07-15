@@ -5,7 +5,7 @@ Wifi Remote Console
 * KEYWORDS: Wifi,Web Server,Remote Console
 * USES: Internet,CC3000
 
-![Screenshot](screenshot.png)
+![Screenshot](WiFi Remote Console/screenshot.png)
 
 Introduction
 -----------

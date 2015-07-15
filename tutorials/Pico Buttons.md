@@ -20,7 +20,7 @@ You'll Need
 Wiring Up
 --------
 
-![One Button](one.jpg)
+![One Button](Pico Buttons/one.jpg)
 
 Firstly, we're going to just use the built-in button, but after that we'll use a second, external button which we'll wire up now.
 
@@ -157,7 +157,7 @@ So that's great, you can add new buttons as long as you connect one side of them
 
 You can use one of Espruino's pins, and just tell it to output 3.3v to that pin instead. Take the second pushbutton and put it in to the right of the existing one (so connected to the 6th and 8th pins from the left). These are pins `B5` and `B7`.
 
-![Two Buttons](two.jpg)
+![Two Buttons](Pico Buttons/two.jpg)
 
 All you need to do now is use `digitalWrite` just like we would have done to turn the LED on, alongside the other code that we used for the second button.
 

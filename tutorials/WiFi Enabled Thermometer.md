@@ -1,11 +1,11 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Wifi Enabled Thermometer
+WiFi Enabled Thermometer
 ===============================
 
 * KEYWORDS: Wifi,Thermometer,Web Server
 * USES: Internet,DS18B20,CC3000
 
-![Temperature Graph](graph.png)
+![Temperature Graph](WiFi Enabled Thermometer/graph.png)
 
 Introduction
 -----------

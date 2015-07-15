@@ -18,7 +18,7 @@ It also looks for a title (second line, after copyright notices) which it uses t
 There are a few extra bits too:
 * ```[[My Page]]``` links to a page on the Espruino website
 * ```[[http://youtu.be/VIDEOID]]``` puts a video on the page
-* ```![Image Title](foo.png)``` Adds an image. Images should be in a directory named after the filename of the file referencing them (or the same directory as the file referencing them)
+* ```![Image Title](MyFilename/foo.png)``` Adds an image. Images should be in a directory named after the filename of the file referencing them (or the same directory as the file referencing them)
 
 It then converts the markdown to HTML and shoves it on the Espruino website. lovely.
 
