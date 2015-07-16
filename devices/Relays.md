@@ -20,7 +20,6 @@ You can see the relay module we'd suggest in the image above. To use this as a s
 * GND, IN1 and VCC to the Espruino board
 * On the blue screw terminals, connect the 2nd pin (marked K1) and the 3rd pin into the circuit that you want to power.
 
-
 The connections are as follows:
 
 ### Blue Screw Terminals
@@ -42,6 +41,8 @@ The connections are as follows:
 | IN1     | Control for Output 1 ( 0 = on, 1 = off) |
 | IN2     | Control for Output 2 ( 0 = on, 1 = off) |
 | VCC     | 5V input |
+
+**Note:** IN1 and IN2 must be connected to 5v tolerant pins on your Espruino board (pins not marked with `3.3v` on the pinout diagram). If you must use a non 5v tolerant pin, you can sometimes remove a jumper from the relay and power the relay from 5v while powering the optoisolator from 3.3v - however this will depend on your relay module.
 
 ### 3x1 pin srip
 
