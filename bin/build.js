@@ -270,7 +270,7 @@ function inferFile(filename, fileContents, baseLineNumber) {
   var cx = new infer.Context(defs, null);
   infer.withContext(cx, function() {
     //console.log(JSON.stringify(filename));
-    var ast = infer.parse(fileContents);
+    var ast = infer.parse(fileContents, {}, {});
     infer.analyze(ast, "file:"+filename /* just an id */);
     // find all calls
     require("acorn/dist/walk").simple(ast, { "CallExpression" : function(n) {

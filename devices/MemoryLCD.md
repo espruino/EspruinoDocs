@@ -51,4 +51,9 @@ Notes
 Buying
 -----
 
-The LCDs come with a ~0.5mm ribbon on them so they're hard to connect to directly and you'll probably need a breakout board. The only seller of these I'm aware of is [MakerDyne](http://www.makerdyne.com/blog/shop/)
+The LCDs come with a ~0.5mm ribbon on them so they're hard to connect to directly and you'll probably need a breakout board. 
+
+Sellers of LCDs on breakout boards are:
+
+* [MakerDyne 1.3" and 2.7"](http://www.makerdyne.com/blog/shop/)
+* [AdaFruit 1.3"](https://www.adafruit.com/products/1393)
