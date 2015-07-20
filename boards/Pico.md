@@ -71,7 +71,7 @@ Embedding the Pico
 
 ![Surface mount Pico](Pico/smd.jpg)
 
-The Pico is designed to be easy to include in your designs. The 0.01" pins are easy to fit in to sockets, and castellated edges mean that unpinned Picos can easily be surface-mounted directly to a PCB.
+The Pico is designed to be easy to include in your designs. The 0.1" pins are easy to fit in to sockets, and castellated edges mean that unpinned Picos can easily be surface-mounted directly to a PCB.
 
 To make it even easier, we've provided [a part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component) that includes the Pico's footprint in several different configurations:
 
@@ -81,7 +81,7 @@ To make it even easier, we've provided [a part library for Eagle CAD](https://gi
 |--------------|-------------|
 | PICO_PIN     | Through-hole connections for all of the Pico's pins |
 | PICO_SMD     | Through-hole connections that can also be used to surface-mount a Pico |
-| PICO_HALFSMD | 0.01" Through-hole connections, with surface-mount pads for 0.05" pins. This often helps with routing small boards (wires can be run under the 0.05" pads) |
+| PICO_HALFSMD | 0.1" Through-hole connections, with surface-mount pads for 0.05" pins. This often helps with routing small boards (wires can be run under the 0.05" pads) |
 | PICO_SMDONLY | Surface mount-only pads for a Pico. Good for double-sided boards with large SMD components on the other side |
 | PICO_0.05    | Through-hole pads for just 0.05" pins (including power) - useful for very small add-on boards |
 
