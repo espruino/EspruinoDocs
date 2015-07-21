@@ -52,9 +52,9 @@ Connections
 
 ![pcb](RobotPCB/pcb.jpg)
 
-|  |  |  |
-|--|--|--|
-| LEDs             | | Always on |
+| Device           |   | Pico      |
+|------------------|---|-----------|
+| LEDs             |   | Always on |
 | LDRs             | 1 (Right) | A5 |
 |                  | 2 (Mid Right) | A6 |
 |                  | 3 (Mid Left) | A7 |
@@ -84,7 +84,7 @@ On the current board (the one with no version number):
 
 * GND on the JST connector isn't connected due to a PCB layout issue. You'll need to short the middle two GND pins of the servo connector together (see Assembly section below).
 * GND on C1 isn't connected, and if C1 is used it'll need shorting to C2 next to it.
-* JP6 (the breakout for the side of the Pico with `Bat,B15,B14,B13,B10,B1,A7,A6,A5` on it is **backwards**
+* JP5 (the breakout for the side of the Pico with `Bat,B15,B14,B13,B10,B1,A7,A6,A5` on it is **backwards**
 * The markings for the LEDs are **wrong**. The flat side of the LED should be **opposite** the board's flat side marking.
 * A10 should be connected to the Optical sensor's CS pin - a wire needs adding. 
 * B4 and B5 (MISO and MOSI) are mixed up, meaning you must use software SPI instead of hardware SPI

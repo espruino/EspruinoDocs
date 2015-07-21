@@ -26,9 +26,18 @@ var B = {
   MAIN_CONTROL_INT      : 0x0
 };
 
-function CAP1188(_i2c, _addr) {
+function CAP1188(_i2c, _opts) {
+  _opts = (_opts == null) ? {} : _opts;
   this.i2c = _i2c;
-  this.addr = (undefined===_addr) ? C.ADDRESS_DEFAULT : _addr;
+
+  // Support old API where second param was _addr
+  if (typeof _opts === 'number') {
+    this.addr = _opts;
+  } else {
+    this.addr  = _opts.address || C.ADDRESS_DEFAULT;
+    this.resetPin = _opts.resetPin || null;
+  }
+
   this.initialize();
 }
 
@@ -38,6 +47,29 @@ CAP1188.prototype.initialize = function() {
   this.multipleTouches(true);
   // "Speed up a bit"
   this.i2c.writeTo(this.addr, [R.STANDBY_CONFIG, 0x30]);
+};
+
+/* Reset the chip if a reset pin has been specified */
+CAP1188.prototype.reset = function(callback) {
+  var delay = 100,
+      pin   = this.resetPin,
+      self  = this;
+
+  if (pin == null) {
+    throw new Error('CAP1188 reset called but no resetPin given');
+  }
+
+  pin.write(0);
+  setTimeout(function () {
+    pin.write(1);
+    setTimeout(function () {
+      pin.write(0);
+      setTimeout(function () {
+        self.initialize();
+        if (callback) { callback(); }
+      }, delay);
+    }, delay);
+  }, delay);
 };
 
 /* How many simultaneous touches to allow */
