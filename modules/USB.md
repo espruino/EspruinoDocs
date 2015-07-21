@@ -4,11 +4,9 @@ USB and USB HID
 
 * KEYWORDS: USB,HID,Human Interface Device,VCP,CDC,Mouse,Keyboard,Joystick
 
-**THIS IS EXPERIMENTAL** - please [see the forum](http://forum.espruino.com/conversations/268671) for information on how to get a version of the firmware with this functionality in.
-
 Both the [Espruino Board](/EspruinoBoard) and the [[Pico]] have USB ports. When connected to a PC, they appear as a Virtual Communications Port (VCP) - as if you plugged in a USB-Serial converter dongle. On that port there's the console interface, which allows you to write code on Espruino using nothing more than a simple serial terminal.
 
-However Espruino [[Pico]] **also** contains a [USB HID mode](http://en.wikipedia.org/wiki/USB_human_interface_device_class). This means that when set up, it can appear to be a USB Human Interface device such as a Mouse, Keyboard, or Joystick in addition to a Virtual Com Port.
+However Espruino [[Pico]] **also contains** a [USB HID mode](http://en.wikipedia.org/wiki/USB_human_interface_device_class). This means that when set up, it can appear to be a USB Human Interface device such as a Mouse, Keyboard, or Joystick in addition to a Virtual Com Port.
 
 To set this up, you need to use the [`E.setUSBHID`](/Reference#l_E_setUSBHID) function to set up the USB report descriptor for the USB HID device you want to emulate. In order to make this less painful, we've provided some modules to handle this for you.
 
@@ -97,3 +95,5 @@ Other devices
 ------------
 
 Other USB HID input devices can be emulated by providing the correct USB Report Descriptor (which you will have to find out or create). See the modules above for examples, as well as the [USB.org HID page](http://www.usb.org/developers/hidpage).
+
+Note that USB MIDI is an Audio device - not a USB HID device - and so currently it is not supported.

@@ -31,7 +31,7 @@ function f() {
   var Xi = 0;
   var i = 0;
   var Cr=(4*x/64)-2;
-  var Ci=(4*y/64)-2;  
+  var Ci=(4*y/64)-2;
   while ((i<32) & ((Xr*Xr+Xi*Xi)<4)) {
     var t=Xr*Xr - Xi*Xi + Cr;
     Xi=2*Xr*Xi+Ci;
@@ -46,6 +46,26 @@ for (y=0;y<64;y++) {
  line="";
  for (x=0;x<64;x++) line += " *"[f()&1];
  print(line);
+}
+```
+
+or you can use compiled code to speed up your IO:
+
+```
+function f(pin, val) {
+  "compiled";
+  /* we can assign d to a local variable so
+  Espruino doesn't have to look it up by name
+  each time it's called.*/
+  var d = digitalWrite;
+  d(pin, (val>>7)&1);
+  d(pin, (val>>6)&1);
+  d(pin, (val>>5)&1);
+  d(pin, (val>>4)&1);
+  d(pin, (val>>3)&1);
+  d(pin, (val>>2)&1);
+  d(pin, (val>>1)&1);
+  d(pin, val&1);
 }
 ```
 
@@ -77,20 +97,20 @@ What works and what doesn't?
 ### Works
 
 * Maths, string operations
-* `a++`, `a+=`, etc.
+* `++a`, `a++`, `a+=`, etc.
 * IF, FOR, WHILE
 * Member and array access
-* Function/method calls that don't require `this` - eg. `console.log`
+* Function/method calls
 
 ### Doesn't Work
 
-* Function/method calls that need `this` - eg. `SPI1.send`
+* Creating objects with `new`
+* Creating arrays or structs ( `[1,2,3]` and `{a:5}` )
 * DO..WHILE
 * Exceptions
 * Creating new global variables
+* Creating new array/object fields, eg. `x.y=3;`
 * Preincrement, eg. `++a`
-* The result of postincrement may be broken (`b=a;a++ == b+1`)
-* Creating arrays of structs ( `[1,2,3]` and `{a:5}` )
 * Defining un-named functions or functions not in the root scope ( `function a() { "compiled"} setInterval(a,1000);` works, `setInterval(function() { "compiled"},1000);` doesn't).
 
 Can I help?
