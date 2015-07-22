@@ -195,8 +195,9 @@ exports.type = function(txt, callback) {
     if (!txt.length) {
       clearInterval(intr);
       if (callback) callback();
+    } else {
+      if (txt[0] in KEY) exports.tap(KEY[txt[0]]);
+      txt = txt.substr(1);
     }
-    if (txt[0] in KEY) exports.tap(KEY[txt[0]]);
-    txt = txt.substr(1);
   }, 20);
 }
