@@ -111,7 +111,8 @@ What works and what doesn't?
 * Creating new global variables
 * Creating new array/object fields, eg. `x.y=3;`
 * Preincrement, eg. `++a`
-* Defining un-named functions or functions not in the root scope ( `function a() { "compiled"} setInterval(a,1000);` works, `setInterval(function() { "compiled"},1000);` doesn't).
+* Defining un-named functions or functions not in the root scope ( `function a() { "compiled" }  setInterval(a, 1000);` works, `setInterval(function() { "compiled" }, 1000);` doesn't).
+* Functions can not have more than 5 arguments
 
 Can I help?
 -----------

@@ -47,6 +47,8 @@ returnType (argType1,argType2,...)
 
 Allowed types are `void`, `bool`, `int`, `double`, `Pin` (a pin number), `JsVar` (a pointer to a JsVar structure).
 
+*Note:* due to restrictions inside Espruino, you cannot have more than 5 arguments to the function.
+
 
 Calling Convention (what you can use!)
 ---------------------------------
