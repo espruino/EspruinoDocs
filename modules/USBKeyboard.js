@@ -191,13 +191,12 @@ exports.tap = function(key, callback) {
 }
 
 exports.type = function(txt, callback) {
-  if (!txt.length) return;
   var intr = setInterval(function() {
-    if (txt[0] in KEY) exports.tap(KEY[txt[0]]);
-    txt = txt.substr(1);
     if (!txt.length) {
       clearInterval(intr);
       if (callback) callback();
     }
+    if (txt[0] in KEY) exports.tap(KEY[txt[0]]);
+    txt = txt.substr(1);
   }, 20);
 }
