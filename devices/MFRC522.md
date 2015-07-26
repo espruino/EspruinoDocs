@@ -10,7 +10,7 @@ The MFRC522 is an RFID reader chip. It's common and very easy to interface to wi
 Wiring Up
 --------
 
-Simply connect up I2C as follows:
+Simply connect up SPI as follows:
 
 | RFID | Espruino |
 |------|----------|
