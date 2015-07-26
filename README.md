@@ -58,7 +58,7 @@ For OSX, go to [http://nodejs.org/](http://nodejs.org/) and click "Install".
 Finally you need to install a node module for highlighting:
 
 ```
-$ npm install marked highlight.js acorn express --save
+$ npm install marked highlight.js acorn express tern --save
 ```
 
 You can then run it with:
