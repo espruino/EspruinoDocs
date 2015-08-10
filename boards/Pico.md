@@ -93,7 +93,7 @@ Known Problems
 
 These are known issues that will be fixed via firmware updates soon.
 
-* The terminal on the left-hand side of the Web IDE may occasionally react only to the second-last key pressed. To fix this, try shutting down Chrome, unplugging the Pico, replugging, and then starting it again.
+* The terminal on the left-hand side of the Web IDE may occasionally react only to the second-last key pressed - firmware 1v80 or later should fix this
 * In Deep Sleep, the Pico is unable to turn off the USB hardware (as it can't re-initialise it). This results in 0.6mA power draw, whereas it should draw less than 0.01mA.
 
 Troubleshooting
