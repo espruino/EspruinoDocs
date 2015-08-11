@@ -2,6 +2,25 @@
 /*
 Simple three color (Red, Green, Blue) detector using TCS3200
 */
+/*Usage:
+var sensor = require("TCS3200").connect(A0, A1, A2, A3, A4);
+setInterval(function(){
+  var c = sensor.getColor();
+  digitalWrite(LED1, false);
+  digitalWrite(LED2, false);
+  digitalWrite(LED3, false);
+  digitalWrite(LED4, false);
+  if(c == 'red')
+    digitalWrite(LED3, true);
+  else if(c == 'green')
+    digitalWrite(LED2, true);
+  else if(c == 'blue')
+    digitalWrite(LED4, true);
+  else
+    digitalWrite(LED1, true);
+  //print(c);
+}, 200);
+*/
 
 var s0 = A0;
 var s1 = A1;
