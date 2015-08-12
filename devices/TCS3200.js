@@ -43,7 +43,7 @@ function TCS3200(S0, S1, S2, S3, OUT){
       tcs.R = counter;
       tcs.filterColor(true, true);
       flag = 1;
-    } else if (tcs.flag == 1) {
+    } else if (flag == 1) {
       tcs.G = counter;
       tcs.filterColor(false, true);
       flag = 2;
