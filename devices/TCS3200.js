@@ -1,60 +1,26 @@
 /* Copyright (c) 2015 Tomáš Juřena. See the file LICENSE for copying permission. */
 /*
 Simple three color (Red, Green, Blue) detector using TCS3200
-*/
-/*Usage:
+
+Usage:
+
+```
 var sensor = require("TCS3200").connect(A0, A1, A2, A3, A4);
 setInterval(function(){
   var c = sensor.getColor();
   digitalWrite(LED1, false);
   digitalWrite(LED2, false);
   digitalWrite(LED3, false);
-  digitalWrite(LED4, false);
   if(c == 'red')
-    digitalWrite(LED3, true);
+    digitalWrite(LED1, true);
   else if(c == 'green')
     digitalWrite(LED2, true);
   else if(c == 'blue')
-    digitalWrite(LED4, true);
-  else
-    digitalWrite(LED1, true);
+    digitalWrite(LED3, true);
   //print(c);
 }, 200);
+```
 */
-
-var s0 = A0;
-var s1 = A1;
-var s2 = A2;
-var s3 = A3;
-var out = A5;
-var counter = 0;
-var R = 0;
-var G = 0;
-var B = 0;
-var flag = 1;
-
-/* Switch color filter */
-function FilterColor(s2, s3) {
-  digitalWrite(this.s2, s2);
-  digitalWrite(this.s3, s3);
-}
-
-/* Timer handler */
-function timerHandler() {
-  if (flag == 1) {
-    R = counter;
-    FilterColor(true, true);
-  } else if (flag == 2) {
-    G = counter;
-    FilterColor(false, true);
-  } else if (flag == 3) {
-    B = counter;
-    FilterColor(false, false);
-    flag = 0;
-  }
-  counter = 0;
-  flag = (typeof flag == 'number' ? flag : 0) + 1;
-}
 
 /* Constructor  */
 function TCS3200(S0, S1, S2, S3, OUT){
@@ -65,25 +31,50 @@ function TCS3200(S0, S1, S2, S3, OUT){
   this.out = OUT;
   digitalWrite(this.s0, false);
   digitalWrite(this.s1, true);
-  FilterColor(true, false);
-  setWatch(function() {
-           this.counter = (typeof this.counter == 'number' ? this.counter : 0) + 1;},
+  this.filterColor(true, false);
+  var counter = 0;
+  var flag = 0;
+  var tcs = this;
+  setWatch(function() { counter++; },
            this.out,
            {"repeat":true,"edge":"rising"});
   setInterval(function() {
-    timerHandler();
- }, 0.2*1000.0);
+    if (flag == 0) {
+      tcs.R = counter;
+      tcs.filterColor(true, true);
+      flag = 1;
+    } else if (tcs.flag == 1) {
+      tcs.G = counter;
+      tcs.filterColor(false, true);
+      flag = 2;
+    } else {
+      tcs.B = counter;
+      tcs.filterColor(false, false);
+      flag = 0;
+    }
+    counter = 0;
+  }, 0.2*1000.0);
 }
 
-/* Get color */
+/* Switch color filter */
+TCS3200.prototype.filterColor = function(s2, s3) {
+  digitalWrite(this.s2, s2);
+  digitalWrite(this.s3, s3);
+};
+
+/* Get colour as `{ red:..., green:..., blue:... }` */
+TCS3200.prototype.getValue = function() {
+  return { red:this.R, green:this.G, blue:this.B };
+};
+
+/* Get color as string */
 TCS3200.prototype.getColor = function(){
-  //print(R + ' ' + G + ' ' + B);
-  if(R > 100 || G > 100 || B > 100){
-    if (R > G && R > B)
+  if(this.R > 100 || this.G > 100 || this.B > 100){
+    if (this.R > this.G && this.R > this.B)
       return 'red';
-    else if(G > R && G > B)
+    else if(this.G > this.R && this.G > this.B)
       return 'green';
-    else if(B > R && B > G)
+    else if(this.B > this.R && this.B > this.G)
       return 'blue';
   }
   else
