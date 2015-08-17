@@ -20,8 +20,8 @@ function MCP23008(i2c,rst, i2ca) {
   this.A6=new PEP(64,this);
   this.A7=new PEP(128,this);
 }
-MCP23008.prototype.s=function(r,d){this.­i2c.writeTo(this.i2ca,r,d);};
-MCP23008.prototype.r=function(r){this.i2­c.writeTo(this.i2ca,r);return this.i2c.readFrom(this.i2ca,1)};
+MCP23008.prototype.s=function(r,d){this.i2c.writeTo(this.i2ca,r,d);};
+MCP23008.prototype.r=function(r){this.i2c.writeTo(this.i2ca,r);return this.i2c.readFrom(this.i2ca,1)};
 MCP23008.prototype.mode=function(pin,mode) {this.m(1<<pin,mode);};
 
 MCP23008.prototype.m=function(bv,mode) {
