@@ -34,6 +34,17 @@ MCP23008.prototype.write=function(pin,val) {
     var bv=1<<pin;
     this.olat&=~bv;
     this.s(9,this.olat|=(bv*val));
+};
+MCP23008.prototype.writePort=function(val) {
+    this.olat=val;
+    this.s(9,this.olat);
+}; 
+MCP23008.prototype.read=function(pin) {
+    var bv=1<<pin;
+    return (this.r(9)[0]&bv)>>pin;
+}; 
+MCP23008.prototype.readPort=function() {
+    return (this.r(9)[0]);
 }; 
 MCP23008.prototype.read=function(pin) {
     var bv=1<<pin;
