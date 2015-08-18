@@ -121,15 +121,14 @@ var netCallbacks = {
     var cmd = 'AT+CIPSEND='+sckt+','+data.length+'\r\n';
     at.cmd(cmd, 10000, function cb(d) {       
       if (d=="OK") {
-        at.register('>', function() {
-          at.unregister('>');
+        at.register('> ', function() {
+          at.unregister('> ');
           at.write(data);          
           return "";
         });
         return cb;
-      } else if (d=="Recv "+data.length+" bytes" || d==" ") {
+      } else if (d=="Recv "+data.length+" bytes") {
         // all good, we expect this 
-        // Single char happens after ~1400 bytes of send
         return cb;
       } else if (d=="SEND OK") {
         // we're ready for more data now
@@ -137,7 +136,7 @@ var netCallbacks = {
         socks[sckt]=true;
       } else {
         socks[sckt]=undefined; // uh-oh. Error.      
-        at.unregister('>'); 
+        at.unregister('> '); 
       }
     });
     // if we obey the above, we shouldn't get the 'busy p...' prompt

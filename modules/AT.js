@@ -123,7 +123,6 @@ exports.connect = function (ser) {
     },
     // unregister for a certain type of response (as a full line)
     "unregisterLine" : function(key) {
-      if (!lineHandlers[key]) throw new Error(key+" not registered");
       delete lineHandlers[key];
     },
     // register for a certain type of response (starting with)
@@ -133,7 +132,6 @@ exports.connect = function (ser) {
     },
     // unregister for a certain type of response (starting with)
     "unregister" : function(key) {
-      if (!handlers[key]) throw new Error(key+" not registered");
       delete handlers[key];
     },    
     "isBusy" : function() { return lineCallback!==undefined; }
