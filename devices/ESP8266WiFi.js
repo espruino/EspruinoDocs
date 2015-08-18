@@ -224,6 +224,18 @@ var wifiFuncs = {
       });
     });
   },
+  "getConnectedDevices" : function(callback) {
+    var devs = [];
+    this.at.cmd("AT+CWLIF\r\n",1000,function r(d) {
+      if (d=="OK") callback(null, devs);
+      else if (d===undefined || d=="ERROR") callback("Error");
+      else {
+        e = d.split(",");
+        devs.push({ip:e[0], mac:e[1]});
+        return r;
+      }
+    });
+  },
   "getIP" : function(callback) {
     at.cmd("AT+CIFSR\r\n", 1000, function(d) {
       var ip = d;

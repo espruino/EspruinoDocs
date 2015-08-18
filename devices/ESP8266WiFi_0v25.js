@@ -127,8 +127,9 @@ var netCallbacks = {
           return "";
         });
         return cb;
-      } else if (d=="Recv "+data.length+" bytes") {
-        // all good, we expect this
+      } else if (d=="Recv "+data.length+" bytes" || d==" ") {
+        // all good, we expect this 
+        // Single char happens after ~1400 bytes of send
         return cb;
       } else if (d=="SEND OK") {
         // we're ready for more data now
@@ -236,6 +237,18 @@ var wifiFuncs = {
         if (cwm!="OK") callback("CWSAP failed: "+cwm);
         else callback(null);        
       });
+    });
+  },
+  "getConnectedDevices" : function(callback) {
+    var devs = [];
+    this.at.cmd("AT+CWLIF\r\n",1000,function r(d) {
+      if (d=="OK") callback(null, devs);
+      else if (d===undefined || d=="ERROR") callback("Error");
+      else {
+        e = d.split(",");
+        devs.push({ip:e[0], mac:e[1]});
+        return r;
+      }
     });
   },
   "getIP" : function(callback) {
