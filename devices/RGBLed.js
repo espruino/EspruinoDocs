@@ -1,14 +1,12 @@
-//TODO: test initial state and color
-
 function RGBLed(pins, state, color) {
   this.pins = pins;
   this.pins.forEach(function (e) {pinMode(e, "output");});
-  this.state = typeof state !== "undefined";
+  this.state = typeof state === "undefined" ? true : !!state;
   this.rgbAnalog = [];
-  this.setColor(typeof color === "undefined" ? "FFFFFF" : "000000");
+  this.setColor(typeof color === "undefined" ? "FFFFFF" : color);
   this.intervalId = 0;
+  this._write(true);
 }
-
 RGBLed.prototype._write = function (stop) {
   if (stop) {this._stop();}
   var that = this;
@@ -37,6 +35,9 @@ RGBLed.prototype.toggle = function () {
   this.state = !this.state;
   this._write();
 };
+RGBLed.prototype.getState = function () {
+  return this.state;
+};
 RGBLed.prototype.strobe = function (ms) {
   this._stop();
   var that = this;
@@ -45,4 +46,4 @@ RGBLed.prototype.strobe = function (ms) {
   }, typeof ms === "undefined" ? 100 : ms);
 };
 
-//var led = new RGBLed([B13, B14, B15]);
+exports.connect = function (pins, state, color) {return new RGBLed(pins, state, color);};
