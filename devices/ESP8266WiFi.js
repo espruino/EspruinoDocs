@@ -112,8 +112,8 @@ var netCallbacks = {
     if (at.isBusy() || socks[sckt]=="Wait") return 0;
     if (!socks[sckt]) return -1; // error - close it
     //console.log("Send",sckt,data);
-    at.register('>', function() {
-      at.unregister('>');
+    at.register('> ', function() {
+      at.unregister('> ');
       at.write(data);          
       return "";
     });
@@ -125,7 +125,7 @@ var netCallbacks = {
         socks[sckt]=true;    
       } else {       
         socks[sckt]=undefined; // a problem?
-        at.unregister('>');
+        at.unregister('> ');
       }
     });
     return data.length;
