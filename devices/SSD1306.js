@@ -67,7 +67,7 @@ exports.connect = function(i2c, callback, options) {
   // configure the OLED
   initCmds.forEach(function(d) {i2c.writeTo(C.OLED_ADDRESS, [0,d]);});;
   // if there is a callback, call it now(ish)
-  if (callback !== undefined) setTimeout(callback, 10);
+  if (callback !== undefined) setTimeout(callback, 100);
 
   // write to the screen
   oled.flip = function() { 
