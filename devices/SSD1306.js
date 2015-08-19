@@ -20,10 +20,8 @@ var g = require("SSD1306").connectSPI(s, A8, B7, go);
 var C = {
  OLED_ADDRESS               : 0x3C,
  OLED_WIDTH                 : 128,
- OLED_HEIGHT                : 64,
  OLED_CHAR                  : 0x40,
- OLED_CHUNK                 : 128,
- OLED_LENGTH                : 1024 // OLED_WIDTH*OLED_HEIGHT / 8
+ OLED_CHUNK                 : 128
 };
 
 // commands sent when initialising the display
@@ -32,7 +30,7 @@ var initCmds = new Uint8Array([
              0xAe, // 0 disp off
              0xD5, // 1 clk div
              0x80, // 2 suggested ratio
-             0xA8, 0, // 3 set multiplex, height-1
+             0xA8, 63, // 3 set multiplex, height-1
              0xD3,0x0, // 5 display offset
              0x40, // 7 start line
              0x8D, extVcc?0x10:0x14, // 8 charge pump
@@ -52,7 +50,7 @@ var flipCmds = [
      0x21, // columns
      0, C.OLED_WIDTH-1,
      0x22, // pages
-     0, 7];
+     0, 7 /* (height>>3)-1 */];
 function update(options) {
   if (options && options.height) {
     initCmds[4] = options.height-1;
@@ -64,7 +62,7 @@ function update(options) {
 
 exports.connect = function(i2c, callback, options) {
   update(options);
-  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,C.OLED_HEIGHT,1,{vertical_byte : true});
+  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,initCmds[4]+1,1,{vertical_byte : true});
 
   // configure the OLED
   initCmds.forEach(function(d) {i2c.writeTo(C.OLED_ADDRESS, [0,d]);});;
@@ -78,7 +76,7 @@ exports.connect = function(i2c, callback, options) {
     var chunk = new Uint8Array(C.OLED_CHUNK+1);
 
     chunk[0] = C.OLED_CHAR;
-    for (var p=0; p<C.OLED_LENGTH; p+=C.OLED_CHUNK) {
+    for (var p=0; p<this.buffer.length; p+=C.OLED_CHUNK) {
       chunk.set(new Uint8Array(this.buffer,p,C.OLED_CHUNK), 1);
       i2c.writeTo(C.OLED_ADDRESS, chunk);
     } 
@@ -90,7 +88,7 @@ exports.connect = function(i2c, callback, options) {
 exports.connectSPI = function(spi, dc,  rst, callback, options) {
   update(options);
   var cs = options?options.cs:undefined;
-  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,C.OLED_HEIGHT,1,{vertical_byte : true});
+  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,initCmds[4]+1,1,{vertical_byte : true});
 
   if (rst) digitalPulse(rst,0,10);
   setTimeout(function() {
