@@ -69,10 +69,31 @@ function f(pin, val) {
 }
 ```
 
+If you want extremely fast IO, you can take advantage of `peek32` and `poke32` to access the registers directly. For example the following code will produce a roughly 8Mhz square wave:
+
+```
+function toggler() {
+  "compiled";
+  // BSRR registers on STM32F4
+  var GPIOA = 0x40020018;
+  var GPIOB = 0x40020418;
+
+  var PIN2 = 1 << 2;
+  // toggle B2 on and off 1 million times
+  var cnt = 1000000;
+  for (var i=0;i<cnt;i++) {
+    poke32(GPIOB, PIN2); // on 
+    poke32(GPIOB, PIN2 << 16); // off
+  }
+}
+```
+
+This can be done with other peripherals as well - check out the reference manual for the MCU on your board for more information on which addresses to write to. The correct reference manual is linked from the [Pico Board](/Pico) and [Original Espruino Board](/EspruinoBoard) pages under the 'Information' heading.
+
 What Happens?
 -----------
 
-Before uploading, the Web IDE scans your code for functions with the `"compiled";` keyword. It then sends those functions to our server which parses them, converts them to C code, compiles that code with GCC, and sends the binary back so that it can be uploaded to Espruino as a native function.
+Before uploading, the Web IDE scans your code for functions with the `"compiled";` keyword. It then sends those functions to our server which parses them, converts them to C++ code, compiles that code with GCC, and sends the binary back so that it can be uploaded to Espruino as a native function.
 
 When you run this native function, the ARM processor in Espruino executes the compiled code directly (with no interpreter in the way). You should see an increase in execution speed of at least 4x.
 
@@ -85,11 +106,13 @@ Caveats
 * `Ctrl+C` and Exception handling won't work. If there's a loop in your compiled function then you'll only be able to break out of it by resetting the board.
 * It's still very early days, and as such you should expect bugs. If you find any, [please let us know](https://github.com/gfwilliams/EspruinoCompiler/issues) with the smallest bit of sample code you can get that reproduces the problem.
 * No source code for the function is stored on Espruino, so you won't be able to edit it using the left-hand pane.
+* The code that is sent to the Espruino board *is specific to that type of board and version of the Espruino firmware*. To use it on a different board you'll need to send it again using the Web IDE.
 
 Performance Notes
 ---------------
 
 * If you access global variables, Espruino will still have to search the symbol table to find them each time the function runs, which will be slow. To speed things up, use local variables or function arguments wherever possible.
+* `peek32/peek16/peek8/poke32/poke16/poke8` map down to very fast IO accesses when provided with integer arguments - this is by far the fastest way to access IO.
 
 What works and what doesn't?
 ----------------------------
@@ -109,8 +132,6 @@ What works and what doesn't?
 * DO..WHILE
 * Exceptions
 * Creating new global variables
-* Creating new array/object fields, eg. `x.y=3;`
-* Preincrement, eg. `++a`
 * Defining un-named functions or functions not in the root scope ( `function a() { "compiled" }  setInterval(a, 1000);` works, `setInterval(function() { "compiled" }, 1000);` doesn't).
 * Functions can not have more than 5 arguments
 
