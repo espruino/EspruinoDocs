@@ -12,11 +12,9 @@ Espruino can run in one of 3 different modes.
 |-------|---------------------------------|-------------------|------|
 | Run   | ~35mA (57 hours)                | 32mA              | Espruino is executing code and running at 72Mhz |
 | Sleep | ~12mA (7 days)                  | ~11mA             | Espruino has stopped the clock to the CPU, but all peripherals are still running and can wake it up |
-| Stop  | ~0.03mA<sup>1</sup> (> 2 years) | 0.6mA<sup>2</sup> | Espruino has stopped the clock to everything except the real-time clock (RTC). It can wake up on setInterval/setTimeout or setWatch |
+| Stop  | ~0.03mA<sup>1</sup> (> 2 years) | 0.02mA            | Espruino has stopped the clock to everything except the real-time clock (RTC). It can wake up on setInterval/setTimeout or setWatch |
 
 <sup>1</sup> Espruino 1v3 has a slightly higher 'Stop' power consumption of 0.11mA.
-
-<sup>2</sup> This will be fixed in a [[Pico]] firmware update soon, and will drop to under 0.01mA *
 
 **Note:** Standby mode is available on the STM32 chip (very low power, but **all data** is lost from RAM). It is not currently used in Espruino.
 

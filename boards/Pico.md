@@ -87,14 +87,12 @@ To make it even easier, we've provided [a part library for Eagle CAD](https://gi
 
 These parts are also used for a variety of [[Shims]] that allow the Pico to be easily attached to other hardware.
 
+Hardware Limitations
+------------------
 
-Known Problems
-------------
-
-These are known issues that will be fixed via firmware updates soon.
-
-* The terminal on the left-hand side of the Web IDE may occasionally react only to the second-last key pressed - firmware 1v80 or later should fix this
-* In Deep Sleep, the Pico is unable to turn off the USB hardware (as it can't re-initialise it). This results in 0.6mA power draw, whereas it should draw less than 0.01mA.
+* You can only have one watched pin of each number (Watching A0 and A1 is fine, but watching A1 and B1 isn't)
+* When in Deep sleep, pin B9 cannot be used as a watch (as A9 is used to wake up on USB)
+* The internal low speed oscillator is used for timekeeping unless an external crystal is soldered on. This is not accurate and can be +/- 10%
 
 Troubleshooting
 -------------
