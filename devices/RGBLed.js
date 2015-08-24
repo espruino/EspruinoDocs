@@ -1,3 +1,4 @@
+/* Copyright (c) 2015 bartmichu. See the file LICENSE for copying permission. */
 function RGBLed(pins, state, color) {
   this.pins = pins;
   this.pins.forEach(function (e) {pinMode(e, "output");});
