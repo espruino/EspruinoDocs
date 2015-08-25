@@ -139,5 +139,5 @@ ADS1X15.prototype.getADC = function(channel, callback) {
 
 // Create an instance of ADS1X15
 exports.connect = function(/*=I2C*/i2c) {
-  return new ADS1X15(i2C);
+  return new ADS1X15(i2c);
 };
