@@ -125,7 +125,7 @@ var getConst = E.asm("int()",
 console.log(getConst().toString(16));
 ```
 
-Even this can cause some problems. You can only access an address that is a multiple of 4 bytes *ahead of the current instruction*. If you get an error when assembling, you'll need to pad out the constants with a `nop`:
+Even this can cause some problems. You can only access an address that is a multiple of 4 bytes *ahead of the current instruction*. If you get an error when assembling such as `Invalid number 'mylabel' - must be between 0 and 1020 and a multiple of 4` then you'll need to pad out the constants with a `nop`:
 
 ```
 var getConst = E.asm("int()",
@@ -182,34 +182,64 @@ var inc = E.asm("int()",
 Accessing IO
 -----------
 
-You can write to GPIO using the register addresses specified in the STM32F103 datasheet/reference (see [[EspruinoBoard]]). There's also a more readable version of the addresses in the [STM32F1 header file](https://github.com/espruino/Espruino/blob/master/targetlibs/stm32f1/lib/stm32f10x.h) - see GPIO_BASE/etc.
+You can write directly to the hardware in order to perform IO very quickly. However how you do this depends on the CPU on your board...
 
-For instance, GPIOA's Output data register is `0x4001080C` (which sets ALL pins on that port). To set individual pins you can write to BSRR = `0x40010810` and to clear them you can write to BRR = `0x40010814`
+### STM32F1 (original Espruino Board)
+
+Useful docs are:
+
+* STM32F103 reference (see [[EspruinoBoard]])
+* [STM32F1 header file](https://github.com/espruino/Espruino/blob/master/targetlibs/stm32f1/lib/stm32f10x.h) - see `GPIO_BASE` and `GPIO_TypeDef`.
+
+GPIOA's Output data register is `0x4001080C` (which sets ALL pins on that port). To set individual pins you can write to BSRR = `0x40010810` and to clear them you can write to BRR = `0x40010814`
 
 So you could write the following code to give the 3 LEDs (on A13,A14 and A15) a quick pulse.
 
 ```
-digitalWrite([LED1,LED2,LED3],0); // set up th eoutput state (easier done in JS!)
+digitalWrite([LED1,LED2,LED3],0); // set up the output state (easier done in JS!)
 
 var pulse = E.asm("void()",
-" ldr	r2, gpioa_addr", // 0-1
-// get the data from the end a put it in r2. 
-// pc has already moved on by 4, so we need to add 12-4 = 8 to it to get the address
-" movw	r3, #57344", // 2-5
-// the bit mask for A13,A14,A15 - 0b1110000000000000 = 57344
-" str	r3, [r2, #0]", // 6-7
-// set *0x40010810 = 57344 (set pins A13-A15)
-" str	r3, [r2, #4]", // 8-9
-// set *0x40010814 = 57344 (clear pins A13-A15)
-" bx	lr", // 10-11
-// Return
+" ldr	r2, gpioa_addr", // Get the gpio address
+" movw	r3, #57344", // the bit mask for A13,A14,A15 - 0b1110000000000000 = 57344
+" str	r3, [r2, #0]", // set *0x40010810 = 57344 (set pins A13-A15)
+" str	r3, [r2, #4]", // set *0x40010814 = 57344 (clear pins A13-A15)
+" bx	lr", // return
 "gpioa_addr:"
-" .word	0x40010810" // 12-5
+" .word	0x40010810" 
 // Our data
 );
 
 pulse();
 ```
+
+### STM32F4 (Espruino Pico)
+
+Useful docs are:
+
+* STM32F401 reference (see [[Pico]])
+* [STM32F401 header file](https://github.com/espruino/Espruino/blob/master/targetlibs/stm32f4/lib/stm32f401xe.h) - see `GPIO_BASE` and `GPIO_TypeDef`.
+
+GPIOB's Output data register is `0x40020414` (GPIOA is `0x40020014`). Writing to that address sets ALL pins on that port. To set individual pins you can write to the lower 16 bits of BSRR = `0x40020418` and to clear them you can write to the upper 16 bits.
+
+So you could write the following code to give LED1 a quick pulse (it's on pin B2).
+
+```
+digitalWrite(LED1,0); // set up the output state (easier done in JS!)
+
+var pulse = E.asm("void()",
+ "ldr  r2,gpiob_addr", 
+ "movw  r0,#4", // 1<<2 = pin 2 on the port
+ "lsl r1,r0,#16", // shift it left by 16 for the reset register
+ "str  r0,[r2]", // Turn on
+ "str  r1,[r2]", // Turn off
+ "bx  lr",
+ "nop",
+ "gpiob_addr:",
+ ".word  0x40020418"
+ );
+pulse();
+```
+
 
 Loops
 -----

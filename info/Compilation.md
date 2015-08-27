@@ -69,7 +69,7 @@ function f(pin, val) {
 }
 ```
 
-If you want extremely fast IO, you can take advantage of `peek32` and `poke32` to access the registers directly. For example the following code will produce a roughly 8Mhz square wave:
+If you want extremely fast IO, you can take advantage of `peek32` and `poke32` to access the registers directly - however which registers you write to depends on the chip you're running Espruino on. For example the following code will produce a roughly 8Mhz square wave on an STM32F4 (Espruino [[Pico]]):
 
 ```
 function toggler() {
@@ -88,7 +88,9 @@ function toggler() {
 }
 ```
 
-This can be done with other peripherals as well - check out the reference manual for the MCU on your board for more information on which addresses to write to. The correct reference manual is linked from the [Pico Board](/Pico) and [Original Espruino Board](/EspruinoBoard) pages under the 'Information' heading.
+For what to do on an STM32F1, take a look at the [[Assembler]] page.
+
+Direct access can be done with other peripherals as well - check out the reference manual for the MCU on your board for more information on which addresses to write to. The correct reference manual is linked from the [Pico Board](/Pico) and [Original Espruino Board](/EspruinoBoard) pages under the 'Information' heading.
 
 What Happens?
 -----------
