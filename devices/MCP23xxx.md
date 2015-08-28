@@ -4,8 +4,9 @@ MCP23xxx I2C and SPI port expanders
 
 * KEYWORDS: Module,port expander,MCP23008,MCP23S08,MCP23017,MCP23S17
 
-
 Overview
 ------------------
-A 'port expander' is a chip which allows a large number (typically 8 or 16) pins to be controlled through a serial bus, typically SPI or I2C. These pins can be used as inputs or outputs, and can switch mode during operation, much like the normal GPIO pins on an Espruino or other microcontroller board. The MCP23xxx modules provide an object-oriented interface to these devices, by providing a number of virtual pins, which can be controlled using pin.write(), pin.read(), and pin.mode(). Functions are also provided for accessing all pins at once. 
 
+Port expanders, as the name implies, are chips which provide a number of pins with many of the capabilities of GPIO pins, controlled over I2C or SPI. Module support is provided for the 8-bit MCP23008 (I2C) and MCP23S08 (SPI), and the 16-bit MCP23017 and MCP23S17. These are of obvious utility when controlling large numbers of devices. 
+
+These modules provide an object-oriented interface to these parts, returning an object with 8 or 16 virtual pins, which can be used with the usual methods: pin.read(), pin.set(), pin.reset(), pin.write() and pin.mode(). 
