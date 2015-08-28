@@ -1,17 +1,17 @@
-exports.connect = function(spi,rst,cs,ad) {
+exports.connect = function(spi,cs,rst,ad) {
     
-    return new MCP23S08(spi,rst,cs,ad);
+    return new MCP23S08(spi,cs,rst,ad);
 };
-function MCP23S08(spi,rst,cs,ad) {
-  rst.write(0);
+function MCP23S08(spi,cs,rst,ad) {
+  if(rst) {
+      rst.write(0);
+  }
   this.spi = spi;
   this.ad=(ad?(ad<<1)+64;64);
   this.cs=cs;
-  this.rst=rst;
   this.m=255;
   this.pu=0;
   this.olat=0;
-  this.rst.write(1);
   this.A0=new PEP(1,this);
   this.A1=new PEP(2,this);
   this.A2=new PEP(4,this);
@@ -20,6 +20,10 @@ function MCP23S08(spi,rst,cs,ad) {
   this.A5=new PEP(32,this);
   this.A6=new PEP(64,this);
   this.A7=new PEP(128,this);
+  if (rst) {
+    this.rst=rst;
+    this.rst.write(1);
+  }
 }
 MCP23S08.prototype.s=function(r,d){this.spi.write([this.ad,r,d],this.cs);};
 MCP23S08.prototype.r=function(r){return this.spi.send([this.ad+1,r,0])&255;};
