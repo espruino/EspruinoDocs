@@ -6,11 +6,13 @@ function MCP23008(i2c,rst, i2ca) {
   rst.write(0);
   this.i2c = i2c;
   this.i2ca = (i2ca===undefined) ? 32:32+i2ca;
-  this.rst=rst;
+  if (rst) {
+      this.rst=rst;
+      this.rst.write(1);
+  }
   this.m=255;
   this.pu=0;
   this.olat=0;
-  this.rst.write(1);
   this.A0=new PEP(1,this);
   this.A1=new PEP(2,this);
   this.A2=new PEP(4,this);
