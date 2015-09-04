@@ -62,8 +62,14 @@ var port=require("MCP23S08").connect(spi,CS,RST,address);
 These will (assuming no errors) return an object that provides the following methods:
 
 `port.read(pin)` Returns the state of specified pin. (pin number 0 to 7 for 8-bit port expanders, 0-15 for 16-bit ones). If 'pin' is omitted,  the values of all pins are read and returned as a single value (bit 0 to pin 0, and so on).
+
 `port.write(pin,value)` Writes to specified pin. (pin number 0 to 7 for 8-bit port expanders, 0-15 for 16-bit ones). If 'pin' is omitted, the value is written to all the pins (bit 0 to pin 0, and so on).
+
 `port.mode(pin,mode)` Sets the mode ('input','output', or 'input_pullup') specified pin. (pin number 0 to 7 for 8-bit port expanders, 0-15 for 16-bit ones).
+
+`port.writePort(value)` Writes all 8 (or 16) pins and returns them as a single value (bit 0 corresponds to pin 0 and so on). For 16-bit port expanders, the low byte corresponds to pins 0-7.
+
+`port.readPort(value)` Reads all 8 (or 16) pins and returns them as a single value (bit 0 corresponds to pin 0 and so on). For 16-bit port expanders, the low byte corresponds to pins 0-7. 
 
 The port object also contains 8 (or 16) virtual pins, each with the normal read(), write(), set(), reset(), and mode() options, named A0-7, (and B0-7 for 16-bit versions). These can be used like shown
 
