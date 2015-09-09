@@ -1,5 +1,4 @@
-/* Copyright (c) 2014 Sam Sykes, Gordon Williams, Jonathan Richards.
-   See the file LICENSE for copying permission. */
+/* Copyright (c) 2014 Sam Sykes, Gordon Williams, Jonathan Richards. See the file LICENSE for copying permission. */
 /* 
    Module for the SH1106 OLED controller
 
@@ -77,7 +76,6 @@ exports.connect = function(i2c, callback) {
         } 
     };
     
-    // return graphics
     return oled;
 };
 exports.connectSPI = function(spi, dc,  rst, callback, options) {
@@ -114,6 +112,5 @@ exports.connectSPI = function(spi, dc,  rst, callback, options) {
         if (cs) digitalWrite(cs,1);
     };
     
-    // return graphics
     return oled;
 };
