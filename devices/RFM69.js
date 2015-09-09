@@ -3,21 +3,21 @@ var RFM69HFreqTbl = {
   315 : new Uint16Array([0x074e, 0x08c0, 0x0900]), //315MHz
   434 : new Uint16Array([0x076c, 0x0880, 0x0900]), //434MHz
   868 : new Uint16Array([0x07d9, 0x0800, 0x0900]), //868MHz
-  915 : new Uint16Array([0x07e4, 0x08c0, 0x0900]), //915MHz
+  915 : new Uint16Array([0x07e4, 0x08c0, 0x0900])  //915MHz
 };
 
 var RFM69HRateTbl = [
   [0x0368, 0x042B],         //BR=1.2K BW=83.333K
   [0x0334, 0x0415],         //BR=2.4K BW=83.333K  
   [0x031A, 0x040B],         //BR=4.8K BW=83.333K
-  [0x030D, 0x0405],         //BR=9.6K BW=83.333K
+  [0x030D, 0x0405]          //BR=9.6K BW=83.333K
 ];
 
 var RFM69HPowerTbl = new Uint16Array([ 
   0x117F,                   //20dbm  
   0x117C,                   //17dbm
   0x1179,                   //14dbm
-  0x1176,                   //11dbm 
+  0x1176                    //11dbm 
 ]);
 
 var RFM69HConfigTbl = new Uint16Array([ 
@@ -43,7 +43,7 @@ var RFM69HConfigTbl = new Uint16Array([
   //0x582D,                 //RegTestLna, increase sensitivity with LNA (Note: consumption also increase!)
   0x6F30,                   //RegTestDAGC, Improved DAGC
   //0x6F00,                 //RegTestDAGC, Normal DAGC
-  0x0104,                   //Enter standby mode    
+  0x0104                    //Enter standby mode    
 ]);
 
   
@@ -61,15 +61,10 @@ var RFM69HTxTbl = new Uint16Array([
   0x130F,                   //Disable OCP
   0x5A5D,                   //High power mode
   0x5C7C,                   //High power mode
-  0x010C,                   //Enter Tx mode
+  0x010C                    //Enter Tx mode
 ]);
 
 
-/** Create an RFM69 object. Options can contain:
- cs : chip select pin (required)
- rst : reset pin (optional)
- freq : frequency - one of 315, 434, 868, 915 (default is 434)
-*/  
 function RFM69(spi, options) {  
   this.spi = spi;
   this.cs = options.cs;
@@ -154,6 +149,15 @@ RFM69.prototype.sendPacket = function (d, callback) {
   }, 1);
 };
 
+/** Create an RFM69 object using the given SPI bus. 
+
+`options` can contain:
+  cs : chip select pin (required)
+  rst : reset pin (optional)
+  freq : frequency - one of 315, 434, 868, 915 (default is 434)
+
+`callback` is optional and is called when the RFM69 has been initialised
+*/  
 exports.connect = function(spi,options,callback) {
   var rfm = new RFM69(spi,options);
   rfm.connect(callback);
