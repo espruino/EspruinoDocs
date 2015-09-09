@@ -2,7 +2,7 @@
 HopeRF RFM69 Wireless Module
 ======================
 
-* KEYWORDS: Module,RFM69,HopeRF,315Mhz,433Mhz,434Mhz,868Mhz,915Mhz,Wireless
+* KEYWORDS: Module,SPI,RFM69,HopeRF,315Mhz,433Mhz,434Mhz,868Mhz,915Mhz,Wireless
 
 The HopeRF RFM69 is a transceiver module capable of operation over a wide frequency range, including the 315,433, 868 and 915MHz license-free ISM (Industry Scientific and Medical) frequency bands. ([datasheet here](http://www.hoperf.cn/upload/rf/RFM69-V1.3.pdf))
 
