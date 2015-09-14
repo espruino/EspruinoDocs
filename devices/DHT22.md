@@ -10,6 +10,8 @@ Overview
 This module interfaces with the DHT22 (AKA AM2302), an inexpensive temperature and relative humidity sensor similar to the DHT11, but with higher accuracy and wider range. 
 
 Key Specifications:
+
+  |                   |          |
   | Temperature Range | -40~80 C |
   | Temp. Accuracy    | +/- 0.5C |
   | Humidity Range    | 0 ~ 100% |
@@ -25,7 +27,7 @@ From left to right when part is viewed from the front (the side with the ventila
 IMPORTANT: Be sure to get the polarity right! If connected backwards, it will ruin the DHT22. 
 
   | Device Pin | Espruino |
-  | ---------- | -------- |
+  |------------|----------|
   | 1 (Vcc)    | 3.3      |
   | 2 (S)      | Any GPIO |
   | 3 (NC)     | N/C*     |
@@ -44,3 +46,10 @@ For example:
     var dht = require("DHT22").connect(C11);
     dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
 ```
+
+Buying
+-----
+
+DHT22 parts and modules can be purchased from many places:
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=DHT22&_sacat=92074)
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=dht22)

@@ -34,10 +34,11 @@ Base64 encoded
       var reader = new FileReader();
       reader.onload = function(event) {
         var bytes = new Uint8Array(event.target.result);
-        var str = "";
+        
         if (bytes.length>(20*1024)) {
-          str = "File too long - must be less than 20kB";
+          $("#resultQuoted").val("File too long - must be less than 20kB");
         } else {        
+          var str = "";
           for (var i=0;i<bytes.length;i++) { 
             var ch = bytes[i];
             if (ch==34) str += "\\\"";
@@ -54,13 +55,14 @@ Base64 encoded
                 str += "\\x"+(ch+256).toString(16).substr(-2); // hex
             }
           }
+          var qStr = '"'+str+'"';
+          var b64Str = 'atob("'+btoa(String.fromCharCode.apply(null, bytes))+'")';
+          
+          $("#sizeQuoted").html(qStr.length+" Characters");
+          $("#sizeBase64").html(b64Str.length+" Characters");
+          $("#resultQuoted").val(qStr);
+          $("#resultBase64").val(b64Str);
         }
-        var qStr = '"'+str+'"';
-        var b64Str = 'atob("'+btoa(String.fromCharCode.apply(null, bytes))+'")';
-        $("#sizeQuoted").html(qStr.length+" Characters");
-        $("#sizeBase64").html(b64Str.length+" Characters");
-        $("#resultQuoted").val(qStr);
-        $("#resultBase64").val(b64Str);
       };
       reader.readAsArrayBuffer(event.target.files[0]);
     });

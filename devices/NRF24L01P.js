@@ -180,7 +180,7 @@ NRF.prototype.getReg = function(reg) {
 /** Get the configured address. reg should be NRF.C.TX_ADDR,C.RX_ADDR_P0..4 */
 NRF.prototype.getAddr = function(reg) {
   var data = this.spi.send([C.R_REGISTER | reg, 0,0,0,0,0], this.CSN);
-  data.splice(0,1); // remove first
+  data = data.slice(1); // remove first
   if (reg>C.RX_ADDR_P1) {
     // addresses > 1 use the last 4 bytes from ADDR_P1
     var fullAddr = this.getAddr(C.RX_ADDR_P1);
@@ -214,7 +214,7 @@ NRF.prototype.getData = function() {
   var data = [C.R_RX_PAYLOAD];
   for (var i=0;i<this.PAYLOAD;i++) data.push(0);
   data = this.spi.send(data, this.CSN); // RX_DR bit
-  data.splice(0,1); // remove first
+  data = data.slice(1); // remove first
   this.setReg(C.STATUS, C.RX_DR); // clear rx flag
   return data;
 };

@@ -4,7 +4,7 @@ Inline Assembler
 
 * KEYWORDS: Assembler,Asm,ARM,Thumb,Thumb2,Thumb-2,C code,inline C,Built-In
 
-The new Web IDE allows you to write inline assembler in the right-hand pane.
+The Web IDE allows you to write inline assembler in the right-hand pane.
 
 ```
 var adder = E.asm("int(int)",
@@ -26,10 +26,13 @@ This is handled as follows:
 
 * When you click `Send to Espruino` the Web IDE pulls out the `E.asm` call
 * It runs the strings you supplied through [its assembler](https://github.com/espruino/EspruinoWebIDE/blob/master/js/plugins/assembler.js) (which doesn't support all the ARM's opCodes yet)
-* It then creates code to load the assembler into Espruino using the `poke16` command
-* It creates a call to [`E.nativeCall`](http://www.espruino.com/Reference#l_E_nativeCall) which creates a JavaScript function using the code that was generated.
+* It then creates code to load the assembler into Espruino as a String
+* It uses [`E.nativeCall`](http://www.espruino.com/Reference#l_E_nativeCall) to create a JavaScript function using the code that was generated.
 
-**Note:** The assembler is only partially implemented so will only parse some opcodes at the moment.
+**Note:**
+
+* The assembler is only partially implemented so will only parse some opcodes at the moment. If you find something missing [please let us know!](https://github.com/espruino/EspruinoTools/issues)
+* If this is a bit hardcore for you, there's now the option of [Compiled JavaScript](/Compilation)
 
 For an ARM Thumb reference, [see this link](https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf)
 
@@ -43,6 +46,8 @@ returnType (argType1,argType2,...)
 ```
 
 Allowed types are `void`, `bool`, `int`, `double`, `Pin` (a pin number), `JsVar` (a pointer to a JsVar structure).
+
+*Note:* due to restrictions inside Espruino, you cannot have more than 5 arguments to the function.
 
 
 Calling Convention (what you can use!)
@@ -120,7 +125,7 @@ var getConst = E.asm("int()",
 console.log(getConst().toString(16));
 ```
 
-Even this can cause some problems. You can only access an address that is a multiple of 4 bytes *ahead of the current instruction*. If you get an error when assembling, you'll need to pad out the constants with a `nop`:
+Even this can cause some problems. You can only access an address that is a multiple of 4 bytes *ahead of the current instruction*. If you get an error when assembling such as `Invalid number 'mylabel' - must be between 0 and 1020 and a multiple of 4` then you'll need to pad out the constants with a `nop`:
 
 ```
 var getConst = E.asm("int()",
@@ -153,37 +158,88 @@ var getConst = E.asm("int()",
 );
 ```
 
+Storing Data
+-----------
+
+While ARM Thumb has a `LDR` instruction that will load from a label, there is no such thing for a store. Instead, you need to use the `ADR` pseudo-instruction to store the address in a register which you can then use in the store instruction.
+
+For example the following section of code will return a value that increments after each call:
+
+```
+var inc = E.asm("int()",
+"adr    r1, data", // Get address of 'data'
+"ldr    r0, [r1]", // Load the value of data into R0
+"add    r0, #1",   // Add one to it
+"str    r0, [r1]", // Save the value of R0 into 'data'
+"bx lr",           // Return (R0 is the value)
+"nop",
+"data:",           // ... padding
+".word    0x0"     // the word that we'll increment
+);
+```
+
+
 Accessing IO
 -----------
 
-You can write to GPIO using the register addresses specified in the STM32F103 datasheet/reference (see [[EspruinoBoard]]). There's also a more readable version of the addresses in the [STM32F1 header file](https://github.com/espruino/Espruino/blob/master/targetlibs/stm32f1/lib/stm32f10x.h) - see GPIO_BASE/etc.
+You can write directly to the hardware in order to perform IO very quickly. However how you do this depends on the CPU on your board...
 
-For instance, GPIOA's Output data register is `0x4001080C` (which sets ALL pins on that port). To set individual pins you can write to BSRR = `0x40010810` and to clear them you can write to BRR = `0x40010814`
+### STM32F1 (original Espruino Board)
+
+Useful docs are:
+
+* STM32F103 reference (see [[EspruinoBoard]])
+* [STM32F1 header file](https://github.com/espruino/Espruino/blob/master/targetlibs/stm32f1/lib/stm32f10x.h) - see `GPIO_BASE` and `GPIO_TypeDef`.
+
+GPIOA's Output data register is `0x4001080C` (which sets ALL pins on that port). To set individual pins you can write to BSRR = `0x40010810` and to clear them you can write to BRR = `0x40010814`
 
 So you could write the following code to give the 3 LEDs (on A13,A14 and A15) a quick pulse.
 
 ```
-digitalWrite([LED1,LED2,LED3],0); // set up th eoutput state (easier done in JS!)
+digitalWrite([LED1,LED2,LED3],0); // set up the output state (easier done in JS!)
 
 var pulse = E.asm("void()",
-" ldr	r2, gpioa_addr", // 0-1
-// get the data from the end a put it in r2. 
-// pc has already moved on by 4, so we need to add 12-4 = 8 to it to get the address
-" movw	r3, #57344", // 2-5
-// the bit mask for A13,A14,A15 - 0b1110000000000000 = 57344
-" str	r3, [r2, #0]", // 6-7
-// set *0x40010810 = 57344 (set pins A13-A15)
-" str	r3, [r2, #4]", // 8-9
-// set *0x40010814 = 57344 (clear pins A13-A15)
-" bx	lr", // 10-11
-// Return
+" ldr	r2, gpioa_addr", // Get the gpio address
+" movw	r3, #57344", // the bit mask for A13,A14,A15 - 0b1110000000000000 = 57344
+" str	r3, [r2, #0]", // set *0x40010810 = 57344 (set pins A13-A15)
+" str	r3, [r2, #4]", // set *0x40010814 = 57344 (clear pins A13-A15)
+" bx	lr", // return
 "gpioa_addr:"
-" .word	0x40010810" // 12-5
+" .word	0x40010810" 
 // Our data
 );
 
 pulse();
 ```
+
+### STM32F4 (Espruino Pico)
+
+Useful docs are:
+
+* STM32F401 reference (see [[Pico]])
+* [STM32F401 header file](https://github.com/espruino/Espruino/blob/master/targetlibs/stm32f4/lib/stm32f401xe.h) - see `GPIO_BASE` and `GPIO_TypeDef`.
+
+GPIOB's Output data register is `0x40020414` (GPIOA is `0x40020014`). Writing to that address sets ALL pins on that port. To set individual pins you can write to the lower 16 bits of BSRR = `0x40020418` and to clear them you can write to the upper 16 bits.
+
+So you could write the following code to give LED1 a quick pulse (it's on pin B2).
+
+```
+digitalWrite(LED1,0); // set up the output state (easier done in JS!)
+
+var pulse = E.asm("void()",
+ "ldr  r2,gpiob_addr", 
+ "movw  r0,#4", // 1<<2 = pin 2 on the port
+ "lsl r1,r0,#16", // shift it left by 16 for the reset register
+ "str  r0,[r2]", // Turn on
+ "str  r1,[r2]", // Turn off
+ "bx  lr",
+ "nop",
+ "gpiob_addr:",
+ ".word  0x40020418"
+ );
+pulse();
+```
+
 
 Loops
 -----
@@ -217,6 +273,44 @@ for (var i=1;i<10;i++)
 
 * This example will crash Espruino for any number less than or equal to zero
 * Labels take some of the pain out of this. `bgt loopStart` is actually equivalent to `bgt #-10`: The program counter is always 4 bytes ahead of the current instruction, and instructions are (usually!) 2 bytes long. That means that to get back to the exact same instruction you must use `-4` and you must subtract another 2 for each instruction you want to jump over (hence `-10`).
+
+
+setWatch
+--------
+
+As of Espruino 1v72, `setWatch` can now call native code from within the interrupt - which is much faster than if the code was executed from the event loop.
+
+For instance the following code measures the number of state changes every second on BTN:
+
+```
+// inc function from above
+var inc = E.asm("void()",
+"adr    r1, data",
+"ldr    r0, [r1]",
+"add    r0, #1",
+"str    r0, [r1]",
+"bx lr",
+"nop",
+"data:",
+".word    0x0"
+);
+var dataPtr = ASM_BASE-4; // the address of 'data'
+
+// Now call inc when the button is pressed - in an IRQ
+setWatch(inc, BTN, { irq:true });
+
+// every second...
+setInterval(function() { 
+  console.log(peek32(dataPtr)); // print the value of the counter
+  poke32(dataPtr,0); // reset the counter
+}, 1000);
+```
+
+In order to be properly useful you'll probably want to access the current time:
+
+* Low precision 16 bit (32/40 kHz) on Espruino (F103): RTC DIVL (0x40002814)
+* Low precision 16 bit (32 kHz) on Espruino Pico (F401): RTC_SSR (0x40002828)
+* Higher precision 32 bit (72/80 Mhz) use SYSTICK (0xE000E018), which stops when the device sleeps.
 
 
 Compiling C Code
@@ -255,3 +349,11 @@ var ASM_BASE1=ASM_BASE+1/*thumb*/;
 [0x4a02,0xf44f,0x4360,0x6013,0x6053,0x4770,0x0810,0x4001].forEach(function(v) { poke16((ASM_BASE+=2)-2,v); }); 
 var pulse = E.nativeCall(ASM_BASE1, "void()")
 ```
+
+**Note:** The best method is now to convert the raw opcodes to a base64 encoded string, and to then use the following:
+
+```
+var myFn = E.nativeCall(1, "void ()", atob("w4D...my...base64...encoded...data...AAAg"))
+```
+
+This will save the program code into Espruino's variable storage, so `save()` will store it along with everything else. Note that we're passing `1` as the offset, because it is Thumb assembly.

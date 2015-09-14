@@ -11,13 +11,14 @@ This is basically [GitHub Markdown](https://help.github.com/articles/github-flav
     * USES: Comma,Separated,List  ; Defines parts that are used by the given tutorial
     * APPEND_USES: part              ; Append a list of pages that have this part in their USES_PARTS list
     * APPEND_JSDOC: filename         ; Append JavaScript documentation based on the JS in the given file
+    * APPEND_PINOUT: boardname       ; Append Pinout for the given board
 
 It also looks for a title (second line, after copyright notices) which it uses to create the title of the HTML page (and of links to it).
 
 There are a few extra bits too:
 * ```[[My Page]]``` links to a page on the Espruino website
 * ```[[http://youtu.be/VIDEOID]]``` puts a video on the page
-* ```![Image Title](foo.png)``` Adds an image. Images should be in a directory named after the filename of the file referencing them (or the same directory as the file referencing them)
+* ```![Image Title](MyFilename/foo.png)``` Adds an image. Images should be in a directory named after the filename of the file referencing them (or the same directory as the file referencing them)
 
 It then converts the markdown to HTML and shoves it on the Espruino website. lovely.
 
@@ -57,7 +58,7 @@ For OSX, go to [http://nodejs.org/](http://nodejs.org/) and click "Install".
 Finally you need to install a node module for highlighting:
 
 ```
-$ npm install marked highlight.js acorn express --save
+$ npm install marked highlight.js acorn express tern --save
 ```
 
 You can then run it with:

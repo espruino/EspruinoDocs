@@ -11,7 +11,7 @@ Espruino can respond to information on serial ports or USB. If you're plugged in
 ```JavaScript
 var cmd="";
 Serial1.setup(9600/*baud*/);
-Serial1.on('data', function () { 
+Serial1.on('data', function (data) { 
   Serial1.print(data); 
   cmd+=data;
   var idx = cmd.indexOf("\r");

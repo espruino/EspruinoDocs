@@ -25,7 +25,7 @@ function DS18B20(oneWire, device) {
   if (device === undefined) {
     this.sCode = this.bus.search()[0];
   } else {
-    if (device >= 0 && device <= 126) {
+    if (parseInt(device).toString()==device && device >= 0 && device <= 126) {
       this.sCode = this.bus.search()[device];
     } else {
       this.sCode = device;
@@ -55,9 +55,9 @@ DS18B20.prototype._writeSpad = function (th, tl, conf) {
   this.bus.reset();
   this.bus.select(this.sCode);
   this.bus.write(C.WRITE);
-  for (var i = 0; i < 3; i++) {
-    this.bus.write(arguments[i]);
-  }
+  this.bus.write(th);
+  this.bus.write(tl);
+  this.bus.write(conf);
   this.bus.reset();
   this.bus.select(this.sCode);
   this.bus.write(C.COPY);

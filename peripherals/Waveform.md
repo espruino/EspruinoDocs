@@ -4,13 +4,13 @@ Waveforms
 
 * KEYWORDS: Analog,ADC,DAC,A2D,D2A,Built-In,Audio,Wave,Signal,Sound,Music
 
-Espruino contains both [[Analog]] Inputs ([[ADC]]) and [[Analog Outputs]] ([[DAC]]). Functions such as `analogRead` and `analogWrite` can be used for IO up to around 0.5kHz but Espruino isn't fast enough for Audio.
+Espruino contains both [[Analog]] Inputs ([[ADC]]) and [[Analog Outputs]] ([[DAC]]). Functions such as `analogRead` and `analogWrite` can be called at around 1kHz (although with PWM you can get higher frequency outputs). While that's fast enough for control it isn't fast enough to play and record audio.
 
 Instead, you can use the [Waveform Class](/Reference#Waveform) to play back or record waveforms.
 
-**Note:** Espruino wasn't designed to handle Audio, and when dealing with Audio's large arrays you will notice significant delays. We'd recommend using `E.sum`, `E.variance`, `E.convolve` and `E.FFT` to work on the large arrays wherever possible.
+**Note:** When dealing the large amounts of elements in Waveforms you'll start to notice Espruino's relatively slow execution speed. We'd recommend using `E.sum`, `E.variance`, `E.convolve` and `E.FFT` to work on large arrays wherever possible, and `Array.forEach` and `Array.map` to iterate over their elements.
 
-**Waveforms can use up so much CPU that they make render Espruino unresponsive** if you create a repeating Waveform with a frequency that is too high (above 10kHz input or 20kHz output).
+**Waveforms can use up so much CPU that they make render Espruino unresponsive** if you create a *repeating* Waveform with a frequency that is too high (above 10kHz input or 20kHz output).
 
 
 Input

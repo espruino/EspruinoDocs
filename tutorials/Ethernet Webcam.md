@@ -3,7 +3,7 @@ Ethernet Webcam Display
 ====================
 
 * KEYWORDS: Webcam,Ethernet,Internet,
-* USES: WIZnet,HTTP,RGB123
+* USES: Internet,WIZnet,HTTP,RGB123
 
 [[http://youtu.be/yK7VKg68uII]]
 

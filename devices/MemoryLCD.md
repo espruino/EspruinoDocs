@@ -4,7 +4,7 @@ Sharp Memory LCD
 
 * KEYWORDS: Module,SPI,Graphics,Graphics Driver,LCD,Monochrome,LS013B7DH03,LS027B7DH01,Memory LCD,PNLC,HR-TFT
 
-![2.7" Memory LCD module](400x240.jpg)
+![2.7" Memory LCD module](MemoryLCD/400x240.jpg)
 
 [Sharp Memory LCDs](http://www.sharpmemorylcd.com/aboutmemorylcd.html) are high pixel density, low power displays that don't need backlights. They draw in the region of 100uA while idle, so are perfect for always-on, battery-powered applications.
 
@@ -51,4 +51,9 @@ Notes
 Buying
 -----
 
-The LCDs come with a ~0.5mm ribbon on them so they're hard to connect to directly and you'll probably need a breakout board. The only seller of these I'm aware of is [MakerDyne](http://www.makerdyne.com/blog/shop/)
+The LCDs come with a ~0.5mm ribbon on them so they're hard to connect to directly and you'll probably need a breakout board. 
+
+Sellers of LCDs on breakout boards are:
+
+* [MakerDyne 1.3" and 2.7"](http://www.makerdyne.com/blog/shop/)
+* [AdaFruit 1.3"](https://www.adafruit.com/products/1393)

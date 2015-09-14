@@ -4,7 +4,7 @@ Servo Motors
 
 * KEYWORDS: Servo,Motor,Servomotor,Servo motor,RC,Built-In,Module
 
-![9g Servo Motor](9g.jpg)
+![9g Servo Motor](Servo Motors/9g.jpg)
 
 RC Servo Motors are great for controlling things from a microcontroller. They're cheap (around $3), and need only power, ground, and a series of pulses between 1ms and 2ms to work - the length of the pulse determines where they move to.
 
@@ -120,3 +120,4 @@ Buying
 -----
 
 * [eBay](http://www.ebay.com/sch/i.html?_nkw=9g+servo)
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&search=9g%20servo)

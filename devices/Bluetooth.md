@@ -4,19 +4,19 @@ Bluetooth
 
 * KEYWORDS: Bluetooth,Wireless,BT,HC-05,HC05,Built-In
 
-![HC-05 front](HC05_front.jpg)
-![HC-05 back](HC05_back.jpg)
+![HC-05 front](Bluetooth/HC05_front.jpg)
+![HC-05 back](Bluetooth/HC05_back.jpg)
 
 The most common Serial bluetooth module is the HC-05 (above) or HC-06. These are very similar modules and both will work with Espruino. The main difference is that the HC-05 can be configured as a Bluetooth Master, and the HC-06 can't.
 
 Connecting
 --------
 
-![HC-05 module on Espruino](HC05_placed.jpg)
+![HC-05 module on Espruino](Bluetooth/HC05_placed.jpg)
 
 [[http://youtu.be/J0HJVTDNSUQ]]
 
-The [Espruino Board](/EspruinoBoard] has pads on it already for the placement of an HC-05 bluetooth module, so it's very easy to connect. Note that while there are many connections on the HC-05 module, only 4 of them are needed. See the [[Wiring Up]] page if you want to connect bluetooth to something other than the Espruino Board.
+The [Espruino Board](/EspruinoBoard) has pads on it already for the placement of an HC-05 bluetooth module, so it's very easy to connect. Note that while there are many connections on the HC-05 module, only 4 of them are needed. See the [[Wiring Up]] page if you want to connect bluetooth to something other than the Espruino Board.
 
 To solder the HC-05 module, do the following:
 

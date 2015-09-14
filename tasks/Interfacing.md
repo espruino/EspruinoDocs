@@ -2,7 +2,7 @@
 Interfacing to a PC
 =================
 
-* KEYWORDS: Interfacing,PC,Computer,Connect,USB
+* KEYWORDS: Interfacing,PC,Computer,Connect,Control,USB
 
 You can use Espruino directly from your PC, Mac or Raspberry Pi to turn things on and off or measure values.
 
@@ -12,13 +12,13 @@ On Windows
 You can write to Espruino very easily with the Windows Command Prompt. For instance to turn an LED on, the command is:
 
 ```Batchfile
-echo LED1.set() > //./.COM10
+echo LED1.set() > \\.\COM10
 ```
 
 Where COM10 is the COM port of your device. If you want to wrap this up in a shortcut to go on the desktop, just enter the following as the shortcut location:
 
 ```Batchfile
-cmd.exe /c "echo LED1.set() > //./.COM10"
+cmd.exe /c "echo LED1.set() > \\.\COM10"
 ```
 
 If you're not connecting by USB, you may have to set up the baud rate first. You have to do this with: 
@@ -32,7 +32,7 @@ On Mac, Linux or Raspberry Pi
 
 This is very similar to windows as long as you know the device name of Espruino.
 
-  **Note:** On Linux, devices will be `/dev/ttyACM0`, `ttyAMA0` / etc, but on MacOS you'll want to use the `/dev/cu.usmodem1234` device name.
+  **Note:** On Linux, devices will be `/dev/ttyACM0`, `ttyAMA0`, etc, but on MacOS you'll want to use the `/dev/cu.usmodem1234` device name.
 
 ```Bash
 echo "LED1.set()" > /dev/ttyACM0

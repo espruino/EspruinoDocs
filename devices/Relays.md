@@ -4,7 +4,7 @@ Relays
 
 * KEYWORDS: Relay,Switch
 
-![Relay Module](2x.jpg)
+![Relay Module](Relays/2x.jpg)
 
 [Relays](http://en.wikipedia.org/wiki/Relay) are electrically operated switches. A small current passing through one side will operate a physical switch. This means that you can control almost anything with a relay that you would turn on and off with a physical switch (batteries, motors, even mains-powered electic lights).
 
@@ -20,7 +20,6 @@ You can see the relay module we'd suggest in the image above. To use this as a s
 * GND, IN1 and VCC to the Espruino board
 * On the blue screw terminals, connect the 2nd pin (marked K1) and the 3rd pin into the circuit that you want to power.
 
-
 The connections are as follows:
 
 ### Blue Screw Terminals
@@ -34,7 +33,7 @@ The connections are as follows:
 | K2      | Output 2 Pole |
 |         | Output 2 Normally Open |
 
-### 4x1 pin srip
+### 4x1 pin strip
 
 | Marking | Function |
 | ------- | -------- |
@@ -43,9 +42,21 @@ The connections are as follows:
 | IN2     | Control for Output 2 ( 0 = on, 1 = off) |
 | VCC     | 5V input |
 
+**Note:** IN1 and IN2 must be connected to 5v tolerant pins on your Espruino board (pins not marked with `3.3v` on the pinout diagram). If you must use a non 5v tolerant pin, you can sometimes remove a jumper from the relay and power the relay from 5v while powering the optoisolator from 3.3v - however this will depend on your relay module.
+
 ### 3x1 pin srip
 
 This contains a jumper between VCC and VCC-JD. This means that the relay will be powered from the same 5V signal as the Opto-isolators and LEDs.
+
+### Connecting to the Pico
+
+![Relay Module on Pico](Relays/pico.jpg)
+
+![Jumpers on Relay Module](Relays/jumperwire.jpg)
+
+The Espruino Pico [Starter Kit](/Espruino+Kits) comes with breadboard and male Jumper Wires. To connect to the relay, take the 4 supplied black jumpers and place them on the 4 male pins of the Relay Module. You can then push the Jumper Wires into the top of them.
+
+We'd suggest that you connect Relay GND to Espruino `GND`, and relay VCC to Espruino `VBAT`. The two inputs can then be connected to any of the IO pins.
 
 Using 
 -----

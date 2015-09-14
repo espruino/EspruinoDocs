@@ -4,8 +4,9 @@ Infrared Remote Control Receiver
 
 ```
 require("IRReceiver").connect(A0, function(code) {
-  if (code==351861118902700) ...
-  if (code==351861118886252) ...
+  if (code=="100000000000010001100001000111101") ...
+  else if (code=="100000000000010000010100011010111") ...
+  else console.log("Unknown "+code);
 });
 ```  
 
@@ -21,7 +22,7 @@ exports.connect = function(pin, callback, options) {
   // pullup on the pin - most IR receivers don't have this 
   pinMode(pin,"input_pullup");
   // the actual code
-  var code;
+  var code = "";
   // the timeout that will trigger the callback after the last bit
   var timeout;
   // set our callback to happen whenever pin goes low (eg, whenever pulse starts)
@@ -32,15 +33,15 @@ exports.connect = function(pin, callback, options) {
       timeout = undefined;
     }
     if (d>0.04) { // a gap between transmissions
-      if (code!==undefined) callback(code);
-      code = undefined;
+      if (code!=="") callback(code);
+      code = "";
     } else {
-      code = (code<<1) | (d>0.0008);
+      code += 0|d>0.0008;
       // queue a timeout so after we stop getting bits, we execute the callback
       timeout = setTimeout(function() {
         timeout = undefined;
-        if (code!==undefined) callback(code);
-        code = undefined;
+        if (code!=="") callback(code);
+        code = "";
       }, 50);
     }
   }, pin, { repeat:true, edge:pulseGap ? "falling" : "rising" });

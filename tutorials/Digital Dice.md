@@ -13,7 +13,7 @@ Here's how to make what you see above - a multifunction, digital dice:
 What you need
 ------------
 
-![Step 1](step1.jpg)
+![Step 1](Digital Dice/step1.jpg)
 
 * A clean and empty Pringles Can
 * An Espruino Board
@@ -30,33 +30,33 @@ Measure 4cm from each end of the pringles can, and use a craft knife to cut it a
 
 Also cut another ring from the middle of the can, around 3cm wide. Cut across it as well - this will help to hold the LED lights in place.
 
-![Step 2](step2.jpg)
+![Step 2](Digital Dice/step2.jpg)
 
 Then, cut 12 equally spaced (8mm) holes in the tin end of the can, about 2mm from the edge. You'll also need a hole in the middle for your switch. We marked ours by hand with a marker pen until they looked about right, and then drilled them out.
 
-![Step 3](step3.jpg)
+![Step 3](Digital Dice/step3.jpg)
 
 Put the two ends of the can back together, and tape them together on the inside.
 
-![Step 4](step4.jpg)
+![Step 4](Digital Dice/step4.jpg)
 
 Apply double-sided sticky tape around the outside of the can, and then use some patterned paper (like wrapping paper) to cover up the pringles text.
 
-![Step 5](step5.jpg)
+![Step 5](Digital Dice/step5.jpg)
 
 Look carefully at the two ends of your strip of lights. Through the clear plastic you should be able to see markings on the PCB where the wires connect. One set should clearly say '5V, DI, GND', the other might say 'DO' in the middle (or you might not be able to make anything out). Make sure you mark the end of the lights marked with  '5V, DI, GND' - you don't care about the other end at all, so just make sure it stays out of the way.
 
 Then push each one of the 12 LEDs into their holes (in order). You can use blu-tack or double-sided tape to hold them in place.
 
-![Step 6](step6.jpg)
+![Step 6](Digital Dice/step6.jpg)
 
 Put the third ring of the Pringles can inside the LEDs to hold them in place - add some tape to it to help hold it in position.
 
-![Step 7](step7.jpg)
+![Step 7](Digital Dice/step7.jpg)
 
 Now, connect the two wires to your switch. We've used some head-shrink sleeving to stop the contacts shorting out, but you could use tape again. Having the contacts short won't damage anything, but it'll make Espruino think the button has been pressed when it hasn't!
 
-![Step 8](step8.jpg)
+![Step 8](Digital Dice/step8.jpg)
 
 Now solder the wires to Espruino...
 
@@ -70,11 +70,11 @@ On the lights, take the end that was marked  '5V, DI, GND', and separate out the
 * Connect 'DI' to 'B5' on Espruino (for this one, you need a pin that is marked SPI#_MOSI)
 * You're done - you can now connect the battery!
 
-![Step 9](step9.jpg)
+![Step 9](Digital Dice/step9.jpg)
 
 And now, you can tuck everything inside. The Espruino board and battery should fit snugly inbetween the LEDs. Make sure the USB connector faces outwards so that you can connect to it with your PC
 
-![Step 10](step10.jpg)
+![Step 10](Digital Dice/step10.jpg)
 
 Software
 -------

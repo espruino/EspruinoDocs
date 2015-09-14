@@ -75,3 +75,9 @@ nixie.send();
 ```
 
 
+Buying
+-----
+
+SmartNixie build kits can be purchased from the manufacturer:
+
+* [switchmodedesign.com](http://switchmodedesign.com/collections/arduino-shields/products/smart-nixie-tube)

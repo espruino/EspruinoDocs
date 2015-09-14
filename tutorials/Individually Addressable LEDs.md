@@ -5,14 +5,14 @@ Individually Addressable LEDs
 * KEYWORDS: Individually Addressable LEDs,Light,Lights,LED,LEDs,WS2811,WS2812,WS2812B,Multicolour,Fairy
 * USES: WS2811
 
-![LED String](string.jpg)
+![LED String](Individually Addressable LEDs/string.jpg)
 
 Introduction
 -----------
 
 In the last few years, individually addressable RGB lights have been getting cheaper and cheaper. These lights contain a small controller chip alongside the RGB LED which makes it show a certain colour. The controller chips have a serial data input and output, and can be daisy-chained together. In this way you can control many different lights using just a few control wires (rather than needing wires going to each individual light).
 
-![LED String](use_england.jpg) ![LED String](use_celebrate.jpg)
+![LED String](Individually Addressable LEDs/use_england.jpg) ![LED String](Individually Addressable LEDs/use_celebrate.jpg)
 
 It seems that the most popular type of controller at the moment is the [WS2801](/datasheets/WS2801.pdf). This has 4 wires - ground, power, clock and data. It can be controlled using SPI, which is available on most microcontrollers. There are some small disadvantages though:
 
@@ -82,7 +82,7 @@ And we can then control a second or third LED by just sending more data:
 So now, we could make a function with a for loop that would create colours for every LED. This one just makes all 50 LEDs progressively brighter white (the first LED will be off) :
 
 ```
-var rgb = new Uint8Array(25*3);
+var rgb = new Uint8ClampedArray(25*3);
 
 function getPattern() {
   for (var i=0;i<rgb.length;i+=3) {
@@ -93,7 +93,8 @@ function getPattern() {
 }
 ```
 
-Note that we define the array `rgb` once, as a Uint8Array (you can use a normal array, but Uint8Arrays are faster and more memory efficient when all you need to store are values between 0 and 255).
+Note that we define the array `rgb` once, as a `Uint8ClampedArray`. You could use a normal array, but Typed Arrays are faster and more memory efficient when all you need to store are values between 0 and 255.
+Using `Uint8ClampedArray` also means that any values greater than 255 or less than 0 are 'clamped'. If you used `Uint8Array` instead than a value would just have the top bits removed, turning 256 into 0, 257 to 1 and so on.
  
 Then we can make a function which will send this information to the lights - and can call it:
 
@@ -201,7 +202,7 @@ The full code (if you just want to copy it in all at once) is:
 
 ```
 SPI2.setup({baud:3200000, mosi:B15});
-var rgb = new Uint8Array(25*3);
+var rgb = new Uint8ClampedArray(25*3);
 
 var pos=0;
 

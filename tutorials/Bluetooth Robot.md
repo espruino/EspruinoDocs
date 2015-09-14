@@ -105,3 +105,13 @@ This will watch for the words 'forward', 'back', 'left' and 'right' being sent o
 It might take a few attempts to respond - the voice typing expects sentances, not individual commands and so it sometimes gets confused.
 
 If you leave USB connected, you'll see what words are being sent over bluetooth - you could easily add your own commands to do other things!
+
+**Note:** When you unplug Espruino from USB, the 'console' (that interprets commands you type) will be automatically moved to `Serial1`, and will stop the data handler for `Serial1` from working. To work around this, we'd suggest you add the following:
+
+```
+function onInit() {
+  USB.setConsole();
+}
+```
+
+Then, when you `save()` your code, every time the Espruino restarts it'll make sure that the console is set to USB, allowing the Serial1 data handler to work.
