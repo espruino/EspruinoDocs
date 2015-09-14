@@ -74,7 +74,8 @@ function onPageRequest(req, res) {
   res.write('<p>Pin is '+(BTN.read()?'on':'off')+'</p>');
   res.write('<a href="?led=1">on</a><br/><a href="?led=0">off</a>');
   res.end('</body></html>');
-  if ("led" in a.query) digitalWrite(LED1, a.query["led"]);
+  if (a.query && "led" in a.query) 
+    digitalWrite(LED1, a.query["led"]);
 }
 require("http").createServer(onPageRequest).listen(8080);
 ```
