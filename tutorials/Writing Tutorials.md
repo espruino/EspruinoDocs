@@ -45,7 +45,7 @@ Writing and submitting tutorials is really easy, and it's great for the communit
 
 * Start writing your tutorial! To get it formatted nicely you just need to write it in a slightly special way, called Markdown. [See this link](https://help.github.com/articles/github-flavored-markdown) for examples of how to use it, and maybe look at the other tutorials. 
 
-   **Note:** Images are handled slightly differently... Put your images in a folder named after your tutorial (eg. `My Tutorial`) and then write the following: ```![Image Description](image filename)```
+   **Note:** Images are handled slightly differently... Put your images in a folder named after your tutorial (eg. `My Tutorial`) and then write the following: ```![Image Description](My Tutorial/image filename)```
 
 * Make sure the `* USES:` line contains the hardware that your tutorial uses. If it uses only the Espruino board, type `* USES: Only Espruino Board`. You can get the correct names by looking at the `.md` files for other tutorials, or the `.md` file in [devices](https://github.com/espruino/EspruinoDocs/tree/master/devices) that corresponds to what your device uses, and finding out what it says after `APPEND_USES`.
 

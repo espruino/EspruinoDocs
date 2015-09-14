@@ -24,7 +24,7 @@ You'll Need
 Wiring Up
 --------
 
-![Motion Sensing Lights Wiring](setup.jpg)
+![Motion Sensing Lights Wiring](Motion Sensing Lights/setup.jpg)
 
 Connect the [[Pyroelectric]] sensor as follows:
 
@@ -54,7 +54,7 @@ SPI2.setup({baud:3200000, mosi:B15});
 // stores the timeout used to turn lights off
 var timeout; 
 // stores the RGB data we want to send to our lights
-var rgb = new Uint8Array(25*3); // 25 x RGB lights
+var rgb = new Uint8ClampedArray(25*3); // 25 x RGB lights
 
 // Turn lights on
 function lightsOn() {
@@ -106,7 +106,7 @@ SPI2.setup({baud:3200000, mosi:B15});
 // stores the timeout used to turn lights off
 var timeout; 
 // stores the RGB data we want to send to our lights
-var rgb = new Uint8Array(25*3); // 25 x RGB lights
+var rgb = new Uint8ClampedArray(25*3); // 25 x RGB lights
 
 // Turn lights on
 function lightsOn() {
@@ -119,9 +119,9 @@ function lightsOn() {
     // Work out colours - fade in from one end
     for (var i=0;i<rgb.length;) {
       var a = (i/rgb.length)+(pos*2)-1;
-      rgb[i++] = E.clip(a*512,0,255); // red
-      rgb[i++] = E.clip((a*512)-128,0,255); // green
-      rgb[i++] = E.clip((a*512)-256,0,255); // blue
+      rgb[i++] = a*512; // red
+      rgb[i++] = (a*512)-128; // green
+      rgb[i++] = (a*512)-256; // blue
     }
     // send data to the lights
     SPI2.send4bit(rgb, 0b0001, 0b0011);
@@ -137,9 +137,9 @@ function lightsOff() {
     pos += 0.05;
     if (pos>=1) clearInterval(interval); 
     // Work out colours - fade all out the same amount
-    var amtr = E.clip((1-pos)*255,0,255); // red
-    var amtg = E.clip((1-pos*1.5)*255,0,255); // green
-    var amtb = E.clip((1-pos*2)*255,0,255); // blue
+    var amtr = (1-pos)*255; // red
+    var amtg = (1-pos*1.5)*255; // green
+    var amtb = (1-pos*2)*255; // blue
     for (var i=0;i<rgb.length;) {
       rgb[i++] = amtr;
       rgb[i++] = amtg;
@@ -153,7 +153,7 @@ function lightsOff() {
 // When the signal from the PIR changes...
 setWatch(function(e) {
   // If we had a timeout, it's because lights are already On.
-  // clear it...    
+  // clear it...
   if (timeout!==undefined)
     clearTimeout(timeout);
   else // otherwise turn the lights on

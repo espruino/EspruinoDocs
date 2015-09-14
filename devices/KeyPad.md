@@ -4,7 +4,7 @@ KeyPad Matrix
 
 * KEYWORDS: Module,KeyPad,Key pad,matrix,buttons,button,switch
 
-![Key Pad](4x4.jpg) ![Key Pad](4x5.jpg)
+![Key Pad](KeyPad/4x4.jpg) ![Key Pad](KeyPad/4x5.jpg)
 
 
 A [KeyPad Matrix](http://en.wikipedia.org/wiki/Keyboard_matrix_circuit) is a selection of switches arranged in a grid. One side of each switch is connected with horizontal wires (rows) and one side is connected with vertical wires (columns). By putting a signal on one side (for example the rows) and reading the other side (the columns), you can determine which key is pressed down.
@@ -63,3 +63,5 @@ Buying
 -----
 
 * [eBay](http://www.ebay.com/sch/i.html?_nkw=matrix+membrane+keypad)
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=membrane-button)
+

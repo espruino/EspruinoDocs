@@ -23,20 +23,20 @@ Get one of these with a sponge in it. When wet, it can be used to get any oxidis
 
 ### De-Solder Pump
 
-![De-Solder Pump](desolder.jpg)
+![De-Solder Pump](Tools/desolder.jpg)
 
 Otherwise known as the Solder Sucker, it's a simple tool that simple sucks the molten solder off of joints. It's good to have one of these, because if you add too much solder you can easily remove it.
 
 ### Wire Strippers and Cutters
 
-![T-Stripper wire stripper](t_strip.jpg)
-![Simple wire stripper](strip.jpg)
+![T-Stripper wire stripper](Tools/t_strip.jpg)
+![Simple wire stripper](Tools/strip.jpg)
 
 Don't be fooled by the huge semi-automatic wire strippers. Simple is better - either of the above styles is suitable. 
 
 ### Diagonal Cutters
 
-![Diagonal Cutters](sidecutter.jpg)
+![Diagonal Cutters](Tools/sidecutter.jpg)
 
 Wire cutters with a simple cutting point - these are extremely useful for cutting wires close to the PCB
 

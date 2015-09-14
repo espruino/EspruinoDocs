@@ -11,9 +11,11 @@ You can wire this up as follows:
 | Device Pin | Espruino |
 | ---------- | -------- |
 | GND / -    | GND      |
-| Vcc / +    | 3.3      |
-| CL         | B6       |
-| DA         | B7       |
+| VCC / +    | 3.3      |
+| SCL        | B6       |
+| SDA        | B7       |
+
+**Note:** On Adafruit's board, don't connect the 3.3v line and instead connect VCC on thb breakout board to Espruino's 3.3v [as discussed here](https://learn.adafruit.com/adafruit-htu21d-f-temperature-humidity-sensor/wiring-and-test)
 
 Basic usage:
 
@@ -25,7 +27,7 @@ Basic usage:
   // Check the humidity every two seconds
   setInterval(function () {
     htu.getHumidity(
-      function (x) { print ("RH = "+x+"%"); }
+      function (x) { console.log("RH = "+x+"%"); }
     );
   }, 2000);
 
@@ -35,8 +37,13 @@ Basic usage:
     // Check the temperature every two seconds
     setInterval(function () {
       htu.getTemperature(
-        function (x) { print ("T = "+x+" oC"); }
+        function (x) { console.log("T = "+x+" oC"); }
       );
     }, 2000);
   }, 1000);
 ```
+
+Buying
+-----
+
+* [AdaFruit breakout board](https://www.adafruit.com/products/1899)

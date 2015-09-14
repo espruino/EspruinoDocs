@@ -21,7 +21,7 @@ exports.connect = function(spi, cs, irq, offsetx, offsety, width, height, callba
   var watchFunction = function() {
     var interval = setInterval(function () {
       if (!digitalRead(irq)) { // touch down
-        var d = spi.send([0x90,0,0xD0,0,0],A4);
+        var d = spi.send([0x90,0,0xD0,0,0],cs);
         callback(
           offsetx + (d[1]*256+d[2])*width/0x8000,
           offsety + (d[3]*256+d[4])*height/0x8000);

@@ -7,7 +7,7 @@ WiFi Xively Humidity/Temperature Sensor with Display
 
 ![WiFi Humidity](wifi_humidity.jpg)
 
-This is a Wireless Humidity/Temperature sensor that displays information as well as uploading it to [Xively](http://xively.com).
+This is a Wireless Humidity/Temperature sensor that displays information as well as uploading it to [Xively](http://xively.com). For more information on using Xively or other services see the [[IoT Services]] page.
 
 To set this up:
 

@@ -1,7 +1,7 @@
 // Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. 
 // Generate keywords.js, and convert Markdown into HTML
 
-// needs marked + jsdoc
+// needs marked + jsdoc + tern + acorn
 
 var fs = require('fs');
 var path = require('path');
@@ -12,6 +12,7 @@ var BASEDIR = path.resolve(__dirname, "..");
 var HTML_DIR = BASEDIR+"/html/";
 var IMAGE_DIR = "refimages/";
 
+var ESPRUINO_DIR = path.resolve(BASEDIR, "../Espruino");
 var FUNCTION_KEYWORD_FILE = path.resolve(BASEDIR, "../Espruino/function_keywords.js");
 var KEYWORD_JS_FILE = path.resolve(HTML_DIR, "keywords.js");
 
@@ -159,9 +160,6 @@ function createKeywordsJS(keywords) {
 }
 
 function handleImages(file, contents) {
-  var basePath = file;
-  if (basePath.lastIndexOf(".")>0)
-    basePath = basePath.substr(0, basePath.lastIndexOf("."));
   var directory = file;
   if (directory.lastIndexOf("/")>0)
     directory = directory.substr(0, directory.lastIndexOf("/"));
@@ -172,18 +170,19 @@ function handleImages(file, contents) {
     if (tagMid>=0 && tagEnd>=0) {
       // we've found a tag - do stuff
       var imageName = contents.substring(tagMid+2, tagEnd);
-      var imagePath = basePath+"/"+imageName;
-      if (fs.existsSync(directory+"/"+imageName)) {
-        imagePath=directory+"/"+imageName;
-      }
+      var imagePath = directory+"/"+imageName;
       if (fs.existsSync(imagePath)) {
-        var newPath = IMAGE_DIR+htmlLinks[file]+"_"+imageName;
-//        console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
+        var newPath = htmlLinks[file]+"_"+imageName;
+        newPath = newPath.replace(/\//g,"_");
+        newPath = newPath.replace(/\+/g,"_");
+        newPath = newPath.replace(/ /g,"_");
+        newPath = IMAGE_DIR+newPath
+        //console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
         fs.createReadStream(imagePath).pipe(fs.createWriteStream(path.resolve(HTML_DIR, newPath)));
         // now rename the image in the tag
         contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
       } else {
-        WARNING("Image '"+imagePath+"' does not exist");
+        WARNING(file+": Image '"+imagePath+"' does not exist");
       }
     }
     tagStart = contents.indexOf("![", tagStart+1);
@@ -238,29 +237,63 @@ markdownFiles.forEach(function (file) {
   htmlLinks[file] = htmlFile;
 });
 
-fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,0)+";");
+fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,1)+";");
 
 
 // ---------------------------------------------- Inference code
 /* Works out which of Espruino's built-in commands are used in which
  files */
 //Load tern inference thingybob
-var infer = require("./tern/infer.js");
-// require("../../tern/plugin/node.js"); // for handling node.js 'require'?
+var infer = require("tern/lib/infer");
+
 var defs = [JSON.parse(fs.readFileSync(path.resolve(BASEDIR, "bin/espruino.json")))];
 // Our list of Reference URLs that are used
 var urls = {};
 
+
 function inferFile(filename, fileContents, baseLineNumber) {
-  var cx = new infer.Context(defs, this);
+  function addLink(url, node) {
+    if (!(url in urls)) urls[url] = [];
+    var lineNumber = baseLineNumber + require("acorn").getLineInfo(fileContents, node.start).line;
+    var link = "/"+htmlLinks[filename]+"#line=";
+    var found = false;
+    for (var i in urls[url]) {
+      if (urls[url][i].url.indexOf(link)==0) {
+        urls[url][i].url += ","+lineNumber;
+        found = true;
+      }
+    }
+    if (!found)
+      urls[url].push({ url : link+lineNumber, title : fileTitles[filename]});
+  }
+
+  var cx = new infer.Context(defs, null);
   infer.withContext(cx, function() {
     //console.log(JSON.stringify(filename));
-    var ast = infer.parse(fileContents);
+    var ast = infer.parse(fileContents, {}, {});
     infer.analyze(ast, "file:"+filename /* just an id */);
     // find all calls
-    require("acorn/util/walk").simple(ast, { "CallExpression" : function(n) {
+    require("acorn/dist/walk").simple(ast, { "CallExpression" : function(n) {
      var expr = infer.findExpressionAt(n.callee);
      var type = infer.expressionType(expr);
+
+     // Try and handle 'require(...).foo) - this doesn't work for 
+     // var fs = require("fs") though.
+     if (n.callee.type=="MemberExpression" && 
+         n.callee.object.type=="CallExpression" &&
+         n.callee.object.callee.type=="Identifier" &&
+         n.callee.object.callee.name=="require" &&
+         n.callee.object.arguments.length==1 &&
+         n.callee.object.arguments[0].type=="Literal") {
+       var lib = n.callee.object.arguments[0].value;
+       var name = n.callee.property.name;       
+       if (defs[0][lib] && defs[0][lib][name] && defs[0][lib][name]["!url"]) { 
+//         console.log(">>>>>>>>>>>>>>>"+lib+":"+name);       
+//         console.log(defs[0][lib][name], defs[0][lib][name]["!url"]);
+         addLink(defs[0][lib][name]["!url"], n);
+       }
+     }
+
      // search prototype chain of type to try and find our call
      if (type.forward && type.types) {
        var name = type.forward[0].propName;
@@ -276,21 +309,7 @@ function inferFile(filename, fileContents, baseLineNumber) {
      }
      if (type && type.types && type.types.length>0) {
        var url = type.types[0].url;
-       if (url) {
-         if (!(url in urls)) urls[url] = [];
-         var lineNumber = baseLineNumber + require("acorn").getLineInfo(fileContents, n.start).line;
-         var link = "/"+htmlLinks[filename]+"#line=";
-         var found = false;
-         for (var i in urls[url]) {
-           if (urls[url][i].url.indexOf(link)==0) {
-             urls[url][i].url += ","+lineNumber;
-             found = true;
-           }
-         }
-             
-         if (!found)
-           urls[url].push({ url : link+lineNumber, title : fileTitles[filename]});
-       }
+       if (url) addLink(url, n);
      }
     }});
   });
@@ -384,7 +403,8 @@ markdownFiles.forEach(function (file) {
    appendMatching(/^\* APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, "No tutorials use this yet.");
    // try and handle module documentation
    for (i in contentLines) {
-     var match = contentLines[i].match(/^\* APPEND_JSDOC: (.*)/);
+     var match;
+     match = contentLines[i].match(/^\* APPEND_JSDOC: (.*)/);
      if (match!=null) {
        var jsfilename = file.substr(0, file.lastIndexOf("/")+1) + match[1];       
        var js = fs.readFileSync(jsfilename).toString();
@@ -400,11 +420,23 @@ markdownFiles.forEach(function (file) {
 
    contents = contentLines.join("\n");
    
-   // Do inference on Markdown file
+   // Get Markdown
    inferMarkdownFile(file, contents);
-
-  
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
+
+   // Check for Pinouts
+        
+   if (file=="boards/Pico.md") console.log("############################################################### PICO");
+   var regex = /<ul>\n<li>APPEND_PINOUT: (.*)<\/li>\n<\/ul>/;
+   var match = html.match(regex);
+   if (match!=null) {
+     var htmlfilename = HTML_DIR+"boards/" + match[1] + ".html";       
+     console.log("APPEND_PINOUT "+htmlfilename);       
+     var pinout = fs.readFileSync(htmlfilename).toString();
+     html = html.replace(regex, pinout);
+   }
+
+   //
    github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+path.relative(BASEDIR, file);
    html = '<div style="min-height:700px;">' + html + '</div>'+
           '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues/new?title='+file+'">let us know</a>.</p>';

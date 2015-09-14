@@ -2,11 +2,14 @@
 Speaker
 =======
 
-* KEYWORDS: Speaker,Sound,Buzzer,Audio
+* KEYWORDS: Speaker,Sound,Buzzer,Audio,Piezo
 
-![Speaker](speaker.jpg)
+![Speaker](Speaker/speaker.jpg)
+![Piezo Speaker](Speaker/piezo.jpg)
 
-Espruino can't output proper audio, but it can output square waves of varying frequencies on some of its IO pins (those marked as [[PWM]]).
+Espruino can either output square waves using [[PWM]], or low sample rate can be output using the [[Waveform]] class.
+
+To use a speaker with Espruino you'll have to connect it to pins marked with [[PWM]] or [[DAC]].
 
 Useful sources of speakers are:
 

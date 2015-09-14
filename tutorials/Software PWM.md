@@ -20,7 +20,7 @@ Software
 --------
 To understand PWM, we need to look at a few examples where we turn on the power to a PIN. We start with turning the power on for the entire duration of 5 seconds:
 
-![software PWM](img1.png)
+![software PWM](Software PWM/img1.png)
 
 You can try this out for yourself on an Espruino, using the command:
 
@@ -40,11 +40,11 @@ setTimeout( function() { LED1.reset(); }, 1000);
 
 Once again, nothing exciting to see. Now let's try to turn the light on for 1/5th of a second during each second and repeat this for 5 seconds:
 
-![software PWM](img2.png)
+![software PWM](Software PWM/img2.png)
 
 Notice that we still have the light on for a total of only 1 second during those 5 seconds, or 20% of the time. The difference is that we now change between on and off during each second. If we want to fool our senses, we will need to do this rapid switching even more frequently. The number of times we turn a signal on and off is called a *period*. The number of periods we have each second is measured in Hertz or *Hz*. For example:
 
-![software PWM](img3.png)
+![software PWM](Software PWM/img3.png)
 
 You can see that each period we turn the LED on for 20% of the time and turn it off for 80% of the time. We have a total of 25 periods. So, if the total duration was one second, then this would have been 25 Hz.
 

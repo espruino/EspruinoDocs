@@ -17,7 +17,7 @@ Wiring Up
 
 To use it, just solder the same pins as you used to do for the HC-05.
 
-![HM-10](HM-10.jpg)
+![HM-10](Bluetooth BLE/HM-10.jpg)
 
 However, there's one exception: This board doesn't use pin 34 as key pin, but pin 23. In addition pin 24 gives information whether it is working/connected. For the beginning you might want to connect these as well as the configuration is more complicated than for the HC-05.
 

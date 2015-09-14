@@ -56,3 +56,11 @@ The final command will print something like:
 ```
  
 Which is the acceleration in G * 16384 in each of the X, Y and Z axes.
+
+
+Buying
+-----
+
+The LSM303DLHCL can be purchased from many places including:
+
+* [digitalmeans.co.uk LSM303](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=lsm303)

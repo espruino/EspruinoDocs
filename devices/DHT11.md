@@ -9,7 +9,10 @@ Overview
 
 This module interfaces with the DHT11, a very cheap (and cheaply made) temperature and relative humidity sensor. Support is included in the [[DHT11.js]] module.
 
-Key Specifications:
+ Key Specifications:
+
+  |                   |          |
+  |-------------------|----------|
   | Temperature Range | 0 ~ 50 C |
   | Temp. Accuracy    | +/- 1C   |
   | Humidity Range    | 20 ~ 90% |
@@ -29,7 +32,7 @@ Wiring
 From left to right when part is viewed from the front (the side with the ventilation holes) with pins pointing down. (The DHT11 has no pin markings)
 
   | Device Pin | Espruino |
-  | ---------- | -------- |
+  |------------|----------|
   | 1 (Vcc)    | 3.3      |
   | 2 (S)      | Any GPIO |
   | 3 (NC)     | N/C*     |
@@ -48,3 +51,11 @@ For example:
     var dht = require("DHT11").connect(C11);
     dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
 ```
+
+
+Buying
+-----
+
+DHT11 parts and modules can be purchased from many places:
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=DHT11&_sacat=92074)
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=dht11)

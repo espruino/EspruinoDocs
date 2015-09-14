@@ -8,7 +8,7 @@ Thermistor Temperature Sensor
 
 This module uses the following common thermistor characteristics found in most off the shelf thermistor based temperature sensors.
 
-The module has been written to match the characteristics and codes in this [thermistor datasheet](http://www.sontay.com/sites/default/files/productdownloads/Thermistor%20Types%20and%20Compatibility%20Charts_10.pdf).
+The module has been written to match the characteristics and codes in this [thermistor datasheet](https://www.sontay.com/media/specs/Thermistor_Types_and_Compatibility_Charts.pdf).
 
 Use the [Thermistor](/modules/Thermistor.js) ([About Modules](/Modules)) module for it.
 
@@ -78,3 +78,11 @@ i.e. : If the thermistor is a 10K3A1 temperature sensor connected to Pin C0 then
 **Troubleshooting.**
 
 If you find the code returns NaN.  Check that you have used ``" " ``around the thermistor type.
+
+
+Buying
+-----
+
+Thermistors are readily available from any electronics supplier, as well as other hobby sources like eBay.
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=thermistor&_sacat=92074)
+* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=thermistor)

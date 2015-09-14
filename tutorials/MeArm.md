@@ -64,11 +64,11 @@ Pin.positions = {};
 Pin.prototype.goto = function(pos) { // -1 .. 1
   Pin.positions[this] = pos;
   console.log(this,pos);
-  analogWrite(this, Math.clip(0.5*pos+1.5,1,2)*0.05, {freq:50});
+  analogWrite(this, E.clip(0.5*pos+1.5,1,2)*0.05, {freq:50});
 };
 // This will just move one step in the direction that is given
 Pin.prototype.move = function(dir) {
-  Pin.positions[this] = Math.clip(Pin.positions[this]+dir,-1,1);
+  Pin.positions[this] = E.clip(Pin.positions[this]+dir,-1,1);
   this.goto(Pin.positions[this]);
 };
 
@@ -124,15 +124,15 @@ from our remote control, so you'll have to use the codes shown by the
 `print("Unknown "+code)` statement below. */
 require("IRReceiver").connect(C3, function(code) {
   switch (code) {
-    case -522174273: onInit(); break; // power
-    case -522168153: doGrab(); break; // menu - start 'grab' sequence
-    case -522172233: servos.elbow.move(0.1); break; // ch +
-    case -522188553: servos.elbow.move(-0.1); break; // ch -
-    case -522148263: servos.base.move(-0.1); break; // left
-    case -522172743: servos.base.move(0.1); break; // right
-    case -522189063: servos.shoulder.move(0.1); break; // up
-    case -522156423: servos.shoulder.move(-0.1); break; // down
-    case -522184983: clenched = !clenched; 
+    case "111100000111000000100000010111111": onInit(); break; // power
+    case "111100000111000000101100010100111": doGrab(); break; // menu - start 'grab' sequence
+    case "111100000111000000100100010110111": servos.elbow.move(0.1); break; // ch +
+    case "111100000111000000000100011110111": servos.elbow.move(-0.1); break; // ch -
+    case "111100000111000001010011001011001": servos.base.move(-0.1); break; // left
+    case "111100000111000000100011010111001": servos.base.move(0.1); break; // right
+    case "111100000111000000000011011111001": servos.shoulder.move(0.1); break; // up
+    case "111100000111000001000011001111001": servos.shoulder.move(-0.1); break; // down
+    case "111100000111000000001011011101001": clenched = !clenched; 
                      servos.hand.goto(clenched ? hand_on : hand_off); break; // ok
     default: print("Unknown "+code);
   }

@@ -2,9 +2,9 @@
 Pin and Socket Strip
 ====================
 
-* KEYWORDS: Pin,Socket,Strip,0.1,Dupont
+* KEYWORDS: Pin,Pins,Socket,Strip,0.1,Dupont,Header
 
-![Pin Strip](strip.jpg)
+![Pin Strip](Pin Strip/strip.jpg)
 
 If you're trying to prototype something, it's often handy to be able to plug and unplug it. The video below shows you how to solder Pin Strip on to the Espruino Board.
 
@@ -26,3 +26,4 @@ Buying
 * [eBay Jumper wires](http://www.ebay.com/sch/i.html?_nkw=female+dupont+jumper+wire)
 * [Sparkfun **solderless** headers](https://www.sparkfun.com/products/10527)
 * [Proto-pic **solderless** headers](http://proto-pic.co.uk/solderless-headers-10-pin-straight/)
+* [digitalmeans.co.uk headers](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=pin-header)

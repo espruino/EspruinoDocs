@@ -4,31 +4,32 @@ Power Consumption
 
 * KEYWORDS: Power,Watts,Efficiency,Milliamps,Microamps,Sleep,Stop,Standby,Deep Sleep
 
-**Note:** This information is mainly relevant to the Espruino board. A lot of other boards do not have the same power save functionality.
+**Note:** This information is mainly relevant to the [Original Espruino](/EspruinoBoard) and [[Pico]] boards. Most other boards do not have the same power save functionality.
 
 Espruino can run in one of 3 different modes.
 
-| Mode | Current | Time on 2000mAh battery | Notes |
-| -----|---------|--------|
-| Run | ~35mA | 57 hours | Espruino is executing code and running at 72Mhz |
-| Sleep | ~12mA | 7 days | Espruino has stopped the clock to the CPU, but all peripherals are still running and can wake it up |
-| Stop | ~0.11mA | 2 years | Espruino has stopped the clock to everything except the real-time clock (RTC). It can wake up on setInterval/setTimeout or setWatch |
+| Mode  | [Original Espruino](/EspruinoBoard) 1v4 | [[Pico]]  | Notes |
+|-------|---------------------------------|-------------------|------|
+| Run   | ~35mA (57 hours)                | 32mA              | Espruino is executing code and running at 72Mhz |
+| Sleep | ~12mA (7 days)                  | ~11mA             | Espruino has stopped the clock to the CPU, but all peripherals are still running and can wake it up |
+| Stop  | ~0.03mA<sup>1</sup> (> 2 years) | 0.02mA            | Espruino has stopped the clock to everything except the real-time clock (RTC). It can wake up on setInterval/setTimeout or setWatch |
 
-**Note:** Standby mode is available on the STM32 chip (very low power, but **all data** is lost from RAM). It is not currently used in Espruino (see _Other sources of Power Draw_ below for why not).
+<sup>1</sup> Espruino 1v3 has a slightly higher 'Stop' power consumption of 0.11mA.
+
+**Note:** Standby mode is available on the STM32 chip (very low power, but **all data** is lost from RAM). It is not currently used in Espruino.
 
 Sleep
-----
+-----
 
-This is the normal low-power mode for Espruino. You don't have to do anything to enter this at all, Espruino will enter it whenever it thinks it can.
+This is the normal low-power mode for Espruino. You don't have to do anything to enter this at all, Espruino will enter this mode whenever it isn't doing anything.
 
-Stop
-----
+Deep Sleep (Stop)
+---------------
 
-This is the best low-power mode in Espruino, which involves turning off the clock to all peripherals (which stops them) and waking only when an external pin changes state or after a set amount of time. It is only enabled when you run ```setDeepSleep(1)``` (you can turn it off by passing 0). It's not enabled by default because:
+This is the best low-power mode in Espruino, which involves turning off the main clock (which stops all peripherals) and waking only when an external pin changes state or after a set amount of time. It is only enabled when you run ```setDeepSleep(1)``` (you can turn it off by passing 0). It's not enabled by default because:
 
-* Espruino won't wake when USB is plugged in - after USB is unplugged and plugged back in, it must have been awakened by something. We'd suggest ```setWatch(function() {}, BTN, true)``` so that you can press the button to wake up Espruino and allow you to connect via USB.
-* Espruino can't be woken by USART (and they will not receive data while it is sleeping). This means that if you were using the Bluetooth module for receiving communications then you can't use deep sleep. In reality this isn't such a big problem because the Bluetooth module draws 30mA when active!
-* All external peripherals (including timers for PWM) will stop. Espruino does not currently detect if any of these timers are in use before sleeping.
+* Espruino can't be woken by Serial/USART traffic (and will not receive data while in Deep Sleep). For instance you would be unable to use Deep Sleep if you were using the Bluetooth module and wanted to react to messages from it. To work around this, you'd need to implement RTS/CTS flow control in software (waking Espruino on RTS, and only setting CTS after `setDeepSleep(0)` has been called).
+* All external peripherals (including timers for PWM) will stop. Espruino does not currently detect if any of these timers are in use before entering Deep Sleep.
 
 ### Conditions for Deep Sleep
 
@@ -37,9 +38,12 @@ For deep sleep to work, you must:
 * Have called ```setDeepSleep(1)```
 * Not be connected to USB
 * Not have any data waiting to be sent down Serial or USB
-* Have no pending callbacks from setIntervals/setTimeout that are **less than 1.5 seconds** away. Espruino uses the real time clock for wakeups, and the RTC can only wake up on a second by second basis.
+* Have no pending callbacks from setIntervals/setTimeout that are **less than 1.5 seconds** away (this is less on the [[Pico]]). Espruino uses the real time clock for wakeups, and the RTC can only wake up on a second by second basis.
+* Not have any [[Waveform]]s running, and not have a `digitalPulse(...)` command that is yet to finish
 
-  **Note:** Espruino won't enter deep sleep as soon as you execute ```setDeepSleep(1)```. It'll wait until it doesn't have anything to do, and then it'll enter it. For example you can type ```setDeepSleep(1)``` while you're connected to your PC via USB, and Espruino will only enter deep sleep mode once you unplug from USB. 
+**Note:** Espruino won't enter deep sleep as soon as you execute ```setDeepSleep(1)```. It'll wait until all the bullet points above are satisfied, and then it'll enter it. For example you can type ```setDeepSleep(1)``` while you're connected to your PC via USB, and Espruino will only enter deep sleep mode once you unplug from USB. 
+
+`setDeepSleep(...)` sets a flag internally - so you only need to call it once (not each time you want to go to sleep).
 
 Examples
 -------
@@ -68,8 +72,6 @@ setWatch(function() {
 setDeepSleep(1);
 ```
 
-As suggested above, we'd advise that you **always** add setWatch on BTN when allowing deep sleep, as this allows you to wake Espruino up so that you can connect to it with USB.
-
 Debugging Sleep
 -------------
 
@@ -89,10 +91,12 @@ Bear in mind that lighting just one LED light uses about the same amount of powe
 Other sources of Power Draw
 ------------------------
 
-While the STM32 datasheets suggest that the STM32 in Espruino will actually draw around 30uA in Stop mode, the voltage regulator that is on the board (despite being designed for low current) still draws 80uA, which makes up the majority of the 110uA power draw.
+On the Espruino Board rev 1v3 the voltage regulator draws 80uA, which makes up the majority of the 110uA power draw. The rev 1v4 has a much more efficient regulator, which allows a power draw of just 30uA.
 
-The STM32 itself can run from between 2 and 3.6v though, so you may not need a voltage regulator. If you need the lowest possible power and you are running from a Lithium Ion/Polymer battery that doesn't exceed 4.3v, you can replace the voltage regulator with a single diode - which will drop the voltage by 0.7v. (bringing the voltage to `5v - 0.7v*2 = 3.6v` when on USB, and `4.2v - 0.7v = 3.5v` maximum when on Li-Ion batteries.
+**What follows is not relevant for Espruino Boards rev 1v4 and later**
 
-![Low power modifications](lowpower.jpg)
+The STM32 itself can run from between 2 and 3.6v, so you may not need a voltage regulator. If you need the lowest possible power and you are running from a Lithium Ion/Polymer battery that doesn't exceed 4.3v, you can replace the voltage regulator with a single diode - which will drop the voltage by 0.7v. (bringing the voltage to `5v - 0.7v*2 = 3.6v` when on USB, and `4.2v - 0.7v = 3.5v` maximum when on Li-Ion batteries.
+
+![Low power modifications](Power Consumption/lowpower.jpg)
 
 To do this, see the image above. Unsolder the small 5-pin IC that is near the battery connector, and then solder a standard diode (the SOD-123 package works well) between the two pins nearest the STM32 chip. The diode should be placed with the white line on the diode towards the pushbuttons.
