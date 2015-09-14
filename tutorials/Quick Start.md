@@ -14,6 +14,7 @@ If you have a kit from KickStarter and want to see what everything is, check out
 Plugging in
 ----------
 
+<span style="color:red">Please check that there is no bare metal (including your desk!) near the board when you plug it in, as it could short it out.</span>
 
 * **Espruino Pico** - the Pico is designed to plug right into you computer's USB type A connector, or a USB extension lead. The components (not the text) should usually be facing upwards (so the 4 gold strips are facing the plastic in the USB socket).
 * **Original Espruino** - just plug the board in with a Micro USB cable and you're done. 
@@ -148,10 +149,15 @@ The `save()` command saves the current state of the pins and on-chip peripherals
 ```
 function onInit() {
   digitalWrite([LED1,LED2], 2);
-  setTimeout("digitalWrite([LED1,LED2], 1);", 1000)
-  setTimeout("digitalWrite([LED1,LED2], 0);", 2000)
+  setTimeout("digitalWrite([LED1,LED2], 1);", 1000);
+  setTimeout("digitalWrite([LED1,LED2], 0);", 2000);
 }
 ```
+
+The code above uses a few extra features in Espruino that weren't covered before:
+
+* You can pass an array of pins into `digitalWrite` (the same applies to `digitalRead`). If you do that, the value you supply will be treated as a binary value, with the least significant bit going to the rightmost pin in the array and so on.
+* If you pass a string into `setTimeout` or `setInterval`, it'll be treated in the same way as a function and will be executed after a certain time period.
 
 If you do manage to save something to Espruino that causes it not to work, don't worry - you can easily recover it. Just see the [[Troubleshooting]] page.
 
