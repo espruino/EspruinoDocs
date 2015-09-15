@@ -110,7 +110,7 @@ ADS1X15.prototype.setGain = function(gain) {
   if (!(gain in GAINS)) throw new Error("Gain "+gain+" not found");
   this.gain = gain;
 };
-/* Get an ADC reading and call `callback` with it as a 16 bit value. 
+/* Get an ADC reading and call `callback` with the raw data as a 16 bit signed value. 
 `channel` is a value between 0 and 3. */
 ADS1X15.prototype.getADC = function(channel, callback) {
   var config = CONFIG.CQUE_NONE    | // Disable the comparator (default val)
@@ -135,6 +135,14 @@ ADS1X15.prototype.getADC = function(channel, callback) {
     if (d&0x8000) d-=65536; // sign
     callback(d); 
   }, 8);
+};
+/* Get an ADC reading and call `callback` with the voltage as a floating point value.
+`channel` is a value between 0 and 3. */
+ADS1X15.prototype.getADCVoltage = function(channel, callback) {
+  var mul = this.gain / 32768000;
+  this.getADC(channel, function(v) {
+    callback(v*mul);
+  });
 };
 
 // Create an instance of ADS1X15
