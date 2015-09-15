@@ -24,8 +24,8 @@ The MCP23000-series port expanders require the following connections to be made 
 | SDA/SI   | SDA  | MOSI  |  |
 | SO   | NC  | MISO  ||
 | CS   | NC  | Any IO Pin  ||
-| A0   | Vcc or Gnd  | Vcc or Gnd  | N  |
-| A1   | Vcc or Gnd  | Vcc or Gnd  | N  |
+| A0   | Vcc or Gnd  | Vcc or Gnd  |   |
+| A1   | Vcc or Gnd  | Vcc or Gnd  |   |
 | A2   | Vcc or Gnd  | Vcc or Gnd  | 23x17 only  |
 
 The Reset pin may also be connected to any IO pin on the Espruino if you need to be able to reset the port expander. This is recommended, in order to ensure that the port expander is in the expected state when you start using it, and to ensure that restarting your program also resets the port expander. 
@@ -71,15 +71,18 @@ These will (assuming no errors) return an object that provides the following met
 
 `port.readPort(value)` Reads all 8 (or 16) pins and returns them as a single value (bit 0 corresponds to pin 0 and so on). For 16-bit port expanders, the low byte corresponds to pins 0-7. 
 
-The port object also contains 8 (or 16) virtual pins, each with the normal read(), write(), set(), reset(), and mode() options, named A0-7, (and B0-7 for 16-bit versions). These can be used like shown
+The port object also contains 8 (or 16) virtual pins, each with the normal read(), write(), set(), reset(), and mode() options, named A0-7, (and B0-7 for 16-bit versions).
 
 ```
 > port.A0.mode('input_pullup');
 > console.log(port.A0.read());
 1
+> port.B3.mode('output');
+> port.B3.write(1);
+> console.log(port.B3.read());
+1
+> port.B3.write(0);
+> console.log(port.B3.read());
+0
 ```
 
-
-MCP23x16
-------------
-The obsolete MCP23x16 parts should also work; the interface is the same. However, an external resistor and capacitor must be connected per datasheet in order to form an RC oscillator to provide the internal clock for the port expander. This is built in to the MCP23x17 parts. 
