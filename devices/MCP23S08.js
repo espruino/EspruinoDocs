@@ -9,7 +9,7 @@ function MCP23S08(spi,cs,rst,ad) {
   this.spi = spi;
   this.ad=(ad?(ad<<1)+64;64);
   this.cs=cs;
-  this.m=255;
+  this.n=255;
   this.pu=0;
   this.olat=0;
   this.A0=new PEP(1,this);
@@ -31,7 +31,7 @@ MCP23S08.prototype.mode=function(pin,mode) {this.m(1<<pin,mode);};
 
 MCP23S08.prototype.m=function(bv,mode) {
   if (["input","output","input_pullup"].indexOf(mode)<0) throw "Pin mode "+mode+" not available";
-  this.s(0,mode=='output'?(this.m&=~bv):(this.m |=bv));
+  this.s(0,mode=='output'?(this.n&=~bv):(this.n |=bv));
   this.s(6,mode=='input_pullup'?(this.pu|=bv):(this.pu&=~bv));
 };
 
