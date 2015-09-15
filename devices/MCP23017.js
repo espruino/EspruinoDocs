@@ -12,7 +12,7 @@ function MCP23017(i2c,rst, i2ca) {
       this.rst=rst;
       this.rst.write(1);
   }
-  this.m=65535;
+  this.n=65535; //IODIR register, 1 = input
   this.pu=0;
   this.olat=0;
   this.A0=new PEP(1,this);
@@ -36,7 +36,7 @@ MCP23017.prototype.s=function(r,d){this.i2c.writeTo(this.i2ca,r,[d&255,d>>8]);};
 MCP23017.prototype.r=function(r){this.i2c.writeTo(this.i2ca,r);return this.i2c.readFrom(this.i2ca,2);};
 MCP23017.prototype.m=function(bv,mode) {
   if (["input","output","input_pullup"].indexOf(mode)<0) throw "Pin mode "+mode+" not available";
-  this.s(0,mode=='output'?(this.m&=~bv):(this.m |=bv));
+  this.s(0,mode=='output'?(this.n&=~bv):(this.n |=bv));
   this.s(12,mode=='input_pullup'?(this.pu|=bv):(this.pu&=~bv));
 };
 
