@@ -1,5 +1,6 @@
-exports.connect = function(i2c,rst,i2ca) {
-    
+/* Copyright (c) 2015 Spence Konde, Pur3 Ltd. See the file LICENSE for copying permission. */
+/* See MCP23xxx.md for more info */
+exports.connect = function(i2c,rst,i2ca) {    
     return new MCP23017(i2c,rst,i2ca);
 };
 function MCP23017(i2c,rst, i2ca) {

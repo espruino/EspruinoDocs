@@ -2,7 +2,7 @@
 MCP23xxx I2C and SPI port expanders
 ========================
 
-* KEYWORDS: Module,port expander,MCP23008,MCP23S08,MCP23017,MCP23S17
+* KEYWORDS: Module,port expander,I2C,SPI,MCP23008,MCP23S08,MCP23017,MCP23S17
 
 Overview
 ------------------
@@ -37,6 +37,8 @@ Software
 
 Connect to the port expander:
 
+### I2C port expanders
+
 ```
 
 var i2c=I2C1;
@@ -44,9 +46,15 @@ i2c.setup({scl:B6,sda:B7});
 var address = 0; //this is the address, set by the address pins. 
 var RST=A8; //pin connected to reset. Omit if reset is not connected. 
 
-var port=require("MCP23008").connect(i2c,RST,address); 
-
+// for MCP23008
+var port=require("MCP23008").connect(i2c,RST,address);
+// for MCP23017
+var port=require("MCP23017").connect(i2c,RST,address);
+// for MCP23S17
+var port=require("MCP23S17").connect(i2c,RST,address);
 ```
+
+### SPI port expanders
 
 ```
 var spi=SPI1;
@@ -55,8 +63,8 @@ var address = 0; //this is the address, set by the address pins.
 var RST=B10; //pin connected to reset. Omit if reset is not connected. 
 var CS=B1; 
 
+// for MCP23S08
 var port=require("MCP23S08").connect(spi,CS,RST,address); 
-
 ```
 
 These will (assuming no errors) return an object that provides the following methods:

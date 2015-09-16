@@ -1,5 +1,6 @@
-exports.connect = function(i2c,rst,i2ca) {
-    
+/* Copyright (c) 2015 Spence Konde, Pur3 Ltd. See the file LICENSE for copying permission. */
+/* See MCP23xxx.md for more info */
+exports.connect = function(i2c,rst,i2ca) {    
     return new MCP23S17(i2c,rst,i2ca);
 };
 function MCP23S17(spi,cs,rst,ad) {
@@ -8,7 +9,7 @@ function MCP23S17(spi,cs,rst,ad) {
   }
   this.spi = spi;
   this.i2c = i2c;
-  this.ad=(ad?(ad<<1)+64;64);
+  this.ad=(ad?(ad<<1)+64:64);
   this.cs=cs;
   if (rst) {
       this.rst=rst;
@@ -34,7 +35,7 @@ function MCP23S17(spi,cs,rst,ad) {
   this.B6=new PEP(16384,this);
   this.B7=new PEP(32768,this);
 }
-MCP23S17.prototype.s=function(r,d){this.spi.write(([this.ad,r,d&255,d>>8],this.cs);};
+MCP23S17.prototype.s=function(r,d){this.spi.write([this.ad,r,d&255,d>>8],this.cs);};
 MCP23S17.prototype.r=function(r){return this.spi.send([this.ad+1,r,0,0],this.cs);};
 MCP23S17.prototype.m=function(bv,mode) {
   if (["input","output","input_pullup"].indexOf(mode)<0) throw "Pin mode "+mode+" not available";

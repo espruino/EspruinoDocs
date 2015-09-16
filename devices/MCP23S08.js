@@ -1,5 +1,6 @@
-exports.connect = function(spi,cs,rst,ad) {
-    
+/* Copyright (c) 2015 Spence Konde, Pur3 Ltd. See the file LICENSE for copying permission. */
+/* See MCP23xxx.md for more info */
+exports.connect = function(spi,cs,rst,ad) {    
     return new MCP23S08(spi,cs,rst,ad);
 };
 function MCP23S08(spi,cs,rst,ad) {
@@ -7,7 +8,7 @@ function MCP23S08(spi,cs,rst,ad) {
       rst.write(0);
   }
   this.spi = spi;
-  this.ad=(ad?(ad<<1)+64;64);
+  this.ad=(ad?(ad<<1)+64:64);
   this.cs=cs;
   this.n=255;
   this.pu=0;
