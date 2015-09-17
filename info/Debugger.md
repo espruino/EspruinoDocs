@@ -4,7 +4,9 @@ Espruino Debugger
 
 * KEYWORDS: Debug,Debugger,Finding Problems
 
-As of Espruino 1v81, there is now a built-in text mode debugger available, which allows you to step through your code line by line.
+As of Espruino 1v81, there is now a built-in text mode debugger available, which allows you to step through your code line by line. The commands used are almost identical to those in GDB.
+
+**Note:** If you have a board with very little flash memory (128kB or less) the debugger may not be included in your build. However it *is* available for all official Espruino boards.
 
 Entering the debugger
 -------------------
