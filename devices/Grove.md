@@ -4,6 +4,9 @@ SeeedStudio Grove System
 
 * KEYWORDS: SeeedStudio,Grove,System
 
+![Grove System](Grove.jpg)
+
+The [Seeed Studio](http://www.seeedstudio.com) [Grove System](http://www.seeedstudio.com/wiki/Grove_System) is an open modular toolset, designed to minimize the difficulty of electronic engineering. Each board has unified 4pin interface and standardized jigsaw shape for easy combination.
 
 Wiring
 -----
@@ -75,3 +78,11 @@ LCD RGB
 
 * APPEND_JSDOC: GroveLCDRGB.js
 
+
+Buying
+------
+
+The Grove System Starter kits and individual parts are available directly from SeeedStudio in China, or from a range of distributors.
+
+* [SeeedStudio](http://www.seeedstudio.com/depot/s/grove.html)
+* [digitalmeans](https://digitalmeans.co.uk/shop/index.php?search=grove)
