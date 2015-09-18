@@ -172,7 +172,11 @@ function handleImages(file, contents) {
       var imageName = contents.substring(tagMid+2, tagEnd);
       var imagePath = directory+"/"+imageName;
       if (fs.existsSync(imagePath)) {
-        var newPath = htmlLinks[file]+"_"+imageName;
+/*        console.log("IMAGE -----------------------------");
+        console.log(imageName);
+        console.log(imagePath);*/
+        var newPath = /*htmlLinks[file]+"_"+*/imageName;
+        console.log(newPath);
         newPath = newPath.replace(/\//g,"_");
         newPath = newPath.replace(/\+/g,"_");
         newPath = newPath.replace(/ /g,"_");

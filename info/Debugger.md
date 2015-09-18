@@ -14,6 +14,10 @@ Entering the debugger
 If your program has actually hung (isn't returning to the prompt) then you can press `Ctrl-C` in order to enter debug mode. Otherwise, to force a breakpoint you need to add the text `debugger` where you want a breakpoint to occur:
 
 ```
+function bar(one) {
+  return one+" ";
+}
+
 function foo(one, two) {
   return one+two;
 }
@@ -24,15 +28,16 @@ function hello() {
   console.log(1);
   debugger;
   console.log(2);
-  foo(a,b);
+  foo(bar(a),b);
   console.log(3);
 }
 ```
 
 When you then run `hello()`, you'll enter debug mode at the `debugger` keyword. The terminal will now show `debug>` and you're ready to enter debugging commands.
 
-Type `help` for a list of what's available.
+When in debug mode type `help` for a list of what's available.
 
+**Note:** if you want to debug a single function without modifying it, you can simply type `debugger;myfunction()` in Espruino's console.
 
 Exiting the debugger
 ------------------
@@ -96,14 +101,19 @@ debug>n
   ^
 debug>n
 2
-  foo(a,b);
+  foo(bar(a),b);
   ^
 debug>n
   console.log(3);
   ^
+debug>n
+3
+Value returned is =undefined
+=undefined
+> 
 ```
 
-Or using `step`, you step inside the function `foo`:
+Or using `step`, you step inside the functions `bar` and `foo`:
 
 ```
 debug>s
@@ -111,15 +121,21 @@ debug>s
   ^
 debug>s
 2
-  foo(a,b);
+  foo(bar(a),b);
   ^
 debug>s
+Stepping into bar
+  return one+" ";
+  ^
+debug>s
+Value returned is ="Goodbye "
+Stepping into foo
   return one+two;
   ^
 debug>
 ```
 
-You can now type `finish` (or `f`) to run to the end of the function, and the return value will be displayed.
+You can also type `finish` (or `f`) to run to the end of the function `foo`, and the return value will be displayed.
 
 ```
 debug>finish
@@ -136,4 +152,18 @@ debug>c
 =undefined
 >
 ```
+
+Conditional Breakpoints
+---------------------
+
+If you want to break into the debugger only when something happens, you can call `debugger` from inside an `if` statement:
+
+```
+for (var i=0;i<10;i++) {
+  console.log(i);
+  if (i==5) debugger;
+}
+```
+
+This will enter the debugger only when `i` is 5.
 
