@@ -118,7 +118,7 @@ ADS1X15.prototype.setGain = function(gain) {
 };
 /* Get an ADC reading and call `callback` with the raw data as a 16 bit signed value. 
 `channel` is a value between 0 and 3, or an array of inputs. Either `[0,1]`, `[0,3]`, `[1,3]` or `[2,3]`  */
-ADS1X15.prototype.getADC = function(channel, callback) {
+ADS1X15.prototype.getADC = function(channelSpec, callback) {
   var config = CONFIG.CQUE_NONE    | // Disable the comparator (default val)
                     CONFIG.CLAT_NONLAT  | // Non-latching (default val)
                     CONFIG.CPOL_ACTVLOW | // Alert/Rdy active low   (default val)
