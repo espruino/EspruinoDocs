@@ -29,8 +29,8 @@ cp files/* $WEBSITE/www/files
 mkdir -p $WEBSITE/www/refimages
 rm $WEBSITE/www/refimages/*
 cp html/refimages/* $WEBSITE/www/refimages
-# Resize any images that might be too big
-mogrify -resize "600x800>" $WEBSITE/www/refimages/*
+# Resize any images that might be too big, and remove metadata
+mogrify -resize "600x800>" -strip $WEBSITE/www/refimages/*
 
 MODULEDIR=$WEBSITE/www/modules
 mkdir -p $MODULEDIR
