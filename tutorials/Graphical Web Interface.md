@@ -205,7 +205,7 @@ function onPageRequest(req, res) {
   var a = url.parse(req.url, true);
   res.writeHead(200, {'Content-Type': 'text/html'});
   // If /set is requested...
-  if (a.pathname == "/set") {
+  if (a.pathname == "/set" && a.query) {
     for (var l in a.query) {
       if (l.length==2 && l[0]=="l") {
         var n = map[parseInt(l[1],16)];
