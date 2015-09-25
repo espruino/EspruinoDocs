@@ -2,7 +2,7 @@
 Low-level STM32 Peripheral access
 =============================
 
-* KEYWORDS: STM32,peripherals,advanced,direct,peek,poke,timers,registers,counter,input capture,capture compare
+* KEYWORDS: STM32,peripherals,advanced,direct,peek,poke,timers,registers,counter,input capture,capture compare,capacitive touch
 * USES: STM32,Pico
 
 While Espruino provides an easy-to use way to access the peripherals on the microcontroller,
@@ -28,7 +28,7 @@ and [this is the STM32F401CD Datasheet](/datasheets/STM32F401xD.pdf).
 It's a huge manual, but you're only interested in specific parts of it.
 
 
-What happens for PWM
+What happens for [PWM](/PWM)
 ------------------
 
 First off, look at `Advanced-control timer (TIM1)` on page 241. We're going to look at what happens when you
@@ -79,7 +79,7 @@ Finally it's done, and the `A8` will be outputting a square wave at 10Hz.
 Accessing the Timer
 -----------------
 
-So, that was all pretty heavy. While the Reference manual does walk you through what's needed, that's a lot to learn for a PWM output.
+So, that was all pretty heavy. While the Reference manual does walk you through what's needed, that's a lot to learn for a [PWM](/PWM) output.
 
 All of those things that Espruino did were done by modifying the peripheral registers - bits of memory at certain locations that control how the peripherals work.
 
@@ -348,8 +348,6 @@ Input Capture
 
 Input capture is another useful function. In this mode, you can set `CNT` to run at whatever speed you want (with `analogWrite(A8, 0.5, {freq : my_frequency})`), but every time a bit changes state it'll save the value of `CNT` into the relevant `CCR` register.
 
-This is even more useful when you're able to set up one channel in Input Capture mode, while keeping another in normal PWM mode. That way, you can easily check the time delay between the output being raised, and the input responding - perfect for things such as capacitive touch.
-
 For this we'll use the timer in this configuration:
 
 ![TIM1 Mux](STM32 Peripherals/TIM1_capture.png)
@@ -359,7 +357,7 @@ The relevant section of the reference manual is `12.3.6 Input capture mode`, but
 All we need to do is:
 
 * Enable and configure the counter (prescaler, autoreload) with `analogWrite`
-* Reconfigure Channel 1 to listen for events, rather that outputtting PWM
+* Reconfigure Channel 1 to listen for events, rather that outputtting [PWM](/PWM)
 
 Obviously the first step is easy, and for the second step we can actually steal some of the code that we'd written previously for the counter - with one small tweak. This time we're using channel 1's prescaler `IC1PS`, so we want to make sure we reset it's value as well so it doesn't do anything. It's just a matter of making sure we clear 2 extra bits in the `CCMR1` register:
 
@@ -403,3 +401,65 @@ The act of reading `CCR1` actually cleared the `CC1IF` flag, so `peek16(SR)&2` w
 But what if the timer triggers twice, before we can read the last value? We can detect that too - that's in the `Capture Compare 1 Overflow flag` `CC1OF`, which you can check with `peek16(SR)&512`.
 
 This may have marked an overflow already, and it can be cleared with `poke16(SR,peek16(SR)&~512)`. But now, if you pulse the pin twice, without reading from `CCR1`, the overflow flag will get set.
+
+Capacitive Touch Sensor
+-----------------------
+
+Input capture really shines when you use it alongside another timer channel on the same timer. Let's say you use pin `A10` on the Pico (`TIM1_CH3`) as a normal [PWM](/PWM) output, but then enable capture compare on `A8` using the code above. You can now measure how long it takes `A8`'s input to rise after `A10`'s output rose.
+
+It turns out this is very useful for capacitive touch (amongst other things).
+
+Remove everything from the breadboard apart from the Pico, and then get a 1 Million Ohm resistor (100k Ohm will do, just not as well) and connect it between `A10` (on the small holes at the end of the board - the resistor should just push into the hole) and `A8`. Now get a 10cm length of wire, bend it into a circle, and connect it to `A8` as well. What you've got now is a very large resistor, and a very small capacitor (the wire loop). When you move your hand near the capacitor your body increases the size of the capacitor.
+
+So what does this mean? Well, as the capacitor gets bigger, it takes longer to charge and discharge (which is done via the resistor connected to `A10`). Using Input Capture we can detect this (without having to use any computational time in JavaScript).
+
+Simply upload the following code:
+
+```
+// Status Register
+var SR= 0x40010010;
+// Capture/compare enable register 
+var CCER = 0x40010020;
+// Capture compare mode register
+var CCMR1 = 0x40010018;
+// counter 
+var CNT = 0x40010024;
+// Capture Compare 1
+var CCR1 = 0x40010034;
+var PSC = 0x40010028;
+
+// enable PWM on A8 (TIM1 CH1)
+analogWrite(A8,0.5,{freq:1000}); 
+// enable PWM on A10 (TIM1 CH3)
+analogWrite(A10,0.5,{freq:1000}); 
+// CC1E = 0 (Turn channel 1 off)
+poke16(CCER, peek16(CCER) & ~1);
+// CC1S[1:0]=01 (rising edge),  IC3PSC[3:2]=00 (no prescaler), IC1F[7:4]=0 (no filter),
+poke16(CCMR1, (peek16(CCMR1) & ~0b11111111) | (0b00000001));
+// CC1P=0, CC1NP=0 (detect rising edge), CC1E[0] = 1 (Turn channel 1 on)
+poke16(CCER, peek16(CCER) & ~(0b1011) | (0b0001));
+
+function getCap() { return peek16(CCR1); }
+```
+
+This is identical to the Input Capture code, but:
+
+* The frequency is now 1000Hz
+* We're writing a square wave to A10 as well now
+* We put the read of `CCR1` into a convenience function
+
+So now, if you call `getCap()` you should get a number (which depends on the resistor you used, and the capacitance of the coil of wire).
+
+But, if you keep calling `getCap()` while moving you hand near the wire, when you hand gets within less that a centimeter of the wire you should see the value rise up. If you were to call `getCap()` from `setInterval` like this:
+
+```
+// a value slightly above what you get from getCap() when you hand isn't close
+var thresh = 300; 
+
+setInterval(function () {
+  digitalWrite(LED1, getCap() > thresh);
+}, 10);
+```
+
+Then you'd have your own capacitive touch sensor!
+
