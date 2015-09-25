@@ -40,11 +40,11 @@ You'll see a diagram of the timer a few pages in:
 
 Here, we've coloured what bits get used during `analogWrite(A8, 0.5, {freq:10})`.
 
-First, Espruino looks around to see what peripherals are available on the pin A8. That information
+First, Espruino looks around to see what peripherals are available on the pin `A8`. That information
 is in the Datasheet, under `Pinouts and pin description` in a table called `Table 8. STM32F401xD/xE pin definitions` (look for `PA8` in it). 
 It's actually pretty painful to read, so we've documented it all properly on the [Pico](/Pico) page. 
 Under the `Pinout` heading hover your mouse over the `PWM` tag below the pin `A8`. It'll say `TIM1_CH1` - 
-so Channel 1 of the TIM1 peripheral.
+so Channel 1 of the `TIM1` peripheral.
 
 Now, Espruino will make sure the STM32 applies power to `TIM1` (it'll be off by default to save power).
 
@@ -64,7 +64,7 @@ register, so for instance if you wanted to put `TIM1_CH1N` onto pin `A7` on an S
 Now Espruino's done all that painful stuff, it'll configure the timer itself. It:
 
 * Sets up the prescaler to divide the Pico's 84Mhz clock down, such that the 16 bit 
-counter `CNT1` counts up from 0 to 65535 just less than 10 times per second 
+counter `CNT` counts up from 0 to 65535 just less than 10 times per second 
 (because we set the frequency to s0).
 * Sets the `AutoReload Register` (`ARR`) to fine-tune the frequency, by only letting the
 counter count up to a value a bit less than the full 16 bit value 65535
@@ -85,7 +85,7 @@ All of those things that Espruino did were done by modifying the peripheral regi
 
 If you go to the end of the chapter in the reference manual, you'll find `12.4 TIM1 registers`. These are descriptions of exactly which bits of the registers do what.
 
-So let's access `CCR1` (Capture/Compare register 1`) - the register that Espruino put the duty cycle in, and see what it is. If you look it up,
+So let's access `CCR1` (Capture/Compare register 1) - the register that Espruino put the duty cycle in, and see what it is. If you look it up,
 at `12.4.14 TIM1 capture/compare register 1 (TIMx_CCR1)` you'll see it says `Address offset: 0x34` - this is the address offset in `TIM1`.
 
 So now, you want to find the address of `TIM1` itself. Go to `2.3 Memory map` in the reference and look at the table. The entry for `TIM1` says: `0x40010000 - 0x400103FF   -   TIM1`.
