@@ -64,7 +64,7 @@ exports.connect = function(/*=SPI*/_spi,/*=PIN*/_cs) {
     },
     // Set the scan limit
     scanLimit : function(limit) {
-      spi.send([0xb, limit+1], cs);
+      spi.send([0xb, limit-1], cs);
     }
   };
 };
