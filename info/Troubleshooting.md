@@ -96,7 +96,23 @@ You could try typing `dump()` to see if your code has actually been saved. If it
 
 You could try typing `load()` to force Espruino to load its saved program.
 
-If you want to execute certain commands at power-on, put those commands in a function called `onInit` and then type `save()`.
+If you want to execute certain commands at power-on, add one or more event handlers for the `init` event on `E`:
+
+```
+E.on('init', function() {
+  // ...
+});
+```
+
+This will then be loaded every time Espruino starts up. If you create a function called `onInit`, that will be executed too:
+
+```
+function onInit() {
+ // ...
+}
+```
+
+But of course there can only be one `onInit` function, so if you copy and paste two bits of code with two `onInit` functions then the second function will overwrite the first.
 
 
 ## Espruino stopped working after I typed `save()`

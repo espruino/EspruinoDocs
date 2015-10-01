@@ -152,15 +152,17 @@ If you press the reset button on the board (if your board has one), Espruino wil
 
 If you power off or reset Espruino using the reset button, it will lose all the code that you wrote. You can save the state of Espruino so this doesn't happen using the `save()` command. 
 
-The `save()` command saves the current state of the pins and on-chip peripherals, as well as all your functions, variables, watches and timers. The commands that you typed in previously *won't be executed again though*. If you want to execute some code when Espruino starts (for example you may need to initialise some external bit of hardware like an LCD), create a function called `onInit`. For example this bit of code lights the red, then green LEDs each time Espruino starts up:
+The `save()` command saves the current state of the pins and on-chip peripherals, as well as all your functions, variables, watches and timers. The commands that you typed in previously *won't be executed again though*. If you want to execute some code when Espruino starts (for example you may need to initialise some external bit of hardware like an LCD), you can use the `init` event on `E`. For example this bit of code lights the red, then green LEDs each time Espruino starts up:
 
 ```
-function onInit() {
+E.on('init', function() {
   digitalWrite([LED1,LED2], 2);
   setTimeout("digitalWrite([LED1,LED2], 1);", 1000);
   setTimeout("digitalWrite([LED1,LED2], 0);", 2000);
-}
+});
 ```
+
+**Note:** You can add a second handler to do something else when Espruino starts up, just by calling `E.on('init', ...)` again. If you write a function called `onInit`, that will automatically be executed as well.
 
 The code above uses a few extra features in Espruino that weren't covered above:
 
