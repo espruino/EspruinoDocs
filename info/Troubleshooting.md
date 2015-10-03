@@ -80,6 +80,29 @@ This may happen if you are using an ST Discovery board and haven't yet installed
 Using Espruino
 ============
 
+## I just upgraded Espruino to the latest version, and now I'm getting `ReferenceError` messages
+
+This is a new feature in Espruino that detects the use of previously undefined variables - it makes it much more likely that your code will work as intended.
+
+In order to fix the error, either create the variable beforehand with `var`, or just assign a value to it. For instance this code worked before Espruino 1v81, but won't work now:
+
+```
+setInterval(function() {
+  on = !on;
+  LED1.write(on);
+}, 500);
+```
+
+To fix it, simply define `on`:
+
+```
+var  on = false;
+setInterval(function() {
+  on = !on;
+  LED1.write(on);
+}, 500);
+```
+
 ## Espruino keeps responding `=undefined` to my commands
 
 This is actually fine - Espruino writes what your command returned, so if you execute a command that doesn't return a value, `=undefined` gets returned.
