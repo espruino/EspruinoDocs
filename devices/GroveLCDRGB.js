@@ -52,7 +52,9 @@ g.write("World");
 ```
 */
 function GroveLCDRGB(pins) {
-  this.i2c = I2C1;
+  // find the I2C device 
+  this.i2c = I2C.find(pins[0]);
+  if (!this.i2c) throw "Pins not capable of I2C";
   this.i2c.setup({scl:pins[0], sda:pins[1]});
   // Init LCD
   var lcdType = LCD._2LINE;

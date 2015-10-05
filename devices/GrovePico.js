@@ -1,17 +1,11 @@
 /* Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
-/* SeedStudio Grove pins while using the Arduino Pico adaptor board*/
+/* SeedStudio Grove pins while using the Mini Pico adaptor board*/
 exports = {
-  A0  : [A0,A1],   
-  A1  : [A1,A2],   
-  A2  : [A2,A3],   
-  A3  : [A3,A4],   
-  USART  : [B7,B6],
-  I2C  : [B8,B9], 
-  D2 : [B1,B3],
-  D3 : [B3,B4],     
-  D4 : [B4,B5],     
-  D5 : [B5,A6],     
-  D6 : [A6,A7],     
-  D7 : [A7,A8],          
-  D8 : [A8,B10]
+  A1  : [A5,A6],   
+  A2  : [A7,B1],   
+  UART  : [B7,B6],
+  I2C2  : [B10,B3],
+  I2C3  : [A8,B4],  
+  D1 : [B5,B13],
+  D2 : [B14,B15]
 };

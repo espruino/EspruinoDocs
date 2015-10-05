@@ -19,11 +19,23 @@ Otherwise, you need to wire each module up to GND, VCC, and to signal wires on t
 Software
 -------
 
-If you're using the [Arduino adaptor shield](/ArduinoPico) then you can easily use the [[GrovePico.js]] module to get the correct pins. Simply use the name written on the Grove adaptor. For instance for a button connected to `D4`:
+Each 'Grove' library in Espruino expects to be given an array of 2 pins as an argument, for instance [A0,A1].
+
+To make this easier we've added some modules with these arrays already defined, just choose from the table:
+
+| Adaptor | Module |
+|---------|--------|
+| [Arduino Adaptor shield for Pico](/ArduinoPico) | [[GroveArduinoPico.js]] |
+| Pico Mini Adaptor Shield | [[GrovePico.js]] |
+
+Once you're using the correct module, for instance with `var grove = require("GrovePico");`, 
+you can then access the relevant pins just by typing `grove.NAME` where `NAME` is the name 
+written on the Grove board. For instance for a button connected to `D2` on the Pico Shield,
+you'd simply do:
 
 ```
 var grove = require("GrovePico");
-new (require("GroveButton"))(grove.D4, function(e) {
+new (require("GroveButton"))(grove.D2, function(e) {
   if (e.state) console.log("Pressed");
   else console.log("Released");
 });
