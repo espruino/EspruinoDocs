@@ -20,7 +20,8 @@ exports.getJSDocumentation = function(js) {
   var ast = require("acorn").parse(js, {
     locations : true,
     onComment : function(block, text, start, end, startLoc, endLoc) {
-      comments[endLoc.line+1] = text.substr(1).trim();
+      if (text[0]=="*") text=text.substr(1);
+      comments[endLoc.line+1] = text.trim();
     }
   });
   // convert function to a pretty string
@@ -29,10 +30,13 @@ exports.getJSDocumentation = function(js) {
     return "function ("+args.join(", ")+") { ... }";
   }
   function tweakComment(comment) {
-    return ("\n"+comment).
-            replace(/```\n/g,"").
-            replace(/```/g,"").
-            split("\n").join("\n// ").trim() + "\n";
+    comment = ("\n"+comment).
+              replace(/```\n/g,"").
+              replace(/```/g,"").trim();
+   if (comment.indexOf("\n")>=0)
+     return "/* " + comment + "\n*/\n";
+   else
+     return "// " + comment + "\n";
   }
   
   var functions = {};

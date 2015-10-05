@@ -39,11 +39,12 @@ var LCD = {
   _5x8DOTS : 0x00
 };
 
-/*A Text LCD screen with a RGB backlight
+/*Text LCD screen with an RGB backlight
+--------------------------------
 
 ```
 var grove = require("GrovePico");
-var g = new (require("GroveLCDRGB"))(grove.I2C);
+var g = new (require("GroveLCDRGB"))(grove.I2C2);
 g.setColor(64,128,255);
 g.clear();
 g.write("Hello");
