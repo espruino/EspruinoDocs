@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Modules
-=======
+# Modules
+
 
 * KEYWORDS: Modules,Libraries
 
@@ -8,28 +8,63 @@ In Espruino, Modules are pieces of pre-written code (libraries) that perform com
 
 They can currently be used in a few different ways:
 
-Espruino Web IDE
---------------
+## Working with Modules
+
+### Espruino Web IDE
 
 If you're using the Espruino Web IDE, simply write ```require("modulename")``` on the right-hand side - as you would have seen in the reference pages. When you click the *Send to Espruino* button, the Web IDE will automatically look online for minified versions of the modules you need, download them, and load them onto the board. You don't need an SD card or an internet connection to the Espruino board itself.
 
-Stand-alone Espruino
-------------------
+#### Load Module - the default mechanism
+
+If you are using the Web IDE as is, the modules will be loaded from [http://www.espruino.com/modules/](http://www.espruino.com/modules/). This URL can be changed in Web IDE settings.
+
+To save space, most modules are provided as a minified version and the Web IDE tries to load minified versions first with default configuration.
+
+For example, using ```require("ADNS5050");``` will make the Web IDE loading the minified module from [http://www.espruino.com/modules/ADNS5050.min.js](http://www.espruino.com/modules/ADNS5050.min.js).
+
+##### Load Module from Github
+
+For now, as you can type a URL into require, you can actually just pull a module right off GitHub. For instance you could look at the history of something on GitHub, and could then just require a specific version of that file with:
+
+```require("https://github.com/espruino/Esp­ruinoDocs/blob/411be7a72bc55b4a51d05f3df­5bc8fa80017f3b0/devices/PCD8544.js");```
+
+The URL comes from clicking ```<>``` by the commit you were interested in.
+
+##### Load Module from NPM
+
+If you activate this option in Web IDE, you can load modules from the NPM repository. Right now you can only load the latest version there.
+
+For example using ```require("async");``` will make the Web IDE loading the tar.gz file (with automatic extraction) of the module from [http://registry.npmjs.org/async](http://registry.npmjs.org/async).
+
+##### Load Module from local folder
+
+If you are using a local project folder, the Web IDE will automatically create an empty modules folder inside. Put a module there and you can load it with ```require("myCustomModule")```.
+
+With default Web IDE configuration, it will look for modules following this order:
+
+1. local minified
+2. online minified
+3. local normal
+4. online normal
+
+If your own module has the same name as one of the existing ones, the Web IDE will use the minified version from online first.
+
+If you need it anyway, you can provide a local minified version or you can change the Web IDE configuration from ```.min.js|.js``` to ```.js|.min.js``` or even ```myCustomModule.js|.min.js|.js``` to get it working.
+
+### Stand-alone Espruino
+
 
 If you have an Espruino with an SD card (but you're not using the Web IDE), you can copy the modules you need into a directory called 'node_modules' on the SD card. Now, whenever you write ``` require("modulename") ``` the module will be used.
 
-WiFi-enabled Espruino
-------------------
+### WiFi-enabled Espruino
 
 **We're working on this - but soon:** If you have a WiFi-enabled Espruino and it is connected to the internet, writing ```require("mymodule")``` will cause it to look on the internet for the module with the name you have given.
 
-Existing Modules
---------------
+## Existing Modules
 
 * APPEND_KEYWORD: Module
 
-Built-in Functionality
--------------------
+### Built-in Functionality
 
 Espruino also contains many built-in modules and classes that provide a lot of functionality:
 
@@ -38,9 +73,7 @@ Espruino also contains many built-in modules and classes that provide a lot of f
 You don't need a module to be able to interface to hardware - sometimes it just makes it easier. If you want to interface to a device that isn't listed here, please check out the [[Tutorials]] page, or [[Search]] for it.
 
 
-Frequently Asked Questions
------------------------
-
+## Frequently Asked Questions
 
 ### <a name="repl"></a>Why don't modules work when typing `require` on the left-hand side of the Web IDE (or from a terminal window)?
 
