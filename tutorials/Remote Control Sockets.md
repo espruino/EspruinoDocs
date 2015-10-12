@@ -29,7 +29,7 @@ The sockets I'm using are [433.92](/433Mhz)Mhz ones (it's written on the back). 
 The Protocol
 ----------
 
-Unless you have a storage oscilliscope, working out the protocol of your particular sockets is remarkably difficult. In order to make the tutorial a bit easier I've described it below. There's also [this post](http://www.picaxeforum.co.uk/archive/index.php/t-16509.html) on the PicAxe forum that describes it very well.
+Unless you have a storage oscilloscope, working out the protocol of your particular sockets is remarkably difficult. In order to make the tutorial a bit easier I've described it below. There's also [this post](http://www.picaxeforum.co.uk/archive/index.php/t-16509.html) on the PicAxe forum that describes it very well.
 
 * There are 25, equally spaced bits
 * A '1' is represented as 0.9ms ON, and then 0.3ms OFF
@@ -63,80 +63,70 @@ We know what the protocol is (above) so we'll try and make something to understa
 Add the following code:
 
 ```
-var t,n;
-
-// When the signal rises, check if it was after ~5ms of delay - if so (and if we have a code) display it.
-function sigOn(e) {
-  var d = e.time-t;
-  if (d>0.005 && n>0) {
-    console.log("0b"+n.toString(2));
-    n=0;
+function startListening(pin) {
+  // The data we have received so far
+  var n="";
+  // The handler that gets called when the signal changes state
+  function sig(e) {
+    var d = 10000*(e.time-e.lastTime);
+    if (d<2 || d>10) {
+      if (n.length>20) console.log(n);
+      n="";
+    } else if (!e.state) n+=0|d>5;
   }
-  t = e.time;
+  // start listening for a change
+  setWatch(sig, pin, {repeat:true, edge:"both"});
 }
 
-// When the signal falls, measure the length of our pulse. 
-// If it was within range, record a 1 or a 0 depending on the length. 
-// If it wasn't in range, zero it
-function sigOff(e) {
-  var d = e.time-t;
-  t = e.time;
-  if (d>0.0001 && d<0.001)
-    n = (n<<1) | ((d>=0.0004)?1:0);
-  else
-    n=0;
-}
-
-setWatch(sigOn,A0,{repeat:true,edge:"rising"});
-setWatch(sigOff,A0,{repeat:true,edge:"falling"});
+startListening(A0);
 ```
 
-The function `sigOff` is quite hard to understand. It has been written such that the code executes relatively quickly, so it is explained in more detail (with comments) below:
+The function `sig` is quite hard to understand. It has been written such that the code executes relatively quickly, so it is explained in more detail (with comments) below:
 
 ```
-function sigOff(e) {
-  /* Here, we work out the length of the pulse and save it to 'd'.
-  'e.time' is the time of the signal turning off, and 't' was
-  set in 'sigOn', last time the signal turned on */
-  var d = e.time-t;
-  /* we update the value of 't', so we can measure the pulse length
-  in 'sigOn' as well */
-  t = e.time;
-  // Now, we check that the pulse length is what we expect
-  if (d>0.0001 && d<0.001) {
-    /* Ok, the pulse length is what we expect (between 0.1 and 1 ms).
-       Now, we do three things:
-         * We work out if the pulse length represents a 1 ( > 0.4 ms) or a 0. 
-           'd>=0.0004' returns either true or false.
-         * We use a ternary operator (A ? B : C) to turn that boolean 
-           value into a 1 or a 0.
-         * We use 'shift' and 'or' operators to shift the bits in 'n' to the
-           left by 1, and then to add in the new bit of data we got.
-       This means that at the end of all the bits, 'n' will contain
-       a number representing the data we received.
-     */
-    n = (n<<1) | ((d>=0.0004)?1:0);
-  } else {
-    /* if the pulse length isn't right, we got a corrupted signal, so
-       just delete everything we got so far */
-    n=0;
+  function sig(e) {
+    // set d to the time (in 0.1ms) the pulse was high or low for (makes the numbers nice and easy later on!)
+    var d = 10000*(e.time-e.lastTime);
+    // If the pulse length is really out of range... 
+    // we were looking for 0.3ms or 0.9ms, so throw out anything 
+    // less than 0.2 or greater than 1ms
+    if (d<2 || d>10) {
+      // it's out of range... 
+      // if we had enough data, it could be our signal - print it!
+      if (n.length>20) console.log(n);
+      // now empty it
+      n="";
+    } else if (!e.state) {
+      // Signal length was in range, and check that the current pin
+      // state is 0 - this means a pulse has just ended, so what we
+      // have is the length of the pulse in `d`
+
+      // Now, we're just adding a '1' or a '0' to the string `n`
+
+      // This is basically:
+      // if (d>5) n+="1" else n+="0";
+
+      // But `d>5` is a boolean to we make it an int by `or`ing it with `0`
+      // Luckily the precedence of `|` is such that `d>5` happens before `0|`
+      n+=0|d>5;
+    }
   }
-}
 ```
 
 Put the transmitter right next to the receiver and press one of the buttons. You should see a bunch of lines that are all the same (and a few corrupted ones!). They'll look something like:
 
 ```
-0b10100000111111101110
-0b10100000111111101110
-0b10100000111111101110
-0b10100000111111101110
-0b10100000111111101110
-0b10100000111111101110
-0b10100000111111101110
+0000010100000111111101110
+0000010100000111111101110
+0000010100000111111101110
+0000010100000111111101110
+0000010100000111111101110
+0000010100000111111101110
+0000010100000111111101110
+0000010100000111111101110
 ```
 
-This is the transmitted code (note that there are a few zeros at the front that aren't getting displayed).
+This is the transmitted code...
 
 Try pressing different buttons, and you should notice that the numbers at the beginning are the same, and the ones at the end change (except the final 0). It should all look something like:
 
@@ -169,7 +159,7 @@ And now reset Espruino and put in the following code, replacing the number in CO
 
 ```
 var TX = A0;
-var CODE = 0b10100000111111101110;
+var CODE = 0b0000010100000111111101110;
 
 function sendCommand(command) {
   var bits = (CODE & ~0b11111) | command;
@@ -210,7 +200,7 @@ Next, Wire up the [[CC3000]] as described in [this link](/CC3000) and use the fo
 
 ```
 var TX = A0;
-var CODE = 0b10100000111111101110;
+var CODE = 0b0000010100000111111101110;
 
 function sendCommand(command) {
   var bits = (CODE & ~0b11111) | command;
