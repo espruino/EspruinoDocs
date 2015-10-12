@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-# Modules
-
+Modules
+=======
 
 * KEYWORDS: Modules,Libraries
 
@@ -8,7 +8,8 @@ In Espruino, Modules are pieces of pre-written code (libraries) that perform com
 
 They can currently be used in a few different ways:
 
-## Working with Modules
+Working with Modules
+--------------------
 
 ### Espruino Web IDE
 
@@ -32,13 +33,17 @@ The URL comes from clicking ```<>``` by the commit you were interested in.
 
 ##### Load Module from NPM
 
-If you activate this option in Web IDE, you can load modules from the NPM repository. Right now you can only load the latest version there.
+If you activate this option in Web IDE, you can load modules from the NPM repository. Right now it:
+
+* only loads the latest version there.
+* only works if the module contains a single file.
+* can cause some confusion with Espruino's modules, for instance [clock](http://www.espruino.com/clock).
 
 For example using ```require("async");``` will make the Web IDE loading the tar.gz file (with automatic extraction) of the module from [http://registry.npmjs.org/async](http://registry.npmjs.org/async).
 
 ##### Load Module from local folder
 
-If you are using a local project folder, the Web IDE will automatically create an empty modules folder inside. Put a module there and you can load it with ```require("myCustomModule")```.
+If you are using a local project folder, the Web IDE will automatically create an empty modules folder inside. Put a module there and you can load it with ```require("myCustomModule");```.
 
 With default Web IDE configuration, it will look for modules following this order:
 
@@ -60,7 +65,8 @@ If you have an Espruino with an SD card (but you're not using the Web IDE), you 
 
 **We're working on this - but soon:** If you have a WiFi-enabled Espruino and it is connected to the internet, writing ```require("mymodule")``` will cause it to look on the internet for the module with the name you have given.
 
-## Existing Modules
+Existing Modules
+----------------
 
 * APPEND_KEYWORD: Module
 
@@ -73,7 +79,8 @@ Espruino also contains many built-in modules and classes that provide a lot of f
 You don't need a module to be able to interface to hardware - sometimes it just makes it easier. If you want to interface to a device that isn't listed here, please check out the [[Tutorials]] page, or [[Search]] for it.
 
 
-## Frequently Asked Questions
+Frequently Asked Questions
+--------------------------
 
 ### <a name="repl"></a>Why don't modules work when typing `require` on the left-hand side of the Web IDE (or from a terminal window)?
 
