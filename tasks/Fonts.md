@@ -42,6 +42,7 @@ Often you may want a font that is bigger than the built-in font, but smaller tha
 
 Current modules are:
 
+* [[Font4x4.js]] - tiny 4x4 block font (only digits 0-9)
 * [[Font6x8.js]]
 * [[Font6x12.js]]
 * [[Font8x12.js]]
