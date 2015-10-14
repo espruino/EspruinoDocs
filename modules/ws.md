@@ -1,4 +1,4 @@
-<!--- Copyright (c) 2015 Sameh Hady. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2015 Gordon Williams & Sameh Hady. See the file LICENSE for copying permission. -->
 WebSocket client
 =====================
 
