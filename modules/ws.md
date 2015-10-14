@@ -67,7 +67,7 @@ socket.on('pong', function() {
 Send Message
 -----------
 
-At any time during a session you can publish a message to the broker. A topic must be provided to allow the broker to deliver the message to any client with a subscription that matches that topic.
+At any time during a session you can publish a message to the server.
 ```js
   var message = "hello world";
   socket.send(message);
