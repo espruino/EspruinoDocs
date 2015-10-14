@@ -27,6 +27,7 @@ How to use the ws module:
     
     socket.on('data', function(msg) {
         console.log("MSG: " + msg);
+        socket.send("Hello Back");
     });
 
     socket.on('close', function() {
