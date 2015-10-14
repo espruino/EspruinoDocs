@@ -1,8 +1,8 @@
-/* Copyright (c) 2015 Sameh Hady. See the file LICENSE for copying permission.
-
+/* Copyright (c) 2015 Sameh Hady. See the file LICENSE for copying permission. */
+/*
 Simple WebSocket protocol wrapper for Espruino sockets.
 
-KEYWORDS: Module,websocket,ws,socket
+* KEYWORDS: Module,websocket,ws,socket
 
 Websocket implementation on Espruino, it let you control your Espruino from the cloud without the need to know it's IP. You will need to use it with a websocket server.
 
@@ -11,28 +11,25 @@ Limitations: The module only accept messages less than 127 character.
 How to use the ws module:
 
 ```
-  ESP8266WiFi.connect("Sameh Hady", "Password", function() {
-    console.log("Connected to wifi");
-    ESP8266WiFi.init();
+  // Connect to WiFi, then...    
+  var socket = require("ws").connect("Host", Port);
+
+  socket.on('connected', function() {
+     console.log("Connected to server");
+  });
+
+  socket.on('handshake', function() {
+      console.log("Handshake Success");
+  });
     
-    var socket = require("ws").connect("Host", Port);
+  socket.on('message', function(msg) {
+      console.log("MSG: " + msg);
+      socket.send("Hello Back");
+  });
 
-    socket.on('connected', function() {
-        console.log("Connected to server");
-    });
-
-    socket.on('handshake', function() {
-        console.log("Handshake Success");
-    });
-    
-    socket.on('message', function(msg) {
-        console.log("MSG: " + msg);
-        socket.send("Hello Back");
-    });
-
-    socket.on('close', function() {
-        console.log("Connection closed");
-    });
+  socket.on('close', function() {
+      console.log("Connection closed");
+  });
 });
 ```
 */
