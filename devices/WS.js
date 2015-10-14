@@ -33,10 +33,6 @@ How to use the ws module:
     socket.on('close', function() {
         console.log("Connection closed");
     });
-  
-    socket.on('pong', function() {
-        console.log("Pong received");
-    });
 });
 ```
 */
@@ -63,13 +59,18 @@ function websocket(host, port) {
 var parseData = function(data, ws) {
     if (data.indexOf("HSmrc0sMlYUkAGmm5OPpG2HaGWk=") > -1) {
         ws.emit('handshake');
-        var ping = setInterval(function(socket){
+        var ping = setInterval(function(){
           ws.send("ping", 0x89);
         },60000);
     }
 
     if (data.indexOf(strChr(0x8A)) > -1) {
         ws.emit('pong');
+    }
+    
+    if (data.indexOf(strChr(0x89)) > -1) {
+        ws.send("pong", 0x8A);
+        ws.emit('ping');
     }
 
     if (data.indexOf(strChr(0x0a)) > -1) {
@@ -81,8 +82,8 @@ var parseData = function(data, ws) {
         var opCode = data.charCodeAt(0);
         var pm = "";
             data = data.substring(2);
-            for (var index2 = 0; index2 < dataLen; index2++) {
-                pm += data[index2];
+            for (var i = 0; i < dataLen; i++) {
+                pm += data[i];
             }
             ws.emit('data', pm);
     }
