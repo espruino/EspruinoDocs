@@ -10,7 +10,11 @@ function go(){
 }
 // I2C
 I2C1.setup({scl:B6,sda:B7});
+
 var g = require("SSD1306").connect(I2C1, go);
+// or
+var g = require("SSD1306").connect(I2C1, go, { address: 0x3C });
+
 // SPI
 var s = new SPI();
 s.setup({mosi: B6, sck:B5});
@@ -18,7 +22,6 @@ var g = require("SSD1306").connectSPI(s, A8, B7, go);
 ```
 */
 var C = {
- OLED_ADDRESS               : 0x3C,
  OLED_WIDTH                 : 128,
  OLED_CHAR                  : 0x40,
  OLED_CHUNK                 : 128
@@ -64,27 +67,31 @@ exports.connect = function(i2c, callback, options) {
   update(options);
   var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,initCmds[4]+1,1,{vertical_byte : true});
 
+  var addr = 0x3C;
+  if(options && options.address) addr = options.address;
+
   // configure the OLED
-  initCmds.forEach(function(d) {i2c.writeTo(C.OLED_ADDRESS, [0,d]);});;
+  initCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});;
   // if there is a callback, call it now(ish)
   if (callback !== undefined) setTimeout(callback, 100);
 
   // write to the screen
   oled.flip = function() { 
     // set how the data is to be sent (whole screen)
-    flipCmds.forEach(function(d) {i2c.writeTo(C.OLED_ADDRESS, [0,d]);});;
+    flipCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});;
     var chunk = new Uint8Array(C.OLED_CHUNK+1);
 
     chunk[0] = C.OLED_CHAR;
     for (var p=0; p<this.buffer.length; p+=C.OLED_CHUNK) {
       chunk.set(new Uint8Array(this.buffer,p,C.OLED_CHUNK), 1);
-      i2c.writeTo(C.OLED_ADDRESS, chunk);
+      i2c.writeTo(addr, chunk);
     } 
   };
 
   // return graphics
   return oled;
 };
+
 exports.connectSPI = function(spi, dc,  rst, callback, options) {
   update(options);
   var cs = options?options.cs:undefined;

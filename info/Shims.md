@@ -19,6 +19,8 @@ WIZnet W550io Ethernet
 Shim Collection
 -------------
 
+![Shim Collection](Shims/supershimphoto.jpg)
+
 The shim collection is a single 10cm x 10cm board, containing several different shims for your Pico that can be snapped out.
 
 It consists of:
@@ -64,6 +66,34 @@ See the [NRF24L01P](/NRF24L01P) page for more information on software.
 Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/esp8266_esp12_header.brd)
  and [schematic](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/esp8266_esp12_header.sch)
 
+This board may need an Espruino Pico rev 1v4 board (or an Espruino rev 1v3 with external power) to work reliably.
+
+**Note:** on rev 1.0 adaptors, you need to short pins 9 and 10 of the ESP8266 together (the two pins on the edge, nearest the Pico's pin A8).
+
+```
+// make sure the Espruino console doesn't interfere with ESP8266 if we're not connected to USB
+USB.setConsole(); 
+// Start ESP8266
+Serial1.setup(115200, { rx: B7, tx : B6 });
+var wifi = require("ESP8266WiFi_0v25").connect(Serial1, function(err) {
+  if (err) throw err;
+  wifi.reset(function(err) {
+    if (err) throw err;
+    console.log("Connecting to WiFi");
+    wifi.connect("WiFi_Name","WPA2_Key", function(err) {
+      if (err) throw err;
+      console.log("Connected");
+      // Now you can do something, like an HTTP request
+      require("http").get("http://www.pur3.co.uk/hello.txt", function(res) {
+        console.log("Response: ",res);
+        res.on('data', function(d) {
+          console.log("--->"+d);
+        });
+      });
+    });
+  });
+});
+```
 
 See [the ESP8266 page](/ESP8266) for more information on software.
 
@@ -71,6 +101,7 @@ See [the ESP8266 page](/ESP8266) for more information on software.
 |------|-----------|
 | B6   | ESP8266 RX|
 | B7   | ESP8266_TX|
+
 
 | Component | Function |
 |-----------|----------|

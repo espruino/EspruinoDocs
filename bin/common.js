@@ -20,7 +20,7 @@ exports.getJSDocumentation = function(js) {
   var ast = require("acorn").parse(js, {
     locations : true,
     onComment : function(block, text, start, end, startLoc, endLoc) {
-      if (text[0]=="*") text=text.substr(1);
+      if (text[0]=="*" || text[0]=="/") text=text.substr(1);
       comments[endLoc.line+1] = text.trim();
     }
   });

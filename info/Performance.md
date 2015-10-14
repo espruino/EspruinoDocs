@@ -8,9 +8,9 @@ Please see [[Internals]] for a more technical description of the interpreter's i
 
 Espruino is designed to run on devices with very small amounts of RAM available (down to 8kB) *while still keeping a copy of the source code it is executing so you can edit it on the device*. As such, it makes some compromises that affect the performance in ways you may not expect.
 
-**Please Note:** It's very easy to use the information below to pick holes in Espruino's implementation - however we have provided it in order to help our users. We suggest that you actually try Espruino before writing it off - you'll find out that in the real world these decisions pay off, and allow us to create a very capable JavaScript implementation that uses around 1000x less RAM than desktop JavaScript implementations.
+**Please Note:** It's easy to use the information below to pick holes in Espruino's implementation. We suggest that you actually try Espruino - you'll find that *in the real world* these decisions pay off, and allow us to create a very capable JavaScript implementation that uses significantly less RAM than desktop JavaScript.
 
-**Does it seem too slow for you?** Then use the Web IDE to [Compile JavaScript into Thumb Code](/Compilation), or if that isn't fast enough then use [Inline Assembler](/Assembler) instead.
+**Does it seem too slow for you?** Then use the Web IDE to [Compile JavaScript into optimised Thumb Code](/Compilation), or if that isn't fast enough then use [Inline Assembler](/Assembler) instead.
 
 
 
@@ -48,7 +48,7 @@ Luckily the Espruino board has a bit more memory than that ([Original Espruino](
 
 JavaScript minification can also provide a good alternative to bytecode. While not as fast, it is still very compact - and is still valid, human-readable JavaScript.
 
-**If you need higher execution speed, you can now write [inline assembler](/Assembler) or [Compile JavaScript](/Compilation)**
+**Need higher execution speed?** you can now write [inline assembler](/Assembler) or [Compile JavaScript](/Compilation)
 
 
 
@@ -69,7 +69,7 @@ You can just do:
 SPI1.send([1,2,3]);
 ```
 
-This will be significantly faster. For maximum speed/efficiency you can put the data in a String or Uint8Array that you defined previously (see below).
+This will be significantly faster. For maximum speed/efficiency you can put the data in a String or `Uint8Array` that you defined previously (see below).
 
 ```
 var buf = new Uint8Array([1,2,3]);
@@ -96,8 +96,6 @@ ESPRUINO STORES NORMAL ARRAYS AND OBJECTS IN LINKED LISTS
 
 So the number of elements in an array or object will seriously affect the time it takes to access elements in it. For instance, if you're storing two-dimensional data, it is faster to store data in a two-dimensional array than it is to store it in a single-dimensional array!
 
-As Espruino becomes more mature the Linked Lists may be replaced with a Tree structure, but for now it is very useful to be aware of this limitation.
-
 To work around this, try and use `Array.map`, `Array.forEach`, and `Array.reduce` wherever possible, as these can iterate over the linked list very efficiently.
 
 For example to AND together all values in an array:
@@ -113,6 +111,12 @@ myArray.forEach(function(value) {
   digitalWrite([A0,A1,A2,A3], value);
 });
 ```
+
+or even (see below):
+
+```
+myArray.forEach(digitalWrite.bind(null,[A0,A1,A2,A3]));
+```
  
 
 
@@ -123,7 +127,7 @@ This makes allocation and deallocation very fast for Espruino and avoids memory 
 
 This may seem inefficient, but if you compare this with a naive malloc/free implementation you'll realise that it saves a significant amount of RAM.
 
-**Note:** on smaller devices (with less than 256 variables) Espruino uses 12 bytes per storage unit (not 16).
+**Note:** on smaller devices (with less than 1024 variables) Espruino uses 12 bytes per storage unit (not 16).
 
  
 
@@ -181,4 +185,84 @@ c = new Uint8Array(a.buffer, 2, 5); // [3,4,5,6,7]
 b.set(c, 2); // set b with the contents of c starting from index 2
 b; // [0,0,3,4,5,6,7]
 ```
+
+
+SOME VARIABLE LOOKUPS ARE FASTER THAN OTHERS
+---------------------------------------
+
+The time taken to find a variable from the name is dependent on how far down the
+scope chain Espruino has to search to find it. Global variables take longer to find than
+local variables of function parameters.
+
+For instance this code:
+
+```
+function go() {
+  var counter = 0;
+  setWatch(function() {
+    counter++;
+  }, A0, {repeat:true, edge:"falling"});
+}
+```
+
+Will execute more quickly than:
+
+```
+var counter = 0;
+function go() {
+  setWatch(function() {
+    counter++;
+  }, A0, {repeat:true, edge:"falling"});
+}
+```
+
+Because `counter` is further up the scope chain.
+
+`LED1.write(1)` is also slightly faster (~5%) than `digitalWrite(LED1,1)` because there is only 
+one global lookup for `LED1`. Once `LED1` is found, Espruino knows that it is a Pin, so only
+has to look within the Pin for the `write` method.
+
+Variables also take a little longer to find if their names are longer. You might want to 
+consider storing a function that you use a lot locally, for instance instead of:
+
+```
+for (var i=0;i<1000;i++) {
+  digitalWrite(LED1,1);
+  digitalWrite(LED1,0);
+}
+```
+
+you might do:
+
+```
+var d = digitalWrite;
+for (var i=0;i<1000;i++) {
+  d(LED1,1);
+  d(LED1,0);
+}
+```
+
+You can also use `.bind` - see below:
+
+
+BINDING IS FAST
+-------------
+
+Binding variables to functions is pretty fast - for instance, maybe you want to write a value to a pin:
+
+```
+digitalWrite(pin, x);
+// or
+pin.write(x);
+```
+
+You can speed things up by 'binding' the `this` variable and the first arguments, eg:
+
+```
+var w = pin.write.bind(pin);
+// ...
+w(x);
+```
+
+This has the advantage of reducing variable lookups (mentioned above) as well.
 
