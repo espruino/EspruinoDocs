@@ -5,6 +5,8 @@ Image Slideshow with ILI9341 display
 * KEYWORDS: Slideshow,Image,Graphics
 * USES: ILI9341,Pico,SD
 
+![Slideshow](slideshow_ili9341.jpg)
+
 This example shows you how to use an [[ILI9341]] display
 to output a series of images loaded from SD card (there's an SD card connector on the back of the display).
 
