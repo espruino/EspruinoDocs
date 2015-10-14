@@ -11,7 +11,7 @@ Limitations: The module only accept messages less than 127 character.
 How to use the ws module:
 
 ```
-  ESP8266WiFi.connect("Sameh Hady", "Password", function(response) {
+  ESP8266WiFi.connect("Sameh Hady", "Password", function() {
     console.log("Connected to wifi");
     ESP8266WiFi.init();
     
@@ -25,7 +25,7 @@ How to use the ws module:
         console.log("Handshake Success");
     });
     
-    socket.on('data', function(msg) {
+    socket.on('message', function(msg) {
         console.log("MSG: " + msg);
         socket.send("Hello Back");
     });
@@ -56,6 +56,7 @@ function websocket(host, port) {
     });
 }
 
+/** Parse the received data */
 var parseData = function(data, ws) {
     if (data.indexOf("HSmrc0sMlYUkAGmm5OPpG2HaGWk=") > -1) {
         ws.emit('handshake');
@@ -85,11 +86,11 @@ var parseData = function(data, ws) {
             for (var i = 0; i < dataLen; i++) {
                 pm += data[i];
             }
-            ws.emit('data', pm);
+            ws.emit('message', pm);
     }
 };
 
-/** Parse the received data */
+/** Send message based on opcode type */
 websocket.prototype.send = function(msg, opcode) {
     opcode = typeof opcode !== 'undefined' ? opcode : 0x81;
     this.socket.write(strChr(opcode));
@@ -114,10 +115,13 @@ var handshake = function(socket) {
     }
 };
 
+/** Minify String.fromCharCode() call */
 function strChr(chr){
   return String.fromCharCode(chr);
 }
 
+/** Exports */
 exports.connect = function(host, port) {
+    port = typeof port !== 'undefined' ? port : 80;
     return new websocket(host, port);
 };
