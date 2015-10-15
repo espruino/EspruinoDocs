@@ -68,7 +68,7 @@ so we must wait 5ms before the value can be read */
 MPL115A2.prototype.readRawData = function(convert) {
   var self = this;
 
-  self.i2c.writeTo(C.MPL115A2_ADDRESS, [C.MPL115A2_CONVERT, MPL115A2_REGISTER_P_ADC_MSB]);
+  self.i2c.writeTo(C.MPL115A2_ADDRESS, [C.MPL115A2_CONVERT, C.MPL115A2_REGISTER_P_ADC_MSB]);
 
   setTimeout(function() {
     self.i2c.writeTo(C.MPL115A2_ADDRESS, C.MPL115A2_REGISTER_P_ADC_MSB);
