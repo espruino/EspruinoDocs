@@ -24,14 +24,19 @@ To use the [[ws.js]] module (assuming you are already connected to WiFi/Ethernet
 
 ```js
 var host = "192.168.0.10";
-var port = 8080;
-var socket = require("ws").connect(host, port);
+var WebSocket = require("ws");
+    var ws = new WebSocket(host,{
+      port: 8080,
+      protocolVersion: 13,
+      origin: 'Espruino',
+      keepAlive: 60
+    });
 	
-socket.on('connected', function() {
+ws.on('connected', function() {
   console.log("Connected to server");
 });
 
-socket.on('message', function(msg) {
+ws.on('message', function(msg) {
   console.log("MSG: " + msg);
 });
 ```
@@ -39,7 +44,7 @@ Available callbacks
 -----------
 
 ```js
-socket.on('connected', function() {
+socket.on('open', function() {
   console.log("Connected to server");
 });
 	
@@ -62,6 +67,10 @@ socket.on('ping', function() {
 socket.on('pong', function() {
   console.log("Got a pong");
 });
+
+socket.on('rawData', function(msg) {
+  console.log("RAW: " + msg);
+});
 ```
 
 Send Message
@@ -70,6 +79,6 @@ Send Message
 At any time during a session you can publish a message to the server.
 ```js
   var message = "hello world";
-  socket.send(message);
+  ws.send(message);
 ```
 
