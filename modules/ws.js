@@ -13,22 +13,24 @@
 
  ```javascript
  // Connect to WiFi, then...
- var socket = require("ws").connect("Host", 80);
+ var WebSocket = require("ws");
+ var ws = new WebSocket("HOST",{
+      port: 8080,
+      protocolVersion: 13,
+      origin: 'Espruino',
+      keepAlive: 60  // Ping Interval in seconds.
+    });
 
- socket.on('connected', function() {
+ ws.on('open', function() {
  console.log("Connected to server");
  });
 
- socket.on('handshake', function() {
- console.log("Handshake Success");
- });
-
- socket.on('message', function(msg) {
+ ws.on('message', function(msg) {
  console.log("MSG: " + msg);
- socket.send("Hello Back");
+ ws.send("Hello Back");
  });
 
- socket.on('close', function() {
+ ws.on('close', function() {
  console.log("Connection closed");
  });
  ```
@@ -39,10 +41,14 @@ function strChr(chr) {
     return String.fromCharCode(chr);
 }
 
-function WebSocket(host, port) {
+function WebSocket(host, options) {
     this.socket = null;
+    options = options || {};
     this.host = host;
-    this.port = port;
+    this.port = options.port || 80;
+    this.protocolVersion = options.protocolVersion || 13;
+    this.origin = options.origin || 'Espruino';
+    this.keepAlive = options.keepAlive * 1000 || 60000;
 }
 
 WebSocket.prototype.initializeConnection = function () {
@@ -61,18 +67,18 @@ WebSocket.prototype.onConnect = function (socket) {
         ws.emit('close');
     });
 
-    this.emit('connected');
+    this.emit('open');
     this.handshake();
 };
 
 WebSocket.prototype.parseData = function (data) {
     var ws = this;
-    var minuteInMs = 60000;
+    this.emit('rawData', data);
     if (data.indexOf('HSmrc0sMlYUkAGmm5OPpG2HaGWk=') > -1) {
         this.emit('handshake');
         var ping = setInterval(function () {
             ws.send('ping', 0x89);
-        }, minuteInMs);
+        }, this.keepAlive);
     }
 
     if (data.indexOf(strChr(0x8A)) > -1) {
@@ -105,8 +111,8 @@ WebSocket.prototype.handshake = function () {
         "Upgrade: websocket",
         "Connection: Upgrade",
         "Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==",
-        "Sec-WebSocket-Version: 13",
-        "Origin: Espruino",
+        "Sec-WebSocket-Version: " + this.protocolVersion,
+        "Origin: " + this.origin,
         ""
     ];
 
@@ -123,9 +129,8 @@ WebSocket.prototype.send = function (msg, opcode) {
     this.socket.write(msg);
 };
 
-exports.connect = function (host, port) {
-    port = port === undefined ? 80 : port;
-    var ws = new WebSocket(host, port);
+exports = function (host, options) {
+    var ws = new WebSocket(host, options);
     ws.initializeConnection();
     return ws;
 };
