@@ -44,31 +44,31 @@ Available callbacks
 -----------
 
 ```js
-socket.on('open', function() {
+ws.on('open', function() {
   console.log("Connected to server");
 });
 	
-socket.on('message', function(msg) {
+ws.on('message', function(msg) {
   console.log("MSG: " + msg);
 });
 	
-socket.on('close', function() {
+ws.on('close', function() {
   console.log("Connection closed");
 });
 	
-socket.on('handshake', function() {
+ws.on('handshake', function() {
   console.log("Handshake Success");
 });
 	
-socket.on('ping', function() {
+ws.on('ping', function() {
   console.log("Got a ping");
 });
 	
-socket.on('pong', function() {
+ws.on('pong', function() {
   console.log("Got a pong");
 });
 
-socket.on('rawData', function(msg) {
+ws.on('rawData', function(msg) {
   console.log("RAW: " + msg);
 });
 ```
