@@ -18,4 +18,4 @@ This video is from the [[Quick Start]] page, which contains extra information on
 
 ### Installing the development version
 
-We only update the Web IDE when we're sure that everything is working. If you want the 'Cutting Edge' version then you can [get it directly from GitHub](www.github.com/espruino/EspruinoWebIDE). There instructions on how to get started on the main page.
+We only update the Web IDE when we're sure that everything is working. If you want the 'Cutting Edge' version then you can [get it directly from GitHub](https://www.github.com/espruino/EspruinoWebIDE). There instructions on how to get started on the main page.
