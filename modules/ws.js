@@ -28,7 +28,6 @@
 
  ws.on('message', function(msg) {
  console.log("MSG: " + msg);
- ws.send("Hello Back");
  });
 
  ws.on('close', function() {
@@ -40,6 +39,9 @@
  
  //Broadcast message to all users
  ws.broadcast("Hello All");
+ 
+ // Join a room
+ ws.join("Espruino");
  
  //Broadcast message to specific room
  ws.broadcast("Hello Room", "Espruino");
