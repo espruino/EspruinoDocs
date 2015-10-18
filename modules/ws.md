@@ -129,6 +129,9 @@ wss.on('connection', function connection(ws) {
         if (message.room) {
             broadcast(message);
         }
+        if (message.msg) {
+            console.log("Server got: " + message.msg);
+        }
     });
 
     ws.on('error', function(er) {
