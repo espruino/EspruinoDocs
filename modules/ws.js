@@ -23,6 +23,7 @@
 
  ws.on('open', function() {
  console.log("Connected to server");
+ ws.broadcast("New User Joined");
  });
 
  ws.on('message', function(msg) {
@@ -33,6 +34,15 @@
  ws.on('close', function() {
  console.log("Connection closed");
  });
+ 
+ //Send message to server
+ ws.send("Hello Server");
+ 
+ //Broadcast message to all users
+ ws.broadcast("Hello All");
+ 
+ //Broadcast message to specific room
+ ws.broadcast("Hello Room", "Espruino");
  ```
  */
 
@@ -127,6 +137,19 @@ WebSocket.prototype.send = function (msg, opcode) {
     this.socket.write(strChr(opcode));
     this.socket.write(strChr(msg.length));
     this.socket.write(msg);
+};
+
+/** Broadcast message to room */
+WebSocket.prototype.broadcast = function (msg, room) {
+    room = room === undefined ? 'all' : room;
+    var newMsg = '{"room":"' + room + '", "msg":"' + msg + '"}';
+    this.send(newMsg);
+};
+
+/** Join a room */
+WebSocket.prototype.join = function (room) {
+    var newMsg = '{"join":"' + room +'"}';
+    this.send(newMsg);
 };
 
 exports = function (host, options) {
