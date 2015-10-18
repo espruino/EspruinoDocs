@@ -136,6 +136,7 @@ WebSocket.prototype.handshake = function () {
 /** Send message based on opcode type */
 WebSocket.prototype.send = function (msg, opcode) {
     opcode = opcode === undefined ? 0x81 : opcode;
+    if(!JSON.parse(msg)){msg = '{"msg":"' + msg + '"}';}
     this.socket.write(strChr(opcode));
     this.socket.write(strChr(msg.length));
     this.socket.write(msg);
