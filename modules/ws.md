@@ -82,3 +82,71 @@ At any time during a session you can publish a message to the server.
   ws.send(message);
 ```
 
+Broadcast a message to all connected users. ( `must be used with the ws node.js server example provided` )
+```js
+  var message = "hello world";
+  ws.broadcast(message);
+```
+
+Broadcast a message to specific room. ( `must be used with the ws node.js server example provided` )
+```js
+  var message = "hello world";
+  var room = "Espruino";
+  ws.broadcast(message, room);
+```
+
+Join a room. ( `must be used with the ws node.js server example provided` )
+```js
+  var room = "Espruino";
+  ws.join(room);
+```
+
+Node.js server.
+-----------
+
+First you need to install the node.js `ws` module ( `assuming you already have node.js installed` )
+
+```js
+npm install ws
+```
+
+Now you can run this server example that is needed for broadcasting and joining a room.
+```js
+var WebSocketServer = require('ws').Server,
+    wss = new WebSocketServer({
+        port: 8080
+    });
+
+wss.on('connection', function connection(ws) {
+    ws.room = [];
+    ws.send("User Joined");
+
+    ws.on('message', function(message) {
+        message = JSON.parse(message);
+        if (message.join) {
+            ws.room.push(message.join);
+        }
+        if (message.room) {
+            broadcast(message);
+        }
+    });
+
+    ws.on('error', function(er) {
+        console.log(er);
+    })
+
+
+    ws.on('close', function() {
+        console.log('Connection closed')
+    })
+});
+
+function broadcast(message) {
+    wss.clients.forEach(function each(client) {
+        if (client.room.indexOf(message.room) > -1 || message.room == 'all') {
+            client.send(message.msg);
+        }
+    });
+}
+```
+
