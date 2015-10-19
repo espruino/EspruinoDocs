@@ -13,24 +13,38 @@
 
  ```javascript
  // Connect to WiFi, then...
- var socket = require("ws").connect("Host", 80);
+ var WebSocket = require("ws");
+ var ws = new WebSocket("HOST",{
+      port: 8080,
+      protocolVersion: 13,
+      origin: 'Espruino',
+      keepAlive: 60  // Ping Interval in seconds.
+    });
 
- socket.on('connected', function() {
+ ws.on('open', function() {
  console.log("Connected to server");
+ ws.broadcast("New User Joined");
  });
 
- socket.on('handshake', function() {
- console.log("Handshake Success");
- });
-
- socket.on('message', function(msg) {
+ ws.on('message', function(msg) {
  console.log("MSG: " + msg);
- socket.send("Hello Back");
  });
 
- socket.on('close', function() {
+ ws.on('close', function() {
  console.log("Connection closed");
  });
+ 
+ //Send message to server
+ ws.send("Hello Server");
+ 
+ //Broadcast message to all users
+ ws.broadcast("Hello All");
+ 
+ // Join a room
+ ws.join("Espruino");
+ 
+ //Broadcast message to specific room
+ ws.broadcast("Hello Room", "Espruino");
  ```
  */
 
@@ -39,10 +53,14 @@ function strChr(chr) {
     return String.fromCharCode(chr);
 }
 
-function WebSocket(host, port) {
+function WebSocket(host, options) {
     this.socket = null;
+    options = options || {};
     this.host = host;
-    this.port = port;
+    this.port = options.port || 80;
+    this.protocolVersion = options.protocolVersion || 13;
+    this.origin = options.origin || 'Espruino';
+    this.keepAlive = options.keepAlive * 1000 || 60000;
 }
 
 WebSocket.prototype.initializeConnection = function () {
@@ -61,18 +79,18 @@ WebSocket.prototype.onConnect = function (socket) {
         ws.emit('close');
     });
 
-    this.emit('connected');
+    this.emit('open');
     this.handshake();
 };
 
 WebSocket.prototype.parseData = function (data) {
     var ws = this;
-    var minuteInMs = 60000;
+    this.emit('rawData', data);
     if (data.indexOf('HSmrc0sMlYUkAGmm5OPpG2HaGWk=') > -1) {
         this.emit('handshake');
         var ping = setInterval(function () {
             ws.send('ping', 0x89);
-        }, minuteInMs);
+        }, this.keepAlive);
     }
 
     if (data.indexOf(strChr(0x8A)) > -1) {
@@ -105,8 +123,8 @@ WebSocket.prototype.handshake = function () {
         "Upgrade: websocket",
         "Connection: Upgrade",
         "Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==",
-        "Sec-WebSocket-Version: 13",
-        "Origin: Espruino",
+        "Sec-WebSocket-Version: " + this.protocolVersion,
+        "Origin: " + this.origin,
         ""
     ];
 
@@ -118,14 +136,27 @@ WebSocket.prototype.handshake = function () {
 /** Send message based on opcode type */
 WebSocket.prototype.send = function (msg, opcode) {
     opcode = opcode === undefined ? 0x81 : opcode;
+    if(!JSON.parse(msg)){msg = '{"msg":"' + msg + '"}';}
     this.socket.write(strChr(opcode));
     this.socket.write(strChr(msg.length));
     this.socket.write(msg);
 };
 
-exports.connect = function (host, port) {
-    port = port === undefined ? 80 : port;
-    var ws = new WebSocket(host, port);
+/** Broadcast message to room */
+WebSocket.prototype.broadcast = function (msg, room) {
+    room = room === undefined ? 'all' : room;
+    var newMsg = '{"room":"' + room + '", "msg":"' + msg + '"}';
+    this.send(newMsg);
+};
+
+/** Join a room */
+WebSocket.prototype.join = function (room) {
+    var newMsg = '{"join":"' + room +'"}';
+    this.send(newMsg);
+};
+
+exports = function (host, options) {
+    var ws = new WebSocket(host, options);
     ws.initializeConnection();
     return ws;
 };
