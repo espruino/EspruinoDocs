@@ -14,7 +14,7 @@
  ```javascript
  // Connect to WiFi, then...
  var WebSocket = require("ws");
- var ws = new WebSocket("HOST",{
+ var ws = WebSocket.init("HOST",{
       port: 8080,
       protocolVersion: 13,
       origin: 'Espruino',
@@ -155,7 +155,7 @@ WebSocket.prototype.join = function (room) {
     this.send(newMsg);
 };
 
-exports = function (host, options) {
+exports.init = function (host, options) {
     var ws = new WebSocket(host, options);
     ws.initializeConnection();
     return ws;
