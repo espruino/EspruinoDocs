@@ -25,7 +25,7 @@ To use the [[ws.js]] module (assuming you are already connected to WiFi/Ethernet
 ```js
 var host = "192.168.0.10";
 var WebSocket = require("ws");
-    var ws = WebSocket.init(host,{
+    var ws = new WebSocket(host,{
       port: 8080,
       protocolVersion: 13,
       origin: 'Espruino',
