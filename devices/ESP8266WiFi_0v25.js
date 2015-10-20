@@ -194,7 +194,7 @@ var wifiFuncs = {
   "reset" : function(callback) {
     at.cmd("\r\nAT+RST\r\n", 10000, function cb(d) {
       //console.log(">>>>>"+JSON.stringify(d));
-      if (d=="ready") setTimeout(function() { wifiFuncs.init(callback); }, 1000);
+      if (d=="ready" || d=="Ready.") setTimeout(function() { wifiFuncs.init(callback); }, 1000);
       else if (d===undefined) callback("No 'ready' after AT+RST");
       else return cb;
     });
