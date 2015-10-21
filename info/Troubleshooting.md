@@ -73,12 +73,14 @@ If you have Windows, check that it's not one of the problems described above.
 
 As Espruino itself won't work, the IDE won't know what type of board it is supposed to flash so you'll have to choose the correct board from the list of available boards when flashing.
 
+
 ## My board appears as a mouse or joystick in Windows Control Panel's 'Devices and Printers' page.
 
 This may happen if you are using an ST Discovery board and haven't yet installed the Espuino firmware. Some of these boards are automatically recognized by Windows as a completely different kind of device (because of the 'demo software' that comes installed). Install the firmware as described on the Download page, disconnect the board a reconnect it again. 
 
 Using Espruino
 ============
+
 
 ## I just upgraded Espruino to the latest version, and now I'm getting `ReferenceError` messages
 
@@ -103,15 +105,18 @@ setInterval(function() {
 }, 500);
 ```
 
+
 ## Espruino keeps responding `=undefined` to my commands
 
 This is actually fine - Espruino writes what your command returned, so if you execute a command that doesn't return a value, `=undefined` gets returned.
+
 
 ## I typed a command and Espruino says `Function --- not found!`
 
 Have you got the capitalisation correct?
 
  JavaScript is case sensitive, so `digitalWrite(LED1,1)` will work, but commands like `DigitalWrite(LED1,1)` or `digitalwrite(LED1,1)` won't.
+
 
 ## I typed `save()` and it succeeded, but my code isn't loaded at power on
 
@@ -193,6 +198,18 @@ When you are not connected to a computer via USB, Espruino writes any console da
 
 To fix this, either remove your `console.log` and `print` statements, or explicitly set the console to be on the Serial port at startup with `function onInit() { Serial1.setConsole(); }`. However the second option will mean that you will no longer be able to program Espruino from USB unless you reset it.
 
+
+## Espruino works when connected to a computer, but stops when powered from something else
+
+Do you have a Serial device connected to pins `B6`/`B7` on the [Pico](/Pico), or `A9`/`A10` on the [Original Espruino](/EspruinoBoard)? When disconnected from USB, Espruino's 'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` - which is on those pins. If you've got a Serial device on those pins then it won't work.
+
+To fix this, right at the top of your code that runs on initialisation (eg. the `onInit` function or `E.on('init', ...)` event), add the line `USB.setConsole()`, which will force the console onto USB.
+
+Other reasons could be that the power supply you're using isn't supplying enougn current or is too low a voltage.
+
+To debug further, you can take advantage of the console that was mentioned before. Connect a USB-TTL converter to GND and the Serial1 pins (shown above) and connect with the Web IDE at 9600 baud. You can then interact with Espruino as if it was connected to USB - but while it is powered from another source.
+
+
 ## When I type `dump()` the code that is displayed isn't exactly the code that I entered
 
 When you send code to Espruino, it is executed immediately. That means if you say:
@@ -221,6 +238,7 @@ setInterval("print('Hello')", 10000);
 To get around this, it's best to put code that you intend to run every time Espruino starts into a function called `onInit()`.
 
 **Note:** The problem with `setInterval` happens because Espruino is trying to turn its internal state back into a human readable form. If you just type `save()` then the correct state will still be saved.
+
 
 ## I've pasted code into the left-hand side of the Web IDE and it doesn't work
 
@@ -260,6 +278,7 @@ if (true) {
 If you're writing code in the right-hand side of the Web IDE, the Web IDE should try and detect the different formatting and insert a special newline character (Alt-Enter) which will fix it for you. If you're using other tools to send data to Espruino then this may not automatically happen for you though.
 
 **Note:** If you use `require(...)` on the left-hand side and the module is not already part of Espruino, you may find that you get a 'Module not found' error. In this case, you should add the `require(...)` command to the right-hand pane of the Web IDE and click `Send to Espruino`. This will automatically load the module into Espruino, allowing you to use it from the left hand side.
+
 
 ## I'm using an unofficial board and some of the examples don't work
 
