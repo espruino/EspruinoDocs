@@ -41,3 +41,4 @@ Serial1.setup(9600, {tx:B6,rx:B7});
 ```
 
 For more information, please see the [reference](/Reference) for your board.
+
