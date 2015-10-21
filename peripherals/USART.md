@@ -41,3 +41,15 @@ Serial1.setup(9600, {tx:B6,rx:B7});
 ```
 
 For more information, please see the [reference](/Reference) for your board.
+
+<a name="ConsoleSerial"></a>Console over serial
+-------------------
+
+Espruino will by default connect the console to the Serial1 port, or the USB serial port if you are connected to a computer.
+
+To avoid this behaviour, for example if you wish to use Serial1 on explicitly set the console serial port using  [Serial.setConsole](/Reference#l_Serial_setConsole) during the [init event](Reference#l_E_init) which Espruino runs on boot.
+```JavaScript
+E.on('init', function() {
+  USB.setConsole();
+}
+```
