@@ -80,5 +80,8 @@ exports.tx = function(pin, data, repeat, callback) {
       setTimeout(callback, msecs);
     }
   }
-  send();
+  // one training pulse at the start
+  digitalPulse(pin,1,[1]);
+  // now start sending data
+  setTimeout(send, 1.5);
 };
