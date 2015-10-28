@@ -35,7 +35,7 @@ and behave the same way as their `...Sync` equivalents.
 
 ```
 var files = require("fs").readdirSync();
-for (var i in arr)
+for (var i in files)
   console.log("Found file "+files[i]);
 ```
 

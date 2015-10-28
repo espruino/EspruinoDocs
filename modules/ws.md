@@ -24,14 +24,19 @@ To use the [[ws.js]] module (assuming you are already connected to WiFi/Ethernet
 
 ```js
 var host = "192.168.0.10";
-var port = 8080;
-var socket = require("ws").connect(host, port);
+var WebSocket = require("ws");
+    var ws = new WebSocket(host,{
+      port: 8080,
+      protocolVersion: 13,
+      origin: 'Espruino',
+      keepAlive: 60
+    });
 	
-socket.on('connected', function() {
+ws.on('open', function() {
   console.log("Connected to server");
 });
 
-socket.on('message', function(msg) {
+ws.on('message', function(msg) {
   console.log("MSG: " + msg);
 });
 ```
@@ -39,28 +44,32 @@ Available callbacks
 -----------
 
 ```js
-socket.on('connected', function() {
+ws.on('open', function() {
   console.log("Connected to server");
 });
 	
-socket.on('message', function(msg) {
+ws.on('message', function(msg) {
   console.log("MSG: " + msg);
 });
 	
-socket.on('close', function() {
+ws.on('close', function() {
   console.log("Connection closed");
 });
 	
-socket.on('handshake', function() {
+ws.on('handshake', function() {
   console.log("Handshake Success");
 });
 	
-socket.on('ping', function() {
+ws.on('ping', function() {
   console.log("Got a ping");
 });
 	
-socket.on('pong', function() {
+ws.on('pong', function() {
   console.log("Got a pong");
+});
+
+ws.on('rawData', function(msg) {
+  console.log("RAW: " + msg);
 });
 ```
 
@@ -70,6 +79,77 @@ Send Message
 At any time during a session you can publish a message to the server.
 ```js
   var message = "hello world";
-  socket.send(message);
+  ws.send(message);
+```
+
+Broadcast a message to all connected users. ( `must be used with the ws node.js server example provided` )
+```js
+  var message = "hello world";
+  ws.broadcast(message);
+```
+
+Broadcast a message to specific room. ( `must be used with the ws node.js server example provided` )
+```js
+  var message = "hello world";
+  var room = "Espruino";
+  ws.broadcast(message, room);
+```
+
+Join a room. ( `must be used with the ws node.js server example provided` )
+```js
+  var room = "Espruino";
+  ws.join(room);
+```
+
+Node.js server.
+-----------
+
+First you need to install the node.js `ws` module ( `assuming you already have node.js installed` )
+
+```js
+npm install ws
+```
+
+Now you can run this server example that is needed for broadcasting and joining a room.
+```js
+var WebSocketServer = require('ws').Server,
+    wss = new WebSocketServer({
+        port: 8080
+    });
+
+wss.on('connection', function connection(ws) {
+    ws.room = [];
+    ws.send("User Joined");
+
+    ws.on('message', function(message) {
+        message = JSON.parse(message);
+        if (message.join) {
+            ws.room.push(message.join);
+        }
+        if (message.room) {
+            broadcast(message);
+        }
+        if (message.msg) {
+            console.log("Server got: " + message.msg);
+        }
+    });
+
+    ws.on('error', function(er) {
+        console.log(er);
+    })
+
+
+    ws.on('close', function() {
+        console.log('Connection closed')
+    })
+});
+
+function broadcast(message) {
+    wss.clients.forEach(function each(client) {
+        if (client.room.indexOf(message.room) > -1 || message.room == 'all') {
+            client.send(message.msg);
+        }
+    });
+}
 ```
 
