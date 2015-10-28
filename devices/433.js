@@ -12,7 +12,6 @@ require("433").tx(B13, "Hello", 5, function() {
 
 */
 /* Sends and receives data over simple 433Mhz AM radio links */
-var exports={};
 function decode(w) {
   var l = w.data.length;
   var d = new Uint8Array((l+7)>>3);
