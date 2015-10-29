@@ -33,7 +33,9 @@ exports.getJSDocumentation = function(js) {
     comment = ("\n"+comment).
               replace(/```\n/g,"").
               replace(/```/g,"").trim();
-   if (comment.indexOf("\n")>=0)
+   if (comment[0]=="*")
+     return "/" + comment + "\n */\n";
+   else if (comment.indexOf("\n")>=0)
      return "/* " + comment + "\n*/\n";
    else
      return "// " + comment + "\n";
