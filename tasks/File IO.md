@@ -2,7 +2,7 @@
 File IO
 =======
 
-* KEYWORDS: File,Filesystem,File IO
+* KEYWORDS: File,Filesystem,File IO,SD card,microSD card
 
 To access files from Espruino (if you're not getting them from the [[Internet]]) you'll need an SD card.
 
@@ -148,14 +148,19 @@ setDeepSleep(1);
 ```
 
 
-quick SD card adapter hack
+Wiring up an SD card adapter
 --------------------------
 
-If you don't have a SD breakout board at your disposal, you can hack youself one using a microSD/SDHC to SD card adapter (often provided with microSDs  )
-<img src="https://espruino.microco.sm/api/v1/files/37e7d58f25d3c2580efd9586bb29f8b464e8e874.JPG" width="100%">
-Example of wiring it up to the Espruino Pico
-<img src="https://espruino.microco.sm/api/v1/files/faca6bc8f8d02169334e5a69d92ffaa5277ab8da.JPG" width="100%">
-Example code for the above wiring
+If you don't have an SD breakout board at your disposal, you can make your own by soldering directly to a microSD/SDHC to SD card adapter (often provided with microSDs).
+
+![SD Card Wiring](File IO/wiring1.jpg)
+
+Example of wiring it up to the Espruino Pico:
+
+![SD Card Wiring](File IO/wiring2.jpg)
+
+Example code for the above wiring:
+
 ```javascript
 /* 
   R: the following function is auto-called when the Espruino is booting up
@@ -169,3 +174,4 @@ function onInit() {
   // ...
 }
 ```
+
