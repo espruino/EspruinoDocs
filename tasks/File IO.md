@@ -35,7 +35,7 @@ and behave the same way as their `...Sync` equivalents.
 
 ```
 var files = require("fs").readdirSync();
-for (var i in arr)
+for (var i in files)
   console.log("Found file "+files[i]);
 ```
 
@@ -148,3 +148,24 @@ setDeepSleep(1);
 ```
 
 
+quick SD card adapter hack
+--------------------------
+
+If you don't have a SD breakout board at your disposal, you can hack youself one using a microSD/SDHC to SD card adapter (often provided with microSDs  )
+<img src="https://espruino.microco.sm/api/v1/files/37e7d58f25d3c2580efd9586bb29f8b464e8e874.JPG" width="100%">
+Example of wiring it up to the Espruino Pico
+<img src="https://espruino.microco.sm/api/v1/files/faca6bc8f8d02169334e5a69d92ffaa5277ab8da.JPG" width="100%">
+Example code for the above wiring
+```javascript
+/* 
+  R: the following function is auto-called when the Espruino is booting up
+     to flash the Espruino & save the following to its flash, just call 'save()' in the IDE
+*/
+function onInit() {
+  // initial SPI1 for SDCard module
+  SPI1.setup({sck:A5, miso:A6, mosi:A7 });
+  E.connectSDCard(SPI1,B1/*CS*/);
+  console.log(require("fs").readdirSync());
+  // ...
+}
+```
