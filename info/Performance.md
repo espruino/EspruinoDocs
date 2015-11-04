@@ -8,16 +8,142 @@ Please see [[Internals]] for a more technical description of the interpreter's i
 
 Espruino is designed to run on devices with very small amounts of RAM available (down to 8kB) *while still keeping a copy of the source code it is executing so you can edit it on the device*. As such, it makes some compromises that affect the performance in ways you may not expect.
 
-**Please Note:** It's easy to use the information below to pick holes in Espruino's implementation. We suggest that you actually try Espruino - you'll find that *in the real world* these decisions pay off, and allow us to create a very capable JavaScript implementation that uses significantly less RAM than desktop JavaScript.
-
-**Does it seem too slow for you?** Then use the Web IDE to [Compile JavaScript into optimised Thumb Code](/Compilation), or if that isn't fast enough then use [Inline Assembler](/Assembler) instead.
+**Is it too slow for you?** Then use the Web IDE to [Compile JavaScript into optimised Thumb Code](/Compilation), or if that isn't fast enough then use [Inline Assembler](/Assembler) instead.
 
 
 
 ESPRUINO EXECUTES CODE DIRECTLY FROM SOURCE
---------------------------------------
+--------------------------------------------
 
-So source code size affects code execution speed.
+### Why not compile to native/bytecode?
+
+Memory is scarce on microcontrollers, and we want the source code on the device itself so we can edit and debug it without external tools.
+
+There isn't enough room on the microcontroller for source code *and* compiled code, but luckily source code is surprisingly memory-efficient.
+
+For instance take this code that draws a Mandelbrot fractal:
+
+```
+var x,y,line;
+for (y=0;y<32;y++) {
+ line="";
+ for (x=0;x<32;x++) {
+  var Xr = 0;
+  var Xi = 0;
+  var i = 0;
+  var Cr=(4*x/32)-2;
+  var Ci=(4*y/32)-2;
+  while ((i<8) & ((Xr*Xr+Xi*Xi)<4)) {
+    var t=Xr*Xr - Xi*Xi + Cr;
+    Xi=2*Xr*Xi+Ci;
+    Xr=t;
+    i=i+1;
+  }
+  line += " *"[i&1];
+ }
+ print(line);
+}
+```
+
+It's 301 bytes long.
+
+When compiled with [SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey), the following bytecode is created (obtained by running a debug build and `dbg(function() { .... })`:
+
+```
+loc     op
+-----   --
+main:
+00000:  getlocal 0
+00003:  pop
+00004:  getlocal 1
+00007:  pop
+00008:  getlocal 2
+00011:  pop
+00012:  zero
+  ...
+00256:  loopentry 1
+00258:  getlocal 1
+00261:  int8 32
+00263:  lt
+00264:  ifne 22 (-242)
+00269:  stop
+```
+
+It's 270 bytes long. So you've saved 31 bytes over the original code, but now your code is totally uneditable and unreadable.
+
+If you compiled this into native code with the Espruino [Compiler](http://www.espruino.com/Compilation), the size of the binary would be 1136 bytes. 
+
+But what if you rewrote it in C and compiled it in GCC with size optimisation turned on. That'll be efficient, right?
+
+```
+void main() {
+ int x,y;
+ char line[33];
+ line[32] = 0;
+ for (y=0;y<32;y++) {
+  for (x=0;x<32;x++) {
+   double Xr = 0;
+   double Xi = 0;
+   int i = 0;
+   double Cr=(4*x/32.0)-2;
+   double Ci=(4*y/32.0)-2;
+   while ((i<8) & ((Xr*Xr+Xi*Xi)<4)) {
+     double t=Xr*Xr - Xi*Xi + Cr;
+     Xi=2*Xr*Xi+Ci;
+     Xr=t;
+     i=i+1;
+   }
+   line[x] = (char)((i&1)?'*':' ');
+  }
+  puts(line);
+ }
+}
+```
+
+```
+$arm-none-eabi-gcc mandel.c -mthumb -Os -c -o mandel.o
+$arm-none-eabi-objdump -S mandel.o
+
+00000000 <main>:
+   0:	b5f0      	push	{r4, r5, r6, r7, lr}
+   2:	2400      	movs	r4, #0
+   4:	b097      	sub	sp, #92	; 0x5c
+   6:	ab0c      	add	r3, sp, #48	; 0x30
+   ...
+ 116:	bc01      	pop	{r0}
+ 118:	4700      	bx	r0
+ 11a:	46c0      	nop			; (mov r8, r8)
+ 11c:	3fa00000 	.word	0x3fa00000
+ 120:	40100000 	.word	0x40100000
+```
+
+Nope. 290 bytes.
+
+However, if you minified your code with the closure compiler you'd get:
+
+```
+var a,b,c;for(b=0;32>b;b++){c="";for(a=0;32>a;a++){for(var 
+d=0,e=0,f=0,g=4*a/32-2,h=4*b/32-2;8>f&4>d*d+e*e;)var k=d*d
+-e*e+g,e=2*d*e+h,d=k,f=f+1;c+=" *"[f&1]}print(c)};
+```
+
+It's editable, *just about* readable, and it's only 167 bytes - so *it is smaller than bytecode and even highly optimised native code!*
+
+| Type | Size (bytes) |
+|------|--------------|
+| Original JS Code | 301 |
+| Spidermonkey bytecode | 270 |
+| Espruino Compiled JS | 1136 |
+| GCC Compiled C code (`-Os`) | 290 |
+| Minified JS | 167 |
+
+So by executing from source, we use around the same amount of memory as we would if we compiled or used bytecode, while still having everything we need to edit and debug the code on-chip. 
+
+However, if you need to make things smaller, you can minify the JavaScript functions you don't need to edit, which will use less RAM than even size-optimised C code!
+
+### What does executing from source mean?
+ 
+The size of your source code will affect the code execution speed.
 
 On the Espruino board a simple loop will create roughly a 4kHz square wave (so 4000 iterations of the loop per second) using code like this:
 
@@ -31,24 +157,7 @@ While code like this will toggle a pin at around 3.5kHz.
 while (1) { A0.set();                 A0.reset();               } 
 ```
 
-This applies equally to comments - so it pays to keep comments above or below a function declaration, not inside it.
-
- 
-
-WHY DON'T YOU COMPILE TO BYTECODE?
------------------------------------------
-
-*It uses too much RAM.* To put it in context, look at the square below:
- 
-<div style="margin-left:64px;border:1px solid black;background-color:#CCC;width:45px;height:45px"></div>
-  
-That square alone (45x45x32bpp) is using 8kB of RAM. In order to run on a device with that much RAM, Espruino has to fit your program code, data, the execution stack, interpreter state and IO buffers in there. If you want the source code (so you can edit it on the device) then there's not enough room for that and the bytecode too (8kB = roughly 5 pages of text from a normal hardback book).
-
-Luckily the Espruino board has a bit more memory than that ([Original Espruino](/EspruinoBoard) = 64kB, [Espruino Pico](/Pico) = 96kB), however it is still very important to make the most of every byte.
-
-JavaScript minification can also provide a good alternative to bytecode. While not as fast, it is still very compact - and is still valid, human-readable JavaScript.
-
-**Need higher execution speed?** you can now write [inline assembler](/Assembler) or [Compile JavaScript](/Compilation)
+This applies equally to comments - so it pays to keep comments above or below a function declaration or loop, not inside it.
 
 
 
