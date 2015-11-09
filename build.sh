@@ -15,8 +15,8 @@ python scripts/build_board_docs.py PICO_R1_3 pinout
 mv boards/PICO_R1_3.html $DIR/html/boards
 python scripts/build_board_docs.py ESPRUINOBOARD pinout
 mv boards/ESPRUINOBOARD.html $DIR/html/boards
-python scripts/build_board_docs.py ESP8266_12 pinout
-mv boards/ESP8266_12.html $DIR/html/boards
+python scripts/build_board_docs.py ESP8266_BOARD pinout
+mv boards/ESP8266_BOARD.html $DIR/html/boards
 python scripts/build_board_docs.py EMW3165 pinout
 mv boards/EMW3165.html $DIR/html/boards
 cd $DIR
