@@ -429,7 +429,6 @@ markdownFiles.forEach(function (file) {
 
    // Check for Pinouts
         
-   if (file=="boards/Pico.md") console.log("############################################################### PICO");
    var regex = /<ul>\n<li>APPEND_PINOUT: (.*)<\/li>\n<\/ul>/;
    var match = html.match(regex);
    if (match!=null) {
