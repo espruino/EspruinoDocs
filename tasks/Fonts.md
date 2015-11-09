@@ -47,7 +47,7 @@ Current modules are:
 * [[Font6x12.js]]
 * [[Font8x12.js]]
 * [[Font8x16.js]]
-* [[FontDennis8.js]] - An 8 pixel high font by [Dennis Bemmann](German, Spanish, French, Turkish) with most characters for German, Spanish, French, Turkish, etc:
+* [[FontDennis8.js]] - An 8 pixel high font by [Dennis Bemmann](https://github.com/pastaclub/espruino-font-dennis8) with most characters for German, Spanish, French, Turkish, etc:
 
 ![FontDennis8.png](Fonts/FontDennis8.png)
 
