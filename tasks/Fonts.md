@@ -47,6 +47,9 @@ Current modules are:
 * [[Font6x12.js]]
 * [[Font8x12.js]]
 * [[Font8x16.js]]
+* [[FontDennis8.js]] - An 8 pixel high font by [Dennis Bemmann](German, Spanish, French, Turkish) with most characters for German, Spanish, French, Turkish, etc:
+
+![FontDennis8.png](Fonts/FontDennis8.png)
 
 Use these like this:
 
@@ -62,11 +65,14 @@ g.drawString("Hello World!",0,0);
 Custom Fonts
 -----------
 
-But you can also create your own fonts. To do this, see [`g.setFontCustom(...)`](/Reference#l_Graphics_setFontCustom)
+You can also create your own fonts. To do this, see [`g.setFontCustom(...)`](/Reference#l_Graphics_setFontCustom)
 
 You'll need a string containing a column-first, most significant bit first, 1 bit per pixel bitmap containing the font bitmap. Optionally you can also have another string containing the widths of each character.
 
-For an example of how to create the data, see [the JS file used to make Espruino's font modules](https://github.com/espruino/Espruino/blob/master/scripts/create_custom_font.js)
+Matt Brailsford has made an excellent [online font converter](http://ebfc.mattbrailsford.com/) specifically for creating fonts for Espruino. 
+... or for an example of how to create the data programmatically, take a look at
+[the JS file used to make Espruino's font modules](https://github.com/espruino/Espruino/blob/master/scripts/create_custom_font.js).
+
 
 Font Widths
 ----------

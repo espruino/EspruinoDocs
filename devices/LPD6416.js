@@ -2,8 +2,8 @@
 /* LPD-6416 driver - super hacky to try and get the refresh speed as high as possible!
 
 ```
-require("LPD6416").connect({A:B15, B:B14, C:B13, D:B10,
-                            nG:B1, L:A6, S:A5, nEN:A8, nR:A7});
+var g = require("LPD6416").connect({A:B15, B:B14, C:B13, D:B10,
+                                    nG:B1, L:A6, S:A5, nEN:A8, nR:A7});
 ```
 
 */
