@@ -44,20 +44,35 @@ Each block has optional links to children and siblings, which allows a tree stru
 
 What follows are the basic variable bytes. Note that NAME_INT_INT, NAME_INT_BOOL, and NAME_STRING_INT follow the same pattern as NAME_STR/NAME_INT - they just use `child` to store a value rather than a reference:
 
+### 16 byte JsVars 
 
-|16B offs|12B offs| Name    | STRING | STR_EXT  | NAME_STR | NAME_INT | INT  | DOUBLE | OBJ/FUNC/ARRAY | ARRAYBUFFER |
-|--------|--------|---------|--------|----------|----------|----------|------|--------|----------------|-------------|
-| 0 - 3  | 0 - 3  | varData | data   | data     |  data    | data     | data | data   | nativePtr      | size        |
-| 4 - 5  | 4      | next    | data   | data     |  next    | next     | -    | data   | argTypes       | format      |
-| 6 - 7  | 5      | prev    | data   | data     |  prev    | prev     | -    | data   | argTypes       | format      |
-| 8 - 9  | 6      | first   | data   | data     |  child   | child    |  -   |  -     | first          | stringPtr   |
-| 10-11  | 7      | refs    | refs   | data     |  refs    | refs     | refs | refs   | refs           | refs        |
-| 12-13  | 8      | last    | nextPtr| nextPtr  |  nextPtr |  -       |  -   |  -     | last           | -           |
-| 14-15  | 9-11   | Flags   | Flags  | Flags    |  Flags   | Flags    | Flags| Flags  | Flags          | Flags       |
+( > 1024 variables, JsVars for 32 bit refs are similar )
+ 
+ | Offset | Name    | STRING | STR_EXT  | NAME_STR | NAME_INT | INT  | DOUBLE  | OBJ/FUNC/ARRAY | ARRAYBUFFER |
+ |--------|---------|--------|----------|----------|----------|------|---------|----------------|-------------|
+ | 0 - 3  | varData | data   | data     |  data    | data     | data | data    | nativePtr      | size        |
+ | 4 - 5  | next    | data   | data     |  next    | next     |  -   | data    | argTypes       | format      |
+ | 6 - 7  | prev    | data   | data     |  prev    | prev     |  -   | data    | argTypes       | format      |
+ | 8 - 9  | first   | data   | data     |  child   | child    |  -   |  -      | first          | stringPtr   |
+ | 10-11  | refs    | refs   | data     |  refs    | refs     | refs | refs    | refs           | refs        |
+ | 12-13  | last    | nextPtr| nextPtr  |  nextPtr |  -       |  -   |  -      | last           | -           |
+ | 14-15  | Flags   | Flags  | Flags    |  Flags   | Flags    | Flags| Flags   | Flags          | Flags       |
+ 
+###  12 byte JsVars 
 
-* **16B offs** - 16 Byte variables (where > 1023 variables)
-* **12B offs** - 12 Byte variables (where < 1024 variables). 10 bit addresses are used, with the extra bits being stored in a field called `pack` which sits just before `flags` 
+( where < 1024 variables )
 
-
+10 bit addresses are used, with the extra bits being stored in a field called `pack` and the `flags` variable
+ 
+ | Offset | Name    | STRING | STR_EXT  | NAME_STR | NAME_INT | INT  | DOUBLE | OBJ/FUNC/ARRAY | ARRAYBUFFER |
+ |--------|---------|--------|----------|----------|----------|------|--------|----------------|-------------|
+ | 0 - 3  | varData | data   | data     |  data    | data     | data | data   | nativePtr      | size        |
+ | 4      | next    | data   | data     |  next    | next     |  -   | data   | argTypes       | format      |
+ | 5      | prev    | data   | data     |  prev    | prev     |  -   | data   | argTypes       | format      |
+ | 6      | first   | data   | data     |  child   | child    |  -   | data   | first          | stringPtr   |
+ | 7      | pack    | pack   | data     |  pack    | pack     | pack | data   | pack           | pack        |
+ | 8      | refs    | refs   | data     |  refs    | refs     | refs | refs   | refs           | refs        |
+ | 9      | last    | nextPtr| nextPtr  |  nextPtr |  -       |  -   |   -    | last           | -           |
+ | 10-11  | Flags   | Flags  | Flags    |  Flags   | Flags    | Flags| Flags  | Flags          | Flags       |
 
 
