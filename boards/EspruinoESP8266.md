@@ -1,8 +1,10 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Esp8266 esp-12 module
+Espruino on ESP8266 WiFi
 =====================
 
-* KEYWORDS: ESP8266,esp-12,Board,PCB,Pinout
+* KEYWORDS: ESP8266,ESP-12,ESP12,ESP01,ESP1,ESP-01,Espruino,Board,PCB,Pinout
+
+**Note:** *This page documents running the Espruino firmware on the ESP8266 board. To find out how to connect an ESP8266 board to another Espruino board (as a Wifi Adaptor) [please see this page instead](/ESP8266)*
 
 Features
 -------
@@ -17,19 +19,20 @@ Features
 Not supported
 -------------
 The following features are not supported by Espruino on the ESP8266:
-- No hardware I2C, however, the software I2C works OK.
-- No hardware SPI (implementing that is on the to-do list), the software SPI works OK.
-- No DAC/PWM/analogWrite: the esp8266 does not have a DAC and the one PWM it has is very
+
+- No hardware [[I2C]], however, the software I2C works OK.
+- No hardware [[SPI]] (implementing that is on the to-do list), the software SPI works OK.
+- No [[DAC]]/[[PWM]]/analogWrite: the esp8266 does not have a DAC and the one PWM it has is very
   finnicky and its timer is used to implement the Espruino timer, which is used to create
   pulses and such.
 
 Pinout
 ------
 
-* APPEND_PINOUT: ESP8266_12
+* APPEND_PINOUT: ESP8266_BOARD
 
 <span style="color: red">**Note:** You need a good 3.3v regulator with a solid power supply.
-If you get errors as soon as Wifi starts it's probbaly because the power is insufficient.
+If you get errors as soon as Wifi starts it's probably because the power is insufficient.
 A 500-600mA regulator with at least 22uF capacitor is recommended.</span>
 
 GPIO Pins
@@ -150,12 +153,14 @@ WiFi
 ----
 The ESP8266 can only support a finite number of concurrent TCP/IP connections
 when performing the role of an access point.  The Espruino implementation is
-configured to constrain this to 4.  
+configured to constrain this to 4.
 
 Loading Espruino
 ----------------
 
 Espruino can be loaded into the esp8266 using any of the flashing techniques applicable to the esp8266 itself.  A variety of tools are available to assist with this.
+
+The Espruino ESP8266 firmware is still under heavy development, and is not yet distributed alongside all the other firmwares on the Espruino Website. Instead, you should pick up the latest builds from [Espruino Builds on GitHub](https://github.com/espruino/EspruinoBuilds)
 
 Further reading
 ---------------
