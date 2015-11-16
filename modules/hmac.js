@@ -47,32 +47,6 @@ function hmac(key, message, digestmod) {
   }
 }
 
-/**
-  compare_digest(a, b) -> bool
-        
-  Return 'a == b'.  This function uses an approach designed to prevent
-  timing analysis, making it appropriate for cryptography.
-  a and b must both be of the same type.
-  
-  Note: If a and b are of different lengths, or if an error occurs,
-  a timing attack could theoretically reveal information about the
-  types and lengths of a and b--but not their values.
-*/
-function compage_digest(a, b) {
-  var match, i;
-
-  if(a.length != b.length) {
-    return false;
-  }
-
-  match = 0;
-  for(i = 0; i < a.length; i++) {
-    match |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  }
-
-  return match == 0;
-}
-
 hmac.prototype.update = function(m) {
   if(m) {
     this.finished = false;
@@ -99,3 +73,29 @@ hmac.prototype.hexdigest = function() {
 exports.create = function(key, message, digestmod) {
   return new hmac(key, message, digestmod);
 }
+
+/**
+  compare_digest(a, b) -> bool
+        
+  Return 'a == b'.  This function uses an approach designed to prevent
+  timing analysis, making it appropriate for cryptography.
+  a and b must both be of the same type.
+  
+  Note: If a and b are of different lengths, or if an error occurs,
+  a timing attack could theoretically reveal information about the
+  types and lengths of a and b--but not their values.
+*/
+exports.compare_digest = function(a, b) {
+  var match, i;
+
+  if(a.length != b.length) {
+    return false;
+  }
+
+  match = 0;
+  for(i = 0; i < a.length; i++) {
+    match |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+
+  return match == 0;
+};
