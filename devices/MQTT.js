@@ -63,8 +63,22 @@ MQTT.prototype.mqttStr = function(s) {
 
 /** MQTT standard packet formatter */
 MQTT.prototype.mqttPacket = function(cmd, variable, payload) {
-  return String.fromCharCode(cmd, variable.length+payload.length)+variable+payload;
+  return String.fromCharCode(cmd) + this.mqttPacketLength(variable.length+payload.length) +variable+payload;
 };
+/** MQTT packet length formatter - algorithm from reference docs */
+MQTT.prototype.mqttPacketLength = function(length) {
+    var encLength = '';
+    do {
+      encByte = length & 127;
+      length = length >> 7;
+      // if there are more data to encode, set the top bit of this byte
+      if ( length > 0 ) {
+         encByte += 128;
+      }
+      encLength += String.fromCharCode(encByte);
+    } while ( length > 0 )
+    return encLength;
+}
 
 /** PUBLISH packet parser - returns object with topic and message */
 MQTT.prototype.parsePublish = function(data) {
