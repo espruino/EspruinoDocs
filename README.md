@@ -22,6 +22,13 @@ There are a few extra bits too:
 
 It then converts the markdown to HTML and shoves it on the Espruino website. lovely.
 
+JavaScript
+----------
+
+Any `.js` files in `examples` have a webpage created that uses the comments as markdown, and then adds the code as a code block right at the end.
+
+All other `.js` files are treated as modules. They are minified using Google's online closure compiler and the SIMPLE_OPTIMISATIONS flag. To get advanced optimisations, you must add the exact text `@compilation_level ADVANCED_OPTIMIZATIONS` into the comments at the head of the file.
+
 Building
 -------
 
@@ -79,4 +86,6 @@ $ node app.js
 ```
 
 Then load up a page in a browser: [http://localhost:3040/EspruinoBoard](http://localhost:3040/EspruinoBoard)
+
+
 

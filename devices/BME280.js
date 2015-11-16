@@ -1,4 +1,5 @@
 /* Copyright (c) 2015 Masafumi Okada. See the file LICENSE for copying permission. */
+// @compilation_level ADVANCED_OPTIMIZATIONS
 /* modified Moray McConnachie 2015 for Closure's advanced optimisation level and to remove cruft */
 /* Read Temperature, Pressure, and Humidity from Bosch Sensortec's BME280 sensor module. */
 
