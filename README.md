@@ -1,10 +1,11 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-EspruinoDocs
-============
+# EspruinoDocs
 
 Espruino Documentation and Code
 
-This is basically [GitHub Markdown](https://help.github.com/articles/github-flavored-markdown) but it goes through a script which looks for the following (on the start of a line):
+This project generates the website and tutorial code for [Espruino.com](http://espruino.com). This also contains the modules that can be required by the [Espruino  Web IDE](http://www.espruino.com/Web+IDE). You can contribute to the site and standardised modules in this project.
+
+Documentation files are written [GitHub Markdown](https://help.github.com/articles/github-flavored-markdown) with additional metadata. Basically, a script that looks for the following (on the start of a line):
 
     * KEYWORDS: Comma,Separated,List ; Defines keywords for this file
     * APPEND_KEYWORD: Keyword        ; Append a list of pages that match the keyword
@@ -16,26 +17,85 @@ This is basically [GitHub Markdown](https://help.github.com/articles/github-flav
 It also looks for a title (second line, after copyright notices) which it uses to create the title of the HTML page (and of links to it).
 
 There are a few extra bits too:
+
 * ```[[My Page]]``` links to a page on the Espruino website
 * ```[[http://youtu.be/VIDEOID]]``` puts a video on the page
 * ```![Image Title](MyFilename/foo.png)``` Adds an image. Images should be in a directory named after the filename of the file referencing them (or the same directory as the file referencing them)
 
-It then converts the markdown to HTML and shoves it on the Espruino website. lovely.
+It then converts the Markdown to HTML and shoves it on the Espruino website. Lovely!
 
-Building
--------
+## Build Requirements
 
-You just need node.js... For Linux (Debian/Ubuntu) you can do this with:
+### Step 1: Obtain Espruino Source Code
+
+Checked out the `Espruino` source at the same same level as `EspruinoDocs` folder. Assuming you're in the `EspruinoDocs` folder...
 
 ```
-# Get newer node.js - you'll only need this on earlier Linux versions
-$ sudo apt-add-repository ppa:richarvey/nodejs 
-$ sudo apt-get update
-
-# Install node
-$ sudo apt-get install npm nodejs
+$ cd ..
+$ git clone git@github.com:espruino/Espruino.git`
+$ cd EspruinoDocs
 ```
-# Set Maximum Open Files
+
+
+### Step 2: Install Node.js® and npm
+
+If you have Node.js and npm installed skip this step.
+
+If you haven't got Node.js JavaScript runtime installed or the JavaScript Package managers installed  do so via the installation guides below.
+
+* [Windows Installation Guide](http://treehouse.github.io/installation-guides/windows/node-windows.html)
+* [Mac Installation Guide](http://treehouse.github.io/installation-guides/mac/node-mac.html)
+* [Linux Installation Guide](http://treehouse.github.io/installation-guides/linux/node-linux.html)
+
+
+
+### Step 3: Install Required Node Modules
+
+In order to generate the documentation and view it you require several JavaScript packages. To install them issue the following command:
+
+```
+$ npm install
+```
+
+This will install all JavaScript dependancies.
+
+## Build Process
+
+### First Time:
+
+For the first time you can run:
+
+```
+$ ./build.sh
+```
+
+### Subsequent Times:
+
+You can then run it with:
+
+```
+$ npm run build
+```
+
+The output will be placed in the `html` directory.
+
+## View Generated Documentation
+
+You can load a development version of the website locally.  It will *not* look exactly like the production site but you can test your build and links.
+
+```
+$ npm start
+```
+
+Then load up a page in a browser: [http://localhost:3040/EspruinoBoard](http://localhost:3040/EspruinoBoard)
+
+--------
+
+# Troubleshooting
+
+## OS X
+
+### Set Maximum Open Files
 On OSX, most likely the default amount of open files will be set too low.  This may cause
 an error during the build, like: "Error: EMFILE, too many open files 'tasks/File Converter.md'"
 
@@ -50,33 +110,4 @@ Increase the limit:
 ```
 $ ulimit -n 1024  # increase to 1024
 ```
-
-# Install Required Modules
-
-For OSX, go to [http://nodejs.org/](http://nodejs.org/) and click "Install".
-
-Finally you need to install a node module for highlighting:
-
-```
-$ npm install marked highlight.js acorn express tern --save
-```
-
-You can then run it with:
-
-```
-$ node bin/build.js
-```
-
-and the output will be placed in the `html` directory...
-
-
-## Run the Website Locally
-
-You can load a dev version of the website locally.  It will not look exactly like the production site but you can test your build and links.
-
-```
-$ node app.js
-```
-
-Then load up a page in a browser: [http://localhost:3040/EspruinoBoard](http://localhost:3040/EspruinoBoard)
 
