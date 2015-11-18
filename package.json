@@ -1,11 +1,8 @@
 {
   "name": "espruino-docs",
   "version": "1.0.0",
-  "description": "<!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. --> EspruinoDocs ============",
+  "description": "Espruino Site, Documenation Tutorials and Modules",
   "main": "app.js",
-  "directories": {
-    "example": "examples"
-  },
   "scripts": {
     "build": "node ./bin/build.js",
     "start": "node app.js"
