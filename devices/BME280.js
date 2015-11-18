@@ -1,21 +1,14 @@
 /* Copyright (c) 2015 Masafumi Okada. See the file LICENSE for copying permission. */
-/*
-Read Temperature, Pressure, and Humidity from Bosch Sensortec's BME280 sensor module.
-*/
+// @compilation_level ADVANCED_OPTIMIZATIONS
+/* modified Moray McConnachie 2015 for Closure's advanced optimisation level and to remove cruft */
+/* Read Temperature, Pressure, and Humidity from Bosch Sensortec's BME280 sensor module. */
 
-var BME280_ADDRESS;
-var i2c;
-var dig_T1, dig_T2, dig_T3;
-var dig_P1, dig_P2, dig_P3, dig_P4, dig_P5, dig_P6, dig_P7, dig_P8, dig_P9;
-var dig_H1, dig_H2, dig_H3, dig_H4, dig_H5, dig_H6;
-var t_fine;
-var pres_raw, temp_raw, hum_raw;
-var debug;
+var C = {BME280_ADDRESS: 0x76}
 
-function BME280(_i2c) {
-  this.i2c = _i2c;
-  this.BME280_ADDRESS = 0x76;
-  this.debug = false;
+function BME280(_i2c, options) {
+  this.i2c = _i2c; 
+  var options = options || {};    
+  this.debug = options['debug'];
 
   var osrs_t = 1;  //Temperature oversampling x 1
   var osrs_p = 1;  //Pressure oversampling x 1
@@ -29,9 +22,12 @@ function BME280(_i2c) {
   var config_reg = (t_sb << 5) | (filter << 2) | spi3w_en;
   var ctrl_hum_reg = osrs_h;
 
-  if (this.read8(0xD0) == 0x60 && this.debug)
+/* enable this if you want debugging  
+    
+  if (this.read8(0xD0) == 0x60 && this.debug) {
     console.log("This chip is BME280");
-
+  }
+*/
   this.writeReg(0xF2, ctrl_hum_reg);
   this.writeReg(0xF4, ctrl_meas_reg);
   this.writeReg(0xF5, config_reg);
@@ -58,23 +54,23 @@ BME280.prototype.convS16 = function(ub1, ub2) {
 
 /* Write single byte to register reg_address */
 BME280.prototype.writeReg = function(reg_address, data) {
-  this.i2c.writeTo(this.BME280_ADDRESS, [reg_address, data]);
+  this.i2c['writeTo'](C.BME280_ADDRESS, [reg_address, data]);
 };
 
 /* Read single byte from register reg*/
 BME280.prototype.read8 = function(reg) {
-  this.i2c.writeTo(this.BME280_ADDRESS, reg);
-  return this.i2c.readFrom(this.BME280_ADDRESS, 1)[0];
+  this.i2c['writeTo'](C.BME280_ADDRESS, reg);
+  return this.i2c['readFrom'](C.BME280_ADDRESS, 1)[0];
 };
 
 /* Read and store all coefficients stored in the sensor */
 BME280.prototype.readCoefficients = function() {
-  this.i2c.writeTo(this.BME280_ADDRESS, 0x88);
-  var data = this.i2c.readFrom(this.BME280_ADDRESS, 24);
-  this.i2c.writeTo(this.BME280_ADDRESS, 0xA1);
-  data = this.concatU8(data, this.i2c.readFrom(this.BME280_ADDRESS, 1));
-  this.i2c.writeTo(this.BME280_ADDRESS, 0xE1);
-  data = this.concatU8(data, this.i2c.readFrom(this.BME280_ADDRESS, 7));
+  this.i2c['writeTo'](C.BME280_ADDRESS, 0x88);
+  var data = this.i2c['readFrom'](C.BME280_ADDRESS, 24);
+  this.i2c['writeTo'](C.BME280_ADDRESS, 0xA1);
+  data = this.concatU8(data, this.i2c['readFrom'](C.BME280_ADDRESS, 1));
+  this.i2c['writeTo'](C.BME280_ADDRESS, 0xE1);
+  data = this.concatU8(data, this.i2c['readFrom'](C.BME280_ADDRESS, 7));
 
   this.dig_T1 = (data[1] << 8) | data[0];
   this.dig_T2 = this.convS16(data[3], data[2]);
@@ -98,10 +94,13 @@ BME280.prototype.readCoefficients = function() {
 
 };
 
+/*public methods*/
 /* Read Raw data from the sensor */
-BME280.prototype.readRawData = function() {
-  this.i2c.writeTo(this.BME280_ADDRESS, 0xF7);
-  var data = this.i2c.readFrom(this.BME280_ADDRESS, 8);
+BME280.prototype['readRawData'] = function() {
+  this.i2c['writeTo'](C.BME280_ADDRESS, 0xF7);
+  var data = this.i2c['readFrom'](C.BME280_ADDRESS, 8);
+  /* enable this if you want to be able to debug data values and calibration 
+
   if (this.debug) {
     console.log("d0: " + data[0]);
     console.log("d1: " + data[1]);
@@ -112,14 +111,14 @@ BME280.prototype.readRawData = function() {
     console.log("d6: " + data[6]);
     console.log("d7: " + data[7]);
   }
-
-  this.pres_raw = (data[0] << 12) | (data[1] << 4) | (data[2] >> 4);
-  this.temp_raw = (data[3] << 12) | (data[4] << 4) | (data[5] >> 4);
-  this.hum_raw = (data[6] << 8) | data[7];
+  */
+  this['pres_raw'] = (data[0] << 12) | (data[1] << 4) | (data[2] >> 4);
+  this['temp_raw'] = (data[3] << 12) | (data[4] << 4) | (data[5] >> 4);
+  this['hum_raw'] = (data[6] << 8) | data[7];
 };
 
 /* Calibration of Temperature, algorithm is taken from the datasheet */
-BME280.prototype.calibration_T = function(adc_T) {
+BME280.prototype['calibration_T'] = function(adc_T) {
   var var1, var2, T;
   var1 = ((adc_T) / 16384.0 - (this.dig_T1) / 1024.0) * (this.dig_T2);
   var2 = (((adc_T) / 131072.0 - (this.dig_T1) / 8192.0) * ((adc_T) / 131072.0 - (this.dig_T1) / 8192.0)) * (this.dig_T3);
@@ -129,7 +128,8 @@ BME280.prototype.calibration_T = function(adc_T) {
 };
 
 /* Calibration of Pressure, algorithm is taken from the datasheet */
-BME280.prototype.calibration_P = function(adc_P) {
+BME280.prototype['calibration_P'] = function(adc_P) {
+/* enable this if you want to be able to debug data values and calibration
   if (this.debug) {
     console.log("T1: " + this.dig_T1);
     console.log("T2: " + this.dig_T2);
@@ -149,7 +149,7 @@ BME280.prototype.calibration_P = function(adc_P) {
     console.log("P7: " + this.dig_P7);
     console.log("P8: " + this.dig_P8);
     console.log("P9: " + this.dig_P9);
-  }
+  }*/
   var var1, var2, p;
   var1 = (this.t_fine / 2.0) - 64000.0;
   var2 = var1 * var1 * (this.dig_P6) / 32768.0;
@@ -169,7 +169,7 @@ BME280.prototype.calibration_P = function(adc_P) {
 };
 
 /* Calibration of Humidity, algorithm is taken from the datasheet */
-BME280.prototype.calibration_H = function(adc_H) {
+BME280.prototype['calibration_H'] = function(adc_H) {
   var v_x1;
 
   v_x1 = (this.t_fine - (76800));
@@ -183,6 +183,6 @@ BME280.prototype.calibration_H = function(adc_H) {
   return (v_x1 >> 12);
 };
 
-exports.connect = function(_i2c) {
-  return (new BME280(_i2c));
+exports.connect = function(_i2c, options) {
+  return (new BME280(_i2c, options));
 };

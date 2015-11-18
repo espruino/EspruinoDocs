@@ -179,8 +179,12 @@ Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/maste
 | B14  | MISO    |
 | B15  | MOSI    |
 
-**Note:** The resistor `R1` is for a 1206-size 100k pullup resistor for the `CS` line. This should definitely 
-be added as it avoids unintentional SD card accesses that could occur before the Espruino Pico has set up the CS line properly.
+**Note 2:** On rev 1.0 of this board, GND is not connected. You will have manually to add a wire from GND of the Espruino Pico to pin 6 of the micro SD card connector. Adding a 0.1uF decoupling capacitor across the voltage rail is also a good idea.
+
+**Note:** The resistor `R1` is for a 1206-size 100k pullup resistor for the `CS` line. This should 
+be added as it avoids unintentional SD card accesses that could occur before the Espruino Pico has set
+up the CS line properly.
+
 
 ```
 SPI2.setup({mosi:B15,miso:B14,sck:B13});
