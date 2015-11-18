@@ -11,6 +11,7 @@ app.all('/*', function(req, res, next) {
   return express.static(__dirname + '/html')(req, res, next);
 });
 
-var port = process.env.PORT || 3040;
-console.log('** EspruinoDocs - running on port ' + port + ' **');
-app.listen(port);
+app.listen(process.env.PORT || 3040, function(app){  
+  var port = this.address().port;
+  console.log('** EspruinoDocs - running on http://localhost:%s/EspruinoBoard **', port);
+});
