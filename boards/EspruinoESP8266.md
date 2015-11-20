@@ -135,7 +135,7 @@ firmware is loaded and care is used not to conflict with the 2x256KB layout.
 The result of all this is the following: 
 
 Start    | Start  | Length | Function
-------- :|-------:|-------:|:--------------
+--------:|-------:|-------:|:----------------------------------------
 0x000000 |      0 |    4KB | Bootloader with flash type/size header
 0x001000 |    4KB |  476KB | Espruino firmware, first partition
 0x078000 |  480KB |   12KB | Espruino save() area
@@ -150,6 +150,7 @@ Start    | Start  | Length | Function
 0x3FC000 | 4080KB |   16KB | 4MB flash: Espressif SDK system params, else unused/SPIFFS
 
 The Espressif SDK sstem params area is composed of:
+
 Offset   | Size   | Function
 --------:|-------:|:---------
 0x0000   |    4KB | RF parameter values (default in esp_init_data_default.bin)
