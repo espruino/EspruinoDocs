@@ -4,7 +4,9 @@ Espruino on ESP8266 WiFi
 
 * KEYWORDS: ESP8266,ESP-12,ESP12,ESP01,ESP1,ESP-01,Espruino,Board,PCB,Pinout
 
-**Note:** *This page documents running the Espruino firmware on the ESP8266 board. To find out how to connect an ESP8266 board to another Espruino board (as a Wifi Adaptor) [please see this page instead](/ESP8266)*
+**Note:** *This page documents running the Espruino firmware on the ESP8266 board.
+To find out how to connect an ESP8266 board to another Espruino board (as a Wifi Adaptor)
+[please see this page instead](/ESP8266)*
 
 Features
 -------
@@ -21,10 +23,10 @@ Not supported
 The following features are not supported by Espruino on the ESP8266:
 
 - No hardware [[I2C]], however, the software I2C works OK.
-- No hardware [[SPI]] (implementing that is on the to-do list), the software SPI works OK.
-- No [[DAC]]/[[PWM]]/analogWrite: the esp8266 does not have a DAC and the one PWM it has is very
-  finnicky and its timer is used to implement the Espruino timer, which is used to create
-  pulses and such.
+- No hardware [[SPI]], however, the software SPI works OK and it's not clear that there is any real
+  benefit to the hardware SPI.
+- [[PWM]] is in the works.
+- No [[DAC]]: the esp8266 does not have a DAC.
 
 Pinout
 ------
@@ -37,15 +39,17 @@ A 500-600mA regulator with at least 22uF capacitor is recommended.</span>
 
 GPIO Pins
 ---------
-The esp8266 GPIO pins support [totem-pole](https://en.wikipedia.org/wiki/Push%E2%80%93pull_output#Totem-pole_push.E2.80.93pull_output_stages) and [open-drain outputs](https://en.wikipedia.org/wiki/Open_collector), and they
-support a weak internal [pull-up resistor](https://en.wikipedia.org/wiki/Pull-up_resistor) (in the 20KOhm-50KOhm range). The
-Espruino D0 through D15 pins map directory to GPIO0 through GPIO15 on
+The esp8266 GPIO pins support
+[totem-pole](https://en.wikipedia.org/wiki/Push%E2%80%93pull_output#Totem-pole_push.E2.80.93pull_output_stages) and
+[open-drain outputs](https://en.wikipedia.org/wiki/Open_collector),
+and they support a weak internal
+[pull-up resistor](https://en.wikipedia.org/wiki/Pull-up_resistor) (in the 20KOhm-50KOhm range).
+The Espruino D0 through D15 pins map directory to GPIO0 through GPIO15 on
 the esp8266. Remember that GPIO6 through GPIO11 are used for the external
 flash chip and are therefore not really available. Also, GPIO0 and GPIO2
 must be pulled-up at boot and GPIO15 must be pulled-down at boot.
 
-The current implementation does not support hardware PWM as the timers
-are used elsewhere. The esp8266 ADC function is available on any pin
+The esp8266 ADC function is available on any pin
 (D0-D15) but really uses a separate pin on the esp8266 (this should
 be changed to an A0 pin).
 
@@ -55,7 +59,7 @@ pin but rather is attached to the real-time-clock circuitry.
 I2C Implementation
 ------------------
 The I2C interface is implemented in software because the esp8266 does
-not have hardware support for i2c (contrary to what the datasheet seems
+not have hardware support for I2C (contrary to what the datasheet seems
 to imply). The software implementation has the following limitations:
 - operates at approx 100Khz
 - is master-only
@@ -68,28 +72,22 @@ configured to be open-drain outputs and an external pull-up resistor
 is required on each of the two pins. Remember that esp8266 pins are
 not 5v compatible...
 
-SPI Implementation
-------------------
-
-The current SPI features are also only implemented currently in software.  The ESP8266 does have
-hardware SPI support but this has not been take advantage of yet.
-
 System time
 -----------
 The esp8266 has two notions of system time implemented in the SDK by
-`system_get_time()` and `system_get_rtc_time()`. The former has 1us
+`system_get_time()` and `system_get_rtc_time()`. The former has 1µs
 granularity and comes off the CPU cycle counter, the latter has approx
-57us granularity (need to check) and comes off the RTC clock. Both are
+57µs granularity and comes off the RTC clock. Both are
 32-bit counters and thus need some form of roll-over handling in software
 to produce a JsSysTime.
 
-It seems pretty clear from the API and the calibration concepts that the
-RTC runs off an internal RC oscillator or something similar and the SDK
-provides functions to calibrate it WRT the crystal oscillator.
-
-The RTC timer is preserved when the chip goes into light sleep mode,
-when it does a software restart (WDT, exception, or reset call) but it
-is lost after a deep sleep or an external reset input.
+While the RTC clock may look attractive, it is not clear that it really is.
+The RTC runs off an internal RC oscillator or something similar and the SDK
+provides functions to calibrate it WRT the crystal oscillator. It does not
+run off a 32khz crystal like a proper RTC. In addition, due to some smart
+engineering a reset of the esp8266 chip resets the RTC, thus, even during
+deep sleep, where the RTC wakes up the processor, the RTC counter is lost.
+The conclusion is that it's about as close to worthless as it gets...
 
 The implementation uses the system timer for `jshGetSystemTime()` and
 related functions and uses the rtc timer only at start-up to initialize
@@ -114,25 +112,50 @@ is a 2nd binary blob up after the first one to provide the two firmware
 images necessary for a safe OTA update. All this is described in the
 Espressif IOT SDK User Manual.
 - The hardware can memory-map 1MBytes of flash, but it has to be read
-on word (4-byte) boundaries, it cannot be written as far as I know
-- Every memory map has a 16KB "user param" area that is reserved for
-applications to store non-volatile settings and such. This is used as the
-"save to flash" area in Espruino. Currently the number of variables is
-set to 1023, which uses 12KB and in addition the saved data is run-length
-encoded. Therefore at most 12KB of this flash area really need to be
-reserved. It is not known whether there's a chance to increase the number
-of variables at this point.
-- Every memory maps also has a 16KB "system param" area in which the
+on word (4-byte) boundaries, it cannot be written using the memory map.
+- Every flash layout has a 16KB "system param" area in which the
 SDK stores settings, including RF parameters and wifi settings
-- Finally there is an unused 4KB area just before the 2nd firmware in the
-larger memory maps, this "mirrors" the bootloader area but is not used.
+- The Espruino firmware uses over 400KB, which is far more than fits into
+an OTA-capable flash layout on modules that have only 512KB of flash.
+Therefore Over-The-Air upgrades of the Espruino firmware cannot be supported
+on these modules.
 
-Flash size | FW size | FW#1 start | FW #2 start | Save to flash | System param | SPIFFs | Free
-:---------:|--------:|-----------:|------------:|--------------:|-------------:|-------:| -----:
-512KB      | 480KB   | 0x000000   | N/A         | 0x78000       | 0x7C000      | N/A    | N/A
-1MB        | 492KB   | 0x001000   | 0x81000     | 0x7C000       | 0xFC000      | N/A    | 0x80000 (4KB)
-2MB        | 492KB   | 0x001000   | 0x81000     | 0x7C000       | 0x1FC000     | 0x100000 (1MB) | 0x80000 (4KB)
-4MB        | 492KB   | 0x001000   | 0x81000     | 0x7C000       | 0x3FC000     | 0x100000 (3MB) | 0x80000 (4KB)
+In order to produce a single flash image for all esp8266 modules some
+trickery has been used. The key concepts are:
+- All modules use the OTA firmware format with a second-stage bootloader
+and the two binary images allowing for upgrades (these are called user1.bin
+and user2.bin by Espressif).
+- On modules with 1MB of flash or more the standard OTA flash layout is used
+with two 512KB application partitions. On modules with more than 1MB of flash,
+the flash beyond 1MB can be used for a forthcoming spiffs filesystem.
+- On modules with 512KB of flash, a somewhat tricked layout is used. The SDK
+is told to use an OTA layout with two 256KB firmwares but in fact a single 400KB+
+firmware is loaded and care is used not to conflict with the 2x256KB layout.
+
+The result of all this is the following: 
+
+Start    | Start  | Length | Function
+------- :|-------:|-------:|:--------------
+0x000000 |      0 |    4KB | Bootloader with flash type/size header
+0x001000 |    4KB |  476KB | Espruino firmware, first partition
+0x078000 |  480KB |   12KB | Espruino save() area
+0x07B000 |  492KB |    4KB | EEPROM emulation
+0x07C000 |  496KB |   16KB | 512KB flash: Espressif SDK system params, else unused
+0x080000 |  512KB |    4KB | Unused
+0x081000 |  516KB |  476KB | Espruino firmware, second partition
+0x0F8000 |  992KB |   16KB | Unused
+0x0FC000 |  996KB |   16KB | 1MB flash: Espressif SDK system params, else unused
+0x100000 |    1MB |        | approx 1MB-3MB flash for SPIFFS on 2MB-4MB modules
+0x1FC000 | 2032KB |   16KB | 2MB flash: Espressif SDK system params, else unused/SPIFFS
+0x3FC000 | 4080KB |   16KB | 4MB flash: Espressif SDK system params, else unused/SPIFFS
+
+The Espressif SDK sstem params area is composed of:
+Offset   | Size   | Function
+--------:|-------:|:---------
+0x0000   |    4KB | RF parameter values (default in esp_init_data_default.bin)
+0x1000   |    4KB | ?
+0x2000   |    4KB | Wifi and other system parameters (clear using blank.bin)
+0x3000   |    4KB | ?
 
 Main loop processing
 --------------------
@@ -157,12 +180,15 @@ configured to constrain this to 4.
 
 Loading Espruino
 ----------------
+Espruino can be loaded into the esp8266 using any of the flashing techniques applicable
+to the esp8266 itself.  A variety of tools are available to assist with this.
 
-Espruino can be loaded into the esp8266 using any of the flashing techniques applicable to the esp8266 itself.  A variety of tools are available to assist with this.
-
-The Espruino ESP8266 firmware is still under heavy development, and is not yet distributed alongside all the other firmwares on the Espruino Website. Instead, you should pick up the latest builds from [Espruino Builds on GitHub](https://github.com/espruino/EspruinoBuilds)
+The Espruino ESP8266 firmware is still under heavy development, and is not yet distributed
+alongside all the other firmwares on the Espruino Website.
+Instead, you should pick up the latest builds from
+[Espruino Builds on GitHub](https://github.com/espruino/EspruinoBuilds)
 
 Further reading
 ---------------
-
-The esp8266 has its own [community](http://www.esp8266.com/), free books, videos and more.  For esp8266 questions not related to Espruino, it is recommended to research using those resources.
+The esp8266 has its own [community](http://www.esp8266.com/), free books, videos and more.
+For esp8266 questions not related to Espruino, it is recommended to research using those resources.
