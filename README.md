@@ -67,17 +67,31 @@ This will install all JavaScript dependancies.
 
 ## Build Process
 
-### First Time:
+Currently they are two build scripts. One bash, one JavaScript.
 
-For the first time you can run:
+The bash script does 3 things:
+
+1. Uses the `Espruino` source code to generate the pinout diagrams. `python` is required
+2. Builds the production site at `~/workspace/espruinowebsite`
+3. Builds Espruino specific modules and minifies the JavaScript code
+
+The JavaScript build process just builds the documentation in the `html` folder.
+
+You will have to run `build.sh` at least once if you want the `build.js` to work. 
+
+### To Do a Full Build
+
+Run:
 
 ```
 $ ./build.sh
 ```
 
-### Subsequent Times:
+###  To Build Documentation Only
 
-You can then run it with:
+**Note:** You've had to have least ran the bash script once for this to build successfully.
+
+Run:
 
 ```
 $ npm run build
