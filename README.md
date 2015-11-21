@@ -77,7 +77,7 @@ The bash script does 3 things:
 
 The JavaScript build process just builds the documentation in the `html` folder.
 
-You will have to run `build.sh` at least once if you want the
+You will have to run `build.sh` at least once if you want the `build.js` to work. 
 
 ### To Do a Full Build
 
