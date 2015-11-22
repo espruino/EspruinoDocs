@@ -31,7 +31,7 @@ exports.load = function(bmpString) {
   var istride = (ostride+3) & ~3; // bmp aligns to 32 bits
   // re-pack, and invert
   for (var y=0;y<img.height;y++)
-    img.buffer.set(new Uint8Array(bmp, addr+istride*(img.height-(y+1)), w), ostride*y);
+    img.buffer.set(new Uint8Array(bmp, addr+istride*(img.height-(y+1)), ostride), ostride*y);
   return img;
 }
 

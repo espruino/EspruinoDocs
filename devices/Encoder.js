@@ -13,7 +13,6 @@ require("Encoder").connect(A1,A2,function (direction) {
 */
 
 function Encoder(/*=PIN*/pina, /*=PIN*/pinb, callback) {
-  this.last = 0;
   this.PINA = pina;
   this.PINB = pinb;
   this.callback = callback;
@@ -33,6 +32,7 @@ function Encoder(/*=PIN*/pina, /*=PIN*/pinb, callback) {
   };
   pinMode(this.PINA, "input_pulldown");
   pinMode(this.PINB, "input_pulldown");
+  onChange(); // initialize the state of a, b and state: no callback will occur
   setWatch(onChange, this.PINA, { repeat: true });
   setWatch(onChange, this.PINB, { repeat: true });
 }

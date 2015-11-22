@@ -19,18 +19,19 @@ Features
 * On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 16v
 * Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
 * On-board FET can be used to drive high-current outputs
+* Rev 1v4: 500mA polyfuse on board
 
 <a name="buy"></a>Buying
 ------
 
-You can now get an Espruino Pico from several different distributors. Check out page on [Ordering Espruino](/Order)
+You can now get an Espruino Pico from several different distributors. [Click here to see them.](/Order)
 
 Pinout
 ------
 
 * APPEND_PINOUT: PICO_R1_3
 
-<span style="color: red">**Note:** There is no built-in fuse on the Espruino Pico. You should check that your circuit does not contain shorts with a volt meter *before you plug it into USB*, or you may damage your board.</span>
+<span style="color: red">**Note:** There is no built-in fuse on the Espruino Pico 1v3 (1v4 contains one). You should check that your circuit does not contain shorts with a volt meter *before you plug it into USB*, or you may damage your board.</span>
 
 Information
 -----------
@@ -61,7 +62,7 @@ Layout
 | SWD Debug | (Advanced) SWD debug connections for firmware debugging |
 | BOOT0 Jumper | (Advanced) Short this jumper out to connect the button to BOOT0. Plugging the device in with the button pressed will the cause the DFU bootloader to be started, allowing you to change absolutely all of Espruino's firmware. |
 | JST Battery | Pads for a surface mount JST PHR-2 [[Battery]] connector (see [below](#battery)) |
-| Micro/Mini USB | Under the white silkscreen are pads for Mini USB and Micro USB sockets (see [below](#usb)) |
+| Micro/Mini USB | Under the white silkscreen are pads to solder USB sockets on (see [below](#usb)) |
 | FET Jumper | Shorting this jumper allows the PFET to be controlled from pin B0 (see [below](#power)) |
 
 **Note:** The two jumpers can be shorted out just by scribbling over them with an HB pencil.
@@ -115,21 +116,23 @@ Please see the [[Battery]] page for information on connectors and where to buy t
 
 ![Micro and Mini USB](Pico/microusb.jpg)
 
-On the rear of the Pico Board under the while block of silkscreen, there are pads for both Micro and Mini USB connectors. To use these, *carefully* scratch off the silkscreen until you have copper tracks, and solder on the connector. 
+On the rear of the Pico Board under the while block of silkscreen, there are pads for connectors. Espruino rev 1v3 has both Micro and Mini USB, but Espruino rev 1v4 only has Mini USB (due to potential issues with Apple's USB extension leads).
+
+To use these, *carefully* scratch off the silkscreen until you have copper tracks, and solder on the connector. 
 
 The connectors you need are very standard parts. While some parts are listed below, many other parts from many different manufacturers would work perfectly well.
 
 
 ### Mini-B USB
 
-5 pin, 4 pad surface mount
+(Pico Revision 1v3 and 1v4) - 5 pin, 4 pad surface mount
 
 * [Seeed OPL (3400020P1)](http://www.seeedstudio.com/wiki/images/a/a9/3400020P1.pdf)
 * [Digi-Key](http://www.digikey.co.uk/product-detail/en/DX2R005HN2E700/670-1190-1-ND/1283605)
 
 ### Micro-B USB 
 
-5 pin, 2 pad surface mount
+(Pico Revision 1v3 only) - 5 pin, 2 pad surface mount
 
 * [Seeed OPL (3400150P1)](http://www.seeedstudio.com/wiki/images/a/aa/3400150P1.pdf)
 * Octopart [list of distributors](https://octopart.com/zx62-b-5pa%2811%29-hirose-42422030)

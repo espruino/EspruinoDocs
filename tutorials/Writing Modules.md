@@ -55,7 +55,7 @@ like `require("libname")`.
 
 To test out your module, we'd suggest that you copy it verbatim into the right-hand side of the Web IDE, with the line `var exports={};` at the top, and at the bottom, where you use the module, write `exports.myfunction()` instead of `require('MOD123').myfunction()`.
 
-Check out some of the [other modules](www.espruino.com/modules) for examples (some of these still don't follow this form though). There are some important points to note here, which will help make your module as efficient as possible.
+Check out some of the [other modules](http://www.espruino.com/modules) for examples (some of these still don't follow this form though). There are some important points to note here, which will help make your module as efficient as possible.
 
  * When a module is loaded, Espruino executes the file in its own scope and then stores the variables and functions that are defined in that scope in a cache of modules.
 

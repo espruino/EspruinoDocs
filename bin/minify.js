@@ -27,8 +27,10 @@ js = "(function(){\n" + js + "\n})();";
 
 function minify(type, callback) {
   // nicked from http://stackoverflow.com/questions/6158933/how-to-make-an-http-post-request-in-node-js)
+  var advanced = js.indexOf("@compilation_level ADVANCED_OPTIMIZATIONS")>=0;
+
   var post_data = querystring.stringify({
-  'compilation_level' : 'SIMPLE_OPTIMIZATIONS',
+  'compilation_level' : advanced ? 'ADVANCED_OPTIMIZATIONS' : 'SIMPLE_OPTIMIZATIONS',
   'output_format': 'text',
   'output_info': type,
   //'warning_level' : 'QUIET',

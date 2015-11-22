@@ -26,9 +26,9 @@ Software
 
 The example in the [[Quick Start]] shows how to flash an LED the 'right' way - but we can actually do it in one simple line. Just copy and paste:
 
-```setInterval("digitalWrite(LED1,l=!l);",200);```
+```var l;setInterval("digitalWrite(LED1,l=!l);",200);```
 
-The function setInterval calls the first argument (either a function or a string containing code to execute) every 200ms. In this case, the code just flips the state of a variable ```l``` between true and false with ```l=!l```, and sets the state of the LED to it. This isn't recommended as it's a bit hard to read though.
+The function setInterval calls the first argument (either a function or a string containing code to execute) every 200ms. In this case, the code just flips the state of a variable ```l``` (which we had to define first with `var l`) between `true` and `false` with ```l=!l```, and sets the state of the LED to it. This isn't recommended as it's a bit hard to read though.
 
 To stop the light flashing, just type ```clearInterval()```
 
@@ -39,6 +39,7 @@ Try 1 shows how to flash LEDs at a set rate. But what if you want to flash two L
 This time, we're going to write the code in a way that's easier to understand. First off, write two functions:
 
 ```
+var on1,on2;
 function toggle1() {
   on1 = !on1;
   digitalWrite(LED1, on1);

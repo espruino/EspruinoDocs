@@ -1,8 +1,13 @@
 *~
 html/*.html
+html/*.jpg
+html/*.png
+html/*.gif
 html/refimages/*
 html/boards/*
 html/keywords.js
 node_modules
 .idea
 references.json
+/.project
+npm-debug.log

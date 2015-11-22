@@ -20,7 +20,8 @@ exports.getJSDocumentation = function(js) {
   var ast = require("acorn").parse(js, {
     locations : true,
     onComment : function(block, text, start, end, startLoc, endLoc) {
-      comments[endLoc.line+1] = text.substr(1).trim();
+      if (text[0]=="*" || text[0]=="/") text=text.substr(1);
+      comments[endLoc.line+1] = text.trim();
     }
   });
   // convert function to a pretty string
@@ -28,24 +29,50 @@ exports.getJSDocumentation = function(js) {
     var args = node.params.map(function (n) { return n.name; });
     return "function ("+args.join(", ")+") { ... }";
   }
+  function tweakComment(comment) {
+    comment = ("\n"+comment).
+              replace(/```\n/g,"").
+              replace(/```/g,"").trim();
+   if (comment[0]=="*")
+     return "/" + comment + "\n */\n";
+   else if (comment.indexOf("\n")>=0)
+     return "/* " + comment + "\n*/\n";
+   else
+     return "// " + comment + "\n";
+  }
   
+  var functions = {};
   var result = "";
   // Now try and find function definitions in the base of the module
   // These are either 'exports.XXX = ' or 'XXX.prototype.YYY = '
   ast.body.forEach(function (expr) {
-    if (expr.type!="ExpressionStatement" || expr.expression.right.type!="FunctionExpression") return;
-    var left = expr.expression.left;
-    var leftString = undefined;
-    if (left.object.property && left.object.property.name == 'prototype')
-      leftString = left.object.object.name+".prototype."+left.property.name;
-    else if (left.object.name == 'exports')
-      leftString = "exports."+left.property.name;
-    
-    if (leftString) {
-      if (expr.loc.start.line in comments)
-        result += ("\n"+comments[expr.loc.start.line]).split("\n").join("\n// ").trim() + "\n";
-      result += leftString+" = "+fnToString(expr.expression.right)+"\n\n";
+    //console.log(expr);
+    if (expr.type=="FunctionDeclaration") {
+      functions[expr.id.name] = expr;
     }
+    // X.prototype.y = function() ...
+    // exports.foo = function() ...
+    if (expr.type=="ExpressionStatement" && expr.expression.right.type=="FunctionExpression") {
+      var left = expr.expression.left;
+      var leftString = undefined;
+      if (left.object.property && left.object.property.name == 'prototype')
+        leftString = left.object.object.name+".prototype."+left.property.name;
+      else if (left.object.name == 'exports')
+        leftString = "exports."+left.property.name;
+      if (leftString) {
+        if (expr.loc.start.line in comments) result += tweakComment(comments[expr.loc.start.line]);
+        result += leftString+" = "+fnToString(expr.expression.right)+"\n\n";
+      }
+    }
+    // exports = Function
+    if (expr.type=="ExpressionStatement" && expr.expression.right.type=="Identifier" &&
+        (expr.expression.right.name in functions)) {
+       var func = functions[expr.expression.right.name];
+       if (func.loc.start.line in comments) 
+         result += tweakComment(comments[func.loc.start.line]);
+       result += fnToString(func)+"\n\n";
+    }
+
   });
   return result;
 };
@@ -78,4 +105,4 @@ exports.getMarkdown = function(dir) {
     }
   });
   return results;
-};
+ }; 

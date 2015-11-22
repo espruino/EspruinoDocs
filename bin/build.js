@@ -172,7 +172,11 @@ function handleImages(file, contents) {
       var imageName = contents.substring(tagMid+2, tagEnd);
       var imagePath = directory+"/"+imageName;
       if (fs.existsSync(imagePath)) {
-        var newPath = htmlLinks[file]+"_"+imageName;
+/*        console.log("IMAGE -----------------------------");
+        console.log(imageName);
+        console.log(imagePath);*/
+        var newPath = /*htmlLinks[file]+"_"+*/imageName;
+        console.log(newPath);
         newPath = newPath.replace(/\//g,"_");
         newPath = newPath.replace(/\+/g,"_");
         newPath = newPath.replace(/ /g,"_");
@@ -343,8 +347,7 @@ markdownFiles.forEach(function (file) {
    contents = handleImages(file, contents);
    
    // replace simple links
-//   contents = contents.replace(/\[\[http:\/\/youtu.be\/([a-zA-Z0-9\-_ ]+)\]\]/g,"[![Video Thumbnail](http://img.youtube.com/vi/$1/0.jpg)](http://www.youtube.com/watch?v=$1)"); // youtube
-   contents = contents.replace(/\[\[http:\/\/youtu.be\/([a-zA-Z0-9\-_ ]+)\]\]/g,
+   contents = contents.replace(/\[\[http[s]?:\/\/youtu.be\/([a-zA-Z0-9\-_ ]+)\]\]/g,
            '<iframe allowfullscreen="" frameborder="0" height="360" src="http://www.youtube.com/embed/$1" width="640"></iframe>'); // youtube
    contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+).js\]\]/g,"[$1](/modules/$1.js) ([About Modules](/Modules))");
    contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+)\]\]/g,"[$1](/$1)");
@@ -426,7 +429,6 @@ markdownFiles.forEach(function (file) {
 
    // Check for Pinouts
         
-   if (file=="boards/Pico.md") console.log("############################################################### PICO");
    var regex = /<ul>\n<li>APPEND_PINOUT: (.*)<\/li>\n<\/ul>/;
    var match = html.match(regex);
    if (match!=null) {
