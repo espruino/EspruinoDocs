@@ -45,7 +45,7 @@ FlashEEPROM.prototype.read = function(addr) {
 };
 
 /// return the current values of all keys in an array
-FlashEEPROM.prototype.readAll = function(addr) { 
+FlashEEPROM.prototype.readAll = function() { 
   var data = [];
   var n = this.addr;
   var key = this.flash.read(4, n);
