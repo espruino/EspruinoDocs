@@ -140,7 +140,9 @@ MQTT.prototype.connect = function(client) {
       var type = data.charCodeAt(0) >> 4;
 
       if(type === TYPE.PUBLISH) {
-        mqo.emit('publish', mqo.parsePublish(data));
+        var data = mqo.parsePublish(data);
+        mqo.emit('publish', data);
+        mqo.emit('message', data.topic, data.message);
       }
       else if(type === TYPE.PUBACK) {
         // implement puback
@@ -164,9 +166,11 @@ MQTT.prototype.connect = function(client) {
           mqo.connected = true;
           console.log("MQTT connection accepted");
           mqo.emit('connected');
+          mqo.emit('connect');
         }
         else {
           console.log("MQTT connection error");
+          mqo.emit('error', "MQTT connection error");
         }
       }
       else {
@@ -179,12 +183,16 @@ MQTT.prototype.connect = function(client) {
       console.log('MQTT client disconnected');
       clearInterval(mqo.pintr);
       mqo.emit('disconnected');
+      mqo.emit('close');
     });
     
     mqo.client = client;
   };
-  if (client) onConnect();
-  else client = require("net").connect({host : mqo.server, port: mqo.port}, onConnect);
+  if (client) { onConnect(); }
+  else {
+    client = require("net").connect({host : mqo.server, port: mqo.port}, onConnect);
+    // TODO: Reconnect on timeout
+  }
 };
 
 /** Disconnect from server */
@@ -202,9 +210,38 @@ MQTT.prototype.publish = function(topic, message, qos) {
 };
 
 /** Subscribe to topic (filter) */
-MQTT.prototype.subscribe = function(topic, qos) {
-  var _qos = qos || this.C.DEF_QOS;
-  this.client.write(this.mqttSubscribe(topic, _qos));
+MQTT.prototype.subscribe = function(topics, opts, callback) {
+  if (!opts) { opts = { qos: this.C.DEF_QOS }; }
+  if ('number' === typeof opts) { opts = { qos: opts }; }
+
+  var subs = [];
+  if ('string' === typeof topics) {
+    topics = [topics];
+  }
+  if (Array.isArray(topics)) {
+    topics.forEach(function (topic) {
+      subs.push({
+        topic: topic,
+        qos: opts.qos
+      });
+    });
+  } else {
+    Object
+      .keys(topics)
+      .forEach(function (k) {
+        subs.push({
+          topic: k,
+          qos: obj[k]
+        });
+      });
+  }
+  
+  subs.forEach(function(sub){
+    // TODO: Multiple topics in single subscribe packet
+    this.client.write(this.mqttSubscribe(sub.topic, sub.qos));
+  }.bind(this));
+  
+  if ('function' === typeof callback) { callback(); }
 };
 
 /** Unsubscribe to topic (filter) */
@@ -293,4 +330,9 @@ MQTT.prototype.mqttUnsubscribe = function(topic) {
 /** This is 'exported' so it can be used with `require('MQTT.js').create(server, options)` */
 exports.create = function (server, options) {
   return new MQTT(server, options);
+};
+exports.connect = function(options) {
+  var mqtt = new MQTT(options.host, options);
+  mqtt.connect();
+  return mqtt;
 };
