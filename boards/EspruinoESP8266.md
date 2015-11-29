@@ -99,6 +99,9 @@ a time in seconds (float).
 
 Flash map and access
 --------------------
+Note: if you are looking for a free flash area to use, call `ESP8266.getFreeFlash`,
+which will return a list of available areas (see docs).
+
 The esp8266 modules come with varying flash chip
 sizes. The flash layout for each size is slightly different. There are
 a number of random tidbits to know about flash layout:
