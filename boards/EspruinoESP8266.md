@@ -99,7 +99,7 @@ a time in seconds (float).
 
 Flash map and access
 --------------------
-The esp8266 modules come in a number of forms with varying flash chip
+The esp8266 modules come with varying flash chip
 sizes. The flash layout for each size is slightly different. There are
 a number of random tidbits to know about flash layout:
 
@@ -137,19 +137,21 @@ The result of all this is the following:
 Start    | Start  | Length | Function
 --------:|-------:|-------:|:----------------------------------------
 0x000000 |      0 |    4KB | Bootloader with flash type/size header
-0x001000 |    4KB |  476KB | Espruino firmware, first partition
+0x001000 |    4KB |  472KB | Espruino firmware, first partition
+0x077000 |  476KB |    4KB | EEPROM emulation
 0x078000 |  480KB |   12KB | Espruino save() area
-0x07B000 |  492KB |    4KB | EEPROM emulation
+0x07B000 |  492KB |    4KB | Espruino system and wifi settings
 0x07C000 |  496KB |   16KB | 512KB flash: Espressif SDK system params, else unused
 0x080000 |  512KB |    4KB | Unused
-0x081000 |  516KB |  476KB | Espruino firmware, second partition
+0x081000 |  516KB |  472KB | Espruino firmware, second partition
+0x0F7000 |  988KB |    4KB | Unused
 0x0F8000 |  992KB |   16KB | Unused
 0x0FC000 |  996KB |   16KB | 1MB flash: Espressif SDK system params, else unused
 0x100000 |    1MB |        | approx 1MB-3MB flash for SPIFFS on 2MB-4MB modules
 0x1FC000 | 2032KB |   16KB | 2MB flash: Espressif SDK system params, else unused/SPIFFS
 0x3FC000 | 4080KB |   16KB | 4MB flash: Espressif SDK system params, else unused/SPIFFS
 
-The Espressif SDK sstem params area is composed of:
+The Espressif SDK system params area is composed of:
 
 Offset   | Size   | Function
 --------:|-------:|:---------
