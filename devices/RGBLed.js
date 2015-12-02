@@ -1,6 +1,7 @@
 /* Copyright (c) 2015 bartmichu. See the file LICENSE for copying permission. */
 function RGBLed(pins, state, color) {
   this.pins = pins;
+  this.inverted=false;
   this.pins.forEach(function (e) {pinMode(e, "output");});
   this.state = typeof state === "undefined" ? true : !!state;
   this.rgbAnalog = [];
@@ -20,7 +21,12 @@ RGBLed.prototype._stop = function () {
 };
 RGBLed.prototype.setColor = function (color) {
   for (var i = 0, s = -6; i < 3; i += 1, s += 2) {
-    this.rgbAnalog[i] = E.clip(parseInt(color.substr(s, 2), 16), 0, 255) / 255;
+    if(!this.inverted){  
+      this.rgbAnalog[i] = E.clip(parseInt(color.substr(s, 2), 16), 0, 255) / 255;
+    }
+    else {
+      this.rgbAnalog[i] = 1-(E.clip(parseInt(color.substr(s, 2), 16), 0, 255) / 255);
+    }
   }
   this._write();
 };
@@ -35,6 +41,9 @@ RGBLed.prototype.off = function () {
 RGBLed.prototype.toggle = function () {
   this.state = !this.state;
   this._write();
+};
+RGBLed.prototype.invert = function (x) {
+  this.inverted=x;
 };
 RGBLed.prototype.getState = function () {
   return this.state;
