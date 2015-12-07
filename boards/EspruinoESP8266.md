@@ -18,15 +18,27 @@ Features
 * Built-in Wifi
 * 1023 JS variables
 
-Not supported
--------------
-The following features are not supported by Espruino on the ESP8266:
+Limitations
+-----------
+The following features are only partially or not supported by Espruino on the ESP8266:
 
 - No hardware [[I2C]], however, the software I2C works OK.
 - No hardware [[SPI]], however, the software SPI works OK and it's not clear that there is any real
   benefit to the hardware SPI.
 - [[PWM]] is in the works.
 - No [[DAC]]: the esp8266 does not have a DAC.
+
+The main limitations of Espruino on the esp8266 come from two factors:
+- The esp8266 does not have rich I/O peripheral interfaces, this means protocols need to be run in software, which not only may
+  be slower but keeps the CPU busy and not attending to other things. As a result, the esp8266 just cannot drive as man peripherals
+  as a good ARM processor.
+- The esp8266 uses FreeRTOS with non-preemtible tasks and has extremely limited code space for interrupt handlers, as a result,
+  it is not possible to handle certain peripherals at interrupt time and a task has to be scheduled instead, which would be OK
+  if tasks were pre-emptible, but they are not. This means that functions like digitalPulse have to use busy-waiting between
+  edge transitions instead of being interrupt driven.
+
+In general the above limitations can be overcome by writing C code and loading it into a custom Espruino build.
+The current state of the esp8266 Espruino port could also certainly be improved and contributions are always appreciated!
 
 Pinout
 ------
@@ -56,6 +68,18 @@ be changed to an A0 pin).
 GPIO16 is not currently supported in Espruino, it is not a normal GPIO
 pin but rather is attached to the real-time-clock circuitry.
 
+### digitalPulse implementation
+
+The digitalPulse function is implemented by busy-waiting between pulse transitions. I.e., if you specify a series of 10 500us
+pulses the esp8266 will busy-wait for 5ms in order to toggle the output pin at the right moment. Other than the fact that your
+program will not do anything else during this time, this also prevents Wifi processing and empirically, somewhere after 10ms-50ms
+the watchdog timeout will kick in and reset the chip.
+
+### setWatch implementation
+
+The setWatch implementation uses interrupts to capture incoming pulse edges and queues them. The queue can hold 16 elements, so
+setWatch will loose transitions if javascript code does not run promptly.
+
 I2C Implementation
 ------------------
 The I2C interface is implemented in software because the esp8266 does
@@ -70,7 +94,7 @@ should avoid GPIO15 because it needs to be pulled-down at boot time
 and the I2C bus needs pull-up resistors. The pins chosen for I2C are
 configured to be open-drain outputs and an external pull-up resistor
 is required on each of the two pins. Remember that esp8266 pins are
-not 5v compatible...
+not 5v compatible!
 
 System time
 -----------
@@ -163,6 +187,9 @@ Offset   | Size   | Function
 0x2000   |    4KB | Wifi and other system parameters (clear using blank.bin)
 0x3000   |    4KB | ?
 
+The `ESP8266` library provides a `getFreeFlash` function that returns an array of free flash areas should you want to
+use the EEPROM emulation class or read/write flash directly.
+
 Main loop processing
 --------------------
 Espruino has the concept of a "main loop" which is executed to perform
@@ -182,7 +209,7 @@ WiFi
 ----
 The ESP8266 can only support a finite number of concurrent TCP/IP connections
 when performing the role of an access point.  The Espruino implementation is
-configured to constrain this to 4.
+configured to constrain this to 10.
 
 Loading Espruino
 ----------------
