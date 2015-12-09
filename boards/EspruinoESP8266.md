@@ -96,6 +96,11 @@ configured to be open-drain outputs and an external pull-up resistor
 is required on each of the two pins. Remember that esp8266 pins are
 not 5v compatible!
 
+GetSerial
+---------
+The esp8266 does not have a serial number. It does have two mac addresses "burned-in", which one can use for identification purposes.
+`getSerial()` returns the MAC address of the STA interface.
+
 System time
 -----------
 The esp8266 has two notions of system time implemented in the SDK by
