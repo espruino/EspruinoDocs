@@ -1,31 +1,28 @@
 /* Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 
-/** Create a VT100-style terminal.
-
-  g = Graphics to use
-  charWidth = width of characters in pixels
-  charHeight = height of characters in pixels
-*/
-function VT100(g, charWidth, charHeight) {
+function VT100(g, options) {
+  if (typeof options != "object") options = {};
   this.g = g;
-  this.charW = charWidth;
-  this.charH = charHeight;
+  this.charW = options.charWidth || 4;
+  this.charH = options.charHeight || 8;
   this.x = 0;
   this.y = 0;
+  this.ox = 0|options.marginLeft;
+  this.oy = 0|options.marginTop;
   // console height in lines
-  this.consoleHeight = 0|(g.getHeight() / charHeight);
+  this.consoleHeight = 0|((g.getHeight()-(this.oy+(0|options.marginBottom))) / this.charH);
   this.controlChars = "";
 }
 /// Draw an underline under the current character
 VT100.prototype.drawCursor = function() {
-  this.g.fillRect(this.x*this.charW, (this.y+1)*this.charH-1, 
-                  (this.x+1)*this.charW-1, (this.y+1)*this.charH-1);
+  this.g.fillRect(this.ox+this.x*this.charW, this.oy+(this.y+1)*this.charH-1, 
+                  this.ox+(this.x+1)*this.charW-1, this.oy+(this.y+1)*this.charH-1);
 };
 /// Scroll the screen down (if possible, else clear)
 VT100.prototype.scrollDown = function() {
   if (this.g.buffer !== undefined) {
     // if we have a buffer, hopefully we can scroll
-    var stride = this.g.buffer.length / this.consoleHeight;
+    var stride = this.g.buffer.length * this.charH / this.g.getHeight();
     new Uint8Array(this.g.buffer).set(new Uint8Array(this.g.buffer, stride), 0);
     this.y--;
     return;
@@ -56,10 +53,10 @@ VT100.prototype.char = function(ch) {
     } else if (chn==19 || chn==17) { // XOFF/XON
     } else {
       // Else actually add character
-      this.g.fillRect(this.x*this.charW, this.y*this.charH, 
-                 (this.x+1)*this.charW-1, (this.y+1)*this.charH-1);
+      this.g.fillRect(this.ox+this.x*this.charW, this.oy+this.y*this.charH, 
+                 this.ox+(this.x+1)*this.charW-1, this.oy+(this.y+1)*this.charH-1);
       this.g.setColor(1,1,1);        
-      this.g.drawString(ch, this.x*this.charW, this.y*this.charH);
+      this.g.drawString(ch, this.ox+this.x*this.charW, this.oy+this.y*this.charH);
       this.x++;
     }
   } else if (this.controlChars[0]==27) {
@@ -96,6 +93,16 @@ VT100.prototype.char = function(ch) {
   this.drawCursor();
 };
 
-exports.connect = function(g, charWidth, charHeight) {
-  return new VT100(g, charWidth, charHeight);
+/** Create a VT100-style terminal.
+
+  g = Graphics to use
+  options = object of options: 
+    charWidth -> width of characters in pixels
+    charHeight -> height of characters in pixels
+    marginLeft -> left margin (we have no right margin)
+    marginTop -> top margin 
+    marginBottom -> bottom margin
+*/
+exports.connect = function(g, options) {
+  return new VT100(g, options);
 };
