@@ -16,14 +16,14 @@
 //node.js deps
 
 //npm deps
-const mqtt = require('MQTT');
+var mqtt = require('MQTT');
 
 //app deps
-const exceptions = {
+var exceptions = {
   INVALID_CONNECT_OPTIONS: 'Invalid connect options supplied.',
   INVALID_CLIENT_ID_OPTION: 'Invalid "clientId" (mqtt client id) option supplied.'
 };
-const isUndefined = function(value) {
+var isUndefined = function(value) {
   if ((typeof(value) === 'undefined') || (typeof(value) === null)) {
       return true;
   }
@@ -31,7 +31,7 @@ const isUndefined = function(value) {
 };
 
 //begin module
-const reconnectPeriod = 3 * 1000;
+var reconnectPeriod = 3 * 1000;
 
 //
 // This method is the exposed module; it validates the mqtt options,
@@ -78,7 +78,7 @@ module.exports = function(options) {
      console.log('attempting new mqtt connection...');
   }
   //connect and return the client instance to map all mqttjs apis
-  const device = mqtt.connect(options);
+  var device = mqtt.connect(options);
 
   //handle some exceptions
   device 
