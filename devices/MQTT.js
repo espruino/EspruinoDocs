@@ -1,4 +1,4 @@
-/* Copyright (c) 2014 Lars Toft Jacobsen (boxed.dk). See the file LICENSE for copying permission. */
+/* Copyright (c) 2014 Lars Toft Jacobsen (boxed.dk), Gordon Williams. See the file LICENSE for copying permission. */
 /*
 Simple MQTT protocol wrapper for Espruino sockets.
 */
@@ -56,17 +56,15 @@ MQTT.prototype.C = {
 
 /* Utility functions ***************************/
 
+var fromCharCode = String.fromCharCode;
+
 /** MQTT string (length MSB, LSB + data) */
-MQTT.prototype.mqttStr = function(s) {
-  return String.fromCharCode(s.length>>8, s.length&255)+s;
+function mqttStr(s) {
+  return fromCharCode(s.length>>8, s.length&255)+s;
 };
 
-/** MQTT standard packet formatter */
-MQTT.prototype.mqttPacket = function(cmd, variable, payload) {
-  return String.fromCharCode(cmd) + this.mqttPacketLength(variable.length+payload.length) +variable+payload;
-};
 /** MQTT packet length formatter - algorithm from reference docs */
-MQTT.prototype.mqttPacketLength = function(length) {
+function mqttPacketLength(length) {
     var encLength = '';
     do {
       encByte = length & 127;
@@ -75,10 +73,15 @@ MQTT.prototype.mqttPacketLength = function(length) {
       if ( length > 0 ) {
          encByte += 128;
       }
-      encLength += String.fromCharCode(encByte);
+      encLength += fromCharCode(encByte);
     } while ( length > 0 )
     return encLength;
 }
+
+/** MQTT standard packet formatter */
+function mqttPacket(cmd, variable, payload) {
+  return fromCharCode(cmd) + mqttPacketLength(variable.length+payload.length) + variable + payload;
+};
 
 /** PUBLISH packet parser - returns object with topic and message */
 MQTT.prototype.parsePublish = function(data) {
@@ -112,7 +115,7 @@ MQTT.prototype.mqttUid = (function() {
 
 /** Create escaped hex value from number */
 MQTT.prototype.createEscapedHex = function( number ){
-  return String.fromCharCode(parseInt( number.toString(16) , 16));
+  return fromCharCode(parseInt( number.toString(16) , 16));
 };
 
 /* Public interface ****************************/
@@ -197,7 +200,7 @@ MQTT.prototype.connect = function(client) {
 
 /** Disconnect from server */
 MQTT.prototype.disconnect = function(topic, message) {
-  this.client.write(String.fromCharCode(TYPE.DISCONNECT<<4)+"\x00");
+  this.client.write(fromCharCode(TYPE.DISCONNECT<<4)+"\x00");
   this.client.end();
   this.client = false;
   this.connected = false;
@@ -251,7 +254,7 @@ MQTT.prototype.unsubscribe = function(topic) {
 
 /** Send ping request to server */
 MQTT.prototype.ping = function() {
-  this.client.write(String.fromCharCode(TYPE.PINGREQ<<4)+"\x00");
+  this.client.write(fromCharCode(TYPE.PINGREQ<<4)+"\x00");
 };
 
 /* Packet specific functions *******************/
@@ -278,18 +281,18 @@ MQTT.prototype.mqttConnect = function(clean) {
     clean_session: clean
   });
 
-  var keep_alive = String.fromCharCode(this.keep_alive>>8, this.keep_alive&255);
+  var keep_alive = fromCharCode(this.keep_alive>>8, this.keep_alive&255);
 
   /* payload */
-  var payload = this.mqttStr(this.client_id); 
+  var payload = mqttStr(this.client_id); 
   if( this.username ){
-    payload += this.mqttStr( this.username );
+    payload += mqttStr( this.username );
     if( this.password ){
-      payload += this.mqttStr( this.password );
+      payload += mqttStr( this.password );
     }
   }
 
-  return this.mqttPacket(cmd, 
+  return mqttPacket(cmd, 
            this.mqttStr( this.protocol_name )/*protocol name*/+
            this.protocol_level /*protocol level*/+
            flags+
@@ -300,29 +303,29 @@ MQTT.prototype.mqttConnect = function(clean) {
 /** PUBLISH control packet */
 MQTT.prototype.mqttPublish = function(topic, message, qos) {
   var cmd = TYPE.PUBLISH << 4 | (qos << 1);
-  var pid = String.fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
+  var pid = fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
   // Packet id must be included for QOS > 0
-  var variable = (qos === 0) ? this.mqttStr(topic) : this.mqttStr(topic)+pid;
-  return this.mqttPacket(cmd, variable, message);
+  var variable = (qos === 0) ? mqttStr(topic) : mqttStr(topic)+pid;
+  return mqttPacket(cmd, variable, message);
 };
 
 /** SUBSCRIBE control packet */
 MQTT.prototype.mqttSubscribe = function(topic, qos) {
   var cmd = TYPE.SUBSCRIBE << 4 | 2;
-  var pid = String.fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
-  return this.mqttPacket(cmd,
+  var pid = fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
+  return mqttPacket(cmd,
            pid/*Packet id*/,
-           this.mqttStr(topic)+
-           String.fromCharCode(qos)/*QOS*/);
+           mqttStr(topic)+
+           fromCharCode(qos)/*QOS*/);
 };
 
 /** UNSUBSCRIBE control packet */
 MQTT.prototype.mqttUnsubscribe = function(topic) {
   var cmd = TYPE.UNSUBSCRIBE << 4 | 2;
-  var pid = String.fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
-  return this.mqttPacket(cmd,
+  var pid = fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
+  return mqttPacket(cmd,
            pid/*Packet id*/,
-           this.mqttStr(topic));
+           mqttStr(topic));
 };
 
 /* Exports *************************************/
