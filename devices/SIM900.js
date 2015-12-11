@@ -189,9 +189,9 @@ var gprsFuncs = {
             return cb;
           } else if(r === 'OK') {
             s = 1;
-            at.cmd('AT+CPIN?\r\n', 100, cb);
+            at.cmd('AT+CPIN?\r\n', 500, cb);
           } else if(r) {
-            callback('Error in ' + s + ': ' + r);
+            callback('Error in ATE0: ' + r);
           }
           break;
         case 1:
@@ -199,27 +199,28 @@ var gprsFuncs = {
             return cb;
           } else if (r === 'OK') {
             s = 2;
-            at.cmd('AT+CGATT?\r\n', 100, cb);
+            // check if we're on network
+            at.cmd('AT+CGATT?\r\n', 500, cb);
           } else if(r) {
-            callback('Error in ' + s + ': ' + r);
+            callback('Error in CPIN: ' + r);
           }
           break;
         case 2:
           if(r === '+CGATT: 1') {
-            return cb;
+            return cb; 
           } else if(r === 'OK') {
             s = 3;
-            at.cmd('AT+CIPSHUT\r\n', 100, cb);
+            at.cmd('AT+CIPSHUT\r\n', 500, cb);
           } else if(r) {
-            callback('Error in ' + s + ': ' + r);
+            callback('Error in CGATT: ' + r);
           }
           break;
         case 3:
           if(r === 'SHUT OK') {
             s = 4;
-            at.cmd('AT+CIPSTATUS\r\n', 100, cb);
+            at.cmd('AT+CIPSTATUS\r\n', 500, cb);
           } else if(r) {
-            callback('Error in ' + s + ': ' + r);
+            callback('Error in CIPSHUT: ' + r);
           }
           break;
         case 4:
@@ -227,25 +228,25 @@ var gprsFuncs = {
             return cb;
           } else if(r === 'STATE: IP INITIAL') {
             s = 5;
-            at.cmd('AT+CIPMUX=1\r\n', 100, cb);
+            at.cmd('AT+CIPMUX=1\r\n', 500, cb);
           }
           else if(r) {
-            callback('Error in ' + s + ': ' + r);
+            callback('Error in CIPSTATUS: ' + r);
           }
           break;
         case 5:
           if(r === 'OK') {
             s = 6;
-            at.cmd('AT+CIPHEAD=1\r\n', 100, cb);
+            at.cmd('AT+CIPHEAD=1\r\n', 500, cb);
           }  else if(r) {
-            callback('Error in ' + s + ': ' + r);
+            callback('Error in CIPMUX: ' + r);
           }
           break;
         case 6:
           if(r === 'OK') {
             return cb;
           } else if(r) {
-             callback('Error in ' + s + ': ' + r);
+             callback('Error in CIPHEAD: ' + r);
           } else {
             callback(null);
           }
@@ -255,6 +256,7 @@ var gprsFuncs = {
     at.cmd("ATE0\r\n",1000,cb);
   },
   "reset": function(callback) {
+    if (!rst) return gprsFuncs.init(callback);
     digitalPulse(rst, true, 1);
     setTimeout(function() {
       gprsFuncs.init(callback);
