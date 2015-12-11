@@ -32,7 +32,7 @@ function MQTT(server, options) {
   this.server = server;
   var options = options || {};
   this.port = options.port || this.C.DEF_PORT;
-  this.client_id = options.client_id || this.mqttUid();
+  this.client_id = options.client_id || mqttUid();
   this.keep_alive = options.keep_alive || this.C.DEF_KEEP_ALIVE;
   this.clean_session = options.clean_session || true;
   this.username = options.username;
@@ -42,7 +42,7 @@ function MQTT(server, options) {
   this.ping_interval = 
     this.keep_alive < this.C.PING_INTERVAL ? (this.keep_alive - 5) : this.C.PING_INTERVAL;
   this.protocol_name = options.protocol_name || "MQTT";
-  this.protocol_level = this.createEscapedHex( options.protocol_level || C.PROTOCOL_LEVEL );
+  this.protocol_level = createEscapedHex( options.protocol_level || C.PROTOCOL_LEVEL );
 }
 
 /** 'public' constants here */
@@ -84,7 +84,7 @@ function mqttPacket(cmd, variable, payload) {
 };
 
 /** PUBLISH packet parser - returns object with topic and message */
-MQTT.prototype.parsePublish = function(data) {
+function parsePublish(data) {
   if (data.length > 5 && typeof data !== undefined) {
     var cmd = data.charCodeAt(0);
     var rem_len = data.charCodeAt(1);
@@ -102,7 +102,7 @@ MQTT.prototype.parsePublish = function(data) {
 };
 
 /** Generate random UID */
-MQTT.prototype.mqttUid = (function() {
+var mqttUid = (function() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
                .toString(16)
@@ -114,7 +114,7 @@ MQTT.prototype.mqttUid = (function() {
 })();
 
 /** Create escaped hex value from number */
-MQTT.prototype.createEscapedHex = function( number ){
+function createEscapedHex( number ){
   return fromCharCode(parseInt( number.toString(16) , 16));
 };
 
@@ -143,7 +143,7 @@ MQTT.prototype.connect = function(client) {
       var type = data.charCodeAt(0) >> 4;
 
       if(type === TYPE.PUBLISH) {
-        var data = mqo.parsePublish(data);
+        var data = parsePublish(data);
         mqo.emit('publish', data);
         mqo.emit('message', data.topic, data.message);
       }
@@ -267,7 +267,7 @@ MQTT.prototype.createFlagsForConnection = function( options ){
   flags |= ( this.username )? 0x80 : 0; 
   flags |= ( this.username && this.password )? 0x40 : 0; 
   flags |= ( options.clean_session )? 0x02 : 0;
-  return this.createEscapedHex( flags );
+  return createEscapedHex( flags );
 };
 
 /** CONNECT control packet 
