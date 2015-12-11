@@ -1,4 +1,4 @@
-/* Copyright (c) 2015 Sameh Hady. See the file LICENSE for copying permission. */
+/* Copyright (c) 2015 Sameh Hady, Gordon Williams. See the file LICENSE for copying permission. */
 /*
  Simple WebSocket protocol wrapper for Espruino sockets.
 
@@ -13,6 +13,8 @@
 
  ```javascript
  // Connect to WiFi, then...
+
+ // =============================== CLIENT
  var WebSocket = require("ws");
  var ws = new WebSocket("HOST",{
       port: 8080,
@@ -45,8 +47,27 @@
  
  //Broadcast message to specific room
  ws.broadcast("Hello Room", "Espruino");
- ```
- */
+
+ // =============================== SERVER
+ var page = '<html><body><script>var ws;setTimeout(function(){';
+ page += 'ws = new WebSocket("ws://" + location.host + "/my_websocket", "protocolOne");';
+ page += 'ws.onmessage = function (event) { console.log("MSG:"+event.data); };';
+ page += 'setTimeout(function() { ws.send("Hello to Espruino!"); }, 1000);';
+ page += '},1000);</script></body></html>';
+
+ function onPageRequest(req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.end(page);
+ }
+
+ var server = require('ws').createServer(onPageRequest);
+ server.listen(8000);
+ server.on("websocket", function(ws) {
+    ws.on('message',function(msg) { print("[WS] "+JSON.stringify(msg)); });
+    ws.send("Hello from Espruino!");
+ });
+```
+*/
 
 /** Minify String.fromCharCode() call */
 var strChr = String.fromCharCode;
@@ -84,6 +105,7 @@ WebSocket.prototype.onConnect = function (socket) {
 WebSocket.prototype.parseData = function (data) {
     // see https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
     // Note, docs specify bits 0-7, etc - but BIT 0 is the MSB, 7 is the LSB
+    // TODO: handle >1 data packet, or packets split over multiple parseData calls
     var ws = this;
     this.emit('rawData', data);
 
@@ -115,8 +137,8 @@ WebSocket.prototype.parseData = function (data) {
         var offset = 2;
         var mask = [ 0,0,0,0 ];
         if (data.charCodeAt(1)&128 /* mask */)
-          mask = [ data.charCodeAt(offset++),data.charCodeAt(offset++),
-                   data.charCodeAt(offset++),data.charCodeAt(offset++)];
+          mask = [ data.charCodeAt(offset++), data.charCodeAt(offset++),
+                   data.charCodeAt(offset++), data.charCodeAt(offset++)];
 
         var message = "";
         for (var i = 0; i < dataLen; i++) {
@@ -171,4 +193,25 @@ exports = function (host, options) {
       ws.initializeConnection();
     }
     return ws;
+};
+
+exports.createServer = function(callback, wscallback) {
+  var server = require('http').createServer(function (req, res) {
+    if (req.headers.Connection=="Upgrade") {    
+      var key = req.headers["Sec-WebSocket-Key"];
+      var accept = btoa(E.toString(require("crypto").SHA1(key+"258EAFA5-E914-47DA-95CA-C5AB0DC85B11")));
+      res.writeHead(101, {
+          'Upgrade': 'websocket',
+          'Connection': 'Upgrade',
+          'Sec-WebSocket-Accept': accept,
+          'Sec-WebSocket-Protocol': req.headers["Sec-WebSocket-Protocol"]
+      });
+      var ws = require("ws")(undefined,{
+        serverRequest : req,
+        serverResponse : res
+      });
+      server.emit("websocket", ws);
+    } else callback(req, res);
+  });
+  return server;
 };
