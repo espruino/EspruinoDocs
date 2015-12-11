@@ -134,8 +134,8 @@ Join a room. ( `must be used with the ws node.js server example provided` )
   ws.join(room);
 ```
 
-Node.js server.
------------
+Node.js server
+---------------
 
 First you need to install the node.js `ws` module ( `assuming you already have node.js installed` )
 
