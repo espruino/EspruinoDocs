@@ -49,9 +49,7 @@
  */
 
 /** Minify String.fromCharCode() call */
-function strChr(chr) {
-    return String.fromCharCode(chr);
-}
+var strChr = String.fromCharCode;
 
 function WebSocket(host, options) {
     this.socket = null;
@@ -84,8 +82,12 @@ WebSocket.prototype.onConnect = function (socket) {
 };
 
 WebSocket.prototype.parseData = function (data) {
+    // see https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
+    // Note, docs specify bits 0-7, etc - but BIT 0 is the MSB, 7 is the LSB
     var ws = this;
     this.emit('rawData', data);
+
+    // FIXME - not a good idea!
     if (data.indexOf('HSmrc0sMlYUkAGmm5OPpG2HaGWk=') > -1) {
         this.emit('handshake');
         var ping = setInterval(function () {
@@ -93,25 +95,32 @@ WebSocket.prototype.parseData = function (data) {
         }, this.keepAlive);
     }
 
-    if (data.indexOf(strChr(0x8A)) > -1) {
+    var opcode = data.charCodeAt(0)&7;
+
+    if (opcode == 0xA) {
         this.emit('pong');
+        return
     }
 
-    if (data.indexOf(strChr(0x89)) > -1) {
+    if (opcode == 0x9) {
         this.send('pong', 0x8A);
-        this.emit('ping');
+        return this.emit('ping');
     }
 
-    if (data.indexOf(strChr(0x0a)) > -1) {
-        data = data.substring(1);
-    }
+    // TODO: 0x08 -> close
 
-    if (data.indexOf(strChr(0x81)) > -1) {
-        var dataLen = data.charCodeAt(1);
-        data = data.substring(2);
+    if (opcode == 1 /* text - all we're supporting */) {
+        var dataLen = data.charCodeAt(1)&127;
+        if (dataLen>126) throw "Messages >125 in length unsupported";
+        var offset = 2;
+        var mask = [ 0,0,0,0 ];
+        if (data.charCodeAt(1)&128 /* mask */)
+          mask = [ data.charCodeAt(offset++),data.charCodeAt(offset++),
+                   data.charCodeAt(offset++),data.charCodeAt(offset++)];
+
         var message = "";
         for (var i = 0; i < dataLen; i++) {
-            message += data[i];
+            message += String.fromCharCode(data.charCodeAt(offset++) ^ mask[i&3]);
         }
         this.emit('message', message);
     }
@@ -136,17 +145,15 @@ WebSocket.prototype.handshake = function () {
 /** Send message based on opcode type */
 WebSocket.prototype.send = function (msg, opcode) {
     opcode = opcode === undefined ? 0x81 : opcode;
-    if(!JSON.parse(msg)){msg = '{"msg":"' + msg + '"}';}
-    this.socket.write(strChr(opcode));
-    this.socket.write(strChr(msg.length));
+    if(!JSON.parse(msg)) msg = JSON.stringify({msg:msg});
+    this.socket.write(strChr(opcode, msg.length));
     this.socket.write(msg);
 };
 
 /** Broadcast message to room */
 WebSocket.prototype.broadcast = function (msg, room) {
     room = room === undefined ? 'all' : room;
-    var newMsg = '{"room":"' + room + '", "msg":"' + msg + '"}';
-    this.send(newMsg);
+    this.send(JSON.stringify({room:room,msg:msg}));
 };
 
 /** Join a room */
@@ -157,6 +164,11 @@ WebSocket.prototype.join = function (room) {
 
 exports = function (host, options) {
     var ws = new WebSocket(host, options);
-    ws.initializeConnection();
+    if (options && options.serverResponse && options.serverRequest) { 
+      ws.socket = options.serverResponse;
+      options.serverRequest.on('data', ws.parseData.bind(ws) );
+    } else { 
+      ws.initializeConnection();
+    }
     return ws;
 };
