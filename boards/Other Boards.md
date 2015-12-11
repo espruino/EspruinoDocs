@@ -121,6 +121,8 @@ See the [Download](/Download) page for more information - the Web IDE directly s
 
 *   Run the 'STM32 ST-LINK Utility'
 
+*   Click 'Target'->'Erase Chip'
+
 *   Click 'File'->'Open File' and choose espruino_1vXX_stm32vldiscovery.bin
 
 *   When asked if you want to program, click 'Yes'
