@@ -83,7 +83,8 @@ var netCallbacks = {
       socks[sckt]="WaitClose";
     else if (socks[sckt]!==undefined) {
       // socket may already have been closed (eg. received 0,CLOSE)
-      at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(d) {
+      // we need to a different command if we're closing a server
+      at.cmd(((sckt==MAXSOCKETS) ? 'AT+CIPSERVER=0' : ('AT+CIPCLOSE='+sckt))+'\r\n',1000, function(d) {
         socks[sckt] = undefined;
       });
     }

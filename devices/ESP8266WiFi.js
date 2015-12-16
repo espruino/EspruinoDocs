@@ -74,7 +74,10 @@ var netCallbacks = {
       socks[sckt]="WaitClose";
     else {
       lastSocket = sckt;
-      at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(/*d*/) { socks[sckt] = undefined; });
+      // we need to a different command if we're closing a server
+      at.cmd(((sckt==MAXSOCKETS) ? 'AT+CIPSERVER=0' : ('AT+CIPCLOSE='+sckt))+'\r\n',1000, function(d) {
+        socks[sckt] = undefined;
+      });
     }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
