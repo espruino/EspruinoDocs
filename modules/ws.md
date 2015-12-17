@@ -2,7 +2,7 @@
 WebSockets
 ==========
 
-* KEYWORDS: Module,websocket,ws,socket
+* KEYWORDS: Module,websocket,ws,socket,Internet
 
 This is a Websocket implementation on Espruino - it lets you:
 

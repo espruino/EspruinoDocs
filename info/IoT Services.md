@@ -2,7 +2,7 @@
 IoT Services
 ==========
 
-* KEYWORDS: IoT,Server,Service,Broker,Cloud Services,Hosted Services,Data Services,Cubitic,Xively,IFTTT,Dweet
+* KEYWORDS: IoT,Server,Service,Broker,Cloud Services,Hosted Services,Data Services,Cubitic,Xively,IFTTT,Dweet,Internet
 * USES: Internet,ESP8266,CC3000,WIZnet,GSM
 
 There are [quite a lot](http://postscapes.com/companies/iot-cloud-services) of IoT cloud service providers around at the moment. We've collected some sample code for a selection of them below. If you've got some code you'd like to share, please contribute it (you can submit changes via [this page on GitHub](https://github.com/espruino/EspruinoDocs/blob/master/info/IoT%20Services.md)).
