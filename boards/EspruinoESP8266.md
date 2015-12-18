@@ -212,9 +212,29 @@ chip reset.
 
 WiFi
 ----
-The ESP8266 can only support a finite number of concurrent TCP/IP connections
-when performing the role of an access point.  The Espruino implementation is
-configured to constrain this to 10.
+The ESP8266's Wifi implementation supports both a simple access point mode and a station mode.
+The station mode is highly recommended for normal operation as the access point mode is very
+limited. It supports 4 stations max and offers no routing between stations.
+
+The default initial configuration is for an access point with an SSID like `ESP_123ABC` to show
+up.
+
+Using the wifi is documented in the [Wifi library reference](http://www.espruino.com/Reference#Wifi).
+The "getting started 3-liner" is:
+```
+var wifi = require("Wifi");
+wifi.connect("my-ssid", {password:"my-pwd"}, function(ap){ console.log("connected:", ap); });
+wifi.stopAP();
+```
+You may want to add `wifi.setDHCPHostname("espruino")`.
+Once you're happy with your connection, you can use `wifi.save()` to persist it, so you don't have
+to reconnect each time you reset your ESP8266.
+
+To make HTTP requests, use the [HTTP library](http://www.espruino.com/Reference#http).
+Code for a simple get request can be found in the docs for the `get()` method.
+
+Beware that TCP connections can require a lot of memory for buffers, thus "your mileage may vary"
+if you use many connections and/or receive a lot of data.
 
 Loading Espruino
 ----------------
@@ -224,7 +244,15 @@ to the esp8266 itself.  A variety of tools are available to assist with this.
 The Espruino ESP8266 firmware is still under heavy development, and is not yet distributed
 alongside all the other firmwares on the Espruino Website.
 Instead, you should pick up the latest builds from
-[Espruino Builds on GitHub](https://github.com/espruino/EspruinoBuilds)
+[this forum thread](http://forum.espruino.com/conversations/279176)
+
+Open Issues
+-----------
+The authoritative list of open issues is
+[on github](https://github.com/espruino/Espruino/issues?q=is%3Aopen+is%3Aissue+label%3AESP8266).
+Some of the top-level issues at the time of writing are:
+- Support sleep mode
+- Provide more memory (either more JSvars, or store code in flash)
 
 Further reading
 ---------------
