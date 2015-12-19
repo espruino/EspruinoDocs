@@ -233,8 +233,28 @@ to reconnect each time you reset your ESP8266.
 To make HTTP requests, use the [HTTP library](http://www.espruino.com/Reference#http).
 Code for a simple get request can be found in the docs for the `get()` method.
 
+In terms of power consumption, the esp8266 uses about 60mA minimum when in AP mode, with power
+spikes in the 100-300mA range when transmitting. When in station mode and the station supports
+power save (often visible as a "DTIM period" setting in the access point) then the esp8266
+will bounce between ~15mA and ~60mA most of the time when not transmitting, if power-save is
+enabled (see Wifi library), otherwise it will stay at ~70mA. If the Wifi is turned
+off it will consume around 15mA. Lower power modes (e.g. sleeping) is not currently supported
+in the Espruino port.
+
 Beware that TCP connections can require a lot of memory for buffers, thus "your mileage may vary"
-if you use many connections and/or receive a lot of data.
+if you use many connections and/or receive a lot of data. The memory for these buffers comes out
+of the heap using malloc, they are separate from the memory used by JavaScript. Thus you can
+run out of JavaScript memory (Espruino prints "Out of memory!") and you can run out of heap
+memory (the system tends to crash in those situations).
+
+In order to reduce memory requirements,
+Espruino uses LwIP configured with a MSS of 536, this means that all TCP packets can have at most
+536 bytes of payload as opposed to the typical 1460 bytes. On the tranmission end, LwIP seems
+to allow for 3 packets to be in-flight (it has to keep data that is sent until it receives an
+acknowledgment from the receiver). On the reception end, it advertises a TCP window of 4 times
+the MSS, i.e. 2144 bytes, and Espruino tells LwIP to stop incoming data when it has two unconsumed
+buffers. The net result is that up to 6\*536 = 3216 bytes may arrive and need to be buffered on
+a connection. If multiple connections are active these buffer requirements can add up quickly!
 
 Loading Espruino
 ----------------
