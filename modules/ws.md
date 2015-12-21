@@ -106,44 +106,26 @@ ws.on('rawData', function(msg) {
 });
 ```
 
-Send Message
+Sending a Message
 -----------
 
 At any time during a session you can publish a message to the server.
-```js
-  var message = "hello world";
-  ws.send(message);
-```
 
-Broadcast a message to all connected users. ( `must be used with the ws node.js server example provided` )
 ```js
-  var message = "hello world";
-  ws.broadcast(message);
-```
-
-Broadcast a message to specific room. ( `must be used with the ws node.js server example provided` )
-```js
-  var message = "hello world";
-  var room = "Espruino";
-  ws.broadcast(message, room);
-```
-
-Join a room. ( `must be used with the ws node.js server example provided` )
-```js
-  var room = "Espruino";
-  ws.join(room);
+  ws.send("hello world");
 ```
 
 Node.js server
 ---------------
 
-First you need to install the node.js `ws` module ( `assuming you already have node.js installed` )
+First you need to install the node.js `ws` module ( assuming you already have `node.js` and `npm` installed ):
 
 ```js
 npm install ws
 ```
 
-Now you can run this server example that is needed for broadcasting and joining a room.
+Now you can run this server example that implements a simple chat room:
+
 ```js
 var WebSocketServer = require('ws').Server,
     wss = new WebSocketServer({
@@ -186,3 +168,49 @@ function broadcast(message) {
 }
 ```
 
+Then on Espruino, you can interact with the chat room using:
+
+```
+/** Join a room */
+WebSocket.prototype.message = function (msg) {
+    this.send(JSON.stringify({ msg : msg }));
+};
+
+/** Broadcast message to room */
+WebSocket.prototype.broadcast = function (msg, room) {
+    room = room === undefined ? 'all' : room;
+    this.send(JSON.stringify({ room:room, msg:msg }));
+};
+
+/** Join a room */
+WebSocket.prototype.join = function (room) {
+    this.send(JSON.stringify({ join : room }));
+};
+
+Then to send a message use:
+
+```js
+  ws.message("hello world");
+```
+
+To broadcast a message to all connected users:
+
+```js
+  var message = "hello world";
+  ws.broadcast(message);
+```
+
+To broadcast a message to specific room:
+
+```js
+  var message = "hello world";
+  var room = "Espruino";
+  ws.broadcast(message, room);
+```
+
+Or to join a room:
+
+```js
+  var room = "Espruino";
+  ws.join(room);
+```

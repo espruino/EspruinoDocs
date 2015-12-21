@@ -24,30 +24,20 @@
     });
 
  ws.on('open', function() {
- console.log("Connected to server");
- ws.broadcast("New User Joined");
+   console.log("Connected to server");
  });
 
  ws.on('message', function(msg) {
- console.log("MSG: " + msg);
+   console.log("MSG: " + msg);
  });
 
  ws.on('close', function() {
- console.log("Connection closed");
+   console.log("Connection closed");
  });
  
  //Send message to server
  ws.send("Hello Server");
  
- //Broadcast message to all users
- ws.broadcast("Hello All");
- 
- // Join a room
- ws.join("Espruino");
- 
- //Broadcast message to specific room
- ws.broadcast("Hello Room", "Espruino");
-
  // =============================== SERVER
  var page = '<html><body><script>var ws;setTimeout(function(){';
  page += 'ws = new WebSocket("ws://" + location.host + "/my_websocket", "protocolOne");';
@@ -117,19 +107,22 @@ WebSocket.prototype.parseData = function (data) {
         }, this.keepAlive);
     }
 
-    var opcode = data.charCodeAt(0)&7;
+    var opcode = data.charCodeAt(0)&15;
 
-    if (opcode == 0xA) {
-        this.emit('pong');
-        return
-    }
+    if (opcode == 0xA)
+        return this.emit('pong');
 
     if (opcode == 0x9) {
         this.send('pong', 0x8A);
         return this.emit('ping');
     }
 
-    // TODO: 0x08 -> close
+    if (opcode == 0x8) {
+        // connection close request
+        this.socket.end();
+        // we'll emit a 'close' when the socket itself closes
+        return;
+    }
 
     if (opcode == 1 /* text - all we're supporting */) {
         var dataLen = data.charCodeAt(1)&127;
@@ -156,45 +149,27 @@ WebSocket.prototype.handshake = function () {
         "Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==",
         "Sec-WebSocket-Version: " + this.protocolVersion,
         "Origin: " + this.origin,
-        ""
+        "",""
     ];
 
-    for (var index = 0; index < socketHeader.length; index++) {
-        this.socket.write(socketHeader[index] + "\r\n");
-    }
+    this.socket.write(socketHeader.join("\r\n"));
 };
 
 /** Send message based on opcode type */
 WebSocket.prototype.send = function (msg, opcode) {
     opcode = opcode === undefined ? 0x81 : opcode;
-    if(!JSON.parse(msg)) msg = JSON.stringify({msg:msg});
     this.socket.write(strChr(opcode, msg.length));
     this.socket.write(msg);
 };
 
-/** Broadcast message to room */
-WebSocket.prototype.broadcast = function (msg, room) {
-    room = room === undefined ? 'all' : room;
-    this.send(JSON.stringify({room:room,msg:msg}));
-};
-
-/** Join a room */
-WebSocket.prototype.join = function (room) {
-    var newMsg = '{"join":"' + room +'"}';
-    this.send(newMsg);
-};
-
+/** Create a WebSocket client */
 exports = function (host, options) {
     var ws = new WebSocket(host, options);
-    if (options && options.serverResponse && options.serverRequest) { 
-      ws.socket = options.serverResponse;
-      options.serverRequest.on('data', ws.parseData.bind(ws) );
-    } else { 
-      ws.initializeConnection();
-    }
+    ws.initializeConnection();
     return ws;
 };
 
+/** Create a WebSocket server */
 exports.createServer = function(callback, wscallback) {
   var server = require('http').createServer(function (req, res) {
     if (req.headers.Connection=="Upgrade") {    
@@ -206,10 +181,23 @@ exports.createServer = function(callback, wscallback) {
           'Sec-WebSocket-Accept': accept,
           'Sec-WebSocket-Protocol': req.headers["Sec-WebSocket-Protocol"]
       });
-      var ws = require("ws")(undefined,{
-        serverRequest : req,
-        serverResponse : res
+      res.write(""); /** Completes the webSocket handshake on pre-1v85 builds **/
+
+      var ws = new WebSocket(undefined, {});
+      ws.socket = res;
+      req.on('data', ws.parseData.bind(ws) );
+      req.on('close', function() {
+        // if srvPing is undefined, we already emitted a 'close'
+        clearInterval(ws.srvPing);
+        ws.srvPing = undefined;
+        // emit websocket close event
+        ws.emit('close');
       });
+      /** Start a server ping at the keepAlive interval  **/
+      ws.srvPing = setInterval(function () {
+          ws.emit('ping', true); // true: indicates a server ping
+          ws.send('ping', 0x89);
+      }, ws.keepAlive);
       server.emit("websocket", ws);
     } else callback(req, res);
   });
