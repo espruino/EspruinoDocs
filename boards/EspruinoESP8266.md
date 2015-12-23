@@ -8,6 +8,11 @@ Espruino on ESP8266 WiFi
 To find out how to connect an ESP8266 board to another Espruino board (as a Wifi Adaptor)
 [please see this page instead](/ESP8266)*
 
+Quick links
+-----------
+* [Forum thread with latest firmware](http://forum.espruino.com/conversations/279176/newest/)
+* [Flashing the esp8266 tutorial](/tutorials/ESP8266_Flashing.md)
+
 Features
 -------
 
