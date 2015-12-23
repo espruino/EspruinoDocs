@@ -12,6 +12,9 @@ Quick links
 -----------
 * [Forum thread with latest firmware](http://forum.espruino.com/conversations/279176/newest/)
 * [Flashing the esp8266 tutorial](/tutorials/ESP8266_Flashing.md)
+* [Forum discussions about the esp8266 port](http://forum.espruino.com/microcosms/925/)
+* [Gitter chat about Espruino](https://gitter.im/espruino/Espruino) (not focused on esp8266 but
+lots of esp8266 chatter)
 
 Features
 -------

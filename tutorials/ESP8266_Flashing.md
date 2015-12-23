@@ -28,12 +28,12 @@ this build.
 Initial flashing
 ----------------
 
-There are many different types of esp8266 modules and daughter boards, ranging from bare esp-01 or
+There are many different __types of esp8266 modules__ and daughter boards, ranging from bare esp-01 or
 esp-12 modules, to Adafruit's Huzzah or Sparkfun's Thing. You will have to use your module's
 description for getting it into the flash mode as some have buttons, others don't, and yet others
 have USB integrated. Here are a few tips.
 
-Use esp-12 modules if at all possible, avoid esp-01 modules: the esp-12 has all the I/O pins
+__Use esp-12 modules__ if at all possible, avoid esp-01 modules: the esp-12 has all the I/O pins
 brought out, has 4MBytes of flash, and has a much better RF section. The esp-01 has barely any usable
 I/O, only has 512KB flash, and the RF is 10dB worse (that's a factor of 8x!). Esp-07, esp-13,
 and wroom-02 modules are good too.
@@ -41,7 +41,7 @@ and wroom-02 modules are good too.
 You need a good power supply: typically powering from a USB FTDI type adapter doesn't suffice.
 A typical symptom is that flashing works but the esp crashes as soon as you try to run it afterwards.
 
-To get into flash mode you need to pull-up gpio2, and pull down gpio0 and gpio15. Afterwards
+__To get into flash mode__ you need to pull-up gpio2, and pull down gpio0 and gpio15. Afterwards
 to run the flashed firware you need to pull-up gpio0 and gpio2, and pull down gpio15 (i.e. gpio0
 changes).
 To issue a reset, you briefly pull either reset or ch\_en (chip-enable) low. A pull-up resistor is
@@ -55,7 +55,7 @@ clock is output on gpio0, so you definitely don't want to hard-ground that pin! 
 4.7Kohm to 10Kohm for pull-ups, and about 1Kohm-3.3Kohm for pull-downs.
 
 Connect your FTDI's TX to the esp's RX and FTDI RX to esp's TX. If your FTDI adapter cannot be
-set to 3.3v then you need to deal with the fact that the esp8266 is not 5v tolerant. That means
+set to 3.3v then you need to deal with the fact that __the esp8266 is not 5v tolerant__. That means
 you need to do something about the FTDI TX -> esp RX connection. A quick hack is to add a 2.2Kohm
 to 4.7Kohm resistor in series. A simple nicer solution is to add a diode such that the FTDI can
 only pull the esp's RX pin low and use a pull-up for the 1's (see the Adafruit Huzzah schematics).
@@ -68,7 +68,7 @@ The flashing needs to perform the following functions:
 - clear the SDK's hardware config
 - configure the correct SPI flash parameters (few tools do this)
 
-On linux, it is highly recommended to use esptool.py because it performs the last step
+On linux, it is highly recommended to __use esptool.py__ because it performs the last step
 correctly. Download it from [github](https://github.com/themadinventor/esptool),
 and run it as follows using the files from the Espruino download tgz. Here you need to know
 what size flash chip you have, if you guess wrong, Espruino will tell you at boot time and
@@ -100,7 +100,7 @@ After the flashing, you should be able to connect to the serial port at 115200 b
 at the Espruino prompt. A simple commandline program you can use to check
 is `screen /dev/ttyUSB0 115200`. For example:
 ```
-$ screen /dev/ttyUSB0 115200`
+$ screen /dev/ttyUSB0 115200
 >process.memory()
 process.memory()
 ={ "free": 1279, "usage": 121, "total": 1400, "history": 37 }
@@ -120,12 +120,17 @@ Flash map 4MB:512/512, manuf 0xe0 chip 0x4016
 >
 ```
 
+The last "Flash map..." line tells you that I have my module configured for 4MBytes of flash
+and that the actual flash chip is from manufacturer 0xe0 and code 0x4016. You can look up most
+codes at http://code.coreboot.org/svn/flashrom/trunk/flashchips.h and Espruino will complain
+if the config doesn't match the chip for some common chips.
+
 Configuring the Wifi
 --------------------
 
 To configure the Wifi you will need an access point to which you can connect, you will need to
-tell Espruino to connect to it, you will need to give it a hostname and then you will need to
-save the Wifi settings so it automatically connects after a reset.
+tell Espruino to connect to it, you will then need to give it a hostname and finally
+you will want to save the Wifi settings so it automatically connects after a reset.
 
 The wifi configuration is done using the Wifi library (docs are
 available in the [reference section](http://www.espruino.com/Reference#Wifi)). Use the
@@ -178,7 +183,7 @@ automatically at power-up:
 ```
 
 Note that the esp8266 can also act as a simplistic access point. It has its limitations, such as
-4 clients max and no routing between clients, so be aware of that. To use the access point
+4 clients max and no routing between clients, but in a pinch it works. To use the access point
 functionality, you can simply do:
 ```
 > wifi.startAP("my-ssid")
@@ -198,7 +203,7 @@ Using the IDE over Wifi
 
 You can now connect directly from the IDE to your Espruino over Wifi. First make sure that you
 really have connectivity. You can try `ping espruino`, or `ping espruino.local`,
-or `ping 192.168.0.106` (with the correct IP adrdess, of course).
+or `ping 192.168.0.106` (with the correct IP address, of course).
 
 You can also use a terminal window (xterm, iterm,
 putty, ...) to connect to port 23 of Espruino and verify that you have the Espruino prompt.
@@ -219,13 +224,16 @@ and you should be right there at the prompt!
 If you have the default IDE configuration, it will issue a `reset()` when it connects [VERIFY]
 and you may wonder how come you're still connected if it resets.
 Well, `reset()` is a soft reset and does not touch the wifi.
-It will close all sockets that your sketch creates, but it does not touch the
+It will close all sockets that your sketch creates, reset all pin modes, and clear memory,
+but it does not touch the
 socket used by the TCP connection from the IDE (or a terminal window).
 
 Using the IDE or a terminal window you can now upload Javascript code and try out your sketch.
 Once you are happy and want Espruino to start your sketch automatically at boot time, you can
 use `save()` to save the sketch code (note that this is separate from `wifi.save()`, which saves
-the wifi settings in a separate flash area.
+the wifi settings in a separate flash area. For a more in-depth explanation of saving your
+Javascript code so it starts automatically see
+[this forum thread](http://forum.espruino.com/conversations/278526).
 
 Updating the Espruino firmware over Wifi
 ----------------------------------------
@@ -234,7 +242,7 @@ When a new version of Espruino becomes available you can also update the firmwar
 Wifi assuming your esp8266 module has at least 1Mbytes of flash (i.e. this does not work
 using the esp-01). The upgrade uses a small shell script provided in the download tgz which
 performs a few HTTP requests using `curl` to upload the fresh firmware and reboot the esp8266.
-This looks as follows:
+This looks as follows (all files needed are in the downloaded tgz):
 
 ```
 $ ./wiflash espruino.local:88 espruino_esp8266_user1.bin espruino_esp8266_user2.bin
@@ -252,3 +260,9 @@ with the IDE or terminal program. This flashing does not wipe the wifi settings,
 be able to reconnect with the IDE right away. (Most of the time the IDE doesn't notice that
 it got disconnected, so you probably have to disconnect and then connect again.)
 
+Troubleshooting
+---------------
+
+Of course things never just work... Please provide feedback in the
+[espruino forum]() or on [gitter](https://gitter.im/espruino/Espruino)
+about this tutorial and the mishaps you've had so it can be improved!
