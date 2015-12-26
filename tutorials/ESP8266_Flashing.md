@@ -7,7 +7,7 @@ of Espruino, please see the [reference section](/EspruinoESP8266.md).
 
 __WARNING__: while everything described here works, the tutorial has not been tested much.
 
-__Windows users__: Flashing instructions using esptool seem to work. Assuming you have git, python available from commandline.
+__Windows users__: Flashing instructions using esptool seem to work. Check [Initial flashing on windows](#initial-flashing-on-windows) below.
 
 This tutorial has the following steps:
 - Set a band new esp8266 module up and perform the first flashing using a serial port or
@@ -99,7 +99,8 @@ the SDK stores its wifi settings near the end of flash, so it changes with flash
 Initial flashing on windows
 ---------------------------
 
-These instructions assume that git and python available from commandline. Checked on Windows 7, git version 1.9.5.msysgit.0, Enthought Canopy Python 2.7.6, nodemcu dev board v.0.9.
+Esptool seems to work just fine on windows. These instructions assume that git and python available from commandline.
+Checked on Windows 7, git version 1.9.5.msysgit.0, Enthought Canopy Python 2.7.6, nodemcu dev board v.0.9.
 
 Start a command line, clone esptool, and run `python setup.py install` in esptool's directory (this step needs to be done only once):
 ```
