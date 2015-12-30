@@ -80,7 +80,7 @@ For a 4MByte flash chip (e.g. esp-12): [FIXME: need to get radio init and check 
 ```
 $ /path/to/esptool/esptool.py --port /dev/ttyUSB0 --baud 115200 \
   write_flash --flash_freq 80m --flash_mode qio --flash_size 32m \
-  0x0000 boot_v1.4(b1).bin" 0x1000 espruino_esp8266_user1.bin \
+  0x0000 "boot_v1.4(b1).bin" 0x1000 espruino_esp8266_user1.bin \
   0x3FC000 esp_init_data_default.bin 0x3FE000 blank.bin
 ```
 
@@ -88,7 +88,7 @@ For a 512KB flash chip (e.g. esp-01):
 ```
 $ /path/to/esptool/esptool.py --port /dev/ttyUSB0 --baud 115200 \
   write_flash --flash_freq 40m --flash_mode qio --flash_size 4m \
-  0x0000 boot_v1.4(b1).bin" 0x1000 espruino_esp8266_user1.bin \
+  0x0000 "boot_v1.4(b1).bin" 0x1000 espruino_esp8266_user1.bin \
   0x7C000 esp_init_data_default.bin 0x7E000 blank.bin
 ```
 
