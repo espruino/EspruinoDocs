@@ -160,7 +160,7 @@ You can get more info about the status using:
   "powersave": "ps-poll",
   "savedMode": "off"
  }
-> wifi.getIPInfo()
+> wifi.getIP()
 ={
   "ip": "192.168.0.106",
   "netmask": "255.255.255.0",
