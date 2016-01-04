@@ -1,5 +1,4 @@
 <!--- Copyright (c) 2016 Luwar. See the file LICENSE for copying permission. -->
-
 MMC212xMG Dual-axis Magnetic Sensor from MEMSIC used in HDMM01 breakout from Pollin
 ===================================================================================
 
@@ -76,7 +75,7 @@ Read raw magnetic sensor values
 
 The uncalibrated magnetic values of the x- and y-axis can be read asynchronously.
 
-```Javascript
+```JavaScript
 I2C3.setup( { scl: A8, sda: B4 } );
 var mmc = require("MMC212x").connect( I2C3 );
 
@@ -98,7 +97,7 @@ The module can calculate from the raw sensor values (x,y) the angle between the 
  - +y-axis pointing to south → 180°
  - +y-axis pointing to west  → 270°
 
-```Javascript
+```JavaScript
 I2C3.setup( { scl: A8, sda: B4 } );
 var mmc = require("MMC212x").connect( I2C3 );
 mmc.calibrate(1925, 2151, 1919, 2147 ); // values from calibration
@@ -120,7 +119,8 @@ There are four types which only differ by their I²C addresses:
 | MMC2122MG | 0x34         |                         |
 | MMC2123MG | 0x36         |                         |
 
-```Javascript
+
+```JavaScript
 I2C3.setup( { scl: A8, sda: B4 } );
 
 var mmc = require("MMC212x").connect( I2C3 ); // MMC2120MG, default, use address 0x30
@@ -139,7 +139,7 @@ Buying
 
 Links
 -----
-* [Datasheet from Memsic](MMC212xMG/MMC212xMG.pdf)
+* [Datasheet from Memsic](files/MMC212xMG.pdf)
 * [Datasheet from Pollin](http://www.pollin.de/shop/downloads/D810164D.PDF)
 * [Breakout HDMM01 (in German)](http://www.pollin.de/shop/downloads/D810164B.PDF)
 
