@@ -113,6 +113,34 @@ var mqttUid = (function() {
   };
 })();
 
+/** PUBLISH control packet */
+function mqttPublish(topic, message, qos) {
+  var cmd = TYPE.PUBLISH << 4 | (qos << 1);
+  var pid = fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
+  // Packet id must be included for QOS > 0
+  var variable = (qos === 0) ? mqttStr(topic) : mqttStr(topic)+pid;
+  return mqttPacket(cmd, variable, message);
+};
+
+/** SUBSCRIBE control packet */
+function mqttSubscribe(topic, qos) {
+  var cmd = TYPE.SUBSCRIBE << 4 | 2;
+  var pid = fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
+  return mqttPacket(cmd,
+           pid/*Packet id*/,
+           mqttStr(topic)+
+           fromCharCode(qos)/*QOS*/);
+};
+
+/** UNSUBSCRIBE control packet */
+function mqttUnsubscribe(topic) {
+  var cmd = TYPE.UNSUBSCRIBE << 4 | 2;
+  var pid = fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
+  return mqttPacket(cmd,
+           pid/*Packet id*/,
+           mqttStr(topic));
+};
+
 /** Create escaped hex value from number */
 function createEscapedHex( number ){
   return fromCharCode(parseInt( number.toString(16) , 16));
@@ -209,7 +237,7 @@ MQTT.prototype.disconnect = function(topic, message) {
 /** Publish message using specified topic */
 MQTT.prototype.publish = function(topic, message, qos) {
   var _qos = qos || this.C.DEF_QOS;
-  this.client.write(this.mqttPublish(topic, message, _qos));
+  this.client.write(mqttPublish(topic, message, _qos));
 };
 
 /** Subscribe to topic (filter) */
@@ -241,7 +269,7 @@ MQTT.prototype.subscribe = function(topics, opts, callback) {
   
   subs.forEach(function(sub){
     // TODO: Multiple topics in single subscribe packet
-    this.client.write(this.mqttSubscribe(sub.topic, sub.qos));
+    this.client.write(mqttSubscribe(sub.topic, sub.qos));
   }.bind(this));
   
   if ('function' === typeof callback) { callback(); }
@@ -249,7 +277,7 @@ MQTT.prototype.subscribe = function(topics, opts, callback) {
 
 /** Unsubscribe to topic (filter) */
 MQTT.prototype.unsubscribe = function(topic) {
-  this.client.write(this.mqttUnsubscribe(topic));
+  this.client.write(mqttUnsubscribe(topic));
 };
 
 /** Send ping request to server */
@@ -293,39 +321,11 @@ MQTT.prototype.mqttConnect = function(clean) {
   }
 
   return mqttPacket(cmd, 
-           this.mqttStr( this.protocol_name )/*protocol name*/+
+           mqttStr( this.protocol_name )/*protocol name*/+
            this.protocol_level /*protocol level*/+
            flags+
            keep_alive,
            payload);
-};
-
-/** PUBLISH control packet */
-MQTT.prototype.mqttPublish = function(topic, message, qos) {
-  var cmd = TYPE.PUBLISH << 4 | (qos << 1);
-  var pid = fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
-  // Packet id must be included for QOS > 0
-  var variable = (qos === 0) ? mqttStr(topic) : mqttStr(topic)+pid;
-  return mqttPacket(cmd, variable, message);
-};
-
-/** SUBSCRIBE control packet */
-MQTT.prototype.mqttSubscribe = function(topic, qos) {
-  var cmd = TYPE.SUBSCRIBE << 4 | 2;
-  var pid = fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
-  return mqttPacket(cmd,
-           pid/*Packet id*/,
-           mqttStr(topic)+
-           fromCharCode(qos)/*QOS*/);
-};
-
-/** UNSUBSCRIBE control packet */
-MQTT.prototype.mqttUnsubscribe = function(topic) {
-  var cmd = TYPE.UNSUBSCRIBE << 4 | 2;
-  var pid = fromCharCode(C.PACKET_ID<<8, C.PACKET_ID&255);
-  return mqttPacket(cmd,
-           pid/*Packet id*/,
-           mqttStr(topic));
 };
 
 /* Exports *************************************/
