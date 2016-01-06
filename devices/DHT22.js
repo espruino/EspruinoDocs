@@ -6,6 +6,8 @@ Usage (any GPIO pin can be used):
 var dht = require("DHT22").connect(C11);
 dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
 
+the return value if no data received: {"temp": -1, "rh": -1, "checksumError": false}
+the return value, if some data is received, but the checksum is invalid: {"temp": -1, "rh": -1, "checksumError": true}
   */
 
 exports.connect = function(pin) {
@@ -30,7 +32,7 @@ DHT22.prototype.read = function (a) {
     digitalWrite(this.pin,0);
     this.watch=setWatch(function(t) {dht.onwatch(t);},dht.pin,{repeat:true});
     setTimeout(function() {pinMode(dht.pin,'input_pullup');},3);
-    setTimeout(function() {dht.onread(dht.endRead());},50);
+    this.to50ms = setTimeout(function() {dht.onread(dht.endRead());},50);
 };
 DHT22.prototype.onread= function(d) {
     var dht=this;
@@ -64,10 +66,13 @@ DHT22.prototype.recbit = function(plen,bit) {
     } else if (bit < 33) {
         this.tout=(this.tout<<1) | (plen > 0.0000382);
     } else {
+        //AM2301 transfers zero bits after the actual payload, just using 50ms can shift the checksum value, and cause a checksum failure
+        if(bit > 40){this.onread(this.endRead()); return;}
         this.cks=(this.cks<<1) | (plen > 0.0000382);
     }
-}
+};
 DHT22.prototype.endRead = function() {
+    if(this.to50ms){clearTimeout(this.to50ms); this.to50ms = null; }
     clearWatch(this.watch);
     var tcks = this.hout&0xFF;
     tcks+= (this.hout>>8)&0xFF;
@@ -83,6 +88,8 @@ DHT22.prototype.endRead = function() {
         if (rh < 100 ) {
             return {"temp":temp,"rh":rh};
         }
+    } else { 
+      //checksum error, or no data received at all. Maybe usefull for debugging...
+      return {"temp":-1,"rh":-1, "checksumError": (tcks>0)};
     }
-    return {"temp":-1,"rh":-1};
 };
