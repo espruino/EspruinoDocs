@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Espruino on ESP8266 WiFi
-=====================
+========================
 
 * KEYWORDS: ESP8266,ESP-12,ESP12,ESP01,ESP1,ESP-01,Espruino,Board,PCB,Pinout
 
@@ -11,7 +11,8 @@ To find out how to connect an ESP8266 board to another Espruino board (as a Wifi
 Quick links
 -----------
 * [Forum thread with latest firmware](http://forum.espruino.com/conversations/279176/newest/)
-* [Flashing the esp8266 tutorial](/tutorials/ESP8266_Flashing.md)
+* [Flashing the esp8266 tutorial](/ESP8266_Flashing)
+* [Using the esp8266 with Wifi](/ESP8266_WifiUsage)
 * [Forum discussions about the esp8266 port](http://forum.espruino.com/microcosms/925/)
 * [Gitter chat about Espruino](https://gitter.im/espruino/Espruino) (not focused on esp8266 but
 lots of esp8266 chatter)
@@ -56,6 +57,55 @@ Pinout
 <span style="color: red">**Note:** You need a good 3.3v regulator with a solid power supply.
 If you get errors as soon as Wifi starts it's probably because the power is insufficient.
 A 500-600mA regulator with at least 22uF capacitor is recommended.</span>
+
+WiFi
+----
+The ESP8266's Wifi implementation supports both a simple access point mode and a station mode.
+The station mode is highly recommended for normal operation as the access point mode is very
+limited. It supports 4 stations max and offers no routing between stations.
+
+The default initial configuration is for an access point with an SSID like `ESP_123ABC` to show
+up.
+
+Using the wifi is documented in the [Wifi library reference](http://www.espruino.com/Reference#Wifi).
+The "getting started 3-liner" is:
+```
+var wifi = require("Wifi");
+wifi.connect("my-ssid", {password:"my-pwd"}, function(ap){ console.log("connected:", ap); });
+wifi.stopAP();
+```
+You may want to add `wifi.setDHCPHostname("espruino")`.
+Once you're happy with your connection, you can use `wifi.save()` to persist it, so you don't have
+to reconnect each time you reset your ESP8266.
+
+Please see the [Using the ESP8266 with Wifi](/ESP8266_WifiUsage) tutorial for the recommended
+way to use the esp8266 with Wifi.
+
+To make HTTP requests, use the [HTTP library](http://www.espruino.com/Reference#http).
+Code for a simple get request can be found in the docs for the `get()` method.
+
+In terms of power consumption, the esp8266 uses about 60mA minimum when in AP mode, with power
+spikes in the 100-300mA range when transmitting. When in station mode and the station supports
+power save (often visible as a "DTIM period" setting in the access point) then the esp8266
+will bounce between ~15mA and ~60mA most of the time when not transmitting, if power-save is
+enabled (see Wifi library), otherwise it will stay at ~70mA. If the Wifi is turned
+off it will consume around 15mA. Lower power modes (e.g. sleeping) is not currently supported
+in the Espruino port.
+
+Beware that TCP connections can require a lot of memory for buffers, thus "your mileage may vary"
+if you use many connections and/or receive a lot of data. The memory for these buffers comes out
+of the heap using malloc, they are separate from the memory used by JavaScript. Thus you can
+run out of JavaScript memory (Espruino prints "Out of memory!") and you can run out of heap
+memory (the system tends to crash in those situations).
+
+In order to reduce memory requirements,
+Espruino uses LwIP configured with a MSS of 536, this means that all TCP packets can have at most
+536 bytes of payload as opposed to the typical 1460 bytes. On the tranmission end, LwIP seems
+to allow for 3 packets to be in-flight (it has to keep data that is sent until it receives an
+acknowledgment from the receiver). On the reception end, it advertises a TCP window of 4 times
+the MSS, i.e. 2144 bytes, and Espruino tells LwIP to stop incoming data when it has two unconsumed
+buffers. The net result is that up to 6\*536 = 3216 bytes may arrive and need to be buffered on
+a connection. If multiple connections are active these buffer requirements can add up quickly!
 
 GPIO Pins
 ---------
@@ -218,51 +268,31 @@ One important effect of this overall strategy is that running javascript code
 without any iterruption will starve the SDK Wifi processing and will cause a
 chip reset.
 
-WiFi
-----
-The ESP8266's Wifi implementation supports both a simple access point mode and a station mode.
-The station mode is highly recommended for normal operation as the access point mode is very
-limited. It supports 4 stations max and offers no routing between stations.
+Performance
+-----------
+Espruino sets the esp8266 clock to 160Mhz by default, but this can be changed back to
+the default 80Mhz from JavaScript using `require("ESP8266").setCPUFreq(80)`.
+The benefits of the lower clock frequency are assumed to be lower power consumption
+by the CPU and operation at lower voltages, but this has not been confirmed!
 
-The default initial configuration is for an access point with an SSID like `ESP_123ABC` to show
-up.
+The table below shows some measurements taken using an esp-12 module on the mandelbrot and
+qsort_4 benchmarks in the benchmarks directory and on some code that displays lots of characters
+on a HD44780 display attached via an MCP23008 which involves a lot of I2C operations. In the table
+`-Os` refers to the gcc compiler optimization level and `AI` refers to enabling the
+Espruino ALWAYS_INLINE compiler attribute, which tries to guide which functions to inline, and
+`NR` refers to a non-release build with asserts left in.
+The conclusion is that builds with just -Os and 160Mhz clock frequency are the best.
 
-Using the wifi is documented in the [Wifi library reference](http://www.espruino.com/Reference#Wifi).
-The "getting started 3-liner" is:
-```
-var wifi = require("Wifi");
-wifi.connect("my-ssid", {password:"my-pwd"}, function(ap){ console.log("connected:", ap); });
-wifi.stopAP();
-```
-You may want to add `wifi.setDHCPHostname("espruino")`.
-Once you're happy with your connection, you can use `wifi.save()` to persist it, so you don't have
-to reconnect each time you reset your ESP8266.
-
-To make HTTP requests, use the [HTTP library](http://www.espruino.com/Reference#http).
-Code for a simple get request can be found in the docs for the `get()` method.
-
-In terms of power consumption, the esp8266 uses about 60mA minimum when in AP mode, with power
-spikes in the 100-300mA range when transmitting. When in station mode and the station supports
-power save (often visible as a "DTIM period" setting in the access point) then the esp8266
-will bounce between ~15mA and ~60mA most of the time when not transmitting, if power-save is
-enabled (see Wifi library), otherwise it will stay at ~70mA. If the Wifi is turned
-off it will consume around 15mA. Lower power modes (e.g. sleeping) is not currently supported
-in the Espruino port.
-
-Beware that TCP connections can require a lot of memory for buffers, thus "your mileage may vary"
-if you use many connections and/or receive a lot of data. The memory for these buffers comes out
-of the heap using malloc, they are separate from the memory used by JavaScript. Thus you can
-run out of JavaScript memory (Espruino prints "Out of memory!") and you can run out of heap
-memory (the system tends to crash in those situations).
-
-In order to reduce memory requirements,
-Espruino uses LwIP configured with a MSS of 536, this means that all TCP packets can have at most
-536 bytes of payload as opposed to the typical 1460 bytes. On the tranmission end, LwIP seems
-to allow for 3 packets to be in-flight (it has to keep data that is sent until it receives an
-acknowledgment from the receiver). On the reception end, it advertises a TCP window of 4 times
-the MSS, i.e. 2144 bytes, and Espruino tells LwIP to stop incoming data when it has two unconsumed
-buffers. The net result is that up to 6\*536 = 3216 bytes may arrive and need to be buffered on
-a connection. If multiple connections are active these buffer requirements can add up quickly!
+Settings        | Mandelbrot | Quicksort | Display | Code Size
+----------------|-----------:|----------:|--------:|-------:
+-Os, 80Mhz      | 70ms       | 365ms     | 623ms   | 440KB
+-Os, 160Mhz     | 38ms       | 191ms     | 354ms   |
+-Os, 80Mhz, AI  | 74ms       | 469ms     | 693ms   | 477KB
+-Os, 160Mhz, AI | 47ms       | 319ms     | 463ms   |
+-O1, 80Mhz, AI  | 66ms       | 393ms     | 681ms   | 486KB
+-O1, 160Mhz     | 39ms       | 241ms     | 444ms   |
+-Os, 80Mhz, NR  | 90ms       | 494ms     | 886ms   | 454KB
+-Os, 160Mhz, NR | 52ms       | 293ms     | 568ms   |
 
 Loading Espruino
 ----------------
