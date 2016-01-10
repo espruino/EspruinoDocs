@@ -32,8 +32,6 @@ Limitations
 The following features are only partially or not supported by Espruino on the ESP8266:
 
 - No hardware [[I2C]], however, the software I2C works OK.
-- No hardware [[SPI]], however, the software SPI works OK and it's not clear that there is any real
-  benefit to the hardware SPI.
 - [[PWM]] is in the works.
 - No [[DAC]]: the esp8266 does not have a DAC.
 
@@ -153,6 +151,15 @@ and the I2C bus needs pull-up resistors. The pins chosen for I2C are
 configured to be open-drain outputs and an external pull-up resistor
 is required on each of the two pins. Remember that esp8266 pins are
 not 5v compatible!
+
+SPI Implementation
+------------------
+Both the software SPI and hardware SPI implementations can be used. The software SPI works on
+any GPIO pins but operates at a fixed clock rate of about 1Mhz. The hardware SPI operates on
+baud rates as low as 100kHz and as high as 4Mhz (this is limited by the way the clock dividers
+are calculated, the HW is capable of going faster, but given the software overheads around it
+there is not much point to it). The hardware SPI uses the pins shown in the board layout
+(CLK:D14, MISO:D12, MOSI:D13, CS:D15).
 
 GetSerial
 ---------

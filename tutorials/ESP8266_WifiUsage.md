@@ -58,7 +58,7 @@ Just use the ESP8266's hostname or IP address and port 23.
 
 ### 3. Name and persist
 
-You probbaly want to assign a DNS name to your ESP8266 so you don't need to chase the IP address,
+You probably want to assign a DNS name to your ESP8266 so you don't need to chase the IP address,
 the ticket for that is:
 
 ```
@@ -77,15 +77,12 @@ manually disconnect first, the IDE is slow at detecting that the connection got 
 Troubleshooting
 ---------------
 
-Of course eveything never goes as planned, so you may find 
+ideas?
 
 
 
 
 
-You may want to add `wifi.setDHCPHostname("espruino")`.
-Once you're happy with your connection, you can use `wifi.save()` to persist it, so you don't have
-to reconnect each time you reset your ESP8266.
 
 
 
