@@ -1,5 +1,5 @@
 <!--- Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. -->
-DHT22/AM2302 Temperature and RH Sensor
+DHT22/AM2302/AM2301 Temperature and RH Sensor
 =====================
 
 * KEYWORDS: Module,DHT22,AM2302,temperature,humidity
@@ -7,7 +7,7 @@ DHT22/AM2302 Temperature and RH Sensor
 Overview
 -----------------
 
-This module interfaces with the DHT22 (AKA AM2302), an inexpensive temperature and relative humidity sensor similar to the DHT11, but with higher accuracy and wider range. 
+This module interfaces with the DHT22 (AKA AM2302, AM2301), an inexpensive temperature and relative humidity sensor similar to the DHT11, but with higher accuracy and wider range. 
 
 Key Specifications:
 
@@ -39,13 +39,18 @@ IMPORTANT: Be sure to get the polarity right! If connected backwards, it will ru
 Usage
 ------------
 
-call require("DHT22").connect(pin) to get a DHT22 object. To read the sensor, the read method is called with a single argument, the function that is called when the read is complete. This function is called with an object containing two properties, temp and rh. Temperature is in C, RH is in %. 
+Call `require("DHT22").connect(pin)` to get a DHT22 object. To read the sensor, the read method is called with a single argument, the function that is called when the read is complete. This function is called with an object containing two properties, `temp` and `rh`. Temperature is in °C, RH is in %. 
 
 For example:
 ```JavaScript
     var dht = require("DHT22").connect(C11);
     dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
 ```
+Returns -1 for the temperature and humidity if no data is received. An extra `checksumError` field contains extra information about the type of the failure:
+
+The return value if no data received at all: `{"temp": -1, "rh": -1, "checksumError": false}`.
+
+The return value, if some data received, but the checksum is invalid, or timed out: `{"temp": -1, "rh": -1, "checksumError": true}`
 
 Buying
 -----
