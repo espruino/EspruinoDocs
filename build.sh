@@ -19,6 +19,8 @@ python scripts/build_board_docs.py ESP8266_BOARD pinout
 mv boards/ESP8266_BOARD.html $DIR/html/boards
 python scripts/build_board_docs.py EMW3165 pinout
 mv boards/EMW3165.html $DIR/html/boards
+python scripts/build_board_docs.py MICROBIT pinout
+mv boards/MICROBIT.html $DIR/html/boards
 cd $DIR
 
 # Built reference docs and references.json

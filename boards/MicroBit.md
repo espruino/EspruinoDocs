@@ -127,6 +127,20 @@ This returns an object with `x`, `y`, and `z` elements, each containing the forc
 This returns an object with `x`, `y`, and `z` elements, indicating the current direction of the magnetic field
 
 
+Pinout
+------
+
+* APPEND_PINOUT: MICROBIT
+
+
+Tutorials
+--------
+
+Tutorials using the micro:bit Board:
+
+* APPEND_USES: MicroBit
+
+
 Buying
 -------
 
