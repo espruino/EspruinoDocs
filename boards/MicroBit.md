@@ -50,7 +50,7 @@ You can also program the micro:bit wirelessly! There are two main ways to do thi
 
 If you have a device that supports [Web Bluetooth](https://webbluetoothcg.github.io/web-bluetooth/), you can go directly to the [Online Web IDE](https://espruino.github.io/EspruinoWebIDE/) in your web browser, and can connect with that:
 
-[[http://youtu.be/watch?v=HKEHXOSLzCQ]]
+[[http://youtu.be/HKEHXOSLzCQ]]
 
 * Click the connect icon at the top left
 * Choose `Web Bluetooth` - if this doesn't exist, it's because your device doesn't have Web Bluetooth enabled. 
