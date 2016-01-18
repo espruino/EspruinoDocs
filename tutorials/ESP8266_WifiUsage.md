@@ -73,11 +73,43 @@ wifi.save()
 
 At this point you can power cycle your ESP8266 and then reconnect from the IDE (you may have to 
 manually disconnect first, the IDE is slow at detecting that the connection got cut).
+Note that the saving of the wifi settings means that your program code should not configure
+the wifi unless you want special effects that cannot be achieved simply by saving your current
+wifi config.
 
 Troubleshooting
 ---------------
 
-ideas?
+### Recovering from saved JS code
+
+Sometimes you may have commands stored in the regular JS save area that mess with wifi at
+start-up, or some other weird stuff is happening. To recover, try this: `reset()` to clear
+the interpreter. Then `save()` to clear the JS save area. Then use the wifi commands to
+connect to you access point and otherwise get the wifi into the state you want. Then
+use `wifi.save()` to save the wifi settings and power cycle or reboot your esp8266
+(`require("ESP8266").reboot()` will work too). Now ensure that it comes back up the way
+you want. Then load your application JS code (without any commands that mess with wifi
+in it) and use `save()` to commit that to flash. Now reboot again and the esp8266 should connect
+to wifi and run your code.
+
+### Recovering from an endless reset loop
+
+This is not all that related to wifi, but... Sometimes you may have saved JS code that causes
+Espruino to crash or otherwise mess things up such that you can't gain control over the
+interpreter. The solution is to flash over the JS save area: flash blank.bin to 0x7a000
+(or consult the current flash map and pick the last 4KB sector of the save area).
+
+If you need to wipe the wifi save area flash blank.bin to 0x7b000.
+
+### How to wait for a connection before starting services
+
+You can actually start any listening sockets at any time, even before a wifi connetion is
+established. The listening socket is on the wifi interface devices and doesn't care whether
+wifi is connected or not, whether the IP address changes over time, etc.
+
+If you need to make outbound calls, the recommended approach is to retry until successful
+instead of waiting for a connection because that is a more robust approach which can deal
+with errors other than just the loss of wifi association.
 
 
 

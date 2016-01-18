@@ -32,8 +32,9 @@ Limitations
 The following features are only partially or not supported by Espruino on the ESP8266:
 
 - No hardware [[I2C]], however, the software I2C works OK.
-- [[PWM]] is in the works.
+- [[PWM]] does not work. Code exists but doesn't work.
 - No [[DAC]]: the esp8266 does not have a DAC.
+- No independently usable serial port (needs Espruino work)
 
 The main limitations of Espruino on the esp8266 come from two factors:
 - The esp8266 does not have rich I/O peripheral interfaces, this means protocols need to be run in software, which not only may
@@ -161,6 +162,14 @@ are calculated, the HW is capable of going faster, but given the software overhe
 there is not much point to it). The hardware SPI uses the pins shown in the board layout
 (CLK:D14, MISO:D12, MOSI:D13, CS:D15).
 
+Serial port
+-----------
+The esp8266 has two UARTS. UART0 uses gpio1 for TX and gpio3 for RX and is used by the Espruino console.
+It could be reused for application purposes, but that is not currently implemented.
+UART1 uses gpio2 for TX and RX is not really usable due to being used for the SDIO flash
+chip. UART1 TX is used by the debug and could be reused for application purposes, but that is
+not currently implemented.
+
 GetSerial
 ---------
 The esp8266 does not have a serial number. It does have two mac addresses "burned-in", which one can use for identification purposes.
@@ -190,6 +199,18 @@ the system timer to the best guess available for the current date-time.
 From a JavaScript perspective, we can get and set the system time using
 the JS functions called `getTime()` and `setTime()`.  These get and take
 a time in seconds (float).
+
+Saving code to flash
+--------------------
+Currently 12KB of flash are reserved to save JS code to flash using the
+save() function. The total JS memory is larger (22400 bytes) so if you
+filled up the JSvars you will need compression to work well. Some simple
+tests show that "it should fit" but it's certainly possible that some
+combinations of stuff doesn't. In that case you're a bit out of luck.
+
+If the save() area contains something that crashes Espruino or otherwise
+doesn't let you reset the system you can disable whatever is saved by
+flashing blank.bin to the last 4KB block of the save area (0x7A000).
 
 Flash map and access
 --------------------
