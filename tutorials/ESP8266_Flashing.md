@@ -8,8 +8,8 @@ of Espruino, please see the [reference section](/EspruinoESP8266.md).
 
 __WARNING__: while everything described here works, the tutorial has not been tested much.
 
-__Windows users__: apologies, but this tutorial uses linux for now; it would be awesome for a
-Windows user to add parallel instructions!
+__Windows users__: Flashing instructions using esptool seem to work.
+Check [Initial flashing on windows](#initial-flashing-on-windows) below.
 
 This tutorial has the following steps:
 - Set a band new esp8266 module up and perform the first flashing using a serial port or
@@ -81,7 +81,7 @@ For a 4MByte flash chip (e.g. esp-12): [FIXME: need to get radio init and check 
 ```
 $ /path/to/esptool/esptool.py --port /dev/ttyUSB0 --baud 115200 \
   write_flash --flash_freq 80m --flash_mode qio --flash_size 32m \
-  0x0000 boot_v1.4(b1).bin" 0x1000 espruino_esp8266_user1.bin \
+  0x0000 "boot_v1.4(b1).bin" 0x1000 espruino_esp8266_user1.bin \
   0x3FC000 esp_init_data_default.bin 0x3FE000 blank.bin
 ```
 
@@ -89,7 +89,7 @@ For a 512KB flash chip (e.g. esp-01):
 ```
 $ /path/to/esptool/esptool.py --port /dev/ttyUSB0 --baud 115200 \
   write_flash --flash_freq 40m --flash_mode qio --flash_size 4m \
-  0x0000 boot_v1.4(b1).bin" 0x1000 espruino_esp8266_user1.bin \
+  0x0000 "boot_v1.4(b1).bin" 0x1000 espruino_esp8266_user1.bin \
   0x7C000 esp_init_data_default.bin 0x7E000 blank.bin
 ```
 
@@ -97,6 +97,57 @@ The `--flash_size 4m --flash_freq 40m' options say 4Mbits and 40Mhz as opposed t
 at 80Mhz for the 4MByte flash modules. Note the different addresses for esp_init_data_default.bin
 and blank.bin:
 the SDK stores its wifi settings near the end of flash, so it changes with flash size.
+
+Initial flashing on windows
+---------------------------
+
+Esptool seems to work just fine on windows. These instructions assume that git and
+python available from commandline.
+Checked on Windows 7, git version 1.9.5.msysgit.0, Enthought Canopy Python 2.7.6, nodemcu dev board v.0.9.
+
+Start a command line, clone esptool, and run `python setup.py install` in esptool's
+directory (this step needs to be done only once):
+```
+> git clone https://github.com/themadinventor/esptool.git
+Cloning into 'esptool'...
+remote: Counting objects: 268, done.
+emote: Total 268 (delta 0), reused 0 (delta 0), pack-reused 268
+Receiving objects: 100% (268/268), 99.66 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (142/142), done.
+Checking connectivity... done.
+
+> cd esptool
+
+> python setup.py install
+running install
+...
+...
+...
+Finished processing dependencies for esptool==0.1.0
+```
+
+Download and unzip the latest binary package, and start a commandline
+in that directory. The command to run is pretty much the same, the next
+command assumes that esptool is available in a subdirectory of the parent
+directory. Adjust the COM port, if you don't have the ESP on COM12. 460800
+baud worked just fine for me, writing at ~260kbit/s instead of ~80kbit/s.
+```
+>python "../esptool/esptool.py" --port COM12 --baud 115200 write_flash \
+  --flash_freq 80m --flash_mode qio --flash_size 32m \
+  0x0000 boot_v1.4(b1).bin 0x1000 espruino_esp8266_user1.bin \
+  0x3FC000 esp_init_data_default.bin 0x3FE000 blank.bin
+Connecting...
+Erasing flash...
+Wrote 3072 bytes at 0x00000000 in 0.3 seconds (79.8 kbit/s)...
+Erasing flash...
+Wrote 438272 bytes at 0x00001000 in 43.4 seconds (80.7 kbit/s)...
+Erasing flash...
+Wrote 1024 bytes at 0x003fc000 in 0.1 seconds (83.6 kbit/s)...
+Erasing flash...
+Wrote 4096 bytes at 0x003fe000 in 0.4 seconds (83.4 kbit/s)...
+
+Leaving...
+```
 
 After the flashing, you should be able to connect to the serial port at 115200 baud and be
 at the Espruino prompt. A simple commandline program you can use to check
@@ -161,7 +212,7 @@ You can get more info about the status using:
   "powersave": "ps-poll",
   "savedMode": "off"
  }
-> wifi.getIPInfo()
+> wifi.getIP()
 ={
   "ip": "192.168.0.106",
   "netmask": "255.255.255.0",
