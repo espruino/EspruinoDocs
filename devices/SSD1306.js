@@ -135,7 +135,3 @@ exports.connectSPI = function(spi, dc,  rst, callback, options) {
   // return graphics
   return oled;
 };
-
-exports.brightness = function(x) {
-	
-};
