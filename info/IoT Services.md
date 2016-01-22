@@ -216,3 +216,11 @@ sendEvent("button_pressed");
 ```
 
 Using Espruino as the 'that' in 'if this then that' is more difficult at the moment. [IFTTT](https://ifttt.com) expects to send an HTTP POST request to a web server, which means that you'd have to expose your Espruino to the internet (by configuring your broadband router to forward connections to it). You could however get IFTTT to make a request to [Dweet](http://dweet.io/) (see above), which you could then poll using Espruino.
+
+
+Google Sheets / Google Forms
+------------------------------
+
+There is a [tutorial on this here](/Logging to Google Sheets)
+
+This is currently only possible on the Espruino [[Pico]] board, because HTTPS communications are needed.
