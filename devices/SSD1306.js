@@ -92,7 +92,7 @@ exports.connect = function(i2c, callback, options) {
   };
 
   // set contrast, 0..255
-  oled.setContrast = function(c) { i2c.writeTo(addr, 0x81, c); };
+  oled.setContrast = function(c) { i2c.writeTo(addr, 0, 0x81, c); };
 
   // return graphics
   return oled;
