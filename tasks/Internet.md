@@ -2,7 +2,7 @@
 Internet (HTTP)
 ===============
 
-* KEYWORDS: Internet,HTTP,Web,TCPIP,TCP/IP,TCP-IP,IP,TCP,Server,Client,Webserver,Built-In
+* KEYWORDS: Internet,HTTP,Web,TCPIP,TCP/IP,TCP-IP,IP,TCP,Server,Client,Webserver,Built-In,Sockets,HTTPS,TLS
 
 To use the internet in Espruino you need an internet connection. If you're using Espruino under Linux (for example Raspberry Pi or OpenWRT) then you're sorted and can use the examples below directly, otherwise you'll need a module to connect to the internet. Currently your choices are:
 
@@ -13,7 +13,7 @@ To use the internet in Espruino you need an internet connection. If you're using
 
 You'll need to follow the instructions on those pages first in order to get connected to the net.
 
-Basic internet functionality is handled using the [`http`](/Reference#http) library.
+Basic internet functionality is handled using the [`http`](/Reference#http), [`net`](/Reference#net) and [`tls`](/Reference#net) libraries.
 
 Client
 ------
@@ -190,7 +190,76 @@ require('http').createServer(onPageRequest).listen(8080);
 ```
 
 
+Sockets
+-------
+
+Socket support is handled in a similar way to HTTP, you just use the `net` module instead:
+
+For a server:
+
+```
+var server = require("net").createServer(function(c) {
+  // A new client as connected
+  c.write("Hello");
+  c.on('data', function(data) {
+    console.log(">"+JSON.stringify(data));
+  }
+  c.end();
+});
+server.listen(1234);
+```
+
+Or for a client:
+
+```
+var client = require("net").connect({host: "my.url.com", port: 1234}, function() {
+  console.log('client connected');
+  client.on('data', function(data) {
+    console.log(">"+JSON.stringify(data));
+  });
+  client.on('end', function() {
+    console.log('client disconnected');
+  });
+});
+```
+
+
+HTTPS
+-----
+
+The only board currently supporting this is the Espruino [[Pico]]. To use HTTPS simply use it in the URL of any normal HTTP request:
+
+```
+require("http").get("https://www.google.com", function(res) {
+  res.on('data', function(data) { /* ... */ });
+});
+```
+
+To specify keys and certificates, you can use an options object - see [`require('tls').connect(...)`](/Reference#l_tls_connect)
+
+
+TLS
+---
+
+The only board currently supporting this is the Espruino [[Pico]]. Use as follows:
+
+```
+require("tls").connect("my.url.com:1234", function(c) {
+  c.write("Hello"); 
+  c.on('data', function(data) { /* ... */ });
+});
+```
+
+See [`require('tls').connect(...)`](/Reference#l_tls_connect) for more information.
+
+
 Related Pages 
 -----------
+
+* APPEND_KEYWORD: Internet
+
+
+Projects using an Internet Connection
+--------------------------------------
 
 * APPEND_USES: Internet

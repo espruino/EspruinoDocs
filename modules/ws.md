@@ -1,26 +1,29 @@
 <!--- Copyright (c) 2015 Gordon Williams & Sameh Hady. See the file LICENSE for copying permission. -->
-WebSocket client
-=====================
+WebSockets
+==========
 
-* KEYWORDS: Module,websocket,ws,socket
+* KEYWORDS: Module,websocket,ws,socket,Internet
 
-This is a Websocket implementation on Espruino - it let you control your Espruino from the cloud without needing to know its IP. 
-You will need to use it with a websocket server - for instance [one written in Node.js](https://www.npmjs.com/package/ws).
+This is a Websocket implementation on Espruino - it lets you:
 
-Setting up and connecting:
------------
-
-First you need run a websocket server which is explained [here using Node.js](https://www.npmjs.com/package/ws). Then you will be able to use below sketch and point it to your websocket server's host and port.
+* Control your Espruino from the cloud without needing to know its IP (When used as a client)
+* Control Espruino in real-time from we web browser (When used as a server).
 
 Limitations:
 -----------
 
-* The module only accept messages less than 127 character.
-* This is only a WebSocket client implementation (not a server)
+* The module only accepts messages of less than 127 characters.
+* The module will not parse multiple websocket messages that arrive at once
+* When sending, the library will only send JSON-formatted messages
 
+To use the [[ws.js]] module, you must be connected to WiFi/Ethernet/etc - see [here](/Internet).
 
-To use the [[ws.js]] module (assuming you are already connected to WiFi/Ethernet/etc - see [here](/Internet)):
+WebSocket Client
+----------------
 
+First you need run a websocket server which is explained [here using Node.js](https://www.npmjs.com/package/ws). 
+
+Then you will be able to use the following and point it to your websocket server's host and port.
 
 ```js
 var host = "192.168.0.10";
@@ -40,6 +43,36 @@ ws.on('message', function(msg) {
   console.log("MSG: " + msg);
 });
 ```
+
+WebSocket Server
+----------------
+
+Just use `require('ws').createServer` like you would `require('http').createServer` and you can handle HTTP requests,
+then use `.on('websocket', ...)` to register a function to handle websockets.
+
+The code below serves up a Web Page which starts a websocket connection, then 
+
+```
+var page = '<html><body><script>var ws;setTimeout(function(){';
+page += 'ws = new WebSocket("ws://" + location.host + "/my_websocket", "protocolOne");';
+page += 'ws.onmessage = function (event) { console.log("MSG:"+event.data); };';
+page += 'setTimeout(function() { ws.send("Hello to Espruino!"); }, 1000);';
+page += '},1000);</script></body></html>';
+
+function onPageRequest(req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.end(page);
+}
+
+var server = require('ws').createServer(onPageRequest);
+server.listen(8000);
+server.on("websocket", function(ws) {
+    ws.on('message',function(msg) { print("[WS] "+JSON.stringify(msg)); });
+    ws.send("Hello from Espruino!");
+});
+```
+
+
 Available callbacks
 -----------
 
@@ -73,44 +106,26 @@ ws.on('rawData', function(msg) {
 });
 ```
 
-Send Message
+Sending a Message
 -----------
 
 At any time during a session you can publish a message to the server.
+
 ```js
-  var message = "hello world";
-  ws.send(message);
+  ws.send("hello world");
 ```
 
-Broadcast a message to all connected users. ( `must be used with the ws node.js server example provided` )
-```js
-  var message = "hello world";
-  ws.broadcast(message);
-```
+Node.js server
+---------------
 
-Broadcast a message to specific room. ( `must be used with the ws node.js server example provided` )
-```js
-  var message = "hello world";
-  var room = "Espruino";
-  ws.broadcast(message, room);
-```
-
-Join a room. ( `must be used with the ws node.js server example provided` )
-```js
-  var room = "Espruino";
-  ws.join(room);
-```
-
-Node.js server.
------------
-
-First you need to install the node.js `ws` module ( `assuming you already have node.js installed` )
+First you need to install the node.js `ws` module ( assuming you already have `node.js` and `npm` installed ):
 
 ```js
 npm install ws
 ```
 
-Now you can run this server example that is needed for broadcasting and joining a room.
+Now you can run this server example that implements a simple chat room:
+
 ```js
 var WebSocketServer = require('ws').Server,
     wss = new WebSocketServer({
@@ -153,3 +168,49 @@ function broadcast(message) {
 }
 ```
 
+Then on Espruino, you can interact with the chat room using:
+
+```
+/** Join a room */
+WebSocket.prototype.message = function (msg) {
+    this.send(JSON.stringify({ msg : msg }));
+};
+
+/** Broadcast message to room */
+WebSocket.prototype.broadcast = function (msg, room) {
+    room = room === undefined ? 'all' : room;
+    this.send(JSON.stringify({ room:room, msg:msg }));
+};
+
+/** Join a room */
+WebSocket.prototype.join = function (room) {
+    this.send(JSON.stringify({ join : room }));
+};
+
+Then to send a message use:
+
+```js
+  ws.message("hello world");
+```
+
+To broadcast a message to all connected users:
+
+```js
+  var message = "hello world";
+  ws.broadcast(message);
+```
+
+To broadcast a message to specific room:
+
+```js
+  var message = "hello world";
+  var room = "Espruino";
+  ws.broadcast(message, room);
+```
+
+Or to join a room:
+
+```js
+  var room = "Espruino";
+  ws.join(room);
+```

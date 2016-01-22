@@ -245,7 +245,7 @@ ARRAYS AND OBJECTS USE TWO STORAGE UNITS PER ELEMENT (ONE FOR THE KEY, AND ONE F
 
 This means that Sparse Arrays are relatively efficient, but Dense Arrays are not. For dense arrays you should use [Typed Arrays](Reference#l_Uint8Array_Uint8Array) (see the next heading).
 
-If the name (index) of an element is a string that is greater than 4 characters then another variable will have to be allocated to store the remaining characters. The number of variables needed for the index is: `Math.ceil((characters-4)/12)`
+If the name (index) of an element is a string that is greater than 10 characters (7 on 12 byte systems) then another variable will have to be allocated to store the remaining characters. The number of variables needed for the index is: `Math.ceil((characters-10)/12)`
 
 **There are a few cases when both key and value can be packed into an array.** These are:
 
@@ -257,12 +257,14 @@ You can check how many storage units a data structure is using up with [`E.getSi
 
 
 
-STRINGS OR TYPED ARRAYS ARE THE MOST EFFICIENT WAY TO STORE DATA
---------------------------------------------------------
+TYPED ARRAYS ARE THE MOST EFFICIENT WAY TO STORE DATA
+-----------------------------------------------------
 
-Strings and Typed Arrays use the same storage format, where you get on average 12 bytes of data per 16 byte Storage unit. So for an array of bytes, it's 24 times more efficient to use a String or Typed Array than a normal (sparse) Array. It's also faster too!
+Whenever possible, Typed Arrays use one JsVar as a header, and then a contiguous set of JsVars for data. This means that for large arrays you have just 16 bytes of overhead.
 
-**Note:** On Espruino 1v72 and later, Typed Arrays allocate a continuous block of variables (if possible). This uses one 16 byte storage unit as a header, and then the following storage units are used to hold the data in one continuous block. It's much faster to access and is significantly more efficient for large amounts of data.
+Because the data is in one flat block, it is also very fast to do random accesses on.
+
+However Espruino needs to search for a continuous block of memory, allocating Typed Arrays is slow. You should try to allocate them once and leave them allocated. In some cases there won't be a flat block of memory available, and then Espruino will fall back to Strings.
 
 You create a Typed Array with a simple command:
 
@@ -294,6 +296,12 @@ c = new Uint8Array(a.buffer, 2, 5); // [3,4,5,6,7]
 b.set(c, 2); // set b with the contents of c starting from index 2
 b; // [0,0,3,4,5,6,7]
 ```
+
+
+STRINGS ARE THE SECOND MOST EFFICIENT WAY TO STORE DATA
+-------------------------------------------------------
+
+Strings use on average 12 bytes of data per 16 byte Storage unit. So for an array of bytes, it's 24 times more efficient to use a String or Typed Array than a normal (sparse) Array. It's also faster too!
 
 
 SOME VARIABLE LOOKUPS ARE FASTER THAN OTHERS

@@ -5,9 +5,9 @@ Arduino Pico adaptor board
 * KEYWORDS: Arduino,Pico,Adaptor
 * USES: Arduino,Pico
 
-There is now an [Arduino adaptor shield](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Adaptors) that converts the Espruino Pico into an Arduino form factor.
+There is now an Arduino adaptor shield that converts the Espruino Pico into an Arduino form factor. It is available as part of the [Shim Collection](/Shims) available from [Tindie](https://www.tindie.com/products/gfwilliams/espruino-pico-adaptor-pack/)
 
-![](ArduinoPico/arduino.png)
+[![](ArduinoPico/arduino.png)](https://www.tindie.com/products/gfwilliams/espruino-pico-adaptor-pack/)
 
 Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/arduino.brd)
  and [schematic](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/arduino.sch)

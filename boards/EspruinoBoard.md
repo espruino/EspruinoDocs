@@ -25,6 +25,7 @@ Features
 * 0.1" Pin spacing
 * 44 GPIO Pins, capable of: 26 PWM Pins, 16 ADC Pins, 3 USARTs, 2 SPI, 2 I2C and 2 DACs
 * Prototype area which can be used in many different configurations, for example: Servo Headers, Up to 14x 500mA outputs, 2x .NET Gadgeteer connectors, or NRF24L01+ wireless transceiver modules
+* Rev 1v4: CE and RoHS certification
 
 Pinout
 ------
@@ -65,6 +66,7 @@ Information
 * [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/Original/pdf/espruino_schematic.pdf)
 * [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/Original/pdf/espruino_pcb.pdf)
 * [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
+* [Part library for Fritzing](https://github.com/espruino/EspruinoBoard/blob/master/frizting/Espruino_Original.fzpz)
 * [STM32F103RCT6 Datasheet](/datasheets/STM32F103xC.pdf)
 * [STM32F103RCT6 Reference Manual](/datasheets/STM32F103xC_Ref.pdf)
 

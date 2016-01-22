@@ -20,6 +20,7 @@ Features
 * Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
 * On-board FET can be used to drive high-current outputs
 * Rev 1v4: 500mA polyfuse on board
+* Rev 1v4: CE and RoHS certification
 
 <a name="buy"></a>Buying
 ------
@@ -41,6 +42,7 @@ Information
 * [STM32F401CD Datasheet](/datasheets/STM32F401xD.pdf)
 * [STM32F401CD Reference Manual](/datasheets/STM32F401xD_ref.pdf)
 * [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
+* [Part library for Fritzing](https://github.com/espruino/EspruinoBoard/blob/master/frizting/Espruino_Pico.fzpz)
 
 Tutorials
 --------

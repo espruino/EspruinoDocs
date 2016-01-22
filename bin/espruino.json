@@ -1,36 +1,199 @@
 {
   "!name": "Espruino",
-  "ESP8266": {
+  "crypto": {
     "!type": "fn()",
-    "!doc": "Library for the Espressif ESP8266 WiFi Module",
-    "!url": "http://www.espruino.com/Reference#l_ESP8266_undefined",
-    "connect": {
-      "!type": "fn(serial: ?, callback: ?) -> +ESP8266",
-      "!doc": "Initialise the WIZnet module and return an Ethernet object",
-      "!url": "http://www.espruino.com/Reference#l_ESP8266_connect"
+    "!doc": "Cryptographic functions\n\n**Note:** This library is currently only included in builds for the Espruino Pico. For other boards you will have to make build your own firmware, and you may need to remove other features in order to make room.",
+    "!url": "http://www.espruino.com/Reference#l_crypto_undefined",
+    "AES": {
+      "!type": "?",
+      "!doc": "Class containing AES encryption/decryption",
+      "!url": "http://www.espruino.com/Reference#l_crypto_AES"
+    },
+    "SHA1": {
+      "!type": "fn(message: ?) -> +ArrayBuffer",
+      "!doc": "Performs a SHA1 hash and returns the result as a 20 byte ArrayBuffer",
+      "!url": "http://www.espruino.com/Reference#l_crypto_SHA1"
+    },
+    "SHA224": {
+      "!type": "fn(message: ?) -> +ArrayBuffer",
+      "!doc": "Performs a SHA224 hash and returns the result as a 28 byte ArrayBuffer",
+      "!url": "http://www.espruino.com/Reference#l_crypto_SHA224"
+    },
+    "SHA256": {
+      "!type": "fn(message: ?) -> +ArrayBuffer",
+      "!doc": "Performs a SHA256 hash and returns the result as a 32 byte ArrayBuffer",
+      "!url": "http://www.espruino.com/Reference#l_crypto_SHA256"
+    },
+    "SHA384": {
+      "!type": "fn(message: ?) -> +ArrayBuffer",
+      "!doc": "Performs a SHA384 hash and returns the result as a 48 byte ArrayBuffer",
+      "!url": "http://www.espruino.com/Reference#l_crypto_SHA384"
+    },
+    "SHA512": {
+      "!type": "fn(message: ?) -> +ArrayBuffer",
+      "!doc": "Performs a SHA512 hash and returns the result as a 64 byte ArrayBuffer",
+      "!url": "http://www.espruino.com/Reference#l_crypto_SHA512"
+    },
+    "PBKDF2": {
+      "!type": "fn(passphrase: ?, salt: ?, options: ?) -> +ArrayBuffer",
+      "!doc": "Password-Based Key Derivation Function 2 algorithm, using SHA512",
+      "!url": "http://www.espruino.com/Reference#l_crypto_PBKDF2"
     }
   },
-  "ESPWifi": {
+  "AES": {
     "!type": "fn()",
-    "!doc": "An instantiation of an ESP8266 network adaptor",
-    "!url": "http://www.espruino.com/Reference#ESPWifi",
-    "prototype": {
-      "connect": {
-        "!type": "fn(ap: ?, key: ?, callback: ?) -> bool",
-        "!doc": "Connect to an access point",
-        "!url": "http://www.espruino.com/Reference#l_ESPWifi_connect"
-      },
-      "getIP": {
-        "!type": "fn() -> ?",
-        "!doc": "Get the current IP address",
-        "!url": "http://www.espruino.com/Reference#l_ESPWifi_getIP"
-      },
-      "setIP": {
-        "!type": "fn(options: ?) -> bool",
-        "!doc": "Set the current IP address for get an IP from DHCP (if no options object is specified)",
-        "!url": "http://www.espruino.com/Reference#l_ESPWifi_setIP"
-      }
+    "!doc": "Class containing AES encryption/decryption\n\n**Note:** This library is currently only included in builds for the Espruino Pico. For other boards you will have to make build your own firmware, and you may need to remove other features in order to make room.",
+    "!url": "http://www.espruino.com/Reference#AES",
+    "encrypt": {
+      "!type": "fn(passphrase: ?, key: ?, options: ?) -> +ArrayBuffer",
+      "!doc": "",
+      "!url": "http://www.espruino.com/Reference#l_AES_encrypt"
+    },
+    "decrypt": {
+      "!type": "fn(passphrase: ?, key: ?, options: ?) -> +ArrayBuffer",
+      "!doc": "",
+      "!url": "http://www.espruino.com/Reference#l_AES_decrypt"
     }
+  },
+  "ESP8266": {
+    "!type": "fn()",
+    "!doc": "The ESP8266 library is specific to the ESP8266 version of Espruino, i.e., running Espruino on an ESP8266 module (not to be confused with using the ESP8266 as Wifi add-on to an Espruino board).  This library contains functions to handle ESP8266-specific actions.\nFor example: `var esp8266 = require('ESP8266'); esp8266.reboot();` performs a hardware reset of the module.",
+    "!url": "http://www.espruino.com/Reference#l_ESP8266_undefined",
+    "ping": {
+      "!type": "fn(ipAddr: ?, pingCallback: ?)",
+      "!doc": "Perform a network ping request. The parameter can be either a String or a numeric IP address.\n**Note:** This function should probably be removed, or should it be part of the wifi library?",
+      "!url": "http://www.espruino.com/Reference#l_ESP8266_ping"
+    },
+    "reboot": {
+      "!type": "fn()",
+      "!doc": "Perform a hardware reset/reboot of the esp8266.",
+      "!url": "http://www.espruino.com/Reference#l_ESP8266_reboot"
+    },
+    "getResetInfo": {
+      "!type": "fn() -> +RstInfo",
+      "!doc": "At boot time the esp8266's firmware captures the cause of the reset/reboot.  This function returns this information in an object with the following fields:\n\n* `reason`: \"power on\", \"wdt reset\", \"exception\", \"soft wdt\", \"restart\", \"deep sleep\", or \"reset pin\"\n* `exccause`: exception cause\n* `epc1`, `epc2`, `epc3`: instruction pointers\n* `excvaddr`: address being accessed\n* `depc`: (?)",
+      "!url": "http://www.espruino.com/Reference#l_ESP8266_getResetInfo"
+    },
+    "logDebug": {
+      "!type": "fn(enable: ?)",
+      "!doc": "Enable or disable the logging of debug information.  A value of `true` enables debug logging while a value of `false` disables debug logging.  Debug output is sent to UART1 (gpio2).",
+      "!url": "http://www.espruino.com/Reference#l_ESP8266_logDebug"
+    },
+    "setCPUFreq": {
+      "!type": "fn(freq: ?)",
+      "!doc": "Set the operating frequency of the ESP8266 processor.",
+      "!url": "http://www.espruino.com/Reference#l_ESP8266_setCPUFreq"
+    },
+    "getState": {
+      "!type": "fn() -> ?",
+      "!doc": "Returns an object that contains details about the state of the ESP8266 with the following fields:\n\n* `sdkVersion`   - Version of the SDK.\n* `cpuFrequency` - CPU operating frequency in Mhz.\n* `freeHeap`     - Amount of free heap in bytes.\n* `maxCon`       - Maximum number of concurrent connections.\n* `flashMap`     - Configured flash size&map: '512KB:256/256' .. '4MB:512/512'\n* `flashKB`      - Configured flash size in KB as integer\n* `flashChip`    - Type of flash chip as string with manufacturer & chip, ex: '0xEF 0x4016`",
+      "!url": "http://www.espruino.com/Reference#l_ESP8266_getState"
+    },
+    "getFreeFlash": {
+      "!type": "fn() -> ?",
+      "!doc": "",
+      "!url": "http://www.espruino.com/Reference#l_ESP8266_getFreeFlash"
+    },
+    "crc32": {
+      "!type": "fn(arrayOfData: ?) -> ?",
+      "!doc": "",
+      "!url": "http://www.espruino.com/Reference#l_ESP8266_crc32"
+    },
+    "neopixelWrite": {
+      "!type": "fn(pin: +Pin, arrayOfData: ?)",
+      "!doc": "",
+      "!url": "http://www.espruino.com/Reference#l_ESP8266_neopixelWrite"
+    }
+  },
+  "Wifi": {
+    "!type": "fn()",
+    "!doc": "The wifi library is a generic cross-platform library to control the Wifi interface.  It supports functionality such as connecting to wifi networks, getting network information, starting and access point, etc.\n**Currently this library is ESP8266 specific** and needs to be ported to other Espruino platforms.\n\nTo get started and connect to your local access point all you need is\n```\nvar wifi = require(\"Wifi\");\nwifi.connect(\"my-ssid\", {password:\"my-pwd\"}, function(ap){ console.log(\"connected:\", ap); });\n```\nIf you want the connection to happen automatically at boot, add `wifi.save();`.",
+    "!url": "http://www.espruino.com/Reference#l_Wifi_undefined",
+    "disconnect": {
+      "!type": "fn(callback: ?)",
+      "!doc": "Disconnect the wifi station from an access point and disable the station mode. It is OK to call `disconnect` to turn off station mode even if no connection exists (for example, connection attempts may be failing). Station mode can be re-enabled by calling `connect` or `scan`.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_disconnect"
+    },
+    "stopAP": {
+      "!type": "fn(callback: ?)",
+      "!doc": "Stop being an access point and disable the AP operation mode. Ap mode can be re-enabled by calling `startAP`.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_stopAP"
+    },
+    "connect": {
+      "!type": "fn(ssid: ?, options: ?, callback: ?)",
+      "!doc": "Connect to an access point as a station. If there is an existing connection to an AP it is first disconnected if the SSID or password are different from those passed as parameters. Put differently, if the passed SSID and password are identical to the currently connected AP then nothing is changed.\nWhen the connection attempt completes the callback function is invoked with one `err` parameter, which is NULL if there is no error and a string message if there is an error. If DHCP is enabled the callback occurs once an IP addres has been obtained, if a static IP is set the callback occurs once the AP's network has been joined.  The callback is also invoked if a connection already exists and does not need to be changed.\n\nThe options properties may contain:\n\n* `password` - Password string to be used to access the network.\n* `dnsServers` (array of String) - An array of up to two DNS servers in dotted decimal format string.\n\nNotes:\n\n* the options should include the ability to set a static IP and associated netmask and gateway, this is a future enhancement.\n* the only error reported in the callback is \"Bad password\", all other errors (such as access point not found or DHCP timeout) just cause connection retries. If the reporting of such temporary errors is desired, the caller must use its own timeout and the `getDetails().status` field.\n* the `connect` call automatically enabled station mode, it can be disabled again by calling `disconnect`.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_connect"
+    },
+    "scan": {
+      "!type": "fn(callback: ?)",
+      "!doc": "Perform a scan for access points. This will enable the station mode if it is not currently enabled. Once the scan is complete the callback function is called with an array of APs found, each AP is an object with:\n\n* `ssid`: SSID string.\n* `mac`: access point MAC address in 00:00:00:00:00:00 format.\n* `authMode`: `open`, `wep`, `wpa`, `wpa2`, or `wpa_wpa2`.\n* `channel`: wifi channel 1..13.\n* `hidden`: true if the SSID is hidden.\n* `rssi`: signal strength in dB in the range -110..0.\n\nNotes:\n* in order to perform the scan the station mode is turned on and remains on, use Wifi.disconnect() to turn it off again, if desired.\n* only one scan can be in progress at a time.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_scan"
+    },
+    "startAP": {
+      "!type": "fn(ssid: ?, options: ?, callback: ?)",
+      "!doc": "Create a WiFi access point allowing stations to connect. If the password is NULL or an empty string the access point is open, otherwise it is encrypted.\nThe callback function is invoked once the access point is set-up and receives one `err` argument, which is NULL on success and contains an error message string otherwise.\n\nThe `options` object can contain the following properties.\n\n* `authMode` - The authentication mode to use.  Can be one of \"open\", \"wpa2\", \"wpa\", \"wpa_wpa2\". The default is open (but open access points are not recommended).\n* `password` - The password for connecting stations if authMode is not open.\n* `channel` - The channel to be used for the access point in the range 1..13. If the device is also connected to an access point as a station then that access point determines the channel.\n\nNotes:\n\n* the options should include the ability to set the AP IP and associated netmask, this is a future enhancement.\n* the `startAP` call automatically enables AP mode. It can be disabled again by calling `stopAP`.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_startAP"
+    },
+    "getStatus": {
+      "!type": "fn(callback: ?) -> ?",
+      "!doc": "Retrieve the current overall WiFi configuration. This call provides general information that pertains to both station and access point modes. The getDetails and getAPDetails calls provide more in-depth information about the station and access point configurations, respectively. The status object has the following properties:\n\n* `station` - Status of the wifi station: `off`, `connecting`, ...\n* `ap` - Status of the wifi access point: `disabled`, `enabled`.\n* `mode` - The current operation mode: `off`, `sta`, `ap`, `sta+ap`.\n* `phy` - Modulation standard configured: `11b`, `11g`, `11n` (the esp8266 docs are not very clear, but it is assumed that 11n means b/g/n). This setting limits the modulations that the radio will use, it does not indicate the current modulation used with a specific access point.\n* `powersave` - Power saving mode: `none` (radio is on all the time), `ps-poll` (radio is off between beacons as determined by the access point's DTIM setting). Note that in 'ap' and 'sta+ap' modes the radio is always on, i.e., no power saving is possible.\n* `savedMode` - The saved operation mode which will be applied at boot time: `off`, `sta`, `ap`, `sta+ap`.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_getStatus"
+    },
+    "setConfig": {
+      "!type": "fn(settings: ?)",
+      "!doc": "Sets a number of global wifi configuration settings. All parameters are optional and which are passed determines which settings are updated.\nThe settings available are:\n\n* `phy` - Modulation standard to allow: `11b`, `11g`, `11n` (the esp8266 docs are not very clear, but it is assumed that 11n means b/g/n).\n* `powersave` - Power saving mode: `none` (radio is on all the time), `ps-poll` (radio is off between beacons as determined by the access point's DTIM setting). Note that in 'ap' and 'sta+ap' modes the radio is always on, i.e., no power saving is possible.\n\nNote: esp8266 SDK programmers may be missing an \"opmode\" option to set the sta/ap/sta+ap operation mode. Please use connect/scan/disconnect/startAP/stopAP, which all set the esp8266 opmode indirectly.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_setConfig"
+    },
+    "getDetails": {
+      "!type": "fn(callback: ?) -> ?",
+      "!doc": "Retrieve the wifi station configuration and status details. The details object has the following properties:\n\n* `status` - Details about the wifi station connection, one of `off`, `connecting`, `wrong_password`, `no_ap_found`, `connect_fail`, or `connected`. The off, bad_password and connected states are stable, the other states are transient. The connecting state will either result in connected or one of the error states (bad_password, no_ap_found, connect_fail) and the no_ap_found and connect_fail states will result in a reconnection attempt after some interval.\n* `rssi` - signal strength of the connected access point in dB, typically in the range -110 to 0, with anything greater than -30 being an excessively strong signal.\n* `ssid` - SSID of the access point.\n* `password` - the password used to connect to the access point.\n* `authMode` - the authentication used: `open`, `wpa`, `wpa2`, `wpa_wpa2` (not currently supported).\n* `savedSsid` - the SSID to connect to automatically at boot time, null if none.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_getDetails"
+    },
+    "getAPDetails": {
+      "!type": "fn(callback: ?) -> ?",
+      "!doc": "Retrieve the current access point configuration and status.  The details object has the following properties:\n\n* `status` - Current access point status: `enabled` or `disabled`\n* `stations` - an array of the stations connected to the access point.  This array may be empty.  Each entry in the array is an object describing the station which, at a minimum contains `ip` being the IP address of the station.\n* `ssid` - SSID to broadcast.\n* `password` - Password for authentication.\n* `authMode` - the authentication required of stations: `open`, `wpa`, `wpa2`, `wpa_wpa2`.\n* `hidden` - True if the SSID is hidden, false otherwise.\n* `maxConn` - Max number of station connections supported.\n* `savedSsid` - the SSID to broadcast automatically at boot time, null if the access point is to be disabled at boot.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_getAPDetails"
+    },
+    "save": {
+      "!type": "fn(what: ?)",
+      "!doc": "Save the current wifi configuration (station and access point) to flash and automatically apply this configuration at boot time, unless `what==\"clear\"`, in which case the saved configuration is cleared such that wifi remains disabled at boot. The saved configuration includes:\n\n* mode (off/sta/ap/sta+ap)\n* SSIDs & passwords\n* phy (11b/g/n)\n* powersave setting\n* DHCP hostname",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_save"
+    },
+    "restore": {
+      "!type": "fn()",
+      "!doc": "Restores the saved Wifi configuration from flash. See `Wifi.save()`.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_restore"
+    },
+    "getIP": {
+      "!type": "fn(callback: ?) -> ?",
+      "!doc": "Return the station IP information in an object as follows:\n\n* ip - IP address as string (e.g. \"192.168.1.5\")\n* netmask - The interface netmask as string\n* gw - The network gateway as string\n* mac - The MAC address as string of the form 00:00:00:00:00:00\n\nNote that the `ip`, `netmask`, and `gw` fields are omitted if no connection is established:",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_getIP"
+    },
+    "getAPIP": {
+      "!type": "fn(callback: ?) -> ?",
+      "!doc": "Return the access point IP information in an object which contains:\n\n* ip - IP address as string (typ \"192.168.4.1\")\n* netmask - The interface netmask as string\n* gw - The network gateway as string\n* mac - The MAC address as string of the form 00:00:00:00:00:00",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_getAPIP"
+    },
+    "getHostByName": {
+      "!type": "fn(hostname: ?, callback: ?)",
+      "!doc": "Lookup the hostname and invoke a callback with the IP address as integer argument. If the lookup fails, the callback is invoked with a null argument.\n**Note:** only a single hostname lookup can be made at a time, concurrent lookups are not supported.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_getHostByName"
+    },
+    "getDHCPHostname": {
+      "!type": "fn(callback: ?) -> ?",
+      "!doc": "Returns the hostname announced to the DHCP server when connecting to an access point.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_getDHCPHostname"
+    },
+    "setDHCPHostname": {
+      "!type": "fn(hostname: ?)",
+      "!doc": "Set the hostname sent with every DHCP request, this may be visible in the access point and may be forwarded into DNS as hostname.local.\nIf a DHCP lease currently exists changing the hostname will cause a disconnect and reconnect in order to transmit the change to the DHCP server.",
+      "!url": "http://www.espruino.com/Reference#l_Wifi_setDHCPHostname"
+    }
+  },
+  "ESP8266WiFi": {
+    "!type": "fn()",
+    "!doc": "The ESP8266WiFi library is to be removed.",
+    "!url": "http://www.espruino.com/Reference#l_ESP8266WiFi_undefined"
   },
   "http": {
     "!type": "fn()",
@@ -43,12 +206,12 @@
     },
     "request": {
       "!type": "fn(options: ?, callback: ?) -> +httpCRq",
-      "!doc": "Create an HTTP Request - end() must be called on it to complete the operation",
+      "!doc": "Create an HTTP Request - `end()` must be called on it to complete the operation. `options` is of the form:\n\n```\nvar options = {\n    host: 'example.com', // host name\n    port: 80,            // (optional) port, defaults to 80\n    path: '/',           // path sent to server\n    method: 'GET',       // HTTP command sent to server (must be uppercase 'GET', 'POST', etc)\n    headers: { key : value, key : value } // (optional) HTTP headers\n  };\nrequire(\"http\").request(options, function(res) {\n  res.on('data', function(data) {\n    console.log(\"HTTP> \"+data);\n  });\n  res.on('close', function(data) {\n    console.log(\"Connection closed\");\n  });\n});\n```\n\nYou can easily pre-populate `options` from a URL using `var options = url.parse(\"http://www.example.com/foo.html\")`\n\n**Note:** if TLS/HTTPS is enabled, options can have `ca`, `key` and `cert` fields. See `tls.connect` for\nmore information about these and how to use them.",
       "!url": "http://www.espruino.com/Reference#l_http_request"
     },
     "get": {
       "!type": "fn(options: ?, callback: ?) -> +httpCRq",
-      "!doc": "Create an HTTP Request - convenience function for ```http.request()```. `options.method` is set to 'get', and end is called automatically. See [the Internet page](/Internet) for more usage examples.",
+      "!doc": "Request a webpage over HTTP - a convenience function for `http.request()` that makes sure the HTTP command is 'GET', and that calls `end` automatically.\n\n```\nrequire(\"http\").get(\"http://pur3.co.uk/hello.txt\", function(res) {\n  res.on('data', function(data) {\n    console.log(\"HTTP> \"+data);\n  });\n  res.on('close', function(data) {\n    console.log(\"Connection closed\");\n  });\n});\n```\n\nSee `http.request()` and [the Internet page](/Internet) and ` for more usage examples.",
       "!url": "http://www.espruino.com/Reference#l_http_get"
     }
   },
@@ -278,6 +441,16 @@
       }
     }
   },
+  "tls": {
+    "!type": "fn()",
+    "!doc": "This library allows you to create TCPIP servers and clients using TLS encryption\n\nIn order to use this, you will need an extra module to get network connectivity.\n\nThis is designed to be a cut-down version of the [node.js library](http://nodejs.org/api/tls.html). Please see the [Internet](/Internet) page for more information on how to use it.",
+    "!url": "http://www.espruino.com/Reference#l_tls_undefined",
+    "connect": {
+      "!type": "fn(options: ?, callback: ?) -> +Socket",
+      "!doc": "Create a socket connection using TLS\n\nOptions can have `ca`, `key` and `cert` fields, which should be the decoded content of the certificate.\n\n```\nvar options = url.parse(\"https://localhost\");\noptions.key = atob(\"MIIJKQ ... OZs08C\");\noptions.cert = atob(\"MIIFi ... Uf93rN+\");\noptions.ca = atob(\"MIIFgDCC ... GosQML4sc=\");\nrequire(\"http\").request(options, ... );\n```\n\nIf you have the certificates as `.pem` files, you need to load these files, take the\ninformation between the lines beginning with `----`, remove the newlines from it\nso you have raw base64, and then feed it into `atob` as above.\n\nFor more information about generating and using certificates, see:\n\nhttps://engineering.circle.com/https-authorized-certs-with-node-js/",
+      "!url": "http://www.espruino.com/Reference#l_tls_connect"
+    }
+  },
   "WIZnet": {
     "!type": "fn()",
     "!doc": "Library for communication with the WIZnet Ethernet module",
@@ -459,6 +632,36 @@
       "!doc": "Find the maximum of a series of numbers",
       "!url": "http://www.espruino.com/Reference#l_Math_max"
     }
+  },
+  "NRF": {
+    "!type": "fn()",
+    "!doc": "",
+    "!url": "http://www.espruino.com/Reference#NRF",
+    "sleep": {
+      "!type": "fn()",
+      "!doc": "",
+      "!url": "http://www.espruino.com/Reference#l_NRF_sleep"
+    },
+    "wake": {
+      "!type": "fn()",
+      "!doc": "",
+      "!url": "http://www.espruino.com/Reference#l_NRF_wake"
+    },
+    "getBattery": {
+      "!type": "fn() -> number",
+      "!doc": "Get the battery level in volts",
+      "!url": "http://www.espruino.com/Reference#l_NRF_getBattery"
+    },
+    "setAdvertising": {
+      "!type": "fn(data: ?)",
+      "!doc": "Data is of the form `{ UUID : data_as_byte_array }`. For example to return battery level at 95%, do:\n\n```\nNRF.setAdvertising({\n  0x180F : [95]\n});\n```\n\nOr you could report the current temperature:\n\n```\nsetInterval(function() {\n  NRF.setAdvertising({\n    0x1809 : [0|E.getTemperature()]\n  });\n}, 30000);\n```",
+      "!url": "http://www.espruino.com/Reference#l_NRF_setAdvertising"
+    }
+  },
+  "Bluetooth": {
+    "!type": "+Serial",
+    "!doc": "The USB Serial port",
+    "!url": "http://www.espruino.com/Reference#l__global_Bluetooth"
   },
   "hashlib": {
     "!type": "fn()",
@@ -671,6 +874,11 @@
         "!type": "fn(image: ?, x: number, y: number)",
         "!doc": "Draw an image at the specified position. If the image is 1 bit, the graphics foreground/background colours will be used. Otherwise color data will be copied as-is. Bitmaps are rendered MSB-first",
         "!url": "http://www.espruino.com/Reference#l_Graphics_drawImage"
+      },
+      "getModified": {
+        "!type": "fn(reset: bool) -> ?",
+        "!doc": "Return the area of the Graphics canvas that has been modified, and optionally clear\nthe modified area to 0.\n\nFor instance if `g.setPixel(10,20)` was called, this would return `{x1:10, y1:20, x2:10, y2:20}`",
+        "!url": "http://www.espruino.com/Reference#l_Graphics_getModified"
       }
     }
   },
@@ -895,6 +1103,11 @@
     "!type": "fn()",
     "!doc": "Create a software SPI port. This has limited functionality (no baud rate), but it can work on any pins.\n\nUse `SPI.setup` to configure this port.",
     "!url": "http://www.espruino.com/Reference#l_SPI_SPI",
+    "find": {
+      "!type": "fn(pin: +Pin) -> ?",
+      "!doc": "Try and find an SPI hardware device that will work on this pin (eg. `SPI1`)\n\nMay return undefined if no device can be found.",
+      "!url": "http://www.espruino.com/Reference#l_SPI_find"
+    },
     "prototype": {
       "setup": {
         "!type": "fn(options: ?)",
@@ -942,6 +1155,11 @@
     "!type": "fn()",
     "!doc": "This class allows use of the built-in I2C ports. Currently it allows I2C Master mode only.\n\nAll addresses are in 7 bit format. If you have an 8 bit address then you need to shift it one bit to the right.",
     "!url": "http://www.espruino.com/Reference#I2C",
+    "find": {
+      "!type": "fn(pin: +Pin) -> ?",
+      "!doc": "Try and find an I2C hardware device that will work on this pin (eg. `I2C1`)\n\nMay return undefined if no device can be found.",
+      "!url": "http://www.espruino.com/Reference#l_I2C_find"
+    },
     "prototype": {
       "setup": {
         "!type": "fn(options: ?)",
@@ -1070,12 +1288,12 @@
       },
       "push": {
         "!type": "fn(arguments: ?) -> number",
-        "!doc": "Push a new value onto the end of this array'",
+        "!doc": "Push a new value onto the end of this array'\n\nThis is the opposite of `[1,2,3].unshift(0)`, which adds one or more elements to the beginning of the array.",
         "!url": "http://www.espruino.com/Reference#l_Array_push"
       },
       "pop": {
         "!type": "fn() -> ?",
-        "!doc": "Pop a new value off of the end of this array",
+        "!doc": "Remove and return the value on the end of this array.\n\nThis is the opposite of `[1,2,3].shift()`, which removes an element from the beginning of the array.",
         "!url": "http://www.espruino.com/Reference#l_Array_pop"
       },
       "map": {
@@ -1115,12 +1333,12 @@
       },
       "shift": {
         "!type": "fn() -> ?",
-        "!doc": "Remove the first element of the array, and return it",
+        "!doc": "Remove and return the first element of the array.\n\nThis is the opposite of `[1,2,3].pop()`, which takes an element off the end.",
         "!url": "http://www.espruino.com/Reference#l_Array_shift"
       },
       "unshift": {
         "!type": "fn(elements: ?) -> number",
-        "!doc": "Remove the first element of the array, and return it",
+        "!doc": "Add one or more items to the start of the array, and return its new length.\n\nThis is the opposite of `[1,2,3].push(4)`, which puts one or more elements on the end.",
         "!url": "http://www.espruino.com/Reference#l_Array_unshift"
       },
       "slice": {
@@ -1222,12 +1440,12 @@
       },
       "toString": {
         "!type": "fn() -> ?",
-        "!doc": "Converts to a String, eg: `Fri Jun 20 2014 14:52:20 GMT+0000`\n\n**Note:** This always assumes a timezone of GMT+0000",
+        "!doc": "Converts to a String, eg: `Fri Jun 20 2014 14:52:20 GMT+0000`\n\n **Note:** This always assumes a timezone of GMT+0000",
         "!url": "http://www.espruino.com/Reference#l_Date_toString"
       },
       "toUTCString": {
         "!type": "fn() -> ?",
-        "!doc": "Converts to a String, eg: `Fri, 20 Jun 2014 14:52:20 GMT`\n\n**Note:** This always assumes a timezone of GMT",
+        "!doc": "Converts to a String, eg: `Fri, 20 Jun 2014 14:52:20 GMT`\n\n **Note:** This always assumes a timezone of GMT",
         "!url": "http://www.espruino.com/Reference#l_Date_toUTCString"
       }
     },
@@ -1269,7 +1487,7 @@
       },
       "map": {
         "!type": "fn(function: ?, thisArg: ?) -> +ArrayBufferView",
-        "!doc": "Return an array which is made from the following: ```A.map(function) = [function(A[0]), function(A[1]), ...]```\n\n**Note:** This returns an ArrayBuffer of the same type it was called on. To get an Array, use `Array.prototype.map`",
+        "!doc": "Return an array which is made from the following: ```A.map(function) = [function(A[0]), function(A[1]), ...]```\n\n **Note:** This returns an ArrayBuffer of the same type it was called on. To get an Array, use `Array.prototype.map`",
         "!url": "http://www.espruino.com/Reference#l_ArrayBufferView_map"
       },
       "indexOf": {
@@ -1309,7 +1527,7 @@
       },
       "slice": {
         "!type": "fn(start: number, end: ?) -> +Array",
-        "!doc": "Return a copy of a portion of this array (in a new array).\n\n**Note:** This currently returns a normal Array, not an ArrayBuffer",
+        "!doc": "Return a copy of a portion of this array (in a new array).\n\n **Note:** This currently returns a normal Array, not an ArrayBuffer",
         "!url": "http://www.espruino.com/Reference#l_ArrayBufferView_slice"
       }
     }
@@ -1390,6 +1608,11 @@
     "!type": "fn()",
     "!doc": "This class allows use of the built-in USARTs\n\nMethods may be called on the USB, Serial1, Serial2, Serial3, Serial4, Serial5 and Serial6 objects. While different processors provide different numbers of USARTs, you can always rely on at least Serial1 and Serial2",
     "!url": "http://www.espruino.com/Reference#Serial",
+    "find": {
+      "!type": "fn(pin: +Pin) -> ?",
+      "!doc": "Try and find a USART (Serial) hardware device that will work on this pin (eg. `Serial1`)\n\nMay return undefined if no device can be found.",
+      "!url": "http://www.espruino.com/Reference#l_Serial_find"
+    },
     "prototype": {
       "setConsole": {
         "!type": "fn()",
@@ -1403,12 +1626,12 @@
       },
       "print": {
         "!type": "fn(string: ?)",
-        "!doc": "Print a string to the serial port - without a line feed\n\n**Note:** This function replaces any occurances of `\\n` in the string with `\\r\\n`. To avoid this, use `Serial.write`.",
+        "!doc": "Print a string to the serial port - without a line feed\n\n **Note:** This function replaces any occurances of `\\n` in the string with `\\r\\n`. To avoid this, use `Serial.write`.",
         "!url": "http://www.espruino.com/Reference#l_Serial_print"
       },
       "println": {
         "!type": "fn(string: ?)",
-        "!doc": "Print a line to the serial port with a newline (`\\r\\n`) at the end of it.\n\n**Note:** This function converts data to a string first, eg `Serial.print([1,2,3])` is equivalent to `Serial.print(\"1,2,3\"). If you'd like to write raw bytes, use `Serial.write`.",
+        "!doc": "Print a line to the serial port with a newline (`\\r\\n`) at the end of it.\n\n **Note:** This function converts data to a string first, eg `Serial.print([1,2,3])` is equivalent to `Serial.print(\"1,2,3\"). If you'd like to write raw bytes, use `Serial.write`.",
         "!url": "http://www.espruino.com/Reference#l_Serial_println"
       },
       "write": {
@@ -1512,27 +1735,27 @@
     "prototype": {
       "read": {
         "!type": "fn() -> bool",
-        "!doc": "Returns the input state of the pin as a boolean.\n\n**Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"input\"`",
+        "!doc": "Returns the input state of the pin as a boolean.\n\n **Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"input\"`",
         "!url": "http://www.espruino.com/Reference#l_Pin_read"
       },
       "set": {
         "!type": "fn()",
-        "!doc": "Sets the output state of the pin to a 1\n\n**Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`",
+        "!doc": "Sets the output state of the pin to a 1\n\n **Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`",
         "!url": "http://www.espruino.com/Reference#l_Pin_set"
       },
       "reset": {
         "!type": "fn()",
-        "!doc": "Sets the output state of the pin to a 0\n\n**Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`",
+        "!doc": "Sets the output state of the pin to a 0\n\n **Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`",
         "!url": "http://www.espruino.com/Reference#l_Pin_reset"
       },
       "write": {
         "!type": "fn(value: bool)",
-        "!doc": "Sets the output state of the pin to the parameter given\n\n**Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`",
+        "!doc": "Sets the output state of the pin to the parameter given\n\n **Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`",
         "!url": "http://www.espruino.com/Reference#l_Pin_write"
       },
       "writeAtTime": {
         "!type": "fn(value: bool, time: number)",
-        "!doc": "Sets the output state of the pin to the parameter given at the specified time.\n\n**Note:** this **doesn't** change the mode of the pin to an output. To do that, you need to use `pin.write(0)` or `pinMode(pin, 'output')` first.",
+        "!doc": "Sets the output state of the pin to the parameter given at the specified time.\n\n **Note:** this **doesn't** change the mode of the pin to an output. To do that, you need to use `pin.write(0)` or `pinMode(pin, 'output')` first.",
         "!url": "http://www.espruino.com/Reference#l_Pin_writeAtTime"
       },
       "getMode": {
@@ -1544,6 +1767,11 @@
         "!type": "fn(mode: ?)",
         "!doc": "Set the mode of the given pin. See [`pinMode`](#l__global_pinMode) for more information on pin modes.",
         "!url": "http://www.espruino.com/Reference#l_Pin_mode"
+      },
+      "getInfo": {
+        "!type": "fn() -> ?",
+        "!doc": "Get information about this pin and its capabilities. Of the form:\n\n```\n{\n  \"port\"      : \"A\", // the Pin's port on the chip\n  \"num\"       : 12, // the Pin's number\n  \"in_addr\"   : 0x..., // (if available) the address of the pin's input address in bit-banded memory (can be used with peek)\n  \"out_addr\"  : 0x..., // (if available) the address of the pin's output address in bit-banded memory (can be used with poke)\n  \"analog\"    : { ADCs : [1], channel : 12 }, // If analog input is available\n  \"functions\" : {\n    \"TIM1\":{type:\"CH1, af:0},\n    \"I2C3\":{type:\"SCL\", af:1}\n  }\n}\n```\nWill return undefined if pin is not valid.",
+        "!url": "http://www.espruino.com/Reference#l_Pin_getInfo"
       }
     }
   },
@@ -1553,9 +1781,9 @@
     "!url": "http://www.espruino.com/Reference#Hardware"
   },
   "Object": {
-    "!type": "fn()",
-    "!doc": "This is the built-in class for Objects",
-    "!url": "http://www.espruino.com/Reference#Object",
+    "!type": "fn(value: ?) -> ?",
+    "!doc": "Creates an Object from the supplied argument",
+    "!url": "http://www.espruino.com/Reference#l_Object_Object",
     "prototype": {
       "!stdProto": "Object",
       "length": {
@@ -1606,7 +1834,7 @@
     },
     "getOwnPropertyNames": {
       "!type": "fn(object: ?) -> ?",
-      "!doc": "Returns an array of all properties (enumerable or not) found directly on a given object.\n\n**Note:** This doesn't currently work as it should for built-in objects and their prototypes. See bug #380",
+      "!doc": "Returns an array of all properties (enumerable or not) found directly on a given object.\n\n **Note:** This doesn't currently work as it should for built-in objects and their prototypes. See bug #380",
       "!url": "http://www.espruino.com/Reference#l_Object_getOwnPropertyNames"
     },
     "create": {
@@ -1618,6 +1846,16 @@
       "!type": "fn(obj: ?, name: ?) -> ?",
       "!doc": "Get information on the given property in the object, or undefined",
       "!url": "http://www.espruino.com/Reference#l_Object_getOwnPropertyDescriptor"
+    },
+    "defineProperty": {
+      "!type": "fn(obj: ?, name: ?, desc: ?) -> ?",
+      "!doc": "Add a new property to the Object. 'Desc' is an object with the following fields:\n\n* `configurable` (bool = false) - can this property be changed/deleted\n* `enumerable` (bool = false) - can this property be enumerated\n* `value` (anything) - the value of this property\n* `writable` (bool = false) - can the value be changed with the assignment operator?\n* `get` (function) - the getter function, or undefined if no getter\n* `set` (function) - the setter function, or undefined if no setter\n*\n**Note:** `configurable`, `enumerable`, `writable`, `get`, and `set` are not implemented and will be ignored.",
+      "!url": "http://www.espruino.com/Reference#l_Object_defineProperty"
+    },
+    "defineProperties": {
+      "!type": "fn(obj: ?, props: ?) -> ?",
+      "!doc": "Adds new properties to the Object. See `Object.defineProperty` for more information",
+      "!url": "http://www.espruino.com/Reference#l_Object_defineProperties"
     }
   },
   "Function": {
@@ -1675,7 +1913,14 @@
   "TypeError": {
     "!type": "fn(message: ?) -> ?",
     "!doc": "Creates a TypeError object",
-    "!url": "http://www.espruino.com/Reference#l_TypeError_TypeError"
+    "!url": "http://www.espruino.com/Reference#l_TypeError_TypeError",
+    "prototype": {
+      "toString": {
+        "!type": "fn() -> ?",
+        "!doc": "",
+        "!url": "http://www.espruino.com/Reference#l_TypeError_toString"
+      }
+    }
   },
   "InternalError": {
     "!type": "fn(message: ?) -> ?",
@@ -1686,6 +1931,18 @@
         "!type": "fn() -> ?",
         "!doc": "",
         "!url": "http://www.espruino.com/Reference#l_InternalError_toString"
+      }
+    }
+  },
+  "ReferenceError": {
+    "!type": "fn(message: ?) -> ?",
+    "!doc": "Creates a ReferenceError object",
+    "!url": "http://www.espruino.com/Reference#l_ReferenceError_ReferenceError",
+    "prototype": {
+      "toString": {
+        "!type": "fn() -> ?",
+        "!doc": "",
+        "!url": "http://www.espruino.com/Reference#l_ReferenceError_toString"
       }
     }
   },
@@ -1733,7 +1990,7 @@
     "!url": "http://www.espruino.com/Reference#console",
     "log": {
       "!type": "fn(text: ?)",
-      "!doc": "Print the supplied string(s) to the console\n\n**Note:** If you're connected to a computer (not a wall adaptor) via USB but **you are not running a terminal app** then when you print data Espruino may pause execution and wait until the computer requests the data it is trying to print.",
+      "!doc": "Print the supplied string(s) to the console\n\n **Note:** If you're connected to a computer (not a wall adaptor) via USB but **you are not running a terminal app** then when you print data Espruino may pause execution and wait until the computer requests the data it is trying to print.",
       "!url": "http://www.espruino.com/Reference#l_console_log"
     }
   },
@@ -1820,7 +2077,7 @@
       },
       "trim": {
         "!type": "fn() -> +String",
-        "!doc": "Return the integer value of a single character at the given position in the String.\n\nNote that this returns 0 not 'NaN' for out of bounds characters",
+        "!doc": "Return a new string with any whitespace (tabs, space, form feed, newline,\ncarriage return, etc) removed from the beginning and end.",
         "!url": "http://www.espruino.com/Reference#l_String_trim"
       }
     },
@@ -1851,12 +2108,12 @@
     },
     "getTemperature": {
       "!type": "fn() -> number",
-      "!doc": "Use the STM32's internal thermistor to work out the temperature.\n\nWhile this is implemented on Espruino boards, it may not be implemented on other devices. If so it'll return NaN.\n\n**Note:** This is not entirely accurate and varies by a few degrees from chip to chip. It measures the **die temperature**, so when connected to USB it could be reading 10 over degrees C above ambient temperature. When running from battery with `setDeepSleep(true)` it is much more accurate though.",
+      "!doc": "Use the STM32's internal thermistor to work out the temperature.\n\nWhile this is implemented on Espruino boards, it may not be implemented on other devices. If so it'll return NaN.\n\n **Note:** This is not entirely accurate and varies by a few degrees from chip to chip. It measures the **die temperature**, so when connected to USB it could be reading 10 over degrees C above ambient temperature. When running from battery with `setDeepSleep(true)` it is much more accurate though.",
       "!url": "http://www.espruino.com/Reference#l_E_getTemperature"
     },
     "getAnalogVRef": {
       "!type": "fn() -> number",
-      "!doc": "Check the internal voltage reference. To work out an actual voltage of an input pin, you can use `analogRead(pin)*E.getAnalogVRef()`\n\n**Note:** This value is calculated by reading the voltage on an internal voltage reference with the ADC.\nIt will be slightly noisy, so if you need this for accurate measurements we'd recommend that you call\nthis function several times and average the results.\n\nWhile this is implemented on Espruino boards, it may not be implemented on other devices. If so it'll return NaN.",
+      "!doc": "Check the internal voltage reference. To work out an actual voltage of an input pin, you can use `analogRead(pin)*E.getAnalogVRef()`\n\n **Note:** This value is calculated by reading the voltage on an internal voltage reference with the ADC.\nIt will be slightly noisy, so if you need this for accurate measurements we'd recommend that you call\nthis function several times and average the results.\n\nWhile this is implemented on Espruino boards, it may not be implemented on other devices. If so it'll return NaN.",
       "!url": "http://www.espruino.com/Reference#l_E_getAnalogVRef"
     },
     "nativeCall": {
@@ -1935,14 +2192,19 @@
       "!url": "http://www.espruino.com/Reference#l_E_dumpTimers"
     },
     "getSizeOf": {
-      "!type": "fn(v: ?) -> number",
-      "!doc": "Return the number of Variable Blocks used by the supplied variable. This is useful if you're running out of memory and you want to be able to see what is taking up most of the available space.\n\nSee http://www.espruino.com/Internals for more information",
+      "!type": "fn(v: ?, depth: number) -> ?",
+      "!doc": "Return the number of variable blocks used by the supplied variable. This is\nuseful if you're running out of memory and you want to be able to see what\nis taking up most of the available space.\n\nIf `depth>0` and the variable can be recursed into, an array listing all property\nnames (including internal Espruino names) and their sizes is returned. If\n`depth>1` there is also a `more` field that inspects the objects's children's\nchildren.\n\nFor instance `E.getSizeOf(function(a,b) { })` returns `5`.\n\nBut `E.getSizeOf(E.getSizeOf(function(a,b) { }), 1)` returns:\n\n```\n [\n  {\n    \"name\": \"a\",\n    \"size\": 1 },\n  {\n    \"name\": \"b\",\n    \"size\": 1 },\n  {\n    \"name\": \"\\xFFcod\",\n    \"size\": 2 }\n ]\n```\n\nIn this case setting depth to `2` will make no difference as there are\nno more children to traverse.\n\nSee http://www.espruino.com/Internals for more information",
       "!url": "http://www.espruino.com/Reference#l_E_getSizeOf"
     },
     "mapInPlace": {
       "!type": "fn(from: ?, to: ?, map: ?, bits: number)",
       "!doc": "Take each element of the `from` array, look it up in `map` (or call the \nfunction with it as a first argument), and write it into the corresponding\nelement in the `to` array.",
       "!url": "http://www.espruino.com/Reference#l_E_mapInPlace"
+    },
+    "dumpStr": {
+      "!type": "fn() -> +String",
+      "!doc": "Get the current interpreter state in a text form such that it can be copied to a new device",
+      "!url": "http://www.espruino.com/Reference#l_E_dumpStr"
     },
     "srand": {
       "!type": "fn(v: number)",
@@ -1980,7 +2242,7 @@
       "!url": "http://www.espruino.com/Reference#l_Flash_getPage"
     },
     "erasePage": {
-      "!type": "fn(addr: number)",
+      "!type": "fn(addr: ?)",
       "!doc": "Erase a page of flash memory",
       "!url": "http://www.espruino.com/Reference#l_Flash_erasePage"
     },
@@ -2011,9 +2273,14 @@
     },
     "memory": {
       "!type": "fn() -> ?",
-      "!doc": "Run a Garbage Collection pass, and return an object containing information on memory usage.\n\nfree : Memory that is available to be used\n\nusage : Memory that has been used\n\ntotal : Total memory\n\nhistory : Memory used for command history - that is freed if memory is low. Note that this is INCLUDED in the figure for 'free'\n\nstackEndAddress : (on ARM) the address (that can be used with peek/poke/etc) of the END of the stack. The stack grows down, so unless you do a lot of recursion the bytes above this can be used.\n\nMemory units are specified in 'blocks', which are around 16 bytes each (depending on your device). See http://www.espruino.com/Performance for more information.",
+      "!doc": "Run a Garbage Collection pass, and return an object containing information on memory usage.\n\n* `free` : Memory that is available to be used (in blocks)\n* `usage` : Memory that has been used (in blocks)\n* `total` : Total memory (in blocks)\n* `history` : Memory used for command history - that is freed if memory is low. Note that this is INCLUDED in the figure for 'free'\n* `stackEndAddress` : (on ARM) the address (that can be used with peek/poke/etc) of the END of the stack. The stack grows down, so unless you do a lot of recursion the bytes above this can be used.\n* `flash_start` : (on ARM) the address of the start of flash memory (usually `0x8000000`)\n* `flash_binary_end` : (on ARM) the address in flash memory of the end of Espruino's firmware.\n* `flash_code_start` : (on ARM) the address in flash memory of pages that store any code that you save with `save()`.\n* `flash_length` : (on ARM) the amount of flash memory this firmware was built for (in bytes). **Note:** Some STM32 chips actually have more memory than is advertised.\n\nMemory units are specified in 'blocks', which are around 16 bytes each (depending on your device). See http://www.espruino.com/Performance for more information.",
       "!url": "http://www.espruino.com/Reference#l_process_memory"
     }
+  },
+  "show": {
+    "!type": "fn(image: ?)",
+    "!doc": "Show an image on the in-built 5x5 LED screen.\n\nImage can be:\n\n* A number where each bit represents a pixel (so 25 bits)",
+    "!url": "http://www.espruino.com/Reference#l__global_show"
   },
   "arguments": {
     "!type": "?",
@@ -2049,6 +2316,11 @@
     "!type": "fn(binaryData: ?) -> ?",
     "!doc": "Convert the supplied base64 string into a base64 string",
     "!url": "http://www.espruino.com/Reference#l__global_atob"
+  },
+  "encodeURIComponent": {
+    "!type": "fn(str: ?) -> ?",
+    "!doc": "Convert a string with any character not alphanumeric or `- _ . ! ~ * ' ( )` converted to the form `%XY` where `XY` is its hexadecimal representation",
+    "!url": "http://www.espruino.com/Reference#l__global_encodeURIComponent"
   },
   "require": {
     "!type": "fn(moduleName: ?) -> ?",
@@ -2107,17 +2379,17 @@
   },
   "dump": {
     "!type": "fn()",
-    "!doc": "Output current interpreter state in a text form such that it can be copied to a new device\n\nNote: 'Internal' functions are currently not handled correctly. You will need to recreate these in the onInit function.",
+    "!doc": "Output current interpreter state in a text form such that it can be copied to a new device\n\nNote: 'Internal' functions are currently not handled correctly. You will need to recreate these in the `onInit` function.",
     "!url": "http://www.espruino.com/Reference#l__global_dump"
   },
   "load": {
     "!type": "fn()",
-    "!doc": "Load program memory out of flash\n\nThis command only executes when the Interpreter returns to the Idle state - for instance ```a=1;load();a=2;``` will still leave 'a' as undefined (or what it was set to in the saved program).\n\nEspruino will resume from where it was when you last typed `save()`. If you want code to be executed right after loading (for instance to initialise devices connected to Espruino), create a function called `onInit` (which will be automatically executed by Espruino).",
+    "!doc": "Load program memory out of flash\n\nThis command only executes when the Interpreter returns to the Idle state - for\ninstance ```a=1;load();a=2;``` will still leave 'a' as undefined (or what it was\nset to in the saved program).\n\nEspruino will resume from where it was when you last typed `save()`.\nIf you want code to be executed right after loading (for instance to initialise\ndevices connected to Espruino), add an `init` event handler to `E` with\n`E.on('init', function() { ... your_code ... });`. This will then be automatically\nexecuted by Espruino every time it starts.",
     "!url": "http://www.espruino.com/Reference#l__global_load"
   },
   "save": {
     "!type": "fn()",
-    "!doc": "Save program memory into flash. It will then be loaded automatically every time Espruino powers on or is hard-reset.\n\nThis command only executes when the Interpreter returns to the Idle state - for instance ```a=1;save();a=2;``` will save 'a' as 2.\n\nWhen Espruino powers on, it will resume from where it was when you typed `save()`. If you want code to be executed right after loading (for instance to initialise devices connected to Espruino), create a function called `onInit` (which will be automatically executed by Espruino).\n\nIn order to stop the program saved with this command being loaded automatically, hold down Button 1 while also pressing reset. On some boards, Button 1 enters bootloader mode, so you will need to press Reset with Button 1 raised, and then hold Button 1 down a fraction of a second later.",
+    "!doc": "Save program memory into flash. It will then be loaded automatically every time\nEspruino powers on or is hard-reset.\n\nThis command only executes when the Interpreter returns to the Idle state - for\ninstance ```a=1;save();a=2;``` will save 'a' as 2.\n\nWhen Espruino powers on, it will resume from where it was when you typed `save()`.\nIf you want code to be executed right after loading (for instance to initialise\ndevices connected to Espruino), add an `init` event handler to `E` with\n`E.on('init', function() { ... your_code ... });`. This will then be automatically\nexecuted by Espruino every time it starts.\n\nIn order to stop the program saved with this command being loaded automatically,\nhold down Button 1 while also pressing reset. On some boards, Button 1 enters\nbootloader mode, so you will need to press Reset with Button 1 raised, and then\nhold Button 1 down a fraction of a second later.",
     "!url": "http://www.espruino.com/Reference#l__global_save"
   },
   "reset": {
@@ -2127,7 +2399,7 @@
   },
   "print": {
     "!type": "fn(text: ?)",
-    "!doc": "Print the supplied string(s) to the console\n\n**Note:** If you're connected to a computer (not a wall adaptor) via USB but **you are not running a terminal app** then when you print data Espruino may pause execution and wait until the computer requests the data it is trying to print.",
+    "!doc": "Print the supplied string(s) to the console\n\n **Note:** If you're connected to a computer (not a wall adaptor) via USB but **you are not running a terminal app** then when you print data Espruino may pause execution and wait until the computer requests the data it is trying to print.",
     "!url": "http://www.espruino.com/Reference#l__global_print"
   },
   "edit": {
@@ -2157,12 +2429,12 @@
   },
   "setInterval": {
     "!type": "fn(function: ?, timeout: number, args: ?) -> ?",
-    "!doc": "Call the function specified REPEATEDLY after the timeout in milliseconds.\n\nYou can also specify extra arguments that will be sent to the function when it is executed. For example:\n\n```\nsetInterval(function (a,b) {\n  console.log(a+\" \"+b);\n}, 1000, \"Hello\", \"World\");\n// prints 'Hello World'\n```\n\nIf you want to stop your function from being called, pass the number that\nwas returned by `setInterval` into the `clearInterval` function.\n\n**Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
+    "!doc": "Call the function (or evaluate the string) specified REPEATEDLY after the timeout in milliseconds.\n\nFor instance:\n\n```\nsetInterval(function () {\n  console.log(\"Hello World\");\n}, 1000);\n// or\nsetInterval('console.log(\"Hello World\");', 1000);\n// both print 'Hello World' every second\n```\n\nYou can also specify extra arguments that will be sent to the function when it is executed. For example:\n\n```\nsetInterval(function (a,b) {\n  console.log(a+\" \"+b);\n}, 1000, \"Hello\", \"World\");\n// prints 'Hello World' every second\n```\n\nIf you want to stop your function from being called, pass the number that\nwas returned by `setInterval` into the `clearInterval` function.\n\n **Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
     "!url": "http://www.espruino.com/Reference#l__global_setInterval"
   },
   "setTimeout": {
     "!type": "fn(function: ?, timeout: number, args: ?) -> ?",
-    "!doc": "Call the function specified ONCE after the timeout in milliseconds.\n\nYou can also specify extra arguments that will be sent to the function when it is executed. For example:\n\n```\nsetTimeout(function (a,b) {\n  console.log(a+\" \"+b);\n}, 1000, \"Hello\", \"World\");\n// prints 'Hello World'\n```\n\nIf you want to stop the function from being called, pass the number that\nwas returned by `setTimeout` into the `clearInterval` function.\n\n**Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
+    "!doc": "Call the function (or evaluate the string) specified ONCE after the timeout in milliseconds.\n\nFor instance:\n\n```\nsetTimeout(function () {\n  console.log(\"Hello World\");\n}, 1000);\n// or\nsetTimeout('console.log(\"Hello World\");', 1000);\n// both print 'Hello World' after a second\n```\n\nYou can also specify extra arguments that will be sent to the function when it is executed. For example:\n\n```\nsetTimeout(function (a,b) {\n  console.log(a+\" \"+b);\n}, 1000, \"Hello\", \"World\");\n// prints 'Hello World' after 1 second\n```\n\nIf you want to stop the function from being called, pass the number that\nwas returned by `setTimeout` into the `clearInterval` function.\n\n **Note:** If `setDeepSleep(true)` has been called and the interval is greater than 5 seconds, Espruino may execute the interval up to 1 second late. This is because Espruino can only wake from deep sleep every second - and waking early would cause Espruino to waste power while it waited for the correct time.",
     "!url": "http://www.espruino.com/Reference#l__global_setTimeout"
   },
   "clearInterval": {
@@ -2177,7 +2449,7 @@
   },
   "changeInterval": {
     "!type": "fn(id: ?, time: number)",
-    "!doc": "Change the Interval on a callback created with setInterval, for example:\n\n```var id = setInterval(function () { print('foo'); }, 1000); // every second```\n\n```changeInterval(id, 1500); // now runs every 1.5 seconds```\n\nThis takes effect the next time the callback is called (so it is not immediate).",
+    "!doc": "Change the Interval on a callback created with setInterval, for example:\n\n```var id = setInterval(function () { print('foo'); }, 1000); // every second```\n\n```changeInterval(id, 1500); // now runs every 1.5 seconds```\n\nThis takes effect immediately and resets the timeout, so in the example above,\nregardless of when you call `changeInterval`, the next interval will occur 1500ms\nafter it.",
     "!url": "http://www.espruino.com/Reference#l__global_changeInterval"
   },
   "peek8": {
@@ -2212,32 +2484,32 @@
   },
   "analogRead": {
     "!type": "fn(pin: +Pin) -> number",
-    "!doc": "Get the analog value of the given pin\n\nThis is different to Arduino which only returns an integer between 0 and 1023\n\nHowever only pins connected to an ADC will work (see the datasheet)\n\n**Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"analog\"`",
+    "!doc": "Get the analog value of the given pin\n\nThis is different to Arduino which only returns an integer between 0 and 1023\n\nHowever only pins connected to an ADC will work (see the datasheet)\n\n **Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"analog\"`",
     "!url": "http://www.espruino.com/Reference#l__global_analogRead"
   },
   "analogWrite": {
     "!type": "fn(pin: +Pin, value: number, options: ?)",
-    "!doc": "Set the analog Value of a pin. It will be output using PWM.\n\n**Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`",
+    "!doc": "Set the analog Value of a pin. It will be output using PWM.\n\nObjects can contain:\n\n* `freq` - pulse frequency in Hz, eg. ```analogWrite(A0,0.5,{ freq : 10 });``` - specifying a frequency will force PWM output, even if the pin has a DAC\n* `soft` - boolean, If true software PWM is used if available.\n* `forceSoft` - boolean, If true software PWM is used even\n\n **Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`",
     "!url": "http://www.espruino.com/Reference#l__global_analogWrite"
   },
   "digitalPulse": {
     "!type": "fn(pin: +Pin, value: bool, time: ?)",
-    "!doc": "Pulse the pin with the value for the given time in milliseconds. It uses a hardware timer to produce accurate pulses, and returns immediately (before the pulse has finished). Use `digitalPulse(A0,1,0)` to wait until a previous pulse has finished.\n\neg. `digitalPulse(A0,1,5);` pulses A0 high for 5ms. `digitalPulse(A0,1,[5,2,4]);` pulses A0 high for 5ms, low for 2ms, and high for 4ms\n\n**Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`\n\ndigitalPulse is for SHORT pulses that need to be very accurate. If you're doing anything over a few milliseconds, use setTimeout instead.",
+    "!doc": "Pulse the pin with the value for the given time in milliseconds. It uses a hardware timer to produce accurate pulses, and returns immediately (before the pulse has finished). Use `digitalPulse(A0,1,0)` to wait until a previous pulse has finished.\n\neg. `digitalPulse(A0,1,5);` pulses A0 high for 5ms. `digitalPulse(A0,1,[5,2,4]);` pulses A0 high for 5ms, low for 2ms, and high for 4ms\n\n **Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`\n\ndigitalPulse is for SHORT pulses that need to be very accurate. If you're doing anything over a few milliseconds, use setTimeout instead.",
     "!url": "http://www.espruino.com/Reference#l__global_digitalPulse"
   },
   "digitalWrite": {
     "!type": "fn(pin: +Pin, value: number)",
-    "!doc": "Set the digital value of the given pin.\n\n**Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`\n\nIf pin argument is an array of pins (eg. `[A2,A1,A0]`) the value argument will be treated as an array of bits where the last array element is the least significant bit. \n\nIn this case, pin values are set last significant bit first (from the right-hand side of the array of pins). This means you can use the same pin multiple times, for example `digitalWrite([A1,A1,A0,A0],0b0101)` would pulse A0 followed by A1.",
+    "!doc": "Set the digital value of the given pin.\n\n **Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"output\"`\n\nIf pin argument is an array of pins (eg. `[A2,A1,A0]`) the value argument will be treated\nas an array of bits where the last array element is the least significant bit.\n\nIn this case, pin values are set least significant bit first (from the right-hand side\nof the array of pins). This means you can use the same pin multiple times, for\nexample `digitalWrite([A1,A1,A0,A0],0b0101)` would pulse A0 followed by A1.",
     "!url": "http://www.espruino.com/Reference#l__global_digitalWrite"
   },
   "digitalRead": {
     "!type": "fn(pin: +Pin) -> number",
-    "!doc": "Get the digital value of the given pin. \n\n**Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"input\"`\n\nIf the pin argument is an array of pins (eg. `[A2,A1,A0]`) the value returned will be an number where the last array element is the least significant bit, for example if `A0=A1=1` and `A2=0`, `digitalRead([A2,A1,A0]) == 0b011`",
+    "!doc": "Get the digital value of the given pin. \n\n **Note:** if you didn't call `pinMode` beforehand then this function will also reset pin's state to `\"input\"`\n\nIf the pin argument is an array of pins (eg. `[A2,A1,A0]`) the value returned will be an number where\nthe last array element is the least significant bit, for example if `A0=A1=1` and `A2=0`, `digitalRead([A2,A1,A0]) == 0b011`",
     "!url": "http://www.espruino.com/Reference#l__global_digitalRead"
   },
   "pinMode": {
     "!type": "fn(pin: +Pin, mode: ?)",
-    "!doc": "Set the mode of the given pin.\n\n* `analog` - Analog input\n* `input` - Digital input\n* `input_pullup` - Digital input with internal ~40k pull-up resistor\n* `input_pulldown` - Digital input with internal ~40k pull-down resistor\n* `output` - Digital output\n* `opendrain` - Digital output that only ever pulls down to 0v. Sending a logical `1` leaves the pin open circuit\n* `af_output` - Digital output from built-in peripheral\n* `af_opendrain` - Digital output from built-in peripheral that only ever pulls down to 0v. Sending a logical `1` leaves the pin open circuit\n\n**Note:** `digitalRead`/`digitalWrite`/etc set the pin mode automatically *unless* `pinMode` has been called first. If you want `digitalRead`/etc to set the pin mode automatically after you have called `pinMode`, simply call it again with no mode argument: `pinMode(pin)`",
+    "!doc": "Set the mode of the given pin.\n\n * `analog` - Analog input\n * `input` - Digital input\n * `input_pullup` - Digital input with internal ~40k pull-up resistor\n * `input_pulldown` - Digital input with internal ~40k pull-down resistor\n * `output` - Digital output\n * `opendrain` - Digital output that only ever pulls down to 0v. Sending a logical `1` leaves the pin open circuit\n * `af_output` - Digital output from built-in peripheral\n * `af_opendrain` - Digital output from built-in peripheral that only ever pulls down to 0v.\n * Sending a logical `1` leaves the pin open circuit\n\n **Note:** `digitalRead`/`digitalWrite`/etc set the pin mode automatically *unless* `pinMode` has been called first.  If you want `digitalRead`/etc to set the pin mode automatically after you have called `pinMode`, simply call it again with no mode argument: `pinMode(pin)`",
     "!url": "http://www.espruino.com/Reference#l__global_pinMode"
   },
   "getPinMode": {
@@ -2245,9 +2517,14 @@
     "!doc": "Return the current mode of the given pin. See `pinMode` for more information.",
     "!url": "http://www.espruino.com/Reference#l__global_getPinMode"
   },
+  "shiftOut": {
+    "!type": "fn(pins: ?, options: ?, data: ?)",
+    "!doc": "Shift an array of data out using the pins supplied *least significant bit first*,\nfor example:\n\n```\n// shift out to single clk+data\nshiftOut(A0, { clk : A1 }, [1,0,1,0]);\n\n// shift out a whole byte (like software SPI)\nshiftOut(A0, { clk : A1, repeat: 8 }, [1,2,3,4]);\n\n// shift out via 4 data pins\nshiftOut([A3,A2,A1,A0], { clk : A4 }, [1,2,3,4]);\n```\n\n`options` is an object of the form:\n\n```\n{\n  clk : pin, // a pin to use as the clock (undefined = no pin)\n  clkPol : bool, // clock polarity - default is 0 (so 1 normally, pulsing to 0 to clock data in)\n  repeat : int, // number of clocks per array item\n}\n```\n\nEach item in the `data` array will be output to the pins, with the first\npin in the array being the MSB and the last the LSB, then the clock will be\npulsed in the polarity given.\n\n`repeat` is the amount of times shift data out for each array item. For instance\nwe may want to shift 8 bits out through 2 pins - in which case we need to set\nrepeat to 4.",
+    "!url": "http://www.espruino.com/Reference#l__global_shiftOut"
+  },
   "setWatch": {
     "!type": "fn(function: ?, pin: +Pin, options: ?) -> ?",
-    "!doc": "Call the function specified when the pin changes. Watches set with `setWatch` can be removed using `clearWatch`.\n\nThe function may also take an argument, which is an object of type `{state:bool, time:float, lastTime:float}`.\n\n* `state` is whether the pin is currently a `1` or a `0`\n* `time` is the time in seconds at which the pin changed state\n* `lastTime` is the time in seconds at which the **pin last changed state**. When using `edge:'rising'` or `edge:'falling'`, this is not the same as when the function was last called. \n\nFor instance, if you want to measure the length of a positive pulse you could use `setWatch(function(e) { console.log(e.time-e.lastTime); }, BTN, { repeat:true, edge:'falling' });`. \nThis will only be called on the falling edge of the pulse, but will be able to measure the width of the pulse because `e.lastTime` is the time of the rising edge.\n\nInternally, an interrupt writes the time of the pin's state change into a queue, and the function\nsupplied to `setWatch` is executed only from the main message loop. However, if the callback is a \nnative function `void (bool state)` then you can add `irq:true` to options, which will cause the \nfunction to be called from within the IRQ. When doing this, interrupts will happen on both edges \nand there will be no debouncing.",
+    "!doc": "Call the function specified when the pin changes. Watches set with `setWatch` can be removed using `clearWatch`.\n\nThe function may also take an argument, which is an object of type `{state:bool, time:float, lastTime:float}`.\n\n * `state` is whether the pin is currently a `1` or a `0`\n * `time` is the time in seconds at which the pin changed state\n * `lastTime` is the time in seconds at which the **pin last changed state**. When using `edge:'rising'` or `edge:'falling'`, this is not the same as when the function was last called.\n\nFor instance, if you want to measure the length of a positive pulse you could use `setWatch(function(e) { console.log(e.time-e.lastTime); }, BTN, { repeat:true, edge:'falling' });`. \nThis will only be called on the falling edge of the pulse, but will be able to measure the width of the pulse because `e.lastTime` is the time of the rising edge.\n\nInternally, an interrupt writes the time of the pin's state change into a queue, and the function\nsupplied to `setWatch` is executed only from the main message loop. However, if the callback is a \nnative function `void (bool state)` then you can add `irq:true` to options, which will cause the \nfunction to be called from within the IRQ. When doing this, interrupts will happen on both edges \nand there will be no debouncing.\n\n**Note:** The STM32 chip (used in the [Espruino Board](/EspruinoBoard) and [Pico](/Pico)) cannot\nwatch two pins with the same number - eg `A0` and `B0`.",
     "!url": "http://www.espruino.com/Reference#l__global_setWatch"
   },
   "clearWatch": {

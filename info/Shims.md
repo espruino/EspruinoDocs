@@ -19,9 +19,9 @@ WIZnet W550io Ethernet
 Shim Collection
 -------------
 
-![Shim Collection](Shims/supershimphoto.jpg)
+[![Shim Collection](Shims/supershimphoto.jpg)](https://www.tindie.com/products/gfwilliams/espruino-pico-adaptor-pack/)
 
-The shim collection is a single 10cm x 10cm board, containing several different shims for your Pico that can be snapped out.
+The [shim collection](https://www.tindie.com/products/gfwilliams/espruino-pico-adaptor-pack/) is a single 10cm x 10cm board, containing several different shims for your Pico that can be snapped out.
 
 It consists of:
 
@@ -179,8 +179,12 @@ Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/maste
 | B14  | MISO    |
 | B15  | MOSI    |
 
-**Note:** The resistor `R1` is for a 1206-size 100k pullup resistor for the `CS` line. This should definitely 
-be added as it avoids unintentional SD card accesses that could occur before the Espruino Pico has set up the CS line properly.
+**Note 2:** On rev 1.0 of this board, GND is not connected. You will have manually to add a wire from GND of the Espruino Pico to pin 6 of the micro SD card connector. Adding a 0.1uF decoupling capacitor across the voltage rail is also a good idea.
+
+**Note:** The resistor `R1` is for a 1206-size 100k pullup resistor for the `CS` line. This should 
+be added as it avoids unintentional SD card accesses that could occur before the Espruino Pico has set
+up the CS line properly.
+
 
 ```
 SPI2.setup({mosi:B15,miso:B14,sck:B13});
@@ -231,6 +235,6 @@ This adaptor provides a small prototype area either side of the Espruino Pico. I
 Where can I get one?
 ------------------
 
-We're now selling a selection of shims [on Tindie](https://www.tindie.com/stores/gfwilliams/). However all the shims we've designed are Open Source.
+We're now selling a selection of shims [on Tindie](https://www.tindie.com/stores/gfwilliams/), with the Shim Collection [here](https://www.tindie.com/products/gfwilliams/espruino-pico-adaptor-pack/). However all the shims we've designed are Open Source.
 
 You can [view and download them here](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Adaptors) and can then send the designs (`.brd` files) to someone like [OSHPark](https://www.oshpark.com/) who will manufacture them to order for a very reasonable price.
