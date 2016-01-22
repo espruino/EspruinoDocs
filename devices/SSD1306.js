@@ -75,6 +75,18 @@ exports.connect = function(i2c, callback, options) {
 
   // configure the OLED
   initCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});;
+  
+  //set the brightness once
+  if(options && options.brightness){
+    var x=options.brightness;
+    if (x>255)
+      x=255;
+    if(x<0)
+      x=0;
+    i2c.writeTo(addr, [0,0x81]);
+    i2c.writeTo(addr, [0,x]);
+  }
+  
   // if there is a callback, call it now(ish)
   if (callback !== undefined) setTimeout(callback, 100);
 
