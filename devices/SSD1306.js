@@ -55,10 +55,13 @@ var flipCmds = [
      0x22, // pages
      0, 7 /* (height>>3)-1 */];
 function update(options) {
-  if (options && options.height) {
-    initCmds[4] = options.height-1;
-    initCmds[15] = options.height==64 ? 0x12 : 0x02;
-    flipCmds[5] = (options.height>>3)-1;
+  if (options) {
+    if (options.height) {
+      initCmds[4] = options.height-1;
+      initCmds[15] = options.height==64 ? 0x12 : 0x02;
+      flipCmds[5] = (options.height>>3)-1;
+    }
+    if (options.contrast!==undefined) initCmds[17] = options.contrast;
   }
 }
 
@@ -87,6 +90,9 @@ exports.connect = function(i2c, callback, options) {
       i2c.writeTo(addr, chunk);
     } 
   };
+
+  // set contrast, 0..255
+  oled.setContrast = function(c) { i2c.writeTo(addr, 0x81, c); };
 
   // return graphics
   return oled;
@@ -118,6 +124,13 @@ exports.connectSPI = function(spi, dc,  rst, callback, options) {
     digitalWrite(dc,1);// data
     spi.write(this.buffer);
     if (cs) digitalWrite(cs,1);
+  };
+
+  // set contrast, 0..255
+  oled.setContrast = function(c) { 
+    if (cs) cs.reset();
+    spi.write(0x81,c,dc);
+    if (cs) cs.set();
   };
 
   // return graphics
