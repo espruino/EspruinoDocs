@@ -1,3 +1,4 @@
+<!--- Copyright (c) 2015 Thorsten von Eicken, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Using the ESP8266 with Wifi
 ===========================
 
