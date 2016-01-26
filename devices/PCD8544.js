@@ -14,14 +14,10 @@ var g = require("PCD8544").connect(SPI1,B6,B7,B8, function() {
 ```  
 
  */
-exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst, callback) {
+exports.connect = function(/*=SPI*/spi, /*=PIN*/dc, /*=PIN*/ce, /*=PIN*/rst, callback) {
   var LCD = Graphics.createArrayBuffer(84,48,1,{vertical_byte:true});
-  var spi = _spi;
-  var dc = _dc;
-  var ce = _ce;
-  var rst = _rst;
   setTimeout(function() {
-    digitalWrite(dc,0); // cmd
+    dc.reset(); // cmd
     digitalPulse(rst, 0, 10); // pulse reset low
     
     setTimeout(function() {      
@@ -37,13 +33,13 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_dc, /*=PIN*/_ce, /*=PIN*/_rst,
   }, 100);
 
   LCD.flip = function () {
-    digitalWrite(dc,0); // cmd
-    spi.write([0x40,0x80],ce); // X + Y addr (0,0)
-    digitalWrite(dc,1); // data
-    spi.write(this.buffer,ce);
+    dc.reset(); // cmd
+    spi.write([0x40,0x80], ce); // X + Y addr (0,0)
+    dc.set(); // data
+    spi.write(this.buffer, ce);
   };
   LCD.setContrast = function(c) { // c between 0 and 1. 0.5 is default
-    digitalWrite(dc,0); // cmd
+    dc.reset(); // cmd
     spi.write(
         [0x21, // fnset extended
         0x80 | E.clip(c*0x7f,0,0x7f), // setvop
