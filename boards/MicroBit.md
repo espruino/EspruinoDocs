@@ -62,6 +62,7 @@ If you have a device that supports [Web Bluetooth](https://webbluetoothcg.github
 * Click it, and wait - connection can take around 10 seconds
 * Finally the icon up the top left should change state to 'Connected', and you'll be able to program Espruino as normal - but via Bluetooth!
 
+**Note:** You can still use Web Bluetooth on Android 5, but you need the latest 'Chromium' builds. [See this post on StackOverflow](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop/34810195#34810195)
 
 micro:bit Functionality
 -----------------------
