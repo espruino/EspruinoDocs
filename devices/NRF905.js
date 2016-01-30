@@ -177,7 +177,7 @@ NRF.prototype.init = function(myAddr,Callback) {
 	this.setReg(REG.W_CONFIG+2,0x11);	//both TX and RX addresses are 1 byte long
 	this.setReg(REG.W_CONFIG+3,0x20);	//RX payload is 32 byte long
 	this.setReg(REG.W_CONFIG+4,0x20);	//TX payload is 32 byte long
-	this.setReg(REG.W_CONFIG+9,0x58);	//8-bit CRC enabled, Fosc=16MHz, disable external clock
+	this.setReg(REG.W_CONFIG+9,0xD8);	//16-bit CRC enabled, Fosc=16MHz, disable external clock
 	digitalWrite(this.TRXEN,1);//enable radio
 	digitalWrite(this.TXE,0);//enable RX
 	var a=this;
