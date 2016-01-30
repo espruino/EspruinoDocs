@@ -63,25 +63,42 @@ function NRF(_spi, _csn, _dr, _txe, _trxen) {
 
 /** addressing is limited to [0..255] */
 NRF.prototype.setMyAddr = function(addr) {
+	digitalWrite(this.TRXEN,0);
 	this.setReg(REG.W_CONFIG+2,0x11);	//both TX and RX addresses are 1 byte long
 	this.spi.send([(REG.W_CONFIG+5),addr,0,0,0], this.CSN);//RX_ADDRESS 
+	//go back to RX
+	digitalWrite(this.TXE,0);//enable RX
+	digitalWrite(this.TRXEN,1);//enable radio
 };
 
 NRF.prototype.setReg= function(reg,value)
 {
+	digitalWrite(this.TRXEN,0);
 	this.spi.send([reg,value], this.CSN);
+	//go back to RX
+	digitalWrite(this.TXE,0);//enable RX
+	digitalWrite(this.TRXEN,1);//enable radio
 }
 
 NRF.prototype.getReg= function(reg)
 {
 	var data;
+	digitalWrite(this.TRXEN,0);
 	data= this.spi.send([reg,0x00], this.CSN);
+	//go back to RX
+	digitalWrite(this.TXE,0);//enable RX
+	digitalWrite(this.TRXEN,1);//enable radio
 	return data[1];
 }
 
 /** Get the contents of the status register */
 NRF.prototype.getStatus = function() {
-	return this.spi.send(0x00, this.CSN);
+	digitalWrite(this.TRXEN,0);
+	var status=this.spi.send(0x00, this.CSN);
+	//go back to RX
+	digitalWrite(this.TXE,0);//enable RX
+	digitalWrite(this.TRXEN,1);//enable radio
+	return status;
 };
 
 NRF.prototype.getData = function() {
@@ -91,6 +108,9 @@ NRF.prototype.getData = function() {
 	var data=[];
 	data=this.spi.send([REG.R_RX_PAYLOAD,dummy], this.CSN);
 	data=data.slice(1); //remove the status byte
+	//go back to RX
+	digitalWrite(this.TXE,0);//enable RX
+	digitalWrite(this.TRXEN,1);//enable radio
 	return data;
 };
 
@@ -101,7 +121,10 @@ NRF.prototype.TXEnd=function()
 	digitalWrite(this.TRXEN,1);//enable radio
 	this.busy=false;
 	var a=this;
-	this.RXCallback=setWatch(function(){a.NRF905RX();},this.DR,{repeat:true,edge:'rising'});
+	if(this.RXCallback==false)
+		this.RXCallback=setWatch(function(){a.NRF905RX();},this.DR,{repeat:true,edge:'rising'});
+	else	
+		console.log("RXCallback was not cleared properly.");
 }
 
 /** Send a single packet */
@@ -109,23 +132,29 @@ NRF.prototype.send = function(txAddr,data) {
 	if(!this.busy)
 	{
 		digitalWrite(this.TRXEN,0);//enable standby+SPI programming
-		clearWatch(this.RXCallback);
+		if(this.RXCallback)
+		{
+			clearWatch(this.RXCallback);
+			this.RXCallback=false;
+		}
+		else
+			console.log("RXCallback was inexistent");
 		this.busy=true;
 		while(data.length>32)data.pop();//remove bytes in excess.
 		while(data.length<32)data.push(0);//32-byte zero padding
 		this.spi.send([REG.W_TX_PAYLOAD,data], this.CSN);//write payload
 		if( (typeof(txAddr)=="number") && (txAddr>-1) && (txAddr<256) )
 			this.spi.send([REG.W_TX_ADDRESS,txAddr], this.CSN);//write TX address
-		
+		else
+			console.log("NRF.send: wrong address format");
 		digitalWrite(this.TXE,1);//enable TX	
-		digitalPulse(this.TRXEN, 1, 10);//pulse high for 10ms
+		digitalPulse(this.TRXEN, 1, 1);//pulse high for 1ms
 		var a=this;
 		setWatch(function(){a.TXEnd();},this.DR,{edge:'rising'});
 	}
 };
 
 NRF.prototype.NRF905RX= function(){
-	digitalWrite(this.TRXEN,0);
 	var data=[];
 	data=this.getData();
 	if(this.userCallback!=false)
@@ -143,7 +172,7 @@ NRF.prototype.init = function(myAddr,Callback) {
 	digitalWrite(this.TXE,0);
 	digitalWrite(this.CSN,1);
 	this.setMyAddr(myAddr);
-	this.setReg(REG.W_CONFIG,0x60);	//CH_NO=0x60
+	this.setReg(REG.W_CONFIG,0x01);	//CH_NO
 	this.setReg(REG.W_CONFIG+1,0x0C);	//no retransmission, normal operation, TX:10dBm, band:433MHz
 	this.setReg(REG.W_CONFIG+2,0x11);	//both TX and RX addresses are 1 byte long
 	this.setReg(REG.W_CONFIG+3,0x20);	//RX payload is 32 byte long
@@ -152,7 +181,7 @@ NRF.prototype.init = function(myAddr,Callback) {
 	digitalWrite(this.TRXEN,1);//enable radio
 	digitalWrite(this.TXE,0);//enable RX
 	var a=this;
-	this.RXCallback=setWatch(function(){digitalWrite(LED3,!digitalRead(LED3));a.NRF905RX();},this.DR,{repeat:true,edge:'rising'});
+	this.RXCallback=setWatch(function(){a.NRF905RX();},this.DR,{repeat:true,edge:'rising'});
 	this.busy=false;
 };
 
