@@ -1,4 +1,4 @@
-/* Copyright (C) 2016 Enchanted Engineering. See the file LICENSE for use. */
+<!--- Copyright (C) 2016 Enchanted Engineering. See the file LICENSE for use. -->
 DHTxx or RHTxx Generic Humidity and Temperature Sensor
 ======================================================
 
