@@ -2,7 +2,7 @@
 DHTxx or RHTxx Generic Humidity and Temperature Sensor
 ======================================================
 
-* KEYWORDS: Module,Humidity,Temperature,DHT11,DHT21,DHT22,DHT33,DHT44,RHT01,RHT02,RHT03,RHT04,RHT05,AM2301,AM2302,AM2303,HM2301
+* KEYWORDS: Module, Humidity, Temperature, DHT11, DHT21, DHT22, DHT33, DHT44, RHT01, RHT02, RHT03,RHT04, RHT05, AM2301, AM2302, AM2303, HM2301
 
 Generic Relative humidity and temperature sensor interface module based on the DHTxx (RHTxx or AM23xx) sensor. 
 
@@ -15,7 +15,7 @@ Wire sensor as follows:
 | 3 (N.C.)   |          |
 | 4 (GND)    | GND      |
 
-  **Note:** ANY digital general purpose I/O pin 
+  ***Note:** Any general purpose digital I/O pin may be used. 
 
 MODULE REFERENCE
 ----------------
@@ -60,7 +60,7 @@ Note: rh11 and t11 not valid for DHT22 sensor.
 Reference
 ---------
 
-* APPEND_JSDOC: MOD123.js
+* APPEND_JSDOC: HTxx.js
 
 Using
 -----
