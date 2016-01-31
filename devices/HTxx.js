@@ -1,4 +1,4 @@
-/* Copyright (C) 2014 Enchanted Engineering. See the file LICENSE for use. */
+/* Copyright (C) 2016 Enchanted Engineering. See the file LICENSE for use. */
 /*
 Generic Relative humidity and temp sensor interface module; uses 1 GPIO pin.
 Derived from Spence Konde DHT22 module code...
