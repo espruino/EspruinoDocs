@@ -6,7 +6,7 @@ LPRS easyRadio (eRIC) Radio Modules
 
 ![eRIC module](easyRadio/finger.jpg)
 
-The 'easy Radio Intelligent Controller' (eRIC) radio transceiver module is based on the Texas Instruments CC430F5137 System-on-Chip. It combines a high performance RF transceiver, RF band pass filters (BPF), an MSP430 microcontroller, 32Kb flash memory, non-volatile flash storage, temperature sensor, and a low drop voltage regulator. The device operates on the International licence exempt Industrial, Scientific and Medical (ISM) radio bands.
+The 'easy Radio Integrated Controller' (eRIC) radio transceiver module is based on the Texas Instruments CC430F5137 System-on-Chip. It combines a high performance RF transceiver, RF band pass filters (BPF), an MSP430 microcontroller, 32Kb flash memory, non-volatile flash storage, temperature sensor, and a low drop voltage regulator. The device operates on the International licence exempt Industrial, Scientific and Medical (ISM) radio bands.
 
 While these modules can be programmed with their own code, they come pre-installed with the [easyRadio](http://www.lprs.co.uk/easy-radio/) firmware, which allows communication over a serial interface. A driver this is in the [[easyRadio.js]] module.
 
