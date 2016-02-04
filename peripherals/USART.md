@@ -26,7 +26,7 @@ Serial1.on('data', function (data) {
 });
 ```
  
-Or you can do a quick 'loopback' test. Connect the RX and TX pins together for one of the serial ports (maybe Serial4), and then do:
+Or you can do a quick 'loopback' test. Connect the RX and TX pins together for one of the serial ports (for example Serial4 on some boards), and then do:
 
 ```JavaScript
 Serial4.setup(9600);
@@ -37,18 +37,45 @@ Serial4.print("Hello World");
 Most chips can also have the same Serial port on different pins, for example Serial1 TX is available on A9 or B6 on the Espruino Board (look at the datasheets for the board you have). Espruino will choose the first available pins by default - if you wish to use an alternate set of pins, you can specify them when you set up the Serial port:
 
 ```JavaScript
-Serial1.setup(9600, {tx:B6,rx:B7});
+Serial1.setup(9600, { tx:B6, rx:B7 });
 ```
 
 For more information, please see the [reference](/Reference) for your board.
 
+USARTs (CK pin)
+---------------
+
+Some of the UARTs have a `CK` pin - this is an optional clock that can be generated alongside the normal serial output. It is not enabled by default but you can use it by specifying it when initialising:
+
+```JavaScript
+Serial1.setup(9600, { tx:B6, rx:B7, ck:A8 });
+```
+
+Parity/Framing errors
+---------------------
+
+If there are parity errors (if parity is enabled), you can get notified of them with the following event listener:
+
+```
+  Serial1.on('parity', function() {
+    console.log("Oh no!");
+  });
+```
+
+You can also get notified of framing errors (when the START and STOP bits are not correct) with:
+
+```
+  Serial1.on('framing', function() {
+    console.log("Oh no!");
+  });
+```
 
 <a name="ConsoleSerial"></a>Console over serial
 -------------------
 
-Espruino will by default connect the console to the Serial1 port, or the USB serial port if you are connected to a computer.
+Espruino will by default connect its interactive console to the `Serial1` port, or to the USB serial port if you are connected to a computer. When the console is on a port, a listener added with `SerialX.on('data', ...)` will no longer get called. See [this troubleshooting post]([Troubleshooting](/Troubleshooting#console) for more information.
 
-To avoid this behaviour, for example if you wish to use Serial1 to talk to a device while disconnected from USB, explicitly set the console serial port using  [Serial.setConsole](/Reference#l_Serial_setConsole) during the [init event](Reference#l_E_init) which Espruino runs on boot.
+To avoid this behaviour, for example if you wish to use `Serial1` to talk to a device while disconnected from USB, explicitly set the console serial port using  [Serial.setConsole](/Reference#l_Serial_setConsole) during the [init event](Reference#l_E_init) which Espruino runs on boot.
 
 ```JavaScript
 E.on('init', function() {

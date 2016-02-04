@@ -15,7 +15,7 @@ exports.connectRX = function(pin, size, callback) {
   var dmx = new Uint8Array(size);
   var dmxIdx = 0;
   Serial1.on('data',function(d){dmx.set(d, dmxIdx);dmxIdx+=d.length;});
-  Serial1.on('framing',function(d){
+  Serial1.on('framing',function(){
     if (dmxIdx>=dmx.length) callback(new Uint8Array(dmx.buffer,1));
     dmxIdx = 0;
   });

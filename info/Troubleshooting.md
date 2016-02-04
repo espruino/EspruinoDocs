@@ -199,7 +199,7 @@ When you are not connected to a computer via USB, Espruino writes any console da
 To fix this, either remove your `console.log` and `print` statements, or explicitly set the console to be on the Serial port at startup with `function onInit() { Serial1.setConsole(); }`. However the second option will mean that you will no longer be able to program Espruino from USB unless you reset it.
 
 
-## Espruino works when connected to a computer, but stops when powered from something else
+## <a name="console"></a>Espruino works when connected to a computer, but stops when powered from something else
 
 Do you have a Serial device connected to pins `B6`/`B7` on the [Pico](/Pico), or `A9`/`A10` on the [Original Espruino](/EspruinoBoard)? When disconnected from USB, Espruino's 'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` - which is on those pins. If you've got a Serial device on those pins then it won't work.
 
