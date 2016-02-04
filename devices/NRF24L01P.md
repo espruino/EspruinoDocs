@@ -2,7 +2,7 @@
 NRF24L01+ Wireless Module
 ======================
 
-* KEYWORDS: Module,NRF,NRF24L01,NRF24L01P,NRF24L01+,Wireless
+* KEYWORDS: Module,NRF,NRF24L01,NRF24L01P,NRF24L01+,Wireless,Radio,Transceiver
 
 ![NRF24L01+ Wireless Module](NRF24L01P/module.jpg)
 
