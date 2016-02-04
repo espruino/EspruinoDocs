@@ -101,6 +101,29 @@ eric.getTemperature(function(err, temp) {
 });
 ```
 
+Remote Connection to Espruino
+-----------------------------
+
+It's easy to use eRIC modules to communicate with an Espruino board as if it was connected by wire:
+
+* Wire an eRIC module to an Espruino as above
+* Write the following into Espruino
+
+```
+Serial1.setup(19200, {rx:B7, tx:B6});
+var realReset=reset;
+var reset=load;
+```
+
+* Type `save();`
+* Disconnect the Espruino from the PC, and power it from something else (this will move the console on to Serial1).
+* Now wire a second eRIC module to a USB-Serial converter and plug it to your computer
+* Open the Web IDE, go to `Settings`, `Communications` and set `Baud Rate` to `19200`
+* Connect the Web IDE to your USB-Serial converter - you should now be able to program the Espruino remotely as before.
+
+**Note:** Espruino's `reset()` function would reset the baud rate to 9600 baud, which is why it has to be overwritten in this case.
+
+
 Reference
 ---------
  
