@@ -344,7 +344,8 @@ SX.prototype.init = function() {
   this.w(REG.PAYLOADMAXLENGTH, 0x40);
 };
 
-SX.prototype.rx = function() {
+SX.prototype.rx = function(callback) {
+  this.rxCallback = callback;
   if (this.options.iqInverted) {
     this.mask(REG.INVERTIQ, RF.INVERTIQ_TX_MASK & RF.INVERTIQ_RX_MASK,
               RF.INVERTIQ_RX_ON | RF.INVERTIQ_TX_OFF);
@@ -420,7 +421,8 @@ SX.prototype.standby = function() {
     this.state = "IDLE";
 };
 
-SX.prototype.send = function(data) {
+SX.prototype.send = function(data, callback) {
+  this.txCallback = callback;
   if(this.options.iqInverted) {
     this.mask(REG.INVERTIQ, RF.INVERTIQ_TX_MASK & RF.INVERTIQ_RX_MASK,
               RF.INVERTIQ_RX_OFF | RF.INVERTIQ_TX_ON);
@@ -474,7 +476,7 @@ SX.prototype.onIRQ = function() {
 
       if (!this.options.rxContinuous)
         this.state = "IDLE";
-      this.emit("RxError");
+      if (this.rxCallback) this.rxCallback("RxError");
       return;
     }
 
@@ -487,12 +489,13 @@ SX.prototype.onIRQ = function() {
     
 
     if (!this.options.rxContinuous)
-        this.state = "IDLE";
-    this.emit("RxDone", inf);
+      this.state = "IDLE";
+    if (this.rxCallback) 
+      this.rxCallback(null, inf);
   }
   if (irqFlags&RF.IRQFLAGS_TXDONE) {    
     this.w( REG.IRQFLAGS, RF.IRQFLAGS_TXDONE ); // clear 
-    this.emit("TxDone");
+    if (this.txCallback) this.txCallback();
   }
 };
 
