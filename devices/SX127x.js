@@ -303,7 +303,6 @@ function SX(options) {
     digitalPulse(this.rst,0,1); // 1ms low
   setTimeout(this.init.bind(this), 7);
   this.options = {};
-  this.rxContinuous = true;
   this.state = "";
 }
 
@@ -381,7 +380,7 @@ SX.prototype.rx = function() {
   this.w( REG.FIFOADDRPTR, 0 );
  
   this.state = "RX_RUNNING";
-  this.setOpMode( this.rxContinuous ? RF.OPMODE_RECEIVER : RF.OPMODE_RECEIVER_SINGLE );
+  this.setOpMode( this.options.rxContinuous ? RF.OPMODE_RECEIVER : RF.OPMODE_RECEIVER_SINGLE );
 };
 
 SX.prototype.tx = function() {
@@ -473,7 +472,7 @@ SX.prototype.onIRQ = function() {
     if (irqFlags & RF.IRQFLAGS_PAYLOADCRCERROR) {
       this.w( REG.IRQFLAGS, RF.IRQFLAGS_PAYLOADCRCERROR ); // clear 
 
-      if (!this.RxContinuous)
+      if (!this.options.rxContinuous)
         this.state = "IDLE";
       this.emit("RxError");
       return;
@@ -487,7 +486,7 @@ SX.prototype.onIRQ = function() {
     inf.data = this.r( REG.FIFO, nBytes);
     
 
-    if (!this.RxContinuous)
+    if (!this.options.rxContinuous)
         this.state = "IDLE";
     this.emit("RxDone", inf);
   }
@@ -518,13 +517,14 @@ SX.prototype.commonSetConfig = function(options) {
   } else {
     this.LowDatarateOptimize = 0x00;
   }
-  options.coderate = options.coderare||1; // [1: 4/5, 2: 4/6, 3: 4/7, 4: 4/8]
+  options.coderate = options.coderate||1; // [1: 4/5, 2: 4/6, 3: 4/7, 4: 4/8]
   options.preambleLen = options.preambleLen||8;
   options.fixLen = 0|options.fixLen; // fixed length payload? 0/1
   options.crcOn = 0|options.crcOn; // CRC on? 0/1
   options.freqHopOn = 0|options.freqHopOn; // frequency hopping on? 0/1  
   options.iqInverted = 0|options.iqInverted; // 0/1
-  options.symbTimeout = options.symbTimeout||5;
+  options.rxContinuous = 0|options.rxContinuous; // continuous reception?
+  options.symbTimeout = options.symbTimeout||5; // symbol timeout when rxContinuous = true
   
   for (var i in options)
     this.options[i]=options[i];
