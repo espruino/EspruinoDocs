@@ -1,0 +1,180 @@
+<!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
+AA/AAA Battery Charger
+======================
+
+* KEYWORDS: AA,AAA,Battery Charger
+* USES: Pico,PCD8544,ADC,Breadboard
+
+Introduction
+------------
+
+![Battery Charger](Battery Charger/final.jpg)
+
+Many AA or AAA battery chargers charge batteries in pairs, but plenty of devices use 1 or 3 batteries, meaning that some of your batteries get overcharged and some get undercharged. NiCd and NiMH batteries also benefit from an occasional full discharge, which most normal battery chargers won't do.
+
+If you're anything like me you'll end up with a lot of rechargeable batteries, none of which end up being charged properly, and some of which turn out to be completely unusable. It'd be perfect if you had a low-power battery charger that you could leave on all the time, that would charge your batteries individually, automatically discharge them, and give you an idea of their real capacity. That's what you'll make in this tutorial!
+
+**Note:** This charger uses Espruino's IO directly, and so it isn't a fast charger by any means (it can take *days* to charge and discharge your batteries!).
+
+
+You'll Need
+----------
+
+* One [Espruino Pico](/Pico)
+* A long [[Breadboard]]
+* A [[PCD8544]] LCD display
+* Some patch wire (normal solid core wire is fine)
+* 4x 75 Ohm resistors
+* AA or AAA battery holders with pins (Available from Rapid Electronics, [AA](http://www.rapidonline.com/Electrical-Power/TruPower-BH-311-1P-1-X-AA-PCB-Battery-Holder-18-2960) or [AAA](http://www.rapidonline.com/Electrical-Power/TruPower-BH-411-3P-1-X-AAA-PCB-Battery-Holder-18-2920))
+
+
+Wiring Up
+--------
+
+![Battery Charger Wiring](Battery Charger/wiring.jpg)
+
+* Place the breadboard with the `-` row of pins right at the bottom, and the `+` row right at the top.
+* Plug the Espruino [[Pico]] into the breadboard as far left as it will go (as in the picture)
+* Add a wire from Espruino's `GND` pin straight down to the bottom `-` row of pins
+* Plug the [[PCD8544]] into the breadboard below the [[Pico]], with 2 pins sticking out to the right of the [[Pico]] (it should overlap the GND wire)
+* Take a patch wire and connect from pin `B1` on the [[Pico]] to the top of a column 5 pins to the right of the Pico (see the picture)
+* Fold a 75 Ohm resistor, cut it to length, and add it diagonalluy between the 5th column right of the Pico and the 6th.
+* Now add 3 more sets of wires and resistors, from pins `A7`, `A6` and `A5`, to new columns, each with 7 columns of pins between it and the last. **Note:** This works for AAA batteries - for AA you will need to space the columns out a bit more. 
+* Cut the pins on your battery holders down so they'll fit in the breadboard, and then place the battery holders in the breadboard at an angle: With the `+` contact relative to the resistor (as shown below), and with the `-` contact in the bottom `-` row of pins on the breadboard.
+
+![Battery Charger](Battery Charger/batholder.jpg)
+
+* Now add 2 wires for the LCD: `B10` to the pin nearest the [[Pico]], and `B13` to the pin right on the edge.
+
+And you're done! 
+
+
+Software
+-------
+
+Connect to the Web IDE, copy the following software into the right-hand side, and upload it:
+
+```
+var g;
+
+B3.write(0); // GND
+//B4.write(1); // BL
+B5.write(1); // VCC
+
+var BATS = [ B1, A7, A6, A5 ];
+var batCharge = [ 0, 0, 0, 0 ];
+var cntCharge = [ 0, 0, 0, 0 ];
+var cntDischarge = [ 0, 0, 0, 0 ];
+
+function getBatteryVoltages() {
+  var voltages = [0,0,0,0];
+  var N = 20;
+  for (var i=0;i<N;i++) {
+    for (var b=0;b<BATS.length;b++) {
+      digitalWrite(BATS[b], 0);
+      voltages[b] += analogRead(BATS[b])*3.3/N;
+    }
+  }
+  for (var b=0;b<BATS.length;b++) {
+    pinMode(BATS[b], "input_pullup");
+    if (digitalRead(BATS[b]))
+      voltages[b] = -1; // no battery
+    pinMode(BATS[b]); // auto
+  }
+  return voltages;
+}
+
+var lastInterval;
+
+function onInterval() {
+  var time = getTime() - lastInterval;
+  lastInterval = getTime();
+  var maH = 20*time/3600; // fractions of a milliamp hour
+  
+  var volts = getBatteryVoltages();
+  
+  for (var i=0;i<4;i++) {
+    if (batCharge[i])
+      cntCharge[i]+=maH;
+    else
+      cntDischarge[i]+=maH;
+    if (!batCharge[i] && volts[i]<=0.8)
+      batCharge[i] = 1; // now charge
+    if (volts[i] < 0) {
+      // no battery - reset to defaults
+      batCharge[i] = 0; 
+      cntCharge[i] = 0;
+      cntDischarge[i] = 0;
+    }
+    digitalWrite(BATS[i], batCharge[i]);
+  }
+  
+  // now update display
+  g.clear();
+  g.drawString("Battery Charger",0,0);
+  g.drawLine(0,8,84,8);
+  for (i=0;i<4;i++) {
+    var x = 84*(i+0.5)/4;
+    g.drawStringCenter(i+1, x, 12);
+    g.drawLine(x-8,18,x+8,18);
+    if (volts[i] >= 0) {
+      g.drawStringCenter(batCharge[i] ? "CHG" : "DIS", x, 20);
+      g.drawStringCenter(volts[i].toFixed(2), x, 28);
+      g.drawStringCenter(cntDischarge[i] ? (cntDischarge[i]|0) : "-", x, 36);
+      g.drawStringCenter(cntCharge[i] ? (cntCharge[i]|0) : "-", x, 42);
+    } else {
+      g.drawStringCenter("-", x, 20);
+    }
+  }
+  g.flip();
+}
+
+function onInit() {
+  var spi = new SPI();
+  spi.setup({ sck:B6, mosi:B7 });
+  g = require("PCD8544").connect(spi, A8 /*DC*/, B10 /*CE*/, B13 /*RST*/, function() {
+    g.setRotation(2);
+    g.clear();
+    g.drawString("Loading...",0,0);
+    g.drawLine(0,10,84,10);
+    g.flip();
+  });
+  g.drawStringCenter = function(txt,x,y) {
+    this.drawString(txt, x-this.stringWidth(txt)/2, y);
+  };
+  
+  lastInterval = getTime();
+  setInterval(onInterval, 2000);
+}
+
+setWatch(function() {
+  if (batCharge=="0,0,0,0") batCharge.fill(1);
+  else batCharge.fill(0);
+  cntCharge.fill(0);
+  cntDischarge.fill(0);
+  onInterval();
+}, BTN, { repeat: true, edge:"rising", debounce:50});
+```
+
+Then type `save()` in the left-hand size of the IDE.
+
+
+Using
+-----
+
+Just plug in your batteries and they'll be recognised. The LCD will show the current voltage, and `DIS` next to the battery to mark that is is discharging (at around 20mA - this could take a few days!).
+
+* The top counter will show roughly how much power has been drained from the battery.
+* When the battery reaches 0.8v, Espruino will start recharging it. The top counter will now give you some idea of the cell's capacity (not in any particular units)
+* Espruino will keep recharging the battery at 20mA while it is displaying `CHG`, and the second counter will show how much power has been added to the battery (again, not in any particular units). Both NiMH and NiCd batteries are fine with being 'trickle charged' at this level for as long as you want.
+* You can press the Pico's button to swapp all cells between charging and discharging. If you want to swap just one cell, disconnect it for a few seconds and reconnect it.
+
+
+Next Steps
+----------
+
+* One easy next step is to extend your Battery charger to charge more than just 4 batteries. By using the analog pins on the small 0.05" pins on the end of the Pico, you could charge another 5 batteries (so 9 in total).
+* You could also use FETs, or something like a motor driver IC to allow you to 'fast charge' your batteries.
+
+
+
