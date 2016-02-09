@@ -38,7 +38,7 @@ Wiring Up
 * Add a wire from Espruino's `GND` pin straight down to the bottom `-` row of pins
 * Plug the [[PCD8544]] into the breadboard below the [[Pico]], with 2 pins sticking out to the right of the [[Pico]] (it should overlap the GND wire)
 * Take a patch wire and connect from pin `B1` on the [[Pico]] to the top of a column 5 pins to the right of the Pico (see the picture)
-* Fold a 75 Ohm resistor, cut it to length, and add it diagonalluy between the 5th column right of the Pico and the 6th.
+* Fold a 75 Ohm resistor, cut it to length, and add it diagonally between the 5th column right of the Pico and the 6th.
 * Now add 3 more sets of wires and resistors, from pins `A7`, `A6` and `A5`, to new columns, each with 7 columns of pins between it and the last. **Note:** This works for AAA batteries - for AA you will need to space the columns out a bit more. 
 * Cut the pins on your battery holders down so they'll fit in the breadboard, and then place the battery holders in the breadboard at an angle: With the `+` contact relative to the resistor (as shown below), and with the `-` contact in the bottom `-` row of pins on the breadboard.
 
@@ -172,7 +172,7 @@ setWatch(function() {
 }, BTN, { repeat: true, edge:"rising", debounce:50});
 ```
 
-Then type `save()` in the left-hand size of the IDE, it should show `Loading...` on the LCD display, and 2 seconds later will shart showing the charging status of the 4 batteries.
+Then type `save()` in the left-hand size of the IDE, it should show `Loading...` on the LCD display, and 2 seconds later will start showing the charging status of the 4 batteries.
 
 
 Using
@@ -183,7 +183,7 @@ Just plug in your batteries and they'll be recognised. The LCD will show the cur
 * The top counter will show roughly how much power has been drained from the battery so far (in something close to mAh).
 * When the battery reaches 0.8v, Espruino will start recharging it. The top counter will now give you some idea of the cell's capacity (in something close to mAh)
 * Espruino will keep recharging the battery at around 20mA while it is displaying `CHG`, and the second counter will show how much power has been added to the battery (in something near mAh). Both NiMH and NiCd batteries are fine with being 'trickle charged' at this level for long periods of time.
-* You can press the Pico's button to swapp all cells between charging and discharging. If you want to swap just one cell, disconnect it for a few seconds and reconnect it.
+* You can press the Pico's button to swap all cells between charging and discharging. If you want to swap just one cell, disconnect it for a few seconds and reconnect it.
 
 
 Next Steps
