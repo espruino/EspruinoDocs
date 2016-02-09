@@ -14,7 +14,7 @@ Many AA or AAA battery chargers charge batteries in pairs, but plenty of devices
 
 If you're anything like me you'll end up with a lot of rechargeable batteries, none of which end up being charged properly, and some of which turn out to be completely unusable. It'd be perfect if you had a low-power battery charger that you could leave on all the time, that would charge your batteries individually, automatically discharge them, and give you an idea of their real capacity. That's what you'll make in this tutorial!
 
-**Note:** This charger uses Espruino's IO directly, and so it isn't a fast charger by any means (it can take *days* to charge and discharge your batteries!).
+**Note:** To make this nice and simple, the charger uses Espruino's GPIO pins to directly charge and discharge the batteries. This means it can't charge batteries very quickly (it can take *days* to charge and discharge them!). 
 
 
 You'll Need
@@ -24,8 +24,8 @@ You'll Need
 * A long [[Breadboard]]
 * A [[PCD8544]] LCD display
 * Some patch wire (normal solid core wire is fine)
-* 4x 75 Ohm resistors
-* AA or AAA battery holders with pins (Available from Rapid Electronics, [AA](http://www.rapidonline.com/Electrical-Power/TruPower-BH-311-1P-1-X-AA-PCB-Battery-Holder-18-2960) or [AAA](http://www.rapidonline.com/Electrical-Power/TruPower-BH-411-3P-1-X-AAA-PCB-Battery-Holder-18-2920))
+* 4x 100 Ohm resistors
+* AA or AAA battery holders with pins (available from Rapid Electronics: [AA](http://www.rapidonline.com/Electrical-Power/TruPower-BH-311-1P-1-X-AA-PCB-Battery-Holder-18-2960) or [AAA](http://www.rapidonline.com/Electrical-Power/TruPower-BH-411-3P-1-X-AAA-PCB-Battery-Holder-18-2920))
 
 
 Wiring Up
@@ -58,16 +58,27 @@ Connect to the Web IDE, copy the following software into the right-hand side, an
 var g;
 
 B3.write(0); // GND
-//B4.write(1); // BL
+// B4.write(1); // Backlight
 B5.write(1); // VCC
 
+// The pins each battery is connected to
 var BATS = [ B1, A7, A6, A5 ];
+
+// The resistor's value
+var RESISTOR_VALUE = 100;
+
+// Are we charging or discharging batteries?
 var batCharge = [ 0, 0, 0, 0 ];
+
+// How much charge has gone into batteries (in mAh-ish)
 var cntCharge = [ 0, 0, 0, 0 ];
+
+// How much have batteries been discharged (in mAh-ish)
 var cntDischarge = [ 0, 0, 0, 0 ];
 
 function getBatteryVoltages() {
   var voltages = [0,0,0,0];
+  // read voltages multiple times, and take an average
   var N = 20;
   for (var i=0;i<N;i++) {
     for (var b=0;b<BATS.length;b++) {
@@ -75,6 +86,8 @@ function getBatteryVoltages() {
       voltages[b] += analogRead(BATS[b])*3.3/N;
     }
   }
+  // Check for disconnected battery be enabling the pullup and seeing
+  // if the voltage rises
   for (var b=0;b<BATS.length;b++) {
     pinMode(BATS[b], "input_pullup");
     if (digitalRead(BATS[b]))
@@ -89,15 +102,17 @@ var lastInterval;
 function onInterval() {
   var time = getTime() - lastInterval;
   lastInterval = getTime();
-  var maH = 20*time/3600; // fractions of a milliamp hour
+  var hrs = time/3600; // fractions of an hour
   
+  // for each battery... 
   var volts = getBatteryVoltages();
-  
   for (var i=0;i<4;i++) {
+    // update charge counters
     if (batCharge[i])
-      cntCharge[i]+=maH;
+      cntCharge[i] += hrs*(3.3-volts[i])/RESISTOR_VALUE;
     else
-      cntDischarge[i]+=maH;
+      cntDischarge[i] += hrs*volts[i]/RESISTOR_VALUE;
+    // work out if we're charging or discharging
     if (!batCharge[i] && volts[i]<=0.8)
       batCharge[i] = 1; // now charge
     if (volts[i] < 0) {
@@ -147,6 +162,7 @@ function onInit() {
   setInterval(onInterval, 2000);
 }
 
+// What happens when we press a button
 setWatch(function() {
   if (batCharge=="0,0,0,0") batCharge.fill(1);
   else batCharge.fill(0);
@@ -156,7 +172,7 @@ setWatch(function() {
 }, BTN, { repeat: true, edge:"rising", debounce:50});
 ```
 
-Then type `save()` in the left-hand size of the IDE.
+Then type `save()` in the left-hand size of the IDE, it should show `Loading...` on the LCD display, and 2 seconds later will shart showing the charging status of the 4 batteries.
 
 
 Using
@@ -164,16 +180,16 @@ Using
 
 Just plug in your batteries and they'll be recognised. The LCD will show the current voltage, and `DIS` next to the battery to mark that is is discharging (at around 20mA - this could take a few days!).
 
-* The top counter will show roughly how much power has been drained from the battery.
-* When the battery reaches 0.8v, Espruino will start recharging it. The top counter will now give you some idea of the cell's capacity (not in any particular units)
-* Espruino will keep recharging the battery at 20mA while it is displaying `CHG`, and the second counter will show how much power has been added to the battery (again, not in any particular units). Both NiMH and NiCd batteries are fine with being 'trickle charged' at this level for as long as you want.
+* The top counter will show roughly how much power has been drained from the battery so far (in something close to mAh).
+* When the battery reaches 0.8v, Espruino will start recharging it. The top counter will now give you some idea of the cell's capacity (in something close to mAh)
+* Espruino will keep recharging the battery at around 20mA while it is displaying `CHG`, and the second counter will show how much power has been added to the battery (in something near mAh). Both NiMH and NiCd batteries are fine with being 'trickle charged' at this level for long periods of time.
 * You can press the Pico's button to swapp all cells between charging and discharging. If you want to swap just one cell, disconnect it for a few seconds and reconnect it.
 
 
 Next Steps
 ----------
 
-* One easy next step is to extend your Battery charger to charge more than just 4 batteries. By using the analog pins on the small 0.05" pins on the end of the Pico, you could charge another 5 batteries (so 9 in total).
+* One easy next step is to extend your Battery charger to charge more than just 4 batteries. By using the analog pins on the small 0.05" pins on the end of the Pico, you could charge another 5 batteries (so 9 in total). However the chip in Espruino is rated to provide 25mA on each pin, and 100mA in total - so you would need to be careful not to exceed this by trying to charge all the batteries at once.
 * You could also use FETs, or something like a motor driver IC to allow you to 'fast charge' your batteries.
 
 
