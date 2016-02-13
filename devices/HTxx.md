@@ -1,10 +1,19 @@
 <!--- Copyright (C) 2016 Enchanted Engineering. See the file LICENSE for use. -->
-DHTxx or RHTxx Generic Humidity and Temperature Sensor
+DHTxx or RHTxx Humidity and Temperature Sensor
 ======================================================
 
-* KEYWORDS: Module, Humidity, Temperature, DHT11, DHT21, DHT22, DHT33, DHT44, RHT01, RHT02, RHT03,RHT04, RHT05, AM2301, AM2302, AM2303, HM2301
+* KEYWORDS: Module, Humidity, Temperature, DHT21, DHT22, DHT33, DHT44, RHT01, RHT02, RHT03,RHT04, RHT05, AM2301, AM2302, AM2303, HM2301
 
-Generic Relative humidity and temperature sensor interface module based on the DHTxx (RHTxx or AM23xx) sensor. 
+DISCLAIMER
+----------
+
+**This module is not directly compatible with the existing Espruino DHT22 module.**
+
+
+APPLICATION
+-----------
+
+Relative humidity and temperature sensor interface module based on the DHTxx (RHTxx or AM23xx) sensor. 
 
 Wire sensor as follows:
 
@@ -27,35 +36,39 @@ Parameters:
 * **cb** - {function} Callback to receive data.
 * **n** - {Integer} An optional number of read attempts, default=3
 
-Returns (to callback):
+Return (callback) signiture: function callback(error,JSON) { }
 
-* JSON object with the keys...
-  - err:  false if reading good; if true raw included,
-  - rh:   relative humidity valid for all sensor types except DHT11 (RHT01),
-  - t:    temperature valid for all sensor types except DHT11 (RHT01),
-  - rh11: relative humidity valid for DHT11 (RHT01) only,
-  - t11:  temperature valid for DHT11 (RHT01) only
+* **error**   boolean flag for result
+* JSON object keys if error is true ...
+  - **bs**:   bitstream string of received data
+* JSON object keys if error is false ...
+  - **rh**:   relative humidity valid for all sensor types except DHT11 (RHT01)
+  - **t**:    temperature valid for all sensor types except DHT11 (RHT01)
 
 Example...
 ----------
 
 ```JavaScript
 // demo callback that dumps returned JSON object
-function cb(js) {
-	console.log(JSON.stringify(js));
+function cb(err,js) {
+	console.log("answer: "+((err)?"ERROR":"OK"), JSON.stringify(js));
   }
 
-var ht = require("HTxx").init(A0);  // DHT22 sensor on pin A0
+var ht = new (require("HTxx"))(A0);  // DHT22 sensor on pin A0
 ht.read(cb);
 ```
 
 Will produce...
 
 ```JavaScript
-answer: {"err":false,"rh":29.7,"t":26.7,"rh11":1,"t11":1,"raw":[1,41,1,11,54]}
+answer: OK {"rh":29.7,"t":26.7}
 ```
 
-Note: rh11 and t11 not valid for DHT22 sensor.
+or for an failed sensor read...
+
+```JavaScript
+answer: ERROR {"bs":""}
+```
 
 Reference
 ---------
