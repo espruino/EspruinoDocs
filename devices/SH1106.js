@@ -24,7 +24,6 @@ var g = require("SH1106").connectSPI(SPI2, B14, B10, go, {cs: B1, height: 64});
 
 var C = {
     OLED_WIDTH                 : 128,
-    OLED_HEIGHT                : 64,
     OLED_CHAR                  : 0x40,
 };
 
