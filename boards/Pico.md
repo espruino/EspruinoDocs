@@ -139,8 +139,8 @@ The connectors you need are very standard parts. While some parts are listed bel
 * [Seeed OPL (3400150P1)](http://www.seeedstudio.com/wiki/images/a/aa/3400150P1.pdf)
 * Octopart [list of distributors](https://octopart.com/zx62-b-5pa%2811%29-hirose-42422030)
 * [Farnell](http://uk.farnell.com/hirose-hrs/zx62-b-5pa-11/micro-usb-b-type-receptacle/dp/1645325)
-* [RS](http://uk.rs-online.com/web/p/products/6850965/?cm_mmc=aff-_-uk-_-octopart-_-6850965)
-* [Mouser](http://www.mouser.com/ProductDetail/Hirose-Electric/ZX62-B-5PA11/?qs=%2fha2pyFadujrkQEnlOn9YFM9AS87Cj2wDCLgsuo%252bP0h1%252bvKUCD3W%252bw%3d%3d)
+* [RS](http://uk.rs-online.com/web/p/products/6850965/)
+* [Mouser](http://www.mouser.com/ProductDetail/Hirose-Electric/ZX62-B-5PA11/)
 
 
 <a name="power"></a>Power, and the FET/B0 Jumper
