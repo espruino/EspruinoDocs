@@ -61,7 +61,6 @@ exports.connect = function(i2c, callback, options) {
 	var addr = 0x3C;
 	if(options && options.address) addr = options.address;
 
-
     // configure the OLED
     initCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});
     // if there is a callback, call it now(ish)
