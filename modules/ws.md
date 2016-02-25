@@ -170,7 +170,7 @@ function broadcast(message) {
 
 Then on Espruino, you can interact with the chat room using:
 
-```
+```js
 /** Join a room */
 WebSocket.prototype.message = function (msg) {
     this.send(JSON.stringify({ msg : msg }));
@@ -186,6 +186,7 @@ WebSocket.prototype.broadcast = function (msg, room) {
 WebSocket.prototype.join = function (room) {
     this.send(JSON.stringify({ join : room }));
 };
+```
 
 Then to send a message use:
 
