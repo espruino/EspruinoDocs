@@ -72,7 +72,10 @@ exports.connect = function(i2c, callback, options) {
 
   var addr = 0x3C;
   if(options && options.address) addr = options.address;
-
+  
+  // reset display if pin is part of options 
+  if (options && options.pin) digitalPulse(options.pin,0,5); 
+  
   // configure the OLED
   initCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});;
   // if there is a callback, call it now(ish)
