@@ -71,13 +71,17 @@ exports.connect = function(i2c, callback, options) {
   var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,initCmds[4]+1,1,{vertical_byte : true});
 
   var addr = 0x3C;
-  if(options && options.address) addr = options.address;
+  if(options) {
+    if (options.address) addr = options.address;  
+    // reset display if 'rst' is part of options 
+    if (options.rst) digitalPulse(options.rst, 0, 10); 
+  }
   
-  // reset display if pin is part of options 
-  if (options && options.pin) digitalPulse(options.pin,0,5); 
-  
-  // configure the OLED
-  initCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});;
+  setTimeout(function() {
+    // configure the OLED
+    initCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});;
+  }, 50);
+
   // if there is a callback, call it now(ish)
   if (callback !== undefined) setTimeout(callback, 100);
 
