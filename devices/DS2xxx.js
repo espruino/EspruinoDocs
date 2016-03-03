@@ -26,7 +26,7 @@ Write the specified data starting at the specified address. Writes that cross pa
 
 */
 exports.connect = function(ow, pgsz, cap,n,device) {
-        return new DS2xxx(ow, pgsz, cap,n,device);
+    return new DS2xxx(ow, pgsz, cap,n,device);
 };
 function DS2xxx(ow, pgsz, cap,n, device) {
     this.ow = ow;
@@ -36,7 +36,6 @@ function DS2xxx(ow, pgsz, cap,n, device) {
     this.cap=cap<<7;
 }
 DS2xxx.prototype.s=function(cmd) {
-    this.ow.reset();
     this.ow.select(this.code)
     this.ow.write(cmd,cmd.length==4); //We only want to leave power on when we do a page copy - that's the only time we send a 4 element array. 
 }
