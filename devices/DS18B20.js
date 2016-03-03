@@ -38,18 +38,20 @@ function DS18B20(oneWire, device) {
 
 /** For internal use - read the scratchpad region */
 DS18B20.prototype._r = function() {
-  this.bus.select(this.sCode);
-  this.bus.write(C.READ);
-  return this.bus.read(9);
+  var b = this.bus;
+  b.select(this.sCode);
+  b.write(C.READ);
+  return b.read(9);
 };
 
 /** For internal use - write to the scratchpad region */
 DS18B20.prototype._w = function (th, tl, conf) {
-  this.bus.select(this.sCode);
-  this.bus.write([C.WRITE,th,tl,conf]);
-  this.bus.select(this.sCode);
-  this.bus.write(C.COPY);
-  this.bus.reset();
+  var b = this.bus;
+  b.select(this.sCode);
+  b.write([C.WRITE,th,tl,conf]);
+  b.select(this.sCode);
+  b.write(C.COPY);
+  b.reset();
 };
 
 /** Set the sensor resolution in bits. From 9 to 12.
