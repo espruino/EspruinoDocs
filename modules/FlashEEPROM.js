@@ -10,15 +10,19 @@
    erasePage and getPage then it can be used 
 */ 
 function FlashEEPROM(addr, flash) {
+  this.flash = flash ? flash : require("Flash");
   if (addr) {
     this.addr = addr;
-  } else {
+  } else if (this.flash.getFree!==undefined) {
+    var free = this.flash.getFree();
+    if (free.length) this.addr = free[0].addr;
+  } else { 
+    // TODO: remove this after 1v86 is released
     var mem = process.memory();
     if (!mem.flash_start || !mem.flash_length)
       throw "process.memory() didn't contain information about flash memory";  
     this.addr = mem.flash_start + mem.flash_length;
   }
-  this.flash = flash ? flash : require("Flash");
   var page = this.flash.getPage(this.addr);
   if (!page) throw "Couldn't find flash page";
   this.addr = page.addr;
