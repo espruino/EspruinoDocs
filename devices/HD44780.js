@@ -10,6 +10,11 @@ var lcd = require("HD44780").connectI2C(I2C1);
 lcd.print("Hello World!");
 ```
 
+You can specify device address following way:
+```
+require("HD44780").connectI2C(I2C1, 0x3F);
+```
+
 Otherwise try:
 
 ```
@@ -49,12 +54,12 @@ function HD44780(write) {
   };
 }
 
-exports.connectI2C = function(/*=I2C*/_i2c) {
+exports.connectI2C = function(/*=I2C*/_i2c, _addr) {
   var i2c = _i2c;
   var write = function(x, c) {
     var a = (x&0xF0) |8| ((c===undefined)?1:0);
     var b = ((x<<4)&0xF0) |8| ((c===undefined)?1:0);
-    i2c.writeTo(0x27, [a,a,a|4,a|4,a,a,b,b,b|4,b|4,b,b]);
+    i2c.writeTo(_addr || 0x27, [a,a,a|4,a|4,a,a,b,b,b|4,b|4,b,b]);
   };
   return new HD44780(write);
 };
