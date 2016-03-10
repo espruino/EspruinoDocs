@@ -65,13 +65,17 @@ Now you can type commands and they will be executed (you can also copy and paste
 
 Try typing the following in the left-hand side of the Web IDE, and press 'Enter' after it:
 
-```1+2```
+```javascript
+1+2
+```
 
 This should return ```=3```. If it doesn't, there might have been some text entered already by the terminal application. Press ```Ctrl-C``` to clear this, and try again.
 
 Every time you type a command and press enter, it will be executed immediately. ```=``` will be displayed followed by the result. If there is no result (for instance if you were executing a function that returned no value), ```=undefined``` is displayed.
 
-```digitalWrite(LED1,1)```
+```javascript
+digitalWrite(LED1,1)
+```
 
 Remember to enter capital letters where they appear above - JavaScript (and so Espruino) is case-sensitive, so for instance `digitalwrite` won't work while `digitalWrite` will.
 
@@ -79,13 +83,15 @@ Remember to enter capital letters where they appear above - JavaScript (and so E
 
 Now, press the 'up' arrow. This will display the last command you ran, and will show the text ```digitalWrite(LED1,1)``` again. Press the left arrow until the cursor moves to the end of ```1```, press backspace, then press ```0```. It should now look like this:
 
-```digitalWrite(LED1,0)```
+```javascript
+digitalWrite(LED1,0)
+```
 
 You can now step back to the end of the line (using the right arrow, or the 'end' key) and can press enter to execute the command (which will turn the LED off). If you press enter before the cursor is on the end of the line, it won't execute the command, but will split it on to two lines (you can press backspace again to back up).
 
 For the next bit, we need to create a variable. Type:
 
-```
+```javascript
 var on = false
 ```
 
@@ -93,7 +99,7 @@ Then press enter - this will create a new variable called `on` and will set its 
 
 You can now write a function. Type the following:
 
-```
+```javascript
 function toggle() {
  on = !on;
  digitalWrite(LED1, on);
@@ -110,23 +116,29 @@ The next line takes the changed value of `on` (either `true` of `false`) and app
 
 Now we can try it, type the following and hit enter:
 
-```toggle()```
+```javascript
+toggle()
+```
 
 If you want to run it again, just hit the up arrow (to find the command in history) followed by enter. Every time you run it, the LED will change state from on to off or vice versa.
 
 Now type:
 
-```var i = setInterval(toggle, 500)```
+```javascript
+var i = setInterval(toggle, 500)
+```
 
 This will call the `toggle` function every 500ms (eg. twice a second), so the LED will start blinking. The new variable called `i` (which was defined by `var`) is a reference to the timer we have created - this will be useful later!
 
 But what if we want to change the `toggle` function? Type:
 
-```edit('toggle')```
+```javascript
+edit('toggle')
+```
 
 You can also get a similar effect by hitting the up arrow until you get back to the command where you defined `toggle`. Now the function is displayed, press the left arrow to move the cursor backwards, and start to edit the function. Add a new line at the end so that it looks like this (to add a line after `digitalWrite`, move the cursor to the end of the line, and press 'enter'):
 
-```
+```javascript
 function toggle() {
  on = !on;
  digitalWrite(LED1, on);
@@ -138,19 +150,25 @@ Now, move the cursor right to the end of the last line using the arrow keys (or 
 
 You can now change the speed the lights flash, using this command:
 
-```changeInterval(i, 200)```
+```javascript
+changeInterval(i, 200)
+```
 
 This is the same as if you originally called `setInterval( ... , 200)` - `toggle` is now called every 200ms (5 times a second)
 
 And if you want your lights to stop flashing - just type this:
 
-```clearInterval(i)```
+```javascript
+clearInterval(i)
+```
 
 Note that just typing `clearInterval()` without any arguments will clear *all* active intervals.
 
 If you want to start completely from scratch and wipe out everything you have done, just type:
 
-```reset()```
+```javascript
+reset()
+```
 
 If you press the reset button on the board (if your board has one), Espruino will also reset. However we don't recommend this - on most boards this will reset the USB connection as well, so you may need to restart your terminal application, or in some cases even unplug and re-plug the device.
 
