@@ -29,23 +29,50 @@ function FlashEEPROM(addr, flash) {
   this.endAddr = page.addr+page.length;
 }
 
-/** Read the current value of a key (key must be between 0 and 255).
- This will return a Uint8Array */
-FlashEEPROM.prototype.read = function(addr) { 
+/** Internal function - return an object containing:
+    * addr: the address in memory of the key (must be between 0 and 255), or -1 if it doesn't exist 
+    * end: the address of the next free entry in memory
+*/
+FlashEEPROM.prototype.getAddr = function(addr) { 
   // search for the last occurrence of the address in flash
   var n = this.addr;
   var key = this.flash.read(4, n);
   var lastAddr = -1;
   while (key[3]!=255 && n<this.endAddr) {
     if (key[0] == addr) lastAddr = n;
-    n += (key[1]+7) & ~3;
+    var l = key[1] | (key[2]<<8);
+    n += (l+7) & ~3;
     key = this.flash.read(4, n);
   }
+  return {addr:lastAddr, end:n};
+};
+
+/** Read the current value of a key (key must be between 0 and 255).
+ This will return a Uint8Array. It can be converted to a string
+ with E.toString() */
+FlashEEPROM.prototype.read = function(addr) { 
+  var lastAddr = this.getAddr(addr).addr;
   // if not found, return undefined
   if (lastAddr<0) return undefined;
   // else get the key again, and return that many characters
   key = this.flash.read(4, lastAddr);
-  return this.flash.read(key[1], lastAddr+4);
+  var l = key[1] | (key[2]<<8);
+  return this.flash.read(l, lastAddr+4);
+};
+
+/** Read the current value of a key (key must be between 0 and 255).
+ This will return a 'Memory Area' string, which directly references the
+ data in flash memory rather than loading it into RAM first. This is 
+ useful when you've written a lot of data and you're trying to save
+ RAM. */
+FlashEEPROM.prototype.readMem = function(addr) { 
+  var lastAddr = this.getAddr(addr).addr;
+  // if not found, return undefined
+  if (lastAddr<0) return undefined;
+  // else get the key again, and return that many characters
+  key = this.flash.read(4, lastAddr);
+  var l = key[1] | (key[2]<<8);
+  return E.memoryArea(lastAddr+4, l);
 };
 
 /// return the current values of all keys in an array
@@ -55,9 +82,9 @@ FlashEEPROM.prototype.readAll = function() {
   var key = this.flash.read(4, n);
   var lastAddr = -1;
   while (key[3]!=255 && n<this.endAddr) {
-    if (key[1])
-      data[key[0]] = this.flash.read(key[1], n+4);
-    n += (key[1]+7) & ~3;
+    var l = key[1] | (key[2]<<8);
+    if (l) data[key[0]] = this.flash.read(l, n+4);
+    n += (l+7) & ~3;
     key = this.flash.read(4, n);
   }
   return data;
@@ -66,7 +93,7 @@ FlashEEPROM.prototype.readAll = function() {
 /// Internal function to write a data block
 FlashEEPROM.prototype._write = function(n, addr, data) {
   // now write header
-  this.flash.write(new Uint8Array([addr, data.length, 0, 0]), n);
+  this.flash.write(new Uint8Array([addr, data.length, data.length>>8, 0]), n);
   // write data
   n+=4;
   if (data.length!=4) {
@@ -82,29 +109,22 @@ FlashEEPROM.prototype._write = function(n, addr, data) {
  can be a string or uint8array but cannot be longer than 255 bytes */
 FlashEEPROM.prototype.write = function(addr, data) { 
   data = E.toUint8Array(data);
-  // search for the last used address in flash
-  var n = this.addr;
-  var key = this.flash.read(4, n);
-  var lastAddr = -1;
-  while (key[3]!=255 && n<this.endAddr) {
-    if (key[0] == addr) lastAddr = n;
-    n += (key[1]+7) & ~3;
-    key = this.flash.read(4, n);
-  }
+  var a = this.getAddr(addr);
   // If we had the key already, check if it is the same
-  if (lastAddr>=0) {
-    key = this.flash.read(4, lastAddr);
-    var oldData = this.flash.read(key[1], lastAddr+4);
+  if (a.addr>=0) {
+    key = this.flash.read(4, a.addr);
+    var l = key[1] | (key[2]<<8);
+    var oldData = this.flash.read(l, a.addr+4);
     if (oldData == data) return;
   }
   // test if we have enough memory
-  if (n+data.length+4>=this.endAddr) {
-    n = this.cleanup();
-    if (n+data.length+4>=this.endAddr)
+  if (a.end+data.length+4>=this.endAddr) {
+    a.end = this.cleanup();
+    if (a.end+data.length+4>=this.endAddr)
       throw "Not enough memory!";
   }
   //
-  this._write(n, addr, data);
+  this._write(a.end, addr, data);
 };
 
 /// Read all data, erase the page, and write it back (removing duplicates)

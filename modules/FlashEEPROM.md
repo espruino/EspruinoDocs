@@ -27,13 +27,17 @@ var f = new (require("FlashEEPROM"))();
 
 f.write(0, "Hello");
 f.write(1, "World");
-//.. you can write to any address between 0 and 255, with any data up to 256 chars long
+//.. you can write to any address between 0 and 255, with any data up to 65536 chars long
 
 f.read(0)
 // returns new Uint8Array([72, 101, 108, 108, 111])
 
 E.toString(f.read(1))
 // returns "World"
+
+f.readMem(0)
+// returns "Hello" - this is a special string that is accessed directly from ROM 
+// (and is not loaded into RAM first)
 
 f.readAll();
 // returns [
