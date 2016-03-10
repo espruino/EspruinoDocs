@@ -263,7 +263,9 @@ function inferFile(filename, fileContents, baseLineNumber) {
     var found = false;
     for (var i in urls[url]) {
       if (urls[url][i].url.indexOf(link)==0) {
-        urls[url][i].url += ","+lineNumber;
+        var lineNumbers = urls[url][i].url.substr(link.length).split(",");
+        if (lineNumbers.indexOf(lineNumber)<0)
+          urls[url][i].url += ","+lineNumber;
         found = true;
       }
     }
