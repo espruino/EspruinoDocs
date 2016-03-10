@@ -16,7 +16,11 @@ Connecting
 
 [[http://youtu.be/J0HJVTDNSUQ]]
 
-The [Espruino Board](/EspruinoBoard) has pads on it already for the placement of an HC-05 bluetooth module, so it's very easy to connect. Note that while there are many connections on the HC-05 module, only 4 of them are needed. See the [[Wiring Up]] page if you want to connect bluetooth to something other than the Espruino Board.
+The [Espruino Board](/EspruinoBoard) has pads on it already for the placement of an HC-05 bluetooth module, so it's very easy to connect. Note that while there are many connections on the HC-05 module, only 4 of them are needed. 
+
+For the Espruino [[Pico]], there is [an adaptor shim available](/Shims#bluetooth-0-1-adaptor) that makes connecting Bluetooth a lot easier!
+
+See the [[Wiring Up]] page if you want to connect bluetooth to something other than the Espruino Board.
 
 To solder the HC-05 module, do the following:
 

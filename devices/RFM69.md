@@ -12,8 +12,8 @@ A driver for it is available in the [[RFM69.js]] module.
 
 Connect as follows:
 
-| NRF24L01+ | Name |  Espruino  |
-|-----------|------|------------|
+| RFM69 | Name |  Espruino  |
+|-------|------|------------|
 | 1 | RST  | B1 |
 | 2 | DIO0 | | 
 | 3 | DIO1 | | 
@@ -30,6 +30,9 @@ Connect as follows:
 | 14 | MOSI | B15 |
 | 15 | NSS | B10 |
 | 15 | NC | GND |
+
+For the Espruino [[Pico]], there is [an adaptor shim available](/Shims#rfm69-rfm12b-0-1-adaptor) that makes connecting this module a lot easier.
+
 
 Software
 -----------
