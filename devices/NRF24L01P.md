@@ -19,7 +19,7 @@ Connect as follows:
 | 1 | GND       | GND        | GND |
 | 2 | 3.3V      | 3.3        | 3.3v |
 | 3 | CE        | B1         | GPIO Out |
-| 4 | CSN       | B0         | GPIO Out |
+| 4 | CSN       | B3         | GPIO Out |
 | 5 | SCK       | A5         | SPI SCK |
 | 6 | MOSI      | A7         | SPI MOSI |
 | 7 | MISO      | A6         | SPI MISO |
@@ -57,7 +57,7 @@ Just do the following for a Slave:
 
 ```
 SPI1.setup({sck:A5, miso:A6, mosi:A7});
-var nrf = require("NRF24L01P").connect( SPI1, B0, B1 );
+var nrf = require("NRF24L01P").connect( SPI1, B3, B1 );
 function onInit() {
   nrf.init([0,0,0,0,1], [0,0,0,0,2]);
 }
@@ -71,7 +71,7 @@ And the following for a Master:
 
 ```
 SPI1.setup({sck:A5, miso:A6, mosi:A7});
-var nrf = require("NRF24L01P").connect( SPI1, B0, B1 );
+var nrf = require("NRF24L01P").connect( SPI1, B3, B1 );
 function onInit() {
   nrf.init([0,0,0,0,2], [0,0,0,0,1]);
 }
@@ -112,7 +112,7 @@ The usage of ```slaveHandler``` and ```masterHandler``` is not required - if you
 
 ```
 SPI1.setup({sck:A5, miso:A6, mosi:A7});
-var nrf = require("NRF24L01P").connect( SPI1, B0, B1 );
+var nrf = require("NRF24L01P").connect( SPI1, B3, B1 );
 function onInit() {
   nrf.init([0,0,0,0,1], [0,0,0,0,2]);
 }
@@ -127,7 +127,7 @@ And then a receiver:
 
 ```
 SPI1.setup({sck:A5, miso:A6, mosi:A7});
-var nrf = require("NRF24L01P").connect( SPI1, B0, B1 );
+var nrf = require("NRF24L01P").connect( SPI1, B3, B1 );
 function onInit() {
   nrf.init([0,0,0,0,2], [0,0,0,0,1]);
 }
