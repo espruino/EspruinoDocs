@@ -55,6 +55,9 @@ E.toString(f.read(1))
 overwritten by subsequent writes. It can take around a second though */
 f.cleanup();
 
+// Or clear absolutely everything out of memory
+f.erase();
+
 ```
 
 Speed
