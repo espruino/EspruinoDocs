@@ -27,6 +27,19 @@ var TYPE = {
   DISCONNECT  : 14
 };
 
+/**
+ Return Codes
+ http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc385349256
+ **/
+var RETURN_CODES = {
+  ACCEPTED                      : 0,
+  UNACCEPTABLE_PROTOCOL_VERSION : 1,
+  IDENTIFIER_REJECTED           : 2,
+  SERVER_UNAVAILABLE            : 3,
+  BAD_USER_NAME_OR_PASSWORD     : 4,
+  NOT_AUTHORIZED                : 5
+};
+
 /** MQTT constructor */ 
 function MQTT(server, options) {
   this.server = server;
@@ -193,15 +206,32 @@ MQTT.prototype.connect = function(client) {
       }
       else if(type === TYPE.CONNACK) {
         clearTimeout(mqo.ctimo);
-        if(data.charCodeAt(3) === 0) {
+        var returnCode = data.charCodeAt(3);
+        if(returnCode === RETURN_CODES.ACCEPTED) {
           mqo.connected = true;
           console.log("MQTT connection accepted");
           mqo.emit('connected');
           mqo.emit('connect');
         }
         else {
-          console.log("MQTT connection error");
-          mqo.emit('error', "MQTT connection error");
+          switch(returnCode) {
+              case RETURN_CODES.UNACCEPTABLE_PROTOCOL_VERSION:
+                  mqttError += "unacceptable protocol version.";
+                  break;
+              case RETURN_CODES.IDENTIFIER_REJECTED:
+                  mqttError += "identifier rejected.";
+                  break;
+              case RETURN_CODES.BAD_USER_NAME_OR_PASSWORD:
+                  mqttError += "bad user name or password.";
+                  break;
+              case RETURN_CODES.NOT_AUTHORIZED:
+                  mqttError += "not authorized.";
+                  break;
+              default:
+                  mqttError += "uknown reason."
+          }
+          console.log(mqttError);
+          mqo.emit('error', mqttError);
         }
       }
       else {
