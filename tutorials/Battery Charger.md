@@ -35,7 +35,7 @@ Wiring Up
 
 * Place the breadboard with the `-` row of pins right at the bottom, and the `+` row right at the top.
 * Plug the Espruino [[Pico]] into the breadboard as far left as it will go (as in the picture)
-* Add a wire from Espruino's `GND` pin straight down to the bottom `-` row of pins
+* Add a wire from Espruino's `GND` pin (on the far left) straight down to the bottom `-` row of pins. You can't see this in the picture because it's under the LCD screen.
 * Plug the [[PCD8544]] into the breadboard below the [[Pico]], with 2 pins sticking out to the right of the [[Pico]] (it should overlap the GND wire)
 * Take a patch wire and connect from pin `B1` on the [[Pico]] to the top of a column 5 pins to the right of the Pico (see the picture)
 * Fold a 75 Ohm resistor, cut it to length, and add it diagonally between the 5th column right of the Pico and the 6th.
