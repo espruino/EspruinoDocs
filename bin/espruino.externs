@@ -1,0 +1,93 @@
+/**
+ * @constructor
+ */
+function Graphics() {}
+Graphics.createArrayBuffer = function( width, height, bpp, options ) {}
+Graphics.createCallback = function( width, height, bpp, callback ) {}
+Graphics.createSDL = function( width, height) {}
+Graphics.prototype.getWidth = function() {}
+Graphics.prototype.getHeight = function() {}
+Graphics.prototype.clear = function() {}
+Graphics.prototype.fillRect = function( x1, y1, x2, y2) {};
+Graphics.prototype.drawRect = function( x1, y1, x2, y2) {};
+Graphics.prototype.getPixel = function( x, y ) {};
+Graphics.prototype.setPixel = function( x, y, col) {};
+Graphics.prototype.setColor = function( r, g, b) {};
+Graphics.prototype.setBgColor = function( r, g, b) {}
+Graphics.prototype.getColor = function() {};
+Graphics.prototype.getBgColor = function() {};
+Graphics.prototype.setFontBitmap = function() {};
+Graphics.prototype.setFontVector = function(size) {};
+Graphics.prototype.setFontCustom = function( bitmap, firstChar, width, height) {}
+Graphics.prototype.drawString = function(str, x, y) {};
+Graphics.prototype.stringWidth = function( str ) {}
+Graphics.prototype.drawLine = function( x1 , y1, x2, y2) {};
+Graphics.prototype.lineTo = function(x, y) {};
+Graphics.prototype.moveTo = function( x, y) {};
+Graphics.prototype.fillPoly = function( poly ) {};
+Graphics.prototype.setRotation = function( rotation, reflect) {};
+Graphics.prototype.drawImage = function( image, x, y) {};
+Graphics.prototype.getModified = function( reset ) {};
+
+// E
+function E() {}
+E.clip = function( x, min, max ) {}
+E.toUint8Array = function( args ) {}
+E.sum = function( arr ) {}
+E.mapInPlace = function( from, to, map, bits ) {}
+
+
+/**
+ * @param callback
+ * @param pin {Pin]
+ * @param options
+ */
+function setWatch( callback, pin, options ) {}
+function clearWatch( id ) {}
+
+function Pin( value ) {}
+
+
+/**
+ * @constructor
+ */
+function I2C() {}
+
+I2C.prototype.writeTo = function(address, data)  {};
+I2C.prototype.readFrom = function(address, /** number*/ quantity) /** Uint8Array*/ {};
+
+
+/**
+ * @constructor
+ */
+function SPI() {}
+SPI.prototype.setup = function( options ) {}
+
+/**
+ * @param data
+ * @param nss_pin {Pin}
+ */
+SPI.prototype.send = function( data, nss_pin) {}
+SPI.prototype.write = function( data ) {}
+/**
+ * @param data
+ * @param bit0
+ * @param bit1
+ * @param nss_pin {Pin}
+ */
+SPI.prototype.send4bit = function( data, bit0, bit1, nss_pin ) {}
+/**
+ * @param data
+ * @param bit0
+ * @param bit1
+ * @param nss_pin {Pin}
+ */
+SPI.prototype.send8bit = function( data, bit0, bit1, nss_pin ) {}
+
+/**
+ * @type {SPI}
+ */
+var SPI1;
+
+
+var exports;

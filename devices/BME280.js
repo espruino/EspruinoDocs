@@ -5,6 +5,9 @@
 
 var C = {BME280_ADDRESS: 0x76}
 
+/**
+ * @constructor
+ */
 function BME280(_i2c, options) {
   this.i2c = _i2c; 
   var options = options || {};    
@@ -54,23 +57,23 @@ BME280.prototype.convS16 = function(ub1, ub2) {
 
 /* Write single byte to register reg_address */
 BME280.prototype.writeReg = function(reg_address, data) {
-  this.i2c['writeTo'](C.BME280_ADDRESS, [reg_address, data]);
+  this.i2c.writeTo(C.BME280_ADDRESS, [reg_address, data]);
 };
 
 /* Read single byte from register reg*/
 BME280.prototype.read8 = function(reg) {
-  this.i2c['writeTo'](C.BME280_ADDRESS, reg);
-  return this.i2c['readFrom'](C.BME280_ADDRESS, 1)[0];
+  this.i2c.writeTo(C.BME280_ADDRESS, reg);
+  return this.i2c.readFrom(C.BME280_ADDRESS, 1)[0];
 };
 
 /* Read and store all coefficients stored in the sensor */
 BME280.prototype.readCoefficients = function() {
-  this.i2c['writeTo'](C.BME280_ADDRESS, 0x88);
-  var data = this.i2c['readFrom'](C.BME280_ADDRESS, 24);
-  this.i2c['writeTo'](C.BME280_ADDRESS, 0xA1);
-  data = this.concatU8(data, this.i2c['readFrom'](C.BME280_ADDRESS, 1));
-  this.i2c['writeTo'](C.BME280_ADDRESS, 0xE1);
-  data = this.concatU8(data, this.i2c['readFrom'](C.BME280_ADDRESS, 7));
+  this.i2c.writeTo(C.BME280_ADDRESS, 0x88);
+  var data = this.i2c.readFrom(C.BME280_ADDRESS, 24);
+  this.i2c.writeTo(C.BME280_ADDRESS, 0xA1);
+  data = this.concatU8(data, this.i2c.readFrom(C.BME280_ADDRESS, 1));
+  this.i2c.writeTo(C.BME280_ADDRESS, 0xE1);
+  data = this.concatU8(data, this.i2c.readFrom(C.BME280_ADDRESS, 7));
 
   this.dig_T1 = (data[1] << 8) | data[0];
   this.dig_T2 = this.convS16(data[3], data[2]);
@@ -96,9 +99,9 @@ BME280.prototype.readCoefficients = function() {
 
 /*public methods*/
 /* Read Raw data from the sensor */
-BME280.prototype['readRawData'] = function() {
-  this.i2c['writeTo'](C.BME280_ADDRESS, 0xF7);
-  var data = this.i2c['readFrom'](C.BME280_ADDRESS, 8);
+BME280.prototype.readRawData = function() {
+  this.i2c.writeTo(C.BME280_ADDRESS, 0xF7);
+  var data = this.i2c.readFrom(C.BME280_ADDRESS, 8);
   /* enable this if you want to be able to debug data values and calibration 
 
   if (this.debug) {
@@ -112,13 +115,13 @@ BME280.prototype['readRawData'] = function() {
     console.log("d7: " + data[7]);
   }
   */
-  this['pres_raw'] = (data[0] << 12) | (data[1] << 4) | (data[2] >> 4);
-  this['temp_raw'] = (data[3] << 12) | (data[4] << 4) | (data[5] >> 4);
-  this['hum_raw'] = (data[6] << 8) | data[7];
+  this.pres_raw = (data[0] << 12) | (data[1] << 4) | (data[2] >> 4);
+  this.temp_raw = (data[3] << 12) | (data[4] << 4) | (data[5] >> 4);
+  this.hum_raw = (data[6] << 8) | data[7];
 };
 
 /* Calibration of Temperature, algorithm is taken from the datasheet */
-BME280.prototype['calibration_T'] = function(adc_T) {
+BME280.prototype.calibration_T = function(adc_T) {
   var var1, var2, T;
   var1 = ((adc_T) / 16384.0 - (this.dig_T1) / 1024.0) * (this.dig_T2);
   var2 = (((adc_T) / 131072.0 - (this.dig_T1) / 8192.0) * ((adc_T) / 131072.0 - (this.dig_T1) / 8192.0)) * (this.dig_T3);
@@ -128,7 +131,7 @@ BME280.prototype['calibration_T'] = function(adc_T) {
 };
 
 /* Calibration of Pressure, algorithm is taken from the datasheet */
-BME280.prototype['calibration_P'] = function(adc_P) {
+BME280.prototype.calibration_P = function(adc_P) {
 /* enable this if you want to be able to debug data values and calibration
   if (this.debug) {
     console.log("T1: " + this.dig_T1);
@@ -169,7 +172,7 @@ BME280.prototype['calibration_P'] = function(adc_P) {
 };
 
 /* Calibration of Humidity, algorithm is taken from the datasheet */
-BME280.prototype['calibration_H'] = function(adc_H) {
+BME280.prototype.calibration_H = function(adc_H) {
   var v_x1;
 
   v_x1 = (this.t_fine - (76800));
