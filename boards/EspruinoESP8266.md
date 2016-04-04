@@ -164,11 +164,15 @@ there is not much point to it). The hardware SPI uses the pins shown in the boar
 
 Serial port
 -----------
-The esp8266 has two UARTS. UART0 uses gpio1 for TX and gpio3 for RX and is used by the Espruino console.
-It could be reused for application purposes, but that is not currently implemented.
-UART1 uses gpio2 for TX and RX is not really usable due to being used for the SDIO flash
-chip. UART1 TX is used by the debug and could be reused for application purposes, but that is
-not currently implemented.
+The esp8266 has two UARTS. UART0 (`Serial1`) uses gpio1 for TX and gpio3 for RX and is used by
+the Espruino JavaScript console. It can be used for other things once the Espruino console
+is moved to another device. For instance calling `LoopbackA.setConsole()` will move the console
+to 'loopback' (where is can be accessed using `LoopbackB`), and will free up `Serial1` for
+use like any normal Espruino Serial port.
+
+UART1 (`Serial2`) uses gpio2 for TX and RX is not totally usable due to being used for the SDIO
+flash chip. UART1 TX is used for debugging and can be used for application purposes, but RX is
+not available.
 
 GetSerial
 ---------
