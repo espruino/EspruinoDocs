@@ -127,15 +127,22 @@ pin but rather is attached to the real-time-clock circuitry.
 
 ### digitalPulse implementation
 
-The digitalPulse function is implemented by busy-waiting between pulse transitions. I.e., if you specify a series of 10 500us
-pulses the esp8266 will busy-wait for 5ms in order to toggle the output pin at the right moment. Other than the fact that your
-program will not do anything else during this time, this also prevents Wifi processing and empirically, somewhere after 10ms-50ms
+The `digitalPulse` function is implemented by busy-waiting between pulse transitions (unlike on other Espruino
+boards where `digitalPulse` is asynchronous). 
+
+This means that if you specify a series of 10 500us pulses the esp8266 will busy-wait for 5ms in order to toggle 
+the output pin at the right moment. Other than the fact that your program will not do anything else during this 
+time, this also prevents Wifi processing and empirically, somewhere after 10ms-50ms
 the watchdog timeout will kick in and reset the chip.
+
+**Note:** This also means that `digitalPulse(D0,1,10);digitalPulse(D0,0,10);digitalPulse(D0,1,10);` will *not*
+produce 10ms pulses, because the time taken to execute the JS code for the function calls will increase the
+pulse length. Instead, you need to do `digitalPulse(D0,1,[10,10,10])`.
 
 ### setWatch implementation
 
 The setWatch implementation uses interrupts to capture incoming pulse edges and queues them. The queue can hold 16 elements, so
-setWatch will loose transitions if javascript code does not run promptly.
+setWatch will lose transitions if javascript code does not run promptly.
 
 I2C Implementation
 ------------------
@@ -174,8 +181,8 @@ UART1 (`Serial2`) uses gpio2 for TX and RX is not totally usable due to being us
 flash chip. UART1 TX is used for debugging and can be used for application purposes, but RX is
 not available.
 
-GetSerial
----------
+Serial Numbers
+--------------
 The esp8266 does not have a serial number. It does have two mac addresses "burned-in", which one can use for identification purposes.
 `getSerial()` returns the MAC address of the STA interface.
 
@@ -331,10 +338,8 @@ Loading Espruino
 Espruino can be loaded into the esp8266 using any of the flashing techniques applicable
 to the esp8266 itself.  A variety of tools are available to assist with this.
 
-The Espruino ESP8266 firmware is still under heavy development, and is not yet distributed
-alongside all the other firmwares on the Espruino Website.
-Instead, you should pick up the latest builds from
-[this forum thread](http://forum.espruino.com/conversations/279176)
+The Espruino ESP8266 firmware [is now distributed alongside all the other firmwares on the 
+Espruino Website](http://www.espruino.com/Download).
 
 Open Issues
 -----------
