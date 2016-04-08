@@ -80,7 +80,7 @@ function mqttStr(s) {
 function mqttPacketLength(length) {
     var encLength = '';
     do {
-      encByte = length & 127;
+      var encByte = length & 127;
       length = length >> 7;
       // if there are more data to encode, set the top bit of this byte
       if ( length > 0 ) {
@@ -94,7 +94,7 @@ function mqttPacketLength(length) {
 /** MQTT standard packet formatter */
 function mqttPacket(cmd, variable, payload) {
   return fromCharCode(cmd) + mqttPacketLength(variable.length+payload.length) + variable + payload;
-};
+}
 
 /** PUBLISH packet parser - returns object with topic and message */
 function parsePublish(data) {
@@ -112,7 +112,7 @@ function parsePublish(data) {
   else {
     return undefined;
   }
-};
+}
 
 /** Generate random UID */
 var mqttUid = (function() {
@@ -133,7 +133,7 @@ function mqttPublish(topic, message, qos) {
   // Packet id must be included for QOS > 0
   var variable = (qos === 0) ? mqttStr(topic) : mqttStr(topic)+pid;
   return mqttPacket(cmd, variable, message);
-};
+}
 
 /** SUBSCRIBE control packet */
 function mqttSubscribe(topic, qos) {
@@ -143,7 +143,7 @@ function mqttSubscribe(topic, qos) {
            pid/*Packet id*/,
            mqttStr(topic)+
            fromCharCode(qos)/*QOS*/);
-};
+}
 
 /** UNSUBSCRIBE control packet */
 function mqttUnsubscribe(topic) {
@@ -152,12 +152,12 @@ function mqttUnsubscribe(topic) {
   return mqttPacket(cmd,
            pid/*Packet id*/,
            mqttStr(topic));
-};
+}
 
 /** Create escaped hex value from number */
 function createEscapedHex( number ){
   return fromCharCode(parseInt( number.toString(16) , 16));
-};
+}
 
 /* Public interface ****************************/
 
@@ -184,9 +184,9 @@ MQTT.prototype.connect = function(client) {
       var type = data.charCodeAt(0) >> 4;
 
       if(type === TYPE.PUBLISH) {
-        var data = parsePublish(data);
-        mqo.emit('publish', data);
-        mqo.emit('message', data.topic, data.message);
+        var parsedData = parsePublish(data);
+        mqo.emit('publish', parsedData);
+        mqo.emit('message', parsedData.topic, parsedData.message);
       }
       else if(type === TYPE.PUBACK) {
         // implement puback
@@ -214,6 +214,7 @@ MQTT.prototype.connect = function(client) {
           mqo.emit('connect');
         }
         else {
+          var mqttError = "Connection refused, ";
           switch(returnCode) {
               case RETURN_CODES.UNACCEPTABLE_PROTOCOL_VERSION:
                   mqttError += "unacceptable protocol version.";
@@ -221,6 +222,9 @@ MQTT.prototype.connect = function(client) {
               case RETURN_CODES.IDENTIFIER_REJECTED:
                   mqttError += "identifier rejected.";
                   break;
+              case RETURN_CODES.SERVER_UNAVAILABLE:
+                  mqttError += "server unavailable.";
+                  break;                  
               case RETURN_CODES.BAD_USER_NAME_OR_PASSWORD:
                   mqttError += "bad user name or password.";
                   break;
@@ -228,7 +232,7 @@ MQTT.prototype.connect = function(client) {
                   mqttError += "not authorized.";
                   break;
               default:
-                  mqttError += "uknown reason."
+                  mqttError += "unknown return code: " + returnCode + ".";
           }
           console.log(mqttError);
           mqo.emit('error', mqttError);
@@ -292,7 +296,7 @@ MQTT.prototype.subscribe = function(topics, opts, callback) {
       .forEach(function (k) {
         subs.push({
           topic: k,
-          qos: obj[k]
+          qos: topics[k]
         });
       });
   }
@@ -364,6 +368,7 @@ MQTT.prototype.mqttConnect = function(clean) {
 exports.create = function (server, options) {
   return new MQTT(server, options);
 };
+
 exports.connect = function(options) {
   var mqtt = new MQTT(options.host, options);
   mqtt.connect();
