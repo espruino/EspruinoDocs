@@ -1,3 +1,4 @@
+
 /* Copyright (c) 2014 Lars Toft Jacobsen. See the file LICENSE for copying permission. */
 /*
 Module for the Invensense MPU6050 digital gyro + accelerometer sensor fusion IC.
@@ -23,6 +24,9 @@ var C = {
   ADDRESS_AD0_LOW     : 0x68, // address pin low (GND)
   ADDRESS_AD0_HIGH    : 0x69, // address pin high (VCC)
 
+  PWR1_CLKSEL_BIT     : 2,
+  PWR1_CLKSEL_LENGTH  : 3,
+
   CLOCK_INTERNAL      : 0x00,
   CLOCK_PLL_XGYRO     : 0x01,
   CLOCK_PLL_YGYRO     : 0x02,
@@ -30,11 +34,17 @@ var C = {
   CLOCK_PLL_EXT32K    : 0x04,
   CLOCK_PLL_EXT19M    : 0x05,
   CLOCK_KEEP_RESET    : 0x07,
-  
+
   GYRO_FS_250         : 0x00,
   GYRO_FS_500         : 0x01,
   GYRO_FS_1000        : 0x02,
   GYRO_FS_2000        : 0x03,
+
+  GCONFIG_FS_SEL_BIT  : 4,
+  GCONFIG_FS_SEL_LENGTH : 2,
+
+  ACONFIG_AFS_SEL_BIT : 4,
+  ACONFIG_AFS_SEL_LENGTH  : 2,
 
   ACCEL_FS_2          : 0x00,
   ACCEL_FS_4          : 0x01,
@@ -158,10 +168,23 @@ MPU6050.prototype.writeBit = function(reg, bit, val) {
 };
 
 /* Set more bits in a register */
-MPU6050.prototype.writeBits = function(reg, shift, val) {
+MPU6050.prototype.writeBits = function(reg, bitStart, length, val) {
   this.i2c.writeTo(this.addr, reg);
   var b = this.i2c.readFrom(this.addr, 1)[0];
-  b = b | (val << shift);
+
+  //      010 value to write
+  // 76543210 bit numbers
+  //    xxx   args: bitStart=4, length=3
+  // 00011100 mask byte
+  // 10101111 original value (sample)
+  // 10100011 original & ~mask
+  // 10101011 masked | value
+  var mask = ((1 << length) - 1) << (bitStart - length + 1);
+  val <<= (bitStart - length + 1); // shift data into correct position
+  val &= mask; // zero all non-important bits in data
+  b &= ~(mask); // zero all important bits in existing byte
+  b |= val; // combine data with existing byte
+
   this.i2c.writeTo(this.addr, [reg, b]);
 };
 
@@ -189,18 +212,18 @@ MPU6050.prototype.readSXYZ = function(reg) {
 
 /* Set the clock source */
 MPU6050.prototype.setClockSource = function(clock) {
-  this.writeBits(R.PWR_MGMT_1, 0, clock);
+  this.writeBits(R.PWR_MGMT_1, C.PWR1_CLKSEL_BIT, C.PWR1_CLKSEL_LENGTH, clock);
 };
 
 /* Set full scale for accelerometer*/
 MPU6050.prototype.setFullScaleAccelRange = function(fs) {
-  this.writeBits(R.ACCEL_CONFIG, 3, fs);
+  this.writeBits(R.ACCEL_CONFIG, C.ACONFIG_AFS_SEL_BIT, C.ACONFIG_AFS_SEL_LENGTH, fs);
   this.acc_lsb_sens = Math.pow(2, 14-fs); // Set LSB sensitivity
 };
 
 /* Set full scale for gyro */
 MPU6050.prototype.setFullScaleGyroRange = function(fs) {
-  this.writeBits(R.GYRO_CONFIG, 3, fs);
+  this.writeBits(R.GYRO_CONFIG, C.GCONFIG_FS_SEL_BIT, C.GCONFIG_FS_SEL_LENGTH, fs);
   this.gyro_lsb_sens = 131 / Math.pow(2, fs); // Set LSB sensitivity
 };
 
