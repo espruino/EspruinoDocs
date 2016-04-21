@@ -36,7 +36,7 @@ DHT22.prototype.read = function (cb, n) {
       cb({ 
         raw : d,
         rh : parseInt(d.substr(2,16),2)*0.1,
-        temp : parseInt(d.substr(19,15),2)*0.2*(0.5-d[16])
+        temp : parseInt(d.substr(19,15),2)*0.2*(0.5-d[18])
       });
     } else {
       if (n>1) setTimeout(function() {ht.read(cb,--n);},500);
