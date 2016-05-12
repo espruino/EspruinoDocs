@@ -61,7 +61,7 @@ anywhere between 0 and 3.3v. In order to avoid noise and to be error tolerant, t
 
 * If the voltage is above 2v it's a Logic 1
 * If the voltage is below 0.8v it's a Logic 0
-* If the voltage is between 0.8v and 2v, the logig level *stays the same*.
+* If the voltage is between 0.8v and 2v, the logic level *stays the same*.
 
 At the same time, the headphone output of your computer generally produces -1V to +1V. so a voltage 
 swing of 2 volts. If we could shift that (by adding about 1.5V) then it'd produce 0.5V to 2.5V - just
