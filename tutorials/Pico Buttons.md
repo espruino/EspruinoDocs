@@ -132,7 +132,7 @@ It's connected between 3.3v and `B4`, so just try the following with the button 
 digitalRead(B4)
 ```
 
-It doesn't work properly, returning `1` most of the time. Why? Becayse while pressing the button connects `B4` to 3.3v, nothing exists to connect it to 0v when it isn't pressed. For that, you need a resistor.
+It doesn't work properly, returning `1` most of the time. Why? Because while pressing the button connects `B4` to 3.3v, nothing exists to connect it to 0v when it isn't pressed. For that, you need a resistor.
 
 Handily Espruino has some built in, that can be turned on and off from Espruino itself. Try:
 
