@@ -21,7 +21,7 @@ It contains:
 Flashing Espruino
 ------------------
 
-There is a build of Espruino designed specifically for the micro:bit. From version 1v85 and on, releases will be available from the [Download page](/Download) - however you may also download 'cutting edge' builds [from here](http://www.espruino.com/binaries/travis/master/) - these are updated every time something changes in Espruino's source code, so may occasionally not work.
+There is a build of Espruino designed specifically for the micro:bit. Releases are available from the [Download page](/Download) - however you may also download 'cutting edge' builds [from here](http://www.espruino.com/binaries/travis/master/) - these are updated every time something changes in Espruino's source code, so may occasionally not work.
 
 To flash onto your micro:bit:
 
@@ -40,7 +40,11 @@ There are two ways to communicate with your micro:bit:
 
 This is the easiest, and recommended way of communicating with Espruino.
 
-Follow the [instructions in the Quick Start tutorial](/Quick+Start) to install the Web IDE, and you should be able to communicate with the micro:bit just like any other board.
+For Windows users, you will [need to install drivers first](https://developer.mbed.org/handbook/Windows-serial-configuration) - on other platforms, the board should 'just work'.
+
+Follow the [instructions in the Quick Start tutorial](/Quick+Start) to install the Web IDE (ignore the `Plugging in` section), and you should be able to communicate with the micro:bit just like any other board.
+
+**Note:** as the micro:bit has a display but no general-purpose LEDs, the tutorials in the Quick Start that use `LED1`/etc will not work without modification.
 
 ### Bluetooth Low Energy (BT 4.0 / Bluetooth Smart)
 
