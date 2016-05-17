@@ -137,7 +137,7 @@ onInit();
 
 dataLine = "";
 setInterval(function() {
-  while (nrf.nrf.getDataPipe() !== undefined) {
+  while (nrf.getDataPipe() !== undefined) {
     var data = nrf.getData();
     for (var i in data) {
       var ch = data[i];
