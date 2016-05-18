@@ -27,6 +27,63 @@ THE SOFTWARE.
 =============================================== */
 
 
+/* Module constants*/
+var C = {
+  CLOCK_PLL_ZGYRO     : 0x03,
+
+  GYRO_FS_250         : 0x00,
+  GYRO_FS_500         : 0x01,
+  GYRO_FS_1000        : 0x02,
+  GYRO_FS_2000        : 0x03,
+
+  ACCEL_FS_2          : 0x00,
+  ACCEL_FS_4          : 0x01,
+  ACCEL_FS_8          : 0x02,
+  ACCEL_FS_16         : 0x03,
+
+  EXT_SYNC_SET_BIT      : 5,
+  EXT_SYNC_SET_LENGTH   : 3,
+  EXT_SYNC_TEMP_OUT_L   : 0x1,
+
+  DLPF_CFG_BIT      : 2,
+  DLPF_CFG_LENGTH   : 3,
+  DLPF_BW_256       : 0x00,
+  DLPF_BW_188       : 0x01,
+  DLPF_BW_98        : 0x02,
+  DLPF_BW_42        : 0x03,
+  DLPF_BW_20        : 0x04,
+  DLPF_BW_10        : 0x05,
+  DLPF_BW_5         : 0x06,
+
+  USERCTRL_DMP_EN_BIT     : 7,
+  USERCTRL_FIFO_EN_BIT    : 6,
+  USERCTRL_I2C_MST_EN_BIT : 5,
+  USERCTRL_DMP_RESET_BIT  : 3,
+  USERCTRL_FIFO_RESET_BIT : 2,
+  USERCTRL_I2C_MST_RESET_BIT : 1
+};
+
+/* Register addresses*/
+var R = {
+  SMPLRT_DIV          : 0x19,
+  CONFIG              : 0x1A,
+  MOT_THR             : 0x1F,
+  MOT_DUR             : 0x20,
+  ZRMOT_THR           : 0x21,
+  ZRMOT_DUR           : 0x22,
+  FIFO_EN             : 0x23,
+  INT_PIN_CFG         : 0x37,
+  INT_ENABLE          : 0x38,
+  INT_STATUS          : 0x3A,
+  USER_CTRL           : 0x6A,
+  DMP_CFG_1           : 0x70,
+  DMP_CFG_2           : 0x71,
+  FIFO_COUNT_H        : 0x72,
+  FIFO_COUNT_L        : 0x73,
+  FIFO_R_W            : 0x74,
+  WHO_AM_I            : 0x75
+};
+
 
 exports.create = function (_mpu6050, _fifoRate) {
   return new DMP(_mpu6050, _fifoRate);
@@ -46,7 +103,7 @@ function DMP(_mpu6050, _fifoRate) {
   this.initialize();
 }
 
-const PACKET_SIZE = 42;
+var PACKET_SIZE = 42;
 
 // Returns the Quaternion, Acceleration and Gyro in 1 object
 DMP.prototype.getData = function() {
@@ -112,7 +169,7 @@ DMP.prototype.getEuler = function(data) {
 }
 
 
-const DMP_MEMORY = [
+var DMP_MEMORY = new Uint8Array([
     // bank 0, 256 bytes
     0xFB, 0x00, 0x00, 0x3E, 0x00, 0x0B, 0x00, 0x36, 0x00, 0x01, 0x00, 0x02, 0x00, 0x03, 0x00, 0x00,
     0x00, 0x65, 0x00, 0x54, 0xFF, 0xEF, 0x00, 0x00, 0xFA, 0x80, 0x00, 0x0B, 0x12, 0x82, 0x00, 0x01,
@@ -249,11 +306,11 @@ const DMP_MEMORY = [
     0xA3, 0xB2, 0xA3, 0xA3, 0xA3, 0xA3, 0xA3, 0xA3, 0xB0, 0x87, 0xB5, 0x99, 0xF1, 0xA3, 0xA3, 0xA3,
     0x98, 0xF1, 0xA3, 0xA3, 0xA3, 0xA3, 0x97, 0xA3, 0xA3, 0xA3, 0xA3, 0xF3, 0x9B, 0xA3, 0xA3, 0xDC,
     0xB9, 0xA7, 0xF1, 0x26, 0x26, 0x26, 0xD8, 0xD8, 0xFF
-];
+]);
 
 
 
-const DMP_CONFIG = [
+var DMP_CONFIG = new Uint8Array([
 //  BANK    OFFSET  LENGTH  [DATA]
     0x03,   0x7B,   0x03,   0x4C, 0xCD, 0x6C,         // FCFG_1 inv_set_gyro_calibration
     0x03,   0xAB,   0x03,   0x36, 0x56, 0x76,         // FCFG_3 inv_set_gyro_calibration
@@ -285,10 +342,10 @@ const DMP_CONFIG = [
     0x07,   0x46,   0x01,   0x9A,                     // CFG_GYRO_SOURCE inv_send_gyro
     0x07,   0x47,   0x04,   0xF1, 0x28, 0x30, 0x38,   // CFG_9 inv_send_gyro -> inv_construct3_fifo
     0x07,   0x6C,   0x04,   0xF1, 0x28, 0x30, 0x38,   // CFG_12 inv_send_accel -> inv_construct3_fifo
-    0x02,   0x16,   0x02,   0x00//, FIFO_RATE         // D_0_22 inv_set_fifo_rate. The last data Byte is the FifoRate and will be added later
-];
+    0x02,   0x16,   0x02,   0x00, 0x00                // D_0_22 inv_set_fifo_rate. The last data Byte is the FifoRate and will be replaced later
+]);
 
-const DMP_UPDATES = [
+var DMP_UPDATES = [
 //   BANK  ADDRESS    DATA...
     [0x01,   0xB2,   [0xFF, 0xFF]],
     [0x01,   0x90,   [0x09, 0x23, 0xA1, 0x35]],
@@ -302,9 +359,9 @@ const DMP_UPDATES = [
 
 
 DMP.prototype.writeDMPConfigurationSet = function(data) {
-  data = data.concat(this.fifoRate);
-
   var dataSize = data.length
+  data[dataSize-1] = this.fifoRate;
+
 
   // config set data is a long string of blocks with the following structure:
   // [bank] [offset] [length] [byte[0], byte[1], ..., byte[length]]
@@ -334,7 +391,7 @@ DMP.prototype.writeDMPConfigurationSet = function(data) {
 
       if (special == 0x01) {
         // enable DMP-related interrupts
-        this.mpu.writeBytes(this.mpu.R.INT_ENABLE, 0x32);
+        this.mpu.writeBytes(R.INT_ENABLE, 0x32);
       } else {
         console.log("Unknowns special command: " + special);
         return false;
@@ -348,32 +405,31 @@ DMP.prototype.writeDMPConfigurationSet = function(data) {
 
 
 DMP.prototype.setIntEnabled = function(enabled) {
-  this.mpu.writeBytes(this.mpu.R.INT_ENABLE, enabled);
+  this.mpu.writeBytes(R.INT_ENABLE, enabled);
 }
 
 DMP.prototype.setSampleRate = function(rate) {
-  this.mpu.writeBytes(this.mpu.R.SMPLRT_DIV, rate);
+  this.mpu.writeBytes(R.SMPLRT_DIV, rate);
 }
 
 DMP.prototype.setExternalFrameSync = function(sync) {
-  this.mpu.writeBits(this.mpu.R.CONFIG, this.mpu.C.EXT_SYNC_SET_BIT, this.mpu.C.EXT_SYNC_SET_LENGTH, sync);
-
+  this.mpu.writeBits(R.CONFIG, C.EXT_SYNC_SET_BIT, C.EXT_SYNC_SET_LENGTH, sync);
 }
 
 DMP.prototype.setDLPFMode = function(mode) {
-  this.mpu.writeBits(this.mpu.R.CONFIG, this.mpu.C.DLPF_CFG_BIT, this.mpu.C.DLPF_CFG_LENGTH, mode);
+  this.mpu.writeBits(R.CONFIG, C.DLPF_CFG_BIT, C.DLPF_CFG_LENGTH, mode);
 }
 
 DMP.prototype.setDMPConfig1 = function(config) {
-  this.mpu.writeBytes(this.mpu.R.DMP_CFG_1, config);
+  this.mpu.writeBytes(R.DMP_CFG_1, config);
 }
 
 DMP.prototype.setDMPConfig2 = function(config) {
-  this.mpu.writeBytes(this.mpu.R.DMP_CFG_2, config);
+  this.mpu.writeBytes(R.DMP_CFG_2, config);
 }
 
 DMP.prototype.setFIFOEnabled = function(enabled) {
-    this.mpu.writeBit(this.mpu.R.USER_CTRL, this.mpu.C.USERCTRL_FIFO_EN_BIT, enabled);
+  this.mpu.writeBit(R.USER_CTRL, C.USERCTRL_FIFO_EN_BIT, enabled);
 }
 
 /**
@@ -381,7 +437,7 @@ DMP.prototype.setFIFOEnabled = function(enabled) {
  * bit automatically clears to 0 after the reset has been triggered.
  */
 DMP.prototype.resetFIFO = function() {
-    this.mpu.writeBit(this.mpu.R.USER_CTRL, this.mpu.C.USERCTRL_FIFO_RESET_BIT, true);
+    this.mpu.writeBit(R.USER_CTRL, C.USERCTRL_FIFO_RESET_BIT, true);
 }
 
 /**
@@ -391,7 +447,7 @@ DMP.prototype.resetFIFO = function() {
  * set of sensor data bound to be stored in the FIFO (register 35 and 36).
  */
 DMP.prototype.getFIFOCount = function() {
-    var buffer = this.mpu.readBytes(this.mpu.R.FIFO_COUNT_H, 2);
+    var buffer = this.mpu.readBytes(R.FIFO_COUNT_H, 2);
     return (buffer[0] << 8) | buffer[1];
 }
 
@@ -420,7 +476,7 @@ DMP.prototype.getFIFOCount = function() {
  */
 DMP.prototype.getFIFOBytes = function(length) {
   if(length < 1) return new Uint8Array([]);
-  return this.mpu.readBytes( this.mpu.R.FIFO_R_W, length);
+  return this.mpu.readBytes( R.FIFO_R_W, length);
 }
 
 
@@ -428,37 +484,37 @@ DMP.prototype.getFIFOBytes = function(length) {
  * @param threshold New motion detection acceleration threshold value (LSB = 2mg)
  */
 DMP.prototype.setMotionDetectionThreshold = function(threshold) {
-    this.mpu.writeBytes(this.mpu.R.MOT_THR, threshold);
+    this.mpu.writeBytes(R.MOT_THR, threshold);
 }
 
 /** Set zero motion detection event acceleration threshold.
  * @param threshold New zero motion detection acceleration threshold value (LSB = 2mg)
  */
 DMP.prototype.setZeroMotionDetectionThreshold = function(threshold) {
-    this.mpu.writeBytes(this.mpu.R.ZRMOT_THR, threshold);
+    this.mpu.writeBytes(R.ZRMOT_THR, threshold);
 }
 
 /** Set motion detection event duration threshold.
  * @param duration New motion detection duration threshold value (LSB = 1ms)
  */
 DMP.prototype.setMotionDetectionDuration = function(duration) {
-    this.mpu.writeBytes(this.mpu.R.MOT_DUR, duration);
+    this.mpu.writeBytes(R.MOT_DUR, duration);
 }
 
 /** Set zero motion detection event duration threshold.
  * @param duration New zero motion detection duration threshold value (LSB = 1ms)
  */
 DMP.prototype.setZeroMotionDetectionDuration = function(duration) {
-    this.mpu.writeBytes(this.mpu.R.ZRMOT_DUR, duration);
+    this.mpu.writeBytes(R.ZRMOT_DUR, duration);
 }
 
 
 DMP.prototype.setDMPEnabled = function(enabled) {
-    this.mpu.writeBit(this.mpu.R.USER_CTRL, this.mpu.C.USERCTRL_DMP_EN_BIT, enabled);
+    this.mpu.writeBit(R.USER_CTRL, C.USERCTRL_DMP_EN_BIT, enabled);
 }
 
 DMP.prototype.resetDMP = function() {
-    this.mpu.writeBit(this.mpu.R.USER_CTRL, this.mpu.C.USERCTRL_DMP_RESET_BIT, true);
+    this.mpu.writeBit(R.USER_CTRL, C.USERCTRL_DMP_RESET_BIT, true);
 }
 
 /** Get full set of interrupt status bits.
@@ -467,7 +523,7 @@ DMP.prototype.resetDMP = function() {
  * all of them because it has to read the whole byte.
  */
 DMP.prototype.getIntStatus = function() {
-    return this.mpu.readBytes( this.mpu.R.INT_STATUS, 1)[0];
+    return this.mpu.readBytes( R.INT_STATUS, 1)[0];
 }
 
 DMP.prototype.initialize = function() {
@@ -508,17 +564,17 @@ initialize2 = function(dmp, xgOffsetTC, ygOffsetTC, zgOffsetTC) {
       console.log("Success! DMP configuration written and verified.");
 
       // Setting clock source to Z Gyro...
-      dmp.mpu.setClockSource(dmp.mpu.C.CLOCK_PLL_ZGYRO);
+      dmp.mpu.setClockSource(C.CLOCK_PLL_ZGYRO);
       // Setting DMP and FIFO_OFLOW interrupts enabled...
       dmp.setIntEnabled(0x12);
       // Setting sample rate to 200Hz...
       dmp.setSampleRate(4); // 1khz / (1 + 4) = 200 Hz
       // Setting external frame sync to TEMP_OUT_L[0]...
-      dmp.setExternalFrameSync(dmp.mpu.C.EXT_SYNC_TEMP_OUT_L);
+      dmp.setExternalFrameSync(C.EXT_SYNC_TEMP_OUT_L);
       // Setting DLPF bandwidth to 42Hz...
-      dmp.setDLPFMode(dmp.mpu.C.DLPF_BW_42);
-      // Setting gyro sensitivity to +/- 2000 deg/sedmp.mpu.C...
-      dmp.mpu.setFullScaleGyroRange(dmp.mpu.C.GYRO_FS_2000);
+      dmp.setDLPFMode(C.DLPF_BW_42);
+      // Setting gyro sensitivity to +/- 2000 deg/sec
+      dmp.mpu.setFullScaleGyroRange(C.GYRO_FS_2000);
       // Setting DMP configuration bytes (function unknown)...
       dmp.setDMPConfig1(0x03);
       dmp.setDMPConfig2(0x00);

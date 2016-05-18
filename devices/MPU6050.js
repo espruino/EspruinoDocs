@@ -20,7 +20,7 @@ all copies or substantial portions of the Software.
 */
 
 /* Module constants*/
-const C = {
+var C = {
   ADDRESS_AD0_LOW     : 0x68, // address pin low (GND)
   ADDRESS_AD0_HIGH    : 0x69, // address pin high (VCC)
 
@@ -55,42 +55,20 @@ const C = {
   PWR1_DEVICE_RESET_BIT : 7,
   DMP_MEMORY_CHUNK_SIZE : 16,
 
-  EXT_SYNC_SET_BIT      : 5,
-  EXT_SYNC_SET_LENGTH   : 3,
-  EXT_SYNC_TEMP_OUT_L   : 0x1,
-
-  DLPF_CFG_BIT      : 2,
-  DLPF_CFG_LENGTH   : 3,
-  DLPF_BW_256       : 0x00,
-  DLPF_BW_188       : 0x01,
-  DLPF_BW_98        : 0x02,
-  DLPF_BW_42        : 0x03,
-  DLPF_BW_20        : 0x04,
-  DLPF_BW_10        : 0x05,
-  DLPF_BW_5         : 0x06,
-
   TC_PWR_MODE_BIT   : 7,
   TC_OFFSET_BIT     : 6,
   TC_OFFSET_LENGTH  : 6,
   TC_OTP_BNK_VLD_BIT  : 0,
 
-  USERCTRL_DMP_EN_BIT     : 7,
-  USERCTRL_FIFO_EN_BIT    : 6,
   USERCTRL_I2C_MST_EN_BIT : 5,
-  USERCTRL_DMP_RESET_BIT  : 3,
-  USERCTRL_FIFO_RESET_BIT : 2,
   USERCTRL_I2C_MST_RESET_BIT : 1
 };
 
 /* Register addresses*/
-const R = {
+var R = {
   XG_OFFS_TC          : 0x00, //[7] PWR_MODE, [6:1] XG_OFFS_TC, [0] OTP_BNK_VLD
   YG_OFFS_TC          : 0x01, //[7] PWR_MODE, [6:1] YG_OFFS_TC, [0] OTP_BNK_VLD
   ZG_OFFS_TC          : 0x02, //[7] PWR_MODE, [6:1] ZG_OFFS_TC, [0] OTP_BNK_VLD
-  SELF_TEST_X         : 0x0D,
-  SELF_TEST_Y         : 0x0E,
-  SELF_TEST_Z         : 0x0F,
-  SELF_TEST_A         : 0x10,
   SMPLRT_DIV          : 0x19,
   CONFIG              : 0x1A,
   GYRO_CONFIG         : 0x1B,
@@ -104,20 +82,6 @@ const R = {
   I2C_SLV0_ADDR       : 0x25,
   I2C_SLV0_REG        : 0x26,
   I2C_SLV0_CTRL       : 0x27,
-  I2C_SLV1_ADDR       : 0x28,
-  I2C_SLV1_REG        : 0x29,
-  I2C_SLV1_CTRL       : 0x2A,
-  I2C_SLV2_ADDR       : 0x2B,
-  I2C_SLV2_REG        : 0x2C,
-  I2C_SLV2_CTRL       : 0x2D,
-  I2C_SLV3_ADDR       : 0x2E,
-  I2C_SLV3_REG        : 0x2F,
-  I2C_SLV3_CTRL       : 0x30,
-  I2C_SLV4_ADDR       : 0x31,
-  I2C_SLV4_REG        : 0x32,
-  I2C_SLV4_DO         : 0x33,
-  I2C_SLV4_CTRL       : 0x34,
-  I2C_SLV4_DI         : 0x35,
   I2C_MST_STATUS      : 0x36,
   INT_PIN_CFG         : 0x37,
   INT_ENABLE          : 0x38,
@@ -136,34 +100,7 @@ const R = {
   GYRO_YOUT_L         : 0x46,
   GYRO_ZOUT_H         : 0x47,
   GYRO_ZOUT_L         : 0x48,
-  EXT_SENS_DATA00     : 0x49,
-  EXT_SENS_DATA01     : 0x4A,
-  EXT_SENS_DATA02     : 0x4B,
-  EXT_SENS_DATA03     : 0x4C,
-  EXT_SENS_DATA04     : 0x4D,
-  EXT_SENS_DATA05     : 0x4E,
-  EXT_SENS_DATA06     : 0x4F,
-  EXT_SENS_DATA07     : 0x50,
-  EXT_SENS_DATA08     : 0x51,
-  EXT_SENS_DATA09     : 0x52,
-  EXT_SENS_DATA10     : 0x53,
-  EXT_SENS_DATA11     : 0x54,
-  EXT_SENS_DATA12     : 0x55,
-  EXT_SENS_DATA13     : 0x56,
-  EXT_SENS_DATA14     : 0x57,
-  EXT_SENS_DATA15     : 0x58,
-  EXT_SENS_DATA16     : 0x59,
-  EXT_SENS_DATA17     : 0x5A,
-  EXT_SENS_DATA18     : 0x5B,
-  EXT_SENS_DATA19     : 0x5C,
-  EXT_SENS_DATA20     : 0x5D,
-  EXT_SENS_DATA21     : 0x5E,
-  EXT_SENS_DATA22     : 0x5F,
-  EXT_SENS_DATA23     : 0x60,
   I2C_SLV0_DO         : 0x63,
-  I2C_SLV1_DO         : 0x64,
-  I2C_SLV2_DO         : 0x65,
-  I2C_SLV3_DO         : 0x66,
   I2C_MST_DELAY_CTRL  : 0x67,
   SIGNAL_PATH_RESET   : 0x68,
   USER_CTRL           : 0x6A,
@@ -172,11 +109,6 @@ const R = {
   BANK_SEL            : 0x6D,
   MEM_START_ADDR      : 0x6E,
   MEM_R_W             : 0x6F,
-  DMP_CFG_1           : 0x70,
-  DMP_CFG_2           : 0x71,
-  FIFO_COUNT_H        : 0x72,
-  FIFO_COUNT_L        : 0x73,
-  FIFO_R_W            : 0x74,
   WHO_AM_I            : 0x75
 };
 
@@ -194,8 +126,6 @@ function MPU6050(_i2c, _addr) {
   this.initialize();
 }
 
-MPU6050.prototype.C = C;
-MPU6050.prototype.R = R;
 
 /* Initialize the chip */
 MPU6050.prototype.initialize = function() {
