@@ -73,7 +73,7 @@ You can also get notified of framing errors (when the START and STOP bits are no
 <a name="ConsoleSerial"></a>Console over serial
 -------------------
 
-Espruino will by default connect its interactive console to the `Serial1` port, or to the USB serial port if you are connected to a computer. When the console is on a port, a listener added with `SerialX.on('data', ...)` will no longer get called. See [this troubleshooting post]([Troubleshooting](/Troubleshooting#console) for more information.
+Espruino will by default connect its interactive console to the `Serial1` port, or to the USB serial port if you are connected to a computer. When the console is on a port, a listener added with `SerialX.on('data', ...)` will no longer get called. See [this troubleshooting post](/Troubleshooting#console) for more information.
 
 To avoid this behaviour, for example if you wish to use `Serial1` to talk to a device while disconnected from USB, explicitly set the console serial port using  [Serial.setConsole](/Reference#l_Serial_setConsole) during the [init event](Reference#l_E_init) which Espruino runs on boot.
 
