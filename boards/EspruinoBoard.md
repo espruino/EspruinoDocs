@@ -68,7 +68,7 @@ Information
 * [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
 * [Part library for Fritzing](https://github.com/espruino/EspruinoBoard/blob/master/frizting/Espruino_Original.fzpz)
 * [STM32F103RCT6 Datasheet](/datasheets/STM32F103xC.pdf)
-* [STM32F103RCT6 Reference Manual](/datasheets/STM32F103xC_Ref.pdf)
+* [STM32F103RCT6 Reference Manual](/datasheets/STM32F103xC_ref.pdf)
 
 Tutorials
 --------
