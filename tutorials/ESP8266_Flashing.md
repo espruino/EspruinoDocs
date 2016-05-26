@@ -300,7 +300,7 @@ Although this script is designed to be ran from a Linux command line Windows use
 Execution looks as follows (all files needed are in the downloaded zip):
 
 ```
-$ sh wiflash espruino.local:88 espruino_esp8266_user1.bin espruino_esp8266_user2.bin
+$ sh wiflash.sh espruino.local:88 espruino_esp8266_user1.bin espruino_esp8266_user2.bin
 Flashing user2.bin
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
