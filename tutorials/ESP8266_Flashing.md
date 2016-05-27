@@ -293,12 +293,14 @@ Updating the Espruino firmware over Wifi
 
 When a new version of Espruino becomes available you can also update the firmware itself over
 Wifi assuming your esp8266 module has at least 1Mbytes of flash (i.e. this does not work
-using the esp-01). The upgrade uses a small shell script provided in the download tgz which
+using the esp-01). The upgrade uses a small shell script provided in the [download](http://www.espruino.com/Download) zip which
 performs a few HTTP requests using `curl` to upload the fresh firmware and reboot the esp8266.
-This looks as follows (all files needed are in the downloaded tgz):
+Although this script is designed to be ran from a Linux command line Windows users can install [Git](https://git-scm.com/downloads) and select "Use Git and optional Unix tools from the windows command prompt" during the  installation which will allow them to run this bash script just like in linux.
+
+Execution looks as follows (all files needed are in the downloaded zip):
 
 ```
-$ ./wiflash espruino.local:88 espruino_esp8266_user1.bin espruino_esp8266_user2.bin
+$ sh wiflash.sh espruino.local:88 espruino_esp8266_user1.bin espruino_esp8266_user2.bin
 Flashing user2.bin
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
