@@ -52,7 +52,7 @@ There's a [good thread on it here](http://www.raspberrypi.org/phpBB3/viewtopic.p
 However, it's very simple:
 
 * In your favourite language, open the serial port at 9600bps.
-* Send the text ```echo(0)``` (and a newline) - this turns off echoing, which means that the only text you Espruino sends is that which comes from ```print(...)```.
+* Send the text ```echo(0)``` (and a newline) - this turns off echoing, which means that the only text Espruino sends is that which comes from ```print(...)```.
 * Send javascript commands, like ```digitalWrite(LED1,1)```
 * Or read back values by sending commands like ```print(analogRead(A0))```, and waiting a fraction of a second for the result to appear.
 * When you exit, send the text ```echo(1)``` (and a newline) - this will turn echoing back on so that next time you connect with a terminal, Espruino responds to your keypresses in the way you'd expect.
