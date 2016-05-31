@@ -66,7 +66,7 @@ Now, if you get a remote control, point it at the receiver and press some button
 1
 ```
 
-Note that some makes of remote control use a different signal pattern and won't work. If yours doesn't try andother remote control.
+Note that some makes of remote control use a different signal pattern and won't work. If yours doesn't try another remote control.
 
 Press a button and take note of which code went with it, and then do the same with another button. Then copy and paste the two codes into the code below, replacing the ones that I have put in:
 
