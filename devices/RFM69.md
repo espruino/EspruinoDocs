@@ -67,7 +67,7 @@ var rfm;
 function onInit() {
   SPI2.setup({mosi:B15,miso:B14,sck:B13});
   rfm = require("RFM69").connect(SPI2, {cs:B10, rst:B1, freq:434}, function() {
-    rfm.rxmode(); // to to receive data
+    rfm.rxmode(); // in order to receive data
     console.log("Connected");
     setInterval(function() { 
       if (rfm.hasPacket()) 
