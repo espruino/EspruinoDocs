@@ -8,22 +8,20 @@ Serial1.setup(115200, { rx: B7, tx : B6 });
 
 console.log("Connecting to SIM900 module");
 var gprs = require('SIM900').connect(Serial1, B4, function(err) {
-  if(!err) {
-    gprs.connect('APN', 'USERNAME', 'PASSWORD', function(err) {
-      console.log(err);
-      gprs.getIP(function(err, ip) {
-        console.log('IP:' + ip);
-        require("http").get("http://www.pur3.co.uk/hello.txt", function(res) {
-          console.log("Response: ",res);
-          res.on('data', function(d) {
-            console.log("--->"+d);
-          });
+  if (err) throw err;
+  gprs.connect('APN', 'USERNAME', 'PASSWORD', function(err) {
+    if (err) throw err;
+    gprs.getIP(function(err, ip) {
+      if (err) throw err;
+      console.log('IP:' + ip);
+      require("http").get("http://www.pur3.co.uk/hello.txt", function(res) {
+        console.log("Response: ",res);
+        res.on('data', function(d) {
+          console.log("--->"+d);
         });
       });
     });
-  } else {
-    console.log(err);
-  }
+  });
 });
 ```
 */
@@ -200,15 +198,13 @@ var gprsFuncs = {
           } else if (r === 'OK') {
             s = 2;
             // check if we're on network
-            at.cmd('AT+CGATT?\r\n', 500, cb);
+            at.cmd('AT+CGATT=1\r\n', 500, cb);
           } else if(r) {
             callback('Error in CPIN: ' + r);
           }
           break;
         case 2:
-          if(r === '+CGATT: 1') {
-            return cb; 
-          } else if(r === 'OK') {
+          if(r === 'OK') {
             s = 3;
             at.cmd('AT+CIPSHUT\r\n', 500, cb);
           } else if(r) {
@@ -235,7 +231,9 @@ var gprsFuncs = {
           }
           break;
         case 5:
-          if(r === 'OK') {
+          if (r&&r.substr(0,3)=="C: ") {
+            return cb;
+          } else if(r === 'OK') {
             s = 6;
             at.cmd('AT+CIPHEAD=1\r\n', 500, cb);
           }  else if(r) {
