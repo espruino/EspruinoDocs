@@ -101,11 +101,11 @@ Connecting
 
 <span style="color:red;">**NOTE:** The Espruino board has no case and so the USB connector is completely unsupported. This means it is relatively delicate (especially on rev 1v3 boards) and needs to be treated carefully. Try and pull the connector straight out, and **do not** push down on the board when the connector is inserted, or try and move the board around using the cable.</span>
 
-###Pin Strip
+### Pin Strip
 
 There's a [[Pin Strip]] page covering how to solder Pin Strip onto the Espruino Board
 
-###<a name="connecting_batteries"></a>Batteries
+### <a name="connecting_batteries"></a>Batteries
 
 You can usually buy batteries with the PH-type 2 pin female JST (PHR-2) connector ready-soldered, see [[Battery]] for more details on battries and connectors.
 
