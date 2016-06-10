@@ -76,7 +76,7 @@ MFRC522.prototype.req = function(data) {
   //while (!(this.r(R.COMIRQ)&0x31)); // wait doesn't seem to be needed
   this.w(R.BITFRAMING, this.r(R.BITFRAMING)&~0x80); // stop TX
   var err = this.r(R.ERROR);
-  if (err) throw new Error("MRFC522 Request Error "+err);
+  if (err) throw new Error("MFRC522 Request Error "+err);
   var fifo = this.r(R.FIFOLEVEL);
   return this.ra(R.FIFODATA,fifo);
 };
