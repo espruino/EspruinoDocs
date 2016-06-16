@@ -35,6 +35,8 @@ The following features are only partially or not supported by Espruino on the ES
 - [[PWM]] does not work. Code exists but doesn't work.
 - No [[DAC]]: the esp8266 does not have a DAC.
 - No independently usable serial port (needs Espruino work)
+- **GPIO16 is not currently supported in Espruino, it is not a normal GPIO
+pin but rather is attached to the real-time-clock circuitry.**
 
 The main limitations of Espruino on the esp8266 come from two factors:
 - The esp8266 does not have rich I/O peripheral interfaces, this means protocols need to be run in software, which not only may
