@@ -1,6 +1,10 @@
 /* 
 Module for the NRF905 wireless transceiver
 
+IC pin cross refernce
+CE == TRX_EN
+txen == TXE == TX_EN == TxEN
+
 ```JavaScript
 SPI2.setup({sck:B13, miso:B14, mosi:B15});
 var nrf = require("NRF905ck").connect(SPI2,csn,dr,txen,ce);
