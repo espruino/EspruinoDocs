@@ -33,12 +33,12 @@ Figuring out what memory is free
 (process.memory().flash_binary_end+2047)&~2047
 ```
 
-It's also good practice to check if there's anything in the page of flash. If it's all ```0xFF``` (4 bytes of `0xFF` is `0xFFFFFFFF`, which is equivalent to `-1`) then you're safe to overwrite it:
+It's also good practice to check if there's anything in the page of flash. If it's all ```0xFF``` (4 bytes of `0xFF` is `0xFFFFFFFF`, which is bitwise equivalent to `-1`) then you're safe to overwrite it:
 
 ```
 function isPageSafe(addr) {
   for (var i=addr;i<addr+2048;i+=4)
-    if (peek32(i)!=-1) return false;
+    if (peek32(i)^-1) return false;
   return true;
 }
 
