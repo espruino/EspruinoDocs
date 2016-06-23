@@ -151,7 +151,7 @@ I2C Implementation
 The I2C interface is implemented in software because the esp8266 does
 not have hardware support for I2C (contrary to what the datasheet seems
 to imply). The software implementation has the following limitations:
-- operates at approx 100Khz
+- operates at approx 300Khz
 - is master-only
 - does not support clock stretching (a method by which slaves can slow down the master)
 
