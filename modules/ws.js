@@ -70,6 +70,7 @@ function WebSocket(host, options) {
     this.protocolVersion = options.protocolVersion || 13;
     this.origin = options.origin || 'Espruino';
     this.keepAlive = options.keepAlive * 1000 || 60000;
+    this.lastData = "";
 }
 
 WebSocket.prototype.initializeConnection = function () {
@@ -95,9 +96,14 @@ WebSocket.prototype.onConnect = function (socket) {
 WebSocket.prototype.parseData = function (data) {
     // see https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
     // Note, docs specify bits 0-7, etc - but BIT 0 is the MSB, 7 is the LSB
-    // TODO: handle >1 data packet, or packets split over multiple parseData calls
+    // TODO: handle >1 data packet
     var ws = this;
     this.emit('rawData', data);
+
+    if (this.lastData.length) {
+      data = this.lastData+data;
+      this.lastData="";
+    }
 
     // FIXME - not a good idea!
     if (data.indexOf('HSmrc0sMlYUkAGmm5OPpG2HaGWk=') > -1) {
@@ -127,11 +133,20 @@ WebSocket.prototype.parseData = function (data) {
     if (opcode == 1 /* text - all we're supporting */) {
         var dataLen = data.charCodeAt(1)&127;
         if (dataLen>126) throw "Messages >125 in length unsupported";
+
         var offset = 2;
         var mask = [ 0,0,0,0 ];
-        if (data.charCodeAt(1)&128 /* mask */)
+        if (data.charCodeAt(1)&128 /* mask */) {
           mask = [ data.charCodeAt(offset++), data.charCodeAt(offset++),
                    data.charCodeAt(offset++), data.charCodeAt(offset++)];
+        }
+
+        if (dataLen+offset > data.length) {
+          // we received the start of a packet, but not enough of it for a full message.
+          // store it for later, so when we get the next packet we can do the whole message
+          this.lastData = data;
+          return;
+        }
 
         var message = "";
         for (var i = 0; i < dataLen; i++) {
@@ -172,7 +187,7 @@ exports = function (host, options) {
 /** Create a WebSocket server */
 exports.createServer = function(callback, wscallback) {
   var server = require('http').createServer(function (req, res) {
-    if (req.headers.Connection=="Upgrade") {    
+    if (req.headers.Connection && req.headers.Connection.indexOf("Upgrade")>=0) {    
       var key = req.headers["Sec-WebSocket-Key"];
       var accept = btoa(E.toString(require("crypto").SHA1(key+"258EAFA5-E914-47DA-95CA-C5AB0DC85B11")));
       res.writeHead(101, {
