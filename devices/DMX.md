@@ -2,7 +2,7 @@
 DMX
 ===
 
-* KEYWORDS: DMX,DMX512,Digital Multiplex,Stage Lighting
+* KEYWORDS: Module,DMX,DMX512,Digital Multiplex,Stage Lighting
 
 DMX is a standard protocol that's commonly used for digital stage lighting. See the [Wikipedia article on DMX512](https://en.wikipedia.org/wiki/DMX512)
 
