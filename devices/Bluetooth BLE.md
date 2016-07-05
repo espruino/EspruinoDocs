@@ -2,7 +2,7 @@
 Bluetooth BLE 4.0 (HM-10)
 =========================
 
-* KEYWORDS: Bluetooth,BLE,HM-10,iBeacon,
+* KEYWORDS: Bluetooth,BLE,HM-10,iBeacon,Wireless,Radio,Transceiver
 * USES: Espruino,HM-10,Bluetooth
 
 Introduction

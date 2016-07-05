@@ -2022,12 +2022,12 @@
     },
     "getPrototypeOf": {
       "!type": "fn(object: ?) -> ?",
-      "!doc": "Get the prototype of the give object - this is like writing `object.__proto__`\nbut is the expected ES6",
+      "!doc": "Get the prototype of the given object - this is like writing `object.__proto__`\nbut is the 'proper' ES6 way of doing it",
       "!url": "http://www.espruino.com/Reference#l_Object_getPrototypeOf"
     },
     "setPrototypeOf": {
       "!type": "fn(object: ?, prototype: ?) -> ?",
-      "!doc": "Creates a new object with the specified prototype object and properties. properties are currently unsupported.",
+      "!doc": "Set the prototype of the given object - this is like writing\n`object.__proto__ = prototype` but is the 'proper' ES6 way of doing it",
       "!url": "http://www.espruino.com/Reference#l_Object_setPrototypeOf"
     }
   },
