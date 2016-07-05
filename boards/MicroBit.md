@@ -100,18 +100,27 @@ setWatch(function(e) {
 
 ## `show(bitmap)` 
 
-Shows graphics on the built-in 5x5 LED screen. This takes a binary number. For example:
+Shows graphics on the built-in 5x5 LED screen. This takes a binary number or a string. For example:
 
 * `show(0)` shows nothing
 * `show(1)` lights the first LED
 * `show(0b1000)` lights the fourth LED
 * `show(0b1111111111111111111111111)` or `show(0x1FFFFFF)` lights all LEDs
+* The following will draw a smiley face:
+
+```
+show("1   1\n"+
+     "  1  \n"+
+     "  1  \n"+
+     "1   1\n"+
+     " 111 \n");
+````
 
 You can use the Graphics library to display text and images, for example the following with scroll 'Espruino' across the display:
 
 ```
 g = Graphics.createArrayBuffer(5,5,1);
-g.flip = function(){show((new Uint32Array(this.buffer))[0]);};
+g.flip = function(){show(this.buffer);};
 
 var x = 0;
 setInterval(function() {
