@@ -514,7 +514,6 @@
     }
   },
   "Telnet": {
-    "!type": "+Serial",
     "!doc": "A telnet serial device that maps to the built-in telnet console server (devices that have\nbuilt-in wifi only).",
     "!url": "http://www.espruino.com/Reference#l__global_Telnet",
     "setOptions": {
