@@ -8,6 +8,9 @@ Espruino on ESP8266 WiFi
 To find out how to connect an ESP8266 board to another Espruino board (as a Wifi Adaptor)
 [please see this page instead](/ESP8266)*
 
+**Warning:** Espruino on the ESP8266 defaults to 115200 baud on its serial interface. This means you
+will need to adjust this setting in the IDE if you use that. (Other Espruino ports default to 9600 baud.)
+
 Quick links
 -----------
 * [Forum thread with latest firmware](http://forum.espruino.com/conversations/279176/newest/)
@@ -268,19 +271,20 @@ The result of all this is the following:
 Start    | Start  | Length | Function
 --------:|-------:|-------:|:----------------------------------------
 0x000000 |      0 |    4KB | Bootloader with flash type/size header
-0x001000 |    4KB |  472KB | Espruino firmware, first partition
+0x001000 |    4KB |  468KB | Espruino firmware, first partition
+0x076000 |  472KB |    4KB | SDK RF calibration save area on 512KB modules
 0x077000 |  476KB |    4KB | EEPROM emulation
 0x078000 |  480KB |   12KB | Espruino save() area
 0x07B000 |  492KB |    4KB | Espruino system and wifi settings
 0x07C000 |  496KB |   16KB | 512KB flash: Espressif SDK system params, else unused
-0x080000 |  512KB |    4KB | Unused
+0x080000 |  512KB |    4KB | SDK RF calibration save area on 1MB and larger modules
 0x081000 |  516KB |  472KB | Espruino firmware, second partition
 0x0F7000 |  988KB |    4KB | Unused
 0x0F8000 |  992KB |   16KB | Unused
 0x0FC000 |  996KB |   16KB | 1MB flash: Espressif SDK system params, else unused
-0x100000 |    1MB |        | approx 1MB-3MB flash for SPIFFS on 2MB-4MB modules
-0x1FC000 | 2032KB |   16KB | 2MB flash: Espressif SDK system params, else unused/SPIFFS
-0x3FC000 | 4080KB |   16KB | 4MB flash: Espressif SDK system params, else unused/SPIFFS
+0x100000 |    1MB |        | approx 1MB-3MB flash unused on 2MB-4MB modules
+0x1FC000 | 2032KB |   16KB | 2MB flash: Espressif SDK system params, else unused
+0x3FC000 | 4080KB |   16KB | 4MB flash: Espressif SDK system params, else unused
 
 The Espressif SDK system params area is composed of:
 
@@ -291,6 +295,7 @@ Offset   | Size   | Function
 0x2000   |    4KB | Wifi and other system parameters (clear using blank.bin)
 0x3000   |    4KB | ?
 
+Note that the SDK RF calibration save area was added with SDK1.5.4 patch 1.
 The `ESP8266` library provides a `getFreeFlash` function that returns an array of free flash areas should you want to
 use the EEPROM emulation class or read/write flash directly.
 
