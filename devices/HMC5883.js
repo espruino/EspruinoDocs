@@ -60,7 +60,7 @@ HMC5883.prototype.setMode = function(mode) {
 
 HMC5883.prototype.setup = function(sample,dout,ms) {
 	ms=(ms) ? ms&3 : 0;
-	dout=(dout) ? dout&7 : 4;
+	dout=(typeof dout !== 'undefined') ? dout&7 : 4;
 	sample=sample&3;
 	this.i2c.writeTo(this.a,[0,ms|(dout<<2)|(sample<<5)]);
 }
