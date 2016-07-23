@@ -21,7 +21,7 @@ console.log(compass.readc());
 
 
 exports.connect = function(i2c,drdy,mode) {
-    return new HMC5883(i2c,drdy,range);
+    return new HMC5883(i2c,drdy,mode);
 }
 
 function HMC5883(i2c,drdy,mode) {
