@@ -69,10 +69,9 @@ HMC5883.prototype.setGain = function(gain) {
 	this.i2c.writeTo(this.a,[1,((gain & 7)<<5)]);
 	this.i2c.writeTo(this.a,1);
     	this.ngain=(this.i2c.readFrom(this.a,1))>>5;
-    	if (this.mode!=2) {
+    	if (this.mode === 1) {
 		var hmc=this;
 		setWatch(function(){hmc.readc();},this.drdy);
-		this.setMode(1);
     	}
 }
 
