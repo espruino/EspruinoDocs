@@ -26,7 +26,7 @@ exports.connect = function(i2c,drdy,mode) {
 
 function HMC5883(i2c,drdy,mode) {
   this.i2c = i2c;
-  this.mode = (mode) ? mode : 1;
+  this.mode = (typeof mode !== 'undefined') ? mode : 1;
   this.drdy = drdy;
   this.a=0x1E;
   pinMode(drdy,'input');
