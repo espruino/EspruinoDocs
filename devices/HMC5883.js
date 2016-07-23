@@ -13,7 +13,7 @@ read in single measurement mode:
 compass.reads(function(a){print(a);});
 
 read in continuous measurement mode:
-compass.setmode(0);
+compass.setMode(0);
 console.log(compass.readc());
 
 */
@@ -72,7 +72,7 @@ HMC5883.prototype.setGain = function(gain) {
     	if (this.mode!=2) {
 		var hmc=this;
 		setWatch(function(){hmc.readc();},this.drdy);
-		this.setmode(1);
+		this.setMode(1);
     	}
 }
 
@@ -80,5 +80,5 @@ HMC5883.prototype.reads = function(c) {
 	this.onwatch=c;
 	var hmc=this;
 	setWatch(function(){hmc.onwatch(hmc.readc());},this.drdy);
-	this.setmode(1);
+	this.setMode(1);
 }
