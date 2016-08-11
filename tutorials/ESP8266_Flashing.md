@@ -4,7 +4,7 @@ Flashing and using the ESP8266 with Espruino
 
 This tutorial provides a little intro into getting going with the ESP8266 and Espruino, and then
 using it without serial wires going forward. For reference documentation about the esp8266 port
-of Espruino, please see the [reference section](/EspruinoESP8266.md).
+of Espruino, please see the [reference section](/EspruinoESP8266).
 
 __WARNING__: while everything described here works, the tutorial has not been tested much.
 
