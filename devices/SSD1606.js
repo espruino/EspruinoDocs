@@ -310,7 +310,6 @@ SSD1606.prototype.csb = function(callback, clearScreenColor) {
  * @param {callback} - callback is called, when busy pin is ready.
  */
 SSD1606.prototype.refreshScreen = function(callback) {
-  console.log('running refreshScreen');
   this.sc(0x20);
   this.scd(0x22, 0x03);
   this.sc(0x20);
