@@ -41,7 +41,7 @@ Information
 * [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/Pico/pdf/board_1v3.pdf)
 * [STM32F401CD Datasheet](/datasheets/STM32F401xD.pdf)
 * [STM32F401CD Reference Manual](/datasheets/STM32F401xD_ref.pdf)
-* [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
+* [Part libraries for Eagle CAD and KiCad](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
 * [Part library for Fritzing](https://github.com/espruino/EspruinoBoard/blob/master/frizting/Espruino_Pico.fzpz)
 
 Tutorials
@@ -76,9 +76,9 @@ Embedding the Pico
 
 The Pico is designed to be easy to include in your designs. The 0.1" pins are easy to fit in to sockets, and castellated edges mean that unpinned Picos can easily be surface-mounted directly to a PCB.
 
-To make it even easier, we've provided [a part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component) that includes the Pico's footprint in several different configurations:
+To make it even easier, there are [part libraries for Eagle CAD and KiCad](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component). The Eagle CAD library includes the Pico's footprint in several different configurations (KiCad is `SMDONLY`):
 
-![Eagle CAD Footrpints](Pico/footprint.png)
+![Eagle CAD Footprints](Pico/footprint.png)
 
 | Library Name | Description |
 |--------------|-------------|
@@ -120,7 +120,7 @@ Please see the [[Battery]] page for information on connectors and where to buy t
 
 On the rear of the Pico Board under the while block of silkscreen, there are pads for connectors. Espruino rev 1v3 has both Micro and Mini USB, but Espruino rev 1v4 only has Mini USB (due to potential issues with Apple's USB extension leads).
 
-To use these, *carefully* scratch off the silkscreen until you have copper tracks, and solder on the connector. 
+To use these, *carefully* scratch off the silkscreen until you have copper tracks, and solder on the connector.
 
 The connectors you need are very standard parts. While some parts are listed below, many other parts from many different manufacturers would work perfectly well.
 
@@ -132,7 +132,7 @@ The connectors you need are very standard parts. While some parts are listed bel
 * [Seeed OPL (3400020P1)](http://www.seeedstudio.com/wiki/images/a/a9/3400020P1.pdf)
 * [Digi-Key](http://www.digikey.co.uk/product-detail/en/DX2R005HN2E700/670-1190-1-ND/1283605)
 
-### Micro-B USB 
+### Micro-B USB
 
 (Pico Revision 1v3 only) - 5 pin, 2 pad surface mount
 
@@ -202,4 +202,3 @@ Advanced Debugging
 The Pico also has SWD Debug connections on the back of it. An ST-Link debugger (or ST Discovery/Nucleo board) can be connected to these connections for fast firmware uploads and source-level debugging of the interpreter itself.
 
 See the [[AdvancedDebug]] page for more information.
-
