@@ -31,6 +31,13 @@ var sockData = ["","","","",""];
 var MAXSOCKETS = 5;
 var rst;
 var busy = false;
+
+function unregisterSocketCallbacks(sckt) {
+    at.unregister('>');
+    at.unregisterLine(sckt + ', SEND OK');
+    at.unregisterLine(sckt + ', SEND FAIL');
+}
+
 var netCallbacks = {
   create: function(host, port) {
     /* Create a socket and return its index, host is a string, port is an integer.
@@ -51,24 +58,34 @@ var netCallbacks = {
     } else {
       var sckt = 0;
       while (socks[sckt]!==undefined) sckt++; // find free socket
-      if (sckt>=MAXSOCKETS) throw new Error('No free sockets.')
+      if (sckt>=MAXSOCKETS) throw new Error('No free sockets.');
       socks[sckt] = "Wait";
       sockData[sckt] = "";
       at.cmd('AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n',10000, function(d) {
         if (d=="OK") {
           at.registerLine(sckt + ', CONNECT OK', function() {
             at.unregisterLine(sckt + ', CONNECT OK');
+            at.unregisterLine(sckt + ', CONNECT FAIL');  
             socks[sckt] = true;
+            return "";
+          });
+          at.registerLine(sckt + ', CONNECT FAIL', function() {
+            at.unregisterLine(sckt + ', CONNECT FAIL');
+            at.unregisterLine(sckt + ', CONNECT OK');
+            at.unregisterLine(sckt + ', CLOSED');  
+            socks[sckt] = undefined;
             return "";
           });
           at.registerLine(sckt + ', CLOSED', function() {
             at.unregisterLine(sckt + ', CLOSED');
+            unregisterSocketCallbacks(sckt);
             socks[sckt] = undefined;
+            busy = false;
             return "";
           });
         } else {
           socks[sckt] = undefined;
-          throw new Error('CIPSTART failed.')
+          return "";    
         }
       });
     }
@@ -77,7 +94,8 @@ var netCallbacks = {
   /* Close the socket. returns nothing */
   close: function(sckt) {
     if(socks[sckt]) {
-      at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(/*d*/) {   
+      // ,1 = 'fast' close
+      at.cmd('AT+CIPCLOSE='+sckt+",1\r\n",1000, function(/*d*/) {   
         socks[sckt] = undefined;
       });
       
@@ -127,9 +145,16 @@ var netCallbacks = {
     });
     at.registerLine(sckt + ', SEND OK', function() {
       at.unregisterLine(sckt + ', SEND OK');
+      at.unregisterLine(sckt + ', SEND FAIL');
       busy = false;
       return "";
     });
+    at.registerLine(sckt + ', SEND FAIL', function() {
+      at.unregisterLine(sckt + ', SEND OK');
+      at.unregisterLine(sckt + ', SEND FAIL');
+      busy = false;
+      return -1;
+    });  
     at.write('AT+CIPSEND='+sckt+','+data.length+'\r\n');
     return data.length;
   }
@@ -143,7 +168,7 @@ function receiveHandler(line) {
   var len = line.length-(colon+3);
   if (len>=parms[1]) {
    // we have everything
-   sockData[parms[0]] += line.substr(colon+1,parms[1]);
+   sockData[parms[0]] += line.substr(colon+3,parms[1]);
    return line.substr(colon+parms[1]+3); // return anything else
   } else { 
    // still some to get
@@ -281,7 +306,7 @@ var gprsFuncs = {
           if(r === 'OK') {
             return cb;
           }
-          else if(r) {
+          else if (r) {
             callback('Error in ' + s + ': ' + r);
           } else {
             callback(null);
