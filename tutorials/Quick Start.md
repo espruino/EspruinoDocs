@@ -26,7 +26,7 @@ Plugging in
 
   * Windows XP Users [download version 1.3.1 drivers](/files/stm32_vcp_1.3.1.zip). Unzip the file, run `VCP_V1.3.1_Setup.exe`, **and then go to** `C:\Program Files\STMicroelectronics\Software\Virtual comport driver` in Windows Explorer and double-click the executable.
 
-**Linux users** to ensure that you have the the correct permissions to connect as a normal user you'll need to copy [the file 45-espruino.rules](https://github.com/espruino/Espruino/blob/master/misc/45-espruino.rules) to `/etc/udev/rules.d` and to ensure your user is in the 'plugdev' group (you can check by typing ```groups```). You add it by typing ```sudo adduser $USER plugdev``` and then logging out and back in.
+**Linux users** to ensure that you have the correct permissions to connect as a normal user you'll need to copy [the file 45-espruino.rules](https://github.com/espruino/Espruino/blob/master/misc/45-espruino.rules) to `/etc/udev/rules.d` and to ensure your user is in the 'plugdev' group (you can check by typing ```groups```). You add it by typing ```sudo adduser $USER plugdev``` and then logging out and back in.
 
 **Mac OS X and Chromebook Users:** The board will just plug in and work, without drivers!
 
