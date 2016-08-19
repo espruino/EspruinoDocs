@@ -111,6 +111,7 @@ WebSocket.prototype.parseData = function (data) {
         var ping = setInterval(function () {
             ws.send('ping', 0x89);
         }, this.keepAlive);
+        return;
     }
 
     var opcode = data.charCodeAt(0)&15;
