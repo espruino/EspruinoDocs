@@ -34,10 +34,10 @@
  ws.on('close', function() {
    console.log("Connection closed");
  });
- 
+
  //Send message to server
  ws.send("Hello Server");
- 
+
  // =============================== SERVER
  var page = '<html><body><script>var ws;setTimeout(function(){';
  page += 'ws = new WebSocket("ws://" + location.host + "/my_websocket", "protocolOne");';
@@ -63,132 +63,154 @@
 var strChr = String.fromCharCode;
 
 function WebSocket(host, options) {
-    this.socket = null;
-    options = options || {};
-    this.host = host;
-    this.port = options.port || 80;
-    this.protocolVersion = options.protocolVersion || 13;
-    this.origin = options.origin || 'Espruino';
-    this.keepAlive = options.keepAlive * 1000 || 60000;
-    this.lastData = "";
+  this.socket = null;
+  options = options || {};
+  this.host = host;
+  this.port = options.port || 80;
+  this.protocolVersion = options.protocolVersion || 13;
+  this.origin = options.origin || 'Espruino';
+  this.keepAlive = options.keepAlive * 1000 || 60000;
+  this.masking = options.masking || true;
+  this.lastData = "";
 }
 
 WebSocket.prototype.initializeConnection = function () {
-    require("net").connect({
-        host: this.host,
-        port: this.port
-    }, this.onConnect.bind(this));
+  require("net").connect({
+    host: this.host,
+    port: this.port
+  }, this.onConnect.bind(this));
 };
 
 WebSocket.prototype.onConnect = function (socket) {
-    this.socket = socket;
-    var ws = this;
-    socket.on('data', this.parseData.bind(this));
+  this.socket = socket;
+  var ws = this;
+  socket.on('data', this.parseData.bind(this));
 
-    socket.on('close', function () {
-        ws.emit('close');
-    });
+  socket.on('close', function () {
+    if (ws.pingTimer) {
+      clearInterval(ws.pingTimer);
+      ws.pingTimer = undefined;
+    }
+    ws.emit('close');
+  });
 
-    this.emit('open');
-    this.handshake();
+  this.emit('open');
+  this.handshake();
 };
 
 WebSocket.prototype.parseData = function (data) {
-    // see https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
-    // Note, docs specify bits 0-7, etc - but BIT 0 is the MSB, 7 is the LSB
-    // TODO: handle >1 data packet
-    var ws = this;
-    this.emit('rawData', data);
+  // see https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
+  // Note, docs specify bits 0-7, etc - but BIT 0 is the MSB, 7 is the LSB
+  // TODO: handle >1 data packet
+  var ws = this;
+  this.emit('rawData', data);
 
-    if (this.lastData.length) {
-      data = this.lastData+data;
-      this.lastData="";
+  if (this.lastData.length) {
+    data = this.lastData+data;
+    this.lastData="";
+  }
+
+  // FIXME - not a good idea!
+  if (data.indexOf('HSmrc0sMlYUkAGmm5OPpG2HaGWk=') > -1) {
+      this.emit('handshake');
+      this.pingTimer = setInterval(function () {
+          ws.send('ping', 0x89);
+      }, this.keepAlive);
+      return;
+  }
+
+  var opcode = data.charCodeAt(0)&15;
+
+  if (opcode == 0xA)
+    return this.emit('pong');
+
+  if (opcode == 0x9) {
+    this.send('pong', 0x8A);
+    return this.emit('ping');
+  }
+
+  if (opcode == 0x8) {
+    // connection close request
+    this.socket.end();
+    // we'll emit a 'close' when the socket itself closes
+    return;
+  }
+
+  if (opcode == 1 /* text - all we're supporting */) {
+    var dataLen = data.charCodeAt(1)&127;
+    var offset = 2;
+    if (dataLen==126) {
+      dataLen = data.charCodeAt(3) | (data.charCodeAt(2)<<8);
+      offset += 2;
+    } else if (dataLen==127) throw "Messages >65535 in length unsupported";
+
+    var mask = [ 0,0,0,0 ];
+    if (data.charCodeAt(1)&128 /* mask */) {
+      mask = [ data.charCodeAt(offset++), data.charCodeAt(offset++),
+               data.charCodeAt(offset++), data.charCodeAt(offset++)];
     }
 
-    // FIXME - not a good idea!
-    if (data.indexOf('HSmrc0sMlYUkAGmm5OPpG2HaGWk=') > -1) {
-        this.emit('handshake');
-        var ping = setInterval(function () {
-            ws.send('ping', 0x89);
-        }, this.keepAlive);
-        return;
+    if (dataLen+offset > data.length) {
+      // we received the start of a packet, but not enough of it for a full message.
+      // store it for later, so when we get the next packet we can do the whole message
+      this.lastData = data;
+      return;
     }
 
-    var opcode = data.charCodeAt(0)&15;
-
-    if (opcode == 0xA)
-        return this.emit('pong');
-
-    if (opcode == 0x9) {
-        this.send('pong', 0x8A);
-        return this.emit('ping');
-    }
-
-    if (opcode == 0x8) {
-        // connection close request
-        this.socket.end();
-        // we'll emit a 'close' when the socket itself closes
-        return;
-    }
-
-    if (opcode == 1 /* text - all we're supporting */) {
-        var dataLen = data.charCodeAt(1)&127;
-        if (dataLen>126) throw "Messages >125 in length unsupported";
-
-        var offset = 2;
-        var mask = [ 0,0,0,0 ];
-        if (data.charCodeAt(1)&128 /* mask */) {
-          mask = [ data.charCodeAt(offset++), data.charCodeAt(offset++),
-                   data.charCodeAt(offset++), data.charCodeAt(offset++)];
-        }
-
-        if (dataLen+offset > data.length) {
-          // we received the start of a packet, but not enough of it for a full message.
-          // store it for later, so when we get the next packet we can do the whole message
-          this.lastData = data;
-          return;
-        }
-
-        var message = "";
-        for (var i = 0; i < dataLen; i++) {
-            message += String.fromCharCode(data.charCodeAt(offset++) ^ mask[i&3]);
-        }
-        this.emit('message', message);
-    }
+    var msg = "";
+    for (var i = 0; i < dataLen; i++)
+      msg += String.fromCharCode(data.charCodeAt(offset++) ^ mask[i&3]);
+    this.lastData = data.substr(offset);
+    this.emit('message', msg);
+  }
 };
 
 WebSocket.prototype.handshake = function () {
-    var socketHeader = [
-        "GET / HTTP/1.1",
-        "Upgrade: websocket",
-        "Connection: Upgrade",
-        "Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==",
-        "Sec-WebSocket-Version: " + this.protocolVersion,
-        "Origin: " + this.origin,
-        "",""
-    ];
+  var socketHeader = [
+    "GET / HTTP/1.1",
+    "Upgrade: websocket",
+    "Connection: Upgrade",
+    "Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==",
+    "Sec-WebSocket-Version: " + this.protocolVersion,
+    "Origin: " + this.origin,
+    "",""
+  ];
 
-    this.socket.write(socketHeader.join("\r\n"));
+  this.socket.write(socketHeader.join("\r\n"));
 };
 
 /** Send message based on opcode type */
 WebSocket.prototype.send = function (msg, opcode) {
-    opcode = opcode === undefined ? 0x81 : opcode;
-    this.socket.write(strChr(opcode, msg.length));
+  opcode = opcode === undefined ? 0x81 : opcode;
+  if (msg.length>125) throw "Messages >125 in length unsupported";
+  this.socket.write(strChr(opcode, msg.length + ( this.masking ? 128 : 0 )));
+  if (this.masking) {
+    var mask = [];
+    var masked = '';
+    for (var ix = 0; ix < 4; ix++){
+      var rnd = Math.floor( Math.random() * 255 );
+      mask[ix] = rnd;
+      masked += strChr(rnd);
+    }
+    for (var ix = 0; ix < msg.length; ix++)
+      masked += strChr(msg.charCodeAt(ix) ^ mask[ix & 3]);
+    this.socket.write(masked);
+  } else {
     this.socket.write(msg);
+  }
 };
 
 /** Create a WebSocket client */
 exports = function (host, options) {
-    var ws = new WebSocket(host, options);
-    ws.initializeConnection();
-    return ws;
+  var ws = new WebSocket(host, options);
+  ws.initializeConnection();
+  return ws;
 };
 
 /** Create a WebSocket server */
 exports.createServer = function(callback, wscallback) {
   var server = require('http').createServer(function (req, res) {
-    if (req.headers.Connection && req.headers.Connection.indexOf("Upgrade")>=0) {    
+    if (req.headers.Connection && req.headers.Connection.indexOf("Upgrade")>=0) {
       var key = req.headers["Sec-WebSocket-Key"];
       var accept = btoa(E.toString(require("crypto").SHA1(key+"258EAFA5-E914-47DA-95CA-C5AB0DC85B11")));
       res.writeHead(101, {
