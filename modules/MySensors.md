@@ -1,4 +1,9 @@
-# Espruino-MySensors
+<!--- Copyright (c) 2016 Steven Lazidis. See the file LICENSE for copying permission. -->
+MySensors Client/Gateway
+=====================
+
+* KEYWORDS: Module,protocol,client
+
 Module for devices running Espruino to connect to other software using Mysensors api.
 
 See the MySensors API documentation: https://www.mysensors.org/download/sensor_api_20
