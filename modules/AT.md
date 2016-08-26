@@ -2,7 +2,7 @@
 AT Command Handler
 ================
 
-* KEYWORDS: AT,Modem
+* KEYWORDS: Module,AT,Modem
 
 [[AT.js]] handles sending AT-style commands to a Serial device and receiving their responses, while not blocking (allowing other JavaScript to execute in the background).
 
@@ -49,7 +49,7 @@ at.cmd("AT+FOO\r\n", 1000, function cb(d) {
 if (at.isBusy()) ...
 ```
 
-Using 
+Using
 -----
 
 * APPEND_USES: AT

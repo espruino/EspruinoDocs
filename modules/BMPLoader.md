@@ -2,9 +2,9 @@
 BMP Loader Module
 ===============
 
-* KEYWORDS: BMP,Bitmap,Image Loader
+* KEYWORDS: Module,BMP,Bitmap,Image Loader
 
-This is a really simple bitmap loader that loads a [Windows Bitmap File](http://en.wikipedia.org/wiki/BMP_file_format) into an image that can be used with the [[Graphics]] library. 
+This is a really simple bitmap loader that loads a [Windows Bitmap File](http://en.wikipedia.org/wiki/BMP_file_format) into an image that can be used with the [[Graphics]] library.
 
 This is currently only tested with 1 bit per pixel bitmap files, however it should work with 8 and 24 bit files.
 
@@ -15,11 +15,11 @@ g.drawImage(img, 10, 10);
 
 Reference
 --------------
- 
+
 * APPEND_JSDOC: BMPLoader.js
 
 
-Using 
+Using
 -----
 
 * APPEND_USES: BMPLoader

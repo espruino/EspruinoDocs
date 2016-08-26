@@ -2,7 +2,7 @@
 EEPROM on Flash
 ===============
 
-* KEYWORDS: Flash,EEPROM,storage,non-volatile,memory,rom,storage
+* KEYWORDS: Module,Flash,EEPROM,storage,non-volatile,memory,rom,storage
 
 STM32-based chips don't have nonvolatile EEPROM memory (which can be changed one byte at a
 time). Instead, they have Flash memory in which 32 bit words can be written one at a time,
@@ -23,7 +23,7 @@ You use it as follows:
  You can supply extra arguments to choose which flash page you'll use, and even whether you
  use external flash memory - but be careful when doing this. You can accidentally overwrite
  Espruino itself! */
-var f = new (require("FlashEEPROM"))(); 
+var f = new (require("FlashEEPROM"))();
 
 f.write(0, "Hello");
 f.write(1, "World");
@@ -36,7 +36,7 @@ E.toString(f.read(1))
 // returns "World"
 
 f.readMem(0)
-// returns "Hello" - this is a special string that is accessed directly from ROM 
+// returns "Hello" - this is a special string that is accessed directly from ROM
 // (and is not loaded into RAM first)
 
 f.readAll();
@@ -71,7 +71,7 @@ you should be aware that flash memory has a fixed number of write cycles (see th
 so you should try and do this as rarely as possible.
 
 Another option is to limit the amount of Flash memory that can be used. This is a good idea if
-you're using something like the Espruino Pico that will default to using the full 128kB page! 
+you're using something like the Espruino Pico that will default to using the full 128kB page!
 
 ```
 // Use only 1024 bytes
@@ -81,11 +81,11 @@ f.endAddr = f.addr+1024;
 
 Reference
 --------------
- 
+
 * APPEND_JSDOC: FlashEEPROM.js
 
 
-Using 
+Using
 -----
 
 * APPEND_USES: FlashEEPROM

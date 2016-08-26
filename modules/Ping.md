@@ -1,14 +1,18 @@
 <!--- Copyright (c) 2016 MrTimcakes. See the file LICENSE for copying permission. -->
-# Ping
+Ping
+=============
 
-* KEYWORDS: Ping
+* KEYWORDS: Module,Ping
 
-This is a simple module to allow pinging from WiFi enabled devices.
+This is a simple module to allow 'pinging' from WiFi enabled devices. While not
+true pinging, it opens a socket connection to the specified port and returns the
+time it takes to establish the connection.
 
 This Module allows both URLs and IP Addresses.
 
 
-## Functions
+Functions
+----------
 
 #### ping(options, callback)
 
@@ -22,6 +26,7 @@ This Module allows both URLs and IP Addresses.
 ```callback``` should be a function with arguments in node convention - ```function(err, data)```.
 
 Returned data is an object which looks like this:
+
 ```javascript
 {
   "address": "google.com",
@@ -30,7 +35,8 @@ Returned data is an object which looks like this:
  }
 ```
 
-## Usage
+Usage
+----------
 
 ```javascript
 var p = require("Ping");
@@ -41,11 +47,11 @@ p.ping({ address: 'google.com' }, function(err, data) {
 ```
 
 Reference
- ---------
+----------
 
  * APPEND_JSDOC: Ping.js
 
  Using
-  -----
+-----
 
   * APPEND_USES: Ping

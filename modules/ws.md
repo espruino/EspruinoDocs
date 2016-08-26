@@ -21,7 +21,7 @@ To use the [[ws.js]] module, you must be connected to WiFi/Ethernet/etc - see [h
 WebSocket Client
 ----------------
 
-First you need run a websocket server which is explained [here using Node.js](https://www.npmjs.com/package/ws). 
+First you need run a websocket server which is explained [here using Node.js](https://www.npmjs.com/package/ws).
 
 Then you will be able to use the following and point it to your websocket server's host and port.
 
@@ -34,7 +34,7 @@ var WebSocket = require("ws");
       origin: 'Espruino',
       keepAlive: 60
     });
-	
+
 ws.on('open', function() {
   console.log("Connected to server");
 });
@@ -50,7 +50,7 @@ WebSocket Server
 Just use `require('ws').createServer` like you would `require('http').createServer` and you can handle HTTP requests,
 then use `.on('websocket', ...)` to register a function to handle websockets.
 
-The code below serves up a Web Page which starts a websocket connection, then 
+The code below serves up a Web Page which starts a websocket connection, then
 
 ```
 var page = '<html><body><script>var ws;setTimeout(function(){';
@@ -80,23 +80,23 @@ Available callbacks
 ws.on('open', function() {
   console.log("Connected to server");
 });
-	
+
 ws.on('message', function(msg) {
   console.log("MSG: " + msg);
 });
-	
+
 ws.on('close', function() {
   console.log("Connection closed");
 });
-	
+
 ws.on('handshake', function() {
   console.log("Handshake Success");
 });
-	
+
 ws.on('ping', function() {
   console.log("Got a ping");
 });
-	
+
 ws.on('pong', function() {
   console.log("Got a pong");
 });
