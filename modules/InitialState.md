@@ -29,15 +29,18 @@ var bucket = {
 ```
 
 `events` is one or more parameter in one of two possible formats.
-One possible format is the array format that InitialState specifies:
+One possible format is the array format that is 
+[specified by InitialState](http://docs.initialstateeventsapi.apiary.io/#reference/event-data/events-json):
 ```
 [
   { key: key1, value: value1 },
   { key: key2, value: value2 }
 ]
 ```
+When the function receives an `events` parameter that is an array,
+it assumes it is in InitialState's format and sends it unaltered.
 
-The other possible format is a simple object with key/value pair:
+The other possible format is a simple object with key/value pairs:
 ```
 {
   key1: value1,
