@@ -1,5 +1,4 @@
 <!--- Copyright (c) 2016 ST Microelectronics. See the file LICENSE for copying permission. -->
-
 LPS25HB pressure sensor
 =======================
 
