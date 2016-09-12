@@ -10,12 +10,13 @@ Features
 -------
 
 * 33mm x 15mm (1.3 x 0.6 inch)
-* 22 GPIO pins : 9 Analogs inputs, 21 PWM, 2 Serial, 3 SPI, 3 I2C
+* 22 GPIO pins : 9 Analog inputs, 21 PWM, 2 Serial, 3 SPI, 3 I2C
 * All GPIO is 5 volt tolerant (Arduino compatible)
 * 2 rows of 9 0.1" pins, with a third 0.05" row of 8 pins on the end
 * On-board USB Type A connector
 * Two on-board LEDs and one button.
-* [STM32F401CDU6](/datasheets/STM32F401xD.pdf) CPU - ARM Cortex M4, 384kb flash, 96kb RAM
+* [STM32F401CDU6](/datasheets/STM32F401xD.pdf) 32-bit 84MHz ARM Cortex M4 CPU
+* 384kb flash, 96kb RAM
 * On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 16v
 * Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
 * On-board FET can be used to drive high-current outputs

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. 
+# Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission.
 cd `dirname $0`
 DIR=`pwd`
 WEBSITE=~/workspace/espruinowebsite
@@ -13,14 +13,27 @@ rm -f html/boards/*
 cd ../Espruino
 python scripts/build_board_docs.py PICO_R1_3 pinout
 mv boards/PICO_R1_3.html $DIR/html/boards
+cp boards/img/PICO_R1_3.png $WEBSITE/www/img
+
 python scripts/build_board_docs.py ESPRUINOBOARD pinout
 mv boards/ESPRUINOBOARD.html $DIR/html/boards
+cp boards/img/ESPRUINOBOARD.png $WEBSITE/www/img
+
 python scripts/build_board_docs.py ESP8266_BOARD pinout
 mv boards/ESP8266_BOARD.html $DIR/html/boards
+cp boards/img/ESP8266_BOARD.png $WEBSITE/www/img
+
 python scripts/build_board_docs.py EMW3165 pinout
 mv boards/EMW3165.html $DIR/html/boards
+cp boards/img/EMW3165.png $WEBSITE/www/img
+
 python scripts/build_board_docs.py MICROBIT pinout
 mv boards/MICROBIT.html $DIR/html/boards
+cp boards/img/ESPRUINOWIFI.png $WEBSITE/www/img
+
+python scripts/build_board_docs.py ESPRUINOWIFI pinout
+mv boards/ESPRUINOWIFI.html $DIR/html/boards
+cp boards/img/ESPRUINOWIFI.png $WEBSITE/www/img
 cd $DIR
 
 # Built reference docs and references.json
