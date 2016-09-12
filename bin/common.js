@@ -52,7 +52,7 @@ exports.getJSDocumentation = function(js) {
     }
     // X.prototype.y = function() ...
     // exports.foo = function() ...
-    if (expr.type=="ExpressionStatement" && expr.expression.right.type=="FunctionExpression") {
+    if (expr.type=="ExpressionStatement" && expr.expression.right && expr.expression.right.type=="FunctionExpression") {
       var left = expr.expression.left;
       var leftString = undefined;
       if (left.object.property && left.object.property.name == 'prototype')
@@ -65,7 +65,7 @@ exports.getJSDocumentation = function(js) {
       }
     }
     // exports = Function
-    if (expr.type=="ExpressionStatement" && expr.expression.right.type=="Identifier" &&
+    if (expr.type=="ExpressionStatement" && expr.expression.right && expr.expression.right.type=="Identifier" &&
         (expr.expression.right.name in functions)) {
        var func = functions[expr.expression.right.name];
        if (func.loc.start.line in comments) 

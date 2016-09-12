@@ -16,8 +16,8 @@ Plugging in
 
 <span style="color:red">Please check that there is no bare metal (including your desk!) near the board when you plug it in, as it could short it out.</span>
 
-* **Espruino Pico** - the Pico is designed to plug right into you computer's USB type A connector, or a USB extension lead. The components (not the text) should usually be facing upwards (so the 4 gold strips are facing the plastic in the USB socket).
-* **Original Espruino** - just plug the board in with a Micro USB cable and you're done. 
+* **Espruino [Pico](/Pico)** - the Pico is designed to plug right into you computer's USB type A connector, or a USB extension lead. The components (not the text) should usually be facing upwards (so the 4 gold strips are facing the plastic in the USB socket).
+* **Original [Espruino](/EspruinoBoard) and [Espruino WiFi](/EspruinoWiFi)** - just plug the board in with a Micro USB cable and you're done. 
 * **Other Boards** - please [see this page](/Other Boards) for more information.
 
 **Windows Users:** Most versions of Windows won't automatically load the built-in driver for USB com ports. You'll have to download ST's USB driver:

@@ -4,7 +4,7 @@ Espruino WiFi
 
 * KEYWORDS: Espruino WiFi,ESP8266,Board,PCB,Pinout
 
-![Espruino WiFi](Espruino WiFi/angled.jpg)
+![Espruino WiFi](EspruinoWiFi/angled.jpg)
 
 Features
 -------
@@ -29,10 +29,12 @@ Features
 <!-- You can now get an Espruino WiFi from several different distributors. [Click here to see them.](/Order) -->
 Espruino WiFi is currently only available from [our Tindie store](https://www.tindie.com/products/gfwilliams/espruino-wifi).
 
+
 Pinout
 ------
 
 * APPEND_PINOUT: ESPRUINOWIFI
+
 
 Information
 -----------
@@ -40,12 +42,52 @@ Information
 * [STM32F411CE Datasheet](/datasheets/STM32F411xE.pdf)
 * [STM32F411CE Reference Manual](/datasheets/STM32F411xE_ref.pdf)
 
+
+Using WiFi
+----------
+
+To use wifi, simply require the EspruinoWiFi module and call `connect`:
+
+```
+var WIFI_NAME = "";
+var WIFI_OPTIONS = { password : "" };
+
+var wifi = require("EspruinoWiFi");
+wifi.connect(WIFI_NAME, WIFI_OPTIONS, function(err) {
+  if (err) {
+    console.log("Connection error: "+err);
+    return;
+  }
+  console.log("Connected!");
+  getPage();
+});
+
+function getPage() {
+  require("http").get("http://www.pur3.co.uk/hello.txt", function(res) {
+    console.log("Response: ",res);
+    res.on('data', function(d) {
+      console.log("--->"+d);
+    });
+  });
+}
+```
+
+Espruino WiFi's module is designed to work similarly to the [ESP8266 native WiFi module](http://www.espruino.com/Reference#Wifi). 
+
+Eventually you will be able to use the `WiFi` module directly with Espruino WiFi, but this is still in development.
+
+* APPEND_JSDOC: ../devices/EspruinoWiFi.js
+
+
 Tutorials
---------
+---------
 
 Tutorials using the Espruino WiFi Board:
 
 * APPEND_USES: EspruinoWiFi
+
+There aren't currently many tutorials using this board, however it can be used just like the [Espruino Pico](/Pico), which has a lot of tutorials available.
+
 
 Hardware Limitations
 ------------------
@@ -53,10 +95,12 @@ Hardware Limitations
 * You can only have one watched pin of each number (Watching A0 and A1 is fine, but watching A1 and B1 isn't)
 * When in Deep sleep, pin B9 cannot be used as a watch (as A9 is used to wake up on USB)
 
+
 Troubleshooting
 -------------
 
 Please see the [[Troubleshooting]] section.
+
 
 Advanced Reflashing
 -----------------
