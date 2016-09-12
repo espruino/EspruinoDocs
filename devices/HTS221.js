@@ -84,7 +84,7 @@ function HTS221(_i2c, debugMode) {
 
 HTS221.prototype.ObtainCalibratedTemperatureCoefficient= function(callback) {
 
-  // T0_OUT, T1_OUT, T1_degC and T0_degC coefficients are factory calibrated
+  //  this.T0_OUT,  this.T1_OUT, this.T1_degC and  this.T0_degC coefficients are factory calibrated
 
   // 1. Read the value of coefficients T0_degC_x8 and T1_degC_x8 from registers
   var coefficients = this.r(0x32,2);
@@ -92,21 +92,21 @@ HTS221.prototype.ObtainCalibratedTemperatureCoefficient= function(callback) {
   var T0_degC_x8_32 = (coefficients[0] & 0xFF);
   var T1_degC_x8_33 = (coefficients[1] & 0xFF);
 
-  // 2. Read the MSB bits of T1_degC (T1.9 and T1.8 bit) and T0_degC (T0.9 and T0.8 bit) from register 0x35
-  // to compute T0_DegC and T1_DegC
+  // 2. Read the MSB bits of this.T1_degC (T1.9 and T1.8 bit) and  this.T0_degC (T0.9 and T0.8 bit) from register 0x35
+  // to compute  this.T0_degC and this.T1_degC
   var T1_T0_msb = this.r(0x35, 1);
   var T1_T0_msb_x8_35 = T1_T0_msb[0] & 0x0F;
   var T0_degC_x8_10bits = (T1_T0_msb_x8_35 & 0x03)*256 + T0_degC_x8_32;
   var T1_degC_x8_10bits = (T1_T0_msb_x8_35 & 0x0C)*64 + T1_degC_x8_33;
 
   // 3. Divide by 8
-  // in order to obtain the value of coefficients T0_degC and T1_degC
-  T0_degC = T0_degC_x8_10bits/8;
-  T1_degC = T1_degC_x8_10bits/8;
+  // in order to obtain the value of coefficients  this.T0_degC and  this.T1_degC
+  this.T0_degC = T0_degC_x8_10bits/8;
+  this.T1_degC = T1_degC_x8_10bits/8;
 
-  // 4. Read the value of T0_OUT from registers 0x3C & 0x3D
+  // 4. Read the value of  this.T0_OUT from registers 0x3C & 0x3D
   // and
-  // 5. Read the value of T1_OUT from registers 0x3E & 0x3F.
+  // 5. Read the value of  this.T1_OUT from registers 0x3E & 0x3F.
   var T0_OUT1 = this.r(0x3C, 1);
   var T0_OUT_3C = T0_OUT1[0] & 0xFF;
         
@@ -119,31 +119,31 @@ HTS221.prototype.ObtainCalibratedTemperatureCoefficient= function(callback) {
   var T1_OUT2 = this.r(0x3F, 1);
   var T1_OUT_3F = T1_OUT2[0] & 0xFF;
 
-  T0_OUT = (T0_OUT_3D*256) + T0_OUT_3C;
+   this.T0_OUT = (T0_OUT_3D*256) + T0_OUT_3C;
 
   // manage the negative value (two's complement integers)
-  if (T0_OUT > 32767) //0x7FFF
+  if (this.T0_OUT > 32767) //0x7FFF
   {
-      T0_OUT -=65536;
-      console.log("T0_OUT is negative");
+      this.T0_OUT -=65536;
+      console.log("this.T0_OUT is negative");
   }
 
-  T1_OUT = (T1_OUT_3F*256) + T1_OUT_3E;
+   this.T1_OUT = (T1_OUT_3F*256) + T1_OUT_3E;
 
   // manage the negative value (two's complement integers)
-  if (T1_OUT > 32767) //0x7FFF
+  if (this.T1_OUT > 32767) //0x7FFF
   {
-      T1_OUT -=65536;
-      console.log("T1_OUT is negative");
+      this.T1_OUT -=65536;
+      console.log("this.T1_OUT is negative");
   }
 
   if(this.debugMode) {
     console.log(" HTS221 debug : T0_degC_x8_32 = "+T0_degC_x8_32);
     console.log(" HTS221 debug : T1_degC_x8_33 = "+T1_degC_x8_33);
-    console.log(" HTS221 debug : T0_degC = "+T0_degC);
-    console.log(" HTS221 debug : T1_degC = "+T1_degC);
-    console.log(" HTS221 debug : T0_OUT = "+T0_OUT);
-    console.log(" HTS221 debug : T1_OUT = "+T1_OUT);
+    console.log(" HTS221 debug :  this.T0_degC = "+this.T0_degC);
+    console.log(" HTS221 debug :  this.T1_degC = "+this.T1_degC);
+    console.log(" HTS221 debug :  this.T0_OUT = "+this.T0_OUT);
+    console.log(" HTS221 debug :  this.T1_OUT = "+this.T1_OUT);
   }
 
 }
@@ -161,14 +161,14 @@ HTS221.prototype.getTemperature= function(callback) {
 
 
 
-  T_OUT = (T_OUT_2B * 256) + T_OUT_2A;
+   this.T_OUT = (T_OUT_2B * 256) + T_OUT_2A;
 
-  if (T_OUT > 32767) //0x7FFF
+  if (this.T_OUT > 32767) //0x7FFF
   {
-    T_OUT -=65536;
+     this.T_OUT -=65536;
   }
 
-  var celsiusTemp = ( (T1_degC - T0_degC) * (T_OUT - T0_OUT) / (T1_OUT - T0_OUT) ) + T0_degC;
+  var celsiusTemp = ( (this.T1_degC - this.T0_degC) * (this.T_OUT -  this.T0_OUT) / (this.T1_OUT -  this.T0_OUT) ) + this.T0_degC;
 
   if(this.debugMode) {
     console.log(" HTS221 debug : DATA_TEMP_OUT_L="+outputL);
