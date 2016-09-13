@@ -1,10 +1,12 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Espruino WiFi
-============
+=============
 
-* KEYWORDS: Espruino WiFi,ESP8266,Board,PCB,Pinout
+* KEYWORDS: Espruino WiFi,WiFi,Wireless,Internet,Radio,ESP8266,Board,PCB,Pinout
 
-![Espruino WiFi](EspruinoWiFi/angled.jpg)
+![Espruino WiFi](WiFi/angled.jpg)
+
+**Note:** Espruino WiFi provides an easy, well-supported way to get on the Internet, however it's not the only way to access a WiFi network from an Espruino board. [See here](/Internet#related-pages) for more information.
 
 Features
 -------
@@ -71,6 +73,8 @@ function getPage() {
   });
 }
 ```
+
+**Note:** To make sure that Espruino connects at power on, 
 
 Espruino WiFi's module is designed to work similarly to the [ESP8266 native WiFi module](http://www.espruino.com/Reference#Wifi). 
 

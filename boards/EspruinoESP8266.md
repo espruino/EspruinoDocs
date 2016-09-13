@@ -2,7 +2,7 @@
 Espruino on ESP8266 WiFi
 ========================
 
-* KEYWORDS: ESP8266,ESP-12,ESP12,ESP01,ESP1,ESP-01,Espruino,Board,PCB,Pinout
+* KEYWORDS: ESP8266,ESP-12,ESP12,ESP01,ESP1,ESP-01,Espruino,Board,PCB,Pinout,Internet,WiFi,Wireless,Radio
 
 **Note:** *This page documents running the Espruino firmware on the ESP8266 board.
 To find out how to connect an ESP8266 board to another Espruino board (as a Wifi Adaptor)
