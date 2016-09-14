@@ -88,25 +88,18 @@ For more information, see [[Fonts]]
 Circles
 -------
 
-There isn't currently a circle function implemented - but you can just add one!
+You can draw filled or ourlined circles using the two circle functions. For each, the current foreground colour will be used.
+The three required arguments are `x,y,rad`. The `x` and `y` coordinates for the centre position of the circle and `rad` the radius of the circle.
 
 ```JavaScript
-g.fillCircle = function(x,y,rad,col) {
-  var pts = parseInt(rad)/2;
-  var a = [];
-  for (var i=0;i<pts;i++) {
-    var t = 2*i*Math.PI/pts;
-    a.push(x+Math.sin(t)*rad);
-    a.push(y+Math.cos(t)*rad);
-  }
-  g.fillPoly(a);
-}
+// Draw a circle
+g.drawCircle(100,100,50); // A circle with a radius of 50, centred at 100x100 
 
-g.clear();
-g.fillCircle(100,100,50);
+// Draw a filled circle
+g.fillCircle(100,100,50); // A filled circle with a radius of 50, centred at 100x100 
 ```
 
- 
+
 Random Lines
 ------------
 
