@@ -234,6 +234,10 @@ WebSocket.prototype.send = function (msg, opcode) {
   }
 };
 
+WebSocket.prototype.close = function() {
+  this.socket.end();
+};
+
 /** Create a WebSocket client */
 exports = function (host, options) {
   var ws = new WebSocket(host, options);
