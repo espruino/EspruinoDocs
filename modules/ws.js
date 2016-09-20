@@ -121,7 +121,7 @@ WebSocket.prototype.parseData = function (data) {
     data = this.lastData+data;
     this.lastData="";
   }
-  
+
   // FIXME - not a good idea!
   if (data.indexOf(this.key.hashed) > -1 && data.indexOf('\r\n\r\n') > -1) {
       this.emit('handshake');
@@ -130,6 +130,14 @@ WebSocket.prototype.parseData = function (data) {
     }, this.keepAlive);
     data = data.substring(data.indexOf('\r\n\r\n') + 4);
     this.handshakeDone = true;
+  }
+
+  // If a packet contains data spanning two frames we need to split these up so we can handle them individually
+  var nextFrame;
+  if(data.indexOf(String.fromCharCode(129)) !== data.lastIndexOf(String.fromCharCode(129))) {
+    var nextFrameStartPos = data.indexOf(String.fromCharCode(129), data.indexOf(String.fromCharCode(129))+1);
+    nextFrame = data.substring(nextFrameStartPos);
+    data = data.substring(0, nextFrameStartPos);
   }
 
   var opcode = data.charCodeAt(0)&15;
@@ -178,14 +186,18 @@ WebSocket.prototype.parseData = function (data) {
     
     if(this.connected) {
       this.lastData = '';
-      return this.emit('message', msg);
+      this.emit('message', msg);
     } else if(this.handshakeDone) {
       this.lastData = '';
       this.connected = true;
-      return this.emit('open', data.length ? data.substring(data.indexOf('{')) : data);
+      this.emit('open', data.length ? data.substring(data.indexOf('{')) : data);
     }
   }
-  this.lastData = data;
+  if(nextFrame) {
+    this.parseData(nextFrame);
+  } else {
+    this.lastData = data;
+  }
 };
 
 WebSocket.prototype.handshake = function () {
