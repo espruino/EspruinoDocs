@@ -7,8 +7,6 @@
  Websocket implementation on Espruino, it let you control your Espruino from the cloud without the need to know it's IP.
  You will need to use it with a websocket server.
 
- Limitations: The module only accept messages less than 127 character.
-
  How to use the ws module:
 
  ```javascript
@@ -17,6 +15,7 @@
  // =============================== CLIENT
  var WebSocket = require("ws");
  var ws = new WebSocket("HOST",{
+      path: '/echo',
       port: 8080,
       protocolVersion: 13,
       origin: 'Espruino',
@@ -61,6 +60,16 @@
 
 /** Minify String.fromCharCode() call */
 var strChr = String.fromCharCode;
+var crypto = require('crypto');
+
+function buildKey() {
+  var randomString = btoa(Math.random().toString(36).substr(2, 18));
+  var toHash = randomString + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
+  return {
+    source: randomString,
+    hashed: btoa(crypto.SHA1(toHash))
+  }
+}
 
 function WebSocket(host, options) {
   this.socket = null;
@@ -71,7 +80,11 @@ function WebSocket(host, options) {
   this.origin = options.origin || 'Espruino';
   this.keepAlive = options.keepAlive * 1000 || 60000;
   this.masking = options.masking || true;
+  this.path = options.path || "/";
   this.lastData = "";
+  this.key = buildKey();
+  this.connected = false;
+  this.handshakeDone = false;
 }
 
 WebSocket.prototype.initializeConnection = function () {
@@ -94,7 +107,6 @@ WebSocket.prototype.onConnect = function (socket) {
     ws.emit('close');
   });
 
-  this.emit('open');
   this.handshake();
 };
 
@@ -111,12 +123,21 @@ WebSocket.prototype.parseData = function (data) {
   }
 
   // FIXME - not a good idea!
-  if (data.indexOf('HSmrc0sMlYUkAGmm5OPpG2HaGWk=') > -1) {
+  if (data.indexOf(this.key.hashed) > -1 && data.indexOf('\r\n\r\n') > -1) {
       this.emit('handshake');
-      this.pingTimer = setInterval(function () {
-          ws.send('ping', 0x89);
-      }, this.keepAlive);
-      return;
+    this.pingTimer = setInterval(function () {
+      ws.send('ping', 0x89);
+    }, this.keepAlive);
+    data = data.substring(data.indexOf('\r\n\r\n') + 4);
+    this.handshakeDone = true;
+  }
+
+  // If a packet contains data spanning two frames we need to split these up so we can handle them individually
+  var nextFrame;
+  if(data.indexOf(String.fromCharCode(129)) !== data.lastIndexOf(String.fromCharCode(129))) {
+    var nextFrameStartPos = data.indexOf(String.fromCharCode(129), data.indexOf(String.fromCharCode(129))+1);
+    nextFrame = data.substring(nextFrameStartPos);
+    data = data.substring(0, nextFrameStartPos);
   }
 
   var opcode = data.charCodeAt(0)&15;
@@ -129,14 +150,14 @@ WebSocket.prototype.parseData = function (data) {
     return this.emit('ping');
   }
 
-  if (opcode == 0x8) {
-    // connection close request
+  if (opcode == 0x8 && this.connected) {
+    // connection close request but only once we have confirmed the websocket is connected
     this.socket.end();
     // we'll emit a 'close' when the socket itself closes
     return;
   }
 
-  if (opcode == 1 /* text - all we're supporting */) {
+  if (opcode == 0x1 || opcode == 0x0) {
     var dataLen = data.charCodeAt(1)&127;
     var offset = 2;
     if (dataLen==126) {
@@ -150,7 +171,7 @@ WebSocket.prototype.parseData = function (data) {
                data.charCodeAt(offset++), data.charCodeAt(offset++)];
     }
 
-    if (dataLen+offset > data.length) {
+    if (dataLen+offset > data.length && opcode != 0x0 && data.length != 0) {
       // we received the start of a packet, but not enough of it for a full message.
       // store it for later, so when we get the next packet we can do the whole message
       this.lastData = data;
@@ -158,19 +179,34 @@ WebSocket.prototype.parseData = function (data) {
     }
 
     var msg = "";
-    for (var i = 0; i < dataLen; i++)
+    for (var i = 0; i < dataLen; i++) {
       msg += String.fromCharCode(data.charCodeAt(offset++) ^ mask[i&3]);
+    }
     this.lastData = data.substr(offset);
-    this.emit('message', msg);
+    
+    if(this.connected) {
+      this.lastData = '';
+      this.emit('message', msg);
+    } else if(this.handshakeDone) {
+      this.lastData = '';
+      this.connected = true;
+      this.emit('open', data.length ? data.substring(data.indexOf('{')) : data);
+    }
+  }
+  if(nextFrame) {
+    this.parseData(nextFrame);
+  } else {
+    this.lastData = data;
   }
 };
 
 WebSocket.prototype.handshake = function () {
   var socketHeader = [
-    "GET / HTTP/1.1",
+    "GET " + this.path + " HTTP/1.1",
+    "Host: " + this.host,
     "Upgrade: websocket",
     "Connection: Upgrade",
-    "Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==",
+    "Sec-WebSocket-Key: " + this.key.source,
     "Sec-WebSocket-Version: " + this.protocolVersion,
     "Origin: " + this.origin,
     "",""
@@ -182,8 +218,18 @@ WebSocket.prototype.handshake = function () {
 /** Send message based on opcode type */
 WebSocket.prototype.send = function (msg, opcode) {
   opcode = opcode === undefined ? 0x81 : opcode;
-  if (msg.length>125) throw "Messages >125 in length unsupported";
-  this.socket.write(strChr(opcode, msg.length + ( this.masking ? 128 : 0 )));
+  var size = msg.length;
+  if (msg.length>125) {
+    size = 126;
+  }
+  this.socket.write(strChr(opcode, size + ( this.masking ? 128 : 0 )));
+  
+  if (size == 126) {
+    // Need to write extra bytes for longer messages
+    this.socket.write(strChr(msg.length >> 8));
+    this.socket.write(strChr(msg.length));
+  }
+  
   if (this.masking) {
     var mask = [];
     var masked = '';
@@ -200,6 +246,10 @@ WebSocket.prototype.send = function (msg, opcode) {
   }
 };
 
+WebSocket.prototype.close = function() {
+  this.socket.end();
+};
+
 /** Create a WebSocket client */
 exports = function (host, options) {
   var ws = new WebSocket(host, options);
@@ -212,7 +262,7 @@ exports.createServer = function(callback, wscallback) {
   var server = require('http').createServer(function (req, res) {
     if (req.headers.Connection && req.headers.Connection.indexOf("Upgrade")>=0) {
       var key = req.headers["Sec-WebSocket-Key"];
-      var accept = btoa(E.toString(require("crypto").SHA1(key+"258EAFA5-E914-47DA-95CA-C5AB0DC85B11")));
+      var accept = btoa(E.toString(crypto.SHA1(key+"258EAFA5-E914-47DA-95CA-C5AB0DC85B11")));
       res.writeHead(101, {
           'Upgrade': 'websocket',
           'Connection': 'Upgrade',

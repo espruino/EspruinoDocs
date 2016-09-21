@@ -12,7 +12,6 @@ This is a Websocket implementation on Espruino - it lets you:
 Limitations:
 -----------
 
-* The module only accepts messages of less than 127 characters.
 * The module will not parse multiple websocket messages that arrive at once
 * When sending, the library will only send JSON-formatted messages
 
@@ -29,6 +28,7 @@ Then you will be able to use the following and point it to your websocket server
 var host = "192.168.0.10";
 var WebSocket = require("ws");
     var ws = new WebSocket(host,{
+      path: '/',
       port: 8080,
       protocolVersion: 13,
       origin: 'Espruino',
