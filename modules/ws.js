@@ -144,7 +144,8 @@ WebSocket.prototype.parseData = function (data) {
       dataLen = data.charCodeAt(3) | (data.charCodeAt(2)<<8);
       offset += 2;
     } else if (dataLen==127) throw "Messages >65535 in length unsupported";
-    if (dataLen+offset > data.length && opcode != 0x0 && data.length != 0) {
+    var pktLen = dataLen+offset+((data.charCodeAt(1)&128)?4/*mask*/:0);
+    if (pktLen > data.length) {
       // we received the start of a packet, but not enough of it for a full message.
       // store it for later, so when we get the next packet we can do the whole message
       this.lastData = data;
@@ -154,11 +155,9 @@ WebSocket.prototype.parseData = function (data) {
     switch (opcode) {
       case 0xA:
         this.emit('pong');
-        offset += dataLen;
         break;
       case 0x9:
         this.send('pong', 0x8A);
-        offset += dataLen;
         this.emit('ping');
         break;
       case 0x8:
@@ -167,10 +166,9 @@ WebSocket.prototype.parseData = function (data) {
       case 0:
       case 1:
         var mask = [ 0,0,0,0 ];
-        if (data.charCodeAt(1)&128 /* mask */) {
+        if (data.charCodeAt(1)&128 /* mask */)
           mask = [ data.charCodeAt(offset++), data.charCodeAt(offset++),
                    data.charCodeAt(offset++), data.charCodeAt(offset++)];
-        }
         var msg = "";
         for (var i = 0; i < dataLen; i++)
           msg += String.fromCharCode(data.charCodeAt(offset++) ^ mask[i&3]);
@@ -179,7 +177,7 @@ WebSocket.prototype.parseData = function (data) {
       default:
         console.log("WS: Unknown opcode "+opcode);
       }
-      data = data.substr(offset);
+      data = data.substr(pktLen);
     }
 };
 
