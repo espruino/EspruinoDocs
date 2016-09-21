@@ -18,6 +18,7 @@
       path: '/echo',
       port: 8080,
       protocolVersion: 13,
+      protocol : "echo-protocol", // optional websocket protocol
       origin: 'Espruino',
       keepAlive: 60  // Ping Interval in seconds.
     });
@@ -81,10 +82,10 @@ function WebSocket(host, options) {
   this.keepAlive = options.keepAlive * 1000 || 60000;
   this.masking = options.masking || true;
   this.path = options.path || "/";
+  this.protocol = options.protocol;
   this.lastData = "";
   this.key = buildKey();
   this.connected = false;
-  this.handshakeDone = false;
 }
 
 WebSocket.prototype.initializeConnection = function () {
@@ -98,7 +99,6 @@ WebSocket.prototype.onConnect = function (socket) {
   this.socket = socket;
   var ws = this;
   socket.on('data', this.parseData.bind(this));
-
   socket.on('close', function () {
     if (ws.pingTimer) {
       clearInterval(ws.pingTimer);
@@ -113,7 +113,6 @@ WebSocket.prototype.onConnect = function (socket) {
 WebSocket.prototype.parseData = function (data) {
   // see https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
   // Note, docs specify bits 0-7, etc - but BIT 0 is the MSB, 7 is the LSB
-  // TODO: handle >1 data packet
   var ws = this;
   this.emit('rawData', data);
 
@@ -122,55 +121,29 @@ WebSocket.prototype.parseData = function (data) {
     this.lastData="";
   }
 
-  // FIXME - not a good idea!
-  if (data.indexOf(this.key.hashed) > -1 && data.indexOf('\r\n\r\n') > -1) {
-      this.emit('handshake');
-    this.pingTimer = setInterval(function () {
-      ws.send('ping', 0x89);
-    }, this.keepAlive);
-    data = data.substring(data.indexOf('\r\n\r\n') + 4);
-    this.handshakeDone = true;
-  }
-
-  // If a packet contains data spanning two frames we need to split these up so we can handle them individually
-  var nextFrame;
-  if(data.indexOf(String.fromCharCode(129)) !== data.lastIndexOf(String.fromCharCode(129))) {
-    var nextFrameStartPos = data.indexOf(String.fromCharCode(129), data.indexOf(String.fromCharCode(129))+1);
-    nextFrame = data.substring(nextFrameStartPos);
-    data = data.substring(0, nextFrameStartPos);
-  }
-
-  var opcode = data.charCodeAt(0)&15;
-
-  if (opcode == 0xA)
-    return this.emit('pong');
-
-  if (opcode == 0x9) {
-    this.send('pong', 0x8A);
-    return this.emit('ping');
-  }
-
-  if (opcode == 0x8 && this.connected) {
-    // connection close request but only once we have confirmed the websocket is connected
-    this.socket.end();
-    // we'll emit a 'close' when the socket itself closes
+  if (!this.connected) {
+    // FIXME - not a good idea!
+    if (data.indexOf(this.key.hashed) > -1 && data.indexOf('\r\n\r\n') > -1) {
+        this.emit('handshake');
+      this.pingTimer = setInterval(function () {
+        ws.send('ping', 0x89);
+      }, this.keepAlive);
+      data = data.substring(data.indexOf('\r\n\r\n') + 4);
+      this.connected = true;
+      this.emit('open');
+    }
+    this.lastData = data;
     return;
   }
 
-  if (opcode == 0x1 || opcode == 0x0) {
-    var dataLen = data.charCodeAt(1)&127;
+  while (data.length) {
     var offset = 2;
+    var opcode = data.charCodeAt(0)&15;
+    var dataLen = data.charCodeAt(1)&127;
     if (dataLen==126) {
       dataLen = data.charCodeAt(3) | (data.charCodeAt(2)<<8);
       offset += 2;
     } else if (dataLen==127) throw "Messages >65535 in length unsupported";
-
-    var mask = [ 0,0,0,0 ];
-    if (data.charCodeAt(1)&128 /* mask */) {
-      mask = [ data.charCodeAt(offset++), data.charCodeAt(offset++),
-               data.charCodeAt(offset++), data.charCodeAt(offset++)];
-    }
-
     if (dataLen+offset > data.length && opcode != 0x0 && data.length != 0) {
       // we received the start of a packet, but not enough of it for a full message.
       // store it for later, so when we get the next packet we can do the whole message
@@ -178,26 +151,36 @@ WebSocket.prototype.parseData = function (data) {
       return;
     }
 
-    var msg = "";
-    for (var i = 0; i < dataLen; i++) {
-      msg += String.fromCharCode(data.charCodeAt(offset++) ^ mask[i&3]);
+    switch (opcode) {
+      case 0xA:
+        this.emit('pong');
+        offset += dataLen;
+        break;
+      case 0x9:
+        this.send('pong', 0x8A);
+        offset += dataLen;
+        this.emit('ping');
+        break;
+      case 0x8:
+        this.socket.end();
+        break;
+      case 0:
+      case 1:
+        var mask = [ 0,0,0,0 ];
+        if (data.charCodeAt(1)&128 /* mask */) {
+          mask = [ data.charCodeAt(offset++), data.charCodeAt(offset++),
+                   data.charCodeAt(offset++), data.charCodeAt(offset++)];
+        }
+        var msg = "";
+        for (var i = 0; i < dataLen; i++)
+          msg += String.fromCharCode(data.charCodeAt(offset++) ^ mask[i&3]);
+        this.emit('message', msg);
+        break;
+      default:
+        console.log("WS: Unknown opcode "+opcode);
+      }
+      data = data.substr(offset);
     }
-    this.lastData = data.substr(offset);
-    
-    if(this.connected) {
-      this.lastData = '';
-      this.emit('message', msg);
-    } else if(this.handshakeDone) {
-      this.lastData = '';
-      this.connected = true;
-      this.emit('open', data.length ? data.substring(data.indexOf('{')) : data);
-    }
-  }
-  if(nextFrame) {
-    this.parseData(nextFrame);
-  } else {
-    this.lastData = data;
-  }
 };
 
 WebSocket.prototype.handshake = function () {
@@ -208,11 +191,11 @@ WebSocket.prototype.handshake = function () {
     "Connection: Upgrade",
     "Sec-WebSocket-Key: " + this.key.source,
     "Sec-WebSocket-Version: " + this.protocolVersion,
-    "Origin: " + this.origin,
-    "",""
+    "Origin: " + this.origin
   ];
-
-  this.socket.write(socketHeader.join("\r\n"));
+  if (this.protocol)
+    socketHeader.push("Sec-WebSocket-Protocol: "+this.protocol);
+  this.socket.write(socketHeader.join("\r\n")+"\r\n\r\n");
 };
 
 /** Send message based on opcode type */
@@ -223,13 +206,13 @@ WebSocket.prototype.send = function (msg, opcode) {
     size = 126;
   }
   this.socket.write(strChr(opcode, size + ( this.masking ? 128 : 0 )));
-  
+
   if (size == 126) {
     // Need to write extra bytes for longer messages
     this.socket.write(strChr(msg.length >> 8));
     this.socket.write(strChr(msg.length));
   }
-  
+
   if (this.masking) {
     var mask = [];
     var masked = '';

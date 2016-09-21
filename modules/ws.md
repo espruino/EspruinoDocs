@@ -24,13 +24,16 @@ First you need run a websocket server which is explained [here using Node.js](ht
 
 Then you will be able to use the following and point it to your websocket server's host and port.
 
+**Note:** all arguments after the host are optional.
+
 ```js
 var host = "192.168.0.10";
 var WebSocket = require("ws");
     var ws = new WebSocket(host,{
       path: '/',
-      port: 8080,
-      protocolVersion: 13,
+      port: 8080, // default is 80
+      protocol : "echo-protocol", // websocket protocol name (default is none)
+      protocolVersion: 13, // websocket protocol version, default is 13
       origin: 'Espruino',
       keepAlive: 60
     });
