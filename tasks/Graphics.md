@@ -180,7 +180,9 @@ If you don't want to load images off an SD card, the easiest way is to convert t
 
 #### Creating a raw image
 
-It's best to install the [ImageMagick](http://www.imagemagick.org/) tools. Then you can type commands like:
+The easiest solution is to use [our online Image Converter](/Image+Converter).
+
+Or you can use command-line tools locally. It's best to install [ImageMagick](http://www.imagemagick.org/). Then you can type commands like:
 
 ```Bash
 # Create a 24 bit RGB image called output.raw
