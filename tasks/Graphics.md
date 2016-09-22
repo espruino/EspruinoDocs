@@ -4,11 +4,11 @@ Graphics Library
 
 * KEYWORDS: Graphics,LCD,Draw,Line,Fill,Color,Circle,Built-In
 
-Espruino has a built-in graphics library, exposed via the [Graphics](/Reference#Graphics) class. 
+Espruino has a built-in graphics library, exposed via the [Graphics](/Reference#Graphics) class.
 
 On most boards (without built in displays) you can create your own instance(s) of the Graphics class using a module that is designed to interface to a display (see 'Graphics Drivers' below), or you can manually create you own using one of the `Graphics.createXYZ` functions.
 
-On the few boards that do contain LCDs, there is a predefined variable called 'LCD' (which is an instance of the Graphics Object). 
+On the few boards that do contain LCDs, there is a predefined variable called 'LCD' (which is an instance of the Graphics Object).
 
 **Note:** All coordinates in the Graphics library treat 0,0 as the top left corner of the display. However you can rotate or mirror what you draw using the [Graphics.setRotation](/Reference#l_Graphics_setRotation) method.
 
@@ -23,13 +23,13 @@ Below are a list of currently available modules that will interface to hardware 
 You can create a Graphics class which renders to an ArrayBuffer:
 
 ```
-Graphics.prototype.print = function() { 
+Graphics.prototype.print = function() {
   for (var y=0;y<this.getHeight();y++)
     console.log(new Uint8Array(this.buffer,this.getWidth()*y,this.getWidth()));
 }
 var g = Graphics.createArrayBuffer(8,8,8);
 g.setColor(1)
-g.drawString("X",0,0) 
+g.drawString("X",0,0)
 g.print()
 //0,0,0,0,0,0,0,0
 //0,1,1,0,0,0,1,1
@@ -76,7 +76,7 @@ g.setFontVector(60);
 g.setColor(0,1,0);
 g.drawString("World",40,40); // 60px high in green
 ```
- 
+
 You can then switch back to the bitmap font using:
 
 ```
@@ -88,10 +88,18 @@ For more information, see [[Fonts]]
 Circles
 -------
 
-There isn't currently a circle function implemented - but you can just add one!
+In Espruino versions since 1.87, support for drawing circles has been added:
 
 ```JavaScript
-g.fillCircle = function(x,y,rad,col) {
+g.fillCircle(x, y, rad);
+g.drawCircle(x, y, rad);
+```
+
+However if you want to add your own support in earlier versions then you
+can always do something like this:
+
+```JavaScript
+g.fillCircle = function(x,y,rad) {
   var pts = parseInt(rad)/2;
   var a = [];
   for (var i=0;i<pts;i++) {
@@ -106,7 +114,7 @@ g.clear();
 g.fillCircle(100,100,50);
 ```
 
- 
+
 Random Lines
 ------------
 
@@ -118,7 +126,7 @@ while (true) {
   g.setColor(Math.random(),Math.random(),Math.random());
   g.drawLine(
     Math.random()*LCD.getWidth(), Math.random()*LCD.getHeight(),
-    Math.random()*LCD.getWidth(),Math.random()*LCD.getHeight()) 
+    Math.random()*LCD.getWidth(),Math.random()*LCD.getHeight())
 }
 ```
 
@@ -190,7 +198,7 @@ convert myimage.png -resize 16x16\! -depth 1  gray:output.raw
 
 #### Base64 Encoding
 
-On Linux, simply type `base64 --wrap=0 myfilename.raw` - or on other platforms you can use the [[File Converter]] webpage. 
+On Linux, simply type `base64 --wrap=0 myfilename.raw` - or on other platforms you can use the [[File Converter]] webpage.
 
 #### Loading into Espruino
 
@@ -203,5 +211,3 @@ var img = {
   buffer : E.toArrayBuffer(atob("AAAAAAAAeAAAf/4AH/+bAH/ABQBoAAeAaAADwHQAAf5aAfCfS/8/sUXP//1G//AdQ/wAHUAAAB1AAAAdQAAAHWAAABNgAAAeYAAAEOAAABDgAAAQ8AAAGPgAABz4AAAcfAAAnD4AP/A+B//AHz//wA///4AAP+AAABgAAAAAAAA="))
 };
 ```
-
-
