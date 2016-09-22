@@ -41,7 +41,7 @@ See the [Graphics](/Graphics) library page for more information.
         var thresh = 128;
         if (diffusion) thresh=Math.random()*254+1;
         if (c>thresh) {
-          bitData[n>>3] |= 1<<(n&7);
+          bitData[n>>3] |= 128>>(n&7);
           data[n*4]=255;
           data[n*4+1]=255;
           data[n*4+2]=255;
