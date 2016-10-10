@@ -67,7 +67,7 @@ Wiring Up
 
 **Note:** There's no need to connect Blue and Red if you just want a green display!
 
-* Add labels for the keys on your keyboard as below. If you're not in England you'll probably want to make your own key labels,
+* Add labels for the keys on your keyboard as below. If you're not in the UK you'll probably want to make your own key labels,
 but you will need to change the `KEYMAP` variables in the code below.
 
 ![Installed Pico](Espruino Home Computer/full.jpg)
