@@ -13,8 +13,8 @@ The Vector font is made out of polygons, and it can be resized to any size. This
 
 To use it, just use `Graphics.setFontVector(size)`:
 
+assuming you've set up [[Graphics]] as a variable called `g`
 ```
-// assuming you've set up [[Graphics]] as a variable called g
 g.clear();
 g.setFontVector(40);
 g.drawString("Hello",0,0); // 40px high
