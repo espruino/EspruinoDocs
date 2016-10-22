@@ -104,7 +104,7 @@ memory (the system tends to crash in those situations).
 
 In order to reduce memory requirements,
 Espruino uses LwIP configured with a MSS of 536, this means that all TCP packets can have at most
-536 bytes of payload as opposed to the typical 1460 bytes. On the tranmission end, LwIP seems
+536 bytes of payload as opposed to the typical 1460 bytes. On the transmission end, LwIP seems
 to allow for 3 packets to be in-flight (it has to keep data that is sent until it receives an
 acknowledgment from the receiver). On the reception end, it advertises a TCP window of 4 times
 the MSS, i.e. 2144 bytes, and Espruino tells LwIP to stop incoming data when it has two unconsumed
