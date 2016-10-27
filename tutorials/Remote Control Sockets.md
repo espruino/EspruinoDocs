@@ -10,7 +10,7 @@ Remote Control Sockets
 Introduction
 -----------
 
-You can now buy remote controlled sockets [very cheaply](http://www.ebay.co.uk/sch/i.html?_nkw=remote+control+socket). If you want to turn some mains-powered things on and off with your computer but don't want to get involved with [[Relays]] and wiring up mains then controlling these could be a great idea.
+You can now buy remote controlled sockets [very cheaply](http://www.ebay.com/sch/i.html?_nkw=remote+control+socket). If you want to turn some mains-powered things on and off with your computer but don't want to get involved with [[Relays]] and wiring up mains then controlling these could be a great idea.
 
 We're going to use 'Status'-branded sockets.
 
