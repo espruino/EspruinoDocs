@@ -53,5 +53,5 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.co.uk/sch/i.html?_nkw=MFRC522)
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=MFRC522)
 * [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=MFRC522)

@@ -130,4 +130,4 @@ Using
 Buying
 -----
 
-* Digole Digital Solutions via [eBay store ](http://stores.ebay.com/Digole-Digital-Solution/Serial-LCD-OLED-/_i.html) or direct from [digole.com](http://digole.com)
+* Digole Digital Solutions via [eBay store](http://stores.ebay.com/Digole-Digital-Solution) or direct from [digole.com](http://digole.com)
