@@ -211,7 +211,7 @@ exports.KEY = {
 
 exports.tap = function(keyCode, modifiers, callback) {
   NRF.sendHIDReport([modifiers,0,keyCode,0,0,0,0,0], function() {
-    NRF.sendHIDReport([0,0,0,0,0,0,0,0])
+    NRF.sendHIDReport([0,0,0,0,0,0,0,0]);
     if (callback) callback();
   });
 };
