@@ -42,7 +42,7 @@ DHT22.prototype.read = function (cb, n) {
       if (n>1) setTimeout(function() {ht.read(cb,--n);},500);
       else cb({err:true, checksumError:cks>0, raw:d, temp:-1, rh:-1});
     }
-  },6);
+  }, 50);
 };
 
 exports.connect = function(pin) {
