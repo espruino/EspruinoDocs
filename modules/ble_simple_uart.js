@@ -1,6 +1,6 @@
-exports.write = function(deviceAddr, text, callback) {
+exports.write = function(device, text, callback) {
   var device;
-  NRF.connect(deviceAddr).then(function(d) {
+  device.gatt.connect().then(function(d) {
     device = d;
     return d.getPrimaryService("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
   }).then(function(s) {
@@ -25,4 +25,8 @@ exports.write = function(deviceAddr, text, callback) {
   });
 }
 
-//exports.write("e7:e0:57:ad:36:a2 random", "digitalPulse(LED3,1,1000)\n", function() { print('Done!'); }); 
+/*
+NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device) {
+  exports.write(device, "digitalPulse(LED3,1,1000)\n", function() { print('Done!'); }); 
+});
+*/

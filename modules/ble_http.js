@@ -1,7 +1,7 @@
 
-exports.httpRequest = function(url, callback) {
+exports.httpRequest = function(device, url, callback) {
   var device, service;
-  NRF.connect("b8:27:eb:ed:60:4b").then(function(d) {
+  device.gatt.connect().then(function(d) {
     console.log("Connected");
     device = d;
     return d.getPrimaryService(0x1823);
@@ -37,9 +37,9 @@ exports.httpRequest = function(url, callback) {
 };
 /*
 // correct way
-httpRequest = function(url, callback) {
+httpRequest = function(device, url, callback) {
   var device, service;
-  NRF.connect("b8:27:eb:ed:60:4b").then(function(d) {
+  device.gatt.connect().then(function(d) {
     console.log("Connected");
     device = d;
     return d.getPrimaryService(0x1823);
@@ -86,6 +86,7 @@ httpRequest = function(url, callback) {
   });
 };*/
 
-
-// httpRequest("pur3.co.uk/hello.txt", function(d) { print("GET:",JSON.stringify(d)); })
+/*NRF.requestDevice({ filters: [{ services: ['1823'] }] }).then(function(device) {
+  exports.httpRequest(device, "pur3.co.uk/hello.txt", function(d) { print("GET:",JSON.stringify(d)); })
+});*/
 
