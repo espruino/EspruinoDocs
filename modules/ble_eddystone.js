@@ -21,4 +21,4 @@ exports.advertise = function(url) {
   d.push.apply(d,url.toString().split(""));
   d[4] = d.length-5;
   NRF.setAdvertising(d, {interval:100});
-}
+};
