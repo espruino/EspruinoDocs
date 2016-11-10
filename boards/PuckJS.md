@@ -20,6 +20,14 @@ Features
 * Pin capable of capacitive sensing
 
 
+Tutorials
+--------
+
+Tutorials using Puck.js:
+
+* APPEND_USES: Puck.js
+
+
 Power Consumption
 -----------------
 
