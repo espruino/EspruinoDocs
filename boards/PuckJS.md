@@ -43,7 +43,9 @@ for advertising, but values are roughly:
 * Advertising, magnetometer reading 0.63 Hz - 50uA
 * Advertising, magnetometer reading 10 Hz - 200uA
 * Connected via BLE - 200uA
+* One LED lit - 1-2mA
 * 100% CPU usage running JavaScript - 4mA
+* All LEDs lit, 100% CPU usage running JavaScript - 10mA
 
 Puck.js sends advertising data without ever executing JavaScript. To get
 the best power consumption, make sure your code executes as rarely as
