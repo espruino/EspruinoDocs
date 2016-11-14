@@ -1,6 +1,6 @@
 exports.write = function(device, text, callback) {
   var device;
-  device.gatt.connect().then(function(d) {
+  return device.gatt.connect().then(function(d) {
     device = d;
     return d.getPrimaryService("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
   }).then(function(s) {
@@ -20,8 +20,6 @@ exports.write = function(device, text, callback) {
   }).then(function() {
     device.disconnect();
     if (callback) callback();
-  }).catch(function(e) {
-    if (callback) callback("Error!");
   });
 }
 

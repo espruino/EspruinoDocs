@@ -16,7 +16,7 @@ setWatch(go, BTN, {repeat:true, edge:"rising", debounce:50});
 */
 
 exports.print = function(device, text, callback) {
-  device.gatt.connect().then(function(d) {
+  return device.gatt.connect().then(function(d) {
     device = d;
     return d.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb");
   }).then(function(s) {
@@ -35,8 +35,6 @@ exports.print = function(device, text, callback) {
   }).then(function() {
     device.disconnect();
     if (callback) callback();
-  }).catch(function() {
-    if (callback) callback("Error!");
   });
 };
 

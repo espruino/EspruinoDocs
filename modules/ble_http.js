@@ -1,7 +1,7 @@
 
 exports.httpRequest = function(device, url, callback) {
   var device, service;
-  device.gatt.connect().then(function(d) {
+  return device.gatt.connect().then(function(d) {
     console.log("Connected");
     device = d;
     return d.getPrimaryService(0x1823);
@@ -30,9 +30,8 @@ exports.httpRequest = function(device, url, callback) {
   }).then(function(d) {  
     device.disconnect();
     console.log("Disconnected");
-    callback(d);
-  }).catch(function() {
-    console.log("Something's broken.");
+    if (callback) callback(d);
+    return d;
   });
 };
 /*
@@ -80,9 +79,8 @@ httpRequest = function(device, url, callback) {
   }).then(function(d) {  
     device.disconnect();
     console.log("Disconnected");
-    callback(d);
-  }).catch(function() {
-    console.log("Something's broken.");
+    if (callback) callback(d);
+    return d;
   });
 };*/
 
