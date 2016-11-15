@@ -1,3 +1,4 @@
+<!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Using Puck.js from a Web Bluetooth Website
 ==========================================
 

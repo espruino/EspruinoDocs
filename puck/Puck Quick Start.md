@@ -1,3 +1,4 @@
+<!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Getting Started
 ===============
 
@@ -27,7 +28,7 @@ Using the Espruino IDE
 
 ### With Web Bluetooth
 
-If your computer supports it, Web Bluetooth is the easiest way to get started with Puck.js. 
+If your computer supports it, Web Bluetooth is the easiest way to get started with Puck.js.
 
 You'll need:
 
@@ -51,7 +52,7 @@ Now:
 
 ### With an application
 
-On some platforms (Windows, or Linux with older `Bluez`) Web Bluetooth isn't supported. 
+On some platforms (Windows, or Linux with older `Bluez`) Web Bluetooth isn't supported.
 
 On these you'll need to install a native application. We've packaged up the Web IDE in builds for Windows, Linux, and Mac OS that you can download from the Espruino site.
 
@@ -93,7 +94,7 @@ Sending Individual Commands
 
 * Start the app
 * Tap `Connect` and choose your Puck.js device
-* Type commands into the console - see below. 
+* Type commands into the console - see below.
 
 **Note:** In this app, you need to manually press the `Enter` key *before* sending a line
 
@@ -101,7 +102,7 @@ Sending Individual Commands
 
 You can use Web Bluetooth on your own website to control Puck.js devices, as long as you have a compatible browser.
 
-While you can use Web Bluetooth directly, we've provided a helpful library. Just include 
+While you can use Web Bluetooth directly, we've provided a helpful library. Just include
 `<script src="https://puck-js.com/puck.js"></script>` in your website (served off `HTTPS`)
 and you can easily execute commands just by running JS code like:
 
@@ -122,7 +123,7 @@ For the simplest control, add you need to do is connect to the Puck.js bluetooth
 type in `LED1.set()` and click send
 * The red LED should light up.
 * You can now type `LED1.reset()` to turn it off. `LED2` and `LED3` work too
-* Note that responses are also being sent back. You can type in `BTN.read()` and `false` will be returned - it'll be `true` if the button is pressed 
+* Note that responses are also being sent back. You can type in `BTN.read()` and `false` will be returned - it'll be `true` if the button is pressed
 
 
 
