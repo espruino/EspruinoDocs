@@ -2,6 +2,10 @@
 Getting Started
 ===============
 
+First, peel the silicone cover off your Puck.js and tip the circuit board out. On the back you'll find a platic tab in the battery that you need to pull out to power up your Puck.
+
+Next, re-assemble. To make sure the button can click you need to put the battery facing down, with the silver shield facing towards the 'shelf' in the case.
+
 Once you've got power on your Puck.js it'll start doing two things:
 
 * Advertising itself on Bluetooth Low Energy
@@ -13,14 +17,14 @@ Otherwise, you'll need to go straight to the Puck.js website - [https://puck-js.
 
 
 Using Puck.js
-==============
+--------------
 
 By default, Puck.js appears as a Bluetooth Low Energy device with a serial port. When you connect to this serial port you get full command-line access to the Espruno Javascript interpreter built into it.
 
 To get started you have two options:
 
-* Use the Espruino IDE to write code to Puck.js
-* Send individual JavaScript commands to Puck.js, without programming it
+* Use the Espruino IDE or command-line tools to write code to Puck.js
+* Send individual JavaScript commands to Puck.js without programming it
 
 
 Using the Espruino IDE
@@ -80,6 +84,17 @@ Connect as follows:
 You can now use the normal Espruino Web IDE, or a serial terminal application at 9600 baud.
 
 
+Command-Line
+------------
+
+You can use the Espruno command-line app. It works under [Node.js](https://nodejs.org/en/), so you'll need to:
+
+* Install [Node](https://nodejs.org/en/)
+* In a command prompt, type `npm install -g espruino`
+* When that completes, you can type `espruino --help` for help
+* To connect, try `espruino --list` to list devices, then copy your device's MAC address and type `espruino -p aa:bb:cc:dd:ee` to connect.
+
+
 Sending Individual Commands
 ---------------------------
 
@@ -88,13 +103,13 @@ Sending Individual Commands
 * Start the app
 * Choose the Puck.js device you want to communicate with and click `Connect`
 * Click `UART`
-* When connected you're ready to enter some commands - see below
+* When connected you're ready to enter some commands - see `Commands` below
 
 ### `nRF UART` app
 
 * Start the app
 * Tap `Connect` and choose your Puck.js device
-* Type commands into the console - see below.
+* Type commands into the console - see `Commands` below.
 
 **Note:** In this app, you need to manually press the `Enter` key *before* sending a line
 
@@ -106,10 +121,11 @@ While you can use Web Bluetooth directly, we've provided a helpful library. Just
 `<script src="https://puck-js.com/puck.js"></script>` in your website (served off `HTTPS`)
 and you can easily execute commands just by running JS code like:
 
-
 ```
 Puck.write('LED1.set();\n');
 ```
+
+We've got [a proper tutorial on it here](/PuckJS Web Bluetooth)
 
 ### Your own app
 
@@ -117,21 +133,9 @@ You can make your own application to control Espruino for whatever platform you 
 
 For the simplest control, add you need to do is connect to the Puck.js bluetooth device and connect to the characteristic with ID `6e400002b5a3f393e0a9e50e24dcca9e`. You can then write repeatedly to it to send commands to Espruino.
 
-
 ### Commands...
 
 type in `LED1.set()` and click send
 * The red LED should light up.
 * You can now type `LED1.reset()` to turn it off. `LED2` and `LED3` work too
 * Note that responses are also being sent back. You can type in `BTN.read()` and `false` will be returned - it'll be `true` if the button is pressed
-
-
-
-Troubleshooting
-===============
-
-## I think I saved something and stopped it working
-
-Unplug the battery, and plug it back in with the button held down until all 3 LEDs turn on. Then release it. The green LED should flash a few times.
-
-This will stop Puck.js loading any stored code (that time only) - you can then `save()` new code to flash.
