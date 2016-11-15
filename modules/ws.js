@@ -86,6 +86,7 @@ function WebSocket(host, options) {
   this.lastData = "";
   this.key = buildKey();
   this.connected = false || options.connected;
+  this.headers = options.headers || {};
 }
 
 WebSocket.prototype.initializeConnection = function () {
@@ -193,6 +194,12 @@ WebSocket.prototype.handshake = function () {
   ];
   if (this.protocol)
     socketHeader.push("Sec-WebSocket-Protocol: "+this.protocol);
+  
+  for(var key in this.headers) {
+    if (this.headers.hasOwnProperty(key))
+      socketHeader.push(key+": "+this.headers[key]);
+  }
+ 
   this.socket.write(socketHeader.join("\r\n")+"\r\n\r\n");
 };
 
