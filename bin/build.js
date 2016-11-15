@@ -241,7 +241,7 @@ markdownFiles.forEach(function (file) {
   htmlLinks[file] = htmlFile;
 });
 
-fs.writeFile(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,1)+";");
+fs.writeFileSync(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,1)+";");
 
 
 // ---------------------------------------------- Inference code
@@ -445,7 +445,7 @@ markdownFiles.forEach(function (file) {
    html = '<div style="min-height:700px;">' + html + '</div>'+
           '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues/new?title='+file+'">let us know</a>.</p>';
 
-   fs.writeFile(htmlFiles[file], html);
+   fs.writeFileSync(htmlFiles[file], html);
 });
 
 
