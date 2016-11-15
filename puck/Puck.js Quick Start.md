@@ -1,6 +1,9 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Getting Started
-===============
+Getting Started with Puck.js
+============================
+
+* KEYWORDS: Puck.js,Quick Start,Getting Started,Web Bluetooth,BLE
+* USES: Puck.js,Web Bluetooth
 
 First, peel the silicone cover off your Puck.js and tip the circuit board out. On the back you'll find a platic tab in the battery that you need to pull out to power up your Puck.
 
@@ -32,6 +35,12 @@ Using the Espruino IDE
 
 ### With Web Bluetooth
 
+<script><!--
+  document.write("<p><b>Note:</b> Web Bluetooth is  <b>" +
+    (navigator.bluetooth?'already enabled':'currently disabled')+
+    "</b> on this computer.</p>");
+--></script>
+
 If your computer supports it, Web Bluetooth is the easiest way to get started with Puck.js.
 
 You'll need:
@@ -43,15 +52,15 @@ You'll need:
 First, you need to enable Web Bluetooth support:
 
 * Type `chrome://flags` in the address bar
-* Search for `Web Bluetooth` and click `Enable`
+* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`) in Chrome 56 or later, or `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on MacOS and Chromebook, there is no option available and Web Bluetooth is enabled by default.
 * Restart your browser
 
 Now:
 
 * Go to the [Puck.js site](https://puck-js.com/go) and click the Web IDE option.
 * Click the orange icon in the Top Left
-* You should be shown a list of devices - click on Puck.js
-* Wait a few seconds - you should be connected!
+* You should be shown a list of devices - click on `Puck.js ABCD` (where `ABCD` is the last 4 digits of your Puck's address)
+* Wait a few seconds - you should now be connected!
 
 
 ### With an application
