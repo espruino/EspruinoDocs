@@ -36,7 +36,7 @@ var WebSocket = require("ws");
       protocolVersion: 13, // websocket protocol version, default is 13
       origin: 'Espruino',
       keepAlive: 60,
-      headers:{ some:'header', 'untimate-question':42 } // websocket headers to be used e.g. for auth (default is none)
+      headers:{ some:'header', 'ultimate-question':42 } // websocket headers to be used e.g. for auth (default is none)
     });
 
 ws.on('open', function() {
