@@ -20,7 +20,8 @@
       protocolVersion: 13,
       protocol : "echo-protocol", // optional websocket protocol
       origin: 'Espruino',
-      keepAlive: 60  // Ping Interval in seconds.
+      keepAlive: 60,  // Ping Interval in seconds.
+      headers:{ some:'header', 'another-header':42 } // optional websocket headers
     });
 
  ws.on('open', function() {
