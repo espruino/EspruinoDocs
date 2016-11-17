@@ -33,12 +33,12 @@ and click `Create` (if you don't, you'll have to use command-line tools to creat
 
 You'll now have your own webpage at: https://your_username.github.io/PuckTest/test.html
 
-![](PuckJS Web Bluetooth/simple.png)
+![](Puck.js Web Bluetooth/simple.png)
 
 Click on the button marked `On!` and you should be presented with a window
 like the following:
 
-![](PuckJS Web Bluetooth/scanning.png)
+![](Puck.js Web Bluetooth/scanning.png)
 
 If you choose your Puck.js device and click `Pair`, you should see the Red
 LED light up on it after a few seconds. You can now click the `Off!` button
@@ -48,7 +48,7 @@ So what happened? The HTML above creates two buttons, and when they are
 executed they call the `Puck.write` function, which is in the `puck.js`
 script file that we loaded up right before.
 
-`Puck.write` sends the string you pass to it directly to [Puck.js](/PuckJS)
+`Puck.write` sends the string you pass to it directly to [Puck.js](/Puck.js)
 as a command. You need the `\n` (newline character) to tell Espruino that
 it's the end of the command and it should execute it.
 
@@ -111,7 +111,7 @@ area. Add this inside the `<head>` tag:
 
 * If you now reload your page it should look like this:
 
-![](PuckJS Web Bluetooth/lightbulb.png)
+![](Puck.js Web Bluetooth/lightbulb.png)
 
 **Note:** if it doesn't change, it might be because the webpage has been cached.
 If you can add `?1` to the end of the URL (you may have to keep incrementing the

@@ -134,7 +134,7 @@ and you can easily execute commands just by running JS code like:
 Puck.write('LED1.set();\n');
 ```
 
-We've got [a proper tutorial on it here](/PuckJS Web Bluetooth)
+We've got [a proper tutorial on it here](/Puck.js Web Bluetooth)
 
 ### Your own app
 
