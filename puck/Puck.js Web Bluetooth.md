@@ -75,7 +75,7 @@ the edit icon (shaped like a Pencil).
 to stretch, so we need to add some CSS to tell it to fill the available
 area. Add this inside the `<head>` tag:
 
-```
+```CSS
   <style>
     body { margin:0;  }
     svg {
@@ -122,7 +122,7 @@ with just a click on the SVG image.
 
 * Edit the code and replace the HTML for the buttons with the following:
 
-```
+```Script
   <script type="text/javascript">
     // Get the actual curve inside the SVG. You could make differemt
     // parts of a more complex SVG do different things...
@@ -165,6 +165,7 @@ could use the following:
   <svg viewBox="0 0 24 24">
     <path fill="#000000" d="M12,2A7,7 0 0,0 5,9C5,11.38 6.19,13.47 8,14.74V17A1,1 0 0,0 9,18H15A1,1 0 0,0 16,17V14.74C17.81,13.47 19,11.38 19,9A7,7 0 0,0 12,2M9,21A1,1 0 0,0 10,22H14A1,1 0 0,0 15,21V20H9V21Z" />
   </svg>
+  <script src="https://www.puck-js.com/puck.js"></script>
   <script type="text/javascript">
     // Get the actual curve inside the SVG. You could make differemt
     // parts of a more complex SVG do different things...
@@ -291,7 +292,7 @@ function with the connection, which you can then use to send and receive data.
 
 Try the example below:
 
-```
+```HTML_demo_link
 <html>
  <head>
    <style>
