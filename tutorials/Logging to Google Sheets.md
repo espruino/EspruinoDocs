@@ -31,10 +31,10 @@ Software
 
 ```
 var wifi;
-// The 128kB of flash memory on Pico that's not supposed to exist :)
-var addr = process.memory().flash_start + process.memory().flash_length;
 // flash memory module
 var flash = require("Flash");
+// The address of the first free area of flash memory available
+var addr = flash.getFree()[0].addr;
 
 /* This writes data to flash, and returns a 'memoryArea' -
 a reference to the actual bytes in flash*/
