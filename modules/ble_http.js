@@ -1,3 +1,7 @@
+/* Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
+/*NRF.requestDevice({ filters: [{ services: ['1823'] }] }).then(function(device) {
+  exports.httpRequest(device, "pur3.co.uk/hello.txt", function(d) { print("GET:",JSON.stringify(d)); })
+});*/
 
 exports.httpRequest = function(device, url, callback) {
   var device, service;
@@ -15,19 +19,19 @@ exports.httpRequest = function(device, url, callback) {
   }).then(function() {
     console.log("Set URI");
     return service.getCharacteristic(0x2ABA); // control point
-  }).then(function(c) { 
+  }).then(function(c) {
     console.log("Got characteristic");
     return c.writeValue(1); // HTTP GET
-  }).then(function() {  
+  }).then(function() {
     console.log("Written GET");
     return new Promise(function(resolve) {
       setTimeout(resolve, 2000);
-    });  
-  }).then(function() {  
+    });
+  }).then(function() {
     return service.getCharacteristic(0x2AB9); // HTTP body
-  }).then(function(c) {  
+  }).then(function(c) {
     return c.readValue();
-  }).then(function(d) {  
+  }).then(function(d) {
     device.disconnect();
     console.log("Disconnected");
     if (callback) callback(d);
@@ -60,31 +64,26 @@ httpRequest = function(device, url, callback) {
       console.log("Characteristic value changed",JSON.stringify(d));
     });
     return c.startNotifications();
-  }).then(function() { 
+  }).then(function() {
     console.log("Started notifications");
     return service.getCharacteristic(0x2ABA); // control point
-  }).then(function(c) { 
+  }).then(function(c) {
     console.log("Got control point characteristic");
     return c.writeValue(1); // HTTP GET
-  }).then(function() {  
+  }).then(function() {
     console.log("Written GET");
     return new Promise(function(resolve) {
       //FIXME: Use characteristicvaluechanged
       setTimeout(resolve, 2000);
-    });  
-  }).then(function() {  
+    });
+  }).then(function() {
     return service.getCharacteristic(0x2AB9); // HTTP body
-  }).then(function(c) {  
+  }).then(function(c) {
     return c.readValue();
-  }).then(function(d) {  
+  }).then(function(d) {
     device.disconnect();
     console.log("Disconnected");
     if (callback) callback(d);
     return d;
   });
 };*/
-
-/*NRF.requestDevice({ filters: [{ services: ['1823'] }] }).then(function(device) {
-  exports.httpRequest(device, "pur3.co.uk/hello.txt", function(d) { print("GET:",JSON.stringify(d)); })
-});*/
-

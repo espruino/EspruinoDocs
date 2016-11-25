@@ -33,11 +33,11 @@ exports.report = new Uint8Array([
   0xc0                           // END_COLLECTION
 ]);
 
-function p(c) { NRF.sendHIDReport(c, function() { NRF.sendHIDReport(0) }); }
-exports.next = function() { p(0x1) };
-exports.prev = function() { p(0x2) };
-exports.stop = function() { p(0x4) };
-exports.playpause = function() { p(0x8) };
-exports.mute = function() { p(0x10) };
-exports.volumeUp = function() { p(0x20) };
-exports.volumeDown = function() { p(0x40) };
+function p(c,cb) { NRF.sendHIDReport(c, function() { NRF.sendHIDReport(0, cb) }); }
+exports.next = function(cb) { p(0x1,cb) };
+exports.prev = function(cb) { p(0x2,cb) };
+exports.stop = function(cb) { p(0x4,cb) };
+exports.playpause = function(cb) { p(0x8,cb) };
+exports.mute = function(cb) { p(0x10,cb) };
+exports.volumeUp = function(cb) { p(0x20,cb) };
+exports.volumeDown = function(cb) { p(0x40,cb) };

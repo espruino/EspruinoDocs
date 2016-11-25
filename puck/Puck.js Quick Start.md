@@ -5,11 +5,25 @@ Getting Started with Puck.js
 * KEYWORDS: Puck.js,Quick Start,Getting Started,Web Bluetooth,BLE
 * USES: Puck.js,Web Bluetooth
 
-First, peel the silicone cover off your Puck.js and tip the circuit board out. On the back you'll find a platic tab in the battery that you need to pull out to power up your Puck.
 
-Next, re-assemble. To make sure the button can click you need to put the battery facing down, with the silver shield facing towards the 'shelf' in the case.
+Your Puck.js shipped with a battery installed, but with a small plastic tab inserted to keep it turned off.
 
-Once you've got power on your Puck.js it'll start doing two things:
+
+Turning On
+----------
+
+To turn on your Puck, simply:
+
+* Remove Puck.js from its packaging
+* Peel the silicone case away from the hard base using your fingers
+* Tip the Puck.js circuit board out of the case
+* Pull out the clear plastic tab from the battery compartment. The red LED should flash very briefly.
+* Re-assemble the Puck. To make sure the button works correctly you need to put the battery facing down, with the silver shield facing towards the 'shelf' in the case.
+
+Now to get started!
+
+
+Once you've your Puck.js is powered up it'll start doing two things:
 
 * Advertising itself on Bluetooth Low Energy
 * Acting as an NFC tag that will redirect you to the Puck.js website
@@ -43,11 +57,13 @@ Using the Espruino IDE
 
 If your computer supports it, Web Bluetooth is the easiest way to get started with Puck.js.
 
-You'll need:
+You'll need an up to date version of [Google Chrome](https://www.google.com/chrome/browser/desktop/) or Opera Web Browsers on one of:
 
-* A Mac OS, Android, Chromebook or Linux computer (Windows should be supported in Q1 2017)
-* The [Google Chrome](https://www.google.com/chrome/browser/desktop/) web browser
-* If you have Linux you need `Bluez` newer than `5.40` - you can check by typing `bluetoothd --version`
+* Android (Android 6, Marshmallow or later required, but Android 5 [works with Chromium](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop))
+* Mac OS (OS X Yosemite or later required)
+* Linux (BlueZ 5.41+ required - you can check by typing `bluetoothd --version`). [Bluez install instructions here](/Web Bluetooth On Linux)
+* Chromebook (all recent Chromebooks should support Web Bluetooth)
+* Windows support is in progress - Windows 8.1 should be supported in Q1 2017
 
 First, you need to enable Web Bluetooth support:
 
@@ -57,10 +73,21 @@ First, you need to enable Web Bluetooth support:
 
 Now:
 
-* Go to the [Puck.js site](https://puck-js.com/go) and click the Web IDE option.
-* Click the orange icon in the Top Left
+* Go to the [Puck.js site](https://puck-js.com/go). It should tell you that you have Web Bluetooth.
+* Click the Web IDE option.
+* Click the orange icon in the Top Left: ![Connect icon](Puck.js Quick Start/connect.png)
+* You may see a list of connection options - choose `Web Bluetooth`:
+
+![Web Bluetooth setting](Puck.js Quick Start/connect2.png)
+
 * You should be shown a list of devices - click on `Puck.js ABCD` (where `ABCD` is the last 4 digits of your Puck's address)
+
+![Web Bluetooth device chooser](Puck.js Quick Start/connect3.png)
+
 * Wait a few seconds - you should now be connected!
+* Click on the left-hand side of the IDE, type `LED1.set()` and enter. The red LED should light.
+* You can type `LED1.reset()` to turn it off.
+* You can now try the rest of the [Espruino Quick Start](/Quick+Start#start-writing-code-) on your Puck!
 
 
 ### With an application
@@ -72,7 +99,7 @@ On these you'll need to install a native application. We've packaged up the Web 
 
 ### Via a Raspberry Pi
 
-To be added soon...
+To be added soon... In the mean time you can take a look at the [Node RED Tutorial](/Puck.js Node-RED)
 
 
 ### By wired connection
@@ -99,9 +126,12 @@ Command-Line
 You can use the Espruno command-line app. It works under [Node.js](https://nodejs.org/en/), so you'll need to:
 
 * Install [Node](https://nodejs.org/en/)
-* In a command prompt, type `npm install -g espruino`
+* In a command prompt, type `npm install -g espruino` (on Linux you'll want to use `sudo` before the command)
 * When that completes, you can type `espruino --help` for help
 * To connect, try `espruino --list` to list devices, then copy your device's MAC address and type `espruino -p aa:bb:cc:dd:ee` to connect.
+* Press `Ctrl-C` twice to exit.
+* You can also type `espruino -p aa:bb:cc:dd:ee -w filename.js` to upload a file, enter terminal mode,
+and then re-upload it if it changes (so you can use your favourite editor)
 
 
 Sending Individual Commands
@@ -148,3 +178,11 @@ type in `LED1.set()` and click send
 * The red LED should light up.
 * You can now type `LED1.reset()` to turn it off. `LED2` and `LED3` work too
 * Note that responses are also being sent back. You can type in `BTN.read()` and `false` will be returned - it'll be `true` if the button is pressed
+
+
+What now?
+----------
+
+Check out some of the other Puck.js tutorials:
+
+* APPEND_USES: Puck.js

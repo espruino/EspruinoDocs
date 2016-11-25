@@ -1,26 +1,10 @@
-//https://webbluetoothcg.github.io/demos/bluetooth-printer/
-
-/*
-var n = 0;
-function go() {
-  var g = Graphics.createArrayBuffer(256,32,1,{msb:true});
-  g.setFontVector(32);
-  g.drawString("Gordon Test!");
-  
-  NRF.requestDevice({ filters: [{ services: ['18f0'] }] }).then(function(device) {
-    exports.print(device, "Hello "+(n++)+"\n"+exports.getGraphics(g), function() { print('Done!'); }); 
-  });
-}
-
-setWatch(go, BTN, {repeat:true, edge:"rising", debounce:50});
-*/
-
+/* Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 exports.print = function(device, text, callback) {
   return device.gatt.connect().then(function(d) {
     device = d;
     return d.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb");
   }).then(function(s) {
-    return s.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"); 
+    return s.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb");
   }).then(function(c) {
     function sender(resolve, reject) {
       if (text.length) {
@@ -28,7 +12,7 @@ exports.print = function(device, text, callback) {
           sender(resolve, reject);
         }).catch(reject);
         text = text.substr(20);
-      } else 
+      } else
         resolve();
     }
     return new Promise(sender);
@@ -52,5 +36,3 @@ exports.getGraphics = function(g) {
   d[d.length-1] = 10; // newline
   return E.toString(d);
 };
-
-

@@ -329,6 +329,10 @@ Try the example below:
         connection = undefined;
       }
       Puck.connect(function(c) {
+        if (!c) {
+          alert("Couldn't connect!");
+          return;
+        }
         connection = c;
         // Handle the data we get back, and call 'onLine'
         // whenever we get a line
