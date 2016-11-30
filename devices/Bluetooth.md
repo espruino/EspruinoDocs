@@ -7,7 +7,7 @@ Bluetooth
 ![HC-05 front](Bluetooth/HC05_front.jpg)
 ![HC-05 back](Bluetooth/HC05_back.jpg)
 
-The most common Serial bluetooth module is the HC-05 (above) or HC-06. These are very similar modules and both will work with Espruino. The main difference is that the HC-05 can be configured as a Bluetooth Master, and the HC-06 can't.
+The most common Serial Bluetooth module is the HC-05 (above) or HC-06. These are very similar modules and both will work with Espruino. The main difference is that the HC-05 can be configured as a Bluetooth Master, and the HC-06 can't.
 
 Connecting
 --------
@@ -16,11 +16,11 @@ Connecting
 
 [[http://youtu.be/J0HJVTDNSUQ]]
 
-The [Espruino Board](/EspruinoBoard) has pads on it already for the placement of an HC-05 bluetooth module, so it's very easy to connect. Note that while there are many connections on the HC-05 module, only 4 of them are needed. 
+The [Espruino Board](/EspruinoBoard) has pads on it already for the placement of an HC-05 Bluetooth module, so it's very easy to connect. Note that while there are many connections on the HC-05 module, only 4 of them are needed. 
 
 For the Espruino [[Pico]], there is [an adaptor shim available](/Shims#bluetooth-0-1-adaptor) that makes connecting Bluetooth a lot easier!
 
-See the [[Wiring Up]] page if you want to connect bluetooth to something other than the Espruino Board.
+See the [[Wiring Up]] page if you want to connect Bluetooth to something other than the Espruino Board.
 
 To solder the HC-05 module, do the following:
 
@@ -31,7 +31,7 @@ To solder the HC-05 module, do the following:
 Pairing
 ------
 
-The bluetooth module will appear by name as either ```HC-05``` or ```linvor```. Simply pair with this module and enter the pairing code ```1234```. Espruino should then appear as a new Serial port, and you will be able to connect to it with the Web IDE.
+The Bluetooth module will appear by name as either ```HC-05``` or ```linvor```. Simply pair with this module and enter the pairing code ```1234```. Espruino should then appear as a new Serial port, and you will be able to connect to it with the Web IDE.
 
 Mac OS
 -----
@@ -56,7 +56,7 @@ Refresh the Web IDE's connection list. It should show the device under the name 
 Software
 -------
 
-If there is no USB connection, the Espruino board defaults to using the fist Serial Port (USART1) for the Console at 9600 - which is what the bluetooth module is connected to. This means that just powering Espruino from a USB wall supply, the battery connector, or the GND and VBAT pins will make it work. **Note:** If you power the board from your PC's USB port, it will move the console to USB and you will get no response from the Bluetooth connection.
+If there is no USB connection, the Espruino board defaults to using the first Serial Port (USART1) for the Console at 9600 - which is what the Bluetooth module is connected to. This means that just powering Espruino from a USB wall supply, the battery connector, or the GND and VBAT pins will make it work. **Note:** If you power the board from your PC's USB port, it will move the console to USB and you will get no response from the Bluetooth connection.
 
 Changing Bluetooth Module's Name and Passkey
 ---------------------------------------
@@ -100,4 +100,4 @@ Using
 Buying
 -----
 
-HC05 bluetooth modules can be purchased from many places. If you wish to buy from eBay, make sure you get one **without** the 0.1" adaptor PCB included if you want to connect it to the [Espruino Board](/EspruinoBoard) ([eBay search](http://www.ebay.com/sch/i.html?_nkw=HC05+bluetooth) - around $6)
+HC05 Bluetooth modules can be purchased from many places. If you wish to buy from eBay, make sure you get one **without** the 0.1" adaptor PCB included if you want to connect it to the [Espruino Board](/EspruinoBoard) ([eBay search](http://www.ebay.com/sch/i.html?_nkw=HC05+bluetooth) - around $6)
