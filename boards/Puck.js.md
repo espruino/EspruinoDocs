@@ -78,9 +78,9 @@ Troubleshooting
 * Do you have an up to date version of Chrome? (`Help` -> `About Google Chrome`) - it should be at least version 51
 * Have you enabled Web Bluetooth in `chrome://flags`?
 * You need a Bluetooth LE-capable adaptor (at least Bluetooth 4.0). If your PC doesn't have one, you can [buy one for well under $10](http://www.ebay.com/sch/i.html?_nkw=usb+bluetooth+4+dongle&_sacat=0)
-* **Android** needs to be at least version 6 (or version 5 with the Developer version of Chrome)
-* **Windows** isn't currently supported, but it should be (at least for 8.1 and above) in Q1 2017. Otherwise you'll need to use the packaged version of the Web IDE
-* **Linux** needs Bluez 5.40 or above - [see here for instructions on how to install it](/Web Bluetooth On Linux)
+* **Android** needs to be at least version 6 (or version 5 with recent builds of Chromium)
+* **Windows** isn't currently supported, but it should be (at least for 10 and above) in 2017. Otherwise you'll need to use the packaged version of the Web IDE
+* **Linux** needs Bluez 5.41 or above - [see here for instructions on how to install it](/Web Bluetooth On Linux)
 * **MacOS** needs OS X Yosemite or later. Older hardware will need an external USB dongle though - check that `Low Energy` supported in `About this Mac` -> `System Report`/`Bluetooth`  
 * **Chrome OS** works fine
 
