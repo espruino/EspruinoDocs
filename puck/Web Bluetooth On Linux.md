@@ -8,7 +8,7 @@ Web Bluetooth on Ubuntu 16.04 / Linux Mint 18
 **Note:** Alan Assis worked this out and documented it [here](https://acassis.wordpress.com/2016/06/28/how-to-get-chrome-web-bluetooth-working-on-linux/).
 All I've done is tweak it slightly to use a newer bluez (and to modify things that didn't work for me)
 
-**Note 2:** Ubuntu 16.10 comes with `bluez` 5.41 already, so will work with Web Bluetooth out of the box.
+**Note 2:** Ubuntu 16.10 comes with `bluez` 5.41 already, but the experimental interface flag is needed for this version. This means you'll have to build it again with the appropriate flag.
 
 As of writing, Ubuntu 16.04 comes with version 5.37 of `bluez`, the Bluetooth tools.
 While this provides some Bluetooth functionality, it's not very good at exposing it.
@@ -24,7 +24,6 @@ sudo apt-get -y install automake autotools-dev bison check clang flex lcov libca
 mkdir tmp
 cd tmp
 
-
 # Download new bluez
 wget http://www.kernel.org/pub/linux/bluetooth/bluez-5.43.tar.xz
 
@@ -39,16 +38,15 @@ cd bluez-5.43
             --localstatedir=/var    \
             --enable-library        \
             --disable-systemd       \
-            --disable-android       \
-            --enable-experimental
+            --disable-android       
 make
 
 # install everything
 sudo make install
 
-# Stop existing bluetooth and start the new one with '-E'
+# Stop existing bluetooth and start a new one
 sudo /etc/init.d/bluetooth stop
-sudo /usr/libexec/bluetooth/bluetoothd -E
+sudo /usr/libexec/bluetooth/bluetoothd
 ```
 
 Now you can test Web Bluetooth out in Chrome (make sure you enable it in
@@ -61,19 +59,9 @@ Ctrl-C to stop the existing bluetoothd.
 ```
 # Replace the old bluetoothd with the new one:
 sudo cp /usr/libexec/bluetooth/bluetoothd /usr/lib/bluetooth/bluetoothd
-
-# Edit the start/stop script
-sudo nano /etc/init.d/bluetooth
-
-# then change
-SSD_OPTIONS="--oknodo --quiet --exec $DAEMON -- $NOPLUGIN_OPTION"
-
-# to
-SSD_OPTIONS="--oknodo --quiet --exec $DAEMON -- -E $NOPLUGIN_OPTION"
 ```
 
-Now you can re-start the service with the experimental flags enabled, and
-you're good to go!
+Now you can re-start the service and you're good to go!
 
 ```
 sudo /etc/init.d/bluetooth start
