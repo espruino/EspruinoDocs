@@ -62,13 +62,13 @@ You'll need an up to date version of [Google Chrome](https://www.google.com/chro
 * Android (Android 6, Marshmallow or later required, but Android 5 [works with Chromium](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop))
 * Mac OS (OS X Yosemite or later required)
 * Linux (BlueZ 5.41+ required - you can check by typing `bluetoothd --version`). [Bluez install instructions here](/Web Bluetooth On Linux)
-* Chromebook (all recent Chromebooks should support Web Bluetooth)
-* Windows support is in progress - Windows 8.1 should be supported in Q1 2017
+* Chromebook (all Chromebooks with Bluetooth should support Web Bluetooth)
+* Windows support is in progress - Windows 10 should be supported in 2017
 
 First, you need to enable Web Bluetooth support:
 
 * Type `chrome://flags` in the address bar
-* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`) in Chrome 56 or later, or `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on MacOS and Chromebook, there is no option available and Web Bluetooth is enabled by default.
+* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`) in Chrome 56 or later, or `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Mac OS and Chromebook, there is no option available and Web Bluetooth is enabled by default.
 * Restart your browser
 
 Now:
@@ -80,7 +80,7 @@ Now:
 
 ![Web Bluetooth setting](Puck.js Quick Start/connect2.png)
 
-* You should be shown a list of devices - click on `Puck.js ABCD` (where `ABCD` is the last 4 digits of your Puck's address)
+* You should be shown a list of devices - click on `Puck.js ABCD` (where `ABCD` is the last 4 digits of your Puck's MAC address)
 
 ![Web Bluetooth device chooser](Puck.js Quick Start/connect3.png)
 
