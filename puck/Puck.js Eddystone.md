@@ -5,7 +5,7 @@ Puck.js and Eddystone Beacons
 * KEYWORDS: BLE,EddyStone,FatBeacon,iBeacon,Beacon
 * USES: Puck.js
 
-[Eddystone](https://developers.google.com/beacons/) is a technology from Google
+[Eddystone](https://github.com/google/eddystone) is an open beacon format from Google
 that allows you to transmit a URL that will appear as a notification on
 a user's phone.
 
@@ -31,7 +31,7 @@ only notify you
 The URLs:
 
 * Must be HTTPS URLs
-* May only work reliably if they go through `goo.gl`
+* Must be [short](https://github.com/google/eddystone/tree/master/eddystone-url)
 
 **To turn Eddystone advertising off** simply call `NRF.setAdvertising({});`
 
