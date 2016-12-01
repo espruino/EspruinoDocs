@@ -30,7 +30,7 @@ Once you've your Puck.js is powered up it'll start doing two things:
 
 If you have an NFC phone, make sure NFC is on, and then move Puck.js near the NFC receiver on it. A Web page should open that will direct you to some examples.
 
-Otherwise, you'll need to go straight to the Puck.js website - [https://puck-js.com/go](https://puck-js.com/go)
+Otherwise, you'll need to go straight to the Puck.js website - [https://www.puck-js.com/go](https://www.puck-js.com/go)
 
 
 Using Puck.js
