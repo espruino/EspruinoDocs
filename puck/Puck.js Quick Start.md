@@ -180,9 +180,24 @@ type in `LED1.set()` and click send
 * Note that responses are also being sent back. You can type in `BTN.read()` and `false` will be returned - it'll be `true` if the button is pressed
 
 
+Trouble?
+--------
+
+Check out the [Troubleshooting](/Puck.js#troubleshooting) page, or ask on
+[our forums](http://forum.espruino.com)
+
+
 What now?
 ----------
 
 Check out some of the other Puck.js tutorials:
 
 * APPEND_USES: Puck.js
+
+There's also much more detailed information:
+
+* [Puck.js Reference](/Puck.js) and [Troubleshooting](/Puck.js#troubleshooting)
+* [Language Reference](/Reference)
+* [List of available tutorials](/Modules)
+* [Other tutorials](/Tutorials)
+* Or check out [our forums](http://forum.espruino.com)

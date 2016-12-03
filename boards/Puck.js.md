@@ -6,6 +6,7 @@ Puck.js
 
 ![Puck.js](Puck.js/board.jpg)
 
+
 Features
 --------
 
@@ -17,9 +18,26 @@ Features
 * Silicone cover with tactile button
 * MAX3110 Magnetometer
 * IR Transmitter
+* Built in thermometer, light and battery level sensors
 * Red, Green and Blue LEDs
 * NFC tag programmable from JavaScript
 * Pin capable of capacitive sensing
+
+
+Turning Puck.js on
+------------------
+
+Puck.js is assembled with a **clear plastic tab** between the battery
+and PCB to keep it turned off. To turn it on, you need to:
+
+* Pull the silicone case off the top,
+* Tip the PCB out
+* Push the battery out from the back with a blunt object
+* Make sure the clear plastic tab is removed
+* Push the battery back in
+* Reassemble (note that the battery should be facing the black plastic back,
+  and the button (next to the battery) should be positioned as far away from
+  the 'step' in the case as possible.
 
 
 Tutorials
@@ -28,6 +46,71 @@ Tutorials
 Tutorials using Puck.js:
 
 * APPEND_USES: Puck.js
+
+
+On-board peripherals
+--------------------
+
+The Puck's on-board peripherals are exposed by special-purpose functions
+
+### Magnetometer
+
+You can use [`Puck.mag()`](/Reference#l_Puck_mag) to return one magnetometer
+reading (with x, y, and z axes).
+
+However you can also leave the magnetometer on permanently and use it to
+wake Puck.js up whenever it gets a reading. See [`Puck.magOn()`](/Reference#l_Puck_magOn)
+
+```
+Puck.magOn();
+Puck.on('mag', function(xyz) {
+  console.log(xyz);
+});
+// Turn events off with Puck.magOff();
+```
+
+### IR / Infrared
+
+To transmit an IR signal, you just need to call [`Puck.IR([...])`](/Reference#l_Puck_IR)
+with an array of times in milliseconds. They alternate between the time the signal
+should be `on` and `off` - eg. `[on, off, on, off, on, etc]`.
+
+For example the command to turn on a [cheap IR lightbulb](www.ebay.com/sch/i.html?_nkw=ir+rgb+light+bulb&_sacat=0) is:
+
+```
+Puck.IR([9.6,4.9,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,
+  0.7,0.6,1.9,0.5,1.9,0.5,1.9,0.6,1.9,0.5,1.9,0.5,1.9,0.6,1.9,0.5,1.9,0.5,1.9,
+  0.6,1.9,0.5,1.9,0.6,0.7,0.5,0.6,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.6,0.6,0.7,0.5,
+  0.7,0.6,1.9,0.5,1.9,0.5,1.9,0.6,1.9,0.5,1.9,0.5,43.1,9.6,2.5,0.5]);
+```
+
+You can sometimes work this information out based on details online, however
+it's often easier to measure it by attaching an IR receiver to your Puck
+(a tutorial on this will be added soon).
+
+### Light sensor
+
+To get a light value you can simply call [`Puck.light()`](/Reference#l_Puck_light).
+
+This returns an (uncalibrated) value between `0` and `1`
+
+### Bluetooth
+
+Bluetooth is provided by the [`NRF object`](/Reference#NRF).
+
+Bluetooth itself is quite complicated, so it's best to refer to the tutorials
+above, or check the documentation on [`NRF.requestDevice`](/Reference#l_NRF_requestDevice)
+for an example of how to connect to another device.
+
+### Temperature
+
+Temperature can be accessed with `E.getTemperature()`. It returns the temperature in degrees C.
+
+### Battery level
+
+Battery level (based on a normal CR2032 battery) can be accessed with
+[`Puck.getBatteryPercentage()`](/Reference#l_Puck_getBatteryPercentage).
+You can also get the battery voltage using [`NRF.getBattery()`](/Reference#l_NRF_getBattery).
 
 
 Power Consumption
@@ -71,6 +154,13 @@ Firmware Updates
 
 Troubleshooting
 ---------------
+
+### My Puck is not working when it arrives
+
+Puck.js is assembled with a **clear plastic tab** between the battery
+and PCB to keep it turned off.
+
+See [here](#turning-puck-js-on) for instructions on removing it.
 
 ### Web Bluetooth doesn't appear in my Web IDE connection options
 
