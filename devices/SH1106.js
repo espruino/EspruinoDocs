@@ -1,33 +1,30 @@
-/* Copyright (c) 2014 Sam Sykes, Gordon Williams, Jonathan Richards. See the file LICENSE for copying permission. */
+/* Copyright (c) 2014 Sam Sykes, Gordon Williams, Jonathan Richards.
+   See the file LICENSE for copying permission. */
 /* 
-   Module for the SH1106 OLED controller
+Module for the SH1106 OLED controller
 
-   ```
-   function go(){
+```
+function go(){
    // write some text
    g.drawString("Hello World!",2,2);
    // write to the screen
    g.flip(); 
-   }
+}
 
-   // I2C
-   I2C1.setup({scl:B6,sda:B7});
-   var g = require("SH1106").connect(I2C1, go);
+// I2C
+I2C1.setup({scl:B6,sda:B7});
+var g = require("SH1106").connect(I2C1, go, { address: 0x3C });
 
-   // SPI
-   SPI2.setup({mosi: B15, sck: B13});
-   var g = require("SH1106").connectSPI(SPI2, B14, B10, go, {cs: B1, height: 64});
-   ```
+// SPI
+SPI2.setup({mosi: B15, sck: B13});
+var g = require("SH1106").connectSPI(SPI2, B14, B10, go, {cs: B1, height: 64});
+```
 
 */
 
 var C = {
-    OLED_ADDRESS               : 0x3C,
     OLED_WIDTH                 : 128,
-    OLED_HEIGHT                : 64,
     OLED_CHAR                  : 0x40,
-    OLED_CHUNK                 : 128,
-    OLED_LENGTH                : 1024 // OLED_WIDTH*OLED_HEIGHT / 8
 };
 
 // commands sent when initialising the display
@@ -49,39 +46,51 @@ var initCmds = new Uint8Array([ 0xAE, // 0 disp off
                               ]);
 
 function update(options) {
-  if (options && options.height) {
-    initCmds[4] = options.height-1;
-    initCmds[13] = options.height==64 ? 0x12 : 0x02;
-  }
+    if (options && options.height) {
+        initCmds[4] = options.height-1;
+		initCmds[13] = options.height==64 ? 0x12 : 0x02;
+	}
+	if (options && options.contrast) {
+		initCmds[15] = options.contrast;
+	}
 }
 
-exports.connect = function(i2c, callback) {
+exports.connect = function(i2c, callback, options) {
     update(options);
-    var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,C.OLED_HEIGHT,1,{vertical_byte : true});
+    var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,(initCmds[4] + 1),1,{vertical_byte : true});
+	var addr = 0x3C;
+	if(options && options.address) addr = options.address;
 
     // configure the OLED
-    initCmds.forEach(function(d) {i2c.writeTo(C.OLED_ADDRESS, [0,d]);});
+    initCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});
     // if there is a callback, call it now(ish)
     if (callback !== undefined) setTimeout(callback, 10);
     
     // write to the screen
     oled.flip = function() { 
         // chip only has page mode
-        var chunk = new Uint8Array(C.OLED_CHUNK+1);
+        var page = 0xB0;
+        var chunk = new Uint8Array(C.OLED_WIDTH+1);
 
         chunk[0] = C.OLED_CHAR;
-        for (var p=0; p<C.OLED_LENGTH; p+=C.OLED_CHUNK) {
-            chunk.set(new Uint8Array(this.buffer,p,C.OLED_CHUNK), 1);
-            i2c.writeTo(C.OLED_ADDRESS, chunk);
+        for (var p=0; p<(C.OLED_WIDTH * initCmds[4] / 8); p+=C.OLED_WIDTH) {
+			i2c.writeTo(addr, [0, page, 0x02, 0x10]);// display is centred in RAM
+			page++;
+            chunk.set(new Uint8Array(this.buffer,p,C.OLED_WIDTH), 1);
+            i2c.writeTo(addr, chunk);
         } 
     };
     
+	// set contrast, 0..255
+	oled.setContrast = function(c) { i2c.writeTo(addr, 0, 0x81, c); };
+
+    // return graphics
     return oled;
 };
 exports.connectSPI = function(spi, dc,  rst, callback, options) {
     update(options);
     var cs = options?options.cs:undefined;
-    var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,C.OLED_HEIGHT,1,{vertical_byte : true});
+    var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,(initCmds[4] + 1),1,{vertical_byte : true});
     
     if (rst) digitalPulse(rst,0,10);
     setTimeout(function() {
@@ -99,18 +108,26 @@ exports.connectSPI = function(spi, dc,  rst, callback, options) {
     oled.flip = function() { 
         //  chip only has page mode
         var page = 0xB0;
-        var chunk = new Uint8Array(C.OLED_CHUNK);
+        var chunk = new Uint8Array(C.OLED_WIDTH);
         if (cs) digitalWrite(cs,0);
-        for (var p=0; p<C.OLED_LENGTH; p+=C.OLED_CHUNK) {
+        for (var p=0; p<(C.OLED_WIDTH * initCmds[4] / 8); p+=C.OLED_WIDTH) {
             digitalWrite(dc,0); // command
             spi.write([page, 0x02, 0x10]);// display is centred in RAM
             page++;
             digitalWrite(dc,1);// data
-            chunk.set(new Uint8Array(this.buffer,p,C.OLED_CHUNK), 0);
+            chunk.set(new Uint8Array(this.buffer,p,C.OLED_WIDTH), 0);
             spi.write(chunk);
         }
         if (cs) digitalWrite(cs,1);
     };
     
+	// set contrast, 0..255
+	oled.setContrast = function(c) { 
+		if (cs) cs.reset();
+		spi.write(0x81,c,dc);
+		if (cs) cs.set();
+	};
+
+    // return graphics
     return oled;
 };

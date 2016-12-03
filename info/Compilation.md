@@ -81,11 +81,18 @@ function toggler() {
     poke32(pB2, 0); // off
   }
 }
+
+function go() {
+  pinMode(B2, "output");
+  toggler();
+}
 ```
 
 We need to cast `B2.getInfo().out_addr` to an integer by `or`ing it with `0`, as it allows the compiler to optimise the `poke32` call.
 
 **Note:** `in_addr` also works for the input address - see [`Pin.prototype.getInfo`](/Reference#l_Pin_getInfo)
+
+**Note 2:** We're only setting the Output Data register, not the pin state register. This means you'll need a call to `pinMode` (or `digitalWrite`) beforehand in order to set the pin to be an output.
 
 If you did want to access the pins directly, you still can. For example the following code will produce a roughly 8Mhz square wave on an **STM32F4** (Espruino [[Pico]]):
 

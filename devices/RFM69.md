@@ -2,7 +2,7 @@
 HopeRF RFM69 Wireless Module
 ======================
 
-* KEYWORDS: Module,SPI,RFM69,HopeRF,315Mhz,433Mhz,434Mhz,868Mhz,915Mhz,Wireless
+* KEYWORDS: Module,SPI,RFM69,HopeRF,315Mhz,433Mhz,434Mhz,868Mhz,915Mhz,Wireless,Radio,Transceiver
 
 The HopeRF RFM69 is a transceiver module capable of operation over a wide frequency range, including the 315,433, 868 and 915MHz license-free ISM (Industry Scientific and Medical) frequency bands. ([datasheet here](http://www.hoperf.cn/upload/rf/RFM69-V1.3.pdf))
 
@@ -12,8 +12,8 @@ A driver for it is available in the [[RFM69.js]] module.
 
 Connect as follows:
 
-| NRF24L01+ | Name |  Espruino  |
-|-----------|------|------------|
+| RFM69 | Name |  Espruino  |
+|-------|------|------------|
 | 1 | RST  | B1 |
 | 2 | DIO0 | | 
 | 3 | DIO1 | | 
@@ -30,6 +30,9 @@ Connect as follows:
 | 14 | MOSI | B15 |
 | 15 | NSS | B10 |
 | 15 | NC | GND |
+
+For the Espruino [[Pico]], there is [an adaptor shim available](/Shims#rfm69-rfm12b-0-1-adaptor) that makes connecting this module a lot easier.
+
 
 Software
 -----------
@@ -64,7 +67,7 @@ var rfm;
 function onInit() {
   SPI2.setup({mosi:B15,miso:B14,sck:B13});
   rfm = require("RFM69").connect(SPI2, {cs:B10, rst:B1, freq:434}, function() {
-    rfm.rxmode(); // to to receive data
+    rfm.rxmode(); // in order to receive data
     console.log("Connected");
     setInterval(function() { 
       if (rfm.hasPacket()) 

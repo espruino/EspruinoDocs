@@ -1,95 +1,50 @@
-  /* Copyright (C) 2014 Spence Konde. See the file LICENSE for copying permission. */
-  /*
+/* Copyright (C) 2014 Spence Konde. See the file LICENSE for copying permission. */
+/*
 This module interfaces with a DHT22 temperature and relative humidity sensor.
 Usage (any GPIO pin can be used):
 
 var dht = require("DHT22").connect(C11);
 dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
 
-the return value if no data received: {"temp": -1, "rh": -1, "checksumError": false}
-the return value, if some data is received, but the checksum is invalid: {"temp": -1, "rh": -1, "checksumError": true}
+the return value if no data received: {"temp": -1, "rh": -1, err:true, "checksumError": false}
+the return value, if some data is received, but the checksum is invalid: {"temp": -1, "rh": -1, err:true, "checksumError": true}
   */
-
-exports.connect = function(pin) {
-    return new DHT22(pin);
-}
 
 function DHT22(pin) {
   this.pin = pin;
-  this.readfails=0;
-  this.tout=0;
-  this.hout=0;
-  this.cks=0; 
 }
-DHT22.prototype.read = function (a) {
-    this.onreadf=a;
-    this.i=0;
-    this.tout=0;
-    this.hout=0;
-    this.cks=0; 
-    pinMode(this.pin);
-    var dht = this;
-    digitalWrite(this.pin,0);
-    this.watch=setWatch(function(t) {dht.onwatch(t);},dht.pin,{repeat:true});
-    setTimeout(function() {pinMode(dht.pin,'input_pullup');},3);
-    this.to50ms = setTimeout(function() {dht.onread(dht.endRead());},50);
-};
-DHT22.prototype.onread= function(d) {
-    var dht=this;
-    if (d.temp==-1) {
-        dht.readfails++;
-        if(dht.readfails < 20) {
-            dht.read(dht.onreadf);
-        } else {
-            dht.onreadf(d);
-            dht.readfails=0;
-        }
+
+DHT22.prototype.read = function (cb, n) {
+  if (!n) n=10;
+  var d = ""; 
+  var ht = this;
+  pinMode(ht.pin); // set pin state to automatic
+  digitalWrite(ht.pin, 0);
+  this.watch = setWatch(function(t) {
+    d+=0|(t.time-t.lastTime>0.00005);
+  }, ht.pin, {edge:'falling',repeat:true} );
+  setTimeout(function() {pinMode(ht.pin,'input_pullup');},1);
+  setTimeout(function() {
+    clearWatch(ht.watch);
+    delete ht.watch;
+    var cks = 
+        parseInt(d.substr(2,8),2)+
+        parseInt(d.substr(10,8),2)+
+        parseInt(d.substr(18,8),2)+
+        parseInt(d.substr(26,8),2);
+    if (cks&&((cks&0xFF)==parseInt(d.substr(34,8),2))) {
+      cb({ 
+        raw : d,
+        rh : parseInt(d.substr(2,16),2)*0.1,
+        temp : parseInt(d.substr(19,15),2)*0.2*(0.5-d[18])
+      });
     } else {
-        dht.readfails=0;
-        dht.onreadf(d);
+      if (n>1) setTimeout(function() {ht.read(cb,--n);},500);
+      else cb({err:true, checksumError:cks>0, raw:d, temp:-1, rh:-1});
     }
+  }, 50);
 };
-DHT22.prototype.onwatch = function(t) {
-    if (t.state) {
-        this.pstart=t.time;
-    } else {
-        var tt=t.time-this.pstart;
-        if (tt < 0.0002) {
-            this.recbit(tt,this.i);
-            this.i++;
-        }
-    }
-};
-DHT22.prototype.recbit = function(plen,bit) {
-    if (bit==0){} else if (bit < 17) {
-        this.hout=(this.hout<<1) | (plen > 0.0000382);
-    } else if (bit < 33) {
-        this.tout=(this.tout<<1) | (plen > 0.0000382);
-    } else {
-        //AM2301 transfers zero bits after the actual payload, just using 50ms can shift the checksum value, and cause a checksum failure
-        if(bit > 40){this.onread(this.endRead()); return;}
-        this.cks=(this.cks<<1) | (plen > 0.0000382);
-    }
-};
-DHT22.prototype.endRead = function() {
-    if(this.to50ms){clearTimeout(this.to50ms); this.to50ms = null; }
-    clearWatch(this.watch);
-    var tcks = this.hout&0xFF;
-    tcks+= (this.hout>>8)&0xFF;
-    tcks+= (this.tout&0xFF);
-    tcks+= (this.tout>>8)&0xFF;
-    tcks=tcks&0xFF;
-    if (tcks==this.cks && this.hout > 0 && this.tout > 0) {
-        var rh=this.hout*0.1;
-        var temp=this.tout*0.1;
-        if (this.tout&0x8000) {
-            temp=temp*-1;
-        }
-        if (rh < 100 ) {
-            return {"temp":temp,"rh":rh};
-        }
-    } else { 
-      //checksum error, or no data received at all. Maybe usefull for debugging...
-      return {"temp":-1,"rh":-1, "checksumError": (tcks>0)};
-    }
+
+exports.connect = function(pin) {
+    return new DHT22(pin);
 };

@@ -2,7 +2,7 @@
 EEPROM on Flash
 ===============
 
-* KEYWORDS: Flash,EEPROM,storage,non-volatile,memory,rom,storage
+* KEYWORDS: Module,Flash,EEPROM,storage,non-volatile,memory,rom,storage
 
 STM32-based chips don't have nonvolatile EEPROM memory (which can be changed one byte at a
 time). Instead, they have Flash memory in which 32 bit words can be written one at a time,
@@ -23,17 +23,21 @@ You use it as follows:
  You can supply extra arguments to choose which flash page you'll use, and even whether you
  use external flash memory - but be careful when doing this. You can accidentally overwrite
  Espruino itself! */
-var f = new (require("FlashEEPROM"))(); 
+var f = new (require("FlashEEPROM"))();
 
 f.write(0, "Hello");
 f.write(1, "World");
-//.. you can write to any address between 0 and 255, with any data up to 256 chars long
+//.. you can write to any address between 0 and 255, with any data up to 65536 chars long
 
 f.read(0)
 // returns new Uint8Array([72, 101, 108, 108, 111])
 
 E.toString(f.read(1))
 // returns "World"
+
+f.readMem(0)
+// returns "Hello" - this is a special string that is accessed directly from ROM
+// (and is not loaded into RAM first)
 
 f.readAll();
 // returns [
@@ -51,6 +55,9 @@ E.toString(f.read(1))
 overwritten by subsequent writes. It can take around a second though */
 f.cleanup();
 
+// Or clear absolutely everything out of memory
+f.erase();
+
 ```
 
 Speed
@@ -64,7 +71,7 @@ you should be aware that flash memory has a fixed number of write cycles (see th
 so you should try and do this as rarely as possible.
 
 Another option is to limit the amount of Flash memory that can be used. This is a good idea if
-you're using something like the Espruino Pico that will default to using the full 128kB page! 
+you're using something like the Espruino Pico that will default to using the full 128kB page!
 
 ```
 // Use only 1024 bytes
@@ -74,11 +81,11 @@ f.endAddr = f.addr+1024;
 
 Reference
 --------------
- 
+
 * APPEND_JSDOC: FlashEEPROM.js
 
 
-Using 
+Using
 -----
 
 * APPEND_USES: FlashEEPROM

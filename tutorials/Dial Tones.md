@@ -8,7 +8,7 @@ Dial Tones
 Introduction
 -----------
 
-Telephones (not mobiles) now use [DTMF to dial numbers](http://en.wikipedia.org/wiki/Telephone_keypad#Key_Frequency). This involves outputting two different frequencies of beep at once (a different combination for each key). The wikipedia page linked above has a better description, but the frequencies are as follows:
+Telephones (not mobiles) now use [DTMF to dial numbers](http://en.wikipedia.org/wiki/Telephone_keypad#Key_frequency). This involves outputting two different frequencies of beep at once (a different combination for each key). The wikipedia page linked above has a better description, but the frequencies are as follows:
 
 | |1209 Hz|1336 Hz|1477 Hz|1633 Hz|
 |-|-|-|-|

@@ -21,7 +21,7 @@ It contains:
 Flashing Espruino
 ------------------
 
-There is a build of Espruino designed specifically for the micro:bit. From version 1v85 and on, releases will be available from the [Download page](/Download) - however you may also download 'cutting edge' builds [from here](http://www.espruino.com/binaries/travis/master/) - these are updated every time something changes in Espruino's source code, so may occasionally not work.
+There is a build of Espruino designed specifically for the micro:bit. Releases are available from the [Download page](/Download) - however you may also download 'cutting edge' builds [from here](http://www.espruino.com/binaries/travis/master/) - these are updated every time something changes in Espruino's source code, so may occasionally not work.
 
 To flash onto your micro:bit:
 
@@ -40,7 +40,11 @@ There are two ways to communicate with your micro:bit:
 
 This is the easiest, and recommended way of communicating with Espruino.
 
-Follow the [instructions in the Quick Start tutorial](/Quick+Start) to install the Web IDE, and you should be able to communicate with the micro:bit just like any other board.
+For Windows users, you will [need to install drivers first](https://developer.mbed.org/handbook/Windows-serial-configuration) - on other platforms, the board should 'just work'.
+
+Follow the [instructions in the Quick Start tutorial](/Quick+Start) to install the Web IDE (ignore the `Plugging in` section), and you should be able to communicate with the micro:bit just like any other board.
+
+**Note:** as the micro:bit has a display but no general-purpose LEDs, the tutorials in the Quick Start that use `LED1`/etc will not work without modification.
 
 ### Bluetooth Low Energy (BT 4.0 / Bluetooth Smart)
 
@@ -96,18 +100,27 @@ setWatch(function(e) {
 
 ## `show(bitmap)` 
 
-Shows graphics on the built-in 5x5 LED screen. This takes a binary number. For example:
+Shows graphics on the built-in 5x5 LED screen. This takes a binary number or a string. For example:
 
 * `show(0)` shows nothing
 * `show(1)` lights the first LED
 * `show(0b1000)` lights the fourth LED
 * `show(0b1111111111111111111111111)` or `show(0x1FFFFFF)` lights all LEDs
+* The following will draw a smiley face:
+
+```
+show("1   1\n"+
+     "  1  \n"+
+     "  1  \n"+
+     "1   1\n"+
+     " 111 \n");
+````
 
 You can use the Graphics library to display text and images, for example the following with scroll 'Espruino' across the display:
 
 ```
 g = Graphics.createArrayBuffer(5,5,1);
-g.flip = function(){show((new Uint32Array(this.buffer))[0]);};
+g.flip = function(){show(this.buffer);};
 
 var x = 0;
 setInterval(function() {
@@ -145,4 +158,4 @@ Tutorials using the micro:bit Board:
 Buying
 -------
 
-micro:bits are not currently available to buy - they will however be distributed to Year 7 children in the UK in early 2016.
+micro:bits are currently available to buy [in the UK](https://www.element14.com/community/community/stem-academy/microbit) and [in the United States](https://www.techwillsaveus.com/shop/microbit/).

@@ -2,7 +2,7 @@
 AT Command Handler
 ================
 
-* KEYWORDS: AT,Modem
+* KEYWORDS: Module,AT,Modem
 
 [[AT.js]] handles sending AT-style commands to a Serial device and receiving their responses, while not blocking (allowing other JavaScript to execute in the background).
 
@@ -17,25 +17,25 @@ var at = require("AT").connect(Serial2);
 // Debug mode prints out what is sent and received
 at.debug();
 
-// As soon as the line buffer starts with `+IPD`, call the function
+// As soon as the line buffer starts with `+IPD`, call a function
 at.register("+IPD", function() {
-  return "What sound go in the line buffer now";
+  return "Text that should go in the line buffer now";  
 });
 // don't do it any more
 at.unregister("+IPD");
 
-// As soon as we get a complete line `Foo`, execute the function
+// As soon as we get the complete line `Foo`, execute the function
 at.registerLine("Foo", function() { ... });
 // Now don't listen
 at.unregisterLine("Foo");
 
-// Just write some data
+// Just write some data, don't wait for a response
 at.write("Hello!\r\n");
 
 // Send simple command with 1 second timeout
 at.cmd("AT+EO\r\n", 1000, function(d) {
   if (d===undefined) ; // we timed out!
-  // d is now the result
+  // or d is now the result we got
 });
 
 // Send command that returns multiple items
@@ -49,7 +49,7 @@ at.cmd("AT+FOO\r\n", 1000, function cb(d) {
 if (at.isBusy()) ...
 ```
 
-Using 
+Using
 -----
 
 * APPEND_USES: AT

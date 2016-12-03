@@ -68,7 +68,7 @@ Information
 * [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
 * [Part library for Fritzing](https://github.com/espruino/EspruinoBoard/blob/master/frizting/Espruino_Original.fzpz)
 * [STM32F103RCT6 Datasheet](/datasheets/STM32F103xC.pdf)
-* [STM32F103RCT6 Reference Manual](/datasheets/STM32F103xC_Ref.pdf)
+* [STM32F103RCT6 Reference Manual](/datasheets/STM32F103xC_ref.pdf)
 
 Tutorials
 --------
@@ -101,11 +101,11 @@ Connecting
 
 <span style="color:red;">**NOTE:** The Espruino board has no case and so the USB connector is completely unsupported. This means it is relatively delicate (especially on rev 1v3 boards) and needs to be treated carefully. Try and pull the connector straight out, and **do not** push down on the board when the connector is inserted, or try and move the board around using the cable.</span>
 
-###Pin Strip
+### Pin Strip
 
 There's a [[Pin Strip]] page covering how to solder Pin Strip onto the Espruino Board
 
-###<a name="connecting_batteries"></a>Batteries
+### <a name="connecting_batteries"></a>Batteries
 
 You can usually buy batteries with the PH-type 2 pin female JST (PHR-2) connector ready-soldered, see [[Battery]] for more details on battries and connectors.
 

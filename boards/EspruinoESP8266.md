@@ -2,11 +2,14 @@
 Espruino on ESP8266 WiFi
 ========================
 
-* KEYWORDS: ESP8266,ESP-12,ESP12,ESP01,ESP1,ESP-01,Espruino,Board,PCB,Pinout
+* KEYWORDS: ESP8266,ESP-12,ESP12,ESP01,ESP1,ESP-01,Espruino,Board,PCB,Pinout,Internet,WiFi,Wireless,Radio
 
 **Note:** *This page documents running the Espruino firmware on the ESP8266 board.
 To find out how to connect an ESP8266 board to another Espruino board (as a Wifi Adaptor)
 [please see this page instead](/ESP8266)*
+
+**Warning:** Espruino on the ESP8266 defaults to 115200 baud on its serial interface. This means you
+will need to adjust this setting in the IDE if you use that. (Other Espruino ports default to 9600 baud.)
 
 Quick links
 -----------
@@ -35,12 +38,14 @@ The following features are only partially or not supported by Espruino on the ES
 - [[PWM]] does not work. Code exists but doesn't work.
 - No [[DAC]]: the esp8266 does not have a DAC.
 - No independently usable serial port (needs Espruino work)
+- **GPIO16 is not currently supported in Espruino, it is not a normal GPIO
+pin but rather is attached to the real-time-clock circuitry.**
 
 The main limitations of Espruino on the esp8266 come from two factors:
 - The esp8266 does not have rich I/O peripheral interfaces, this means protocols need to be run in software, which not only may
   be slower but keeps the CPU busy and not attending to other things. As a result, the esp8266 just cannot drive as man peripherals
   as a good ARM processor.
-- The esp8266 uses FreeRTOS with non-preemtible tasks and has extremely limited code space for interrupt handlers, as a result,
+- The esp8266 uses FreeRTOS with non-preemptible tasks and has extremely limited code space for interrupt handlers, as a result,
   it is not possible to handle certain peripherals at interrupt time and a task has to be scheduled instead, which would be OK
   if tasks were pre-emptible, but they are not. This means that functions like digitalPulse have to use busy-waiting between
   edge transitions instead of being interrupt driven.
@@ -99,7 +104,7 @@ memory (the system tends to crash in those situations).
 
 In order to reduce memory requirements,
 Espruino uses LwIP configured with a MSS of 536, this means that all TCP packets can have at most
-536 bytes of payload as opposed to the typical 1460 bytes. On the tranmission end, LwIP seems
+536 bytes of payload as opposed to the typical 1460 bytes. On the transmission end, LwIP seems
 to allow for 3 packets to be in-flight (it has to keep data that is sent until it receives an
 acknowledgment from the receiver). On the reception end, it advertises a TCP window of 4 times
 the MSS, i.e. 2144 bytes, and Espruino tells LwIP to stop incoming data when it has two unconsumed
@@ -127,22 +132,29 @@ pin but rather is attached to the real-time-clock circuitry.
 
 ### digitalPulse implementation
 
-The digitalPulse function is implemented by busy-waiting between pulse transitions. I.e., if you specify a series of 10 500us
-pulses the esp8266 will busy-wait for 5ms in order to toggle the output pin at the right moment. Other than the fact that your
-program will not do anything else during this time, this also prevents Wifi processing and empirically, somewhere after 10ms-50ms
+The `digitalPulse` function is implemented by busy-waiting between pulse transitions (unlike on other Espruino
+boards where `digitalPulse` is asynchronous). 
+
+This means that if you specify a series of 10 500us pulses the esp8266 will busy-wait for 5ms in order to toggle 
+the output pin at the right moment. Other than the fact that your program will not do anything else during this 
+time, this also prevents Wifi processing and empirically, somewhere after 10ms-50ms
 the watchdog timeout will kick in and reset the chip.
+
+**Note:** This also means that `digitalPulse(D0,1,10);digitalPulse(D0,0,10);digitalPulse(D0,1,10);` will *not*
+produce 10ms pulses, because the time taken to execute the JS code for the function calls will increase the
+pulse length. Instead, you need to do `digitalPulse(D0,1,[10,10,10])`.
 
 ### setWatch implementation
 
 The setWatch implementation uses interrupts to capture incoming pulse edges and queues them. The queue can hold 16 elements, so
-setWatch will loose transitions if javascript code does not run promptly.
+setWatch will lose transitions if javascript code does not run promptly.
 
 I2C Implementation
 ------------------
 The I2C interface is implemented in software because the esp8266 does
 not have hardware support for I2C (contrary to what the datasheet seems
 to imply). The software implementation has the following limitations:
-- operates at approx 100Khz
+- operates at approx 300Khz
 - is master-only
 - does not support clock stretching (a method by which slaves can slow down the master)
 
@@ -164,14 +176,18 @@ there is not much point to it). The hardware SPI uses the pins shown in the boar
 
 Serial port
 -----------
-The esp8266 has two UARTS. UART0 uses gpio1 for TX and gpio3 for RX and is used by the Espruino console.
-It could be reused for application purposes, but that is not currently implemented.
-UART1 uses gpio2 for TX and RX is not really usable due to being used for the SDIO flash
-chip. UART1 TX is used by the debug and could be reused for application purposes, but that is
-not currently implemented.
+The esp8266 has two UARTS. UART0 (`Serial1`) uses gpio1 for TX and gpio3 for RX and is used by
+the Espruino JavaScript console. It can be used for other things once the Espruino console
+is moved to another device. For instance calling `LoopbackA.setConsole()` will move the console
+to 'loopback' (where is can be accessed using `LoopbackB`), and will free up `Serial1` for
+use like any normal Espruino Serial port.
 
-GetSerial
----------
+UART1 (`Serial2`) uses gpio2 for TX and RX is not totally usable due to being used for the SDIO
+flash chip. UART1 TX is used for debugging and can be used for application purposes, but RX is
+not available.
+
+Serial Numbers
+--------------
 The esp8266 does not have a serial number. It does have two mac addresses "burned-in", which one can use for identification purposes.
 `getSerial()` returns the MAC address of the STA interface.
 
@@ -255,19 +271,20 @@ The result of all this is the following:
 Start    | Start  | Length | Function
 --------:|-------:|-------:|:----------------------------------------
 0x000000 |      0 |    4KB | Bootloader with flash type/size header
-0x001000 |    4KB |  472KB | Espruino firmware, first partition
+0x001000 |    4KB |  468KB | Espruino firmware, first partition
+0x076000 |  472KB |    4KB | SDK RF calibration save area on 512KB modules
 0x077000 |  476KB |    4KB | EEPROM emulation
 0x078000 |  480KB |   12KB | Espruino save() area
 0x07B000 |  492KB |    4KB | Espruino system and wifi settings
 0x07C000 |  496KB |   16KB | 512KB flash: Espressif SDK system params, else unused
-0x080000 |  512KB |    4KB | Unused
+0x080000 |  512KB |    4KB | SDK RF calibration save area on 1MB and larger modules
 0x081000 |  516KB |  472KB | Espruino firmware, second partition
 0x0F7000 |  988KB |    4KB | Unused
 0x0F8000 |  992KB |   16KB | Unused
 0x0FC000 |  996KB |   16KB | 1MB flash: Espressif SDK system params, else unused
-0x100000 |    1MB |        | approx 1MB-3MB flash for SPIFFS on 2MB-4MB modules
-0x1FC000 | 2032KB |   16KB | 2MB flash: Espressif SDK system params, else unused/SPIFFS
-0x3FC000 | 4080KB |   16KB | 4MB flash: Espressif SDK system params, else unused/SPIFFS
+0x100000 |    1MB |        | approx 1MB-3MB flash unused on 2MB-4MB modules
+0x1FC000 | 2032KB |   16KB | 2MB flash: Espressif SDK system params, else unused
+0x3FC000 | 4080KB |   16KB | 4MB flash: Espressif SDK system params, else unused
 
 The Espressif SDK system params area is composed of:
 
@@ -278,6 +295,7 @@ Offset   | Size   | Function
 0x2000   |    4KB | Wifi and other system parameters (clear using blank.bin)
 0x3000   |    4KB | ?
 
+Note that the SDK RF calibration save area was added with SDK1.5.4 patch 1.
 The `ESP8266` library provides a `getFreeFlash` function that returns an array of free flash areas should you want to
 use the EEPROM emulation class or read/write flash directly.
 
@@ -327,10 +345,8 @@ Loading Espruino
 Espruino can be loaded into the esp8266 using any of the flashing techniques applicable
 to the esp8266 itself.  A variety of tools are available to assist with this.
 
-The Espruino ESP8266 firmware is still under heavy development, and is not yet distributed
-alongside all the other firmwares on the Espruino Website.
-Instead, you should pick up the latest builds from
-[this forum thread](http://forum.espruino.com/conversations/279176)
+The Espruino ESP8266 firmware [is now distributed alongside all the other firmwares on the 
+Espruino Website](http://www.espruino.com/Download).
 
 Open Issues
 -----------

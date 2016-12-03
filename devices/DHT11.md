@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. -->
 DHT11 Temperature and RH Sensor
-=====================
+===============================
 
 * KEYWORDS: Module,DHT11,temperature,humidity
 
@@ -21,10 +21,9 @@ This module interfaces with the DHT11, a very cheap (and cheaply made) temperatu
 
 The DHT11 sometimes fails to recognize the trigger pulse, and occasionally the module fails to properly read the data. The checksum is used to validate all data received. 
 
-The module will retry if it doesn't get any response, or if other sanity checks fail. If it fails 20 times in a row, the callback will be called with {"temp":-1, "rh":-1}, indicating a likely problem with the sensor or wiring.
-It is recommended that you do your own sanity-check on the data returned.
+The module will retry if it doesn't get any response, or if other sanity checks fail. If it fails 10 times in a row, the callback will be called with an error (see below), indicating a likely problem with the sensor or wiring. However it is still recommended that you do your own sanity-check on the data returned.
 
-
+**Note:** The [[DHT22]] sensor is also available - it is similar, but more accurate and reliable.
 
 Wiring
 -----------------
@@ -38,20 +37,30 @@ From left to right when part is viewed from the front (the side with the ventila
   | 3 (NC)     | N/C*     |
   | 4 (GND)    | GND      |
 
-*There are reports of DHT11s on the market where pins 3 and 4 are reversed.
+**Note:** There are reports of DHT11s on the market where pins 3 and 4 are reversed.
 
 
 Usage
 -----------------
 
-call require("DHT11").connect(pin) to get a DHT11 object. To read the sensor, the read method is called with a single argument, the function that is called when the read is complete. This function is called with an object containing two properties, temp and rh. Temperature is in C, RH is in %. 
+Call `require("DHT11").connect(pin)` to get a `DHT11` object. To read the sensor, the `read` method is called with a single argument, the function that is called when the read is complete. This function is called with an object containing two properties, `temp` and `rh.` Temperature is in C, RH is in %. 
 
 For example:
+
 ```JavaScript
-    var dht = require("DHT11").connect(C11);
-    dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
+var dht = require("DHT11").connect(C11);
+dht.read(function (a) {console.log("Temp is "+a.temp.toString()+" and RH is "+a.rh.toString());});
 ```
 
+Returns `-1` for the temperature and humidity (and `err:true`) if no data is received. An extra `checksumError` field contains extra information about the type of the failure:
+
+* If no data received at all: `{"temp": -1, "rh": -1, err : true, "checksumError": false}`.
+
+* If some data received, but the checksum is invalid, or timed out: `{"temp": -1, "rh": -1, err : true, "checksumError": true}`
+
+In all cases, a field called `raw` is present which contains the raw data received, as a string of `1` and `0` characters.
+
+**Note:** You can also supply a second argument which is the number of retries if there is an error. The default is 10.
 
 Buying
 -----

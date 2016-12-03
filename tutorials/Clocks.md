@@ -31,7 +31,7 @@ Buying a Crystal
 You can get these from pretty much any electronic component supplier, for instance:
 
 * (Farnell)[http://uk.farnell.com/multicomp/mcrj332768f1220how/crystal-32-768khz-12-5pf-thru-hole/dp/1701100]
-* (eBay)[http://www.ebay.co.uk/sch/i.html?_nkw=Crystal+32.768]
+* (eBay)[http://www.ebay.com/sch/i.html?_nkw=Crystal+32.768]
 
 You need something that looks like the above - roughly 8mm long and 2mm wide, with 2 very thin wires. They're not very expensive - less than £1 each usually, however you may also be able to scavenge them from old Quartz watches.
 

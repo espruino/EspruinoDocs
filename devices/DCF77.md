@@ -2,7 +2,7 @@
 DCF77 
 ======================
 
-* KEYWORDS: Module,Radio,DCF,DCF77,NPL,Rugby Clock,CLoc,Time
+* KEYWORDS: Module,Radio,DCF,DCF77,NPL,Rugby Clock,CLoc,Time,wireless,receiver
 
 ![DCF77 module](DCF77.jpg)
 

@@ -209,3 +209,7 @@ See our [Quick Start](/Quick+Start) page for how to get started using Espruino i
 ### ESP8266
 
 Please see [the ESP8266 page](/EspruinoESP8266) for more information.
+
+### BBC Micro:bit
+
+Please see [the Micro:bit page](/MicroBit) for more information.

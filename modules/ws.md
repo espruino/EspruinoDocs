@@ -12,7 +12,6 @@ This is a Websocket implementation on Espruino - it lets you:
 Limitations:
 -----------
 
-* The module only accepts messages of less than 127 characters.
 * The module will not parse multiple websocket messages that arrive at once
 * When sending, the library will only send JSON-formatted messages
 
@@ -21,20 +20,25 @@ To use the [[ws.js]] module, you must be connected to WiFi/Ethernet/etc - see [h
 WebSocket Client
 ----------------
 
-First you need run a websocket server which is explained [here using Node.js](https://www.npmjs.com/package/ws). 
+First you need run a websocket server which is explained [here using Node.js](https://www.npmjs.com/package/ws).
 
 Then you will be able to use the following and point it to your websocket server's host and port.
+
+**Note:** all arguments after the host are optional.
 
 ```js
 var host = "192.168.0.10";
 var WebSocket = require("ws");
     var ws = new WebSocket(host,{
-      port: 8080,
-      protocolVersion: 13,
+      path: '/',
+      port: 8080, // default is 80
+      protocol : "echo-protocol", // websocket protocol name (default is none)
+      protocolVersion: 13, // websocket protocol version, default is 13
       origin: 'Espruino',
-      keepAlive: 60
+      keepAlive: 60,
+      headers:{ some:'header', 'ultimate-question':42 } // websocket headers to be used e.g. for auth (default is none)
     });
-	
+
 ws.on('open', function() {
   console.log("Connected to server");
 });
@@ -50,7 +54,7 @@ WebSocket Server
 Just use `require('ws').createServer` like you would `require('http').createServer` and you can handle HTTP requests,
 then use `.on('websocket', ...)` to register a function to handle websockets.
 
-The code below serves up a Web Page which starts a websocket connection, then 
+The code below serves up a Web Page which starts a websocket connection, then
 
 ```
 var page = '<html><body><script>var ws;setTimeout(function(){';
@@ -80,23 +84,23 @@ Available callbacks
 ws.on('open', function() {
   console.log("Connected to server");
 });
-	
+
 ws.on('message', function(msg) {
   console.log("MSG: " + msg);
 });
-	
+
 ws.on('close', function() {
   console.log("Connection closed");
 });
-	
+
 ws.on('handshake', function() {
   console.log("Handshake Success");
 });
-	
+
 ws.on('ping', function() {
   console.log("Got a ping");
 });
-	
+
 ws.on('pong', function() {
   console.log("Got a pong");
 });
@@ -170,7 +174,7 @@ function broadcast(message) {
 
 Then on Espruino, you can interact with the chat room using:
 
-```
+```js
 /** Join a room */
 WebSocket.prototype.message = function (msg) {
     this.send(JSON.stringify({ msg : msg }));
@@ -186,6 +190,7 @@ WebSocket.prototype.broadcast = function (msg, room) {
 WebSocket.prototype.join = function (room) {
     this.send(JSON.stringify({ join : room }));
 };
+```
 
 Then to send a message use:
 

@@ -2,7 +2,7 @@
 NRF24L01+ Wireless Module
 ======================
 
-* KEYWORDS: Module,NRF,NRF24L01,NRF24L01P,NRF24L01+,Wireless
+* KEYWORDS: Module,NRF,NRF24L01,NRF24L01P,NRF24L01+,Wireless,Radio,Transceiver
 
 ![NRF24L01+ Wireless Module](NRF24L01P/module.jpg)
 
@@ -14,20 +14,22 @@ A driver for it is available in the [[NRF24L01P.js]] module.
 
 Connect as follows:
 
-| NRF24L01+ | Name |  Espruino  | Type |
+| NRF24L01+ | Name |  Espruino Original  | Type |
 |-----------|------|------------| ---- |
-| 1 | GND       | GND        | GND |
-| 2 | 3.3V      | 3.3        | 3.3v |
-| 3 | CE        | B1         | GPIO Out |
-| 4 | CSN       | B0         | GPIO Out |
-| 5 | SCK       | A5         | SPI SCK |
-| 6 | MOSI      | A7         | SPI MOSI |
-| 7 | MISO      | A6         | SPI MISO |
-| 8 | IRQ       | unused     | GPIO In |
+| 1    | GND       | GND        | GND |
+| 2    | 3.3V      | 3.3        | 3.3v |
+| 3    | CE        | B1         | GPIO Out |
+| 4    | CSN       | B0         | GPIO Out |
+| 5    | SCK       | A5         | SPI SCK |
+| 6    | MOSI      | A7         | SPI MOSI |
+| 7    | MISO      | A6         | SPI MISO |
+| 8    | IRQ       | unused     | GPIO In |
 
-We'd also suggest that you add a 10nF - 100nF decoupling capacitor between GND and 3.3v. Some modules can be unrelible without this.
+**Note:** These pins are suggested for the [Original Espruino Board](/EspruinoBoard) as they are in the middle, leaving the edges free for IO. However you can use any GPIO pins you want (with software [[SPI]] you needn't use SPI pins either).
 
-**Note:** You don't have to use the pins we've given, but these pins are all on the middle part of the board, leaving the edges free for IO.
+For the [[Pico]] there is [an adaptor shim available](/Shims#nrf24l01p-0-05-shim) as part of the [shim collection](/Shims#shim-collection) that makes the NRF24 a lot easier to solder!
+
+We'd also suggest that you add a 10nF - 100nF decoupling capacitor between GND and 3.3v. Some cheaper modules can be unrelible without this.
 
 You can either connect the module with wires and mount it separately, or you can solder it into the prototype area, and run wires as follows on the back of the board. We'd recommend using thin, solid core wire for this.
 
@@ -135,7 +137,7 @@ onInit();
 
 dataLine = "";
 setInterval(function() {
-  while (nrf.nrf.getDataPipe() !== undefined) {
+  while (nrf.getDataPipe() !== undefined) {
     var data = nrf.getData();
     for (var i in data) {
       var ch = data[i];

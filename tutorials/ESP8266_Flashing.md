@@ -4,7 +4,7 @@ Flashing and using the ESP8266 with Espruino
 
 This tutorial provides a little intro into getting going with the ESP8266 and Espruino, and then
 using it without serial wires going forward. For reference documentation about the esp8266 port
-of Espruino, please see the [reference section](/EspruinoESP8266.md).
+of Espruino, please see the [reference section](/EspruinoESP8266).
 
 __WARNING__: while everything described here works, the tutorial has not been tested much.
 
@@ -81,7 +81,7 @@ For a 4MByte flash chip (e.g. esp-12): [FIXME: need to get radio init and check 
 ```
 $ /path/to/esptool/esptool.py --port /dev/ttyUSB0 --baud 115200 \
   write_flash --flash_freq 80m --flash_mode qio --flash_size 32m \
-  0x0000 "boot_v1.4(b1).bin" 0x1000 espruino_esp8266_user1.bin \
+  0x0000 "boot_v1.6.bin" 0x1000 espruino_esp8266_user1.bin \
   0x3FC000 esp_init_data_default.bin 0x3FE000 blank.bin
 ```
 
@@ -89,7 +89,7 @@ For a 512KB flash chip (e.g. esp-01):
 ```
 $ /path/to/esptool/esptool.py --port /dev/ttyUSB0 --baud 115200 \
   write_flash --flash_freq 40m --flash_mode qio --flash_size 4m \
-  0x0000 "boot_v1.4(b1).bin" 0x1000 espruino_esp8266_user1.bin \
+  0x0000 "boot_v1.6.bin" 0x1000 espruino_esp8266_user1.bin \
   0x7C000 esp_init_data_default.bin 0x7E000 blank.bin
 ```
 
@@ -134,7 +134,7 @@ baud worked just fine for me, writing at ~260kbit/s instead of ~80kbit/s.
 ```
 >python "../esptool/esptool.py" --port COM12 --baud 115200 write_flash \
   --flash_freq 80m --flash_mode qio --flash_size 32m \
-  0x0000 boot_v1.4(b1).bin 0x1000 espruino_esp8266_user1.bin \
+  0x0000 boot_v1.6.bin 0x1000 espruino_esp8266_user1.bin \
   0x3FC000 esp_init_data_default.bin 0x3FE000 blank.bin
 Connecting...
 Erasing flash...
@@ -293,12 +293,14 @@ Updating the Espruino firmware over Wifi
 
 When a new version of Espruino becomes available you can also update the firmware itself over
 Wifi assuming your esp8266 module has at least 1Mbytes of flash (i.e. this does not work
-using the esp-01). The upgrade uses a small shell script provided in the download tgz which
+using the esp-01). The upgrade uses a small shell script provided in the [download](http://www.espruino.com/Download) zip which
 performs a few HTTP requests using `curl` to upload the fresh firmware and reboot the esp8266.
-This looks as follows (all files needed are in the downloaded tgz):
+Although this script is designed to be ran from a Linux command line Windows users can install [Git](https://git-scm.com/downloads) and select "Use Git and optional Unix tools from the windows command prompt" during the  installation which will allow them to run this bash script just like in linux.
+
+Execution looks as follows (all files needed are in the downloaded zip):
 
 ```
-$ ./wiflash espruino.local:88 espruino_esp8266_user1.bin espruino_esp8266_user2.bin
+$ sh wiflash.sh espruino.local:88 espruino_esp8266_user1.bin espruino_esp8266_user2.bin
 Flashing user2.bin
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed

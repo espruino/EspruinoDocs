@@ -32,7 +32,7 @@ exports.connect = function(pin, callback, options) {
       clearTimeout(timeout);
       timeout = undefined;
     }
-    if (d>0.04) { // a gap between transmissions
+    if (d>0.04||code.length>100) { // a gap between transmissions, or code getting long
       if (code!=="") callback(code);
       code = "";
     } else {
