@@ -17,8 +17,14 @@ To turn on your Puck, simply:
 * Remove Puck.js from its packaging
 * Peel the silicone case away from the hard base using your fingers
 * Tip the Puck.js circuit board out of the case
-* Pull out the clear plastic tab from the battery compartment. The red LED should flash very briefly.
-* Re-assemble the Puck. To make sure the button works correctly you need to put the battery facing down, with the silver shield facing towards the 'shelf' in the case.
+* Remove the battery by poking it out from the rear with a blunt object
+* Remove the clear plastic tab that was under the battery
+* Re-insert the battery - the red LED should flash very briefly. If the green
+LED lights or red stays lit, remove the battery and try again, making sure the
+button next to the battery connector isn't pressed.
+* Re-assemble the Puck. To make sure the button works correctly you need to put
+the battery facing down, with the silver shield facing towards the 'shelf' in the
+case.
 
 Now to get started!
 
