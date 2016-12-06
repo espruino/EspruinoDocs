@@ -2,7 +2,7 @@
 Puck.js and BLE Printers
 ========================
 
-* KEYWORDS: BLE,BLuetooth,Printer,Receipt Printer
+* KEYWORDS: Module,Modules,BLE,Bluetooth,Printer,Receipt Printer
 * USES: Puck.js
 
 [![Koolertron BLE printer](Puck.js Printer/koolertron.jpg)](http://www.koolertron.com/koolertron-58mm-mini-portable-bluetooth-40-wireless-receipt-thermal-printer-compatible-with-apple-and-android-p-648.html)

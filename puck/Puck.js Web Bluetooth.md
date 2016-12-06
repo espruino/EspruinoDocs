@@ -2,7 +2,7 @@
 Using Puck.js from a Web Bluetooth Website
 ==========================================
 
-* KEYWORDS: Puck.js,GitHub,Web Bluetooth,BLE
+* KEYWORDS: Tutorials,Puck.js,GitHub,Web Bluetooth,BLE
 * USES: Puck.js,Web Bluetooth
 
 To work, Web Bluetooth needs to be run from a website that's served over HTTPS

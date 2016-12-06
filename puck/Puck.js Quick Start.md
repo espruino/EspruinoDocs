@@ -2,7 +2,7 @@
 Getting Started with Puck.js
 ============================
 
-* KEYWORDS: Puck.js,Quick Start,Getting Started,Web Bluetooth,BLE
+* KEYWORDS: Tutorials,Puck.js,Quick Start,Getting Started,Web Bluetooth,BLE
 * USES: Puck.js,Web Bluetooth
 
 

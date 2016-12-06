@@ -2,7 +2,7 @@
 Web Bluetooth on Ubuntu 16.04 / Linux Mint 18
 ==============================================
 
-* KEYWORDS: Puck.js,Web Bluetooth,Linux,Ubuntu,Mint
+* KEYWORDS: Tutorials,Puck.js,Web Bluetooth,Linux,Ubuntu,Mint
 * USES: Puck.js,Web Bluetooth
 
 **Note:** Alan Assis worked this out and documented it [here](https://acassis.wordpress.com/2016/06/28/how-to-get-chrome-web-bluetooth-working-on-linux/).

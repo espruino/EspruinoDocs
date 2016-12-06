@@ -2,7 +2,7 @@
 Puck.js and HTTP Proxies
 =========================
 
-* KEYWORDS: BLE,HTTP,HTTPS,Proxy,Proxies
+* KEYWORDS: Module,Modules,BLE,Bluetooth,HTTP,HTTPS,Proxy,Proxies
 * USES: Puck.js
 
 The BLE standard provides an [HTTP Proxy](https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.http_proxy.xml)

@@ -2,7 +2,7 @@
 Puck.js and BLE UARTs
 ======================
 
-* KEYWORDS: BLE,NUS,Nordic UART,UART
+* KEYWORDS: Module,Modules,BLE,Bluetooth,NUS,Nordic UART,UART
 * USES: Puck.js
 
 By default, Puck.js presents a `Nordic UART` service that provides
