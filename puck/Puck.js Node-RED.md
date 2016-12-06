@@ -2,7 +2,7 @@
 Puck.js and Node-RED with MQTT
 ===============================
 
-* KEYWORDS: Tutorials,BLE,Bluetooth,Node,Node-red,nodered,MQTT
+* KEYWORDS: Tutorials,BLE,Bluetooth,Node,Node-red,nodered,MQTT,Pi,Raspberry Pi
 * USES: Puck.js
 
 The easiest way to get started with Puck.js and [Node-RED](http://nodered.org/) is to use the

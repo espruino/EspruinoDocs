@@ -65,11 +65,11 @@ If your computer supports it, Web Bluetooth is the easiest way to get started wi
 
 You'll need an up to date version of [Google Chrome](https://www.google.com/chrome/browser/desktop/) or Opera Web Browsers on one of:
 
-* Android (Android 6, Marshmallow or later required, but Android 5 [works with Chromium](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop))
 * Mac OS (OS X Yosemite or later required)
+* Windows support in Chrome is in progress - Windows 10 should be supported in 2017. You'll need to [install the Web IDE application](#with-an-application) for now.
 * Linux (BlueZ 5.41+ required - you can check by typing `bluetoothd --version`). [Bluez install instructions here](/Web Bluetooth On Linux)
 * Chromebook (all Chromebooks with Bluetooth should support Web Bluetooth)
-* Windows support is in progress - Windows 10 should be supported in 2017
+* Android (Android 6, Marshmallow or later required, but Android 5 [works with Chromium](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop))
 
 First, you need to enable Web Bluetooth support:
 
@@ -98,14 +98,24 @@ Now:
 
 ### With an application
 
-On some platforms (Windows, or Linux with older `Bluez`) Web Bluetooth isn't supported.
+On some platforms (Windows, or Linux with older versions of `Bluez`) Web
+Bluetooth isn't supported yet.
 
-On these you'll need to install a native application. We've packaged up the Web IDE in builds for Windows, Linux, and Mac OS that you can download from the Espruino site.
+On these you'll need to install a native application. We've created a
+[Web IDE installed for Windows](/Web+IDE).
+
+On Linux, Mac OS and other platforms you'll need to follow the NPM install
+[instructions on the Web IDE GitHub Page](https://github.com/espruino/EspruinoWebIDE#installing-from-npm)
 
 
 ### Via a Raspberry Pi
 
-To be added soon... In the mean time you can take a look at the [Node RED Tutorial](/Puck.js Node-RED)
+There are two ways of using the Raspberry Pi to control Pucks.
+
+* You can use the Espruino Hub software (which provides an MQTT bridge) and the
+Node-RED UI - see the [Node RED Tutorial](/Puck.js Node-RED)
+
+* Or you can [use the Raspberry Pi to host a web-based version of the Web IDE](/Raspberry Pi Web IDE).
 
 
 ### By wired connection
