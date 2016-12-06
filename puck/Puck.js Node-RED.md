@@ -100,7 +100,7 @@ change to true when the Puck is closer than a certain distance.
 * The RSSI value can fluctuate, so you might want to draw on a `smooth`
 Node to smooth it out:
 
-![](Puck.js Node-RED/node-debug-smooth.png)
+![](Puck.js Node-RED/node-smooth.png)
 
 
 Doing something
