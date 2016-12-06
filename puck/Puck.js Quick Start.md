@@ -204,6 +204,6 @@ There's also much more detailed information:
 
 * [Puck.js Reference](/Puck.js) and [Troubleshooting](/Puck.js#troubleshooting)
 * [Language Reference](/Reference)
-* [List of available tutorials](/Modules)
+* [List of available modules](/Modules)
 * [Other tutorials](/Tutorials)
 * Or check out [our forums](http://forum.espruino.com)
