@@ -174,6 +174,15 @@ See [here](#turning-puck-js-on) for instructions on removing it.
 * **MacOS** needs OS X Yosemite or later. Older hardware will need an external USB dongle though - check that `Low Energy` supported in `About this Mac` -> `System Report`/`Bluetooth`  
 * **Chrome OS** works fine
 
+### I can't reconnect to my Puck on Mac OS
+
+* Close the Web Browser window that had the Web IDE in it
+* Hold the `option` key down while clicking on the Bluetooth icon in the top right menu bar.
+* You should see something like `Puck.js abcd` in bold on the drop-down list
+* Click on it, and you'll see menu options for `Disconnect` and `Remove`
+* Click `Remove`
+* Open up the [Web IDE](/ide) in Chrome and try connecting again
+
 ### I can't get the battery out
 
 Poke it with something nonconductive from behind (where the button is)
@@ -211,3 +220,7 @@ the application to the left or right)
 Puck.js will now have booted without loading the saved code. However it won't
 have deleted your saved code. To do that, you'll need to log in and type
 `save()`.
+
+### It's some other problem!
+
+Check out the [main troubleshooting page](/Troubleshooting) and also the [Espruino Forums](http://forum.espruino.com/)
