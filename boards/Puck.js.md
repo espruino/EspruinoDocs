@@ -140,6 +140,20 @@ possible.
 Firmware Updates
 -----------------
 
+### via nRF Toolbox App (Android & iOS)
+
+* On your Bluetooth LE capable phone, install the `nRF Toolbox` app
+* Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
+* Remove the battery from Puck.js, and re-insert it with the button held down momentarily
+* The Green LED should light while the button is pressed, and when released the Red LED should stay lit
+* Open the `nRF Toolbox` app
+* Tap the `DFU` icon
+* Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the ZIP file you downloaded
+* Tap `Select Device` and choose the device called `DfuTarg`
+* Now tap `Upload` and wait. The LED should turn blue and the DFU process will start - it will take around 90 seconds to complete
+
+### via nRF Connect App (Android)
+
 * On your Bluetooth LE capable phone, install the `nRF Connect` app
 * Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
 * Remove the battery from Puck.js, and re-insert it with the button held down momentarily
