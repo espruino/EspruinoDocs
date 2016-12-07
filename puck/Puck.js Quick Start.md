@@ -65,22 +65,63 @@ If your computer supports it, Web Bluetooth is the easiest way to get started wi
 
 You'll need an up to date version of [Google Chrome](https://www.google.com/chrome/browser/desktop/) or Opera Web Browsers on one of:
 
-* Mac OS (OS X Yosemite or later required)
-* Windows support in Chrome is in progress - Windows 10 should be supported in 2017. You'll need to [install the Web IDE application](#with-an-application) for now.
-* Linux (BlueZ 5.41+ required - you can check by typing `bluetoothd --version`). [Bluez install instructions here](/Web Bluetooth On Linux)
-* Chromebook (all Chromebooks with Bluetooth should support Web Bluetooth)
-* Android (Android 6, Marshmallow or later required, but Android 5 [works with Chromium](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop))
+#### Mac OS
 
-First, you need to enable Web Bluetooth support:
+OS X Yosemite or later required, and check that your Mac supports Bluetooth Low Energy:
+
+* Click the Apple logo then `About this Mac` in the top left
+* Click `System Report`
+* Click `Bluetooth` under `Hardware`
+* See if it says `Bluetooth Low Energy Supported`
+
+If it doesn't:
+
+* Get a Bluetooth 4.2 (or later) adaptor (they cost $5 - $10)
+* Open a terminal and type `sudo nvram bluetoothHostControllerSwitchBehavior=al­ways`
+(to go back to the old behaviour type `sudo nvram -d bluetoothHostControllerSwitchBehavior`)
+* Reboot your Mac
+* **Make sure that you turn off (or un-pair) any Bluetooth devices that were using your internal Bluetooth** - they get stop your Mac from using the new adaptor
+
+When your Mac supports BLE, you need to enable Web Bluetooth support:
 
 * Type `chrome://flags` in the address bar
-* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`) in Chrome 56 or later, or `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Mac OS and Chromebook, there is no option available and Web Bluetooth is enabled by default.
+* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Mac OS and Chromebook, there is no option available and Web Bluetooth is enabled by default.
 * Restart your browser
 
-Now:
+#### Windows
+
+Windows support in Chrome is not yet available - Windows 10 should be supported in 2017.
+
+For now you'll need to [install the Web IDE application](#with-an-application) instead.
+
+#### Linux
+
+BlueZ 5.41+ required - you can check by typing `bluetoothd --version`. If it isn't there are some [Bluez installation instructions here](/Web Bluetooth On Linux)
+
+* Type `chrome://flags` in the address bar
+* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`) in Chrome 56 or later, or `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier.
+* Restart your browser
+
+#### Chromebook
+
+All Chromebooks with Bluetooth should support Web Bluetooth
+
+* Type `chrome://flags` in the address bar
+* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Chromebook, there is no option available and Web Bluetooth is enabled by default.
+* Restart your browser
+
+#### Android
+
+Android 6 (Marshmallow) or later required, but Android 5 [works with the latest Chromium builds](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop))
+
+* Type `chrome://flags` in the address bar
+* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later, there is no option available and Web Bluetooth is enabled by default.
+* Restart your browser
+
+#### Once Web Bluetooth is set up:
 
 * Go to the [Puck.js site](https://puck-js.com/go). It should tell you that you have Web Bluetooth.
-* Click the Web IDE option.
+* Click the [Web IDE option](/ide).
 * Click the orange icon in the Top Left: ![Connect icon](Puck.js Quick Start/connect.png)
 * You may see a list of connection options - choose `Web Bluetooth`:
 

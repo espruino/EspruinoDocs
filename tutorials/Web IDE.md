@@ -29,15 +29,20 @@ can use the Web IDE straight from your Web Browser.
 
 Just follow [this link to the Online Web IDE](https://www.espruino.com/ide)
 
-**Note:** Due to security restrictions, the online Web IDE can't access USB
+**Note:**
+
+* Due to security restrictions, the online Web IDE can't access USB
 devices, so you'll be unable to use it with USB Espruino boards (you need the
 Native or Web Store versions).
+* Web Bluetooth may not be enabled in your Browser. Have a look
+at the [Puck.js Quick Start guide](/Puck.js Quick Start) for information
+on how to enable it.
 
 ### As a Native application
 
 The Web IDE is available as a download for 64 bit Windows:
 
-* [Download for Windows x64](/files/espruino_ide_win64_0v65.exe)
+* [Download for Windows x64](/files/espruino_ide_win64_0v65.7.exe)
 
 #### For Windows 8.1 and later
 
