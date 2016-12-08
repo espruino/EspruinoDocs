@@ -89,7 +89,7 @@ with a characteristic:
 * **NOTIFY / INDICATE** - a central device can ask to receive notifications. Then, when the value of the characteristic on the peripheral changes, it will 'push' data to the central, without it having to check. This is the best way to send data. For example you may want to send two identical values - you can easily do this with notify, but would be difficult to do with repeated reads. Notify and Indicate are very similar, but not identical. See [here](https://devzone.nordicsemi.com/question/310/notificationindication-difference/) for an explanation - but basically you should always try and use notify, *not* indicate.
 
 
-**Note:** A characteristic can have any combination of those 3 types. In fact it's very common to have a characteristic that cannot be read, but that has **nofify** so a central device can be notified when something changes.
+**Note:** A characteristic can have any combination of those 3 types. In fact it's very common to have a characteristic that cannot be read, but that has **notify** so a central device can be notified when something changes.
 
 For example you might have:
 
