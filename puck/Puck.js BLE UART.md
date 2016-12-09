@@ -28,4 +28,4 @@ NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device
 You can write text as long as you like to the UART, and the module will automatically
 split it into BLE packets and send them.
 
-**However:** there is currently no way to receive data uisng this module.
+**However:** there is currently no way to receive data using this module.
