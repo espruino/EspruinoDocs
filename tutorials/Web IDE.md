@@ -62,7 +62,8 @@ to be able to access the BLE adaptor directly - so you have to make sure the
 * Go to `Options` -> `List all Devices`
 * Choose your BLE adaptor (mine is `CSR8510 A10`)
 * Make sure `WinUSB` is set as the driver
-* Now when you run the Web IDE you should get a
+* Now when you next run the Native Web IDE and click 'connect' in the top left,
+you should see a list of connectable BLE devices.
 
 #### Native applications for other platforms
 
