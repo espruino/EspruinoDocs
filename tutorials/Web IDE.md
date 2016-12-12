@@ -47,7 +47,7 @@ The Web IDE is available as a download for 64 bit Windows:
 #### For Windows 8.1 and later
 
 The IDE is able to use Windows' own BLE drivers. The only configuration needed
-is for you to go to your system's Bluetooth settings and to click `Connect`
+is for you to go to your system's Bluetooth settings and to click `Connect` (`Pair` on Windows 10)
 on your Puck.js device. This exposes it to the system and makes sure it
 shows up in the Web IDE.
 
