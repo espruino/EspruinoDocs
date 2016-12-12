@@ -143,7 +143,7 @@ On some platforms (Windows, or Linux with older versions of `Bluez`) Web
 Bluetooth isn't supported yet.
 
 On these you'll need to install a native application. We've created a
-[Web IDE installer for Windows](/Web+IDE).
+[Web IDE installer for Windows](/Web+IDE#as-a-native-application).
 
 On Linux, Mac OS and other platforms you'll need to follow the NPM install
 [instructions on the Web IDE GitHub Page](https://github.com/espruino/EspruinoWebIDE#installing-from-npm)
