@@ -143,7 +143,9 @@ On some platforms (Windows, or Linux with older versions of `Bluez`) Web
 Bluetooth isn't supported yet.
 
 On these you'll need to install a native application. We've created a
-[Web IDE installer for Windows](/Web+IDE).
+[Web IDE installer for Windows](/Web+IDE). **Note:** You need to pair
+your Puck.js using the Windows Bluetooth menu before it'll appear in
+the Web IDE.
 
 On Linux, Mac OS and other platforms you'll need to follow the NPM install
 [instructions on the Web IDE GitHub Page](https://github.com/espruino/EspruinoWebIDE#installing-from-npm)
@@ -163,18 +165,9 @@ Node-RED UI - see the [Node RED Tutorial](/Puck.js Node-RED)
 
 In the worst case, you don't have any computers that allow you to communicate using Bluetooth Low Energy.
 
-But all is not lost! You can buy a USB-TTL converter, and can connect directly to your Puck.js.
+But all is not lost! You can buy a USB-TTL converter, and can [connect directly to your Puck.js](/Puck.js#serial-console).
 
-Connect as follows:
-
-| Puck.js  | USB->TTL converter |
-|----------|--------------------|
-| GND      | GND                |
-| D28      | RX ( -> PC )       |
-| D29      | TX ( <- PC )       |
-| 3V       | 3.3v (Optional - to run without a battery) |
-
-You can now use the normal Espruino Web IDE, or a serial terminal application at 9600 baud.
+You can then use the normal Espruino Web IDE.
 
 
 Command-Line
@@ -184,6 +177,7 @@ You can use the Espruno command-line app. It works under [Node.js](https://nodej
 
 * Install [Node](https://nodejs.org/en/)
 * In a command prompt, type `npm install -g espruino` (on Linux you'll want to use `sudo` before the command)
+* On Linux, you need to run ```sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)``` to give node permissions for BLE (or you'll have to run it as `sudo`)
 * When that completes, you can type `espruino --help` for help
 * To connect, try `espruino --list` to list devices, then copy your device's MAC address and type `espruino -p aa:bb:cc:dd:ee` to connect.
 * Press `Ctrl-C` twice to exit.

@@ -88,6 +88,20 @@ You can sometimes work this information out based on details online, however
 it's often easier to measure it by attaching an IR receiver to your Puck
 (a tutorial on this will be added soon).
 
+### NFC - Near Field Communications
+
+To set Puck.js up to redirect to a new NFC URL, just use [NRF.nfcURL(...)](/Reference#l_NRF_nfcURL):
+
+```
+NRF.nfcURL("http://espruino.com");
+```
+
+or to turn off, call it with no arguments:
+
+```
+NRF.nfcURL();
+```
+
 ### Light sensor
 
 To get a light value you can simply call [`Puck.light()`](/Reference#l_Puck_light).
@@ -111,6 +125,34 @@ Temperature can be accessed with `E.getTemperature()`. It returns the temperatur
 Battery level (based on a normal CR2032 battery) can be accessed with
 [`Puck.getBatteryPercentage()`](/Reference#l_Puck_getBatteryPercentage).
 You can also get the battery voltage using [`NRF.getBattery()`](/Reference#l_NRF_getBattery).
+
+
+Serial Console
+---------------
+
+When power is first applied, Puck.js checks if pin `D28` is at 3.3v (which will be the
+case if it is connected to a Serial port's transmit line). If it is, it initialises
+the on-chip UART on `D28` (Puck RX) and `D29` (Puck TX) and puts the Puck.js
+console (REPL) on it.
+
+To use it, connect to a 3.3v output USB to TTL converter as follows:
+
+| Puck.js  | USB->TTL converter |
+|----------|--------------------|
+| GND      | GND                |
+| D28      | RX ( -> PC )       |
+| D29      | TX ( <- PC )       |
+| 3V       | 3.3v (Optional - to run without a battery) |
+
+You can now use the normal Espruino Web IDE, or a serial terminal application at 9600 baud.
+
+When you connect via Bluetooth, the console will automatically move over. To
+stop this, execute `Serial1.setConsole(true)` to force the console to stay on
+`Serial1`.
+
+**Note:** Serial1 is not enabled by default because it requires the high speed
+oscillator to stay on, which increases power draw a huge amount. If you connect
+the UART but don't power down and power on Puck.js, you won't get a serial port.
 
 
 Power Consumption
