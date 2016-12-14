@@ -165,8 +165,10 @@ and at what power level.
 Nordic provides [a tool to work out power consumption](https://devzone.nordicsemi.com/power/),
 for advertising, but values are roughly:
 
-* Not doing anything - 2.5uA
-* Advertising, 750ms 0dBm (default mode) - 20uA
+* Not doing anything - 3uA
+* Not doing anything, watching the button for presses - 12uA
+* Advertising, 375ms 0dBm (default mode) - 20uA
+* Advertising, 375ms 0dBm (default mode), watching the button - 25uA
 * Advertising, magnetometer reading 0.63 Hz - 50uA
 * Advertising, magnetometer reading 10 Hz - 200uA
 * Connected via BLE - 200uA
@@ -186,8 +188,8 @@ Firmware Updates
 
 * On your Bluetooth LE capable phone, install the `nRF Toolbox` app
 * Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
-* Remove the battery from Puck.js, and re-insert it with the button held down momentarily
-* The Green LED should light while the button is pressed, and when released the Red LED should stay lit
+* Remove the battery from Puck.js, and re-insert it with the button held down - the Green LED should be lit
+* Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Toolbox` app
 * Tap the `DFU` icon
 * Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the ZIP file you downloaded
@@ -198,8 +200,8 @@ Firmware Updates
 
 * On your Bluetooth LE capable phone, install the `nRF Connect` app
 * Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
-* Remove the battery from Puck.js, and re-insert it with the button held down momentarily
-* The Green LED should light while the button is pressed, and when released the Red LED should stay lit
+* Remove the battery from Puck.js, and re-insert it with the button held down - the Green LED should be lit
+* Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery. 
 * Open the `nRF Connect` app
 * It should show some Bluetooth devices, including one called `DfuTarg`
 * Click `Connect` to the right of `DfuTarg`
