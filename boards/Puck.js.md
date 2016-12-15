@@ -198,10 +198,12 @@ Firmware Updates
 
 ### via nRF Connect App (Android)
 
+[[http://youtu.be/N3CJbl29vy0]]
+
 * On your Bluetooth LE capable phone, install the `nRF Connect` app
 * Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
 * Remove the battery from Puck.js, and re-insert it with the button held down - the Green LED should be lit
-* Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery. 
+* Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Connect` app
 * It should show some Bluetooth devices, including one called `DfuTarg`
 * Click `Connect` to the right of `DfuTarg`
