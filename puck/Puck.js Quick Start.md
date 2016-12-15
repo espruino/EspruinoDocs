@@ -249,7 +249,11 @@ Check out some of the other Puck.js tutorials:
 There's also much more detailed information:
 
 * [Puck.js Reference](/Puck.js) and [Troubleshooting](/Puck.js#troubleshooting)
-* [Language Reference](/Reference)
+* [How to use Puck.js on board Peripherals](/Puck.js#on-board-peripherals)
+* [Language Reference](/Reference), specifically:
+  * [Puck Object](/Reference#Puck) - for Puck.js specific functionality
+  * [NRF Object](/Reference#NRF) - for nRF52 Bluetooth functionality
+  * [Global Functions](/Reference#_global) and [E Object](/Reference#E) - for built-in Espruino functionality
 * [List of available modules](/Modules)
 * [Other tutorials](/Tutorials)
 * Or check out [our forums](http://forum.espruino.com)
