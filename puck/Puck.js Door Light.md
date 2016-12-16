@@ -1,5 +1,5 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Door Controller Light with Puck.js
+Door Controlled Light with Puck.js
 ==================================
 
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Light,Magnet,Magnetometer,Door
