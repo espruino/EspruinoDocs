@@ -1,93 +1,310 @@
+/////////////////////////////////////////////////
+// This file is generated from jswrap*.c files //
+// Don't edit this file manually               //
+/////////////////////////////////////////////////
+var NodeMCU = {};
+var Nucleo = {};
+Math.clip = function(x, min, max) {};
+Math.wrap = function(x, max) {};
+var NRF = {};
+NRF.sleep = function() {};
+NRF.wake = function() {};
+NRF.getBattery = function() {};
+NRF.setAdvertising = function(data) {};
+NRF.setServices = function(data) {};
+NRF.setScan = function(callback) {};
+NRF.setTxPower = function(power) {};
+var Graphics = {};
+
 /**
- * @constructor
+ * @param {number} width
+ * @param {number} height
+ * @param {number} bpp
+ * @param {{zigzag: (boolean|undefined), vertical_byte: (boolean|undefined), msb: (boolean|undefined), color_order: (string|undefined)}=} options
  */
-function Graphics() {}
-Graphics.createArrayBuffer = function( width, height, bpp, options ) {}
-Graphics.createCallback = function( width, height, bpp, callback ) {}
-Graphics.createSDL = function( width, height) {}
-Graphics.prototype.getWidth = function() {}
-Graphics.prototype.getHeight = function() {}
-Graphics.prototype.clear = function() {}
-Graphics.prototype.fillRect = function( x1, y1, x2, y2) {};
-Graphics.prototype.drawRect = function( x1, y1, x2, y2) {};
-Graphics.prototype.getPixel = function( x, y ) {};
-Graphics.prototype.setPixel = function( x, y, col) {};
-Graphics.prototype.setColor = function( r, g, b) {};
-Graphics.prototype.setBgColor = function( r, g, b) {}
+Graphics.createArrayBuffer = function(width, height, bpp, options) {};
+Graphics.createCallback = function(width, height, bpp, callback) {};
+Graphics.createSDL = function(width, height) {};
+Graphics.prototype.getWidth = function() {};
+Graphics.prototype.getHeight = function() {};
+Graphics.prototype.clear = function() {};
+Graphics.prototype.fillRect = function(x1, y1, x2, y2) {};
+Graphics.prototype.drawRect = function(x1, y1, x2, y2) {};
+Graphics.prototype.getPixel = function(x, y) {};
+Graphics.prototype.setPixel = function(x, y, col) {};
+Graphics.prototype.setColor = function(r, g, b) {};
+Graphics.prototype.setBgColor = function(r, g, b) {};
 Graphics.prototype.getColor = function() {};
 Graphics.prototype.getBgColor = function() {};
 Graphics.prototype.setFontBitmap = function() {};
 Graphics.prototype.setFontVector = function(size) {};
-Graphics.prototype.setFontCustom = function( bitmap, firstChar, width, height) {}
+Graphics.prototype.setFontCustom = function(bitmap, firstChar, width, height) {};
 Graphics.prototype.drawString = function(str, x, y) {};
-Graphics.prototype.stringWidth = function( str ) {}
-Graphics.prototype.drawLine = function( x1 , y1, x2, y2) {};
+Graphics.prototype.stringWidth = function(str) {};
+Graphics.prototype.drawLine = function(x1, y1, x2, y2) {};
 Graphics.prototype.lineTo = function(x, y) {};
-Graphics.prototype.moveTo = function( x, y) {};
-Graphics.prototype.fillPoly = function( poly ) {};
-Graphics.prototype.setRotation = function( rotation, reflect) {};
-Graphics.prototype.drawImage = function( image, x, y) {};
-Graphics.prototype.getModified = function( reset ) {};
-
-// E
-function E() {}
-E.clip = function( x, min, max ) {}
-E.toUint8Array = function( args ) {}
-E.sum = function( arr ) {}
-E.mapInPlace = function( from, to, map, bits ) {}
-
-
+Graphics.prototype.moveTo = function(x, y) {};
+Graphics.prototype.fillPoly = function(poly) {};
+Graphics.prototype.setRotation = function(rotation, reflect) {};
+Graphics.prototype.drawImage = function(image, x, y) {};
+Graphics.prototype.getModified = function(reset) {};
+var WLAN = {};
+WLAN.prototype.connect = function(ap, key, callback) {};
+WLAN.prototype.disconnect = function() {};
+WLAN.prototype.reconnect = function() {};
+WLAN.prototype.getIP = function() {};
+WLAN.prototype.setIP = function(options) {};
+var httpSrv = {};
+httpSrv.prototype.listen = function(port) {};
+httpSrv.prototype.close = function() {};
+var httpSRq = {};
+httpSRq.prototype.available = function() {};
+httpSRq.prototype.read = function(chars) {};
+httpSRq.prototype.pipe = function(destination, options) {};
+var httpSRs = {};
+httpSRs.prototype.write = function(data) {};
+httpSRs.prototype.end = function(data) {};
+httpSRs.prototype.writeHead = function(statusCode, headers) {};
+var httpCRq = {};
+httpCRq.prototype.write = function(data) {};
+httpCRq.prototype.end = function(data) {};
+var httpCRs = {};
+httpCRs.prototype.available = function() {};
+httpCRs.prototype.read = function(chars) {};
+httpCRs.prototype.pipe = function(destination, options) {};
+var url = {};
+url.parse = function(urlStr, parseQuery) {};
+var Server = {};
+Server.prototype.listen = function(port) {};
+Server.prototype.close = function() {};
+var Socket = {};
+Socket.prototype.available = function() {};
+Socket.prototype.read = function(chars) {};
+Socket.prototype.pipe = function(destination, options) {};
+Socket.prototype.write = function(data) {};
+Socket.prototype.end = function(data) {};
+var Ethernet = {};
+Ethernet.prototype.getIP = function() {};
+Ethernet.prototype.setIP = function(options) {};
+var AES = {};
+AES.encrypt = function(passphrase, key, options) {};
+AES.decrypt = function(passphrase, key, options) {};
+var HASH = {};
+HASH.prototype.update = function(message) {};
+HASH.prototype.digest = function(message) {};
+HASH.prototype.hexdigest = function(message) {};
+// var console = {};
+console.log = function(text) {};
+var process = {};
 /**
- * @param callback
- * @param pin {Pin]
- * @param options
+ * @return {{free: number, usage: number, total: number, history: number, stackEndAddress: number, flash_start: number, flash_binary_end: number, flash_code_start: number, flash_length: number }}
+ }}
  */
-function setWatch( callback, pin, options ) {}
-function clearWatch( id ) {}
-
-function Pin( value ) {}
-
-
-/**
- * @constructor
- */
-function I2C() {}
-
-I2C.prototype.writeTo = function(address, data)  {};
-I2C.prototype.readFrom = function(address, /** number*/ quantity) /** Uint8Array*/ {};
-
-
+process.memory = function() {};
 /**
  * @constructor
  */
 function SPI() {}
-SPI.prototype.setup = function( options ) {}
-
+SPI.find = function(pin) {};
+SPI.prototype.setup = function(options) {};
+SPI.prototype.send = function(data, nss_pin) {};
+SPI.prototype.write = function(data) {};
+SPI.prototype.send4bit = function(data, bit0, bit1, nss_pin) {};
+SPI.prototype.send8bit = function(data, bit0, bit1, nss_pin) {};
 /**
- * @param data
- * @param nss_pin {Pin}
+ * @interface
  */
-SPI.prototype.send = function( data, nss_pin) {}
-SPI.prototype.write = function( data ) {}
+function I2C() {}
+I2C.find = function(pin) {};
+I2C.prototype.setup = function(options) {};
+I2C.prototype.writeTo = function(address, data) {};
+I2C.prototype.readFrom = function(address, quantity) {};
 /**
- * @param data
- * @param bit0
- * @param bit1
- * @param nss_pin {Pin}
+ * @constructor
  */
-SPI.prototype.send4bit = function( data, bit0, bit1, nss_pin ) {}
+function Waveform() {}
+Waveform.prototype.startOutput = function(output, freq, options) {};
+Waveform.prototype.startInput = function(output, freq, options) {};
+Waveform.prototype.stop = function() {};
 /**
- * @param data
- * @param bit0
- * @param bit1
- * @param nss_pin {Pin}
+ * @interface
  */
-SPI.prototype.send8bit = function( data, bit0, bit1, nss_pin ) {}
-
+function Serial() {}
+Serial.find = function(pin) {};
+Serial.prototype.setConsole = function() {};
+Serial.prototype.setup = function(baudrate, options) {};
+Serial.prototype.print = function(string) {};
+Serial.prototype.println = function(string) {};
+Serial.prototype.write = function(data) {};
+Serial.prototype.onData = function(fct) {};
+Serial.prototype.available = function() {};
+Serial.prototype.read = function(chars) {};
+Serial.prototype.pipe = function(destination, options) {};
+/**
+ * @constructor
+ */
+function Pin() {}
+Pin.prototype.read = function() {};
+Pin.prototype.set = function() {};
+Pin.prototype.reset = function() {};
+Pin.prototype.write = function(value) {};
+Pin.prototype.writeAtTime = function(value, time) {};
+Pin.prototype.getMode = function() {};
+Pin.prototype.mode = function(mode) {};
+Pin.prototype.getInfo = function() {};
+Object.prototype.clone = function() {};
+Object.prototype.on = function(event, listener) {};
+Object.prototype.emit = function(event, args) {};
+Object.prototype.removeListener = function(event, listener) {};
+Object.prototype.removeAllListeners = function(event) {};
+Function.prototype.replaceWith = function(newFunc) {};
+var Modules = {};
+Modules.getCached = function() {};
+Modules.removeCached = function(id) {};
+Modules.removeAllCached = function() {};
+Modules.addCached = function(id, sourcecode) {};
+/**
+ * @constructor
+ */
+function OneWire() {}
+OneWire.prototype.reset = function() {};
+OneWire.prototype.select = function(rom) {};
+OneWire.prototype.skip = function() {};
+OneWire.prototype.write = function(data, power) {};
+OneWire.prototype.read = function(count) {};
+OneWire.prototype.search = function(command) {};
+// var JSON = {};
+JSON.stringify = function(data) {};
+JSON.parse = function(string) {};
+/**
+ * @constructor
+ */
+function InternalError() {}
+InternalError.prototype.toString = function() {};
+var E = {};
+E.connectSDCard = function(spi, csPin) {};
+E.unmountSD = function() {};
+E.openFile = function(path, mode) {};
+E.getTemperature = function() {};
+E.getAnalogVRef = function() {};
+E.nativeCall = function(addr, sig, data) {};
+E.clip = function(x, min, max) {};
+E.sum = function(arr) {};
+E.variance = function(arr, mean) {};
+E.convolve = function(arr1, arr2, offset) {};
+E.FFT = function(arrReal, arrImage, inverse) {};
+E.interpolate = function(array, index) {};
+E.interpolate2d = function(array, width, x, y) {};
+E.enableWatchdog = function(timeout) {};
+E.getErrorFlags = function() {};
+E.toArrayBuffer = function(str) {};
+E.toString = function(args) {};
+E.toUint8Array = function(args) {};
+E.memoryArea = function(addr, len) {};
+E.setBootCode = function(code, alwaysExec) {};
+E.setClock = function(options) {};
+E.reverseByte = function(x) {};
+E.dumpTimers = function() {};
+E.getSizeOf = function(v, depth) {};
+E.mapInPlace = function(from, to, map, bits) {};
+E.dumpStr = function() {};
+E.srand = function(v) {};
+E.hwRand = function() {};
+E.HSBtoRGB = function(hue, sat, bri) {};
+E.setUSBHID = function(opts) {};
+E.sendUSBHID = function(data) {};
+/**
+ * @type {Serial}
+ */
+var Bluetooth;
 /**
  * @type {SPI}
  */
 var SPI1;
-
+/**
+ * @type {SPI}
+ */
+var SPI2;
+/**
+ * @type {SPI}
+ */
+var SPI3;
+/**
+ * @type {I2C}
+ */
+var I2C1;
+/**
+ * @type {I2C}
+ */
+var I2C2;
+/**
+ * @type {I2C}
+ */
+var I2C3;
+/**
+ * @type {Serial}
+ */
+var USB;
+/**
+ * @type {Serial}
+ */
+var Serial1;
+/**
+ * @type {Serial}
+ */
+var Serial2;
+/**
+ * @type {Serial}
+ */
+var Serial3;
+/**
+ * @type {Serial}
+ */
+var Serial4;
+/**
+ * @type {Serial}
+ */
+var Serial5;
+/**
+ * @type {Serial}
+ */
+var Serial6;
+/**
+ * @type {Serial}
+ */
+var LoopbackA;
+/**
+ * @type {Serial}
+ */
+var LoopbackB;
+/**
+ * @type {Serial}
+ */
+var Telnet;
 
 var exports;
+
+/**
+ * @param pin {number}
+ * @return {number}
+ */
+function digitalRead( pin ) {}
+
+/**
+ * @param pin {number}
+ * @param value {number}
+ * @return {void}
+ */
+function digitalWrite(pin , value ) {}
+
+/**
+ *
+ * @param pin {number}
+ * @param value {number}
+ * @param {{ freq: (number|undefined), soft: (boolean|undefined), forceSoft: (boolean|undefined) }} options
+ * @return {void}
+ */
+function analogWrite( pin, value, options ) {}
+
+function print(message ) {
+}

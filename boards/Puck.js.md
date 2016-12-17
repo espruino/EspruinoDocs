@@ -88,6 +88,20 @@ You can sometimes work this information out based on details online, however
 it's often easier to measure it by attaching an IR receiver to your Puck
 (a tutorial on this will be added soon).
 
+### NFC - Near Field Communications
+
+To set Puck.js up to redirect to a new NFC URL, just use [NRF.nfcURL(...)](/Reference#l_NRF_nfcURL):
+
+```
+NRF.nfcURL("http://espruino.com");
+```
+
+or to turn off, call it with no arguments:
+
+```
+NRF.nfcURL();
+```
+
 ### Light sensor
 
 To get a light value you can simply call [`Puck.light()`](/Reference#l_Puck_light).
@@ -113,6 +127,34 @@ Battery level (based on a normal CR2032 battery) can be accessed with
 You can also get the battery voltage using [`NRF.getBattery()`](/Reference#l_NRF_getBattery).
 
 
+Serial Console
+---------------
+
+When power is first applied, Puck.js checks if pin `D28` is at 3.3v (which will be the
+case if it is connected to a Serial port's transmit line). If it is, it initialises
+the on-chip UART on `D28` (Puck RX) and `D29` (Puck TX) and puts the Puck.js
+console (REPL) on it.
+
+To use it, connect to a 3.3v output USB to TTL converter as follows:
+
+| Puck.js  | USB->TTL converter |
+|----------|--------------------|
+| GND      | GND                |
+| D28      | RX ( -> PC )       |
+| D29      | TX ( <- PC )       |
+| 3V       | 3.3v (Optional - to run without a battery) |
+
+You can now use the normal Espruino Web IDE, or a serial terminal application at 9600 baud.
+
+When you connect via Bluetooth, the console will automatically move over. To
+stop this, execute `Serial1.setConsole(true)` to force the console to stay on
+`Serial1`.
+
+**Note:** Serial1 is not enabled by default because it requires the high speed
+oscillator to stay on, which increases power draw a huge amount. If you connect
+the UART but don't power down and power on Puck.js, you won't get a serial port.
+
+
 Power Consumption
 -----------------
 
@@ -123,8 +165,10 @@ and at what power level.
 Nordic provides [a tool to work out power consumption](https://devzone.nordicsemi.com/power/),
 for advertising, but values are roughly:
 
-* Not doing anything - 2.5uA
-* Advertising, 750ms 0dBm (default mode) - 20uA
+* Not doing anything - 3uA
+* Not doing anything, watching the button for presses - 12uA
+* Advertising, 375ms 0dBm (default mode) - 20uA
+* Advertising, 375ms 0dBm (default mode), watching the button - 25uA
 * Advertising, magnetometer reading 0.63 Hz - 50uA
 * Advertising, magnetometer reading 10 Hz - 200uA
 * Connected via BLE - 200uA
@@ -140,10 +184,26 @@ possible.
 Firmware Updates
 -----------------
 
+### via nRF Toolbox App (Android & iOS)
+
+* On your Bluetooth LE capable phone, install the `nRF Toolbox` app
+* Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
+* Remove the battery from Puck.js, and re-insert it with the button held down - the Green LED should be lit
+* Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
+* Open the `nRF Toolbox` app
+* Tap the `DFU` icon
+* Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the ZIP file you downloaded
+* Tap `Select Device` and choose the device called `DfuTarg`
+* Now tap `Upload` and wait. The LED should turn blue and the DFU process will start - it will take around 90 seconds to complete
+
+### via nRF Connect App (Android)
+
+[[http://youtu.be/N3CJbl29vy0]]
+
 * On your Bluetooth LE capable phone, install the `nRF Connect` app
 * Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
-* Remove the battery from Puck.js, and re-insert it with the button held down momentarily
-* The Green LED should light while the button is pressed, and when released the Red LED should stay lit
+* Remove the battery from Puck.js, and re-insert it with the button held down - the Green LED should be lit
+* Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Connect` app
 * It should show some Bluetooth devices, including one called `DfuTarg`
 * Click `Connect` to the right of `DfuTarg`
@@ -173,6 +233,15 @@ See [here](#turning-puck-js-on) for instructions on removing it.
 * **Linux** needs Bluez 5.41 or above - [see here for instructions on how to install it](/Web Bluetooth On Linux)
 * **MacOS** needs OS X Yosemite or later. Older hardware will need an external USB dongle though - check that `Low Energy` supported in `About this Mac` -> `System Report`/`Bluetooth`  
 * **Chrome OS** works fine
+
+### I can't reconnect to my Puck on Mac OS
+
+* Close the Web Browser window that had the Web IDE in it
+* Hold the `option` key down while clicking on the Bluetooth icon in the top right menu bar.
+* You should see something like `Puck.js abcd` in bold on the drop-down list
+* Click on it, and you'll see menu options for `Disconnect` and `Remove`
+* Click `Remove`
+* Open up the [Web IDE](/ide) in Chrome and try connecting again
 
 ### I can't get the battery out
 
@@ -211,3 +280,7 @@ the application to the left or right)
 Puck.js will now have booted without loading the saved code. However it won't
 have deleted your saved code. To do that, you'll need to log in and type
 `save()`.
+
+### It's some other problem!
+
+Check out the [main troubleshooting page](/Troubleshooting) and also the [Espruino Forums](http://forum.espruino.com/)

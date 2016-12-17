@@ -29,20 +29,25 @@ can use the Web IDE straight from your Web Browser.
 
 Just follow [this link to the Online Web IDE](https://www.espruino.com/ide)
 
-**Note:** Due to security restrictions, the online Web IDE can't access USB
+**Note:**
+
+* Due to security restrictions, the online Web IDE can't access USB
 devices, so you'll be unable to use it with USB Espruino boards (you need the
 Native or Web Store versions).
+* Web Bluetooth may not be enabled in your Browser. Have a look
+at the [Puck.js Quick Start guide](/Puck.js Quick Start) for information
+on how to enable it.
 
 ### As a Native application
 
 The Web IDE is available as a download for 64 bit Windows:
 
-* [Download for Windows x64](/files/espruino_ide_win64_0v65.exe)
+* [Download for Windows x64](/files/espruino_ide_win64_0v65.8.exe)
 
 #### For Windows 8.1 and later
 
 The IDE is able to use Windows' own BLE drivers. The only configuration needed
-is for you to go to your system's Bluetooth settings and to click `Connect`
+is for you to go to your system's Bluetooth settings and to click `Connect` (`Pair` on Windows 10)
 on your Puck.js device. This exposes it to the system and makes sure it
 shows up in the Web IDE.
 
@@ -57,7 +62,8 @@ to be able to access the BLE adaptor directly - so you have to make sure the
 * Go to `Options` -> `List all Devices`
 * Choose your BLE adaptor (mine is `CSR8510 A10`)
 * Make sure `WinUSB` is set as the driver
-* Now when you run the Web IDE you should get a
+* Now when you next run the Native Web IDE and click 'connect' in the top left,
+you should see a list of connectable BLE devices.
 
 #### Native applications for other platforms
 

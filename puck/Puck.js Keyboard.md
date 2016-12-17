@@ -2,7 +2,7 @@
 Puck.js and HID Keyboards
 =========================
 
-* KEYWORDS: BLE,Keyboard,Control,Mouse,HID,Human Interface Device
+* KEYWORDS: Module,Modules,BLE,Bluetooth,Keyboard,Control,Mouse,HID,Human Interface Device
 * USES: Puck.js
 
 Bluetooth LE HID (Human Interface Devices) are things like Keyboards, Mice,

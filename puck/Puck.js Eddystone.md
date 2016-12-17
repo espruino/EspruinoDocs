@@ -2,7 +2,7 @@
 Puck.js and Eddystone Beacons
 =============================
 
-* KEYWORDS: BLE,EddyStone,FatBeacon,iBeacon,Beacon
+* KEYWORDS: Module,Modules,BLE,Bluetooth,EddyStone,FatBeacon,iBeacon,Beacon
 * USES: Puck.js
 
 [Eddystone](https://github.com/google/eddystone) is an open beacon format from Google

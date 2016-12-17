@@ -2,7 +2,7 @@
 Getting Started with Puck.js
 ============================
 
-* KEYWORDS: Puck.js,Quick Start,Getting Started,Web Bluetooth,BLE
+* KEYWORDS: Tutorials,Puck.js,Quick Start,Getting Started,Web Bluetooth,BLE
 * USES: Puck.js,Web Bluetooth
 
 
@@ -19,15 +19,15 @@ To turn on your Puck, simply:
 * Tip the Puck.js circuit board out of the case
 * Remove the battery by poking it out from the rear with a blunt object
 * Remove the clear plastic tab that was under the battery
-* Re-insert the battery - the red LED should flash very briefly. If the green
-LED lights or red stays lit, remove the battery and try again, making sure the
-button next to the battery connector isn't pressed.
+* Re-insert the battery - the red LED should flash once, very briefly.
+* If the green LED lights or red stays lit, it is because you have accidentally
+pressed the button down while inserting the battery. Remove the battery and try
+again, making sure the button next to the battery connector isn't pressed.
 * Re-assemble the Puck. To make sure the button works correctly you need to put
 the battery facing down, with the silver shield facing towards the 'shelf' in the
 case.
 
 Now to get started!
-
 
 Once you've your Puck.js is powered up it'll start doing two things:
 
@@ -65,22 +65,63 @@ If your computer supports it, Web Bluetooth is the easiest way to get started wi
 
 You'll need an up to date version of [Google Chrome](https://www.google.com/chrome/browser/desktop/) or Opera Web Browsers on one of:
 
-* Android (Android 6, Marshmallow or later required, but Android 5 [works with Chromium](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop))
-* Mac OS (OS X Yosemite or later required)
-* Linux (BlueZ 5.41+ required - you can check by typing `bluetoothd --version`). [Bluez install instructions here](/Web Bluetooth On Linux)
-* Chromebook (all Chromebooks with Bluetooth should support Web Bluetooth)
-* Windows support is in progress - Windows 10 should be supported in 2017
+#### Mac OS
 
-First, you need to enable Web Bluetooth support:
+OS X Yosemite or later required, and check that your Mac supports Bluetooth Low Energy:
+
+* Click the Apple logo then `About this Mac` in the top left
+* Click `System Report`
+* Click `Bluetooth` under `Hardware`
+* See if it says `Bluetooth Low Energy Supported`
+
+If it doesn't:
+
+* Get a Bluetooth 4.2 (or later) adaptor (they cost $5 - $10)
+* Open a terminal and type `sudo nvram bluetoothHostControllerSwitchBehavior=al­ways`
+(to go back to the old behaviour type `sudo nvram -d bluetoothHostControllerSwitchBehavior`)
+* Reboot your Mac
+* **Make sure that you turn off (or un-pair) any Bluetooth devices that were using your internal Bluetooth** - they get stop your Mac from using the new adaptor
+
+When your Mac supports BLE, you need to enable Web Bluetooth support:
 
 * Type `chrome://flags` in the address bar
-* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`) in Chrome 56 or later, or `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Mac OS and Chromebook, there is no option available and Web Bluetooth is enabled by default.
+* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Mac OS and Chromebook, there is no option available and Web Bluetooth is enabled by default.
 * Restart your browser
 
-Now:
+#### Windows
+
+Windows support in Chrome is not yet available - Windows 10 should be supported in 2017.
+
+For now you'll need to [install the Web IDE application](#with-an-application) instead.
+
+#### Linux
+
+BlueZ 5.41+ required - you can check by typing `bluetoothd --version`. If it isn't there are some [Bluez installation instructions here](/Web Bluetooth On Linux)
+
+* Type `chrome://flags` in the address bar
+* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`) in Chrome 56 or later, or `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier.
+* Restart your browser
+
+#### Chromebook
+
+All Chromebooks with Bluetooth should support Web Bluetooth
+
+* Type `chrome://flags` in the address bar
+* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Chromebook, there is no option available and Web Bluetooth is enabled by default.
+* Restart your browser
+
+#### Android
+
+Android 6 (Marshmallow) or later required, but Android 5 [works with the latest Chromium builds](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop))
+
+* Type `chrome://flags` in the address bar
+* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later, there is no option available and Web Bluetooth is enabled by default.
+* Restart your browser
+
+#### Once Web Bluetooth is set up:
 
 * Go to the [Puck.js site](https://puck-js.com/go). It should tell you that you have Web Bluetooth.
-* Click the Web IDE option.
+* Click the [Web IDE option](/ide).
 * Click the orange icon in the Top Left: ![Connect icon](Puck.js Quick Start/connect.png)
 * You may see a list of connection options - choose `Web Bluetooth`:
 
@@ -98,32 +139,36 @@ Now:
 
 ### With an application
 
-On some platforms (Windows, or Linux with older `Bluez`) Web Bluetooth isn't supported.
+On some platforms (Windows, or Linux with older versions of `Bluez`) Web
+Bluetooth isn't supported yet.
 
-On these you'll need to install a native application. We've packaged up the Web IDE in builds for Windows, Linux, and Mac OS that you can download from the Espruino site.
+On these you'll need to install a native application. We've created a
+[Web IDE installer for Windows](/Web+IDE#as-a-native-application).
+
+**Note:** You need to pair your Puck.js using the Windows Bluetooth menu before
+ it'll appear in the Web IDE.
+
+On Linux, Mac OS and other platforms you'll need to follow the NPM install
+[instructions on the Web IDE GitHub Page](https://github.com/espruino/EspruinoWebIDE#installing-from-npm)
 
 
 ### Via a Raspberry Pi
 
-To be added soon... In the mean time you can take a look at the [Node RED Tutorial](/Puck.js Node-RED)
+There are two ways of using the Raspberry Pi to control Pucks.
+
+* You can use the Espruino Hub software (which provides an MQTT bridge) and the
+Node-RED UI - see the [Node RED Tutorial](/Puck.js Node-RED)
+
+* Or you can [use the Raspberry Pi to host a web-based version of the Web IDE](/Raspberry Pi Web IDE).
 
 
 ### By wired connection
 
 In the worst case, you don't have any computers that allow you to communicate using Bluetooth Low Energy.
 
-But all is not lost! You can buy a USB-TTL converter, and can connect directly to your Puck.js.
+But all is not lost! You can buy a USB-TTL converter, and can [connect directly to your Puck.js](/Puck.js#serial-console).
 
-Connect as follows:
-
-| Puck.js  | USB->TTL converter |
-|----------|--------------------|
-| GND      | GND                |
-| D28      | RX ( -> PC )       |
-| D29      | TX ( <- PC )       |
-| 3V       | 3.3v (Optional - to run without a battery) |
-
-You can now use the normal Espruino Web IDE, or a serial terminal application at 9600 baud.
+You can then use the normal Espruino Web IDE.
 
 
 Command-Line
@@ -133,6 +178,7 @@ You can use the Espruno command-line app. It works under [Node.js](https://nodej
 
 * Install [Node](https://nodejs.org/en/)
 * In a command prompt, type `npm install -g espruino` (on Linux you'll want to use `sudo` before the command)
+* On Linux, you need to run ```sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)``` to give node permissions for BLE (or you'll have to run it as `sudo`)
 * When that completes, you can type `espruino --help` for help
 * To connect, try `espruino --list` to list devices, then copy your device's MAC address and type `espruino -p aa:bb:cc:dd:ee` to connect.
 * Press `Ctrl-C` twice to exit.
@@ -203,7 +249,11 @@ Check out some of the other Puck.js tutorials:
 There's also much more detailed information:
 
 * [Puck.js Reference](/Puck.js) and [Troubleshooting](/Puck.js#troubleshooting)
-* [Language Reference](/Reference)
-* [List of available tutorials](/Modules)
+* [How to use Puck.js on board Peripherals](/Puck.js#on-board-peripherals)
+* [Language Reference](/Reference), specifically:
+  * [Puck Object](/Reference#Puck) - for Puck.js specific functionality
+  * [NRF Object](/Reference#NRF) - for nRF52 Bluetooth functionality
+  * [Global Functions](/Reference#_global) and [E Object](/Reference#E) - for built-in Espruino functionality
+* [List of available modules](/Modules)
 * [Other tutorials](/Tutorials)
 * Or check out [our forums](http://forum.espruino.com)

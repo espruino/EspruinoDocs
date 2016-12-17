@@ -1,6 +1,9 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Puck.js and Node-RED
-====================
+Puck.js and Node-RED with MQTT
+===============================
+
+* KEYWORDS: Tutorials,BLE,Bluetooth,Node,Node-red,nodered,MQTT,Pi,Raspberry Pi
+* USES: Puck.js
 
 The easiest way to get started with Puck.js and [Node-RED](http://nodered.org/) is to use the
 [EspruinoHub](https://github.com/espruino/EspruinoHub) software on a
@@ -97,7 +100,7 @@ change to true when the Puck is closer than a certain distance.
 * The RSSI value can fluctuate, so you might want to draw on a `smooth`
 Node to smooth it out:
 
-![](Puck.js Node-RED/node-debug-smooth.png)
+![](Puck.js Node-RED/node-smooth.png)
 
 
 Doing something
