@@ -35,9 +35,14 @@ and PCB to keep it turned off. To turn it on, you need to:
 * Push the battery out from the back with a blunt object
 * Make sure the clear plastic tab is removed
 * Push the battery back in
-* Reassemble (note that the battery should be facing the black plastic back,
+* Reassemble (note that the battery should be facing the black plastic case,
   and the button (next to the battery) should be positioned as far away from
   the 'step' in the case as possible.
+
+**Note: Do not re-fit the PCB upside-down or force it into the case.** If
+positioned correctly it should slide in. Forcing the PCB or fitting it
+upside-down could damage the aerial which will stop your Puck's Bluetooth
+from working correctly.
 
 
 Tutorials
@@ -46,6 +51,43 @@ Tutorials
 Tutorials using Puck.js:
 
 * APPEND_USES: Puck.js
+
+
+On-board LEDs, Button and GPIO
+-------------------------------
+
+The Puck contains LEDs and a button that can be accessed in the same way
+as othe Espruino devices.
+
+### LEDs
+
+* You can use `digitalWrite(LED1,1)` to turn the first (red) LED on, and
+`digitalWrite(LED1,0)` to turn it off. You can also use `LED2` for green
+and `LED3` for blue, and for convenience `LED` is defined (which is the same as `LED1`).
+* You can also use `LED1.write(1)` and `LED1.write(0)` to get the same effect
+* As well as `LED1.set()` and `LED1.reset()` to get the same effect
+* Finally, you can control all 3 LEDs at once using a binary number if you want
+to with `digitalWrite([LED3,LED2,LED1], 7)`
+
+### Button
+
+* You can access the button's state with `digitalRead(BTN)` or `BTN.read()`
+(the two commands are identical). `BTN1` is also defined, and is the same as `BTN`.
+* Polling to get the button state wastes power, so it's better to use `setWatch`
+to call a function whenever the button changes state:
+
+```
+setWatch(function() {
+  console.log("Pressed");
+}, BTN, {edge:"rising", debounce:50, repeat:true});
+```
+
+### GPIO pins
+
+GPIO pins are numbered D0 to D31. Their numbers are usually written on the PCB.
+
+You can use the same `digitalWrite`/`digitalRead` commands with these that you
+do with the buttons, but you can also use [[PWM]], [[I2C]], [[SPI]] and [[Analog]].
 
 
 On-board peripherals
