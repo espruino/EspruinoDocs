@@ -34,6 +34,11 @@ cp boards/img/ESPRUINOWIFI.png $WEBSITE/www/img
 python scripts/build_board_docs.py ESPRUINOWIFI pinout
 mv boards/ESPRUINOWIFI.html $DIR/html/boards
 cp boards/img/ESPRUINOWIFI.png $WEBSITE/www/img
+
+python scripts/build_board_docs.py PUCKJS pinout
+mv boards/PUCKJS.html $DIR/html/boards
+cp boards/img/PUCKJS_.jpg $WEBSITE/www/img
+
 cd $DIR
 
 # Built reference docs and references.json
