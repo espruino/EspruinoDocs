@@ -14,7 +14,7 @@ function DHT11(pin) {
 
 DHT11.prototype.read = function (cb, n) {
   if (!n) n=10;
-  var d = ""; 
+  var d = "";
   var ht = this;
   pinMode(ht.pin); // set pin state to automatic
   digitalWrite(ht.pin, 0);
@@ -25,18 +25,17 @@ DHT11.prototype.read = function (cb, n) {
   setTimeout(function() {
     clearWatch(ht.watch);
     delete ht.watch;
-    var cks = 
+    var cks =
         parseInt(d.substr(2,8),2)+
         parseInt(d.substr(10,8),2)+
         parseInt(d.substr(18,8),2)+
         parseInt(d.substr(26,8),2);
     if (cks&&((cks&0xFF)==parseInt(d.substr(34,8),2))) {
-      cb({ 
+      cb({
         raw : d,
         rh : parseInt(d.substr(2,8),2),
-        t : parseInt(d.substr(18,8),2)
+        temp : parseInt(d.substr(18,8),2)
       });
-      cb(o);
     } else {
       if (n>1) setTimeout(function() {ht.read(cb,--n);},500);
       else cb({err:true, checksumError:cks>0, raw:d, temp:-1, rh:-1});
@@ -47,4 +46,3 @@ DHT11.prototype.read = function (cb, n) {
 exports.connect = function(pin) {
     return new DHT11(pin);
 };
-
