@@ -284,3 +284,26 @@ However there's also much more detailed information:
 caters for all of them. Unless a tutorial explicitly says it is for Puck.js it's
 possible that you will have to change some pin names and wiring to match
 [the pins on the Puck](/Puck.js#pinout).
+
+
+Power Usage
+------------
+
+When idle (as it comes after the battery is plugged in) Puck.js draws around 20uA,
+allowing it to run for around year on a battery. When it's running a small amount
+of JavaScript code once a minute or when a button is pressed that figure won't be
+a great deal higher.
+
+However, it's very easy to draw more power:
+
+* Staying connected to Puck.js will draw 10x more power than idle
+* Lighting a single LED will draw around 100x more power than Puck.js does at idle
+* Running JavaScript code all the time will draw 200x more power than at idle
+
+As a result, if you've been using Puck.js but don't intend to use the code
+you've uploaded it's recommended that you either unplug the battery, or connect
+to the Puck and type `reset()`, to ensure that no code is running in the
+background that might flatten the battery.
+
+
+For more details on power usage, [see here](/Puck.js#power-consumption)
