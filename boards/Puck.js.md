@@ -329,7 +329,8 @@ the application to the left or right)
 
 Puck.js will now have booted without loading the saved code. However it won't
 have deleted your saved code. To do that, you'll need to log in and type
-`save()`.
+`save()`. It's also an idea to type `E.setBootCode()` as well, as this will
+clear any JS code that was saved if `Save on Send` was turned on in the IDE.
 
 ### It's some other problem!
 

@@ -54,7 +54,7 @@ HTTP servers are pretty easy. Just use ```http.createServer```, and then use the
 var http = require("http");
 http.createServer(function (req, res) {
   res.writeHead(200);
-  res.end("Hello World"); 
+  res.end("Hello World");
 }).listen(8080);
 ```
 
@@ -74,7 +74,7 @@ function onPageRequest(req, res) {
   res.write('<p>Pin is '+(BTN.read()?'on':'off')+'</p>');
   res.write('<a href="?led=1">on</a><br/><a href="?led=0">off</a>');
   res.end('</body></html>');
-  if (a.query && "led" in a.query) 
+  if (a.query && "led" in a.query)
     digitalWrite(LED1, a.query["led"]);
 }
 require("http").createServer(onPageRequest).listen(8080);
@@ -227,7 +227,8 @@ var client = require("net").connect({host: "my.url.com", port: 1234}, function()
 HTTPS
 -----
 
-The only board currently supporting this is the Espruino [[Pico]]. To use HTTPS simply use it in the URL of any normal HTTP request:
+The only boards currently supporting this are the Espruino [[Pico]] and [[WiFi]].
+To use HTTPS simply use it in the URL of any normal HTTP request:
 
 ```
 require("http").get("https://www.google.com", function(res) {
@@ -241,11 +242,12 @@ To specify keys and certificates, you can use an options object - see [`require(
 TLS
 ---
 
-The only board currently supporting this is the Espruino [[Pico]]. Use as follows:
+The only boards currently supporting this are the Espruino [[Pico]] and [[WiFi]].
+Just use it as follows:
 
 ```
 require("tls").connect("my.url.com:1234", function(c) {
-  c.write("Hello"); 
+  c.write("Hello");
   c.on('data', function(data) { /* ... */ });
 });
 ```
@@ -253,7 +255,7 @@ require("tls").connect("my.url.com:1234", function(c) {
 See [`require('tls').connect(...)`](/Reference#l_tls_connect) for more information.
 
 
-Related Pages 
+Related Pages
 -----------
 
 * APPEND_KEYWORD: Internet
