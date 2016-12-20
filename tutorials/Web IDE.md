@@ -51,7 +51,7 @@ is for you to go to your system's Bluetooth settings and to click `Connect` (`Pa
 on your Puck.js device. This exposes it to the system and makes sure it
 shows up in the Web IDE.
 
-#### For Windows earlier than 8.1
+#### <a id="zadig"></a>For Windows earlier than 8.1
 
 Since Windows versions earlier than 8.1 don't support Web Bluetooth in the OS,
 [noble](https://www.npmjs.com/package/noble) (which the Espruino IDE uses) has

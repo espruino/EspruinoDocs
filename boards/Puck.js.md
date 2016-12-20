@@ -2,7 +2,7 @@
 Puck.js
 =======
 
-* KEYWORDS: Espruino,Puck,Puckjs,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE
+* KEYWORDS: Espruino,Puck,Puckjs,Puck.js,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE
 
 ![Puck.js](Puck.js/board.jpg)
 
@@ -48,7 +48,9 @@ from working correctly.
 Tutorials
 --------
 
-Tutorials using Puck.js:
+First, it's best to check out the [Getting Started Guide](/Puck.js+Quick+Start)
+
+Other tutorials using Puck.js:
 
 * APPEND_USES: Puck.js
 

@@ -34,9 +34,7 @@ Once you've your Puck.js is powered up it'll start doing two things:
 * Advertising itself on Bluetooth Low Energy
 * Acting as an NFC tag that will redirect you to the Puck.js website
 
-If you have an NFC phone, make sure NFC is on, and then move Puck.js near the NFC receiver on it. A Web page should open that will direct you to some examples.
-
-Otherwise, you'll need to go straight to the Puck.js website - [https://www.puck-js.com/go](https://www.puck-js.com/go)
+If you have an NFC phone, make sure NFC is on, and then move Puck.js near the NFC receiver on it. A Web page should open that will direct you to some examples. Otherwise, you can go straight to the Puck.js website - [https://www.puck-js.com/go](https://www.puck-js.com/go)
 
 
 Using Puck.js
@@ -118,7 +116,7 @@ Android 6 (Marshmallow) or later required, but Android 5 [works with the latest 
 * You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later, there is no option available and Web Bluetooth is enabled by default.
 * Restart your browser
 
-#### Once Web Bluetooth is set up:
+### Once Web Bluetooth is set up:
 
 * Go to the [Puck.js site](https://puck-js.com/go). It should tell you that you have Web Bluetooth.
 * Click the [Web IDE option](/ide).
@@ -134,7 +132,7 @@ Android 6 (Marshmallow) or later required, but Android 5 [works with the latest 
 * Wait a few seconds - you should now be connected!
 * Click on the left-hand side of the IDE, type `LED1.set()` and enter. The red LED should light.
 * You can type `LED1.reset()` to turn it off.
-* You can now try the rest of the [Espruino Quick Start](/Quick+Start#start-writing-code-) on your Puck!
+* You can now try [writing some code](#next) on your Puck!
 
 
 ### With an application
@@ -143,13 +141,20 @@ On some platforms (Windows, or Linux with older versions of `Bluez`) Web
 Bluetooth isn't supported yet.
 
 On these you'll need to install a native application. We've created a
-[Web IDE installer for Windows](/Web+IDE#as-a-native-application).
+[Web IDE installer for Windows](/Web+IDE#as-a-native-application) - don't
+use the Chrome Web Store version at the top of that page, as it won't
+give you access to Bluetooth devices.
 
-**Note:** You need to pair your Puck.js using the Windows Bluetooth menu before
- it'll appear in the Web IDE.
+**Note:**
+
+* If using Windows 8.1 or later you'll need to pair your Puck.js using the Windows
+Bluetooth menu before it'll appear in the Web IDE.
+* If using Windows 7 you'll need to have [set up your Bluetooth adaptor with Zadig first](/Web+IDE#zadig)
 
 On Linux, Mac OS and other platforms you'll need to follow the NPM install
 [instructions on the Web IDE GitHub Page](https://github.com/espruino/EspruinoWebIDE#installing-from-npm)
+
+Once set up, you can try [writing some code](#next) on your Puck!
 
 
 ### Via a Raspberry Pi
@@ -161,6 +166,8 @@ Node-RED UI - see the [Node RED Tutorial](/Puck.js Node-RED)
 
 * Or you can [use the Raspberry Pi to host a web-based version of the Web IDE](/Raspberry Pi Web IDE).
 
+Once set up, you can try [writing some code](#next) on your Puck!
+
 
 ### By wired connection
 
@@ -168,7 +175,7 @@ In the worst case, you don't have any computers that allow you to communicate us
 
 But all is not lost! You can buy a USB-TTL converter, and can [connect directly to your Puck.js](/Puck.js#serial-console).
 
-You can then use the normal Espruino Web IDE.
+You can then use the normal [Espruino Web IDE](/Web+IDE).
 
 
 Command-Line
@@ -184,6 +191,7 @@ You can use the Espruno command-line app. It works under [Node.js](https://nodej
 * Press `Ctrl-C` twice to exit.
 * You can also type `espruino -p aa:bb:cc:dd:ee -w filename.js` to upload a file, enter terminal mode,
 and then re-upload it if it changes (so you can use your favourite editor)
+* You can now start [writing some code](#next) on your Puck!
 
 
 Sending Individual Commands
@@ -222,18 +230,21 @@ We've got [a proper tutorial on it here](/Puck.js Web Bluetooth)
 
 You can make your own application to control Espruino for whatever platform you need.
 
-For the simplest control, add you need to do is connect to the Puck.js bluetooth device and connect to the characteristic with ID `6e400002b5a3f393e0a9e50e24dcca9e`. You can then write repeatedly to it to send commands to Espruino.
+For the simplest control, add you need to do is connect to the Puck.js bluetooth
+device and connect to the characteristic with ID `6e400002b5a3f393e0a9e50e24dcca9e`.
+You can then write repeatedly to it to send commands to Espruino.
 
 ### Commands...
 
-type in `LED1.set()` and click send
+Type in `LED1.set()` and click send.
+
 * The red LED should light up.
 * You can now type `LED1.reset()` to turn it off. `LED2` and `LED3` work too
 * Note that responses are also being sent back. You can type in `BTN.read()` and `false` will be returned - it'll be `true` if the button is pressed
 
 
-Trouble?
---------
+<a id="next"></a>Having Trouble?
+-----------------------------
 
 Check out the [Troubleshooting](/Puck.js#troubleshooting) page, or ask on
 [our forums](http://forum.espruino.com)
@@ -242,11 +253,22 @@ Check out the [Troubleshooting](/Puck.js#troubleshooting) page, or ask on
 What now?
 ----------
 
-Check out some of the other Puck.js tutorials:
+If you're using any version of the Web IDE, you can click on the Book icon in
+the top right, then:
+
+* **Tour** for a quick tour of the various parts of the Web IDE
+* **Tutorial** for a step by step guide to writing your first code on Espruino
+
+![Web Bluetooth setting](Puck.js Quick Start/tutorial.png)
+
+Or you can follow the [Quick Start guide](/Quick+Start#start-writing-code-)
+for normal Espruino Boards.
+
+You can check out some of the Puck.js tutorials:
 
 * APPEND_USES: Puck.js
 
-There's also much more detailed information:
+However there's also much more detailed information:
 
 * [Puck.js Reference](/Puck.js) and [Troubleshooting](/Puck.js#troubleshooting)
 * [How to use Puck.js on board Peripherals](/Puck.js#on-board-peripherals)
@@ -257,3 +279,8 @@ There's also much more detailed information:
 * [List of available modules](/Modules)
 * [Other tutorials](/Tutorials)
 * Or check out [our forums](http://forum.espruino.com)
+
+**Note:** Espruino runs on many other devices, and [espruino.com](http://espruino.com)
+caters for all of them. Unless a tutorial explicitly says it is for Puck.js it's
+possible that you will have to change some pin names and wiring to match
+[the pins on the Puck](/Puck.js#pinout).
