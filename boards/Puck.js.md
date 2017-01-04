@@ -16,7 +16,7 @@ Features
 * 9 x SMD GPIO (capable of PWM, SPI, I2C, UART)
 * ABS plastic rear case with lanyard mount
 * Silicone cover with tactile button
-* MAX3110 Magnetometer
+* MAG3110 Magnetometer
 * IR Transmitter
 * Built in thermometer, light and battery level sensors
 * Red, Green and Blue LEDs
