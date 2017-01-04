@@ -74,7 +74,7 @@ OS X Yosemite or later required, and check that your Mac supports Bluetooth Low 
 
 If it doesn't:
 
-* Get a Bluetooth 4.2 (or later) adaptor (they cost $5 - $10)
+* Get a Bluetooth 4.0 (or later) adaptor (they cost $5 - $10)
 * Open a terminal and type `sudo nvram bluetoothHostControllerSwitchBehavior=al­ways`
 (to go back to the old behaviour type `sudo nvram -d bluetoothHostControllerSwitchBehavior`)
 * Reboot your Mac
@@ -290,7 +290,7 @@ Power Usage
 ------------
 
 When idle (as it comes after the battery is plugged in) Puck.js draws around 20uA,
-allowing it to run for around year on a battery. When it's running a small amount
+allowing it to run for around a year on a battery. When it's running a small amount
 of JavaScript code once a minute or when a button is pressed that figure won't be
 a great deal higher.
 

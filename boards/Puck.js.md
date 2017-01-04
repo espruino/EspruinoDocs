@@ -22,6 +22,9 @@ Features
 * Red, Green and Blue LEDs
 * NFC tag programmable from JavaScript
 * Pin capable of capacitive sensing
+* Dimensions of cardboard box: 64mm x 62mm x 16mm
+* Dimensions of plastic case: 36mm dia, 12.5mm thick
+* Dimensions of bare PCB: 29mm dia, 9mm thick
 
 
 Turning Puck.js on
@@ -171,6 +174,12 @@ for an example of how to connect to another device.
 ### Temperature
 
 Temperature can be accessed with `E.getTemperature()`. It returns the temperature in degrees C.
+
+**Note:** This uses an on-die temperature sensor. It is accurate to ~1 degree C
+for changes in temperature, however the absolute values can be 3-4 degrees C
+different. For best accuracy, work out each Puck's temperature offset by calling
+`E.getTemperature()` when it is at a known temperature.
+
 
 ### Battery level
 
