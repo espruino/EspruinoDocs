@@ -327,7 +327,7 @@ the application to the left or right)
 * Re-insert it with the button held down, the Green LED will light
 * Keep the button pressed for ~3 seconds until all 3 LEDs light
 * Release the button
-* The Green LED will flash 3 times (this is the self-test)
+* The Green LED will flash 5 times (this is the self-test)
 
 Puck.js will now have booted without loading the saved code. However it won't
 have deleted your saved code. To do that, you'll need to log in and type
