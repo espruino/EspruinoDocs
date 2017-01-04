@@ -17,6 +17,20 @@ It contains:
 * A Nordic nRF51822 ARM Cortex-M0 microcontroller (256kB flash, 16kB RAM)
 * A Freescale Kinetis chip to handle USB - this provides a virtual USB flash drive that allows firmware updates just by saving a file.
 
+**Note:** While we provide Espruino for the micro:bit, it takes a lot of memory
+to provide bluetooth functionality and as a result some functionality has had to
+be removed:
+
+* No ES6 Features (ArrayBuffer map/forEach, template literals, arrow functions, etc)
+* No advanced library functions (In [the reference](http://www.espruino.com/Reference),
+any function with the comment "Note: This is only available in some devices: not
+devices with low flash memory" will not be included)
+* Low program memory (Espruino on micro:bit has only 350 vars available, whereas
+on other devices it has over 10 times that)
+
+If you want the full experience, please consider buying [an official Espruino Board](http://www.espruino.com/Order).
+[Puck.js](http://www.espruino.com/Puck.js) is especially useful if you want to
+experiment with Bluetooth LE.
 
 Flashing Espruino
 ------------------
@@ -27,7 +41,7 @@ To flash onto your micro:bit:
 
 * Plug it into USB. A drive called `MICROBIT` should appear
 * Download the `.hex` file for Espruino, and save it directly into the root of that drive
-* The yellow LED on the micro:bit will blink quickly for a few seconds, and will then stop. 
+* The yellow LED on the micro:bit will blink quickly for a few seconds, and will then stop.
 * The Espruino firmware is now installed!
 
 
@@ -57,7 +71,7 @@ If you have a device that supports [Web Bluetooth](https://webbluetoothcg.github
 [[http://youtu.be/HKEHXOSLzCQ]]
 
 * Click the connect icon at the top left
-* Choose `Web Bluetooth` - if this doesn't exist, it's because your device doesn't have Web Bluetooth enabled. 
+* Choose `Web Bluetooth` - if this doesn't exist, it's because your device doesn't have Web Bluetooth enabled.
 * If it isn't enabled:
   * If you're on Android, make sure you install `Chrome Dev`
   * Enter `chrome://flags/#enable-web-bluetooth` in your address bar
@@ -98,7 +112,7 @@ setWatch(function(e) {
 
 **Note:** Currently the state of the buttons is *inverted* - `1` means not pressed, `0` means pressed.
 
-## `show(bitmap)` 
+## `show(bitmap)`
 
 Shows graphics on the built-in 5x5 LED screen. This takes a binary number or a string. For example:
 
