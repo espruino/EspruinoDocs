@@ -25,10 +25,16 @@ For example, using ```require("ADNS5050");``` will make the Web IDE loading the 
 
 ##### Load Module from Github
 
-For now, as you can type a URL into require, you can actually just pull a module right off GitHub. For instance you could look at the history of something on GitHub, and could then just require a specific version of that file with:
+For now, as you can type a URL into require, you can actually just pull a module right off GitHub:
 
 ```
-require("https://github.com/espruino/Esp­ruinoDocs/blob/411be7a72bc55b4a51d05f3df­5bc8fa80017f3b0/devices/PCD8544.js");
+require("https://github.com/espruino/EspruinoDocs/blob/master/devices/PCD8544.js");
+```
+
+You can even look at the history of something on GitHub, and can then require a specific version of that file with:
+
+```
+require("https://github.com/espruino/EspruinoDocs/blob/d4996cb3179abe260c030ed02bcb0d2384db6bbd/devices/PCD8544.js");
 ```
 
 The URL comes from clicking ```<>``` by the commit you were interested in.
