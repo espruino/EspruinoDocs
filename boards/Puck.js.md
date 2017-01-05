@@ -180,12 +180,18 @@ for changes in temperature, however the absolute values can be 3-4 degrees C
 different. For best accuracy, work out each Puck's temperature offset by calling
 `E.getTemperature()` when it is at a known temperature.
 
-
 ### Battery level
 
 Battery level (based on a normal CR2032 battery) can be accessed with
 [`Puck.getBatteryPercentage()`](/Reference#l_Puck_getBatteryPercentage).
 You can also get the battery voltage using [`NRF.getBattery()`](/Reference#l_NRF_getBattery).
+
+### Capacitive sense
+
+Puck.js contains a capacitive sense pin `D11`. To use it, simply add some wire
+(preferably attached to something with a large surface area) to the `D11` pin.
+Then call [`Puck.capSense()`](/Reference#l_Puck_capSense) - this will
+return an integer value that rises as the capacitance attached to `D11` increases.
 
 
 Serial Console
