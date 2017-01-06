@@ -2,7 +2,7 @@
 
 # Local Date Extensions
 
-* KEYWORDS: Espruino, module, Date, extensions, local, locale, format
+* KEYWORDS: Module, Espruino, Date, extensions, local, locale, format
 
 ## APPLICATION
 
@@ -158,7 +158,4 @@ Thu Dec 15 2016 14:27:07 MST
 
 [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date]
 
-Using
------
-
-* APPEND_USES: DateExt.js
+Useful for [Cron.js] module to base actions on local time.

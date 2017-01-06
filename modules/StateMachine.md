@@ -2,7 +2,7 @@
 
 # Simple Finite State Machine
 
-* KEYWORDS: Espruino, module, state machine, state, finite state machine, FSM
+* KEYWORDS: Module, Espruino, state machine, state, finite state machine, FSM
 
 ## APPLICATION
 Module for building and operating simple finite state machines (FSM) 
@@ -216,8 +216,5 @@ setWatch(ee, BTN1, {repeat:true, edge:"falling"});
 ## Reference
 
 Search Google for "finite state machine uml tutorial" for more info.
+
 https://www.google.com/?q=finite%20state%20machine%20uml%20tutorial
-
-## Using
-
-* APPEND_USES: StateMAchine.js
