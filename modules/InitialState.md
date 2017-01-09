@@ -2,7 +2,7 @@
 InitialState
 ============
 
-* KEYWORDS: Initial State, InitialState, IoT, cloud, API
+* KEYWORDS: Initial State,Module,InitialState, IoT, cloud, API
 
 The [InitialState module](/modules/InitialState.js) provides an easy to use
 interface to send events to the [InitialState](https://www.initialstate.com/)

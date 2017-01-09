@@ -2,7 +2,7 @@
 Losant
 ======
 
-* KEYWORDS: Losant, IoT, cloud, API
+* KEYWORDS: Losant,Module,IoT,cloud,API
 
 The [Losant module](/modules/Losant.js) provides an easy to use
 interface to send device updates to and get device commands from

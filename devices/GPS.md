@@ -2,7 +2,7 @@
 GPS Module
 =========
 
-* KEYWORDS: GPS,Global Positioning System,Location,NEO6MV2,Ublox,NMEA,UART
+* KEYWORDS: GPS,Module,Global Positioning System,Location,NEO6MV2,Ublox,NMEA,UART
 
 ![Ublox GPS Module](GPS/ublox.jpg)
 
