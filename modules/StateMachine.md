@@ -218,3 +218,7 @@ setWatch(ee, BTN1, {repeat:true, edge:"falling"});
 Search Google for "finite state machine uml tutorial" for more info.
 
 https://www.google.com/?q=finite%20state%20machine%20uml%20tutorial
+
+## Using
+
+* APPEND_USES: StateMachine.js

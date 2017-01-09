@@ -187,3 +187,8 @@ test:  { "dt": 60000, "os": 37897, "t": null, "i": 3, "x": "4,17,12,11,1" }
 
 See Linux Cron and Crontab man pages for more info. See DateExt module for 
 local time configuration.
+
+## Using
+
+* APPEND_USES: Cron.js
+* APPEND_USES: DateExt.js

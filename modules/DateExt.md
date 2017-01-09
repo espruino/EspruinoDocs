@@ -159,3 +159,7 @@ Thu Dec 15 2016 14:27:07 MST
 [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date]
 
 Useful for [Cron.js] module to base actions on local time.
+
+## Using
+
+* APPEND_USES: DateExt.js
