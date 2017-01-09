@@ -2,7 +2,7 @@
 SeeedStudio Grove System
 =====================
 
-* KEYWORDS: SeeedStudio,Grove,System
+* KEYWORDS: Module,SeeedStudio,Grove,System
 
 ![Grove System](Grove.jpg)
 

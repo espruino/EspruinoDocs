@@ -22,6 +22,7 @@ Features
 * Red, Green and Blue LEDs
 * NFC tag programmable from JavaScript
 * Pin capable of capacitive sensing
+* Weight: 14g in plastic case, 20g in packaging
 * Dimensions of cardboard box: 64mm x 62mm x 16mm
 * Dimensions of plastic case: 36mm dia, 12.5mm thick
 * Dimensions of bare PCB: 29mm dia, 9mm thick
