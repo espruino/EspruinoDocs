@@ -199,6 +199,8 @@ Sending Individual Commands
 
 ### Using Adafruit 'Bluefruit LE' app
 
+**This is the easiest solution on iOS**
+
 * Start the app
 * Choose the Puck.js device you want to communicate with and click `Connect`
 * Click `UART`
@@ -210,7 +212,7 @@ Sending Individual Commands
 * Tap `Connect` and choose your Puck.js device
 * Type commands into the console - see `Commands` below.
 
-**Note:** In this app, you need to manually press the `Enter` key *before* sending a line
+**Note:** In this app, you need to manually press the `Enter` key *before* sending a line. If you're on iOS you need to do this by copy/pasting out of code in notepad - which is much trickier (the Adafruit app above is easier).
 
 ### A Website
 
