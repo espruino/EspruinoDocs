@@ -1,6 +1,6 @@
 <!--- Copyright (C) 2016 Enchanted Engineering. See the file LICENSE for use. -->
-
-# Local Date Extensions
+Local Date Extensions
+=====================
 
 * KEYWORDS: Module, Espruino, Date, extensions, local, locale, format
 

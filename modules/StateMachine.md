@@ -1,6 +1,6 @@
 <!--- Copyright (C) 2016 Enchanted Engineering. See the file LICENSE for use. -->
-
-# Simple Finite State Machine
+Simple Finite State Machine
+===========================
 
 * KEYWORDS: Module, Espruino, state machine, state, finite state machine, FSM
 

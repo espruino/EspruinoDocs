@@ -1,6 +1,6 @@
 <!--- Copyright (C) 2016 Enchanted Engineering. See the file LICENSE for use. -->
-
-# Simple Linux-like Cron system
+Simple Linux-like Cron system
+=============================
 
 * KEYWORDS: Module, Espruino, cron, cronjob, task
 
