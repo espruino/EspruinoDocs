@@ -212,7 +212,7 @@ var gprsFuncs = {
             return cb;
           } else if(r === 'OK') {
             s = 1;
-            at.cmd('AT+CPIN?\r\n', 500, cb);
+            at.cmd('AT+CPIN?\r\n', 1000, cb);
           } else if(r) {
             callback('Error in ATE0: ' + r);
           }
@@ -223,7 +223,7 @@ var gprsFuncs = {
           } else if (r === 'OK') {
             s = 2;
             // check if we're on network
-            at.cmd('AT+CGATT=1\r\n', 500, cb);
+            at.cmd('AT+CGATT=1\r\n', 1000, cb);
           } else if(r) {
             callback('Error in CPIN: ' + r);
           }
@@ -231,7 +231,7 @@ var gprsFuncs = {
         case 2:
           if(r === 'OK') {
             s = 3;
-            at.cmd('AT+CIPSHUT\r\n', 500, cb);
+            at.cmd('AT+CIPSHUT\r\n', 1000, cb);
           } else if(r) {
             callback('Error in CGATT: ' + r);
           }
@@ -239,7 +239,7 @@ var gprsFuncs = {
         case 3:
           if(r === 'SHUT OK') {
             s = 4;
-            at.cmd('AT+CIPSTATUS\r\n', 500, cb);
+            at.cmd('AT+CIPSTATUS\r\n', 1000, cb);
           } else if(r) {
             callback('Error in CIPSHUT: ' + r);
           }
@@ -249,7 +249,7 @@ var gprsFuncs = {
             return cb;
           } else if(r === 'STATE: IP INITIAL') {
             s = 5;
-            at.cmd('AT+CIPMUX=1\r\n', 500, cb);
+            at.cmd('AT+CIPMUX=1\r\n', 1000, cb);
           }
           else if(r) {
             callback('Error in CIPSTATUS: ' + r);
@@ -260,7 +260,7 @@ var gprsFuncs = {
             return cb;
           } else if(r === 'OK') {
             s = 6;
-            at.cmd('AT+CIPHEAD=1\r\n', 500, cb);
+            at.cmd('AT+CIPHEAD=1\r\n', 1000, cb);
           }  else if(r) {
             callback('Error in CIPMUX: ' + r);
           }
@@ -276,11 +276,11 @@ var gprsFuncs = {
           break;
       }
     };
-    at.cmd("ATE0\r\n",1000,cb);
+    at.cmd("ATE0\r\n",3000,cb);
   },
   "reset": function(callback) {
     if (!rst) return gprsFuncs.init(callback);
-    digitalPulse(rst, true, 1);
+    digitalPulse(rst, false, 200);
     setTimeout(function() {
       gprsFuncs.init(callback);
     }, 15000);
