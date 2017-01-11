@@ -28,6 +28,13 @@ Features
 * Dimensions of bare PCB: 29mm dia, 9mm thick
 
 
+<a name="buy"></a>Buying
+------
+
+<!-- You can now get Puck.js from several different distributors. [Click here to see them.](/Order) -->
+Puck.js is currently only available from [our Tindie store](https://www.tindie.com/products/gfwilliams/espruino-puckjs).
+
+
 Turning Puck.js on
 ------------------
 
@@ -65,6 +72,15 @@ Pinout
 
 **Note:** Puck.js has one available I2C, SPI and USART (and infinite software SPI and I2C).
 Unlike other Espruino boards, these peripherals can be used on *any* pin.
+
+
+Information
+-----------
+
+* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjs_sch.pdf)
+* [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjs_brd.pdf)
+* [3D Case design files](https://github.com/espruino/EspruinoBoard/tree/master/Puck.js/case)
+* [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
 
 
 On-board LEDs, Button and GPIO

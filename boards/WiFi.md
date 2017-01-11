@@ -41,6 +41,8 @@ Pinout
 Information
 -----------
 
+* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/blob/master/WiFi/pdf/espruino_wifi_sch.pdf)
+* [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/WiFi/pdf/espruino_wifi_brd.pdf)
 * [STM32F411CE Datasheet](/datasheets/STM32F411xE.pdf)
 * [STM32F411CE Reference Manual](/datasheets/STM32F411xE_ref.pdf)
 
@@ -74,11 +76,30 @@ function getPage() {
 }
 ```
 
-**Note:** To make sure that Espruino connects at power on, 
+**Note:** If you want Espruino to connect at power on, make sure that you
+call the WiFi initialisation code inside an `onInit` function - eg:
 
-Espruino WiFi's module is designed to work similarly to the [ESP8266 native WiFi module](http://www.espruino.com/Reference#Wifi). 
+```
+var WIFI_NAME = "";
+var WIFI_OPTIONS = { password : "" };
 
-Eventually you will be able to use the `WiFi` module directly with Espruino WiFi, but this is still in development.
+var wifi;
+
+function onInit() {
+  wifi = require("EspruinoWiFi");
+  wifi.connect(WIFI_NAME, WIFI_OPTIONS, function(err) {
+    if (err) {
+      console.log("Connection error: "+err);
+      return;
+    }
+    console.log("Connected!");
+    getPage();
+  });
+}
+```
+
+Espruino WiFi's module is designed to work similarly to the [ESP8266 native WiFi module](http://www.espruino.com/Reference#Wifi),
+however *you can't use the `WiFi` module directly*. Eventually you will, however this is still in development.
 
 * APPEND_JSDOC: ../devices/EspruinoWiFi.js
 
