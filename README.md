@@ -1,9 +1,18 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-# EspruinoDocs
+# Espruino Documentation and Code
 
-Espruino Documentation and Code
+------------------------------------------------------------
 
-This project generates the website and tutorial code for [Espruino.com](http://espruino.com). This also contains the modules that can be required by the [Espruino  Web IDE](http://www.espruino.com/Web+IDE). You can contribute to the site and standardised modules in this project.
+**PLEASE VIEW THIS DOCUMENTATION ON [WWW.ESPRUINO.COM](http://espruino.com) - you can even [Search](http://espruino.com/Search).** The markdown files in this repository are designed to be parsed by a build script - by viewing them on GitHub you may be missing useful links or information.
+
+------------------------------------------------------------
+
+This project generates the website and tutorial code for [Espruino.com](http://espruino.com). This also contains the modules that can be required by the [Espruino  Web IDE](http://www.espruino.com/Web+IDE). You can contribute to the site and modules in this project.
+
+* Find out how to [create modules here](http://www.espruino.com/Writing+Modules)
+* Find out how to [create tutorials here](http://www.espruino.com/Writing+Tutorials)
+
+------------------------------------------------------------
 
 Documentation files are written [GitHub Markdown](https://help.github.com/articles/github-flavored-markdown) with additional metadata. Basically, a script that looks for the following (on the start of a line):
 
@@ -77,7 +86,7 @@ The bash script does 3 things:
 
 The JavaScript build process just builds the documentation in the `html` folder.
 
-You will have to run `build.sh` at least once if you want the `build.js` to work. 
+You will have to run `build.sh` at least once if you want the `build.js` to work.
 
 ### To Do a Full Build
 
