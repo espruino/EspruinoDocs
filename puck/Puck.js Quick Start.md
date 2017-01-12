@@ -12,7 +12,7 @@ Your Puck.js shipped with a battery installed, but with a small plastic tab inse
 Turning On
 ----------
 
-To turn on your Puck, simply:
+To turn on your Puck.js, simply:
 
 * Remove Puck.js from its packaging
 * Peel the silicone case away from the hard base using your fingers
@@ -23,9 +23,9 @@ To turn on your Puck, simply:
 * If the green LED lights or red stays lit, it is because you have accidentally
 pressed the button down while inserting the battery. Remove the battery and try
 again, making sure the button next to the battery connector isn't pressed.
-* Re-assemble the Puck. To make sure the button works correctly you need to put
-the battery facing down, with the silver shield facing towards the 'shelf' in the
-case.
+* Re-assemble Puck.js. **To make sure the button works correctly you need to put
+the battery side facing down, with the silver shield facing towards the 'shelf' in the
+case.**
 
 Now to get started!
 
@@ -125,14 +125,14 @@ Android 6 (Marshmallow) or later required, but Android 5 [works with the latest 
 
 ![Web Bluetooth setting](Puck.js Quick Start/connect2.png)
 
-* You should be shown a list of devices - click on `Puck.js ABCD` (where `ABCD` is the last 4 digits of your Puck's MAC address)
+* You should be shown a list of devices - click on `Puck.js ABCD` (where `ABCD` is the last 4 digits of your Puck.js's MAC address)
 
 ![Web Bluetooth device chooser](Puck.js Quick Start/connect3.png)
 
 * Wait a few seconds - you should now be connected!
 * Click on the left-hand side of the IDE, type `LED1.set()` and enter. The red LED should light.
 * You can type `LED1.reset()` to turn it off.
-* You can now try [writing some code](#next) on your Puck!
+* You can now try [writing some code](#next) on your Puck.js!
 
 
 ### With an application
@@ -154,19 +154,19 @@ Bluetooth menu before it'll appear in the Web IDE.
 On Linux, Mac OS and other platforms you'll need to follow the NPM install
 [instructions on the Web IDE GitHub Page](https://github.com/espruino/EspruinoWebIDE#installing-from-npm)
 
-Once set up, you can try [writing some code](#next) on your Puck!
+Once set up, you can try [writing some code](#next) on your Puck.js!
 
 
 ### Via a Raspberry Pi
 
-There are two ways of using the Raspberry Pi to control Pucks.
+There are two ways of using the Raspberry Pi to control Puck.js devices.
 
 * You can use the Espruino Hub software (which provides an MQTT bridge) and the
 Node-RED UI - see the [Node RED Tutorial](/Puck.js Node-RED)
 
 * Or you can [use the Raspberry Pi to host a web-based version of the Web IDE](/Raspberry Pi Web IDE).
 
-Once set up, you can try [writing some code](#next) on your Puck!
+Once set up, you can try [writing some code](#next) on your Puck.js!
 
 
 ### By wired connection
@@ -191,7 +191,7 @@ You can use the Espruno command-line app. It works under [Node.js](https://nodej
 * Press `Ctrl-C` twice to exit.
 * You can also type `espruino -p aa:bb:cc:dd:ee -w filename.js` to upload a file, enter terminal mode,
 and then re-upload it if it changes (so you can use your favourite editor)
-* You can now start [writing some code](#next) on your Puck!
+* You can now start [writing some code](#next) on your Puck.js!
 
 
 Sending Individual Commands
@@ -285,7 +285,7 @@ However there's also much more detailed information:
 **Note:** Espruino runs on many other devices, and [espruino.com](http://espruino.com)
 caters for all of them. Unless a tutorial explicitly says it is for Puck.js it's
 possible that you will have to change some pin names and wiring to match
-[the pins on the Puck](/Puck.js#pinout).
+[the pins on the Puck.js](/Puck.js#pinout).
 
 
 Power Usage
@@ -304,7 +304,7 @@ However, it's very easy to draw more power:
 
 As a result, if you've been using Puck.js but don't intend to use the code
 you've uploaded it's recommended that you either unplug the battery, or connect
-to the Puck and type `reset()`, to ensure that no code is running in the
+to the Puck.js and type `reset()`, to ensure that no code is running in the
 background that might flatten the battery.
 
 

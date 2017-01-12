@@ -52,8 +52,23 @@ and PCB to keep it turned off. To turn it on, you need to:
 
 **Note: Do not re-fit the PCB upside-down or force it into the case.** If
 positioned correctly it should slide in. Forcing the PCB or fitting it
-upside-down could damage the aerial which will stop your Puck's Bluetooth
+upside-down could damage the aerial which will stop Puck.js's Bluetooth
 from working correctly.
+
+
+Resetting Puck.js
+-----------------
+
+Occasionally you may want to hard-reset Puck.js. To do this:
+
+* Take the PCB out of the silicone case
+* Place your finger nail between the Battery and the PCB, near the `Puck.js 1.x` text
+* Gently pull the battery away from the PCB for 1 second and release
+* The red LED should then flash, indicating that Puck.js had rebooted.
+
+If you are not able to do that, you can always remove the battery by pushing it
+out of the holder from behind with matchstick or biro. When you re-insert it,
+Puck.js will have reset.
 
 
 Tutorials
@@ -86,7 +101,7 @@ Information
 On-board LEDs, Button and GPIO
 -------------------------------
 
-The Puck contains LEDs and a button that can be accessed in the same way
+Puck.js contains LEDs and a button that can be accessed in the same way
 as othe Espruino devices.
 
 ### LEDs
@@ -123,7 +138,7 @@ do with the buttons, but you can also use [[PWM]], [[I2C]], [[SPI]] and [[Analog
 On-board peripherals
 --------------------
 
-The Puck's on-board peripherals are exposed by special-purpose functions
+Puck.js's on-board peripherals are exposed by special-purpose functions
 
 ### Magnetometer
 
@@ -157,7 +172,7 @@ Puck.IR([9.6,4.9,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,
 ```
 
 You can sometimes work this information out based on details online, however
-it's often easier to measure it by attaching an IR receiver to your Puck
+it's often easier to measure it by attaching an IR receiver to your Puck.js
 (a tutorial on this will be added soon).
 
 ### NFC - Near Field Communications
@@ -194,7 +209,7 @@ Temperature can be accessed with `E.getTemperature()`. It returns the temperatur
 
 **Note:** This uses an on-die temperature sensor. It is accurate to ~1 degree C
 for changes in temperature, however the absolute values can be 3-4 degrees C
-different. For best accuracy, work out each Puck's temperature offset by calling
+different. For best accuracy, work out each Puck.js's temperature offset by calling
 `E.getTemperature()` when it is at a known temperature.
 
 ### Battery level
@@ -216,7 +231,7 @@ Serial Console
 
 When power is first applied, Puck.js checks if pin `D28` is at 3.3v (which will be the
 case if it is connected to a Serial port's transmit line). If it is, it initialises
-the on-chip UART on `D28` (Puck RX) and `D29` (Puck TX) and puts the Puck.js
+the on-chip UART on `D28` (Puck.js RX) and `D29` (Puck.js TX) and puts the Puck.js
 console (REPL) on it.
 
 To use it, connect to a 3.3v output USB to TTL converter as follows:
@@ -272,7 +287,7 @@ Firmware Updates
 
 * On your Bluetooth LE capable phone, install the `nRF Toolbox` app
 * Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
-* Remove the battery from Puck.js, and re-insert it with the button held down - the Green LED should be lit
+* [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED should be lit
 * Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Toolbox` app
 * Tap the `DFU` icon
@@ -286,7 +301,7 @@ Firmware Updates
 
 * On your Bluetooth LE capable phone, install the `nRF Connect` app
 * Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
-* Remove the battery from Puck.js, and re-insert it with the button held down - the Green LED should be lit
+* [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED should be lit
 * Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Connect` app
 * It should show some Bluetooth devices, including one called `DfuTarg`
@@ -299,7 +314,7 @@ Firmware Updates
 Troubleshooting
 ---------------
 
-### My Puck is not working when it arrives
+### My Puck.js is not working when it arrives
 
 Puck.js is assembled with a **clear plastic tab** between the battery
 and PCB to keep it turned off.
@@ -318,7 +333,17 @@ See [here](#turning-puck-js-on) for instructions on removing it.
 * **MacOS** needs OS X Yosemite or later. Older hardware will need an external USB dongle though - check that `Low Energy` supported in `About this Mac` -> `System Report`/`Bluetooth`  
 * **Chrome OS** works fine
 
-### I can't reconnect to my Puck on Mac OS
+### I can't see my Puck.js device any more
+
+Puck.js can only accept one incoming connection at a time. When a device is connected
+to it, it stops advertising its name.
+
+As a result, if you can't see Puck.js advertising then it is probably because
+some other device that is connected. It may even be *an application on the same device*.
+
+### I can't reconnect to my Puck.js on Mac OS
+
+This often happens if you've turned your Puck into a [HID device](/Puck.js+Keyboard) and paired it with your Mac.
 
 * Close the Web Browser window that had the Web IDE in it
 * Hold the `option` key down while clicking on the Bluetooth icon in the top right menu bar.
@@ -353,10 +378,9 @@ Have you been running one of the `Nordic`/`nRF` applications? If so, make sure
 it is closed (Click the square icon to get to the application chooser, and swipe
 the application to the left or right)
 
-### I saved some code and my Puck no longer works
+### I saved some code and my Puck.js no longer works
 
-* Take the battery out
-* Re-insert it with the button held down, the Green LED will light
+* [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED will light.
 * Keep the button pressed for ~3 seconds until all 3 LEDs light
 * Release the button
 * The Green LED will flash 5 times (this is the self-test)
