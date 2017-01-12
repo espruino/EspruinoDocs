@@ -32,7 +32,19 @@ Features
 ------
 
 <!-- You can now get Puck.js from several different distributors. [Click here to see them.](/Order) -->
-Puck.js is currently only available from [our Tindie store](https://www.tindie.com/products/gfwilliams/espruino-puckjs).
+Puck.js is currently available from:
+
+* [Our Tindie Store](https://www.tindie.com/products/gfwilliams/espruino-puckjs) - shipped from the **UK**
+* [DigitalMeans](https://digitalmeans.co.uk/shop/puckjs-bluetooth_beacon), shipped from the **UK**
+* [Adafruit](https://www.adafruit.com/products/3372), shipped from **New York, USA**
+
+If you wish to order 20 or more units, please [Get in Touch](/Contact+Us)
+and we can invoice you directly. We offer bulk discounts:
+
+* 20 units: £20.00 (ex vat)
+* 50 units: £19.00 (ex vat)
+* 100 units: £18.00 (ex vat)
+* 250 units: £17.00 (ex vat)
 
 
 Turning Puck.js on
