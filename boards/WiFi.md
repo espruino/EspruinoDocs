@@ -21,7 +21,7 @@ Features
 * ESP8266 WiFi (802.11 b/g/n)
 * All GPIO is 5 volt tolerant (Arduino compatible)
 * RTC with external oscillator
-* On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 16v
+* On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 16v (**Note:** with WiFi on, it's recommended that you power the board with 5v or less to minimise the voltage regulator's temperature)
 * Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
 * 500mA polyfuse on board
 
