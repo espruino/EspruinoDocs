@@ -1,14 +1,13 @@
 /* Copyright (c) 2015 Spence Konde, Pur3 Ltd. See the file LICENSE for copying permission. */
 /* See MCP23xxx.md for more info */
-exports.connect = function(i2c,rst,i2ca) {    
-    return new MCP23S17(i2c,rst,i2ca);
+exports.connect = function(spi,cs,rst,ad) {
+    return new MCP23S17(spi,cs,rst,ad);
 };
 function MCP23S17(spi,cs,rst,ad) {
   if(rst) {
       rst.write(0);
   }
   this.spi = spi;
-  this.i2c = i2c;
   this.ad=(ad?(ad<<1)+64:64);
   this.cs=cs;
   if (rst) {
@@ -51,15 +50,15 @@ MCP23S17.prototype.write=function(pin,val) {
 MCP23S17.prototype.writePort=function(val) {
     this.olat=val;
     this.s(18,this.olat);
-}; 
+};
 MCP23S17.prototype.read=function(pin) {
 	var ret=this.r(18);
     return ((ret[0]+(ret[1]<<8))&(1<<pin))>>pin;
-}; 
+};
 MCP23S17.prototype.readPort=function() {
 	var ret=this.r(18);
     return (ret[0]+(ret[1]<<8));
-}; 
+};
 MCP23S17.prototype.mode=function(pin,mode) {this.m(1<<pin,mode);};
 function PEP (b,p){
     this.b=b;
