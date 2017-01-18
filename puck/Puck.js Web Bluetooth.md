@@ -91,7 +91,7 @@ area. Add this inside the `<head>` tag:
 
 * And delete the `style=` section from the SVG. Your code should now look like this:
 
-```HTML_demo_link
+```HTML
 <html>
  <head>
    <style>
@@ -124,9 +124,25 @@ number) it'll force a reload.
 Now, we can start to make it interactive. We'll replace the two buttons
 with just a click on the SVG image.
 
-* Edit the code and replace the HTML for the buttons with the following:
+* Edit the code and replace the HTML for the buttons with a script that'll
+work when the image is clicked:
 
-```Script
+```HTML_demo_link
+<html>
+ <head>
+   <style>
+     body { margin:0;  }
+     svg {
+       display:block; position:absolute;
+       top:0%; left:0%; width:100%; height:100%;
+     }
+   </style>    
+ </head>
+ <body>
+  <svg viewBox="0 0 24 24">
+    <path fill="#000000" d="M12,2A7,7 0 0,0 5,9C5,11.38 6.19,13.47 8,14.74V17A1,1 0 0,0 9,18H15A1,1 0 0,0 16,17V14.74C17.81,13.47 19,11.38 19,9A7,7 0 0,0 12,2M9,21A1,1 0 0,0 10,22H14A1,1 0 0,0 15,21V20H9V21Z" />
+  </svg>
+  <script src="https://www.puck-js.com/puck.js"></script>
   <script type="text/javascript">
     // Get the actual curve inside the SVG. You could make differemt
     // parts of a more complex SVG do different things...
@@ -146,6 +162,8 @@ with just a click on the SVG image.
       }
     });
   </script>
+  </body>
+ </html>  
 ```
 
 * Save and reload the page and you should now be able to control the Puck's
