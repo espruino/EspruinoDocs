@@ -116,6 +116,14 @@ Android 6 (Marshmallow) or later required, but Android 5 [works with the latest 
 * You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later, there is no option available and Web Bluetooth is enabled by default.
 * Restart your browser
 
+#### iOS (iPhone, iPad)
+
+Apple's built-in web browser does not support Web Bluetooth. Instead you'll
+need to [install the WebBLE app](https://itunes.apple.com/us/app/webble/id1193531073)
+
+However once that is done you'll be able to access Web Bluetooth through any
+webpage viewed with [WebBLE](https://itunes.apple.com/us/app/webble/id1193531073)
+
 ### Once Web Bluetooth is set up:
 
 * Go to the [Puck.js site](https://puck-js.com/go). It should tell you that you have Web Bluetooth.

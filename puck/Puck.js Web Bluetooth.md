@@ -5,6 +5,10 @@ Using Puck.js from a Web Bluetooth Website
 * KEYWORDS: Tutorials,Puck.js,GitHub,Web Bluetooth,BLE
 * USES: Puck.js,Web Bluetooth
 
+**Note:** Web Bluetooth currently works on Mac OS, Android, Chromebook, Linux and
+iOS (with [this app](https://itunes.apple.com/us/app/webble/id1193531073)). Google
+should be adding Web Bluetooth support for Windows in early 2017.
+
 To work, Web Bluetooth needs to be run from a website that's served over HTTPS
 (not HTTP). While you can set one up yourself with [Let's Encrypt](https://letsencrypt.org/),
 we're not going to cover that here. Instead, we'll use [GitHub Pages](https://pages.github.com/).

@@ -10,8 +10,9 @@ Puck.js
 Features
 --------
 
+* Bluetooth Low Energy
 * Espruino JavaScript interpreter pre-installed
-* nRF52832 SoC - Cortex M4, 64kB RAM, 512kB Flash
+* nRF52832 SoC - 64MHz Cortex M4, 64kB RAM, 512kB Flash
 * 8 x 0.1" GPIO (capable of PWM, SPI, I2C, UART, Analog Input)
 * 9 x SMD GPIO (capable of PWM, SPI, I2C, UART)
 * ABS plastic rear case with lanyard mount
