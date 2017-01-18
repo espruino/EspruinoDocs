@@ -1,27 +1,38 @@
-<!--- Copyright (c) 2014 Lars Toft Jacobsen (boxed.dk). See the file LICENSE for copying permission. -->
-MQTT Client 
+<!--- Copyright (c) 2014 Lars Toft Jacobsen (boxed.dk), Gordon Williams. See the file LICENSE for copying permission. -->
+MQTT Client
 ===========
 
 * KEYWORDS: Module,MQTT,protocol,client,Internet
 
-A very simple [MQTT](http://mqtt.org/) client implementation for Espruino based on the original socket example by Gordon in this [forum post](http://forum.espruino.com/conversations/258515/). MQTT is a lightweight publish-subscribe protocol built for reliable machine-2-machine communication with a very small footprint. It provides efficient and robust communication mechanisms as well as QOS. This module is however a work-in-progress and only a subset of the protocol is implemented. Likewise there's no guarantee that the implementation complies 100% with the MQTT specification. As of now only QOS 0 (at most once) is truly supported. Encryption and authentication is not supported. The module has been tested with Mosquitto-1.3.5. Use the [MQTT](/modules/MQTT.js) ([About Modules](/Modules)) module for it.
+A very simple [MQTT](http://mqtt.org/) client implementation for Espruino. MQTT is a lightweight publish-subscribe protocol built for reliable machine-2-machine communication with a very small footprint. It provides efficient and robust communication mechanisms as well as QOS. This module only implements a subset of the MQTT protocol. As of now only QOS 0 (at most once) is truly supported. Encryption and authentication is not supported. The module has been tested with Mosquitto-1.3.5. Use the [MQTT](/modules/MQTT.js) ([About Modules](/Modules)) module for it.
 
-The module exports the function create(server, options) that returns a new MQTT object using the provided arguments. The server argument is the MQTT broker ip address, and options is an optional object that can used to pass non-default parameters: client_id, keep_alive, port, and clean_session. If not provided these will default to, a random GUID, 60 s, 1883 and true respectively. Provide a hard-coded client id to ensure the Espruino will always present itself using the same id after a reset.
+The module exports the function `create(server, options)` that returns a new MQTT object using the provided arguments. The server argument is the MQTT broker ip address, and options is an optional object that can used to pass non-default parameters - see the code below for the parameters and their options.
 
-Setting up and connecting:
+Setting up and connecting
+---------------------------
 
-First of load the module and create a MQTT object using ```require("MQTT").create(server)```. The module can only be used with a network connection. In the example below th CC3000 is used to setup a network connection and get a DHCP address. Upon a successful connection connect to the MQTT broker by calling ```connect()```. This will open a socket connection to the server and establish MQTT communications. The client will ping the server every 40 seconds to keep the connection alive in case no other control packets are sent. The connected event can be used to set up subscriptions etc. upon sucessful connection.
+First off load the module and create a MQTT object using ```require("MQTT").create(server)```. In the example below the CC3000 is used to set up a network connection and get a DHCP address. Upon a successful connection connect to the MQTT broker by calling ```connect()```. This will open a socket connection to the server and establish MQTT communications. The client will ping the server every 40 seconds to keep the connection alive in case no other control packets are sent. The connected event can be used to set up subscriptions etc upon sucessful connection.
 
-```
+```js
   var server = "192.168.1.10"; // the ip of your MQTT broker
-  var mqtt = require("MQTT").create(server);
+  var options = { // all optional - the defaults are below
+    client_id : "random", // the client ID sent to MQTT - it's a good idea to define your own static one based on `getSerial()`
+    keep_alive: 60, // keep alive time in seconds
+    port: 1883, // port number
+    clean_session: true,
+    username: "username", // default is undefined
+    password: "password",  // default is undefined
+    protocol_name: "MQTT", // or MQIsdp, etc..
+    protocol_level: 4, // protocol level
+  };
+  var mqtt = require("MQTT").create(server, options /*optional*/);
 
   mqtt.on('connected', function() {
     mqtt.subscribe("test");
   });
 
   var wlan = require("CC3000").connect();
-  wlan.connect( "AccessPointName", "WPA2key", function (s) { 
+  wlan.connect( "AccessPointName", "WPA2key", function (s) {
     if (s=="dhcp") {
       console.log("My IP is "+wlan.getIP().ip);
       mqtt.connect();
@@ -29,21 +40,47 @@ First of load the module and create a MQTT object using ```require("MQTT").creat
   });
 ```
 
-### Connection Options
+### Calling `connect` directly
 
-The options you can pass to `MQTT#connect` are as follows.
+You can skip the `create` and `connect` steps and call connect directly,
+but you must already have a network connection.
+
+**Note:** This is `require("MQTT").connect` and not `mqtt.connect`.
 
 ```js
-mqtt.connect({
-  keep_alive: 60, // keep_alive[seconds]
-  port: 1883, // port number
-  clean_session: 1883, // port number
-  username: "username", 
-  password: "password", 
-  protocol_name: "MQTT", // or MQIsdp, etc..
-  protocol_level: 4, // protocol_level
-  });
+require("MQTT").connect({
+  host: "192.168.1.10",
+});
+
+// or specify more options
+
+require("MQTT").connect({
+  host: "192.168.1.10",
+  username: "username",
+  password: "password"
+});
 ```
+
+### Connecting without TCP/IP
+
+In some cases (for example when transmitting MQTT over radio) you may not
+want to use the built-in TCP/IP functionality and will want to define your
+own methods to send and receive data.
+
+You can do this as follows:
+
+```js
+var mqtt = require("MQTT").create(server, options);
+var client = {
+  write : function(data) { /* write data as string */ },
+  end : function() { /* close connection */ }
+};
+mqtt.connect(client);
+
+// call client.emit('data', "received_data")
+// and client.emit('end') when connection closed
+```
+
 
 Disconnect
 -----------
@@ -79,4 +116,3 @@ Subscriptions are managed using the ```subscribe(topic_filter)``` and ```unsubsc
 
   mqtt.unsubscribe("test/epruino");
 ```
-
