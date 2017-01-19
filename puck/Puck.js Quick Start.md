@@ -253,6 +253,15 @@ Type in `LED1.set()` and click send.
 * Note that responses are also being sent back. You can type in `BTN.read()` and `false` will be returned - it'll be `true` if the button is pressed
 
 
+New Firmware
+------------
+
+While Puck.js ships with firmware that's fine for simple tasks, we're constantly
+improving the software and adding new features.
+
+To get the best out of it, we'd recommend that you [update Puck.js's firmware](/Puck.js#firmware-updates)
+
+
 <a id="next"></a>Having Trouble?
 -----------------------------
 

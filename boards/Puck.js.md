@@ -365,9 +365,20 @@ This often happens if you've turned your Puck into a [HID device](/Puck.js+Keybo
 * Click `Remove`
 * Open up the [Web IDE](/ide) in Chrome and try connecting again
 
+### Connections to Puck.js sometimes fail
+
+The firmware that Puck.js shipped with only advertises every 700ms, which means
+that some devices/applications find it difficult to connect to it,
+
+We'd recommend that you [update Puck.js's firmware](/Puck.js#firmware-updates)
+to a more recent version which advertises every 350ms and is much more reliable
+to connect to.
+
 ### I can't get the battery out
 
-Poke it with something nonconductive from behind (where the button is)
+Poke it with something nonconductive from behind (where the button is). If you
+just want to reset your Puck.js you can also lift the battery away from the PCB
+slightly with a fingernail.
 
 ### When I insert the battery the green light comes on
 
