@@ -261,7 +261,7 @@ MQTT.prototype.connect = function(client) {
 };
 
 /** Disconnect from server */
-MQTT.prototype.disconnect = function(topic, message) {
+MQTT.prototype.disconnect = function() {
   this.client.write(fromCharCode(TYPE.DISCONNECT<<4)+"\x00");
   this.client.end();
   this.client = false;
@@ -271,7 +271,7 @@ MQTT.prototype.disconnect = function(topic, message) {
 /** Publish message using specified topic */
 MQTT.prototype.publish = function(topic, message, qos) {
   var _qos = qos || this.C.DEF_QOS;
-  this.client.write(mqttPublish(topic, message, _qos));
+  this.client.write(mqttPublish(topic, message.toString(), _qos));
 };
 
 /** Subscribe to topic (filter) */
