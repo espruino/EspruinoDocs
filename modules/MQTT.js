@@ -245,10 +245,14 @@ MQTT.prototype.connect = function(client) {
     });
 
     client.on('end', function() {
-      console.log('MQTT client disconnected');
-      clearInterval(mqo.pintr);
-      mqo.emit('disconnected');
-      mqo.emit('close');
+      if (mqo.connected) {
+        mqo.connected = false;
+        console.log('MQTT client disconnected');
+        if (mqo.pintr) clearInterval(mqo.pintr);
+        mqo.pintr = undefined;
+        mqo.emit('disconnected');
+        mqo.emit('close');
+      }
     });
 
     mqo.client = client;
