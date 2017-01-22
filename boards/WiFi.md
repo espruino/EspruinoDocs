@@ -21,7 +21,7 @@ Features
 * ESP8266 WiFi (802.11 b/g/n)
 * All GPIO is 5 volt tolerant (Arduino compatible)
 * RTC with external oscillator
-* On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 16v (**Note:** with WiFi on, it's recommended that you power the board with 5v or less to minimise the voltage regulator's temperature)
+* On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 5v (please see notes under (pinout)[#pinout] below)
 * Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
 * 500mA polyfuse on board
 
@@ -37,6 +37,9 @@ Pinout
 
 * APPEND_PINOUT: ESPRUINOWIFI
 
+<span style="color: red">**Note:** Unlike [Espruino Pico](/Pico) and the [original Espruino board](/EspruinoBoard), Espruno WiFi **doesn't** contain any
+battery switchover circuitry. The `+`/`+VUSB` pin is connected straight to **USB 5V**, and shouldn't be used to power the
+WiFi board while Micro USB is plugged in, unless it is via a diode from 5V.</span>
 
 Information
 -----------
