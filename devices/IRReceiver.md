@@ -2,7 +2,7 @@
 Infrared Remote Control Receiver Module
 ==================================
 
-* KEYWORDS: IR,Infrared,Received,Remote Control,TSOP34838,TSOP322,TSOP324,TSOP344,TSOP348,VS1838B
+* KEYWORDS: Module,IR,Infrared,Received,Remote Control,TSOP34838,TSOP322,TSOP324,TSOP344,TSOP348,VS1838B
 
 Remove controls are handled by the [[IRReceiver.js]] module.
 

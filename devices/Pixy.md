@@ -2,7 +2,7 @@
 CMUcam5 Pixy
 ============
 
-* KEYWORDS: Camera,CMUcam5,Pixy,Computer Vision
+* KEYWORDS: Module,Camera,CMUcam5,Pixy,Computer Vision
 
 ![CMUcam5 Pixy](Pixy/module.jpg)
 

@@ -26,9 +26,11 @@ Software
 
 The example in the [[Quick Start]] shows how to flash an LED the 'right' way - but we can actually do it in one simple line. Just copy and paste:
 
-```setInterval("digitalWrite(LED1,l=!l);",200);```
+```
+var l;setInterval("digitalWrite(LED1,l=!l);",200);
+```
 
-The function setInterval calls the first argument (either a function or a string containing code to execute) every 200ms. In this case, the code just flips the state of a variable ```l``` between true and false with ```l=!l```, and sets the state of the LED to it. This isn't recommended as it's a bit hard to read though.
+The function setInterval calls the first argument (either a function or a string containing code to execute) every 200ms. In this case, the code just flips the state of a variable ```l``` (which we had to define first with `var l`) between `true` and `false` with ```l=!l```, and sets the state of the LED to it. This isn't recommended as it's a bit hard to read though.
 
 To stop the light flashing, just type ```clearInterval()```
 
@@ -39,6 +41,7 @@ Try 1 shows how to flash LEDs at a set rate. But what if you want to flash two L
 This time, we're going to write the code in a way that's easier to understand. First off, write two functions:
 
 ```
+var on1,on2;
 function toggle1() {
   on1 = !on1;
   digitalWrite(LED1, on1);
@@ -53,7 +56,7 @@ Note that each function uses its own variable to keep track of whether the LED s
 
 Now, you can use setInterval twice, one for each function. And each time you can give it a different time period:
 
-```
+```javascript
 setInterval(toggle1, 400);
 setInterval(toggle2, 456);
 ```
@@ -62,11 +65,15 @@ This produces a nice effect as the lights move in and out of phase. To add a thi
 
 Each time you called ```setInterval()```, it returned a different number. If you want to change how fast the interval runs (or cancel it altogether) you need to use this number:
 
-```changeInterval(1,1000);```
+```javascript
+changeInterval(1,1000);
+```
 
 or
 
-```clearInterval(1);```
+```javascript
+clearInterval(1);
+```
 
 ### Try 3
 
@@ -74,11 +81,13 @@ But this is less easy than it could be. In JavaScript, you can define variables 
 
 First, reset Espruino so everything goes back to the way it was:
 
-```reset()```
+```javascript
+reset()
+```
 
 Then, create the function:
 
-```
+```javascript
 function startFlashing(pin, period) {
   var on = false;
   setInterval(function() {
@@ -90,7 +99,7 @@ function startFlashing(pin, period) {
 
 Now we can call this function for however many LEDs we want:
 
-```
+```javascript
 startFlashing(LED1, 400);
 startFlashing(LED2, 456);
 ```
@@ -128,7 +137,7 @@ Pin.prototype.startFlashing = function(period) {
 
 Now, you can call ```startFlashing``` multiple times:
 
-```
+```javascript
 LED1.startFlashing(10);
 LED1.startFlashing(100);
 ```

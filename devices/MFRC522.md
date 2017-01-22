@@ -35,7 +35,7 @@ setInterval(function() {
  nfc.findCards(function(card) {
   print("Found card "+card);
   card = JSON.stringify(card);
-  var leds = [LED1,LED2,LED3];
+  var leds = [LED1,LED2];
   if (card=="[147,239,211,128]") digitalWrite(leds,1);
   if (card=="[249,192,235,164]") digitalWrite(leds,2);
  });
@@ -53,5 +53,5 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.co.uk/sch/i.html?_nkw=MFRC522)
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=MFRC522)
 * [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=MFRC522)

@@ -1,0 +1,35 @@
+{
+  "name": "espruino-docs",
+  "version": "1.0.0",
+  "description": "Espruino Site, Documenation Tutorials and Modules",
+  "main": "app.js",
+  "scripts": {
+    "build": "node ./bin/build.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/espruino/EspruinoDocs.git"
+  },
+  "keywords": [
+    "javascript",
+    "microcontroller",
+    "docs",
+    "modules",
+    "devices",
+    "documentation"
+  ],
+  "author": "Gordon Williams",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/espruino/EspruinoDocs/issues"
+  },
+  "homepage": "https://github.com/espruino/EspruinoDocs#readme",
+  "dependencies": {
+    "acorn": "^2.6.2",
+    "express": "^4.13.3",
+    "highlight.js": "^8.9.1",
+    "marked": "^0.3.6",
+    "tern": "^0.16.0"
+  }
+}

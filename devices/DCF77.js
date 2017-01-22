@@ -51,10 +51,11 @@ function decode(d, callback) {
 exports.connect = function(dataPin, callback) {
   var dcf = {
     last : getTime(),
-    bits : ""
+    bits : "",
+    watchId: undefined
   };
 
-  setWatch(function (e) {  
+  dcf.watchId = setWatch(function (e) {
     // Work out what bit we got
     var d = e.time-e.lastTime;
     var bit = (d<0.15)?0:1;

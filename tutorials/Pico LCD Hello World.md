@@ -26,7 +26,12 @@ Wiring Up
 
 ![Wiring](Pico LCD Hello World.gif)
 
-Wiring this up is really simple, because the LCD draws so little power that we can power it from Espruino's GPIO lines... Simply place the Espruino Pico on the breadboard with the USB connector facing left, and then place the LCD directly above it, aligned to the right (so the pin on the Pico nearest the USB connector should not be connected to anything). See the picture for an example.
+Wiring this up is really simple, because the LCD draws so little power that we can power it from Espruino's GPIO lines... 
+
+* Put the Espruino Pico on the breadboard with the USB connector facing left
+* Put the LCD directly above it, **aligned to the right** (so the pin on the Pico nearest the USB connector should not be connected to anything)
+
+See the picture above for an example.
 
 Software
 -------

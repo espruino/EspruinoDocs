@@ -2,9 +2,9 @@
 Touchscreen
 ==========
 
-* KEYWORDS: HYSTM32,HYSTM32_24,HYSTM32_28,HYSTM32_32,Touchscreen,SPI,ADS7843
+* KEYWORDS: Module,HYSTM32,HYSTM32_24,HYSTM32_28,HYSTM32_32,Touchscreen,SPI,ADS7843
 
-We've created a [[Touchscreen.js]] module that allows you to easily access the touchscreen on devices that have them built in. If you've wired up your own touchscreen then you will probably need to use the relevant touchscreen module directly though (such as the [[ASD7843]]). 
+We've created a [[Touchscreen.js]] module that allows you to easily access the touchscreen on devices that have them built in. If you've wired up your own touchscreen then you will probably need to use the relevant touchscreen module directly though (such as the [[ADS7843]]). 
 
 Using the touchscreen is as easy as writing ```require("Touchscreen").connect( ... )```, and supplying a callback function. The callback function has two arguments (X and Y). When you move your finger on the touchscreen the X and Y coordinates are reported back, and when you lift your finger, the callback function is called once with X and Y set to undefined.
 

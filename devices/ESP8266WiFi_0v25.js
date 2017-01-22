@@ -45,7 +45,9 @@ var netCallbacks = {
           socks[sckt] = true;
         } else {
           socks[sckt] = undefined;
-          throw new Error("CIPSERVER failed");
+          setTimeout(function() {
+            throw new Error("CIPSERVER failed ("+(d?d:"Timeout")+")");
+          }, 0);
         }
       });
       return MAXSOCKETS;
@@ -67,7 +69,9 @@ var netCallbacks = {
           });        
         } else {
           socks[sckt] = undefined;
-          throw new Error("CIPSTART failed");
+          setTimeout(function() {
+            throw new Error("CIPSTART failed ("+(d?d:"Timeout")+")");
+          }, 0);
         }
       });
     }
@@ -77,10 +81,13 @@ var netCallbacks = {
   close : function(sckt) {    
     if (socks[sckt]=="Wait")
       socks[sckt]="WaitClose";
-    else
-      at.cmd('AT+CIPCLOSE='+sckt+"\r\n",1000, function(/*d*/) {
+    else if (socks[sckt]!==undefined) {
+      // socket may already have been closed (eg. received 0,CLOSE)
+      // we need to a different command if we're closing a server
+      at.cmd(((sckt==MAXSOCKETS) ? 'AT+CIPSERVER=0' : ('AT+CIPCLOSE='+sckt))+'\r\n',1000, function(d) {
         socks[sckt] = undefined;
       });
+    }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
   accept : function(sckt) {
@@ -178,17 +185,18 @@ var wifiFuncs = {
       if (d=="ATE0") return cb;
       if (d=="OK") {
         at.cmd("AT+CIPMUX=1\r\n",1000,function(d) { // turn on multiple sockets
-          if (d!="OK") callback("CIPMUX failed: "+d);
+          if (d!="OK") callback("CIPMUX failed: "+(d?d:"Timeout"));
           else callback(null);
         });
       }
-      else callback("ATE0 failed: "+d);
+      else callback("ATE0 failed: "+(d?d:"Timeout"));
     });
   },  
   "reset" : function(callback) {
     at.cmd("\r\nAT+RST\r\n", 10000, function cb(d) {
       //console.log(">>>>>"+JSON.stringify(d));
-      if (d=="ready") setTimeout(function() { wifiFuncs.init(callback); }, 1000);      
+      // 'ready' for 0.25, 'Ready.' for 0.50
+      if (d=="ready" || d=="Ready.") setTimeout(function() { wifiFuncs.init(callback); }, 1000);
       else if (d===undefined) callback("No 'ready' after AT+RST");
       else return cb;
     });
@@ -201,11 +209,11 @@ var wifiFuncs = {
   },
   "connect" : function(ssid, key, callback) {
     at.cmd("AT+CWMODE=1\r\n", 1000, function(cwm) {
-      if (cwm!="no change" && cwm!="OK") callback("CWMODE failed: "+cwm);
+      if (cwm!="no change" && cwm!="OK") callback("CWMODE failed: "+(cwm?cwm:"Timeout"));
       else at.cmd("AT+CWJAP="+JSON.stringify(ssid)+","+JSON.stringify(key)+"\r\n", 20000, function cb(d) {
-        if (["WIFI CONNECTED","WIFI GOT IP"].indexOf(d)>=0) return cb;
-        if (d!="OK") callback("WiFi connect failed: "+d);
-        else callback(null);        
+        if (["WIFI DISCONNECT","WIFI CONNECTED","WIFI GOT IP","+CWJAP:1"].indexOf(d)>=0) return cb;
+        if (d!="OK") setTimeout(callback,0,"WiFi connect failed: "+(d?d:"Timeout"));
+        else setTimeout(callback,0,null);
       });
     });
   },
@@ -229,11 +237,11 @@ var wifiFuncs = {
   },
   "createAP" : function(ssid, key, channel, enc, callback) {
     at.cmd("AT+CWMODE=2\r\n", 1000, function(cwm) {
-      if (cwm!="no change" && cwm!="OK" && cwm!="WIFI DISCONNECT") callback("CWMODE failed: "+cwm);
+      if (cwm!="no change" && cwm!="OK" && cwm!="WIFI DISCONNECT") callback("CWMODE failed: "+(cwm?cwm:"Timeout"));
       var encn = enc ? ENCR_FLAGS.indexOf(enc) : 0;
       if (encn<0) callback("Encryption type "+enc+" not known - "+ENCR_FLAGS);
       else at.cmd("AT+CWSAP="+JSON.stringify(ssid)+","+JSON.stringify(key)+","+channel+","+encn+"\r\n", 5000, function(cwm) {
-        if (cwm!="OK") callback("CWSAP failed: "+cwm);
+        if (cwm!="OK") callback("CWSAP failed: "+(cwm?cwm:"Timeout"));
         else callback(null);        
       });
     });

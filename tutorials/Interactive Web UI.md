@@ -243,7 +243,7 @@ function pageHandler(req, res) {
     // If it's a POST, save the data
     var info = url.parse(req.url,true);
     console.log("POST ",info);
-    if ("pos" in info.query)
+    if (info.query && "pos" in info.query)
       setPos(parseFloat(info.query.pos));
     res.writeHead(200);
     res.end("Ok.");

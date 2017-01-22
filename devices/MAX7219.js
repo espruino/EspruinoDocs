@@ -1,4 +1,4 @@
-/* Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
+/* Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 /* 
 Module for the MAX7219 7 segment display driver
 
@@ -20,35 +20,55 @@ setTimeout(function() {
 }, 2000);
 ```
 */
-exports.connect = function(/*=SPI*/_spi,/*=PIN*/_cs) {
-  var spi = _spi;
-  var cs = _cs;
-  spi.send ([0xA,0xF],cs);  // intensity  -full
-  spi.send ([0xB,0x7],cs);  // scan limit - all 8 chars
-  spi.send ([0xC,0],cs);    // shutdown
+exports.connect = function(/*=SPI*/spi, /*=PIN*/cs, screens) {
+  screens = screens||1;
+  spi.write ({data:[0xa,0xf], count:screens}, cs);  // intensity  -full
+  spi.write ({data:[0xb,0x7], count:screens}, cs);  // scan limit - all 8 chars
+  spi.write ({data:[0xc,0], count:screens}, cs);    // shutdown
   return {
     /// Display the given characters - only 0123456789-EHLP are possible
     set : function(val) {
-      spi.send ([0x9,0xFF],cs); // decode all as numbers
-      var map = "0123456789-EHLP  "; // FIXME indexOf doesn't find last index
+      spi.write([0x9,0xff],cs); // decode all as numbers
+      var map = "0123456789-EHLP ";
       var s = "        "+val;
       if (s.length>8) s = s.substr(s.length-8);
       for (var i=0;i<8;i++) {
-        spi.send([8-i,map.indexOf(s[i])],cs);
+        spi.write([8-i,map.indexOf(s[i])],cs);
       }
-      spi.send([0x0C,1],cs); // no shutdown
+      spi.write([0x0c,1],cs); // no shutdown
     },
     // Send the given raw LED data to the display
-    raw : function(val) {
-      spi.send ([0x9,0],cs); // output raw data
-      for (var i=0;i<val.length;i++) {
-        spi.send([i+1,val[i]],cs);
+    raw : function(val) {     
+      spi.write ({data:[0x9,0], count:screens}, cs); // output raw data
+      for (var row=0;row<8;row++) {
+        digitalWrite(cs, 0);
+        for (var i=screens-1;i>=0;i--) {
+          spi.send([8-row, val[i+row*screens]]);
+        }
+        digitalWrite(cs, 1);
       }
-      spi.send([0x0C,1],cs); // no shutdown
+      spi.write({data:[0x0C,1], count:screens}, cs); // no shutdown
     },
     // Turn display off
-    off : function() { spi.send([0xC,0],cs); },
+    off : function() {
+      spi.write({data:[0xc,0], count:screens}, cs);
+    },
+    // Turn display on
+    on: function() {
+      spi.write({data:[0xc, 1], count:screens}, cs);
+    },
     // Set intensity (0 to 1)
-    intensity : function(i) { spi.send([0xA,E.clip(i*15,0,15)],cs); }
+    intensity : function(i) {
+      spi.write({data:[0xA,E.clip(i*15,0,15)], count:screens}, cs);
+    },
+    // Test the display
+    displayTest: function(mode) {
+      spi.write({data:[0xf, mode === true], count:screens}, cs);
+    },
+    // Set the scan limit
+    scanLimit : function(limit) {
+      spi.write({data:[0xb, limit-1], count:screens}, cs);
+    }
   };
 };
+

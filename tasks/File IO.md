@@ -1,8 +1,8 @@
 <!--- Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-File IO
-=======
+File IO and SD cards
+====================
 
-* KEYWORDS: File,Filesystem,File IO
+* KEYWORDS: File,Filesystem,File IO,SD card,microSD card
 
 To access files from Espruino (if you're not getting them from the [[Internet]]) you'll need an SD card.
 
@@ -20,6 +20,7 @@ console.log(require("fs").readdirSync());
 
 Espruino has two main forms of File IO available:
 
+
 FS Library - Simple Node.js-compatible File IO
 -----------------------------------------
 
@@ -35,7 +36,7 @@ and behave the same way as their `...Sync` equivalents.
 
 ```
 var files = require("fs").readdirSync();
-for (var i in arr)
+for (var i in files)
   console.log("Found file "+files[i]);
 ```
 
@@ -49,6 +50,7 @@ console.log(require("fs").readFileSync("hello.txt")); // prints "Hello World!!!"
 ```
 
 However, with the exception of `appendFileSync`, these functions only allow you to act on whole files. This means that you will quickly exhaust Espruino's RAM when loading larger files.
+
 
 E.openFile - Stream File IO
 ------------------------
@@ -93,6 +95,7 @@ Finally you'll need to close the file with `f.close()` or you may get corruption
 
 Note that you could do also this with `appendFileSync`. However `appendFileSync` will close
 the file after each write, which is safer (but also slower!).
+
 
 Piping
 -----
@@ -147,4 +150,33 @@ setWatch(function() {
 setDeepSleep(1);
 ```
 
+
+Wiring up an SD card adapter
+----------------------------
+
+For the Espruino [[Pico]], there is [an adaptor shim available](/Shims#microsd-0-1-adaptor) that makes connecting an SD card a lot easier!
+
+If you don't have an SD breakout board at your disposal, you can make your own by soldering directly to a microSD/SDHC to SD card adapter (often provided with microSDs).
+
+![SD Card Wiring](File IO/wiring1.jpg)
+
+Example of wiring it up to the Espruino Pico:
+
+![SD Card Wiring](File IO/wiring2.jpg)
+
+Example code for the above wiring:
+
+```
+/* 
+  R: the following function is auto-called when the Espruino is booting up
+     to flash the Espruino & save the following to its flash, just call 'save()' in the IDE
+*/
+function onInit() {
+  // initial SPI1 for SDCard module
+  SPI1.setup({sck:A5, miso:A6, mosi:A7 });
+  E.connectSDCard(SPI1,B1/*CS*/);
+  console.log(require("fs").readdirSync());
+  // ...
+}
+```
 

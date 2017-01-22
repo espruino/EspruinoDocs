@@ -79,6 +79,12 @@ var GAINS = {
   512 : CONFIG.PGA_0_512V,  // +/-0.512V range = Gain 8
   256 : CONFIG.PGA_0_256V  // +/-0.256V range = Gain 16;
 };
+var DIFFS = {
+  "0,1" : CONFIG.MUX_DIFF_0_1,   // Differential P = AIN0, N = AIN1 (default)
+  "0,3" : CONFIG.MUX_DIFF_0_3, // Differential P = AIN0, N = AIN3
+  "1,3" : CONFIG.MUX_DIFF_1_3, // Differential P = AIN1, N = AIN3
+  "2,3" : CONFIG.MUX_DIFF_2_3  // Differential P = AIN2, N = AIN3
+};
 var REG = {
   MASK : 3,
   CONVERT : 0,
@@ -110,19 +116,25 @@ ADS1X15.prototype.setGain = function(gain) {
   if (!(gain in GAINS)) throw new Error("Gain "+gain+" not found");
   this.gain = gain;
 };
-/* Get an ADC reading and call `callback` with it as a 16 bit value. 
-`channel` is a value between 0 and 3. */
-ADS1X15.prototype.getADC = function(channel, callback) {
+/* Get an ADC reading and call `callback` with the raw data as a 16 bit signed value. 
+`channel` is a value between 0 and 3, or an array of inputs. Either `[0,1]`, `[0,3]`, `[1,3]` or `[2,3]`  */
+ADS1X15.prototype.getADC = function(channelSpec, callback) {
   var config = CONFIG.CQUE_NONE    | // Disable the comparator (default val)
                     CONFIG.CLAT_NONLAT  | // Non-latching (default val)
                     CONFIG.CPOL_ACTVLOW | // Alert/Rdy active low   (default val)
                     CONFIG.CMODE_TRAD   | // Traditional comparator (default val)
                     CONFIG.DR_1600SPS   | // 1600 samples per second (default)
                     CONFIG.MODE_SINGLE;   // Single-shot mode (default)
+  // single ended (channelSpec is a number) or differential (channelSpec is array w/ valid channel duo)
+  if ("number" == typeof channelSpec) { // Set single-ended input channel
+    config |= [CONFIG.MUX_SINGLE_0,CONFIG.MUX_SINGLE_1,CONFIG.MUX_SINGLE_2,CONFIG.MUX_SINGLE_3][channelSpec];
+  } else { // Set differential input channels from channelSpec
+    var dif = DIFFS[channelSpec];
+    if (typeof dif === "undefined") throw new Error("Invalid differential channelSpec " + channelSpec);
+    config |= dif;
+  }    
   // Set PGA/voltage range
   config |= GAINS[this.gain];
-  // Set single-ended input channel
-  config |= [CONFIG.MUX_SINGLE_0,CONFIG.MUX_SINGLE_1,CONFIG.MUX_SINGLE_2,CONFIG.MUX_SINGLE_3][channel];
   // Set 'start single-conversion' bit
   config |= CONFIG.OS_SINGLE;
   // Write config register to the ADC
@@ -135,6 +147,14 @@ ADS1X15.prototype.getADC = function(channel, callback) {
     if (d&0x8000) d-=65536; // sign
     callback(d); 
   }, 8);
+};
+/* Get an ADC reading and call `callback` with the voltage as a floating point value.
+`channel` is a value between 0 and 3, or an array of inputs. Either `[0,1]`, `[0,3]`, `[1,3]` or `[2,3]`  */
+ADS1X15.prototype.getADCVoltage = function(channel, callback) {
+  var mul = this.gain / 32768000;
+  this.getADC(channel, function(v) {
+    callback(v*mul);
+  });
 };
 
 // Create an instance of ADS1X15

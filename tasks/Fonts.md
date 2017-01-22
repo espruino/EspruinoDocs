@@ -13,8 +13,8 @@ The Vector font is made out of polygons, and it can be resized to any size. This
 
 To use it, just use `Graphics.setFontVector(size)`:
 
+assuming you've set up [[Graphics]] as a variable called `g`
 ```
-// assuming you've set up [[Graphics]] as a variable called g
 g.clear();
 g.setFontVector(40);
 g.drawString("Hello",0,0); // 40px high
@@ -42,10 +42,14 @@ Often you may want a font that is bigger than the built-in font, but smaller tha
 
 Current modules are:
 
+* [[Font4x4.js]] - tiny 4x4 block font (only digits 0-9)
 * [[Font6x8.js]]
 * [[Font6x12.js]]
 * [[Font8x12.js]]
 * [[Font8x16.js]]
+* [[FontDennis8.js]] - An 8 pixel high font by [Dennis Bemmann](https://github.com/pastaclub/espruino-font-dennis8) with most characters for German, Spanish, French, Turkish, etc:
+
+![FontDennis8.png](Fonts/FontDennis8.png)
 
 Use these like this:
 
@@ -61,11 +65,14 @@ g.drawString("Hello World!",0,0);
 Custom Fonts
 -----------
 
-But you can also create your own fonts. To do this, see [`g.setFontCustom(...)`](/Reference#l_Graphics_setFontCustom)
+You can also create your own fonts. To do this, see [`g.setFontCustom(...)`](/Reference#l_Graphics_setFontCustom)
 
 You'll need a string containing a column-first, most significant bit first, 1 bit per pixel bitmap containing the font bitmap. Optionally you can also have another string containing the widths of each character.
 
-For an example of how to create the data, see [the JS file used to make Espruino's font modules](https://github.com/espruino/Espruino/blob/master/scripts/create_custom_font.js)
+Matt Brailsford has made an excellent [online font converter](http://ebfc.mattbrailsford.com/) specifically for creating fonts for Espruino. 
+... or for an example of how to create the data programmatically, take a look at
+[the JS file used to make Espruino's font modules](https://github.com/espruino/Espruino/blob/master/scripts/create_custom_font.js).
+
 
 Font Widths
 ----------

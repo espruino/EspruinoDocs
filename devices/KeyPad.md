@@ -38,7 +38,7 @@ With the 4x5 KeyPads (readily availble on ebay), the four wires nearest the ```F
 
 ```
 require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9,B12], function(e) {
-  print("AB#*123U456D789CL0RE"[e][e]); //A=F1, B=F2, U/D/L/R = Up/Down/Left/Right, R=ESC, E=Enter
+  print("AB#*123U456D789CL0RE"[e]); //A=F1, B=F2, U/D/L/R = Up/Down/Left/Right, C=ESC, E=Enter
 });
 ```
 

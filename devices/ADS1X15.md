@@ -30,7 +30,6 @@ ads.getADC(0, function(val) {
 API reference
 ------------
 
-
 * APPEND_JSDOC: ADS1X15.js
 
 Using 

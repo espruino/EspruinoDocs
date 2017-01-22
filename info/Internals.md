@@ -31,7 +31,7 @@ The parser is a hand-written recursive-descent parser, and code to be executed i
 Variable Storage
 --------------
 
-Variables are usually stored in fixed-size 16 byte blocks. In small devices this can get down to 12 (10 bit addresses) and on PCs it's 32 (32 bit addresses). 
+Variables are usually stored in fixed-size 16 byte blocks. In small devices this can get down to 12 bytes (10 bit addresses) and on PCs it's 32 bytes (32 bit addresses). 
 
 This has several implications:
 
@@ -44,17 +44,35 @@ Each block has optional links to children and siblings, which allows a tree stru
 
 What follows are the basic variable bytes. Note that NAME_INT_INT, NAME_INT_BOOL, and NAME_STRING_INT follow the same pattern as NAME_STR/NAME_INT - they just use `child` to store a value rather than a reference:
 
+### 16 byte JsVars 
 
-| Byte  | Name    | STRING | STR_EXT  | NAME_STR | NAME_INT | INT  | DOUBLE | OBJ/FUNC/ARRAY | ARRAYBUFFER |
-|-------|---------|--------|----------|----------|----------|------|--------|----------------|-------------|
-| 0 - 3 | varData | data   | data     |  data    | data     | data | data   | nativePtr      | size        |
-| 4 - 5 | next    | -      | data     |  next    | next     | -    | data   | argTypes       | format      |
-| 6 - 7 | prev    | -      | data     |  prev    | prev     | -    | data   | argTypes       | format      |
-| 8 - 9 | refs    | refs   | data     |  refs    | refs     | refs | refs   | refs           | refs        |
-| 10-11 | first   | -      | data     |  child   | child    |  -   |  -     | first          | stringPtr   |
-| 12-13 | last    | nextPtr| nextPtr  |  nextPtr |  -       |  -   |  -     | last           | -           |
-| 14-15 | Flags   | Flags  | Flags    |  Flags   | Flags    | Flags| Flags  | Flags          | Flags       |
+( > 1024 variables, JsVars for 32 bit refs are similar )
+ 
+ | Offset | Name    | STRING | STR_EXT  | NAME_STR | NAME_INT | INT  | DOUBLE  | OBJ/FUNC/ARRAY | ARRAYBUFFER |
+ |--------|---------|--------|----------|----------|----------|------|---------|----------------|-------------|
+ | 0 - 3  | varData | data   | data     |  data    | data     | data | data    | nativePtr      | size        |
+ | 4 - 5  | next    | data   | data     |  next    | next     |  -   | data    | argTypes       | format      |
+ | 6 - 7  | prev    | data   | data     |  prev    | prev     |  -   | data    | argTypes       | format      |
+ | 8 - 9  | first   | data   | data     |  child   | child    |  -   |  -      | first          | stringPtr   |
+ | 10-11  | refs    | refs   | data     |  refs    | refs     | refs | refs    | refs           | refs        |
+ | 12-13  | last    | nextPtr| nextPtr  |  nextPtr |  -       |  -   |  -      | last           | -           |
+ | 14-15  | Flags   | Flags  | Flags    |  Flags   | Flags    | Flags| Flags   | Flags          | Flags       |
+ 
+###  12 byte JsVars 
 
+( where < 1024 variables )
 
+10 bit addresses are used, with the extra bits being stored in a field called `pack` and the `flags` variable
+ 
+ | Offset | Name    | STRING | STR_EXT  | NAME_STR | NAME_INT | INT  | DOUBLE | OBJ/FUNC/ARRAY | ARRAYBUFFER |
+ |--------|---------|--------|----------|----------|----------|------|--------|----------------|-------------|
+ | 0 - 3  | varData | data   | data     |  data    | data     | data | data   | nativePtr      | size        |
+ | 4      | next    | data   | data     |  next    | next     |  -   | data   | argTypes       | format      |
+ | 5      | prev    | data   | data     |  prev    | prev     |  -   | data   | argTypes       | format      |
+ | 6      | first   | data   | data     |  child   | child    |  -   | data   | first          | stringPtr   |
+ | 7      | pack    | pack   | data     |  pack    | pack     | pack | data   | pack           | pack        |
+ | 8      | refs    | refs   | data     |  refs    | refs     | refs | refs   | refs           | refs        |
+ | 9      | last    | nextPtr| nextPtr  |  nextPtr |  -       |  -   |   -    | last           | -           |
+ | 10-11  | Flags   | Flags  | Flags    |  Flags   | Flags    | Flags| Flags  | Flags          | Flags       |
 
 

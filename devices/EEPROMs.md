@@ -1,6 +1,7 @@
 <!--- Copyright (c) 2013 Spence Konde. See the file LICENSE for copying permission. -->
 EEPROMs (and related technologies)
 ==============================
+
 * KEYWORDS: EEPROM, eeprom, fram, FRAM, memory, rom, storage
 
 An EEPROM is a form of byte-addressable non-volatile storage, allowing a project based on Espruino to save small amounts of persistant data. 
@@ -243,7 +244,7 @@ FRAM (ferroelectric RAM) and MRAM (magnetoresisive RAM) are two other types of n
 CBRAM
 -----
 
-CBRAM (conductive bridge RAM) is a new type of non-volatile memory, based on forming or breaking metalic bridges. It is available in 8-pin SPI and I2C packages which are intended as a low cost replacement for EEPROM for use cases that involve little write activity. The parts are currently available in sizes up to 128 kbit (16 kbyte), at around half the cost of EEPROMs; however, their write endurance is only ~100 write cycles. Although they use the same format for reading and writing data, CBRAM requires pages to be manually erased prior to writing (requiring the erase to be manually initiated allows the application to fully control the limited number of write cycles supported by CBRAM). So, while AT24/AT25 modules will support reading from these parts, and writing if previously erased, additional coding would be needed to support erasing (and hence re-writing already-written addresses). 
+CBRAM (conductive bridge RAM) is a new type of non-volatile memory, based on forming or breaking metalic bridges. It is available in 8-pin SPI and I2C packages which are intended as a low cost replacement for EEPROM for use cases that involve little write activity. The parts are currently available in sizes up to 128 kbit (16 kbyte), at around half the cost of EEPROMs. In some cases, these parts are fully compatible with EEPROMs, and offer thousands of write cycles - these are fully supported by the AT24 and AT25 modules. In other cases they are only spec'ed for 100 write cycles, and require a separate command for erasing; this erase command is not included in the AT24/AT25 modules.
 
 Related Documents
 ------

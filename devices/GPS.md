@@ -2,7 +2,7 @@
 GPS Module
 =========
 
-* KEYWORDS: GPS,Global Positioning System,Location,NEO6MV2,Ublox,NMEA
+* KEYWORDS: GPS,Module,Global Positioning System,Location,NEO6MV2,Ublox,NMEA,UART
 
 ![Ublox GPS Module](GPS/ublox.jpg)
 
@@ -32,7 +32,7 @@ This will return data every second that looks a lot like:
 
 ```
 ...
-{ "time":"16:35:29", "lat":53.068403,"lon":-4.076282,"fix":1,"satellites":7,"altitude":1085.0 } 
+{ "time":"16:35:29", "lat":53.068403,"lon":-4.076282,"fix":1,"satellites":7,"altitude":1085.0 }
 ...
 ```
 

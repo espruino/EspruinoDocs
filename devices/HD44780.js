@@ -10,6 +10,11 @@ var lcd = require("HD44780").connectI2C(I2C1);
 lcd.print("Hello World!");
 ```
 
+You can specify device address following way:
+```
+require("HD44780").connectI2C(I2C1, 0x3F);
+```
+
 Otherwise try:
 
 ```
@@ -49,30 +54,28 @@ function HD44780(write) {
   };
 }
 
-exports.connectI2C = function(/*=I2C*/_i2c) {
-  var i2c = _i2c;
-  var write = function(x, c) {
+exports.connectI2C = function(/*=I2C*/i2c, _addr) {
+  return new HD44780(function(x, c) {
     var a = (x&0xF0) |8| ((c===undefined)?1:0);
     var b = ((x<<4)&0xF0) |8| ((c===undefined)?1:0);
-    i2c.writeTo(0x27, [a,a,a|4,a|4,a,a,b,b,b|4,b|4,b,b]);
-  };
-  return new HD44780(write);
+    i2c.writeTo(_addr || 0x27, [a,a,a|4,a|4,a,a,b,b,b|4,b|4,b,b]);
+  });
 };
 
-exports.connect = function(/*=PIN*/_rs,/*=PIN*/_en,/*=PIN*/_d4,/*=PIN*/_d5,/*=PIN*/_d6,/*=PIN*/_d7) {
+exports.connect = function(/*=PIN*/rs,/*=PIN*/en,/*=PIN*/_d4,/*=PIN*/_d5,/*=PIN*/_d6,/*=PIN*/_d7) {
   var data = [_d7,_d6,_d5,_d4];
-  var rs = _rs;
-  var en = _en;
-  digitalWrite(rs, 1);
-  digitalWrite([rs,en], 0);
-  var write = function(x, c) {
-    digitalWrite(rs, !c);
-    digitalWrite(data, x>>4);
-    digitalWrite(en, 1);
-    digitalWrite(en, 0);
-    digitalWrite(data, x);
-    digitalWrite(en, 1);
-    digitalWrite(en, 0);
-  };
-  return new HD44780(write);
+  var d = digitalWrite;
+  d(rs, 1);
+  d([rs,en], 0);
+  return new HD44780(function(x, c) {
+    d(rs, !c);
+    d(data, x>>4);
+    d(en, 1);
+    d(en, 0);
+    d(data, x);
+    d(en, 1);
+    d(en, 0);
+  });
 };
+
+exports.HD44780 = HD44780;

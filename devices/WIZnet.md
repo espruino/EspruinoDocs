@@ -2,7 +2,7 @@
 WIZnet WIZ550io/W5500 Ethernet module
 ================================
 
-* KEYWORDS: Wireless,WIZnet,WIZ550io,W5500,Ethernet,Internet,LAN,Web Server,HTTP,Built-In
+* KEYWORDS: Module,Wireless,WIZnet,WIZ550io,W5500,Ethernet,Internet,LAN,Web Server,HTTP,Built-In
 
 ![WIZnet WIZ550io module](WIZnet/module.jpg)
 

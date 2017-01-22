@@ -69,7 +69,32 @@ function f(pin, val) {
 }
 ```
 
-If you want extremely fast IO, you can take advantage of `peek32` and `poke32` to access the registers directly - however which registers you write to depends on the chip you're running Espruino on. For example the following code will produce a roughly 8Mhz square wave on an STM32F4 (Espruino [[Pico]]):
+If you want extremely fast IO, you can take advantage of `peek32` and `poke32` to access the registers directly - however which registers you write to depends on the chip you're running Espruino on. As of Espruino 1v81 this is a lot easier, as you can query the bit-banded address of the specific pin that you need:
+
+```
+function toggler() {
+  "compiled";
+  var pB2 = 0|B2.getInfo().out_addr;
+  var cnt = 1000000;
+  for (var i=0;i<cnt;i++) {
+    poke32(pB2, 1); // on
+    poke32(pB2, 0); // off
+  }
+}
+
+function go() {
+  pinMode(B2, "output");
+  toggler();
+}
+```
+
+We need to cast `B2.getInfo().out_addr` to an integer by `or`ing it with `0`, as it allows the compiler to optimise the `poke32` call.
+
+**Note:** `in_addr` also works for the input address - see [`Pin.prototype.getInfo`](/Reference#l_Pin_getInfo)
+
+**Note 2:** We're only setting the Output Data register, not the pin state register. This means you'll need a call to `pinMode` (or `digitalWrite`) beforehand in order to set the pin to be an output.
+
+If you did want to access the pins directly, you still can. For example the following code will produce a roughly 8Mhz square wave on an **STM32F4** (Espruino [[Pico]]):
 
 ```
 function toggler() {
@@ -88,18 +113,22 @@ function toggler() {
 }
 ```
 
-For what to do on an STM32F1, take a look at the [[Assembler]] page.
+For what to do on an **STM32F1**, take a look at the [[Assembler]] page. 
 
 Direct access can be done with other peripherals as well - check out the reference manual for the MCU on your board for more information on which addresses to write to. The correct reference manual is linked from the [Pico Board](/Pico) and [Original Espruino Board](/EspruinoBoard) pages under the 'Information' heading.
+
+There's a tutorial [on accessing low-level STM32 peripherals here](/STM32+Peripherals)
+
 
 What Happens?
 -----------
 
 Before uploading, the Web IDE scans your code for functions with the `"compiled";` keyword. It then sends those functions to our server which parses them, converts them to C++ code, compiles that code with GCC, and sends the binary back so that it can be uploaded to Espruino as a native function.
 
-When you run this native function, the ARM processor in Espruino executes the compiled code directly (with no interpreter in the way). You should see an increase in execution speed of at least 4x.
+When you run this native function, the ARM processor in Espruino executes the compiled code directly (with no interpreter in the way). You should see an increase in execution speed of at least 4x, and sometimes over 100x if your code can be executed using entirely integers.
 
 For any variable with a type that is not obviously an integer, Maths is handled using Espruino's built-in variable type (which is significantly slower). This means you should try and use integers wherever possible for maximum speed.
+
 
 Caveats
 ------
@@ -114,6 +143,7 @@ Performance Notes
 ---------------
 
 * If you access global variables, Espruino will still have to search the symbol table to find them each time the function runs, which will be slow. To speed things up, use local variables or function arguments wherever possible.
+* When accessing non-local variables, if you expect them to be integers then cast the explicitly with `0|` before using them - this will allow the compiler to do fast integer arithmetic with them, rather than using the interpreter's maths routines (which have to cope with doubles and strings).
 * `peek32/peek16/peek8/poke32/poke16/poke8` map down to very fast IO accesses when provided with integer arguments - this is by far the fastest way to access IO.
 
 What works and what doesn't?

@@ -13,7 +13,7 @@ read in single measurement mode:
 compass.reads(function(a){print(a);});
 
 read in continuous measurement mode:
-compass.setmode(0);
+compass.setMode(0);
 console.log(compass.readc());
 
 */
@@ -21,17 +21,17 @@ console.log(compass.readc());
 
 
 exports.connect = function(i2c,drdy,mode) {
-    return new HMC5883(i2c,drdy,range);
+    return new HMC5883(i2c,drdy,mode);
 }
 
 function HMC5883(i2c,drdy,mode) {
   this.i2c = i2c;
-  this.mode = (mode) ? mode : 1;
+  this.mode = (typeof mode !== 'undefined') ? mode : 1;
   this.drdy = drdy;
   this.a=0x1E;
   pinMode(drdy,'input');
   this.i2c.writeTo(this.a,1);
-  this.gain=(this.i2c.readFrom(this.a,1))>>5;
+  this.gain=(this.i2c.readFrom(this.a,1)[0])>>5;
   this.ngain=this.gain;
   this.i2c.writeTo(this.a,[2,this.mode]);
   this.scale=new Float32Array([0.73,0.92,1.22,1.52,2.27,2.56,3.03,4.35]);
@@ -42,7 +42,7 @@ HMC5883.prototype.readc = function() {
 	this.i2c.writeTo(this.a,3);
 	var f=this.scale[this.gain];
 	this.gain=this.ngain;
-	var gdat = this.i2c.readFrom(this.a,6)
+	var gdat = this.i2c.readFrom(this.a,6);
 	var x = (gdat[0] << 8) | gdat[1];
 	var y = (gdat[2] << 8) | gdat[3];
 	var z = (gdat[4] << 8) | gdat[5];
@@ -60,7 +60,7 @@ HMC5883.prototype.setMode = function(mode) {
 
 HMC5883.prototype.setup = function(sample,dout,ms) {
 	ms=(ms) ? ms&3 : 0;
-	dout=(dout) ? dout&7 : 4;
+	dout=(typeof dout !== 'undefined') ? dout&7 : 4;
 	sample=sample&3;
 	this.i2c.writeTo(this.a,[0,ms|(dout<<2)|(sample<<5)]);
 }
@@ -68,12 +68,10 @@ HMC5883.prototype.setup = function(sample,dout,ms) {
 HMC5883.prototype.setGain = function(gain) {
 	this.i2c.writeTo(this.a,[1,((gain & 7)<<5)]);
 	this.i2c.writeTo(this.a,1);
-    	this.ngain=(this.i2c.readFrom(this.a,1))>>5;
-    	if (this.mode!=2) {
-		this.onwatch=c;
+    	this.ngain=(this.i2c.readFrom(this.a,1)[0])>>5;
+    	if (this.mode === 1) {
 		var hmc=this;
 		setWatch(function(){hmc.readc();},this.drdy);
-		this.setmode(1);
     	}
 }
 
@@ -81,5 +79,5 @@ HMC5883.prototype.reads = function(c) {
 	this.onwatch=c;
 	var hmc=this;
 	setWatch(function(){hmc.onwatch(hmc.readc());},this.drdy);
-	this.setmode(1);
+	this.setMode(1);
 }

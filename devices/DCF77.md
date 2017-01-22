@@ -2,7 +2,7 @@
 DCF77 
 ======================
 
-* KEYWORDS: Module,Radio,DCF,DCF77,NPL,Rugby Clock,CLoc,Time
+* KEYWORDS: Module,Radio,DCF,DCF77,NPL,Rugby Clock,CLoc,Time,wireless,receiver
 
 ![DCF77 module](DCF77.jpg)
 
@@ -68,5 +68,6 @@ You can buy DCF77 modules separately, but they tend to cost around £10 each.
 
 * [eBay](http://www.ebay.com/sch/i.html?_nkw=dcf77+module)
 * [Conrad](http://www.conrad.com/ce/en/product/641138/DCF-receiver-board)
+* [pollin](http://www.pollin.de/shop/dt/NTQ5OTgxOTk-/Bausaetze_Module/Module/DCF_Empfangsmodul_DCF1.html)
 
 You may find that it is in fact cheaper to just buy a DCF77 clock, dismantle it and remove the radio (which is usually a separate module).
