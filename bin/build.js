@@ -1,4 +1,4 @@
-// Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. 
+// Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission.
 // Generate keywords.js, and convert Markdown into HTML
 
 // needs marked + jsdoc + tern + acorn
@@ -77,10 +77,10 @@ function grabInfo(markdownFiles, preloadedFiles) {
   if (fs.existsSync(FUNCTION_KEYWORD_FILE))
     keywords = JSON.parse(fs.readFileSync(FUNCTION_KEYWORD_FILE));
 
-  markdownFiles.forEach(function (file) { 
+  markdownFiles.forEach(function (file) {
    // get file info
    var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(BASEDIR+"/"+file).toString();
-//   console.log(file,contents.length); 
+//   console.log(file,contents.length);
    var contentLines = contents.split("\n");
    if (contentLines[0].substr(0,15)!="<!--- Copyright") WARNING(file+" doesn't have a copyright line");
    if (contentLines[1].trim()=="" || contentLines[2].substr(0,3)!="===") WARNING(file+" doesn't have a title on the first line");
@@ -88,7 +88,7 @@ function grabInfo(markdownFiles, preloadedFiles) {
      path : file,
      title : contentLines[1], // second line
    };
-   fileTitles[fileInfo.path] = fileInfo.title; 
+   fileTitles[fileInfo.path] = fileInfo.title;
    // add keyword for directory
    file.split("/").forEach(function (k) {
      if (k.indexOf(".")>0) k = k.substr(0,k.indexOf(".")); // remove file extension
@@ -98,27 +98,27 @@ function grabInfo(markdownFiles, preloadedFiles) {
    var match;
    match = contents.match(/\n\* KEYWORDS: (.*)/);
    if (match!=null) {
-     match[1].split(",").forEach(function(k) { 
+     match[1].split(",").forEach(function(k) {
        addToList(keywords, k, fileInfo);
      });
    }
    match = contents.match(/\n\* USES: (.*)/);
    if (match!=null) {
-     match[1].split(",").forEach(function(k) { 
+     match[1].split(",").forEach(function(k) {
        addToList(parts, k, fileInfo);
      });
    }
   });
 
   // sort keywords
-  for (keyword in keywords) 
+  for (keyword in keywords)
     keywords[keyword].sort(function(a,b){ return (a.title == b.title)?0:(a.title > b.title ? 1 : -1); });
 
   return {keywords:keywords, parts:parts};
 }
 
-function grabWebsiteKeywords(keywords) {        
-  common.getFiles(path.resolve(BASEDIR,"../espruinowebsite/cms")).forEach(function(f) { 
+function grabWebsiteKeywords(keywords) {
+  common.getFiles(path.resolve(BASEDIR,"../espruinowebsite/cms")).forEach(function(f) {
     if (f.substr(-5) != ".html") return;
     var fileName = f.substring(f.lastIndexOf("/")+1,f.length-5);
     var fileInfo = {
@@ -133,7 +133,7 @@ function grabWebsiteKeywords(keywords) {
     var match = contents.match(/\* KEYWORDS: (.*)/);
      if (match!=null) {
        console.log("  found keywords "+match[1]);
-       match[1].split(",").forEach(function(k) { 
+       match[1].split(",").forEach(function(k) {
          addToList(keywords, k, fileInfo);
      });
    }
@@ -204,7 +204,7 @@ for (i in exampleFiles) {
   var contents = fs.readFileSync(exampleFile).toString();
   var slashStar = contents.indexOf("/*");
   var starSlash = contents.indexOf("*/",slashStar);
-  if (slashStar>=0 && starSlash>=0) {  
+  if (slashStar>=0 && starSlash>=0) {
     var newFile = "<!--- Copyright (c) 2014 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->\n";
 //    newFile += exampleFile+"\n";
 //    newFile += "====================================\n";
@@ -221,7 +221,7 @@ for (i in exampleFiles) {
     preloadedFiles[exampleFile] = newFile;
 
   } else WARNING(exampleFile+" has no comment block at the start");
-  
+
 }
 
 
@@ -283,18 +283,18 @@ function inferFile(filename, fileContents, baseLineNumber) {
      var expr = infer.findExpressionAt(n.callee);
      var type = infer.expressionType(expr);
 
-     // Try and handle 'require(...).foo) - this doesn't work for 
+     // Try and handle 'require(...).foo) - this doesn't work for
      // var fs = require("fs") though.
-     if (n.callee.type=="MemberExpression" && 
+     if (n.callee.type=="MemberExpression" &&
          n.callee.object.type=="CallExpression" &&
          n.callee.object.callee.type=="Identifier" &&
          n.callee.object.callee.name=="require" &&
          n.callee.object.arguments.length==1 &&
          n.callee.object.arguments[0].type=="Literal") {
        var lib = n.callee.object.arguments[0].value;
-       var name = n.callee.property.name;       
-       if (defs[0][lib] && defs[0][lib][name] && defs[0][lib][name]["!url"]) { 
-//         console.log(">>>>>>>>>>>>>>>"+lib+":"+name);       
+       var name = n.callee.property.name;
+       if (defs[0][lib] && defs[0][lib][name] && defs[0][lib][name]["!url"]) {
+//         console.log(">>>>>>>>>>>>>>>"+lib+":"+name);
 //         console.log(defs[0][lib][name], defs[0][lib][name]["!url"]);
          addLink(defs[0][lib][name]["!url"], n);
        }
@@ -330,27 +330,27 @@ function inferMarkdownFile(filename, fileContents) {
         code = code.slice(code.indexOf("\n")+1,-3);
         inferFile(filename, code, baseLineNumber);
       } else {
-        //console.log("Ignoring code block because first line is "+JSON.stringify(code.split("\n")[0]));        
+        //console.log("Ignoring code block because first line is "+JSON.stringify(code.split("\n")[0]));
       }
       // increment line counter
       // ... multi-line code has ``` at the end which takes up a line
       var lines = code.split("\n").length;
       if (lines>1) lines--;
       //console.log(code, "--->",lines);
-      baseLineNumber += lines;      
+      baseLineNumber += lines;
     });
 }
 
 // -------------------------------------------------------------
 markdownFiles.forEach(function (file) {
    var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
-   //console.log(file,contents.length); 
+   //console.log(file,contents.length);
    // Check over images... ![Image Title](foo.png)
    contents = handleImages(file, contents);
-   
+
    // replace simple links
    contents = contents.replace(/\[\[http[s]?:\/\/youtu.be\/([a-zA-Z0-9\-_ ]+)\]\]/g,
-           '<iframe allowfullscreen="" frameborder="0" height="360" src="http://www.youtube.com/embed/$1" width="640"></iframe>'); // youtube
+           '<iframe allowfullscreen="" frameborder="0" height="360" src="https://www.youtube.com/embed/$1" width="640"></iframe>'); // youtube
    contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+).js\]\]/g,"[$1](/modules/$1.js) ([About Modules](/Modules))");
    contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+)\]\]/g,"[$1](/$1)");
    for (var i=0;i<3;i++) // cope with multiple spaces in links (nasty!)
@@ -363,7 +363,7 @@ markdownFiles.forEach(function (file) {
    contents = contents.replace(/\n(\* USES: .*)/g, "<!---\n$1\n--->");
    // TODO - 'Tutorial 2' -> 'Tutorial+2', recognize pages that are references in docs themselves
    var contentLines = contents.split("\n");
-   
+
    var appendMatching = function(regex, kwName, infoList, ifNone) {
      for (i in contentLines) {
        var match = contentLines[i].match(regex);
@@ -381,7 +381,7 @@ markdownFiles.forEach(function (file) {
                for (var k=1;k<kws.length;k++)
                  if (kws[k][0]=="-") {
                    var notkw = kws[k].substr(1);
-                   if (infoList[notkw]!=undefined)                     
+                   if (infoList[notkw]!=undefined)
                      for (var notpg in infoList[notkw])
                        if (infoList[notkw][notpg]["path"]==a.path) {
                          console.log("REJECTED "+a.path+" from "+file+" because of '-"+notkw+"' keyword");
@@ -389,11 +389,11 @@ markdownFiles.forEach(function (file) {
                        }
                  } else WARNING("Unknown keyword option '"+kws[k]+"'");
                // add page link if ok
-               if (pageOk) 
+               if (pageOk)
                  links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );
              }
-           }        
-         } 
+           }
+         }
          if (links.length>0) {
            contentLines[i] = links.join("\n");
          } else {
@@ -403,7 +403,7 @@ markdownFiles.forEach(function (file) {
        }
      }
    };
-   
+
    appendMatching(/^\* APPEND_KEYWORD: (.*)/ , "APPEND_KEYWORD", fileInfo.keywords, "");
    appendMatching(/^\* APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, "No tutorials use this yet.");
    // try and handle module documentation
@@ -411,7 +411,7 @@ markdownFiles.forEach(function (file) {
      var match;
      match = contentLines[i].match(/^\* APPEND_JSDOC: (.*)/);
      if (match!=null) {
-       var jsfilename = file.substr(0, file.lastIndexOf("/")+1) + match[1];       
+       var jsfilename = file.substr(0, file.lastIndexOf("/")+1) + match[1];
        var js = fs.readFileSync(jsfilename).toString();
        console.log("APPEND_JSDOC "+jsfilename);
        var doc = common.getJSDocumentation(js);
@@ -424,18 +424,18 @@ markdownFiles.forEach(function (file) {
    contentLines.splice(0,1); // remove first line (copyright)
 
    contents = contentLines.join("\n");
-   
+
    // Get Markdown
    inferMarkdownFile(file, contents);
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
 
    // Check for Pinouts
-        
+
    var regex = /<ul>\n<li>APPEND_PINOUT: (.*)<\/li>\n<\/ul>/;
    var match = html.match(regex);
    if (match!=null) {
-     var htmlfilename = HTML_DIR+"boards/" + match[1] + ".html";       
-     console.log("APPEND_PINOUT "+htmlfilename);       
+     var htmlfilename = HTML_DIR+"boards/" + match[1] + ".html";
+     console.log("APPEND_PINOUT "+htmlfilename);
      var pinout = fs.readFileSync(htmlfilename).toString();
      html = html.replace(regex, pinout);
    }
