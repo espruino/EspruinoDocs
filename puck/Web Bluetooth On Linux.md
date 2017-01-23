@@ -1,9 +1,52 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Web Bluetooth on Ubuntu 16.04 / Linux Mint 18
-==============================================
+Web Bluetooth on Linux
+======================
 
 * KEYWORDS: Tutorials,Puck.js,Web Bluetooth,Linux,Ubuntu,Mint
 * USES: Puck.js,Web Bluetooth
+
+First, you should type `bluetoothd --version` in the terminal,
+and see which version of Bluez you have - then follow the
+correct set of instructions below:
+
+
+Bluez >= 5.41: Ubuntu 16.10 and newer
+---------------------------------------
+
+Bluetooth *may* work out of the box - try following the [Web Bluetooth getting
+started code](/Puck.js Quick Start) and see if it works.
+
+However, on Bluez 5.41 you still need to enable the Experimental flags. Edit
+the Bluetooth config and add the experimental flag there:
+
+```
+sudo nano /lib/systemd/system/bluetooth.service
+```
+
+And update the line:
+
+```
+ExecStart=/usr/lib/bluetooth/bluetoothd
+```
+
+so it reads:
+
+```
+ExecStart=/usr/lib/bluetooth/bluetoothd --experimental
+```
+
+Save and exit. Then reload Bluez.
+
+```
+sudo systemctl daemon-reload
+sudo systemctl restart bluetooth
+```
+
+(Originally from [Adafruit](https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/installation))
+
+
+Bluez < 5.41: Ubuntu 16.04, Mint 18 and older
+-------------------------------------------------
 
 **Note:** Alan Assis worked this out and documented it [here](https://acassis.wordpress.com/2016/06/28/how-to-get-chrome-web-bluetooth-working-on-linux/).
 All I've done is tweak it slightly to use a newer bluez (and to modify things that didn't work for me)
@@ -50,7 +93,7 @@ sudo /usr/libexec/bluetooth/bluetoothd
 ```
 
 Now you can test Web Bluetooth out in Chrome (make sure you enable it in
-chrome://flags first!). Maybe give the Web IDE a go: https://espruino.github.io/EspruinoWebIDE/
+chrome://flags first!). Maybe give the Web IDE a go: https://www.espruino.com/ide
 
 If that all works, we want to make sure it runs properly after a reboot.
 
