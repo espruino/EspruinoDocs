@@ -88,11 +88,17 @@ For more information, see [[Fonts]]
 Circles
 -------
 
-In Espruino versions since 1.87, support for drawing circles has been added:
+In Espruino versions since 1.87, support for drawing circles has been added.
+
+You can draw filled or outlined circles using the two circle functions. For each, the current foreground colour will be used.
+The three required arguments are `x,y,rad`. The `x` and `y` coordinates for the centre position of the circle and `rad` the radius of the circle.
 
 ```JavaScript
-g.fillCircle(x, y, rad);
-g.drawCircle(x, y, rad);
+// Draw a circle
+g.drawCircle(100,100,50); // A circle with a radius of 50, centred at 100x100 
+
+// Draw a filled circle
+g.fillCircle(100,100,50); // A filled circle with a radius of 50, centred at 100x100 
 ```
 
 However if you want to add your own support in earlier versions then you
@@ -109,10 +115,6 @@ g.fillCircle = function(x,y,rad) {
   }
   g.fillPoly(a);
 }
-
-g.clear();
-g.fillCircle(100,100,50);
-```
 
 
 Random Lines
