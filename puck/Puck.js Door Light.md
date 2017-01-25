@@ -3,7 +3,7 @@ Door Controlled Light with Puck.js
 ==================================
 
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Light,Magnet,Magnetometer,Door
-* USES: Puck.js,Web Bluetooth
+* USES: Puck.js
 
 This video shows you how to control devices from Puck.js when a door opens.
 
