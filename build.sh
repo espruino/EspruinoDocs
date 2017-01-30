@@ -3,6 +3,7 @@
 cd `dirname $0`
 DIR=`pwd`
 WEBSITE=~/workspace/espruinowebsite
+mkdir -p $WEBSITE $WEBSITE/www/img $WEBSITE/www/scripts
 mkdir -p html/refimages
 mkdir -p html/boards
 rm -f html/*.html
