@@ -344,6 +344,7 @@ function inferMarkdownFile(filename, fileContents) {
 // -------------------------------------------------------------
 markdownFiles.forEach(function (file) {
    var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
+   console.log(file);
    //console.log(file,contents.length);
    // Check over images... ![Image Title](foo.png)
    contents = handleImages(file, contents);
@@ -411,9 +412,9 @@ markdownFiles.forEach(function (file) {
      var match;
      match = contentLines[i].match(/^\* APPEND_JSDOC: (.*)/);
      if (match!=null) {
+       console.log("APPEND_JSDOC "+jsfilename);
        var jsfilename = file.substr(0, file.lastIndexOf("/")+1) + match[1];
        var js = fs.readFileSync(jsfilename).toString();
-       console.log("APPEND_JSDOC "+jsfilename);
        var doc = common.getJSDocumentation(js);
        /* setting the language to Java lets it be highlighted correctly
        while not adding the 'send to Espruino' icon */
