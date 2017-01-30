@@ -104,7 +104,7 @@ function onInit() {
 Espruino WiFi's module is designed to work similarly to the [ESP8266 native WiFi module](http://www.espruino.com/Reference#Wifi),
 however *you can't use the `WiFi` module directly*. Eventually you will, however this is still in development.
 
-* APPEND_JSDOC: ../devices/EspruinoWiFi.js
+* APPEND_JSDOC: devices/EspruinoWiFi.js
 
 
 Tutorials
