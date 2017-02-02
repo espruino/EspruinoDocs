@@ -121,12 +121,6 @@ BMP280.prototype.calibration_P = function(adc_P) {
     console.log("T1: " + this.dig_T1);
     console.log("T2: " + this.dig_T2);
     console.log("T3: " + this.dig_T3);
-    console.log("H1: " + this.dig_H1);
-    console.log("H2: " + this.dig_H2);
-    console.log("H3: " + this.dig_H3);
-    console.log("H4: " + this.dig_H4);
-    console.log("H5: " + this.dig_H5);
-    console.log("H6: " + this.dig_H6);
     console.log("P1: " + this.dig_P1);
     console.log("P2: " + this.dig_P2);
     console.log("P3: " + this.dig_P3);
