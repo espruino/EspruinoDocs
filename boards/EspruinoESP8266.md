@@ -14,8 +14,8 @@ will need to adjust this setting in the IDE if you use that. (Other Espruino por
 Quick links
 -----------
 * [Forum thread with latest firmware](http://forum.espruino.com/conversations/279176/newest/)
-* [Flashing the esp8266 tutorial](ESP8266_Flashing.md)
-* [Using the esp8266 with Wifi](ESP8266_WifiUsage.md)
+* [Flashing the esp8266 tutorial](ESP8266_Flashing)
+* [Using the esp8266 with Wifi](ESP8266_WifiUsage)
 * [Forum discussions about the esp8266 port](http://forum.espruino.com/microcosms/925/)
 * [Gitter chat about Espruino](https://gitter.im/espruino/Espruino) (not focused on esp8266 but
 lots of esp8266 chatter)
@@ -82,7 +82,7 @@ You may want to add `wifi.setDHCPHostname("espruino")`.
 Once you're happy with your connection, you can use `wifi.save()` to persist it, so you don't have
 to reconnect each time you reset your ESP8266.
 
-Please see the [Using the ESP8266 with Wifi](ESP8266_WifiUsage.md) tutorial for the recommended
+Please see the [Using the ESP8266 with Wifi](ESP8266_WifiUsage) tutorial for the recommended
 way to use the esp8266 with Wifi.
 
 To make HTTP requests, use the [HTTP library](http://www.espruino.com/Reference#http).
