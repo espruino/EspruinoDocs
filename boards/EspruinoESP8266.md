@@ -14,8 +14,8 @@ will need to adjust this setting in the IDE if you use that. (Other Espruino por
 Quick links
 -----------
 * [Forum thread with latest firmware](http://forum.espruino.com/conversations/279176/newest/)
-* [Flashing the esp8266 tutorial](/ESP8266_Flashing)
-* [Using the esp8266 with Wifi](/ESP8266_WifiUsage)
+* [Flashing the esp8266 tutorial](/tutorials/ESP8266_Flashing.md)
+* [Using the esp8266 with Wifi](/tutorials/ESP8266_WifiUsage.md)
 * [Forum discussions about the esp8266 port](http://forum.espruino.com/microcosms/925/)
 * [Gitter chat about Espruino](https://gitter.im/espruino/Espruino) (not focused on esp8266 but
 lots of esp8266 chatter)
@@ -28,7 +28,7 @@ Features
 * 1 Analog input (0..1V)
 * None of the GPIO are 5 volt tolerant!
 * Built-in Wifi
-* 1023 JS variables
+* 1700 JS variables
 
 Limitations
 -----------
@@ -82,7 +82,7 @@ You may want to add `wifi.setDHCPHostname("espruino")`.
 Once you're happy with your connection, you can use `wifi.save()` to persist it, so you don't have
 to reconnect each time you reset your ESP8266.
 
-Please see the [Using the ESP8266 with Wifi](/ESP8266_WifiUsage) tutorial for the recommended
+Please see the [Using the ESP8266 with Wifi](/tutorials/ESP8266_WifiUsage.md) tutorial for the recommended
 way to use the esp8266 with Wifi.
 
 To make HTTP requests, use the [HTTP library](http://www.espruino.com/Reference#http).
@@ -347,6 +347,35 @@ to the esp8266 itself.  A variety of tools are available to assist with this.
 
 The Espruino ESP8266 firmware [is now distributed alongside all the other firmwares on the 
 Espruino Website](http://www.espruino.com/Download).
+
+Power Consumption
+-----------------
+
+| Parameter | Typical | Unit |
+| :-: | :-: | :-- |
+| Tx 802.11b, CCK 11Mbps, Pout=+17dBm | 170 | mA |
+| Tx 802.11g,OFDM 54Mbps,Pout=+15dBm | 140 | mA |
+| Tx 802.11n, MCS7, Pout=+13dBm | 120 | mA |
+| Rx 802.11b, 1024 bytes packet length, -80dBm | 50 | mA |
+| Rx 802.11g, 1024 bytes packet length, -70dBm | 56 | mA |
+| Rx 802.11n, 1024 bytes packet length, -65dBm | 56 | mA |
+| Model-Sleep | 15 | mA |
+| Light-Sleep | 0.5 | mA |
+| Power save mode DTIM 1 | 1.2 | mA |
+| Power save mode DTIM 3 | 0.9 | mA |
+| Deep-Sleep | 10 | uA |
+| Power OFF | 0.5 | uA |
+
+Currently ESP8266 can support three low power modes: Light Sleep, Modem Sleep and Deep Sleep.
+
+Modem-Sleep requires the CPU to be working, as in PWM or I2S applications. According to 802.11 standards (like U-APSD), it saves power to shut down the Wi-Fi Modem circuit while maintaining a Wi-Fi connection with no data transmission. 
+
+During Light-Sleep, the CPU may be suspended in applications like Wi-Fi switch. Without data transmission, the Wi-Fi Modem circuit can be turned off and CPU suspended to save power according to the 802.11 standard (U-APSD). 
+
+Deep-Sleep does not require Wi-Fi connection to be maintained. For application with long time lags between data transmission, e.g. a temperature sensor that checks the temperature every 100s.
+E.g. sleep 300s and waking up to connect to the AP (taking about 0.3~1s), the overall average current is less than 1mA.
+
+Source: http://bbs.espressif.com/viewtopic.php?t=133
 
 Open Issues
 -----------
