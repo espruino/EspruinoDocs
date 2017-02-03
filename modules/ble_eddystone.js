@@ -7,7 +7,7 @@
   * You can put an anchor after goo.gl links and it'll be transferred. eg. goo.gl/B3J0Oc#foo
 */
 
-exports.advertise = function(url) {
+exports.get = function(url) {
   var d = [0x03,  // Length of Service List
     0x03,  // Param: Service List
     0xAA, 0xFE,  // Eddystone ID
@@ -20,5 +20,9 @@ exports.advertise = function(url) {
   ];
   d.push.apply(d,url.toString().split(""));
   d[4] = d.length-5;
-  NRF.setAdvertising(d, {interval:100});
+  return d;
+}
+
+exports.advertise = function(url) {
+  NRF.setAdvertising(exports.get(url), {interval:100});
 };
