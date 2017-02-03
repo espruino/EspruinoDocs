@@ -1,5 +1,5 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Puck.js and Eddystone Beacons
+Puck.js and iBeacons
 =============================
 
 * KEYWORDS: Module,Modules,BLE,Bluetooth,EddyStone,FatBeacon,iBeacon,Beacon
