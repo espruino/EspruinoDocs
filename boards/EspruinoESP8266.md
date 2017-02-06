@@ -359,7 +359,7 @@ Power Consumption
 | Rx 802.11b, 1024 bytes packet length, -80dBm | 50 | mA |
 | Rx 802.11g, 1024 bytes packet length, -70dBm | 56 | mA |
 | Rx 802.11n, 1024 bytes packet length, -65dBm | 56 | mA |
-| Model-Sleep | 15 | mA |
+| Modem-Sleep | 15 | mA |
 | Light-Sleep | 0.5 | mA |
 | Power save mode DTIM 1 | 1.2 | mA |
 | Power save mode DTIM 3 | 0.9 | mA |
