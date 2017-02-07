@@ -10,6 +10,9 @@ Introduction
 
 We'll add an infrared receiver so that we can receive signals from a remote control, and then we'll record and replay those same signals when a button is pressed.
 
+**Note:** If you don't have an IR receiver you may be able to find the
+'pronto hex' code for your device online. You can then [decode it with this library](/pronto).
+
 See [howstuffworks](http://electronics.howstuffworks.com/remote-control.htm) for a more complete article on how remote controls themselves work.
 
 You'll Need
@@ -25,7 +28,7 @@ Wiring Up
 
 ![Wiring](Pico Infrared.jpg)
 
-This is pretty simple. The IR receiver needs nothing more than 3.3v and a Pullup resistor (which can be provided from the Espruino). The IR transmitter LED would normally be connected with a resistor to reduce current consumption, but because we'll be pulsing the IR LED at 40kHz, it won't do it much harm not to have it. 
+This is pretty simple. The IR receiver needs nothing more than 3.3v and a Pullup resistor (which can be provided from the Espruino). The IR transmitter LED would normally be connected with a resistor to reduce current consumption, but because we'll be pulsing the IR LED at 40kHz, it won't do it much harm not to have it.
 
 * Take the Pico board and place it in the breadboard so that the USB connector sticks out to the left.
 * Simply push the VS1838B into the board under the Pico so that the opening is facing down, and the three pins are connected to the rightmost 3 pins on the Pico (`B6`, `B7` and `A8`).
@@ -82,7 +85,7 @@ require("IRReceiver").connect(B6, function(code) {
 });
 ```
 
-If you `Send to Espruino` now, you should be able to turn LED1 on and off using the two buttons on the remote control. 
+If you `Send to Espruino` now, you should be able to turn LED1 on and off using the two buttons on the remote control.
 
 You could add more `if` statements to turn different things on and off. You could change `LED1` to `A8`, connect a [Relay Module](/Relays) to pin `A8`, and then turn anything on and off from your remote control.
 
@@ -186,4 +189,3 @@ setWatch(function(e) {
 ```
 
 Send it to Espruino, then press some buttons on the remote control. You can then press the button on Espruino itself, and those same commands should be replayed from the IR transmitter!
-
