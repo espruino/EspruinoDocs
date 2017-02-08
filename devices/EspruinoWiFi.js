@@ -287,15 +287,18 @@ exports.stopAP = function() {
    an array of {ssid, authMode, rssi, mac, channel} */
 exports.scan = function(callback) {
   var aps = [];
+  turnOn(MODE.CLIENT, function(err) {
+    if (err) return callback(err);
     at.cmdReg("AT+CWLAP\r\n", 5000, "+CWLAP:",
-      function(d) { 
-        var ap = d.slice(8,-1).split(","); 
+      function(d) {
+        var ap = d.slice(8,-1).split(",");
         aps.push({ ssid : JSON.parse(ap[1]),
-                   authMode: ENCR_FLAGS[ap[0]],                           
+                   authMode: ENCR_FLAGS[ap[0]],
                    rssi: parseInt(ap[2]),
                    mac : JSON.parse(ap[3]),
-                   channel : JSON.parse(ap[4]) }); 
+                   channel : JSON.parse(ap[4]) });
       },
-      function(d) { callback(null, aps); });
+      function(d) { callback(null, aps); }
+    );
+  });
 };
-
