@@ -178,6 +178,15 @@ and that the actual flash chip is from manufacturer 0xe0 and code 0x4016. You ca
 codes at http://code.coreboot.org/svn/flashrom/trunk/flashchips.h and Espruino will complain
 if the config doesn't match the chip for some common chips.
 
+Erase flash
+-----------
+
+It is important to erase the flash before upgrade to a new version to avoid undefined situations like can't load saved code or endless reboot loops..... 
+
+```
+$ /path/to/esptool/esptool.py --port /dev/ttyUSB0 --baud 115200 
+```
+
 Configuring the Wifi
 --------------------
 
