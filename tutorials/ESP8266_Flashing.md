@@ -184,7 +184,7 @@ Erase flash
 It is important to erase the flash before upgrade to a new version to avoid undefined situations like can't load saved code or endless reboot loops..... 
 
 ```
-$ /path/to/esptool/esptool.py --port /dev/ttyUSB0 --baud 115200 
+$ /path/to/esptool/esptool.py --port /dev/ttyUSB0 --baud 115200 erase_flash
 ```
 
 Configuring the Wifi
