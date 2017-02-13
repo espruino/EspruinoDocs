@@ -11,6 +11,9 @@ This video shows you how to control Infrared devices using Puck.js.
 
 You'll need a [Puck.js](/Puck.js) and an [Infrared Receiver](/IRReceiver)
 
+**Note:** If you don't have an IR receiver you may be able to find the
+'pronto hex' code for your device online. You can then [decode it with this library](/pronto).
+
 Recording
 ---------
 
