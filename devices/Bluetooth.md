@@ -4,6 +4,9 @@ Bluetooth
 
 * KEYWORDS: Bluetooth,Wireless,BT,HC-05,HC05,Built-In,Radio,Transceiver
 
+**Note:** This page covers adding Bluetooth on the [Original Espruino Board](/EspruinoBoard).
+We now sell [Puck.js](/Puck.js) which is a device that comes with Bluetooth LE capability pre-installed.
+
 ![HC-05 front](Bluetooth/HC05_front.jpg)
 ![HC-05 back](Bluetooth/HC05_back.jpg)
 
@@ -16,7 +19,7 @@ Connecting
 
 [[http://youtu.be/J0HJVTDNSUQ]]
 
-The [Espruino Board](/EspruinoBoard) has pads on it already for the placement of an HC-05 Bluetooth module, so it's very easy to connect. Note that while there are many connections on the HC-05 module, only 4 of them are needed. 
+The [Espruino Board](/EspruinoBoard) has pads on it already for the placement of an HC-05 Bluetooth module, so it's very easy to connect. Note that while there are many connections on the HC-05 module, only 4 of them are needed.
 
 For the Espruino [[Pico]], there is [an adaptor shim available](/Shims#bluetooth-0-1-adaptor) that makes connecting Bluetooth a lot easier!
 
@@ -92,7 +95,7 @@ Then:
 
 8. It should now be available to pair under the new name `Espruino1` and passkey `1701`!
 
-Using 
+Using
 -----
 
 * APPEND_USES: Bluetooth
