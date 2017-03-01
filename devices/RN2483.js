@@ -101,11 +101,20 @@ RN2483.prototype.getStatus = function(callback) {
     });
   }).then(function(d) {
     status.rxDelay2 = d;
+    return new Promise(function(resolve) {
+      at.cmd("mac get rx2 868\r\n",500,resolve);
+    });
+  }).then(function(d) {
+    status.rxFreq2_868 = d;
     callback(status);
   });
 };
 
-/// configure the LoRaWAN parameters
+/** configure the LoRaWAN parameters
+ devAddr = 4 byte address for this device as hex - eg. "01234567"
+ nwkSKey = 16 byte network session key as hex - eg. "01234567012345670123456701234567"
+ appSKey = 16 byte application session key as hex - eg. "01234567012345670123456701234567"
+*/
 RN2483.prototype.LoRaWAN = function(devAddr,nwkSKey,appSKey, callback)
 {
   var at = this.at;
