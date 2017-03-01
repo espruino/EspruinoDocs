@@ -2,7 +2,7 @@
 Individually Addressable LEDs
 ===============================
 
-* KEYWORDS: Individually Addressable LEDs,Light,Lights,LED,LEDs,WS2811,WS2812,WS2812B,Multicolour,Fairy
+* KEYWORDS: Individually Addressable LEDs,Light,Lights,LED,LEDs,WS2811,WS2812,WS2812B,APA104,APA106,SK6812,Multicolour,Fairy
 * USES: WS2811
 
 ![LED String](Individually Addressable LEDs/string.jpg)
@@ -14,26 +14,28 @@ In the last few years, individually addressable RGB lights have been getting che
 
 ![LED String](Individually Addressable LEDs/use_england.jpg) ![LED String](Individually Addressable LEDs/use_celebrate.jpg)
 
-It seems that the most popular type of controller at the moment is the [WS2801](/datasheets/WS2801.pdf). This has 4 wires - ground, power, clock and data. It can be controlled using SPI, which is available on most microcontrollers. There are some small disadvantages though:
+There are two main types of Individually addressable LED at the moment - 3 wire and 4 wire.
 
-* You need 4 wires between each LED
-* The smallest package the controller fits in is a 14 pin one, which is quite large.
+LEDs like the [WS2801](/datasheets/WS2801.pdf) use 4 wires - ground, power, clock and data. They can be controlled using SPI, which is available on most microcontrollers. There are some small disadvantages though:
 
-There is also a newer controller called the [[WS2811]]. This uses a one-wire style serial protocol, which only requires (as the name suggests) one wire for data. This means:
+* You need 4 wires between each LED (which increases cost)
+* The package for the controller/LED needs more wires, increasing size and cost
+
+Many newer controllers use 3 wires, like the [[WS2811/WS2812/APA104/APA106 and SK6812](/WS2811)]. The use a one-wire style serial protocol, which only requires (as the name suggests) one wire for data. This means:
 
 * Only 3 wires between each LED
-* The controller chip fits in a smaller 8 pin package, which fits on a smaller PCB
-* WS2812 RGB LEDs [are now available](http://www.ebay.com/sch/i.html?_nkw=WS2812) that put the WS2811 controller inside the LED package itself. 
+* The controller chip fits in a smaller package, which fits on a smaller PCB
+* Many LEDs (in fact all apart from the WS2811) put the controller chip inside the LED package itself.
 
 All this adds up to make RGB LED lighting that is significantly cheaper than the WS2801 controller.
 
-In this tutorial we'll show you how to drive WS2811 LEDs from Espruino. The LEDs require a series of pulses at 800 kHz, where a 0 bit is a short pulse, and a 1 bit is a long pulse. To do this, we'll use the SPI port - but instead of sending individual bits, we'll send bits in chunks of 4 - 0b0001 for a 0, and 0b0011 for a 1.
+In this tutorial we'll show you how to drive these 3 wire LEDs from Espruino. The LEDs require a series of pulses at 800 kHz, where a 0 bit is a short pulse, and a 1 bit is a long pulse. To do this, we'll use the SPI port - but instead of sending individual bits, we'll send bits in chunks of 4 - 0b0001 for a 0, and 0b0011 for a 1.
 
 You'll Need
 ----------
 
-* A chain of [[WS2811]] lights. I'll be using individually wired ones (rather than the ones on a flexible PCB) in a string of 25.
-* An Espruino board 
+* A chain of [[WS2811]] style lights. I'll be using individually wired ones (rather than the ones on a flexible PCB) in a string of 25.
+* An Espruino board
 
 Wiring Up
 --------
@@ -57,7 +59,7 @@ So now it's connected up, we need to send some data. First off, we'll set up SPI
 
 Note that we're using pin B15 here - if you want to use a different pin (see the wiring up section) then you'll have to change this.
 
-We choose 3200000 baud because we want to transmit 4 bits of information for each real bit, and we want to transmit at 800000 baud. So 800000 * 4 = 3200000. However the STM32 chips can't get exactly the SPI baud rate you request - they'll try to get it right to within +/- 50%. 
+We choose 3200000 baud because we want to transmit 4 bits of information for each real bit, and we want to transmit at 800000 baud. So 800000 * 4 = 3200000. However the STM32 chips can't get exactly the SPI baud rate you request - they'll try to get it right to within +/- 50%.
 
 And now, we'll send data to the first light. The data is transmitted as sets of bytes for red, green, and blue:
 
@@ -86,7 +88,7 @@ var rgb = new Uint8ClampedArray(25*3);
 
 function getPattern() {
   for (var i=0;i<rgb.length;i+=3) {
-     rgb[i  ] = i*10; 
+     rgb[i  ] = i*10;
      rgb[i+1] = i*10;
      rgb[i+2] = i*10;
   }
@@ -95,7 +97,7 @@ function getPattern() {
 
 Note that we define the array `rgb` once, as a `Uint8ClampedArray`. You could use a normal array, but Typed Arrays are faster and more memory efficient when all you need to store are values between 0 and 255.
 Using `Uint8ClampedArray` also means that any values greater than 255 or less than 0 are 'clamped'. If you used `Uint8Array` instead than a value would just have the top bits removed, turning 256 into 0, 257 to 1 and so on.
- 
+
 Then we can make a function which will send this information to the lights - and can call it:
 
 ```
@@ -106,7 +108,7 @@ function doLights() {
 
 doLights();
 ```
- 
+
 So now, you should have a nice greyscale. But we can animate the lights too:
 
 ```
@@ -121,7 +123,7 @@ function getPattern() {
   }
 }
 doLights();
-``` 
+```
 
 This uses a sine wave to have the lights move between on and off. pos is used to store the position in the animation. Now, every time you call doLights, the lights will change!
 You can animate this using setInterval!
@@ -140,10 +142,10 @@ function getPattern() {
   }
 }
 ```
- 
+
 Or we could just use random numbers for a blue twinking effect:
 
-``` 
+```
 function getPattern() {
   for (var i=0;i<rgb.length;i+=3) {
      rgb[i  ] = 0;
@@ -248,7 +250,3 @@ setInterval(doLights,50);
 ```
 
 That's it! If you come up with any good patterns, please [[Contact Us]] and let us know!
-
-
-
-
