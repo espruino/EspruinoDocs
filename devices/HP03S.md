@@ -68,7 +68,6 @@ Links
 Buying
 ------
 * AliExpress [http://www.aliexpress.com/wholesale?SearchText=hp03s](http://www.aliexpress.com/wholesale?SearchText=hp03s)
-* EBay [http://www.ebay.co.uk/sch/i.html?_nkw="hp03s"](http://www.ebay.co.uk/sch/i.html?_nkw="hp03s")
 * Pollin [https://www.pollin.de/shop/dt/MDg4OTgxOTk-](https://www.pollin.de/shop/dt/MDg4OTgxOTk-)
 
 
