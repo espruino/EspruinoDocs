@@ -36,7 +36,7 @@ If you don't have access to your board's pins, you can also emulate
 I2C in software:
 
 ```
-// set up SPI
+// set up I2C
 var i2c = new I2C();
 i2c.setup({ scl : B6, sda: B7 });
 
