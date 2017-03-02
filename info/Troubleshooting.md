@@ -4,7 +4,7 @@ Troubleshooting
 
 * KEYWORDS: Troubleshooting,Trouble,Problems,Help,Broken,Not Working
 
-What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Forum](http://forum.espruino.com). If you have a problem that is not listed here and find a solution, please [[Contact Us]] and we'll add it here.
+What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Forum](http://forum.espruino.com).
 
 **Do you have a [Puck.js](/Puck.js)?** Check out the [Puck specific troubleshooting page](/Puck.js#troubleshooting)
 
@@ -79,7 +79,7 @@ As Espruino itself won't work, the IDE won't know what type of board it is suppo
 
 ## My board appears as a mouse or joystick in Windows Control Panel's 'Devices and Printers' page.
 
-This may happen if you are using an ST Discovery board and haven't yet installed the Espuino firmware. Some of these boards are automatically recognized by Windows as a completely different kind of device (because of the 'demo software' that comes installed). Install the firmware as described on the Download page, disconnect the board a reconnect it again. 
+This may happen if you are using an ST Discovery board and haven't yet installed the Espuino firmware. Some of these boards are automatically recognized by Windows as a completely different kind of device (because of the 'demo software' that comes installed). Install the firmware as described on the Download page, disconnect the board a reconnect it again.
 
 Using Espruino
 ============
