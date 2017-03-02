@@ -8,7 +8,9 @@ Pulse Width Modulation
 
 In Espruino, you can perform Pulse Width Modulation using the following function:
 
-```analogWrite(PIN, value)```
+```
+analogWrite(PIN, value)
+```
 
 eg. ```analogWrite(A0, 0.2)``` (Pulse high 20% of the time, low 80%)
 
@@ -16,7 +18,9 @@ eg. ```analogWrite(A0, 0.2)``` (Pulse high 20% of the time, low 80%)
 
 To force Espruino to use PWM (instead of the DAC) or to specify a certain frequency, use:
 
-```analogWrite(PIN, value, { freq : my_freq_in_hz } )```
+```
+analogWrite(PIN, value, { freq : my_freq_in_hz } )
+```
 
 Using PWM
 ---------------
