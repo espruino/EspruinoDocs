@@ -1,3 +1,15 @@
+/* Copyright (c) 2017 Pablo Rodiz Obaya. See the file LICENSE for copying permission. */
+/*
+provides an easy to use interface to share device state variables to and get 
+commands from the Vizibles(https://www.vizibles.com/) cloud IoT platform.
+This module depends on having a ESP8266 connected to your Espruino
+board, and the module must run the AT firmware for Vizibles
+(https://github.com/Enxine/ViziblesArduino/releases).
+This module is only a simplification of the AT API to ease its use in Javascript.
+The use of a full client on the ESP8266 allows us to include fully SSL encrypted
+communications while leaving the resources of Espruino free for your application.
+*/
+
 var viziblesFuncs = {
 	"debug" : function() {
 		this.at.debug();
@@ -247,8 +259,3 @@ exports.init = function(usart, startedCallback) {
 	});    
 	return viziblesFuncs;
 };
-
-
-
-
-
