@@ -294,13 +294,11 @@ var connected = function() {
 };
 
 var lightOn = function(d) {
-  console.log(d);
   digitalWrite(LED2,1);
   cloud.update({status : 'on'});
 };
 
 var lightOff = function(d) {
-  console.log(d);
   digitalWrite(LED2,0);
   cloud.update({status : 'off'});
 };
@@ -314,9 +312,7 @@ var cloud = require('Vizibles').init(Serial2, function (d) {
           'id' : 'light-bulb'
         }, function(d) {
         if(d=='Ok'){
-        cloud.connect(null, function(d) {
-          console.log(d);
-        }, connected);
+        cloud.connect(null, null, connected);
         }   
       });  
     }
