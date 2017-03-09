@@ -10,6 +10,8 @@ and buttons. Puck.js can emulate these, so can simulate keys being pressed.
 
 **Note:** Puck.js's 1v89 firmware doesn't support Bonding (needed by Windows HID devices). Pucks can work as keyboards on Android, Mac OS and Chromebook but until bonding is added they won't work on Windows.
 
+**Note:** Bluetooth HID can't be enabled on an active connection. To make it work (if you're connected wirelessly) you need to upload the code, disconnect, and then reconnect.
+
 BLE HID can be enabled by providing a HID Report to [NRF.setServices](/Reference#l_NRF_setServices),
 however we've provided common types of HID report in modules to make it easier:
 
@@ -22,11 +24,17 @@ Keyboard support is from the [[ble_hid_keyboard.js]] module.
 ```
 var kb = require("ble_hid_keyboard");
 NRF.setServices(undefined, { hid : kb.report });
-// Send 'a'
-kb.tap(kb.KEY.A, 0, function() {
-  // Followed by capital 'A'
-  kb.tap(kb.KEY.A, kb.MODIFY.SHIFT);
-});
+
+function btnPressed() 
+  // Send 'a'
+  kb.tap(kb.KEY.A, 0, function() {
+    // Followed by capital 'A'
+    kb.tap(kb.KEY.A, kb.MODIFY.SHIFT);
+  });
+}
+
+// trigger btnPressed whenever the button is pressed
+setWatch(btnPressed, BTN, {edge:"rising",repeat:true,debounce:50});
 ```
 
 
