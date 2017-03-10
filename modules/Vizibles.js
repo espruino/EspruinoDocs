@@ -8,6 +8,8 @@ board, and the module must run the AT firmware for Vizibles
 This module is only a simplification of the AT API to ease its use in Javascript.
 The use of a full client on the ESP8266 allows us to include fully SSL encrypted
 communications while leaving the resources of Espruino free for your application.
+This library heavily uses at module for Espruino, and is inspired on the original ESP8266
+module, so thaks to Gordon Williams and Pur3 Ltd for their contributions.
 */
 
 var viziblesFuncs = {
@@ -90,11 +92,7 @@ var viziblesFuncs = {
 			var i = 0;
 			var keys = Object.keys(options).length;
 			for (o in options) {
-				at.write('"');
-				at.write(o);
-				at.write('","');
-				at.write(options[o]);
-				at.write('"');
+				at.write('"' + o + '","' + options[o] + '"');
 				i++;
 				if(i<keys){
 					at.write(',');
@@ -122,11 +120,7 @@ var viziblesFuncs = {
 			var i = 0;
 			var keys = Object.keys(variables).length;
 			for (o in variables) {
-				at.write('"');
-				at.write(o);
-				at.write('","');
-				at.write(variables[o]);
-				at.write('"');
+				at.write('"' + o + '","' + variables[o] + '"');
 				i++;
 				if(i<keys){
 					at.write(',');
@@ -187,11 +181,7 @@ var viziblesFuncs = {
 				var i = 0;
 				var keys = Object.keys(options).length;
 				for (o in options) {
-					at.write('"');
-					at.write(o);
-					at.write('","');
-					at.write(options[o]);
-					at.write('"');
+					at.write('"' + o + '","' + options[o] + '"');
 					i++;
 					if(i<keys){
 						at.write(',');
