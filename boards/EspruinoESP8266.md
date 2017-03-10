@@ -13,10 +13,12 @@ will need to adjust this setting in the IDE if you use that. (Other Espruino por
 
 Quick links
 -----------
-* [Forum thread with latest firmware](http://forum.espruino.com/conversations/279176/newest/)
-* [Flashing the esp8266 tutorial](ESP8266_Flashing)
-* [Using the esp8266 with Wifi](ESP8266_WifiUsage)
-* [Forum discussions about the esp8266 port](http://forum.espruino.com/microcosms/925/)
+
+* [Download the latest ESP8266 firmware release](http://www.espruino.com/Download)
+* [Download 'cutting edge' ESP8266 firmwares](http://www.espruino.com/binaries/travis/master/) - these may not always work
+* [Tutorial on flashing the esp8266](ESP8266_Flashing)
+* [Espruino ESP8266 Forum](http://forum.espruino.com/microcosms/925/)
+* [Using Wifi on the ESP8266](ESP8266_WifiUsage)
 * [Gitter chat about Espruino](https://gitter.im/espruino/Espruino) (not focused on esp8266 but
 lots of esp8266 chatter)
 
@@ -35,7 +37,7 @@ Limitations
 The following features are only partially or not supported by Espruino on the ESP8266:
 
 - No hardware [[I2C]], however, the software I2C works OK.
-- [[PWM]] does not work. Code exists but doesn't work.
+- [[PWM]] does not work, low speed software [[PWM]] is usable
 - No [[DAC]]: the esp8266 does not have a DAC.
 - No independently usable serial port (needs Espruino work)
 - **GPIO16 is not currently supported in Espruino, it is not a normal GPIO
@@ -64,6 +66,7 @@ A 500-600mA regulator with at least 22uF capacitor is recommended.</span>
 
 WiFi
 ----
+
 The ESP8266's Wifi implementation supports both a simple access point mode and a station mode.
 The station mode is highly recommended for normal operation as the access point mode is very
 limited. It supports 4 stations max and offers no routing between stations.
@@ -113,6 +116,7 @@ a connection. If multiple connections are active these buffer requirements can a
 
 GPIO Pins
 ---------
+
 The esp8266 GPIO pins support
 [totem-pole](https://en.wikipedia.org/wiki/Push%E2%80%93pull_output#Totem-pole_push.E2.80.93pull_output_stages) and
 [open-drain outputs](https://en.wikipedia.org/wiki/Open_collector),
@@ -151,6 +155,7 @@ setWatch will lose transitions if javascript code does not run promptly.
 
 I2C Implementation
 ------------------
+
 The I2C interface is implemented in software because the esp8266 does
 not have hardware support for I2C (contrary to what the datasheet seems
 to imply). The software implementation has the following limitations:
@@ -167,6 +172,7 @@ not 5v compatible!
 
 SPI Implementation
 ------------------
+
 Both the software SPI and hardware SPI implementations can be used. The software SPI works on
 any GPIO pins but operates at a fixed clock rate of about 1Mhz. The hardware SPI operates on
 baud rates as low as 100kHz and as high as 4Mhz (this is limited by the way the clock dividers
@@ -176,6 +182,7 @@ there is not much point to it). The hardware SPI uses the pins shown in the boar
 
 Serial port
 -----------
+
 The esp8266 has two UARTS. UART0 (`Serial1`) uses gpio1 for TX and gpio3 for RX and is used by
 the Espruino JavaScript console. It can be used for other things once the Espruino console
 is moved to another device. For instance calling `LoopbackA.setConsole()` will move the console
@@ -188,11 +195,13 @@ not available.
 
 Serial Numbers
 --------------
+
 The esp8266 does not have a serial number. It does have two mac addresses "burned-in", which one can use for identification purposes.
 `getSerial()` returns the MAC address of the STA interface.
 
 System time
 -----------
+
 The esp8266 has two notions of system time implemented in the SDK by
 `system_get_time()` and `system_get_rtc_time()`. The former has 1µs
 granularity and comes off the CPU cycle counter, the latter has approx
@@ -218,6 +227,7 @@ a time in seconds (float).
 
 Saving code to flash
 --------------------
+
 Currently 12KB of flash are reserved to save JS code to flash using the
 save() function. The total JS memory is larger (22400 bytes) so if you
 filled up the JSvars you will need compression to work well. Some simple
@@ -230,6 +240,7 @@ flashing blank.bin to the last 4KB block of the save area (0x7A000).
 
 Flash map and access
 --------------------
+
 Note: if you are looking for a free flash area to use, call `ESP8266.getFreeFlash`,
 which will return a list of available areas (see docs).
 
@@ -301,6 +312,7 @@ use the EEPROM emulation class or read/write flash directly.
 
 Main loop processing
 --------------------
+
 Espruino has the concept of a "main loop" which is executed to perform
 an iteration of work.  Since the ESP8266 SDK needs control to be returned to
 itself to handle wifi, the current design and implementation returns to the SDK
@@ -316,6 +328,7 @@ chip reset.
 
 Performance
 -----------
+
 Espruino sets the esp8266 clock to 160Mhz by default, but this can be changed back to
 the default 80Mhz from JavaScript using `require("ESP8266").setCPUFreq(80)`.
 The benefits of the lower clock frequency are assumed to be lower power consumption
@@ -342,6 +355,7 @@ Settings        | Mandelbrot | Quicksort | Display | Code Size
 
 Loading Espruino
 ----------------
+
 Espruino can be loaded into the esp8266 using any of the flashing techniques applicable
 to the esp8266 itself.  A variety of tools are available to assist with this.
 
@@ -379,6 +393,7 @@ Source: http://bbs.espressif.com/viewtopic.php?t=133
 
 Open Issues
 -----------
+
 The authoritative list of open issues is
 [on github](https://github.com/espruino/Espruino/issues?q=is%3Aopen+is%3Aissue+label%3AESP8266).
 Some of the top-level issues at the time of writing are:
@@ -387,5 +402,6 @@ Some of the top-level issues at the time of writing are:
 
 Further reading
 ---------------
+
 The esp8266 has its own [community](http://www.esp8266.com/), free books, videos and more.
 For esp8266 questions not related to Espruino, it is recommended to research using those resources.
