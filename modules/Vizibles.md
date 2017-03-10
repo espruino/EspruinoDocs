@@ -4,14 +4,14 @@ Vizibles
 
 * KEYWORDS: Vizibles,Module,IoT,cloud,API
 
-Read this in other languages: [English](https://github.com/Enxine/EspruinoDocs/blob/master/modules/Vizibles.md), [Español](https://github.com/Enxine/EspruinoDocs/blob/master/modules/Vizibles.es.md)
+Read this in other languages: [English](/Vizibles), [Español](/Vizibles.es)
 
 The [Vizibles module](/modules/Vizibles.js) provides an easy to use
 interface to share device state variables to and get commands from
 the [Vizibles](https://www.vizibles.com/) cloud IoT platform.
 This module depends on having a ESP8266 connected to your Espruino
-board, and the module must run the 
-[AT firmware for Vizibles](https://github.com/Enxine/ViziblesArduino/releases). 
+board, and the module must run the
+[AT firmware for Vizibles](https://github.com/Enxine/ViziblesArduino/releases).
 This module is only a simplification of the AT API to ease its use in Javascript.
 The use of a full client on the ESP8266 allows us to include fully SSL encrypted
 communications while leaving the resources of Espruino free for your application.
@@ -44,7 +44,7 @@ Connect the thing with the platform.
 connect = function(options, callback, connectionCb, disconnectionCb)
 ```
 
-`options` is an object containing key/value pairs for configuring the connection 
+`options` is an object containing key/value pairs for configuring the connection
 ```
 {
     'keyID': 'Gp2naLrsSpFE',
@@ -52,8 +52,8 @@ connect = function(options, callback, connectionCb, disconnectionCb)
     'id' : 'light-bulb'
 }
 ```
-As basic options you will need `keyID` and `keySecret` as authentication for the platform and and `id` of the thing. 
-  
+As basic options you will need `keyID` and `keySecret` as authentication for the platform and and `id` of the thing.
+
 `callback` is an optional function which will be called when the connection command ends,  following the format:
 ```
 function (resp) {}
@@ -62,8 +62,8 @@ where `resp` can be `Ok` or `Error` depending on the result of the command.
 But keep in mind that the end of the connection command does not mean the thing is connected to the cloud, but only that the parameters were read correctly.
 For this objective, knowing when the thing is connected, is the third parameter, an optional callback, `connectionCb` without parameters which will be called
 once the connection process is finished correctly.
-There is also a fourth optional parameter, `disconnectionCb`, a function, also without parameters to be called when the connection is lost. 
- 
+There is also a fourth optional parameter, `disconnectionCb`, a function, also without parameters to be called when the connection is lost.
+
 #### setOptions
 
 The `options` parameter in the `connect` function is also optional. We can not start a connection before setting up the parameters. But this task can be done with the `setOptions` function before calling `connect`.
@@ -98,12 +98,12 @@ where `resp` can be `Ok` or `Error` depending on the result of the command.
 
 #### update
 
-Send values of thing's state variables to the Vizibles cloud platform. 
+Send values of thing's state variables to the Vizibles cloud platform.
 ```
 update = function(variables, callback)
 ```
 
-`variables` is an object containing key/value pairs for those state variables, for example 
+`variables` is an object containing key/value pairs for those state variables, for example
 ```
 {
     'temperature': '27',
@@ -120,14 +120,14 @@ where `resp` can be `Ok` or `Error` depending on the result of the command.
 #### expose
 
 This call will create a function that can be invoked either from the cloud or from other thing. In other words, it creates an action.
- 
+
 ```
 expose = function(fName, cbFunction, callback)
 ```
 
 `fName` will be the name to refer to call this function, so the name we will use to create controls or rules on the cloud.  
 
-`cbFunction` is the function itself. This is the code that will be run each time the function is invoked. The callback must have the format 
+`cbFunction` is the function itself. This is the code that will be run each time the function is invoked. The callback must have the format
 ```
 function (parameters) {}
 ```
@@ -215,7 +215,7 @@ where `resp` can be `Ok` or `Error` depending on the result of the command.
 
 #### debug
 
-Activate debug output to console of all character traffic exchanged through the serial connection with the WiFi module 
+Activate debug output to console of all character traffic exchanged through the serial connection with the WiFi module
 
 ```
 debug = function()
@@ -257,8 +257,8 @@ var cloud = require('Vizibles').init(Serial2, function (d) {
     }
   });
 });
-	
-//Reset ESP8266 module on Pico's shim 
+
+//Reset ESP8266 module on Pico's shim
 digitalWrite(B9,1);
 digitalWrite(A10,0); // pulse reset
 digitalWrite(A10,1);
@@ -278,11 +278,11 @@ var exposeFunctions = function(d) {
             exposeFunctions();
          }
        });
-     } else { 
+     } else {
        exposeFunctions();
      }
-  }); 
-}; 
+  });
+};
 
 var connected = function() {
   cloud.update({status : 'off'}, function(d) {
@@ -318,8 +318,8 @@ var cloud = require('Vizibles').init(Serial2, function (d) {
     }
   });
 });
-	
-//Reset ESP8266 module on Pico's shim 
+
+//Reset ESP8266 module on Pico's shim
 digitalWrite(B9,1);
 digitalWrite(A10,0); // pulse reset
 digitalWrite(A10,1);

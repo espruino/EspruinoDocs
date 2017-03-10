@@ -1,15 +1,15 @@
 ﻿<!--- Copyright (c) 2017 Pablo Rodiz Obaya. See the file LICENSE for copying permission. -->
-Vizibles
-========
+Vizibles (Español)
+==================
 
 * KEYWORDS: Vizibles,Module,IoT,cloud,API
 
-Leer en otro idioma: [English](https://github.com/Enxine/EspruinoDocs/blob/master/modules/Vizibles.md), [Español](https://github.com/Enxine/EspruinoDocs/blob/master/modules/Vizibles.es.md)
+Leer en otro idioma: [English](/Vizibles), [Español](/Vizibles.es)
 
-El [módulo Vizibles](/modules/Vizibles.js) proporciona una forma de compartir estados 
-y acciones  de forma sencilla a través de la plataforma 
+El [módulo Vizibles](/modules/Vizibles.js) proporciona una forma de compartir estados
+y acciones  de forma sencilla a través de la plataforma
 [Vizibles](https://www.vizibles.com/) para Internet de las Cosas.
-Este módulo necesita de un ESP8266 ejecutando el 
+Este módulo necesita de un ESP8266 ejecutando el
 [Firmware AT de Vizibles](https://github.com/Enxine/ViziblesArduino/releases)
 conectado a tu placa Espruino.
 Este módulo es solamente una simplificación de la API AT de Vizibles para facilitar su uso desde JavaScript.
@@ -44,7 +44,7 @@ Conecta la cosa con la plataforma.
 connect = function(options, callback, connectionCb, disconnectionCb)
 ```
 
-`options` es un objeto con pares clave/valor para configurar la conexión 
+`options` es un objeto con pares clave/valor para configurar la conexión
 ```
 {
     'keyID': 'Gp2naLrsSpFE',
@@ -52,8 +52,8 @@ connect = function(options, callback, connectionCb, disconnectionCb)
     'id' : 'light-bulb'
 }
 ```
-Como mínimo serán necesarios un `keyID` y un `keySecret` como claves de autenticación para la plataforma y un `id` para identificar la cosa. 
-  
+Como mínimo serán necesarios un `keyID` y un `keySecret` como claves de autenticación para la plataforma y un `id` para identificar la cosa.
+
 `callback` es una función opcional que será ejecutada cuando el comando termine, siguiendo el formato:
 ```
 function (resp) {}
@@ -61,8 +61,8 @@ function (resp) {}
 donde `resp` puede ser `Ok` o `Error` dependiendo del resultado del comando.
 De todas formas hay que tener en cuenta que el final del comando `connect` no significa que la conexión se haya establecido correctamente. Sólo que los parámetros se han leído y son correctos.
 Para este cometido está el tercer parámetro, `connectionCb`, opcional y sin parámetros, que será ejecutado cuando el proceso de conexión termine con éxito.
-También hay un cuarto parámetro, `disconnectionCb`, también opcional y sin parámetros. Función que será llamada cuando la conexión se pierda. 
- 
+También hay un cuarto parámetro, `disconnectionCb`, también opcional y sin parámetros. Función que será llamada cuando la conexión se pierda.
+
 #### setOptions
 
 El parámetro `options` de la función `connect` es opcional. Esto no significa que se pueda iniciar una conexión sin antes configurar estos parámetros. Si no que se puede hacer mediante la función `setOptions` de forma independiente antes de llamar a `connect`.
@@ -97,12 +97,12 @@ donde `resp` puede ser `Ok` o `Error` dependiendo del resultado del comando.
 
 #### update
 
-Envía valores del estado interno de la cosa a la plataforma Vizibles. 
+Envía valores del estado interno de la cosa a la plataforma Vizibles.
 ```
 update = function(variables, callback)
 ```
 
-`variables` es un objeto que contiene pares clave/valor para las variables a enviar, por ejemplo: 
+`variables` es un objeto que contiene pares clave/valor para las variables a enviar, por ejemplo:
 ```
 {
     'temperature': '27',
@@ -119,14 +119,14 @@ donde `resp` puede ser `Ok` o `Error` dependiendo del resultado del comando.
 #### expose
 
 Esta primitiva creará una función que podrá ser ejecutada remotamente desde la plataforma o desde otra cosa. En otras palabras, definirá una acción.
- 
+
 ```
 expose = function(fName, cbFunction, callback)
 ```
 
 `fName` será el nombre de la función, que se usará para crear controles y reglas en la plataforma.  
 
-`cbFunction` es la función en si misma. Este será el código que se ejecute cuando se llame a la función desde cualquier parte. El callback debe tener la forma 
+`cbFunction` es la función en si misma. Este será el código que se ejecute cuando se llame a la función desde cualquier parte. El callback debe tener la forma
 ```
 function (parameters) {}
 ```
@@ -214,7 +214,7 @@ donde `resp` puede ser la dirección `Ok` o `Error` dependiendo del resultado de
 
 #### debug
 
-Activa la salida de información de depuración del módulo a la consola, lo cual incluye todo el tráfico de caracteres entre el módulo ESP8266 y Espruino. 
+Activa la salida de información de depuración del módulo a la consola, lo cual incluye todo el tráfico de caracteres entre el módulo ESP8266 y Espruino.
 
 ```
 debug = function()
@@ -256,8 +256,8 @@ var cloud = require('Vizibles').init(Serial2, function (d) {
     }
   });
 });
-	
-//Reset ESP8266 module on Pico's shim 
+
+//Reset ESP8266 module on Pico's shim
 digitalWrite(B9,1);
 digitalWrite(A10,0); // pulse reset
 digitalWrite(A10,1);
@@ -277,11 +277,11 @@ var exposeFunctions = function(d) {
             exposeFunctions();
          }
        });
-     } else { 
+     } else {
        exposeFunctions();
      }
-  }); 
-}; 
+  });
+};
 
 var connected = function() {
   cloud.update({status : 'off'}, function(d) {
@@ -317,8 +317,8 @@ var cloud = require('Vizibles').init(Serial2, function (d) {
     }
   });
 });
-	
-//Reset ESP8266 module on Pico's shim 
+
+//Reset ESP8266 module on Pico's shim
 digitalWrite(B9,1);
 digitalWrite(A10,0); // pulse reset
 digitalWrite(A10,1);
