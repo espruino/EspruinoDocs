@@ -1,16 +1,20 @@
 <!-- Copyright (c) 2017 Allan Brazute. See the file LICENSE for copying permission. -->
-Espruino WebServer
-==================
+Espruino WebServer Module
+=========================
 
 * KEYWORDS: Module,Espruino,webserver,Internet,http,ajax,html
 
-Espruino WebServer let your Espruino unit act like a real web server and serve static and server generated content.
+Espruino WebServer let your Espruino act like a real web server and serve static and server generated content, including from an SD card.
+
+**Note:** You don't absolutely have to use this WebServer module as you can
+just use [the built-in web server directly](/Internet#server) - however this
+module does automate the task of serving multiple files.
 
 To use the `WebServer.js` module, you must be connected to WiFi/Ethernet/etc.
 
-<br>
 How to use the WebServer module
 -------------------------------
+
 ```javascript
 var WebServer = require("WebServer");
 
@@ -38,7 +42,8 @@ var webs = new WebServer({
 	}
 });
 ```
-<br>
+
+
 Available events
 ----------------
 
@@ -55,7 +60,8 @@ webs.on('error', function(error, WebServer){
 	console.log('WebServer Error', error);
 });
 ```
-<br>
+
+
 The web server setup parameters
 -------------------------------
 
@@ -83,14 +89,12 @@ The object is as follow:
 	}
 ```
 The `content` may be a function. In this case, the file must have the `.njs` extension, to indicate a server side interpreted file, and it must return the object containing the `content` string and `type` string or `header` object.
-<br>
-<br>
-<br>
-<br>
 
------------------------------
+
+
 Working Espruino Example Code
 -----------------------------
+
 - Copy and Paste this code into the WebIDE right panel
 - Send to Espruino
 - If it is running on Espruino hardware, connect to the `Espruino_Server` Access Point
@@ -163,6 +167,4 @@ function index_njs(req, res, uri, webs) {
 			'</html>'
 	};
 }
-
-save();
 ```
