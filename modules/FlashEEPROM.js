@@ -16,6 +16,7 @@ function FlashEEPROM(addr, flash) {
   } else if (this.flash.getFree!==undefined) {
     var free = this.flash.getFree();
     if (free.length) this.addr = free[0].addr;
+    else throw "No free flash memory found";
   } else { 
     // TODO: remove this after 1v86 is released
     var mem = process.memory();
