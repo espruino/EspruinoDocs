@@ -47,8 +47,8 @@ connect = function(options, callback, connectionCb, disconnectionCb)
 `options` is an object containing key/value pairs for configuring the connection 
 ```
 {
-    'keyID': 'Gp2naLrsSpFE',
-    'keySecret' : 'wGyFTwIHvYwGCBDJyA7j',
+    'keyID': 'YOUR_KEY_ID',
+    'keySecret' : 'YOUR_KEY_SECRET',
     'id' : 'light-bulb'
 }
 ```
