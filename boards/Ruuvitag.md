@@ -6,12 +6,15 @@ Ruuvitag
 
 ![Ruuvitag](Ruuvitag/board.png)
 
-The Ruuvitag is a Bluetooth LE beacon with an environment sensor and accelerometer in.
+The Ruuvitag is a Bluetooth LE beacon with an environment sensor and accelerometer built in.
 
 Full details on flashing Ruuvitag can be found at [https://ruu.vi/setup](https://ruu.vi/setup/)
 
-Hopwever, 
+Binaries can be found in:
 
+* the [Downloadable zip of firmare](/Download) (current version)
+* the [binaries folder](/binaries) (current version)
+* the [automatic Travis Builds](https://www.espruino.com/binaries/travis/master/) (cutting edge builds)
 
 Using
 -----
