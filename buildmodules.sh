@@ -8,9 +8,10 @@ MODULEDIR=$WEBSITE/www/modules
 mkdir -p $MODULEDIR
 
 # Minify all modules
-MODULES=`find devices modules -name "*.js"`
+MODULES=`find devices modules boards -name "*.js"`
 
 for module in $MODULES; do
+ if [ -f $module ]; then
   echo ">>>>" $module                                                 # e.g. <module-path>/DS18B20.js
 
   BNAME=`basename $module .js`                                        # e.g. 'DS18B20'
@@ -45,4 +46,5 @@ for module in $MODULES; do
     echo "$module compile FAILED."
     exit 1
   fi
+ fi
 done
