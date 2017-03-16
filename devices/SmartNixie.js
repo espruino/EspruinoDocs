@@ -1,7 +1,5 @@
-
-
-  /* Copyright (C) 2014 Spence Konde. See the file LICENSE for copying permission. */
-  /*
+/* Copyright (C) 2014 Spence Konde. See the file LICENSE for copying permission. */
+/*
 This module interfaces with the Smart Nixie Tube module from Switchmode Design. This device consists of an IN-14 Nixie Tube, an RGB led shining up into the tube, a serial interface, and a boost converter to provide the 170v required by the tube. The modules can be chained together to form a multiple digit display.
 
 Connect the TX pin of the Espruino to the RX pin of the left-most Smart Nixie Tube board (this is the fourth pin away from the power-jack) and GND of Espruino to GND of Smart Nixie Tube board (pin closest to power connector). 
