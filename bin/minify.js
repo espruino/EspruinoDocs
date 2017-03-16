@@ -53,7 +53,7 @@ var post_options = {
   }
 };
 var jsonResponseData = "";
-console.log('Sending to Google Closure Compiler...');
+console.log('Sending to Google Closure Compiler ('+(advancedOptimisation ? 'advanced' : 'simple')+')...');
 // Set up the request
 var post_req = http.request(post_options, function(res) {
   res.setEncoding('utf8');
