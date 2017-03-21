@@ -344,6 +344,21 @@ function inferMarkdownFile(filename, fileContents) {
 // -------------------------------------------------------------
 markdownFiles.forEach(function (file) {
    var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
+   
+   if (file.substr(-3)==".md") {
+    var contentLines = contents.split("\n");
+     if (contentLines[3]!="" || contentLines[4].substr(0,6)!="<span " || contentLines[5]!="") {
+       console.log("=============");
+       console.log(contentLines[3]);
+       console.log(contentLines[4]);
+       console.log(contentLines[5]);
+       console.log("=============");
+       throw new Error("Expecting to find warning comment in "+file+", but didn't.");
+     }
+     contentLines.splice(4,2); // remove comment line
+     contents = contentLines.join("\n");
+   }   
+   
    //console.log(file,contents.length);
    // Check over images... ![Image Title](foo.png)
    contents = handleImages(file, contents);
@@ -363,7 +378,7 @@ markdownFiles.forEach(function (file) {
    contents = contents.replace(/\n(\* USES: .*)/g, "<!---\n$1\n--->");
    // TODO - 'Tutorial 2' -> 'Tutorial+2', recognize pages that are references in docs themselves
    var contentLines = contents.split("\n");
-
+   
    var appendMatching = function(regex, kwName, infoList, ifNone) {
      for (i in contentLines) {
        var match = contentLines[i].match(regex);

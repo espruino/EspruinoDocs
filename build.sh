@@ -11,6 +11,8 @@ rm -f html/*.js
 rm -f html/refimages/*
 rm -f html/boards/*
 
+node bin/commenter.js
+
 cd ../Espruino
 python scripts/build_board_docs.py PICO_R1_3 pinout
 mv boards/PICO_R1_3.html $DIR/html/boards
