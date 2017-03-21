@@ -2,6 +2,8 @@
 OneWire EEPROMs (like DS24B33)
 ========================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/DS2xxx**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Module,EEPROM,storage,rom,DS24B33,DS2431,DS28EC20,OneWire
 
 

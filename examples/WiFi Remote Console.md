@@ -2,6 +2,8 @@
 Wifi Remote Console
 ===============================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/WiFi Remote Console**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Wifi,Web Server,Remote Console
 * USES: Internet,CC3000
 

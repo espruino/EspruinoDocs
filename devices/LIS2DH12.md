@@ -2,6 +2,8 @@
 LIS2DH12 Accelerometer
 ======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/LIS2DH12**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Module,Accelerometer,LIS2DH12,SPI,Sensor
 
 The LIS2DH12 is an ultra-low-power high-performance three-axis linear accelerometer with a digital I2C/SPI serial interface.

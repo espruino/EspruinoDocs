@@ -2,6 +2,8 @@
 Dial Tones
 =========
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Dial Tones**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: DTMF,Dial tone,Beep,Buzz
 * USES: KeyPad,Espruino Board,Speaker,Only Espruino Board,PWM
 

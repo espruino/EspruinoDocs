@@ -2,6 +2,8 @@
 Espruino's Real Time Clock
 =======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Clocks**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Clock,Time,Accuracy,RTC,Real Time Clock
 
 Introduction

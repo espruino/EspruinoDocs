@@ -2,6 +2,8 @@
 Ethernet Webcam Display
 ====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Ethernet Webcam**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Webcam,Ethernet,Internet,
 * USES: Internet,WIZnet,HTTP,RGB123
 

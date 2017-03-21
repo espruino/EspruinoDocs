@@ -2,6 +2,8 @@
 Puck.js and BLE UARTs
 ======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js BLE UART**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Module,Modules,BLE,Bluetooth,NUS,Nordic UART,UART
 * USES: Puck.js
 

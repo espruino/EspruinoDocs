@@ -2,6 +2,8 @@
 Espruino Notes
 ============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Notes**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Web IDE,Execution,onInit,init,Modules,Coding Style
 
 What follows is a list of things that you might find useful as you start out with Espruino.

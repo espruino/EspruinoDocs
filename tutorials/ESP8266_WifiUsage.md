@@ -2,6 +2,8 @@
 Using the ESP8266 with Wifi
 ===========================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/ESP8266_WifiUsage**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 This tutorial provides an intro to using Espruino running on the ESP8266 over Wifi instead of
 hooked up via the serial port.
 

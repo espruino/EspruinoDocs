@@ -2,6 +2,8 @@
 5 Minute Wire Loop Game
 =====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pico Wire Loop Game**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Pico,LCD,Game,Wire Loop
 * USES: Pico,PCD8544,PicoStarterKit,Speaker
 

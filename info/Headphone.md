@@ -2,6 +2,8 @@
 Headphone Jack Communications
 =========================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Headphone**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Serial,Headphone,Jack,Communications,Line-In,Microphone
 
 It's possible to use normal Headphone and Line In/Microphone connections as a 3.3v 9600 baud serial port. This means you can connect to a totally normal Espruino without needing USB or drivers.

@@ -2,6 +2,8 @@
 Modules
 =======
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Modules**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Modules,Libraries
 
 In Espruino, Modules are pieces of pre-written code (libraries) that perform common tasks, such as interfacing to different bits of hardware.

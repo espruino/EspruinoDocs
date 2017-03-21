@@ -2,6 +2,8 @@
 Fractals
 ========
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Fractals**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Fractals,Fractal,Mandelbrot
 
 You don't have to directly control hardware with Espruino - you can use it for calculations too.

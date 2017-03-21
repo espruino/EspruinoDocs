@@ -2,6 +2,8 @@
 Mounting the Espruino Board
 ========================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Mounting**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Mounting,Screws,Screw,Mount
 
 The Espruino board doesn't have any mounting holes on it (there just isn't space!), but you do have a few options for mounting it.

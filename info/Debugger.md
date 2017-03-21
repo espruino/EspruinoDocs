@@ -2,6 +2,8 @@
 Espruino Debugger
 ===============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Debugger**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Debug,Debugger,Finding Problems
 
 As of Espruino 1v81, there is now a built-in text mode debugger available, which allows you to step through your code line by line. The commands used are almost identical to those in GDB.

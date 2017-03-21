@@ -2,6 +2,8 @@
 Inline Assembler
 =============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Assembler**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Assembler,Asm,ARM,Thumb,Thumb2,Thumb-2,C code,inline C,Built-In
 
 The Web IDE allows you to write inline assembler in the right-hand pane.

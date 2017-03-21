@@ -2,6 +2,8 @@
 Espruino Pico 'Shims'
 ===================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Shims**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Pico,Shim,Adaptor,Shield,ESP8266,ESP01,ESP12,W550io,Bluetooth,HC-05,HC-06,HM-10,RFM12B,RFM69,Arduino,MicroSD,SD,Breakout,Prototype
 
 'Shims' for the Espruino Pico are small adaptor boards that you can solder to the Espruino Pico to make it easier to attach devices. For example:

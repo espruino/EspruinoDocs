@@ -2,6 +2,8 @@
 Stepper Motor Module
 ====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/StepperMotor**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Stepper,Motor,Steppermotor,Stepper motor
 
 **Note:** For a more in-depth look at Stepper Motors, see the

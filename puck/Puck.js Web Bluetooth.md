@@ -2,6 +2,8 @@
 Using Puck.js from a Web Bluetooth Website
 ==========================================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js Web Bluetooth**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Tutorials,Puck.js,GitHub,Web Bluetooth,BLE
 * USES: Puck.js,Web Bluetooth
 

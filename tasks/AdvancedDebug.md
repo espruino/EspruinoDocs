@@ -2,6 +2,8 @@
 Advanced Debug
 ============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/AdvancedDebug**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Debug,SWD,JTAG,ICD,STLink,ST-Link
 
 While Espruino can be compiled and debugged on a Host PC, sometimes you'll need to be able to debug the hardware itself. You can do this using SWD pins and an ST-Link device.

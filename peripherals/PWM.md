@@ -2,6 +2,8 @@
 Pulse Width Modulation
 ===================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/PWM**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Pulse Width Modulation,PWM,Pulse,Analog,Built-In
 
 [Pulse Width Modulation](http://en.wikipedia.org/wiki/Pulse-width_modulation) allows you to create an 'average' analog value using only a digital output. It does this by outputting a square wave, where the pulse is high for the a certain proportion of the time. If you want a 'real' analog output, see [[DAC]].

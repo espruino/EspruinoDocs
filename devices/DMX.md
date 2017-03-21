@@ -2,6 +2,8 @@
 DMX
 ===
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/DMX**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Module,DMX,DMX512,Digital Multiplex,Stage Lighting
 
 DMX is a standard protocol that's commonly used for digital stage lighting. See the [Wikipedia article on DMX512](https://en.wikipedia.org/wiki/DMX512)

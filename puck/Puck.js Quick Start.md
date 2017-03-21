@@ -2,6 +2,8 @@
 Getting Started with Puck.js
 ============================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js Quick Start**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+
 * KEYWORDS: Tutorials,Puck.js,Quick Start,Getting Started,Web Bluetooth,BLE
 * USES: Puck.js,Web Bluetooth
 
