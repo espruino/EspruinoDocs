@@ -1,4 +1,4 @@
-﻿<!--- Copyright (c) 2017 Pablo Rodiz Obaya. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2017 Pablo Rodiz Obaya. See the file LICENSE for copying permission. -->
 Vizibles (Español)
 ==================
 

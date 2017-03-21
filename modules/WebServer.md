@@ -1,4 +1,4 @@
-<!-- Copyright (c) 2017 Allan Brazute. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2017 Allan Brazute. See the file LICENSE for copying permission. -->
 Espruino WebServer Module
 =========================
 
