@@ -2,7 +2,7 @@
 Web Bluetooth on Linux
 ======================
 
-* KEYWORDS: Tutorials,Puck.js,Web Bluetooth,Linux,Ubuntu,Mint
+* KEYWORDS: Tutorials,Puck.js,Web Bluetooth,Linux,Ubuntu,Mint,Bluez,Bluetoothd
 * USES: Puck.js,Web Bluetooth
 
 First, you should type `bluetoothd --version` in the terminal,
