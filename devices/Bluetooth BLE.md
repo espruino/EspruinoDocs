@@ -2,7 +2,7 @@
 Bluetooth BLE 4.0 (HM-10)
 =========================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bluetooth BLE**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bluetooth+BLE. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Bluetooth,BLE,HM-10,HM10,iBeacon,Wireless,Radio,Transceiver
 * USES: Espruino,HM-10,Bluetooth

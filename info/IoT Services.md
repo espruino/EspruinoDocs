@@ -2,7 +2,7 @@
 IoT Services
 ==========
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/IoT Services**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/IoT+Services. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: IoT,Server,Service,Broker,Cloud Services,Hosted Services,Data Services,Cubitic,Xively,IFTTT,Dweet,Internet
 * USES: Internet,ESP8266,CC3000,WIZnet,GSM

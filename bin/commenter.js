@@ -30,9 +30,9 @@ var markdownFiles = common.getMarkdown(BASEDIR).map(function (file) {
   
   var realURL = "https://www.espruino.com/"+getWebsiteFilename(file);
   var warnText = '<span style="color:red">:warning: **Please '+
-  'view the correctly rendered version of this page at '+realURL+'**. '+
+  'view the correctly rendered version of this page at '+realURL.replace(/ /g,"+")+'. '+
   'Links, lists, videos, search, and other features will not work correctly '+
-  'when viewed on GitHub.</span>';  
+  'when viewed on GitHub** :warning:</span>';  
   if (txt[4].substr(0,6)!="<span ") {
     txt.splice(4,0,warnText,'');
   } else

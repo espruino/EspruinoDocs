@@ -2,7 +2,7 @@
 Puck.js Security and Access Control
 ===================================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js Security**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Security. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Security,Safe,Password,Login,Hack,Access Control
 * USES: Puck.js

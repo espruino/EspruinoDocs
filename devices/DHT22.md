@@ -2,7 +2,7 @@
 DHT22/AM230x/RHT0x Temperature and RH Sensor
 =============================================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/DHT22**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/DHT22. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,DHT21,DHT22,DHT33,DHT44,RHT01,RHT02,RHT03,RHT04,RHT05,AM2301,AM2302,AM2303,HM2301,temperature,humidity
 

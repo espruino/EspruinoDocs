@@ -2,7 +2,7 @@
 MFRC522 NFC/RFID module
 ==================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MFRC522**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MFRC522. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,SPI,NFC,RFID,MFRC522,RC522,NXP,13.56 MHz,Mifare
 

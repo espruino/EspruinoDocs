@@ -2,7 +2,7 @@
 Web Bluetooth on Linux
 ======================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Web Bluetooth On Linux**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Web+Bluetooth+On+Linux. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,Web Bluetooth,Linux,Ubuntu,Mint,Bluez,Bluetoothd
 * USES: Puck.js,Web Bluetooth

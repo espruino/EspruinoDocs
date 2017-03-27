@@ -2,7 +2,7 @@
 AA/AAA Battery Charger
 ======================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Battery Charger**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Battery+Charger. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: AA,AAA,Battery Charger
 * USES: Pico,PCD8544,ADC,Breadboard

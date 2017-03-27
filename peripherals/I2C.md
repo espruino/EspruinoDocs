@@ -2,7 +2,7 @@
 I2C - Inter-Integrated Circuit
 ==============================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/I2C**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/I2C. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: I2C,I squared C,IIC,Inter-Integrated Circuit,Built-In
 

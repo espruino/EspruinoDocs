@@ -2,7 +2,7 @@
 HopeRF RFM69 Wireless Module
 ======================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/RFM69**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/RFM69. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,SPI,RFM69,HopeRF,315Mhz,433Mhz,434Mhz,868Mhz,915Mhz,Wireless,Radio,Transceiver
 

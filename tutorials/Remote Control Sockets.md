@@ -2,7 +2,7 @@
 Remote Control Sockets
 ======================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Remote Control Sockets**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Remote+Control+Sockets. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Remote Control,RCT-08,Socket,Mains
 * USES: Espruino Board,433Mhz,CC3000,Internet

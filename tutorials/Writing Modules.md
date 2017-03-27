@@ -2,7 +2,7 @@
 Writing and Submitting Modules (or changes)
 =======================================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Writing Modules**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Writing+Modules. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: writing modules,creating modules,module,library,submitting,pull request
 

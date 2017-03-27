@@ -2,7 +2,7 @@
 Espruino on ESP8266 WiFi
 ========================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/EspruinoESP8266**. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub.</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/EspruinoESP8266. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: ESP8266,ESP-12,ESP12,ESP01,ESP1,ESP-01,Espruino,Board,PCB,Pinout,Internet,WiFi,Wireless,Radio
 
