@@ -62,7 +62,6 @@ var netCallbacks = {
           });              
         } else {
           socks[sckt] = undefined;
-          throw new Error("CIPSTART failed");
         }
       });
     }

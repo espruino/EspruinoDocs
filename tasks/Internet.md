@@ -45,6 +45,22 @@ require("http").get("http://www.espruino.com", function(res) {
 });
 ```
 
+### Handling Errors
+
+`http.get` returns an instance of [`httpCRq`](http://www.espruino.com/Reference#httpCRq) which will emit an `error` event if there are problems connecting.
+
+This means you can trap connection errors with something like the following:
+
+```
+require("http").get("http://192.168.12.34", function(res) {
+  var contents = "";
+  res.on('data', function(data) { contents += data; });
+  res.on('close', function() { console.log(contents); });
+}).on('error', function(e) {
+  console.log("ERROR", e);
+});
+```
+
 Server
 ------
 

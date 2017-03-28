@@ -69,9 +69,6 @@ var netCallbacks = {
           });        
         } else {
           socks[sckt] = undefined;
-          setTimeout(function() {
-            throw new Error("CIPSTART failed ("+(d?d:"Timeout")+")");
-          }, 0);
         }
       });
     }
