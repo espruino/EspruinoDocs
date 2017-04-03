@@ -103,8 +103,8 @@ function onInit() {
 }
 ```
 
-Espruino WiFi's module is designed to work similarly to the [ESP8266 native WiFi module](http://www.espruino.com/Reference#Wifi),
-however *you can't use the `WiFi` module directly*. Eventually you will, however this is still in development.
+Espruino WiFi's `EspruinoWiFi` module (code library) is designed to look and behave almost the same as the [ESP8266 native `WiFi` module](http://www.espruino.com/Reference#Wifi). 
+However *you can't use the `WiFi` module directly*, for example by using `require("WiFi")`. You will be able to eventually, however for now you must use `require("EspruinoWiFi")`.
 
 * APPEND_JSDOC: ../devices/EspruinoWiFi.js
 
