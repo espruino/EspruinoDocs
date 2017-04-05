@@ -98,7 +98,7 @@ function mqttPacket(cmd, variable, payload) {
 
 /** PUBLISH packet parser - returns object with topic and message */
 function parsePublish(data) {
-  if (data.length > 5 && typeof data !== undefined) {
+  if (data.length>=4 && typeof data!="undefined") {
     var cmd = data.charCodeAt(0);
     var rem_len = data.charCodeAt(1);
     var var_len = data.charCodeAt(2) << 8 | data.charCodeAt(3);
