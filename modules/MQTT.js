@@ -170,6 +170,7 @@ MQTT.prototype.connect = function(client) {
 
     // Disconnect if no CONNACK is received
     mqo.ctimo = setTimeout(function() {
+      mqo.ctimo = undefined;
       mqo.disconnect();
     }, mqo.C.CONNECT_TIMEOUT);
 
@@ -185,8 +186,10 @@ MQTT.prototype.connect = function(client) {
 
       if(type === TYPE.PUBLISH) {
         var parsedData = parsePublish(data);
-        mqo.emit('publish', parsedData);
-        mqo.emit('message', parsedData.topic, parsedData.message);
+        if (parsedData!==undefined) {
+          mqo.emit('publish', parsedData);
+          mqo.emit('message', parsedData.topic, parsedData.message);
+        }
       }
       else if(type === TYPE.PUBACK) {
         // implement puback
@@ -205,7 +208,8 @@ MQTT.prototype.connect = function(client) {
         mqo.emit('ping_reply');
       }
       else if(type === TYPE.CONNACK) {
-        clearTimeout(mqo.ctimo);
+        if (mqo.ctimo) clearTimeout(mqo.ctimo);
+        mqo.ctimo = undefined;
         var returnCode = data.charCodeAt(3);
         if(returnCode === RETURN_CODES.ACCEPTED) {
           mqo.connected = true;
