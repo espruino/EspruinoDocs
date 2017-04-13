@@ -55,7 +55,7 @@ The following features are only partially or not supported by Espruino on the ES
 
 ### Known Issues
 
-**TODO: Add issues here that are bugs and not feature requests (as listed above)**
+* Espruino Web IDE has issues with the ESP32, see [below](#espruino-web-ide).
 
 ---
 
@@ -65,7 +65,7 @@ The following features are only partially or not supported by Espruino on the ES
 
 If your device is not already flashed, below are the instructions.  Flashing involves downloading the latest firmware to your PC and then copying via USB cable to the microcontroller.
 
-**Note:** This flashing process is being improved.  We expect to remove the
+*Note:* This flashing process is being improved.  We expect to remove the
 build stage and provide the firmware as a download.
 
 #### Build the Firmware
@@ -88,7 +88,7 @@ you know the flashing procedure for the board you have.  Some boards have a flas
 button, that you press when you are running the flash utility.  
 
 For example, the [PyCom boards](https://www.pycom.io/) with the ESP32 microcontroller you need to:
- 1. Connect the ESP32 board to your PC using the USB cable.
+ 1. connect the ESP32 board to your PC using the USB cable.
  2. hold pin G23 to GND;
  3. run the following command; and then
  4. press the reset button.
@@ -136,14 +136,33 @@ Your device is flashed.
 
 ### Espruino Web IDE
 
-**TODO: Describe Espruino Web IDE**
+The [Espruino Web IDE](http://www.espruino.com/Web+IDE) is a basic development environment
+that allows you to write your code and deploy it to the ESP32.  
 
+*Issue*: There is an issue with Espruino Web IDE, sometimes it will not connect.
+Especially the first time you try.  The workaround is to use another tool to
+connect to the ESP32, like minicom or cutecom, see below.  Once connected using one of these tools, try again using Espruino Web IDE.
 
-### Other methods
+Once you have connected once and enabled wifi on boot (see below), you will be
+able to connect to the ESP32 via telnet, using Espruino Web IDE, this tends to
+be quite reliable.
 
-#### Telnet
+#### minicom / CuteCom
 
-#### minicom / cutecom
+There are other methods to connect to your ESP32, not just Espruino Web IDE.  Two
+very basic tools are [minicom](https://en.wikipedia.org/wiki/Minicom) and
+[CuteCom](http://cutecom.sourceforge.net/).
+
+*Minicom* is a basic console based tool that allows you to connect to a serial
+device, such as the ESP32.  Below is the command to get you connected to the
+ESP32.
+
+```
+minicom --baudrade 115200 --device /dev/ttyUSB0
+```
+
+*CuteCom* is also a basic GUI tool that allows you to connect to a serial device.
+Run CuteCom and connect via the correct port.
 
 ### Running some basic JavaScript
 
