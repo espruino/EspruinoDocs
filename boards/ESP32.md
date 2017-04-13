@@ -1,5 +1,4 @@
-Espruino on the ESP32
-=====================
+# Espruino on the ESP32
 
 The [ESP32](https://espressif.com/en/products/hardware/esp32/overview) is a dual core Tensilica LX6
 microcontroller with 520 KB SRAM, integrated Wifi, Bluetooth, and more.  [Espruino](https://github.com/espruino/Espruino)
@@ -18,7 +17,7 @@ should be generic enough for all boards, but you may have to adapt the instructi
 
 ### Quick links
 
-* [Download 'cutting edge' ESP32 firmwares](http://www.espruino.com/binaries/travis/master/) - these may not always work
+* [Download 'cutting edge' ESP32 firmware](http://www.espruino.com/binaries/travis/master/) - these may not always work
 * [Tutorial on flashing the ESP32]()
 * [Espruino ESP32 Forum](http://forum.espruino.com/microcosms/1086/) - Main support forum
 * [ESP32 Forum](https://www.esp32.com)
@@ -59,6 +58,7 @@ The following features are only partially or not supported by Espruino on the ES
 
 **TODO: Add issues here that are bugs and not feature requests (as listed above)**
 
+---
 
 ## Getting Started
 
@@ -359,6 +359,7 @@ Note that the SDK RF calibration save area was added with SDK1.5.4 patch 1.
 The `ESP32` library provides a `getFreeFlash` function that returns an array of free flash areas should you want to
 use the EEPROM emulation class or read/write flash directly.
 
+---
 
 ### Further reading
 
