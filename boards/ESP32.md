@@ -18,7 +18,6 @@ should be generic enough for all boards, but you may have to adapt the instructi
 ### Quick links
 
 * [Download 'cutting edge' ESP32 firmware](http://www.espruino.com/binaries/travis/master/) - these may not always work
-* [Tutorial on flashing the ESP32]()
 * [Espruino ESP32 Forum](http://forum.espruino.com/microcosms/1086/) - Main support forum
 * [ESP32 Forum](https://www.esp32.com)
 * [Developer chat for Espruino ESP32](https://gitter.im/espruino/esp32) - Focuses on development issues.
@@ -44,7 +43,7 @@ should be generic enough for all boards, but you may have to adapt the instructi
 
 ### Limitations / Work in Progress
 
-**TODO: Need to verify these items (they have been lifted from the ESP2866 docs) and add further ones**
+**TODO: Need to verify these items (they have been lifted from the ESP8266 docs) and add further ones**
 
 The following features are only partially or not supported by Espruino on the ESP32:
 
@@ -64,9 +63,76 @@ The following features are only partially or not supported by Espruino on the ES
 
 ### Flashing
 
-If your device is not already flashed, below are the instructions.
+If your device is not already flashed, below are the instructions.  Flashing involves downloading the latest firmware to your PC and then copying via USB cable to the microcontroller.
 
-**TODO: Flashing instructions**
+**Note:** This flashing process is being improved.  We expect to remove the
+build stage and provide the firmware as a download.
+
+#### Build the Firmware
+
+The following work in a bash shell environment, you will need git, and other essential build tools (e.g. on Ubuntu run `sudo apt-get install build-essential`).
+
+```sh
+git clone https://github.com/espruino/Espruino.git
+source scripts/provision.sh ESP32
+export ESP_IDF_PATH=$(pwd)/esp-idf
+make clean && BOARD=ESP32 make
+```
+
+You will have a file called `espruino_esp32.elf`.  This is your ESP32 firmware.
+
+#### The actual flash
+
+To flash the ESP32 we use `esptool.py`.  Before you run `esptool.py`, make sure
+you know the flashing procedure for the board you have.  Some boards have a flash
+button, that you press when you are running the flash utility.  
+
+For example, the [PyCom boards](https://www.pycom.io/) with the ESP32 microcontroller you need to:
+ 1. Connect the ESP32 board to your PC using the USB cable.
+ 2. hold pin G23 to GND;
+ 3. run the following command; and then
+ 4. press the reset button.
+
+The following command will write the flash to the ESP32.  Note you need to
+select the correct port, on Windows it will be something like `COM3`.
+
+```sh
+esp-idf/components/esptool_py/esptool/esptool.py    \
+        --chip esp32                                \
+        --port /dev/ttyUSB0                         \
+        --baud 921600                               \
+        --before esp32r0                            \
+        --after hard_reset write_flash              \      
+        -z                                          \
+        --flash_mode dio                            \
+        --flash_freq 40m                            \
+        --flash_size detect                         \   
+        0x10000 espruino_esp32.bin
+```
+
+You should see something like the following:
+
+```text
+esptool.py v2.0-beta1
+Connecting........................
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 921600
+Changed.
+Attaching SPI flash...
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Compressed 894288 bytes to 517230...
+Wrote 894288 bytes (517230 compressed) at 0x00010000 in 8.4 seconds (effective 848.5 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting...
+```
+
+Your device is flashed.
+
 
 ### Espruino Web IDE
 
@@ -120,7 +186,7 @@ Additional commands:
  * `wifi.save()`: This will save the Wifi details such that the ESP32 will reconnect to the wifi
    after a reboot.
  * `wifi.scan((ap) => { console.log(ap) })`: List all the access points seen by the ESP32.
- * `wifi.setDHCPHostname('myESP32')`: set the hostname.
+ * `wifi.setHostname('myESP32')`: set the hostname. (Not currently implemented.)
 
 **Note:** The ESP32's Wifi implementation supports both a simple access point mode and a station mode.
 The station mode is highly recommended for normal operation as the access point mode is very
@@ -144,9 +210,11 @@ wifi.connect(ssid, {password: password}, function() {
         res.end('Hello World');
     }).listen(port);
 
-    console.log(`Web server running at ${wifi.getIP()}:${port}`)
+    console.log(`Web server running at http://${wifi.getIP()}:${port}`)
 });
 ```
+
+This will output something like `Web server running at http://10.42.0.119:8080` and you will be able to browse to that address.
 
 ### Bluetooth
 
@@ -154,6 +222,8 @@ wifi.connect(ssid, {password: password}, function() {
 
 
 ## Pins
+
+https://github.com/espruino/Espruino/blob/master/boards/ESP32.py
 
 Each pin on the ESP32 maps to a variable in JavaScript.  The map below describes the pins and
 how the are mapped.
@@ -163,7 +233,7 @@ how the are mapped.
 
 ## GPIO Pins
 
-**TODO: This has been lifted from the ESP2866 docs, is it still valid??**
+**TODO: This has been lifted from the ESP8266 docs, is it still valid??**
 
 The ESP32 GPIO pins support
 [totem-pole](https://en.wikipedia.org/wiki/Push%E2%80%93pull_output#Totem-pole_push.E2.80.93pull_output_stages) and
@@ -187,7 +257,7 @@ be changed to an A0 pin).
 
 **TODO: Need a simple example here**
 
-**TODO: The text below has been lifted from the ESP2866 docs, is it still valid??**
+**TODO: The text below has been lifted from the ESP8266 docs, is it still valid??**
 
 Both the software SPI and hardware SPI implementations can be used. The software SPI works on
 any GPIO pins but operates at a fixed clock rate of about 1Mhz. The hardware SPI operates on
@@ -200,7 +270,7 @@ there is not much point to it). The hardware SPI uses the pins shown in the boar
 
 **TODO: Need a simple example here**
 
-**TODO: The text below has been lifted from the ESP2866 docs, is it still valid??**
+**TODO: The text below has been lifted from the ESP8266 docs, is it still valid??**
 
 The ESP32 has two UARTS. UART0 (`Serial1`) uses gpio1 for TX and gpio3 for RX and is used by
 the Espruino JavaScript console. It can be used for other things once the Espruino console
@@ -223,7 +293,7 @@ not available.
 
 ### Unique Identifier for the ESP32
 
-**TODO: The text below has been lifted from the ESP2866 docs, is it still valid??**
+**TODO: The text below has been lifted from the ESP8266 docs, is it still valid??**
 
 The ESP32 does not have a serial number. It does have two mac addresses "burned-in", which one can
 use for identification purposes. `getSerial()` returns the MAC address of the STA interface.
@@ -241,7 +311,7 @@ a time in seconds (float).
 
 ### digitalPulse implementation
 
-**TODO: This has been lifted from the ESP2866 docs, is it still valid??**
+**TODO: This has been lifted from the ESP8266 docs, is it still valid??**
 
 The `digitalPulse` function is implemented by busy-waiting between pulse transitions (unlike on other Espruino
 boards where `digitalPulse` is asynchronous).
@@ -257,7 +327,7 @@ pulse length. Instead, you need to do `digitalPulse(D0,1,[10,10,10])`.
 
 ### setWatch implementation
 
-**TODO: This has been lifted from the ESP2866 docs, is it still valid??**
+**TODO: This has been lifted from the ESP8266 docs, is it still valid??**
 
 The setWatch implementation uses interrupts to capture incoming pulse edges and queues them. The queue can hold 16 elements, so
 setWatch will lose transitions if javascript code does not run promptly.
@@ -273,7 +343,7 @@ This last section has more detailed instructions for the ESP32.
 
 ### Saving code to flash
 
-**TODO: The text below has been lifted from the ESP2866 docs, is it still valid??**
+**TODO: The text below has been lifted from the ESP8266 docs, is it still valid??**
 
 Currently 12KB of flash are reserved to save JS code to flash using the
 save() function. The total JS memory is larger (22400 bytes) so if you
@@ -288,7 +358,7 @@ flashing blank.bin to the last 4KB block of the save area (0x7A000).
 
 ### Flash map and access
 
-**TODO: The text below has been lifted from the ESP2866 docs, is it still valid??**
+**TODO: The text below has been lifted from the ESP8266 docs, is it still valid??**
 
 Note: if you are looking for a free flash area to use, call `ESP32.getFreeFlash`,
 which will return a list of available areas (see docs).
