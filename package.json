@@ -4,8 +4,8 @@
   "description": "Espruino Site, Documenation Tutorials and Modules",
   "main": "app.js",
   "scripts": {
-    "build": "node ./bin/build.js",
-    "start": "node app.js"
+    "build": "nodejs ./bin/build.js",
+    "start": "nodejs app.js"
   },
   "repository": {
     "type": "git",
