@@ -16,15 +16,13 @@ will need to adjust this setting in the IDE if you use that. (Other Espruino por
 
 The [ESP32](https://espressif.com/en/products/hardware/esp32/overview) is a dual core Tensilica LX6
 microcontroller with 520 KB SRAM, integrated Wifi, Bluetooth, and more.  [Espruino](https://github.com/espruino/Espruino)
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/ESP32. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
-
 is a very light weight JavaScript interpreter that runs on the ESP32, and other microcontrollers.
 
 This documentation is intended for those who want to run JavaScript on any ESP32 microcontrollers.
 It will describe how to flash the ESP32 with the latest firmware, connect to Wifi and get the
 other pins going.
 
-There are a few different boards that contain the ESP32 mincrocontroller.  These instructions below
+There are a few different boards that contain the ESP32 microcontroller.  These instructions below
 should be generic enough for all boards, but you may have to adapt the instructions in places.
 
 ---
