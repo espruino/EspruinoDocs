@@ -104,12 +104,27 @@ you know the flashing procedure for the board you have.  Some boards have a flas
 button, that you press when you are running the flash utility.  For board such 
 as the Dev Kit C board - The DTS and RTS lines are used and put the board into bottloader mode automatically
 
-For example, the [PyCom boards](https://www.pycom.io/) with the ESP32 microcontroller you need to:
+##### PyCom boards
+for [PyCom boards](https://www.pycom.io/) with the ESP32 microcontroller you need to:
  1. connect the ESP32 board to your PC using the USB cable.
  2. hold pin G23 to GND;
  3. run the following command; and then
  4. press the reset button.
 
+##### ESP-WROOM-32 (plain, no dev board)
+1. connect pins as follows
+```
+VCC -> VCC(3.3V)
+GND -> GND
+EN -> VCC
+TX -> RX (on usb controller)
+RX -> TX (on usb controller)
+IO0 -> GND (only for flash)
+```
+2. run the following command; and then
+3. leave IO0 floating (not connected) and reset chip
+
+##### Flashing command
 The following command will write the flash to the ESP32.  Note you need to
 select the correct port, on Windows it will be something like `COM3`.
 
@@ -467,3 +482,20 @@ fs.readFileSync();
 ### Further reading
 
 **TODO: Add additional resources not already covered**.
+
+### Troubleshooting
+
+#### Guru Meditation Error
+**Symptom:**
+```
+Guru Meditation Error of type InstrFetchProhibited occurred on core  0. Exception was unhandled.
+Register dump:
+PC      : 0xffffffff  PS      : 0x00060c30  A0      : 0x8008e036  A1      : 0x3ffd54b0  
+A2      : 0x3f400148  A3      : 0x3ffb6952  A4      : 0x00000008  A5      : 0xffffffe8  
+A6      : 0xffffffa4  A7      : 0x3ffb1fa0  A8      : 0xffffffff  A9      : 0x3ffd54c0  
+A10     : 0x00000000  A11     : 0x00000002  A12     : 0x5fff0007  A13     : 0x00000000  
+A14     : 0x00000000  A15     : 0x00000000  SAR     : 0x00000000  EXCCAUSE: 0x00000014  
+EXCVADDR: 0xfffffffc  LBEG    : 0x4000c2e0  LEND    : 0x4000c2f6  LCOUNT  : 0x00000000  
+```
+**Cause:** if it happens whenever wifi tries to connect then the chip is not getting enough power.
+**Solution:** use a designated power source (not the USB serial adapter), add capacitors to the power line
