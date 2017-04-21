@@ -101,8 +101,8 @@ You will have a file called `espruino_esp32.bin`.  This is your ESP32 firmware.
 
 To flash the ESP32 we use `esptool.py`.  Before you run `esptool.py`, make sure
 you know the flashing procedure for the board you have.  Some boards have a flash
-button, that you press when you are running the flash utility.  For board such
-as the Dev Kit C board - The DTS and RTS lines are used and put the board into bottloader mode automatically
+button, that you press when you are running the flash utility.  For boards such
+as the Dev Kit C board - The DTS and RTS lines are used and put the board into bootloader mode automatically
 
 ##### PyCom boards
 for [PyCom boards](https://www.pycom.io/) with the ESP32 microcontroller you need to:
@@ -298,6 +298,8 @@ Not yet implemented
 
 The ESP32 has 40 GPIO pins.  These are available in Espruino as the variables D0 to D40, each of
 these variables are instances of the Pin class.
+
+APPEND_PINOUT: ESP32
 
 For example, connect GPIO25 and D14 with a wire.  Then run the following code.
 
