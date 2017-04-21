@@ -38,6 +38,7 @@ To see how to get started with the [official boards](/Order), just follow our [Q
  | [**'HY' 3.2" LCD**](/ReferenceHYSTM32_32) | STM32F103VC | 72Mhz | 2000 | €30 | Y | 3 | 2 | N | N | Y | |
  | [**ESP8266**](/EspruinoESP8266) | Xtensa | 80Mhz | 1023 | €10 | N | 1 | 1 | N | N | N | WiFi |
  | [**micro:bit**](/MicroBit) | nRF51822 | 16Mhz | 200 | - | Y | 1 | 1 | Y | N | N | Bluetooth LE, LED matrix |
+ | [**ESP32**](/ESP32) | Xtensa | 240Mhz | 5000 | $10 | N | 2 | 2 | N | N | Flash FS | WiFi |
 
 **Key:** `Y`=Yes, `N`=No, `U`=Yes, but currently unimplemented
 
@@ -215,3 +216,7 @@ Please see [the ESP8266 page](/EspruinoESP8266) for more information.
 ### BBC Micro:bit
 
 Please see [the Micro:bit page](/MicroBit) for more information.
+
+### ESP32
+
+Please see [the ESP32 page](/ESP32) for more information.
