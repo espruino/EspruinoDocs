@@ -223,7 +223,7 @@ If you were trying to put this all together you'd need to put the connect
 in the `findDevices` callback, like this:
 
 ```
-NRF.findDevices(function(d) {
+NRF.findDevices(function(devices) {
   if (devices.length<1) throw new Error("Nothing found!");
   devices[0].gatt.connect().then(function(g) {
     gatt = g;
