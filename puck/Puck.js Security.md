@@ -56,11 +56,13 @@ it is from an unknown address.
 
 ```
 NRF.on('connect',function(addr) {
-  if (addr!="69:2d:94:d0:9d:97")
+  if (addr!="69:2d:94:d0:9d:97 public")
     NRF.disconnect();
 });
 ```
 
+Other Puck.js devices will tend to have an address of the form `"aa:bb:cc:dd:ee:ff random"`,
+but PCs and phones will generally have the form `"aa:bb:cc:dd:ee:ff public"`
 
 ## Disable the BLE UART
 

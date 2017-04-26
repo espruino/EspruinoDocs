@@ -27,7 +27,7 @@ Keyboard support is from the [[ble_hid_keyboard.js]] module.
 var kb = require("ble_hid_keyboard");
 NRF.setServices(undefined, { hid : kb.report });
 
-function btnPressed() 
+function btnPressed() {
   // Send 'a'
   kb.tap(kb.KEY.A, 0, function() {
     // Followed by capital 'A'
@@ -77,7 +77,7 @@ You can emulate a wide variety of other devices by providing your own HID report
 ```
 report = new Uint8Array([
   ]);
-NRF.setServices(undefined, { hid : report });  
+NRF.setServices(undefined, { hid : report });
 ```
 
 You can then call `NRF.sendHIDReport` to send data. For Keyboards it must be an array of the form:
