@@ -422,8 +422,17 @@ Please have in mind, PWM via analog always need a lowpass filter, usually a simp
 
 ### Analog Read / Write Example
 
-**TODO: Need a simple example here**
+There are two ADC channels but only ADC-1 is support at the moment. The ADC-1 channel is accessible through `IO35` and `IO36`(`VP_SENSOR`).
+ADC PINs shouldn't not be connected to a voltage higher than VCC - if a higher input voltage is needed, a resistor should be added between the input and the ADC and then the real voltage could be calculated by including the resistor's voltage drop in the equation.
 
+usage example: reading analog voltage from IO35
+
+```JavaScript
+var reading = analogRead(D35);
+// reading is a float between 0 and 1
+var estimatedInputVoltage = reading * 3.3;
+```
+more information on espruino [ADC docs](https://www.espruino.com/ADC) and [analogRead method](https://www.espruino.com/Reference#l__global_analogRead)
 
 ### Unique Identifier for the ESP32
 
