@@ -109,6 +109,20 @@ However *you can't use the `WiFi` module directly*, for example by using `requir
 * APPEND_JSDOC: ../devices/EspruinoWiFi.js
 
 
+Access Point Mode
+-----------------
+
+Espruino WiFi can be made into a WiFi access point with:
+
+```
+wifi.startAP('EspruinoAP', { password: '0123456789', authMode: 'wpa2' }, function(err) {
+  if (err) throw err;
+});
+```
+
+See the documentation above for more information. `startAP` and `connect` can be used together to make Espruino become an access point while also connecting to another WiFi network. In that case, it'll have the DHCP-assigned IP address on the WiFi network it is connected to, and the IP address `192.168.4.1` on the access point it has created.
+
+
 Tutorials
 ---------
 

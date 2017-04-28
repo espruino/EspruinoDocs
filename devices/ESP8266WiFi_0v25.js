@@ -63,9 +63,9 @@ var netCallbacks = {
           return cb;
         }
         if (d=="OK") {          
-          at.registerLine(sckt+",CLOSED", function() {
-            at.unregisterLine(sckt+",CLOSED");
-            socks[sckt] = undefined;
+          at.registerLine(sckt+",CLOSED", function(ln) {
+            socks[sckt] = sockData[sckt].length?"ClosedWithData":undefined;
+            at.unregisterLine(ln);
           });        
         } else {
           socks[sckt] = undefined;
@@ -109,6 +109,8 @@ var netCallbacks = {
       } else {
         r = sockData[sckt];
         sockData[sckt] = "";
+        if (socks[sckt]=="ClosedWithData")
+          socks[sckt] = undefined;
       }
       return r;
     }

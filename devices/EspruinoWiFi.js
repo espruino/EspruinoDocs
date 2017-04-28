@@ -43,10 +43,10 @@ var netCallbacks = {
           socks[sckt] = true;
           return cb;
         }
-        if (d=="OK") {          
-          at.registerLine(sckt+",CLOSED", function() {
-            at.unregisterLine(sckt+",CLOSED");
-            socks[sckt] = undefined;
+        if (d=="OK") {
+          at.registerLine(sckt+",CLOSED", function(ln) {
+            socks[sckt] = sockData[sckt].length?"ClosedWithData":undefined;
+            at.unregisterLine(ln);
           });        
         } else {
           socks[sckt] = undefined;          
@@ -72,7 +72,7 @@ var netCallbacks = {
     // console.log("Accept",sckt);
     for (var i=0;i<MAXSOCKETS;i++)
       if (sockData[i] && socks[i]===undefined) {
-        //console.log("Socket accept "+i,JSON.stringify(sockData[i]),socks[i]);
+        //console.log("Socket accept "+i,JSON.stringify(sockData),JSON.stringify(socks));
         socks[i] = true;
         return i;
       }
@@ -90,6 +90,8 @@ var netCallbacks = {
       } else {
         r = sockData[sckt];
         sockData[sckt] = "";
+        if (socks[sckt]=="ClosedWithData")
+          socks[sckt] = undefined;
       }
       return r;
     }
@@ -299,3 +301,13 @@ exports.scan = function(callback) {
     );
   });
 };
+
+/** This function returns some of the internal state of the WiFi module, and can be used for debugging */
+exports.debug = function() {
+  return {
+    wifiMode : wifiMode,
+    socks : socks,
+    sockData : sockData
+  };
+};
+
