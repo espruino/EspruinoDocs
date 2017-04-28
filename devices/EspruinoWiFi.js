@@ -18,7 +18,7 @@ var MAXSOCKETS = 5;
 undefined         : unused
 true              : connected and ready
 "DataClose"       : closed on esp8266, but with data still in sockData
-"Wait"            : waiting for connection (client)
+"Wait"            : waiting for connection (client), or for data to be sent
 "WaitClose"       : We asked to close it, but it hasn't been opened yet
 "Accept"          : opened by server, waiting for 'accept' to be called
 */
@@ -46,14 +46,11 @@ var netCallbacks = {
     } else {  
       var sckt = 0;
       while (socks[sckt]!==undefined) sckt++; // find free socket
-      if (sckt>=MAXSOCKETS) throw new Error("No free sockets");
+      if (sckt>=MAXSOCKETS) return -7; // SOCKET_ERR_MAX_SOCK
       socks[sckt] = "Wait";
       sockData[sckt] = "";
       at.cmd('AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n',10000, function cb(d) {
-        if (d!="OK") {
-          // report error
-          socks[sckt] = undefined;          
-        }
+        if (d!="OK") socks[sckt] = -6; // SOCKET_ERR_NOT_FOUND
       });
     }
     return sckt;
@@ -64,10 +61,13 @@ var netCallbacks = {
       socks[sckt]="WaitClose";
     else if (socks[sckt]!==undefined) {
       // socket may already have been closed (eg. received 0,CLOSE)
-      // we need to a different command if we're closing a server
-      at.cmd(((sckt==MAXSOCKETS) ? 'AT+CIPSERVER=0' : ('AT+CIPCLOSE='+sckt))+'\r\n',1000, function(d) {
+      if (socks[sckt]<0)
         socks[sckt] = undefined;
-      });
+      else
+      // we need to a different command if we're closing a server
+        at.cmd(((sckt==MAXSOCKETS) ? 'AT+CIPSERVER=0' : ('AT+CIPCLOSE='+sckt))+'\r\n',1000, function(d) {
+          socks[sckt] = undefined;
+        });
     }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
@@ -98,6 +98,7 @@ var netCallbacks = {
       }
       return r;
     }
+    if (socks[sckt]<0) return socks[sckt]; // report an error
     if (!socks[sckt]) return -1; // close it
     return "";
   },
@@ -105,7 +106,8 @@ var netCallbacks = {
   Less than 0  */
   send : function(sckt, data) {
     if (at.isBusy() || socks[sckt]=="Wait") return 0;
-    if (!socks[sckt]) return -1; // error - close it
+    if (socks[sckt]<0) return socks[sckt]; // report an error 
+    if (!socks[sckt]) return -1; // close it
     //console.log("Send",sckt,data);
    
     var cmd = 'AT+CIPSEND='+sckt+','+data.length+'\r\n';
