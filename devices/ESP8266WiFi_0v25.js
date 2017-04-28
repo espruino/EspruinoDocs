@@ -32,6 +32,17 @@ var sockData = ["","","","",""];
 var MAXSOCKETS = 5;
 var ENCR_FLAGS = ["open","wep","wpa_psk","wpa2_psk","wpa_wpa2_psk"];
 
+/*
+`socks` can have the following states:
+
+undefined         : unused
+true              : connected and ready
+"DataClose"       : closed on esp8266, but with data still in sockData
+"Wait"            : waiting for connection (client)
+"WaitClose"       : We asked to close it, but it hasn't been opened yet
+"Accept"          : opened by server, waiting for 'accept' to be called
+*/
+
 var netCallbacks = {
   create : function(host, port) {
     /* Create a socket and return its index, host is a string, port is an integer.
@@ -58,16 +69,8 @@ var netCallbacks = {
       socks[sckt] = "Wait";
       sockData[sckt] = "";
       at.cmd('AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n',10000, function cb(d) {
-        if (d==sckt+",CONNECT") {
-          socks[sckt] = true;
-          return cb;
-        }
-        if (d=="OK") {          
-          at.registerLine(sckt+",CLOSED", function(ln) {
-            socks[sckt] = sockData[sckt].length?"ClosedWithData":undefined;
-            at.unregisterLine(ln);
-          });        
-        } else {
+        if (d!="OK") {
+          // report error
           socks[sckt] = undefined;
         }
       });
@@ -90,7 +93,7 @@ var netCallbacks = {
   accept : function(sckt) {
     // console.log("Accept",sckt);
     for (var i=0;i<MAXSOCKETS;i++)
-      if (sockData[i] && socks[i]===undefined) {
+      if (socks[i]=="Accept") {
         //console.log("Socket accept "+i,JSON.stringify(sockData[i]),socks[i]);
         socks[i] = true;
         return i;
@@ -109,7 +112,7 @@ var netCallbacks = {
       } else {
         r = sockData[sckt];
         sockData[sckt] = "";
-        if (socks[sckt]=="ClosedWithData")
+        if (socks[sckt]=="DataClose")
           socks[sckt] = undefined;
       }
       return r;
@@ -268,12 +271,30 @@ var wifiFuncs = {
   }
 };
 
+function sckOpen(ln) {
+  //console.log("CONNECT", JSON.stringify(ln));
+  socks[ln[0]] = socks[ln[0]]=="Wait" ? true : "Accept";
+}
+function sckClosed(ln) {
+  //console.log("CLOSED", JSON.stringify(ln));
+  socks[ln[0]] = sockData[ln[0]]!="" ? "DataClose" : undefined;
+}
 
 exports.connect = function(usart, connectedCallback) {
   wifiFuncs.at = at = require("AT").connect(usart);  
   require("NetworkJS").create(netCallbacks);
   
   at.register("+IPD", ipdHandler);
+  at.registerLine("0,CONNECT", sckOpen);
+  at.registerLine("1,CONNECT", sckOpen);
+  at.registerLine("2,CONNECT", sckOpen);
+  at.registerLine("3,CONNECT", sckOpen);
+  at.registerLine("4,CONNECT", sckOpen);
+  at.registerLine("0,CLOSED", sckClosed);
+  at.registerLine("1,CLOSED", sckClosed);
+  at.registerLine("2,CLOSED", sckClosed);
+  at.registerLine("3,CLOSED", sckClosed);
+  at.registerLine("4,CLOSED", sckClosed);  
   
   wifiFuncs.reset(connectedCallback);
 
