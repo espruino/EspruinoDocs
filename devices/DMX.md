@@ -13,7 +13,7 @@ Here we're only going to cover reception of DMX. Head over to [the forums](http:
 Wiring
 ------
 
-DMX protocol uses the same logic levels as RS232 serial. You can get DMX shields for Arduino which you can wire up (make sure you buy one that can receive!), but you can also use a normal RS232 level converter like a MAX232.
+DMX protocol uses the same logic levels as RS-485. You can get DMX shields for Arduino which you can wire up (make sure you buy one that can receive!), but you can also use a normal RS-485 converter chip such as the MAX485. Modules are available for just a few pounds on eBay.
 
 ## DMX Receive
 
