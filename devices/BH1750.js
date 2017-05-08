@@ -81,8 +81,8 @@ BH1750.prototype.start= function(resolution,onetime) { //resolution: 1 = 1 lx (r
 };
 
 BH1750.prototype.setMT=function(mt) {
-  this.factor=1.2/(69/X);
   mt=E.clip(mt,31,254);
+  this.factor=1.2/(69/mt);
   this.i2c.writeTo(this.i2ca,0x80+((mt&0xE0)>>3));
   this.i2c.writeTo(this.i2ca,0xB0+(mt&0x1F));
 }
