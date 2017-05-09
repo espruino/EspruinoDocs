@@ -23,7 +23,7 @@ var mpr = require("MPR121").connect(I2C1, ready, { address: 0x5B });
 Default address is 0x5A, if tied to 3.3V its 0x5B
 If tied to SDA its 0x5C and if SCL then 0x5D
 */
-exports.connect = (i2c, callback, options) => {
+exports.connect = function(i2c, callback, options) {
   options = options || {};
 
   let addr = options.address || 0x5A; // default address
@@ -32,13 +32,13 @@ exports.connect = (i2c, callback, options) => {
     read: (count) => i2c.readFrom(addr, count),
     write: (data) => i2c.writeTo(addr, data),
 
-    touched: () => {
+    touched: function() {
       i2c.writeTo(addr, 0x00);
       var data = i2c.readFrom(addr, 2);
       return (data[1] << 8) || data[0];
     },
 
-    setThresholds: (touch, release) => {
+    setThresholds: function(touch, release) {
       for (i=0; i<24; i+=2) {
         i2c.writeTo(addr, 0x41+i, touch);
         i2c.writeTo(addr, 0x42+i, release);
