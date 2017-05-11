@@ -36,6 +36,12 @@ Features
 
 You can now get Puck.js from several different distributors. [Click here to see them.](/Order)
 
+You can also buy kits of different color cases for Puck.js from [our Tindie store](https://www.tindie.com/stores/gfwilliams/):
+
+[![Black cases](Puck.js/col1.jpg)](https://www.tindie.com/products/gfwilliams/puckjs-black-cases/)
+[![Primary color case kit](Puck.js/col4.jpg)](https://www.tindie.com/products/gfwilliams/puckjs-cases-red-yellow-green-blue/)
+[![All color case kit](Puck.js/col5.jpg)](https://www.tindie.com/products/gfwilliams/puckjs-cases-black-red-yellow-green-blue/)
+
 
 Turning Puck.js on
 ------------------

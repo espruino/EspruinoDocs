@@ -30,8 +30,7 @@ Features
 <a name="buy"></a>Buying
 ------
 
-<!-- You can now get an Espruino WiFi from several different distributors. [Click here to see them.](/Order) -->
-Espruino WiFi is currently only available from [our Tindie store](https://www.tindie.com/products/gfwilliams/espruino-wifi).
+You can now get an Espruino WiFi from several different distributors. [Click here to see them.](/Order)
 
 
 Pinout
