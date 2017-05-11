@@ -180,6 +180,8 @@ require("http").createServer(onPageRequest).listen(8080);
 
 This loads the file a section at a time, and even closes it and the HTTP connection once sending is complete.
 
+**Note:** by default `.pipe` will use a relatively small chunk size (the amount of data read and written in one go). Replacing `f.pipe(res)` with `f.pipe(res, {chunkSize:512});` will drastically increase file transfer speeds as it better matches the block size of SD cards.
+
 
 ### Transferring large amounts of data
 
