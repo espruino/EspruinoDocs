@@ -34,7 +34,7 @@ Features
 <a name="buy"></a>Buying
 ------
 
-You can now get Puck.js from several different distributors. [Click here to see them.](/Order)
+You can now get Puck.js from several different distributors. [Click here to see them.](/Order#distributors)
 
 You can also buy kits of different color cases for Puck.js from [our Tindie store](https://www.tindie.com/stores/gfwilliams/):
 

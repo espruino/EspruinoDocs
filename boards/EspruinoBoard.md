@@ -29,6 +29,11 @@ Features
 * Prototype area which can be used in many different configurations, for example: Servo Headers, Up to 14x 500mA outputs, 2x .NET Gadgeteer connectors, or NRF24L01+ wireless transceiver modules
 * Rev 1v4: CE and RoHS certification
 
+<a name="buy"></a>Buying
+------
+
+You can now get an Original Espruino from several different distributors. [Click here to see them.](/Order#distributors)
+
 Pinout
 ------
 
