@@ -29,6 +29,10 @@ function RN2483(serial, options) {
   this.options = options||{};
   this.at = require("AT").connect(serial);
   if (this.options.debug) this.at.debug();
+  var lora = this;
+  this.at.registerLine("mac_rx 1",function(d) {
+    lora.emit("message", JSON.stringify(fromHex(d,9)));
+  });
   this.macOn = true; // are we in LoRaWAN mode or not?
 }
 
@@ -133,7 +137,7 @@ RN2483.prototype.LoRaWAN = function(devAddr,nwkSKey,appSKey, callback)
       at.cmd("mac join ABP\r\n",2000,resolve);
     });
   }).then(function(d) {
-    callback(d);
+    callback((d=="ok")?null:((d===undefined?"Timeout":d)));
   });
 };
 
@@ -153,13 +157,22 @@ RN2483.prototype.radioTX = function(msg, callback) {
   });
 };
 
-/// Transmit a message (using LoRaWAN)
+/** Transmit a message (using LoRaWAN). Will call the callback with 'null'
+on success, or the error message on failure.
+
+In LoRa, messages are received right after data is transmitted - if
+a message was received, the 'message' event will be fired, which 
+can be received if you added a handler as follows:
+
+lora.on('message', function(data) { ... });
+ */
 RN2483.prototype.loraTX = function(msg, callback) {
   var at = this.at;
   this.setMAC(true, function() {
     // convert to hex
-    at.cmd("mac tx uncnf 1 "+toHex(msg)+"\r\n",2000,callback);
-    // check for mac_tx_ok in callback?
+    at.cmd("mac tx uncnf 1 "+toHex(msg)+"\r\n",2000,function(d) {
+      callback((d=="ok")?null:((d===undefined?"Timeout":d)));
+    });
   });
 };
 
