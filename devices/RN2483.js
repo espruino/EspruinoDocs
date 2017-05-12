@@ -31,7 +31,7 @@ function RN2483(serial, options) {
   if (this.options.debug) this.at.debug();
   var lora = this;
   this.at.registerLine("mac_rx 1",function(d) {
-    lora.emit("message", JSON.stringify(fromHex(d,9)));
+    lora.emit("message", fromHex(d,9));
   });
   this.macOn = true; // are we in LoRaWAN mode or not?
 }
