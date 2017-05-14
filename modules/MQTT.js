@@ -263,7 +263,7 @@ MQTT.prototype.connect = function(client) {
   };
   if (client) { onConnect(); }
   else {
-    var net = require("net")；
+    var net = require("net");
     var options = {host : mqo.server, port: mqo.port};
     client = new net.Socket(options);
     client.setTimeout(mqo.C.CONNECT_TIMEOUT, function() {
