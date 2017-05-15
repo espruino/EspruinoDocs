@@ -169,10 +169,10 @@ MQTT.prototype.connect = function(client) {
     client.write(mqo.mqttConnect(mqo.client_id));
 
     // Disconnect if no CONNACK is received
-    // mqo.ctimo = setTimeout(function() {
-    //   mqo.ctimo = undefined;
-    //   mqo.disconnect();
-    // }, mqo.C.CONNECT_TIMEOUT);
+    mqo.ctimo = setTimeout(function() {
+      mqo.ctimo = undefined;
+      mqo.disconnect();
+    }, mqo.C.CONNECT_TIMEOUT);
 
     // Set up regular keep_alive ping
     mqo.pintr = setInterval(function() {
@@ -208,8 +208,8 @@ MQTT.prototype.connect = function(client) {
         mqo.emit('ping_reply');
       }
       else if(type === TYPE.CONNACK) {
-        // if (mqo.ctimo) clearTimeout(mqo.ctimo);
-        // mqo.ctimo = undefined;
+        if (mqo.ctimo) clearTimeout(mqo.ctimo);
+        mqo.ctimo = undefined;
         var returnCode = data.charCodeAt(3);
         if(returnCode === RETURN_CODES.ACCEPTED) {
           mqo.connected = true;
@@ -263,14 +263,8 @@ MQTT.prototype.connect = function(client) {
   };
   if (client) { onConnect(); }
   else {
-    var net = require("net");
-    var options = {host : mqo.server, port: mqo.port};
-    client = new net.Socket(options);
-    client.setTimeout(mqo.C.CONNECT_TIMEOUT, function() {
-      mqo.disconnect();
-      mqo.connect();
-    });
-    client.connect(options, onConnect);
+    client = require("net").connect({host : mqo.server, port: mqo.port}, onConnect);
+    // TODO: Reconnect on timeout
   }
 };
 
