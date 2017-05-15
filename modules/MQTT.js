@@ -64,7 +64,8 @@ function MQTT(server, options) {
 MQTT.prototype.C = {
   DEF_QOS         : 0,    // Default QOS level
   CONNECT_TIMEOUT : 5000, // Time (s) to wait for CONNACK
-  PING_INTERVAL   : 40    // Server ping interval (s)
+  PING_INTERVAL   : 40,    // Server ping interval (s)
+  RECONNECT_INTERVAL: 5000
 };
 
 /* Utility functions ***************************/
@@ -164,15 +165,19 @@ function createEscapedHex( number ){
 /** Establish connection and set up keep_alive ping */
 MQTT.prototype.connect = function(client) {
   var mqo = this;
+
+  // Disconnect if no CONNACK is received
+  mqo.ctimo = setTimeout(function() {
+    mqo.ctimo = undefined;
+    mqo.disconnect();
+    setTimeout(function() {
+      mqo.connect();
+    }, mqo.C.RECONNECT_INTERVAL);
+  }, mqo.C.CONNECT_TIMEOUT);
+
   var onConnect = function() {
     console.log('Client connected');
     client.write(mqo.mqttConnect(mqo.client_id));
-
-    // Disconnect if no CONNACK is received
-    mqo.ctimo = setTimeout(function() {
-      mqo.ctimo = undefined;
-      mqo.disconnect();
-    }, mqo.C.CONNECT_TIMEOUT);
 
     // Set up regular keep_alive ping
     mqo.pintr = setInterval(function() {
@@ -259,13 +264,13 @@ MQTT.prototype.connect = function(client) {
       }
     });
 
-    mqo.client = client;
   };
   if (client) { onConnect(); }
   else {
     client = require("net").connect({host : mqo.server, port: mqo.port}, onConnect);
     // TODO: Reconnect on timeout
   }
+  mqo.client = client;
 };
 
 /** Disconnect from server */
