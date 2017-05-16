@@ -6,7 +6,8 @@ Should also work with other family members.
 
 Usage:
 
-var TLE = require("TLE94112").connect(SPI,csp, enp)
+SPI1.setup({sck:A5, miso:A6, mosi:A7, baud:integer=1000000, mode:integer=1, order:'lsb' });
+var TLE = require("TLE94112").connect(SPI1, B6, A9);
 
 TLE.enable();				// Enable chip, POR
 
@@ -51,14 +52,10 @@ function TLE94112(spi,cs,en) {
 }
 /** Connect the TLE94112 to the SPI interface.
 tlespi = SPI interface, psck, pmiso and pmosi have to be connected to this interface 
-psck  = Pin sck 
-pmiso = Pin miso
-pmosi = Pin mosi 
 pcsp  = Pin chip select 
 pen  = Pin enable
  */
-exports.connect = function(tlespi, psck, pmiso, pmosi, pcsp, pen) {
-	tlespi.setup({sck:psck, miso:pmiso, mosi:pmosi, baud:integer=1000000, mode:integer=1, order:'lsb' });
+exports.connect = function(tlespi, pcsp, pen) {
 	return new TLE94112(tlespi, pcsp, pen);
 };
 
