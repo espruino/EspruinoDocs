@@ -71,15 +71,13 @@ TLE94112.prototype.disable  = function () {
 };
 
 /* send a data byte to the defined register on available device */
-TLE94112.prototype.writeRegister = function ( addr,  data)
-{
+TLE94112.prototype.writeRegister = function ( addr,  data) {
   addr = addr | C.WRITE;
   return this.spi.send( [addr, data], this.cs );
 }
 
 /* read a register from SPI */
-TLE94112.prototype.readRegister = function ( addr )
-{
+TLE94112.prototype.readRegister = function ( addr ) {
   var SPIReturn = this.spi.send( [addr, 0], this.cs );
   return (SPIReturn[1]);
 }
@@ -87,14 +85,14 @@ TLE94112.prototype.readRegister = function ( addr )
 /* Set duty cycle,
 Channel should between 1 and 3, 
 Value 0..255 -> 0% - 100% */
-TLE94112.prototype.setDutyCycle = function( Channel, Value )
-{   this.writeRegister(C.PWM_DC_CTRL[Channel-1], Value); }
+TLE94112.prototype.setDutyCycle = function( Channel, Value ) {   
+  this.writeRegister(C.PWM_DC_CTRL[Channel-1], Value); 
+}
 
 /** set PWM Soruce for a motor.
 Motor 1..6, Source 1..3 
 */
-TLE94112.prototype.setPWMSource = function( Motor, PWMCh )
-{
+TLE94112.prototype.setPWMSource = function( Motor, PWMCh ) {
   Motor = Motor -1;
   var ConVal = (PWMCh + PWMCh*4)<<((Motor&1)*4);
   var MskVal = (0x0f)<<((Motor&1)*4);
@@ -108,8 +106,7 @@ TLE94112.prototype.setPWMSource = function( Motor, PWMCh )
 /** set Half Bridge configuration, if all HB used for motor control
 Motor 1..6, Dir 0 = Stop, 1 = Right, 2 = Left 
 */
-TLE94112.prototype.setDirection = function( Motor, Dir )
-{
+TLE94112.prototype.setDirection = function( Motor, Dir ) {
   Motor = Motor -1;
   var ConVal = 0;
   if ( Dir === 1 ) { ConVal = 0x09;  }
@@ -139,8 +136,7 @@ Channel 4 is used for modulation.
 11B Modulation frequency 62.5kHz 
 
 */
-TLE94112.prototype.setPWMFrequency = function ( Channel, Freq )
-{
+TLE94112.prototype.setPWMFrequency = function ( Channel, Freq ) {
   Channel = Channel -1;
   Freq = (Freq & 0x03)<<((Channel & 3 )*2);
   var MskVal =   (0x03)<<((Channel & 3 )*2);
@@ -154,39 +150,36 @@ TLE94112.prototype.setPWMFrequency = function ( Channel, Freq )
 /**
 Read all overcurrent flags and return as one value.
 */
-TLE94112.prototype.getOvercurrentFlags = function ( )
-{
+TLE94112.prototype.getOvercurrentFlags = function ( ) {
   return ( ( ( this.readRegister(C.SYS_DIAG_4) ) <<16 ) | 
 		   ( ( this.readRegister(C.SYS_DIAG_3) ) <<8  ) | 
 		     ( this.readRegister(C.SYS_DIAG_2) )      );
 }
 
 /** Read all open load flags and return as one value */
-TLE94112.prototype.getOpenLoadFlags = function ( )
-{
+TLE94112.prototype.getOpenLoadFlags = function ( ) {
   return ( ( ( this.readRegister(C.SYS_DIAG_5) ) <<16 ) | 
 		   ( ( this.readRegister(C.SYS_DIAG_6) ) <<8  ) | 
 		     ( this.readRegister(C.SYS_DIAG_7) )      );
 }
 
 /** Dump all Control registers */
-TLE94112.prototype.logCtrlReg = function ()
-{
+TLE94112.prototype.logCtrlReg = function () {
   var cl = console.log; 
-cl("- Settings -");
-cl("HB_ACT_1_CTRL:   ",this.readRegister(C.HB_ACT_CTRL[0]).toString(16));
-cl("HB_ACT_2_CTRL:   ",this.readRegister(C.HB_ACT_CTRL[1]).toString(16));
-cl("HB_ACT_3_CTRL:   ",this.readRegister(C.HB_ACT_CTRL[2]).toString(16));
-cl("HB_MODE_1_CTRL:  ",this.readRegister(C.HB_MODE_CTRL[0]).toString(16));
-cl("HB_MODE_2_CTRL:  ",this.readRegister(C.HB_MODE_CTRL[1]).toString(16));
-cl("HB_MODE_3_CTRL:  ",this.readRegister(C.HB_MODE_CTRL[2]).toString(16));
-cl("PWM_CH_FREQ_CTRL:",this.readRegister(C.PWM_CH_FREQ_CTRL).toString(16));
-cl("PWM1_DC_CTRL:    ",this.readRegister(C.PWM_DC_CTRL[0]).toString(16));
-cl("PWM2_DC_CTRL:    ",this.readRegister(C.PWM_DC_CTRL[1]).toString(16));
-cl("PWM3_DC_CTRL:    ",this.readRegister(C.PWM_DC_CTRL[2]).toString(16));
-cl("FW_OL_CTRL:      ",this.readRegister(C.FW_OL_CTRL).toString(16));
-cl("FW_CTRL:         ",this.readRegister(C.FW_CTRL).toString(16));
-cl("CONFIG_CTRL: ");
+  cl("- Settings -");
+  cl("HB_ACT_1_CTRL:   ",this.readRegister(C.HB_ACT_CTRL[0]).toString(16));
+  cl("HB_ACT_2_CTRL:   ",this.readRegister(C.HB_ACT_CTRL[1]).toString(16));
+  cl("HB_ACT_3_CTRL:   ",this.readRegister(C.HB_ACT_CTRL[2]).toString(16));
+  cl("HB_MODE_1_CTRL:  ",this.readRegister(C.HB_MODE_CTRL[0]).toString(16));
+  cl("HB_MODE_2_CTRL:  ",this.readRegister(C.HB_MODE_CTRL[1]).toString(16));
+  cl("HB_MODE_3_CTRL:  ",this.readRegister(C.HB_MODE_CTRL[2]).toString(16));
+  cl("PWM_CH_FREQ_CTRL:",this.readRegister(C.PWM_CH_FREQ_CTRL).toString(16));
+  cl("PWM1_DC_CTRL:    ",this.readRegister(C.PWM_DC_CTRL[0]).toString(16));
+  cl("PWM2_DC_CTRL:    ",this.readRegister(C.PWM_DC_CTRL[1]).toString(16));
+  cl("PWM3_DC_CTRL:    ",this.readRegister(C.PWM_DC_CTRL[2]).toString(16));
+  cl("FW_OL_CTRL:      ",this.readRegister(C.FW_OL_CTRL).toString(16));
+  cl("FW_CTRL:         ",this.readRegister(C.FW_CTRL).toString(16));
+  cl("CONFIG_CTRL: ");
      switch ( this.readRegister(C.CONFIG_CTRL) )
     {
       case 0 : cl( "TLE94112EL chip"); break;
@@ -200,13 +193,12 @@ cl("CONFIG_CTRL: ");
 }
 
 /** Dump all Diagnose registers */
-TLE94112.prototype.logSysDiag = function () 
-{
-var cl = console.log; 
-cl("- System Diagnose -");
-cl("SYS_DIAG_1:        ",this.readRegister(C.SYS_DIAG_1).toString(16));
-cl("Overcurrent:Flags: ",this.getOvercurrentFlags().toString(16));
-cl("Open Load Flags:   ",this.getOpenLoadFlags().toString(16));
+TLE94112.prototype.logSysDiag = function () {
+  var cl = console.log; 
+  cl("- System Diagnose -");
+  cl("SYS_DIAG_1:        ",this.readRegister(C.SYS_DIAG_1).toString(16));
+  cl("Overcurrent:Flags: ",this.getOvercurrentFlags().toString(16));
+  cl("Open Load Flags:   ",this.getOpenLoadFlags().toString(16));
 }
 
 
