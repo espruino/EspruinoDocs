@@ -42,8 +42,8 @@ function format(val) {
   return ("0"+val).substr(-2);
 }
 
-// Daylight saving time
-function isDST(day,month,dow) {
+// Return whether the supplied date is part of daylight saving time or not
+DS3231.prototype.isDST = function(day,month,dow) {
   if (!this.options.DST) return false;
   if ((month === 3) && (dow === 7) && (day > 23)) {
     return true;
@@ -77,7 +77,7 @@ DS3231.prototype.setDate = function(date,month,year) {
   this.i2c.writeTo(C.i2c_address,[C.dateReg, (dec2bcd(date))]);
   this.i2c.writeTo(C.i2c_address,[C.monthReg, (dec2bcd(month))]);
   this.i2c.writeTo(C.i2c_address,[C.yearReg, (dec2bcd(year))]);
-  this.dstStatus = isDST(date,month,year);
+  this.dstStatus = this.isDST(date,month,year);
 };
 
 // Set the time
@@ -99,13 +99,13 @@ DS3231.prototype.readDateTime = function () {
   var month = bcd2dec(data[5]);
   var year = bcd2dec(data[6]);
 
-  if (hours === 1 && minutes === 0 && seconds === 0 && isDST(date,month,dow) === true && this.dstStatus === false) { // clocks go forward
+  if (hours === 1 && minutes === 0 && seconds === 0 && this.isDST(date,month,dow) === true && this.dstStatus === false) { // clocks go forward
     this.i2c.writeTo(C.i2c_address,[C.hourReg, (dec2bcd(2))]);
     hours = 2;
     this.dstStatus = true;
   }
 
-  if (hours === 2 && minutes === 0 && seconds === 0 && isDST(date,month,dow) === false && this.dstStatus === true) { // clocks go back
+  if (hours === 2 && minutes === 0 && seconds === 0 && this.isDST(date,month,dow) === false && this.dstStatus === true) { // clocks go back
     this.i2c.writeTo(C.i2c_address,[C.hourReg, (dec2bcd(1))]);
     hours = 1;
     this.dstStatus = false;
