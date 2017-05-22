@@ -95,7 +95,7 @@ LIS2DH12.prototype.setPowerMode = function (mode) {
     if (time_ms)
       this.interval = setInterval(function(acc) {
         acc.data = new DataView(new Uint8Array(acc.read(C.OUT_X_L, 6)).buffer);
-        if (acc.callback) acc.callback(acc.getAccel());
+        if (acc.callback) acc.callback(acc.getXYZ());
       }, time_ms, this);
 };
 
