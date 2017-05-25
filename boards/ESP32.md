@@ -90,6 +90,7 @@ The following work in a bash shell environment, you will need git, and other ess
 
 ```sh
 git clone https://github.com/espruino/Espruino.git
+cd Espruino
 source scripts/provision.sh ESP32
 export ESP_IDF_PATH=$(pwd)/esp-idf
 make clean && BOARD=ESP32 make
@@ -128,22 +129,31 @@ IO0 -> GND (only for flash)
 The following command will write the flash to the ESP32.  Note you need to
 select the correct port, on Windows it will be something like `COM3`.
 
-Initial flashing:
+###### Initial flash
+
 ```sh
 esp-idf/components/esptool_py/esptool/esptool.py    \
         --chip esp32                                \
         --port /dev/ttyUSB0                         \
         --baud 921600                               \
         --before esp32r0                            \
-        --after hard_reset write_flash              \      
+        --after hard_reset write_flash              \
         -z                                          \
         --flash_mode dio                            \
         --flash_freq 40m                            \
-        --flash_size detect                         \   
-		0x1000 bootloader.bin
-		0x8000 partitions_espruino.bin
+        --flash_size detect                         \
+        0x1000 bootloader.bin                       \
+        0x8000 partitions_espruino.bin              \
         0x10000 espruino_esp32.bin
 ```
+
+If the `bootloader.bin` and `partitions_espruino.bin` files are not
+included from the same source you acquired the `espruino_esp32.bin` build,
+they should be available in the corresponding `espruino_1v92.*_esp32.tgz`
+package of the [Travis cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
+
+
+###### Subsequent updates
 
 This example is to replace existing Espruino firmware after a new release:
 
@@ -153,11 +163,11 @@ esp-idf/components/esptool_py/esptool/esptool.py    \
         --port /dev/ttyUSB0                         \
         --baud 921600                               \
         --before esp32r0                            \
-        --after hard_reset write_flash              \      
+        --after hard_reset write_flash              \
         -z                                          \
         --flash_mode dio                            \
         --flash_freq 40m                            \
-        --flash_size detect                         \   
+        --flash_size detect                         \
         0x10000 espruino_esp32.bin
 ```
 
@@ -201,8 +211,18 @@ be quite reliable.
 #### minicom / CuteCom
 
 There are other methods to connect to your ESP32, not just Espruino Web IDE.  Two
-very basic tools are [minicom](https://en.wikipedia.org/wiki/Minicom) and
-[CuteCom](http://cutecom.sourceforge.net/).
+very basic tools are [minicom](https://en.wikipedia.org/wiki/Minicom),
+[CuteCom](http://cutecom.sourceforge.net/), 
+and [screen](https://www.gnu.org/software/screen/) which may already be installed
+on your system.
+
+*screen* is usually used for multiplexing terminals, keeping terminal sessions
+alive while you're logged out, and so forth. However, it will also function as
+a serial terminal
+
+```sh
+screen /dev/ttyUSB0 115200
+```
 
 *Minicom* is a basic console based tool that allows you to connect to a serial
 device, such as the ESP32.  Below is the command to get you connected to the
@@ -248,8 +268,8 @@ var password = 'YOUR_SSID_PASSWORD';
 
 var wifi = require('Wifi');
 wifi.connect(ssid, {password: password}, function() {
-    console.log('Connected to Wifi.  IP address is:', wifi.getIP());
-	wifi.save(); // Next reboot will auto-connect
+    console.log('Connected to Wifi.  IP address is:', wifi.getIP().ip);
+    wifi.save(); // Next reboot will auto-connect
 });
 ```
 
@@ -274,17 +294,19 @@ Once you have wifi going you will be able to create a simple web server.
 ```JavaScript
 var ssid = 'YOUR_SSID';
 var password = 'YOUR_SSID_PASSWORD';
+var port = 80;
 
-const port = 80;
+function processRequest (req, res) {
+  res.writeHead(200);
+  res.end('Hello World');
+}
+
 wifi.connect(ssid, {password: password}, function() {
 
     var http = require('http');
-    http.createServer(function (req, res) {
-        res.writeHead(200);
-        res.end('Hello World');
-    }).listen(port);
+    http.createServer(processRequest).listen(port);
 
-    console.log(`Web server running at http://${wifi.getIP()}:${port}`)
+    console.log(`Web server running at http://${wifi.getIP().ip}:${port}`)
 });
 ```
 
@@ -503,7 +525,7 @@ This is defined in partitions_espruino.csv in the EspruinoBuildTools repository
 The last 1Mb has been defined as a flash FAT filesystem. It needs to be intialised for first use - this does it in a safe way that won't delete existing files:
 
 ```JavaScript
-const fs = require('fs');
+var fs = require('fs');
 if ( typeof(fs.readdirSync()) === 'undefined' ) {
     console.log('Formatting FS');
     E.flashFatFS({ format: true });
