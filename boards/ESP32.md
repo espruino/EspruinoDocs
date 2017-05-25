@@ -129,7 +129,8 @@ IO0 -> GND (only for flash)
 The following command will write the flash to the ESP32.  Note you need to
 select the correct port, on Windows it will be something like `COM3`.
 
-Initial flashing:
+###### Initial flash
+
 ```sh
 esp-idf/components/esptool_py/esptool/esptool.py    \
         --chip esp32                                \
@@ -145,6 +146,14 @@ esp-idf/components/esptool_py/esptool/esptool.py    \
         0x8000 partitions_espruino.bin              \
         0x10000 espruino_esp32.bin
 ```
+
+If the `bootloader.bin` and `partitions_espruino.bin` files are not
+included from the same source you acquired the `espruino_esp32.bin` build,
+they should be available in the corresponding `espruino_1v92.*_esp32.tgz`
+package of the [Travis cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
+
+
+###### Subsequent updates
 
 This example is to replace existing Espruino firmware after a new release:
 
