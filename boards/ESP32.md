@@ -259,8 +259,8 @@ var password = 'YOUR_SSID_PASSWORD';
 
 var wifi = require('Wifi');
 wifi.connect(ssid, {password: password}, function() {
-    console.log('Connected to Wifi.  IP address is:', wifi.getIP());
-	wifi.save(); // Next reboot will auto-connect
+    console.log('Connected to Wifi.  IP address is:', wifi.getIP().ip);
+    wifi.save(); // Next reboot will auto-connect
 });
 ```
 
@@ -295,7 +295,7 @@ wifi.connect(ssid, {password: password}, function() {
         res.end('Hello World');
     }).listen(port);
 
-    console.log(`Web server running at http://${wifi.getIP()}:${port}`)
+    console.log(`Web server running at http://${wifi.getIP().ip}:${port}`)
 });
 ```
 
