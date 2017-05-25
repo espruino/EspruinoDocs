@@ -22,6 +22,11 @@ var C = {
   XYZ_EN_MASK:0x07,
   // CTRL_REG4
   HR_MASK:0x08,
+
+  SCALE2G:0,		/**< Scale Selection */
+  SCALE4G:1,
+  SCALE8G:2,
+  SCALE16G:3
 };
 
 function LIS2DH12(spi, cs, callback) {
