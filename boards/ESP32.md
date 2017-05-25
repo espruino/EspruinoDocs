@@ -254,8 +254,8 @@ If your board with the ESP32 has an antenna connection point, connect your Wifi 
 boards have an in-built antenna so this may not be required.
 
 ```JavaScript
-const ssid = 'YOUR_SSID';
-const password = 'YOUR_SSID_PASSWORD';
+var ssid = 'YOUR_SSID';
+var password = 'YOUR_SSID_PASSWORD';
 
 var wifi = require('Wifi');
 wifi.connect(ssid, {password: password}, function() {
@@ -283,9 +283,9 @@ A 500-600mA regulator with at least 22uF capacitor is recommended.</span>
 Once you have wifi going you will be able to create a simple web server.
 
 ```JavaScript
-const ssid = 'YOUR_SSID';
-const password = 'YOUR_SSID_PASSWORD';
-const port = 80;
+var ssid = 'YOUR_SSID';
+var password = 'YOUR_SSID_PASSWORD';
+var port = 80;
 
 function processRequest (req, res) {
   res.writeHead(200);
@@ -516,7 +516,7 @@ This is defined in partitions_espruino.csv in the EspruinoBuildTools repository
 The last 1Mb has been defined as a flash FAT filesystem. It needs to be intialised for first use - this does it in a safe way that won't delete existing files:
 
 ```JavaScript
-const fs = require('fs');
+var fs = require('fs');
 if ( typeof(fs.readdirSync()) === 'undefined' ) {
     console.log('Formatting FS');
     E.flashFatFS({ format: true });
