@@ -202,8 +202,18 @@ be quite reliable.
 #### minicom / CuteCom
 
 There are other methods to connect to your ESP32, not just Espruino Web IDE.  Two
-very basic tools are [minicom](https://en.wikipedia.org/wiki/Minicom) and
-[CuteCom](http://cutecom.sourceforge.net/).
+very basic tools are [minicom](https://en.wikipedia.org/wiki/Minicom),
+[CuteCom](http://cutecom.sourceforge.net/), 
+and [screen](https://www.gnu.org/software/screen/) which may already be installed
+on your system.
+
+*screen* is usually used for multiplexing terminals, keeping terminal sessions
+alive while you're logged out, and so forth. However, it will also function as
+a serial terminal
+
+```sh
+screen /dev/ttyUSB0 115200
+```
 
 *Minicom* is a basic console based tool that allows you to connect to a serial
 device, such as the ESP32.  Below is the command to get you connected to the
