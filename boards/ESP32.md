@@ -254,8 +254,8 @@ If your board with the ESP32 has an antenna connection point, connect your Wifi 
 boards have an in-built antenna so this may not be required.
 
 ```JavaScript
-var ssid = 'YOUR_SSID';
-var password = 'YOUR_SSID_PASSWORD';
+const ssid = 'YOUR_SSID';
+const password = 'YOUR_SSID_PASSWORD';
 
 var wifi = require('Wifi');
 wifi.connect(ssid, {password: password}, function() {
@@ -283,17 +283,19 @@ A 500-600mA regulator with at least 22uF capacitor is recommended.</span>
 Once you have wifi going you will be able to create a simple web server.
 
 ```JavaScript
-var ssid = 'YOUR_SSID';
-var password = 'YOUR_SSID_PASSWORD';
-
+const ssid = 'YOUR_SSID';
+const password = 'YOUR_SSID_PASSWORD';
 const port = 80;
+
+function processRequest (req, res) {
+  res.writeHead(200);
+  res.end('Hello World');
+}
+
 wifi.connect(ssid, {password: password}, function() {
 
     var http = require('http');
-    http.createServer(function (req, res) {
-        res.writeHead(200);
-        res.end('Hello World');
-    }).listen(port);
+    http.createServer(processRequest).listen(port);
 
     console.log(`Web server running at http://${wifi.getIP().ip}:${port}`)
 });
