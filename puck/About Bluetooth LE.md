@@ -20,7 +20,7 @@ There are two distinct types of device (Puck.js can be both):
 * **Peripheral** is a device that gets connected to, like a fitness band.
 
 
-TL;DR - Super-quick summary
+Super-quick summary
 ----------------------
 
 Puck.js provides a UART (serial) connection over Bluetooth LE where you can send
