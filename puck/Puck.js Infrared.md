@@ -9,7 +9,7 @@ Infrared Record and Playback with Puck.js
 
 This video shows you how to control Infrared devices using Puck.js.
 
-[[http://youtu.be/et58ozE-Cu8]]
+[[https://youtu.be/et58ozE-Cu8]]
 
 You'll need a [Puck.js](/Puck.js) and an [Infrared Receiver](/IRReceiver)
 
