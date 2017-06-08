@@ -34,9 +34,8 @@ Just connect as follows:
 colouring of the supplied ribbon cable, be really careful not to accidentally
 connect up the voltage backwards.
 
-The [[MAX7219]] board should run off of 3.3v or 5v. 5v will be brighter, however
-I've hit problems with the MAX7219 not displaying correctly on all panels at the
-higher voltages.
+The [[MAX7219]] board should run off of 3.3v or 5v. 5v will be brighter and will put
+less strain on the 3.3v line (also used by WiFi).
 
 Since we're using software [[SPI]] here, you can use any available GPIO pins for the [[MAX7219]].
 
@@ -59,8 +58,8 @@ var disp;
 var g = Graphics.createArrayBuffer(32, 8, 1);
 g.flip = function() { disp.raw(g.buffer); };
 
-require("Font6x8").add(Graphics);
-g.setFont6x8();
+require("Font4x8Numeric").add(Graphics);
+g.setFont4x8Numeric();
 
 var wifi;
 
@@ -124,3 +123,6 @@ function onInit() {
   });
 }
 ```
+
+**Note:** This code uses a 4x8 font (mentioned in the video, but not shown) which will
+allow you to get more digits (8) on the display.
