@@ -38,6 +38,8 @@ The [[MAX7219]] board should run off of 3.3v or 5v. 5v will be brighter, however
 I've hit problems with the MAX7219 not displaying correctly on all panels at the
 higher voltages.
 
+Since we're using software [[SPI]] here, you can use any available GPIO pins for the [[MAX7219]].
+
 
 Software
 --------
