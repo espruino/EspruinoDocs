@@ -46,6 +46,7 @@ Current modules are:
 
 * [[Font4x4Numeric.js]] - tiny 4x4 fixed width font (only digits 0-9)
 * [[Font4x4.js]] - tiny 4x4 fixed width font by jose1711
+* [[Font4x8Numeric.js]] - 4x8 fixed width font (only digits 0-9)
 * [[Font6x8.js]] - variable width 8px high font
 * [[Font6x12.js]] - variable width 12px high font
 * [[Font8x12.js]] - wider variable width 12px high font
