@@ -19,6 +19,7 @@ exports.get = function(url) {
     url = url.replace("."+r+"/",String.fromCharCode(i));
     url = url.replace("."+r+"",String.fromCharCode(i+7));
   });
+  if (url.length>17) throw new Error("Max URL length is 17");
   // Setup the frame format
   var d = [0x03,  // Length of Service List
     0x03,  // Param: Service List

@@ -34,12 +34,20 @@ only notify you for certain URLs.
 
 The URLs:
 
-* Must be HTTPS URLs
-* Must be [short](https://github.com/google/eddystone/tree/master/eddystone-url)
+* Must be HTTPS URLs 
+* Must be [less than or equal to 17 characters long](https://github.com/google/eddystone/tree/master/eddystone-url)
 
-Realistically the easiest way to do this is to use [Goo.gl](https://goo.gl/) as a URL shortener
+Realistically the easiest way to do this is to use [Goo.gl](https://goo.gl/) as a URL shortener. You can still use
+`#` to pass data - for instance `https://goo.gl/D8sjLK#42`.
+
+While you only have 17 characters, `https://`, `www.`, `.com`, `.org`, `.edu`, `.net`, `.info`, `.biz` and `.gov` 
+in URLs are automatically shortened. So for example `require("ble_eddystone").advertise("https://www.esprino.com/Puck.js")` is
+still fine, even if it would appear to be far too long.
 
 **To turn Eddystone advertising off** simply call `NRF.setAdvertising({});`
+
+**Note:** While advertising Eddystone, Puck.js will not advertise its own name, so will not be connectable.
+
 
 An Example
 ==========
@@ -52,21 +60,21 @@ An Example
 * You can also call  `NRF.setAdvertising({});` to stop advertising
 
 
-  Advanced
-  --------
+Advanced
+--------
 
-  You can also use `require("ble_eddystone").get` with the same options as
-  `advertise` to get the array of advertising data to use. You can
-  feed this directy into `NRF.setAdvertising()`'s first argument and
-  can set other options such as advertising rate.
+You can also use `require("ble_eddystone").get` with the same options as
+`advertise` to get the array of advertising data to use. You can
+feed this directy into `NRF.setAdvertising()`'s first argument and
+can set other options such as advertising rate.
 
-  In Puck.js 1v92 You can also supply an array of advertising data:
+In Puck.js 1v92 You can also supply an array of advertising data:
 
-  ```
-  NRF.setAdvertising([
-    require("ble_ibeacon").get(...),
-    require("ble_eddystone").get(...)
-    ], {interval:100});
-  ```
+```
+NRF.setAdvertising([
+  require("ble_ibeacon").get(...),
+  require("ble_eddystone").get(...)
+  ], {interval:100});
+```
 
-  In which case Puck.js will send each advertising packet in turn.
+In which case Puck.js will send each advertising packet in turn.
