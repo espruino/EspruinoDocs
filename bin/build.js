@@ -349,9 +349,9 @@ markdownFiles.forEach(function (file) {
     var contentLines = contents.split("\n");
      if (contentLines[3]!="" || contentLines[4].substr(0,6)!="<span " || contentLines[5]!="") {
        console.log("=============");
-       console.log(contentLines[3]);
-       console.log(contentLines[4]);
-       console.log(contentLines[5]);
+       console.log(JSON.stringify(contentLines[3]));
+       console.log(JSON.stringify(contentLines[4]));
+       console.log(JSON.stringify(contentLines[5]));
        console.log("=============");
        throw new Error("Expecting to find warning comment in "+file+", but didn't.");
      }
