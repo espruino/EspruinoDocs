@@ -38,6 +38,12 @@ Once you've your Puck.js is powered up it'll start doing two things:
 
 If you have an NFC phone, make sure NFC is on, and then move Puck.js near the NFC receiver on it. A Web page should open that will direct you to some examples. Otherwise, you can go straight to the Puck.js website - [https://www.puck-js.com/go](https://www.puck-js.com/go)
 
+**Note:** unfortunately on Puck.js's default firmware, using NFC causes Puck.js to
+draw significantly more power than normal until the battery is removed and re-inserted, which
+can run your battery down very quickly (within a few days). Up to date firmwares
+for Puck.js have this fixed - but until you update your firmware please be aware that
+scanning Puck.js with NFC can run down your battery.
+
 
 Using Puck.js
 --------------
