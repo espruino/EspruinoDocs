@@ -255,9 +255,10 @@ exports.disconnect = function() {
   turnOff(MODE.CLIENT);
 };
 
-/** Get the Access point's IP and MAC address and call 
-callback(err, { ip : ..., mac : ...}). If err isn't null,
-it contains a string describing the error */
+/** Get the IP and MAC address when connected to an AP and call 
+`callback(err, { ip : ..., mac : ...})`. If err isn't null,
+it contains a string describing the error. This doesn't work
+when only in AP mode (the IP address is always 192.168.4.1) */
 exports.getIP = function(callback) {
   var ip = {}; 
   at.cmd("AT+CIFSR\r\n", 1000, function cb(d) { 
