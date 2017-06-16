@@ -84,7 +84,6 @@ var netCallbacks = {
   /* Receive data. Returns a string (even if empty).
   If non-string returned, socket is then closed */
   recv : function(sckt, maxLen) {    
-    if (at.isBusy() || socks[sckt]=="Wait") return "";
     if (sockData[sckt]) {
       var r;
       if (sockData[sckt].length > maxLen) {
