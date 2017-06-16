@@ -10,9 +10,9 @@ Puck.js and HID Keyboards
 Bluetooth LE HID (Human Interface Devices) are things like Keyboards, Mice,
 and buttons. Puck.js can emulate these, so can simulate keys being pressed.
 
-**Note:** Puck.js's 1v89 firmware doesn't support Bonding (needed by Windows HID devices). Pucks can work as keyboards on Android, Mac OS and Chromebook but until bonding is added they won't work on Windows.
+**Note:** You'll need at least firmware version 1v92 to pair on Windows (it needs the bonding functionality). Earlier firmwares can work as keyboards on Android, Mac OS and Chromebook, but we'd always recommend you're using the latest firmware.
 
-**Note:** Bluetooth HID can't be enabled on an active connection. To make it work (if you're connected wirelessly) you need to upload the code, disconnect, and then reconnect.
+**Note:** Bluetooth HID can't be enabled on an active connection. To make it work (if you're connected wirelessly) you need to upload the code, disconnect, and then reconnect with your Operating System's `Pair` functionality.
 
 BLE HID can be enabled by providing a HID Report to [NRF.setServices](/Reference#l_NRF_setServices),
 however we've provided common types of HID report in modules to make it easier:
