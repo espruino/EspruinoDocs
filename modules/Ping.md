@@ -51,9 +51,10 @@ p.ping({ address: 'google.com' }, function(err, data) {
 Reference
 ----------
 
- * APPEND_JSDOC: Ping.js
+* APPEND_JSDOC: Ping.js
 
- Using
+Using
 -----
 
-  * APPEND_USES: Ping
+* APPEND_USES: Ping
+
