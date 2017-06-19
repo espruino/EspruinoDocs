@@ -321,7 +321,7 @@ Not yet implemented
 The ESP32 has 40 GPIO pins.  These are available in Espruino as the variables D0 to D40, each of
 these variables are instances of the Pin class.
 
-APPEND_PINOUT: ESP32
+* APPEND_PINOUT: ESP32
 
 For example, connect GPIO25 and D14 with a wire.  Then run the following code.
 
