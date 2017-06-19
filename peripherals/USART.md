@@ -56,15 +56,18 @@ Serial1.setup(9600, { tx:B6, rx:B7, ck:A8 });
 Parity/Framing errors
 ---------------------
 
-If there are parity errors (if parity is enabled), you can get notified of them with the following event listener:
+If there are parity errors (if parity is enabled), you can get notified of them with the 
+following event listener if `errors:true` was set when initialising the serial device:
 
 ```
+  Serial1.setup(9600, { parity:"e", errors:true } );
   Serial1.on('parity', function() {
     console.log("Oh no!");
   });
 ```
 
-You can also get notified of framing errors (when the START and STOP bits are not correct) with:
+You can also get notified of framing errors (when the START and STOP bits are not correct) 
+with the following (`errors:true` is also required):
 
 ```
   Serial1.on('framing', function() {
