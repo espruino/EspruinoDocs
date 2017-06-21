@@ -28,7 +28,7 @@ Features
 <a name="buy"></a>Buying
 ------
 
-You can now get an Espruino Pico from several different distributors. [Click here to see them.](/Order#distributors)
+You can now get an Espruino Pico from several different distributors. [Click here to see them.](/Order#pico)
 
 Pinout
 ------

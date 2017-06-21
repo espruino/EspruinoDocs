@@ -32,7 +32,7 @@ Features
 <a name="buy"></a>Buying
 ------
 
-You can now get an Original Espruino from several different distributors. [Click here to see them.](/Order#distributors)
+You can now get an Original Espruino from several different distributors. [Click here to see them.](/Order#original)
 
 Pinout
 ------
