@@ -59,22 +59,30 @@ An Example
 * Once executed (and you have disconnected), Puck.js will start advertising Eddystone
 * You can also call  `NRF.setAdvertising({});` to stop advertising
 
-
 Advanced
 --------
 
 You can also use `require("ble_eddystone").get` with the same options as
-`advertise` to get the array of advertising data to use. You can
-feed this directy into `NRF.setAdvertising()`'s first argument and
+`advertise` to get the raw array of advertising data to use. You can
+then feed this directy into `NRF.setAdvertising()`'s first argument and
 can set other options such as advertising rate.
 
-In Puck.js 1v92 You can also supply an array of advertising data:
+In Puck.js 1v92 and later you can also supply an array of advertising data:
 
 ```
 NRF.setAdvertising([
   require("ble_ibeacon").get(...),
-  require("ble_eddystone").get(...)
+  require("ble_eddystone").get("your_url")
   ], {interval:100});
 ```
 
 In which case Puck.js will send each advertising packet in turn.
+
+**This library's default behaviour is to overwrite Puck.js's advertising
+(name, services, etc) with Eddystone.** However you can easily add the advertising
+in addition to Espruino's existing advertising by setting the Eddystone
+advertising inside the Advertising Scan Response:
+
+```
+NRF.setScanResponse(require("ble_eddystone").get("goo.gl/B3J0Oc"));
+```

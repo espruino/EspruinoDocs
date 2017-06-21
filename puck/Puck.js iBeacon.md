@@ -52,3 +52,12 @@ NRF.setAdvertising([
 ```
 
 In which case Puck.js will send each advertising packet in turn.
+
+**This library's default behaviour is to overwrite Puck.js's advertising
+(name, services, etc) with iBeacon.** However you can easily add the advertising
+in addition to Espruino's existing advertising by setting the Eddystone
+advertising inside the Advertising Scan Response:
+
+```
+NRF.setScanResponse(require("ble_ibeacon").get(...));
+```
