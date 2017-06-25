@@ -70,13 +70,13 @@ mkdir tmp
 cd tmp
 
 # Download new bluez
-wget http://www.kernel.org/pub/linux/bluetooth/bluez-5.43.tar.xz
+wget http://www.kernel.org/pub/linux/bluetooth/bluez-5.45.tar.xz
 
 # Extract it:
-tar xvf bluez-5.43.tar.xz
+tar xvf bluez-5.45.tar.xz
 
 # Configure and compile it:
-cd bluez-5.43
+cd bluez-5.45
 ./configure --prefix=/usr           \
             --mandir=/usr/share/man \
             --sysconfdir=/etc       \
