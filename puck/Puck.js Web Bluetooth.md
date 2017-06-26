@@ -217,6 +217,14 @@ could use the following:
 </html>
 ```
 
+Extra Features
+--------------
+
+The Puck.js library also has a `Puck.setTime(optional_callback)` function
+which will set Puck.js's time to your computer's time. This can be great
+if you're making some time-based device and you want to be sure that
+the clock is always set correctly.
+
 Reading from Puck.js
 --------------------
 
