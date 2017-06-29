@@ -63,8 +63,9 @@ Supported by Espruino on the ESP32:
 * DAC
 * ADC
 * Serial
+* WIFI - as a client and access point
 
-The not supported by Espruino on the ESP32 (yet):
+Not supported by Espruino on the ESP32 (yet):
 
 * No Over-The-Air (OTA) firmware updates.
 * Bluetooth and BLE
@@ -466,10 +467,6 @@ use for identification purposes. `getSerial()` returns the MAC address of the ST
 
 ### System time
 
-**TODO: How do we set the system time?**
-
-**FIXME: It seems setTime on the ESP32 does not work as expected**
-
 From a JavaScript perspective, we can get and set the system time using
 the JS functions called `getTime()` and `setTime()`.  These get and take
 a time in seconds (float).
@@ -489,10 +486,8 @@ Implemented with the esp-idf RMT driver.
 
 ### Saving code to flash
 
-**TODO: The text below has been lifted from the ESP8266 docs, is it still valid??**
-
 Currently 64KB of flash are reserved to save JS code to flash using the
-save() function. This area is also used for E.saveBoatt
+save() function. This area is also used for `E.saveBootCode()`
 
 If the save() area contains something that crashes Espruino or otherwise
 doesn't let you reset the system you can disable whatever is saved by
@@ -500,8 +495,6 @@ flashing blank.bin to 0x100000.
 
 
 ### Flash map and access
-
-**TODO: The text below has been lifted from the ESP8266 docs, is it still valid??**
 
 Note: if you are looking for a free flash area to use, call `require( "Flash").getFree()`,
 which will return a list of available areas (see docs).
