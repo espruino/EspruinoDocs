@@ -313,9 +313,9 @@ Firmware Updates
 * Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Connect` app
 * It should show some Bluetooth devices, including one called `DfuTarg`
-* Click `Connect` to the right of `DfuTarg`
+* Click `Connect` to the right of `DfuTarg` 
 * Once connected, a `DFU` symbol in a circle will appear in the top right of the App
-* Click it, choose `Distribution Packet (ZIP)`, and your Download
+* Click it, choose `Distribution Packet (ZIP)`, and your Download. If clicking on the downloaded zip file opens its contents (Android 7 may do this) then long-press on the zip and tap open instead.
 * The DFU process will start - it will take around 90 seconds to complete
 
 
