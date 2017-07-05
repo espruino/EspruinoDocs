@@ -49,6 +49,27 @@ By default Espruino uses the low power accelerometer mode, however the periphera
 * `Ruuvitag.env` is an instance of the [BME280](/BME280) environment sensor library
 * `Ruuvitag.accel` is an instance of the [LIS2DH12](/LIS2DH12) accelerometer library
 
+Saving Code
+-----------
+
+Normally, uploading code to Espruino will put everything in RAM and it will be
+lost when power is removed. You can type `save()` on the left-hand side of the IDE
+to save to Flash memory though.
+
+When you do that, the sensors will require initialising at power on (so may
+  not work if you 'just' save your code). You'll need to create an `onInit`
+  function like this, where you turn the sensors' power on at boot time:
+  
+```
+var Ruuvitag = require("Ruuvitag");
+
+function onInit() {
+  Ruuvitag.setAccelOn(true, function(xyz) {
+    console.log(xyz);
+  });
+}
+```
+
 
 Reference
 ---------
