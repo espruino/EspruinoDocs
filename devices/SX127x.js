@@ -334,7 +334,7 @@ SX.prototype.setOpMode = function(v) {
 };
 
 SX.prototype.init = function() {
-  var v = sx.r(REG.VERSION);
+  var v = this.r(REG.VERSION);
   if (v===0 || v==255) throw new Error("Radio not found!");
   
   this.setOpMode(RF.OPMODE_SLEEP);
