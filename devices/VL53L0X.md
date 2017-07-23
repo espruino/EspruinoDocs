@@ -112,14 +112,14 @@ Enable Second VL53 Sensor,
 function InitVL53( ) {
   console.log("Init VL53 1");
   digitalWrite(B3,1); // set XSDN -> turn the sensor on
-  laser1 = require("VL53L0X_2").connect(I2C1);
+  laser1 = require("VL53L0X").connect(I2C1);
 
   console.log("Change Address");
   laser1.changeAddress(0x54);  
     
   console.log("Init VL53 2");
   digitalWrite(B5,1); // set XSDN -> turn the sensor on
-  laser2 = require("VL53L0X_2").connect(I2C1);
+  laser2 = require("VL53L0X").connect(I2C1);
 }
 
 function onTimer() {
