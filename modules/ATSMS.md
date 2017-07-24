@@ -2,7 +2,7 @@
 SMS Send and Receive
 ====================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MQTT. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/ATSMS. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,SIM800,SIM900,AT,SMS,GSM
 * USES: AT
@@ -19,7 +19,7 @@ See the [[SIM900]] page for wiring instructions - the only connections you need 
 Software
 --------
 
-The software's pretty eay. All you need to remember is to call
+The software's pretty easy. All you need to remember is to call
 all the initialisation code from `onInit` if you're wanting to
 initialise the modem at power on - and be aware that the modem
 may take a few seconds to boot.
@@ -52,6 +52,11 @@ sms.on('message', function() {
   console.log("Got a message!");
 });
 ```
+
+On many devices, Espruino's console will automatically move to `Serial1`
+when USB or Bluetooth is disconnected, and so will stop the GSM modem
+from working. To fix this, work out where you want the console (eg, where
+you're programming Puck.js from) - for instance USB, and add `USB.setConsole(1)`.
 
 
 Reference
