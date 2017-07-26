@@ -48,7 +48,7 @@ scanning Puck.js with NFC can run down your battery.
 Using Puck.js
 --------------
 
-By default, Puck.js appears as a Bluetooth Low Energy device with a serial port. When you connect to this serial port you get full command-line access to the Espruno Javascript interpreter built into it.
+By default, Puck.js appears as a Bluetooth Low Energy device with a serial port. When you connect to this serial port you get full command-line access to the Espruino Javascript interpreter built into it.
 
 To get started you have two options:
 
@@ -197,7 +197,7 @@ You can then use the normal [Espruino Web IDE](/Web+IDE).
 Command-Line
 ------------
 
-You can use the Espruno command-line app. It works under [Node.js](https://nodejs.org/en/), so you'll need to:
+You can use the Espruino command-line app. It works under [Node.js](https://nodejs.org/en/), so you'll need to:
 
 * Install [Node](https://nodejs.org/en/)
 * In a command prompt, type `npm install -g espruino` (on Linux you'll want to use `sudo` before the command)
