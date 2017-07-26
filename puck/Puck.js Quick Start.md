@@ -161,10 +161,20 @@ On these you'll need to install a native application. We've created a
 use the Chrome Web Store version at the top of that page, as it won't
 give you access to Bluetooth devices.
 
+Once installed, you need to run `Espruino IDE` - which is confusingly
+similar to the `Espruino Web IDE` which you may have had installed if you'd
+used normal Espruino USB devices before.
+
+![IDE Icon on Windows](Puck.js Quick Start/webidewindows.png)
+
 **Note:**
 
-* If using Windows 8.1 or later you'll need to pair your Puck.js using the Windows
+* If using Windows 8.1/10 or later you'll need to pair your Puck.js using the Windows
 Bluetooth menu before it'll appear in the Web IDE.
+* If you're using a Bluetooth dongle with Windows 10 you should use Windows'
+built-in Bluetooth software, rather than installing the software that came with
+your Bluetooth Dongle. Often the Bluetooth dongle's software will not pair
+with Bluetooth LE devices and expose them via Windows 10's API.
 * If using Windows 7 you'll need to have [set up your Bluetooth adaptor with Zadig first](/Web+IDE#zadig)
 
 On Linux, Mac OS and other platforms you'll need to follow the NPM install

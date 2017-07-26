@@ -336,10 +336,17 @@ See [here](#turning-puck-js-on) for instructions on removing it.
 * Have you enabled Web Bluetooth in `chrome://flags`?
 * You need a Bluetooth LE-capable adaptor (at least Bluetooth 4.0). If your PC doesn't have one, you can [buy one for well under $10](http://www.ebay.com/sch/i.html?_nkw=usb+bluetooth+4+dongle&_sacat=0)
 * **Android** needs to be at least version 6 (or version 5 with recent builds of Chromium)
-* **Windows** isn't currently supported, but it should be (at least for 10 and above) in 2017. Otherwise you'll need to use the packaged version of the Web IDE
+* **Windows** isn't currently supported by Chrome. You can use the [Web Bluetooth Polyfill](https://github.com/urish/web-bluetooth-polyfill), or if you just need the IDE you can use the [packaged version of the Web IDE](/Web+IDE#as-a-native-application)
 * **Linux** needs Bluez 5.41 or above - [see here for instructions on how to install it](/Web Bluetooth On Linux)
 * **MacOS** needs OS X Yosemite or later. Older hardware will need an external USB dongle though - check that `Low Energy` supported in `About this Mac` -> `System Report`/`Bluetooth`  
 * **Chrome OS** works fine
+
+### I can't see my Puck.js in the IDE in Windows
+
+* Are you sure some other device isn't connected to it? See the next item.
+* Are you **sure** you're using the [native Espruino IDE](http://www.espruino.com/Puck.js+Quick+Start#with-an-application) as opposed to the IDE Website or Chrome App?
+* **On Windows 10**, have your paired your Puck using the built-in Windows Bluetooth menu? You need that before the IDE can see it. If you can't pair then your PC may not support Bluetooth LE (even if it supports normal Bluetooth) and you may need an exernal Bluetooth dongle.
+* **On Windows 7** you'll need a supported Bluetooth dongle that [may need setting up with Zadig](/Web+IDE#zadig)
 
 ### I can't see my Puck.js device any more
 
@@ -362,7 +369,7 @@ This often happens if you've turned your Puck into a [HID device](/Puck.js+Keybo
 
 ### Connections to Puck.js sometimes fail
 
-The firmware that Puck.js shipped with only advertises every 700ms, which means
+The firmware that the first Puck.js shipped with only advertises every 700ms, which means
 that some devices/applications find it difficult to connect to it,
 
 We'd recommend that you [update Puck.js's firmware](/Puck.js#firmware-updates)
