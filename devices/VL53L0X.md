@@ -98,7 +98,7 @@ The table shows how the pins are connected:
 * **RESISTORS** I2C needs Pull up resistors. The VL53 Modules from ST don't inlcude pullup-resistors. 
 This means you need one extensionmodule with I2C Pull up resistors or you connect two resistors yourself!
 
-The example below will init two VL53 Sensors and the read the sensors every 200ms. The result is written on the serial interface.
+The example below will init two VL53 Sensors and the read the sensors every 200ms. Each sensor will get a address which is different from the default address (0x52). The result is written on the serial interface.
 
 ```
 /** global variables */
@@ -112,14 +112,11 @@ Enable Second VL53 Sensor,
 function InitVL53( ) {
   console.log("Init VL53 1");
   digitalWrite(B3,1); // set XSDN -> turn the sensor on
-  laser1 = require("VL53L0X").connect(I2C1);
+  laser1 = require("VL53L0X").connect(I2C1, {address:0x54 });
 
-  console.log("Change Address");
-  laser1.changeAddress(0x54);  
-    
   console.log("Init VL53 2");
   digitalWrite(B5,1); // set XSDN -> turn the sensor on
-  laser2 = require("VL53L0X").connect(I2C1);
+  laser2 = require("VL53L0X").connect(I2C1, {address:0x56 });
 }
 
 function onTimer() {
