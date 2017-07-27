@@ -7,6 +7,7 @@ function StepperMotor(obj) {
   this.offpattern = obj.offpattern || 0;
   this.pos = 0;
   this.stepsPerSec = obj.stepsPerSec || 100;
+  this.onstep = obj.onstep || 0;
 }
 
 
@@ -26,7 +27,7 @@ StepperMotor.prototype.stop = function(turnOff) {
     clearInterval(this.interval);
     this.interval = undefined;
   }
-  if (turnOff && this.offpattern)
+  if (turnOff)
     digitalWrite(this.pins, this.offpattern);
 };
 
@@ -53,6 +54,7 @@ StepperMotor.prototype.moveTo = function(pos, milliseconds, callback, turnOff) {
         // now do step
         digitalWrite(stepper.pins, stepper.pattern[ stepper.pos & (stepper.pattern.length-1) ]);
       }
+      if (stepper.onstep) stepper.onstep(stepper.pos);
     };
     this.interval = setInterval(step, milliseconds / Math.abs(pos-this.pos));
     step();
