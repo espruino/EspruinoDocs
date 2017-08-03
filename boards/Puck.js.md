@@ -170,7 +170,7 @@ To transmit an IR signal, you just need to call [`Puck.IR([...])`](/Reference#l_
 with an array of times in milliseconds. They alternate between the time the signal
 should be `on` and `off` - eg. `[on, off, on, off, on, etc]`.
 
-For example the command to turn on a [cheap IR lightbulb](www.ebay.com/sch/i.html?_nkw=ir+rgb+light+bulb&_sacat=0) is:
+For example the command to turn on a [cheap IR lightbulb](http://www.ebay.com/sch/i.html?_nkw=ir+rgb+light+bulb&_sacat=0) is:
 
 ```
 Puck.IR([9.6,4.9,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,
