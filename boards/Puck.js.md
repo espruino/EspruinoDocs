@@ -179,8 +179,11 @@ Puck.IR([9.6,4.9,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,
   0.7,0.6,1.9,0.5,1.9,0.5,1.9,0.6,1.9,0.5,1.9,0.5,43.1,9.6,2.5,0.5]);
 ```
 
-You can sometimes work this information out based on details online, however
+You can sometimes work this information out based on details online (for instance [Pronto codes](/pronto)), however
 it's often easier to measure it by [attaching an IR receiver to your Puck.js](/Puck.js+Infrared).
+
+Puck.js's IR has a range of around 1.5 meters, so it needs to be relatively close to the device it's controlling - however
+range can be increased slightly by removing the silicone cover.
 
 ### NFC - Near Field Communications
 
