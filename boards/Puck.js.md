@@ -180,8 +180,7 @@ Puck.IR([9.6,4.9,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,
 ```
 
 You can sometimes work this information out based on details online, however
-it's often easier to measure it by attaching an IR receiver to your Puck.js
-(a tutorial on this will be added soon).
+it's often easier to measure it by [attaching an IR receiver to your Puck.js](/Puck.js+Infrared).
 
 ### NFC - Near Field Communications
 
@@ -282,6 +281,7 @@ for advertising, but values are roughly:
 * One LED lit - 1-2mA
 * 100% CPU usage running JavaScript - 4mA
 * All LEDs lit, 100% CPU usage running JavaScript - 10mA
+* No LEDs lit, using `NRF.findDevices` to scan for devices - 12mA
 
 Puck.js sends advertising data without ever executing JavaScript. To get
 the best power consumption, make sure your code executes as rarely as
