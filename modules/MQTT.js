@@ -304,10 +304,9 @@ MQTT.prototype.connect = function (client) {
         mqo.client = client;
     };
     if (client) {
-        onConnect();
-    }
-    else {
-        client = require("net").connect({host: mqo.server, port: mqo.port}, onConnect);
+      onConnect();
+    } else {
+      client = require("net").connect({host: mqo.server, port: mqo.port}, onConnect);
     }
 };
 
