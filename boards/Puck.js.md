@@ -407,6 +407,12 @@ Have you been running one of the `Nordic`/`nRF` applications? If so, make sure
 it is closed (Click the square icon to get to the application chooser, and swipe
 the application to the left or right)
 
+### When I disconnect the battery, my code is lost. How do I save it?
+
+It's as easy as typing `save()` in the left-hand side of the IDE. When power is re-applied Espruino will resume where it left off, remembering timers, watches, and even pin state. For certain things (like initialising connected hardware like displays) you'll want to run some code when Espruino starts up, in which case you can just add a function called `onInit()` - this will be executed each time Espruino starts.
+
+For more information, see the final section of the [Quick Start](/Quick+Start) guide.
+
 ### I saved some code and my Puck.js no longer works
 
 * [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED will light.
