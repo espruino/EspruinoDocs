@@ -425,6 +425,12 @@ have deleted your saved code. To do that, you'll need to log in and type
 `save()`. It's also an idea to type `E.setBootCode()` as well, as this will
 clear any JS code that was saved if `Save on Send` was turned on in the IDE.
 
+### How can I change my Puck's name?
+
+Check out the reference pages for [NRF.setAdvertising](https://www.espruino.com/Reference#l_NRF_setAdvertising)...
+
+You can simply call `NRF.setAdvertising({},{name:"My Name"});` to change your Puck's advertised name!
+
 ### It's some other problem!
 
 Check out the [main troubleshooting page](/Troubleshooting) and also the [Espruino Forums](http://forum.espruino.com/)
