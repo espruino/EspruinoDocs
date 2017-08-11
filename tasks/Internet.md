@@ -223,7 +223,7 @@ var server = require("net").createServer(function(c) {
   c.write("Hello");
   c.on('data', function(data) {
     console.log(">"+JSON.stringify(data));
-  }
+  });
   c.end();
 });
 server.listen(1234);
