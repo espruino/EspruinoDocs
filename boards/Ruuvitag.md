@@ -54,7 +54,7 @@ Saving Code
 
 Normally, uploading code to Espruino will put everything in RAM and it will be
 lost when power is removed. You can type `save()` on the left-hand side of the IDE
-to save to Flash memory though.
+to save to Flash memory though ([more information](/Saving)).
 
 When you do that, the sensors will require initialising at power on (so may
   not work if you 'just' save your code). You'll need to create an `onInit`

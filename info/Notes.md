@@ -40,7 +40,7 @@ function onInit() {
 }
 ```
 
-But of course there can only be one `onInit` function, so if you copy and paste two bits of code with two `onInit` functions then the second function will overwrite the first.
+But of course there can only be one `onInit` function, so if you copy and paste two bits of code with two `onInit` functions then the second function will overwrite the first. See [the Saving page](/Saving) for more information.
 
 
 ## How do modules work?

@@ -411,7 +411,7 @@ the application to the left or right)
 
 It's as easy as typing `save()` in the left-hand side of the IDE. When power is re-applied Espruino will resume where it left off, remembering timers, watches, and even pin state. For certain things (like initialising connected hardware like displays) you'll want to run some code when Espruino starts up, in which case you can just add a function called `onInit()` - this will be executed each time Espruino starts.
 
-For more information, see the final section of the [Quick Start](/Quick+Start) guide.
+For more information, see the [page on Saving](/Saving).
 
 ### I saved some code and my Puck.js no longer works
 
