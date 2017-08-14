@@ -209,7 +209,7 @@ devices[0].gatt.connect().then(function(g) {
 }).then(function(service) {
   return service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
 }).then(function(characteristic) {
-  characteristic.writeValue("LED1.set()\n");
+  return characteristic.writeValue("LED1.set()\n");
 }).then(function() {
   gatt.disconnect();
   console.log("Done!");
@@ -231,7 +231,7 @@ NRF.findDevices(function(devices) {
   }).then(function(service) {
     return service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
   }).then(function(characteristic) {
-    characteristic.writeValue("LED1.set()\n");
+    return characteristic.writeValue("LED1.set()\n");
   }).then(function() {
     gatt.disconnect();
     console.log("Done!");
