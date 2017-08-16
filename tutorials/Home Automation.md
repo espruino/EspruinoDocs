@@ -102,9 +102,7 @@ And that's it!
 Interfacing with an Espruino WiFi
 ---------------------------------
 
-**Video coming soon**
-
-But for those eager, the code is:
+[[http://youtu.be/G-9esF5u8gs]]
 
 ```
 var WIFI_NAME = "Espruino";
