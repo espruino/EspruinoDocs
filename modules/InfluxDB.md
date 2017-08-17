@@ -1,5 +1,6 @@
 <!--- Copyright (c) 2017 Moncef AOUDIA, Gordon Williams. See the file LICENSE for copying permission. -->
-# Espruino InfluxDB module
+Espruino InfluxDB module
+=========================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/InfluxDB. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
