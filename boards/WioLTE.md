@@ -6,7 +6,7 @@ Seeed Wio LTE
 
 * KEYWORDS: Seeed,Wio,LTE,UMTS,Board,Module,GPS
 
-![Ruuvitag](WioLTE/board.jpg)
+![Seeed Wio LTE](WioLTE/board.jpg)
 
 The [Seeed Wio LTE](http://wiki.seeed.cc/Wio_Tracker_LTE_CAT1/) board is an open source gateway which enable faster IoT GPS solutions.
 
