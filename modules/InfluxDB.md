@@ -10,11 +10,12 @@ Simple [InfluxDB] wrapper for [Espruino].
 
 InfluxDB is an open-source time series database developed by InfluxData. It is written in Go and optimized for fast, high-availability storage and retrieval of time series data in fields such as operations monitoring, application metrics, Internet of Things sensor data, and real-time analytics. It also has support for processing data from Graphite.
 
-## Requirement
+Requirement
+-----------
 1- InfluxDB working server, see [installation] guide.
 
-## Usage
-
+Usage
+-----
 1- Configuration
 ```
  // InfluxDB configuration
@@ -51,8 +52,8 @@ influxDB.query(query);
 console.log("Database created");
 ```
 
-## Example
-
+Example
+-------
 1- Setup InfluxDB on Espruino.
 
 2- Create a new InfluxDB database (from Espruino).
@@ -62,59 +63,59 @@ console.log("Database created");
 4- Read data from InfluxDB.
 
 
-```
-// Import and connect MQ135 module
-var mq135 = require("MQ135").connect(A0);
+```js
+  // Import and connect MQ135 module
+  var mq135 = require("MQ135").connect(A0);
 
-// InfluxDB configuration
-var influxDBParams = {
-    influxDBHost: "localhost",
-    influxPort: 8086,
-    influxDBName: "testDataBase",
-    influxUserName: "toto",
-    influxPassword: "root",
-    influxAgentName: "ESPRUINO"
-};
+  // InfluxDB configuration
+  var influxDBParams = {
+      influxDBHost: "localhost",
+      influxPort: 8086,
+      influxDBName: "testDataBase",
+      influxUserName: "toto",
+      influxPassword: "root",
+      influxAgentName: "ESPRUINO"
+  };
 
-// Import and setup InfluxDB module
-var influxDB = require("InfluxDB").setup(influxDBParams);
+  // Import and setup InfluxDB module
+  var influxDB = require("InfluxDB").setup(influxDBParams);
 
-// Create new influxDb database called "smoke" (if it's not already exists)
-var queryNewDB = "q=CREATE DATABASE smoke\n";
-try {
-    influxDB.query(queryNewDB);
-    console.log("Database was created");
-} catch (e) {
-    console.log("Failed, unable to create the database");
-}
+  // Create new influxDb database called "smoke" (if it's not already exists)
+  var queryNewDB = "q=CREATE DATABASE smoke\n";
+  try {
+      influxDB.query(queryNewDB);
+      console.log("Database was created");
+  } catch (e) {
+      console.log("Failed, unable to create the database");
+  }
 
-// Write data to InfluxDB database every 10 seconds.
-var writeInterval = setInterval(function() {
-    var data = "";
-    try {
-        // Multiple points writing (important: separator "\n").
-        for (var i = 0; i < 3; i++) {
-            var smoke = mq1235.getPPM();
-            data += "smoke, device=ESP0001, value=" + smoke + "\n";
-        }
+  // Write data to InfluxDB database every 10 seconds.
+  var writeInterval = setInterval(function() {
+      var data = "";
+      try {
+          // Multiple points writing (important: separator "\n").
+          for (var i = 0; i < 3; i++) {
+              var smoke = mq135.getPPM();
+              data += "smoke, device=ESP0001, value=" + smoke + "\n";
+          }
 
-        influxDB.write(data);
-        return true;
-    } catch (e) {
-        console.log(e);
-    }
-}, 10000);
+          influxDB.write(data);
+          return true;
+      } catch (e) {
+          console.log(e);
+      }
+  }, 10000);
 
-// Get data to InfluxDB database every hour.
-var readInterval = setInterval(function() {
-    try {
-        var query = "q=SELECT \"value\" FROM \"measurement\"\n";
-        var data = influxDB.query(query);
-        console.log(data);
-    } catch (e) {
-        console.log(e);
-    }
-}, 3600000);
+  // Get data to InfluxDB database every hour.
+  var readInterval = setInterval(function() {
+      try {
+          var query = "q=SELECT \"value\" FROM \"measurement\"\n";
+          var data = influxDB.query(query);
+          console.log(data);
+      } catch (e) {
+          console.log(e);
+      }
+  }, 3600000);
 ```
 
 
