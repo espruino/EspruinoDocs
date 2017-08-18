@@ -15,6 +15,7 @@
  */
 var C  = {
   GDE021A1: {
+    bpp : 2,
     displaySizeX      : 72,
     displaySizeY      : 172,
     lutRegisterData   : new Uint8Array([
