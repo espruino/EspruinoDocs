@@ -1,11 +1,6 @@
+/* Copyright (c) 2017, STMicroelectronics, Gordon Williams, Tobias Schwalm - See the file LICENSE for copying permission. */
 /*
-  Copyright (c) 2017, STMicroelectronics - All Rights Reserved
-  Largely inspired from SIM900 modem library:
-  Copyright (c) 2015 Gordon Williams, Tobias Schwalm.
-  See the file LICENSE for copying permission.
-*/
-
-/*
+  Largely inspired from SIM900 modem library
   Library for interfacing to the UG96 modem (Quectel).
   Uses the 'NetworkJS' library to provide a JS endpoint for HTTP.
 */
