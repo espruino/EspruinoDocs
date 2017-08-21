@@ -5,7 +5,7 @@ MeArm Robotic Arm
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MeArm. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Me Arm,Robot Arm,Robotics
-* USES: Servo Motor,MeArm,IRReceiver
+* USES: Servo Motor,MeArm,IRReceiver,Espruino Board
 
 [[http://youtu.be/WRMF7wJ57Ak]]
 
@@ -143,4 +143,3 @@ require("IRReceiver").connect(C3, function(code) {
 // Finally, initialise
 onInit();
 ```
-

@@ -5,7 +5,7 @@ Favourite Icon on Web Server
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Web+Server+Favourite+Icon. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Wifi,Web Server
-* USES: Internet,CC3000
+* USES: Internet,CC3000,Espruino Board
 
 Introduction
 -----------
@@ -76,4 +76,3 @@ So how did we do it?
 In the getPage function, we look at `req.url` to see which file has been requested. If it's `\favicon.ico` we set the content type to icon, and send the random-looking string. Otherwise we sent a simple webpage.
 
 The string was created using the [[File Converter]] page which takes a normal file and turns it into a string of characters that Espruino can use. You can create your own favourite icon in many different ways - for instance you could use [this online designer](http://www.favicon.cc/), download `favicon.ico` and then feed it into the [[File Converter]].
-
