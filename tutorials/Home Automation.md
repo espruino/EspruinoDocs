@@ -182,7 +182,7 @@ function onInit() {
 Interfacing with a SonOff 
 --------------------------
 
-**Video coming soon**
+[[http://youtu.be/-BYHwGIMKXw]]
 
 But for those eager, the code is:
 
