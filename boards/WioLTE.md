@@ -40,8 +40,8 @@ the exception of the on-board LED which needs to be accessed with the
 The built-in object `WioLTE` provides useful functionality:
 
 ```
+WioLTE.setLEDPower(true);
 WioLTE.LED(r,g,b); // Output a color on the LED (values range 0..255)
-WioLTE.setGrovePower(true); // Enable power to Grove sockets
 ```
 
 There are also built-in variables for each of the [Grove](/Grove)
@@ -79,6 +79,27 @@ The SD card can be accessed with [Espruino's normal File IO](/File+IO).
 However you must be careful not to use it less than 4 seconds before
 power-on, as the SD card will not have initialised by that point.
 
+```
+var fs = require('fs');
+
+// Init SDCard
+WioLTE.init;
+
+var test = function() {
+  // List files
+  console.log('List files on root path:\r\n', fs.readdirSync());
+  // Write file  
+  fs.writeFileSync("hello.txt", "Hello World");
+  // read file
+  console.log(fs.readFileSync("hello.txt"));
+  // append file
+  fs.appendFileSync("hello.txt", "!!!");
+  // read again
+  console.log(fs.readFileSync("hello.txt"));
+};
+
+setTimeout(test, 4000);
+```
 
 Using LTE and GPS
 -----------------
@@ -179,7 +200,7 @@ board = require('wiolte').connect(function(err) {
 ```
 
 Functionality provided is:
-
+* `debug(boolean, boolean)` - choose debug level
 * `reset(callback)` - Reset LTE
 * `init(callback)` - Initialise LTE
 * `getVersion(callback)` - returns LTE firmware version
@@ -196,3 +217,5 @@ Functionality provided is:
   * `answer(callback)`  
   * `hangup(callback)`  
   * `handleRing(boolean)` - if trie, will call any function added with `board.on('RING', ...)`
+* `sleep(callback)` -  LTE modem get into sleep mode, it can save about 100mA
+* `wake(callback)` -  LTE modem wake up from sleep mode
