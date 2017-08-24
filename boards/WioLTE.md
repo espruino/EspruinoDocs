@@ -25,6 +25,11 @@ Binaries can be found in:
 * the [binaries folder](/binaries) (current version)
 * the [automatic Travis Builds](https://www.espruino.com/binaries/travis/master/) (cutting edge builds)
 
+Pinout
+------
+
+* APPEND_PINOUT: WIO_LTE
+
 Using
 -----
 
@@ -78,10 +83,116 @@ power-on, as the SD card will not have initialised by that point.
 Using LTE and GPS
 -----------------
 
-Coming soon... 
+To use this functionality, you need to `require` the `wiolte` module
+with `require('wiolte')`.
 
+An example showing how to connect, use the [[Internet]] connection,
+GPS, and SMS is below: 
 
-Pinout
-------
+```
+var board;
+var APN = "UNINET";
+var USERNAME = "";
+var PASSWORD = "";
 
-* APPEND_PINOUT: WIO_LTE
+function wiolteStart(debug_quectel, debug_at) {
+  debug_quectel = debug_quectel || false;
+  debug_at = debug_at || false;
+
+  board = require('wiolte').connect(function(err) {
+    console.log("connectCB entered...");
+    if (err) throw err;
+    setTimeout(doConnect,3000);
+  });
+
+  board.debug(debug_quectel, debug_at);
+
+}
+
+function doConnect() {
+  board.connect(APN, USERNAME, PASSWORD, function(err) {
+    console.log("connectCB entered...");
+    if (err) throw err;
+    board.getIP(print);
+
+    // work after connected
+    setTimeout(onConnected, 5000);
+
+  });
+}
+
+function onConnected(){
+  // Handle call coming
+  board.on('RING', function(){
+  });
+
+  // Handle SMS coming
+  board.on('message', function(id){
+    board.SMS.read(id, function(d, sms){
+      if(d !== "OK") throw new Error(d);
+      console.log('SMS from:', sms.oaddr);
+      console.log(':', sms.text);
+    });
+  });
+
+  // fetch longitude, latitude every 10 s
+  board.geoLocStart(10000);
+
+  GetHtmlPage("http://www.pur3.co.uk/hello.txt");
+}
+
+function GetHtmlPage(html_page){
+  require("http").get(html_page, function(res) {
+    var contents = "";
+
+    console.log("Response: ",res);
+
+    res.on('data', function(d) {
+      contents += d;
+    });
+
+    res.on('close', function(d) {
+		console.log("Connection closed");
+		console.log("full page content ---> \r\n"+contents);
+    });
+  });
+}
+
+function GeoLoc() {
+  var coord="";
+  board.geoLocGet(function(err, coord) {
+    if(err) throw err;
+    console.log("longitude latitude = " + coord.lat,coord.lng);
+  });
+}
+
+wiolteStart();
+```
+
+Once initialised with:
+
+```
+board = require('wiolte').connect(function(err) {
+  if (err) throw err;
+  console.log("Successfully connected!);
+});
+```
+
+Functionality provided is:
+
+* `reset(callback)` - Reset LTE
+* `init(callback)` - Initialise LTE
+* `getVersion(callback)` - returns LTE firmware version
+* `connect(apn, username, password, callback)` - Connect to mobile network
+* `getVersion(callback)` - returns current version
+* `getIP(callback)` - Get current IP address
+* `geoLocStart(period_in_milliseconds)` - Start getting geolocation data
+* `geoLocStop()` - Stop getting geolocation data
+* `geoLocGet(callback)` - Get last location
+* `geoLocConvert(callback(err,latlong))` - Get last location as latitude/longitude
+* `board.SMS` - SMS functionality with `init/read/send/list/delete` functions based on the [[ATSMS]] module
+* `board.Call`, with:
+  * `call(number, callback)`  
+  * `answer(callback)`  
+  * `hangup(callback)`  
+  * `handleRing(boolean)` - if trie, will call any function added with `board.on('RING', ...)`
