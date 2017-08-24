@@ -1212,7 +1212,26 @@ var gprsFuncs = {
         at.unregisterLine("RING");
       }            
     },
-  },  
+  },
+  "sleep": function (callback) {
+    pinMode(C0, 'output');
+    at.cmd('AT+QSCLK=1\r\n', function(d) {      
+      digitalWrite(A1, 1);
+      digitalWrite(C0, 1);
+      if(callback) callback(d=="OK"?null:("Error: AT+QSCLK=1 "+d));
+      pinMode(C0, 'output');  // wakeup_in - open
+    });
+  },
+  "wakeup": function (callback) {
+    pinMode(A1, 'output');
+    digitalWrite(A1, 0);
+    setTimeout(function(){
+      at.cmd('AT+QSCLK=0\r\n', 1000, function(d) {
+        pinMode(A1, 'input');
+        if(callback) callback(d=="OK"?null:("Error: AT+QSCLK=0 "+d));
+      });      
+    },1000);
+  },
 };
 
 resetOptions = {
