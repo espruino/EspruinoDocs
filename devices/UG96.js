@@ -126,6 +126,46 @@ var AtInitSequence = {
   AT_CURRENT_OPERATOR: 9,
   AT_HW_FLOW_CONTROL: 10,
 };
+/*
+openSocket is triggered at the socket creation, as earlier as possible.
+Nevertheless, this function can be delayed to enter in secure mode (since using of encrypted keys can take time in mbed )
+*/
+function openSocket(sckt, host, port) {
+  if (dbg) console.log('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1');
+
+  at.cmd('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1\r\n',150000, function cb(d) {
+    if (d=="OK") {
+      if (dbg) console.log("AT+QIOPEN OK");
+      return cb;
+    } else if (d=='+QIOPEN: '+sckt+",0") {
+      if (dbg) console.log(d);
+      if (dbg) console.log("AT+QIOPEN completed with socket: " + sckt);
+      socks[sckt] = true;
+      return "";
+    } else if (d=='+QIOPEN: '+sckt+",565") {
+      if (dbg) console.log("AT+QIOPEN failure DNS parse failed...");
+      socks[sckt] = "tobeclosed";
+      return "";
+    } else if (d=='+QIOPEN: '+sckt+",566") {
+      if (dbg) console.log("AT+QIOPEN failure could not connect socket ...");
+      socks[sckt] = "tobeclosed";
+      return "";
+    } else if (d=='+QIOPEN: '+sckt+",563") {
+      if (dbg) console.log("AT+QIOPEN socket identity has been used..., socket is:" + sckt);
+      socks[sckt] = true;
+      return "";
+    } else {
+      if (dbg) console.log("AT+QIOPEN failed on socket:" + sckt);
+        if (dbg) {
+          at.cmd("AT+QIGETERROR\r\n",1000, function cb(d) {
+            if (dbg) console.log(d);
+          });
+        }
+        socks[sckt] = "tobeclosed";
+        return "";
+    }
+  });
+}
 
 /*
 Closesocket is run because of 2 triggers :
@@ -220,41 +260,13 @@ var netCallbacks = {
 
       socks[sckt] = "Wait";
       sockData[sckt] = "";
-      if (dbg) console.log('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1');
-      at.cmd('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1\r\n',150000, function cb(d) {
-        if (d=="OK") {
-	        if (dbg) console.log("AT+QIOPEN OK");
-	  return cb;
-        } else if (d=='+QIOPEN: '+sckt+",0") {
-	      if (dbg) console.log(d);
-	      if (dbg) console.log("AT+QIOPEN completed with socket: " + sckt);
-          socks[sckt] = true;
-          return "";
-        } else if (d=='+QIOPEN: '+sckt+",565") {
-	      if (dbg) console.log("AT+QIOPEN failure DNS parse failed...");
-          socks[sckt] = "tobeclosed";
-          return "";
-        } else if (d=='+QIOPEN: '+sckt+",566") {
-	      if (dbg) console.log("AT+QIOPEN failure could not connect socket ...");
-          socks[sckt] = "tobeclosed";
-          return "";
-        } else if (d=='+QIOPEN: '+sckt+",563") {
-	      if (dbg) console.log("AT+QIOPEN socket identity has been used..., socket is:" + sckt);
-          socks[sckt] = true;
-          return "";
-        } else {
-	      if (dbg) console.log("AT+QIOPEN failed on socket:" + sckt);
-            if (dbg) {
-                at.cmd("AT+QIGETERROR\r\n",1000, function cb(d) {
-                    if (dbg) console.log(d);
-                });
-            }
-            // do not consider socket is used
-           socks[sckt] = "tobeclosed";
-           //throw new Error('QIOPEN failed: ' + d)
-            return "";
-        }
-      });
+
+      if (port == 443) {
+        if (dbg) console.log("delaying the TLS socket opening");
+        setTimeout(function cb(){openSocket(sckt, host, port);}, 3000);
+      } else {
+        openSocket(sckt, host, port);
+      }
     }
     return sckt; // jshint ignore:line
   },
