@@ -758,7 +758,7 @@ var gprsFuncs = {
               s = AtInitSequence.AT_PS_ATTACHMENT;
               // check if we're on network
               if (dbg) console.log('PS attacment is starting. It may take until a minute, please wait ... ');
-              at.cmd('AT+CGATT=1\r\n', 75000, cb);
+              setTimeout(function(){at.cmd('AT+CGATT=1\r\n', 75000, cb);},5000);
             } else {
               // start and wait for the next quality signal report sequence
              setTimeout(function(){at.cmd('AT+CSQ\r\n', 2000, cb);},500);
