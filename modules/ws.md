@@ -84,6 +84,7 @@ Available callbacks
 
 ```js
 ws.on('open', function() {
+  // For WebSocket clients only
   console.log("Connected to server");
 });
 
