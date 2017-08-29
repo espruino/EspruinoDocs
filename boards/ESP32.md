@@ -520,10 +520,11 @@ This is defined in partitions_espruino.csv in the EspruinoBuildTools repository
 The last 1Mb has been defined as a flash FAT filesystem. It needs to be intialised for first use - this does it in a safe way that won't delete existing files:
 
 ```JavaScript
-var fs = require('fs');
-if ( typeof(fs.readdirSync()) === 'undefined' ) {
-    console.log('Formatting FS');
-    E.flashFatFS({ format: true });
+try {
+  fs.readdirSync();
+ } catch (e) { //'Uncaught Error: Unable to mount media : NO_FILESYSTEM'
+  console.log('Formatting FS - only need to do once');
+  E.flashFatFS({ format: true });
 }
 ```
 
