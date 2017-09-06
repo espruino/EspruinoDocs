@@ -17,7 +17,7 @@ It contains:
 * 6 [Grove](/Grove) Connectors
 * Nano SIM and TF card 2 in 1 socket
 
-Full details on flashing can be found on [Seeed's website](http://wiki.seeed.cc/Wio_Tracker_LTE_CAT1/)
+Full details on flashing can be found on [Seeed's website](https://github.com/SeeedDocument/Wio_LTE#software-updates)
 
 Binaries can be found in:
 
@@ -32,6 +32,9 @@ Pinout
 
 Using
 -----
+
+**Seeed has a [complete Getting Started Guide here](https://github.com/SeeedDocument/Wio_LTE)
+which is the best source of information** 
 
 Seeed Wio LTE can be used much like any other Espruino USB device, with
 the exception of the on-board LED which needs to be accessed with the
@@ -219,3 +222,9 @@ Functionality provided is:
   * `handleRing(boolean)` - if trie, will call any function added with `board.on('RING', ...)`
 * `sleep(callback)` -  LTE modem get into sleep mode, it can save about 100mA
 * `wake(callback)` -  LTE modem wake up from sleep mode
+
+
+Buying
+-------
+
+You can buy the Wio LTE Tracker [direct from Seeed](https://www.seeedstudio.com/Wio-LTE-US-Version-4G%2C-Cat.1%2C-GNSS%2C-Espruino-Compatible-p-2957.html)
