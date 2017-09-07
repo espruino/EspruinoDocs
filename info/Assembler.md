@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Inline Assembler
-=============
+=================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Assembler. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
@@ -33,6 +33,7 @@ This is handled as follows:
 
 **Note:**
 
+* This only works on ARM-based microcontrollers - ARM Thumb assembler will not work on ESP8266.
 * The assembler is only partially implemented so will only parse some opcodes at the moment. If you find something missing [please let us know!](https://github.com/espruino/EspruinoTools/issues)
 * If this is a bit hardcore for you, there's now the option of [Compiled JavaScript](/Compilation)
 
