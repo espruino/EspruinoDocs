@@ -43,6 +43,9 @@ g.print()
 //0,1,1,0,0,0,1,1
 ```
 
+See the [`Graphics.createArrayBuffer`](/Reference#l_Graphics_createArrayBuffer) 
+reference for more information on possible arguments that can be used.
+
 Or you can create a Graphics instance which calls your function whenever a pixel needs to be drawn:
 
 ```
@@ -55,8 +58,8 @@ g.drawLine(0,0,2,2)
 //2,2
 ```
 
-Hello World
------------
+Text / Fonts
+-------------
 
 Simple Hello World text using a bitmap font:
 
@@ -79,13 +82,17 @@ g.setColor(0,1,0);
 g.drawString("World",40,40); // 60px high in green
 ```
 
+**Note:** Some non-official Espruino boards don't have
+vector font support built-in.
+
 You can then switch back to the bitmap font using:
 
 ```
 LCD.setFontBitmap();
 ```
 
-For more information, see [[Fonts]]
+**You can also use custom Bitmap Fonts**. For more information, see [[Fonts]]
+
 
 Circles
 -------
