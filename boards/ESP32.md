@@ -78,6 +78,13 @@ Not supported by Espruino on the ESP32 (yet):
 
 ## Getting Started
 
+### Installing drivers
+
+Depending on the board and operating system you have, you might want to install the FTDI or Silicon Labs USB driver:
+
+* [FTDI](http://www.ftdichip.com/Drivers/D2XX.htm)
+* [Silicon Labs CP210x](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
 ### Flashing
 
 If your device is not already flashed, below are the instructions.  Flashing involves downloading the latest firmware to your PC and then copying via USB cable to the microcontroller.
