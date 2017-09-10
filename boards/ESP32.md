@@ -94,6 +94,11 @@ build stage and provide the firmware as a download.
 
 #### Build the Firmware
 
+You can get the Espruino firmare from the [Travis cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
+Get the file ending in '_esp32.bin'.
+
+You can also build the Espruino firmware yourself:
+
 The following work in a bash shell environment, you will need git, and other essential build tools (e.g. on Ubuntu run `sudo apt-get install build-essential`).
 
 ```sh
