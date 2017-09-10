@@ -229,7 +229,7 @@ be quite reliable.
 #### minicom / CuteCom
 
 There are other methods to connect to your ESP32, not just Espruino Web IDE.  Two
-very basic tools are [minicom](https://en.wikipedia.org/wiki/Minicom),
+very basic tools are [CoolTerm](http://freeware.the-meiers.org/),
 [CuteCom](http://cutecom.sourceforge.net/), 
 and [screen](https://www.gnu.org/software/screen/) which may already be installed
 on your system.
