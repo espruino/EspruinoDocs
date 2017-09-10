@@ -532,7 +532,7 @@ you can then use the filesystem with fs or File objects:
 
 ```JavaScript
 fs.writeFileSync('hello world.txt', 'This is the way the world ends\nHello World\nnot with a bang but a whimper.\n');
-fs.readFileSync();
+fs.readFileSync('hello world.txt');
 ```
 
 ---
