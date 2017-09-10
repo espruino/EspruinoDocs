@@ -113,6 +113,8 @@ You will have a file called `espruino_esp32.bin`.  This is your ESP32 firmware.
 
 #### The actual flash
 
+Download [esptool](https://github.com/espressif/esptool) if you haven't downloaded it already.
+
 To flash the ESP32 we use `esptool.py`.  Before you run `esptool.py`, make sure
 you know the flashing procedure for the board you have.  Some boards have a flash
 button, that you press when you are running the flash utility.  For boards such
