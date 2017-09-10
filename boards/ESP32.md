@@ -137,7 +137,6 @@ esp-idf/components/esptool_py/esptool/esptool.py    \
         --chip esp32                                \
         --port /dev/ttyUSB0                         \
         --baud 921600                               \
-        --before esp32r0                            \
         --after hard_reset write_flash              \
         -z                                          \
         --flash_mode dio                            \
