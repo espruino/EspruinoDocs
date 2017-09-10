@@ -242,16 +242,8 @@ a serial terminal
 screen /dev/ttyUSB0 115200
 ```
 
-*Minicom* is a basic console based tool that allows you to connect to a serial
-device, such as the ESP32.  Below is the command to get you connected to the
-ESP32.
-
-```
-minicom --baudrade 115200 --device /dev/ttyUSB0
-```
-
-*CuteCom* is also a basic GUI tool that allows you to connect to a serial device.
-Run CuteCom and connect via the correct port.
+*CoolTerm* and *CuteCom* are also basic GUI tools that allows you to connect to a serial device.
+Run CoolTerm or CuteCom and connect via the correct port.
 
 ### Running some basic JavaScript
 
