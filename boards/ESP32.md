@@ -133,6 +133,10 @@ IO0 -> GND (only for flash)
 2. run the following command; and then
 3. leave IO0 floating (not connected) and reset chip
 
+##### ESP-WROOM-32 (dev board)
+
+Flashing can be done by USB, no special actions on pins are needed.
+
 ##### Flashing command
 The following command will write the flash to the ESP32.  Note you need to
 select the correct port, on Windows it will be something like `COM3`.
