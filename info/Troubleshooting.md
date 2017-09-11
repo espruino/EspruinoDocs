@@ -171,6 +171,10 @@ If you get pulsing Red/Green LEDs, it's because you actually pressed the button 
 
 If you get a glowing blue LED, it's because you pressed **BTN1** too quickly after pressing **RST**. Try again and leave a bit more of a gap.
 
+### Puck.js
+
+See [the instructions on the Puck.js page](/Puck.js#i-saved-some-code-and-my-puck-js-no-longer-works)
+
 ### Finally
 
 This will make Espruino start without loading your saved code. You can then connect with the Web IDE and type `save()` to overwrite your saved program with the 'empty' state that Espruino is now in.
@@ -189,10 +193,42 @@ To enter normal mode, just:
 | Pico/WiFi | Unplug from USB and re-plug, without pressing the button. |
 | Espruino Board | Press and release **RST** while **BTN1** is not pressed. |
 
+## When I upload code, some characters are being lost
+
+Most likely this is because you're uploading code that is doing calculations
+that are taking a long time to finish - and so Espruino is unable to process
+the data that is being received quickly enough. 
+
+When you upload code to Espruino, it is executed as it is received (allowing 
+you to upload more code than might otherwise fit into RAM).
+
+In many cases, you will actually want the code to run *at power on* rather
+than when you upload (eg. WiFi connection or LCD initialisation). In these
+cases you could put your code inside a function called `onInit`:
+
+```
+// variables
+// function declarations
+
+function onInit() {
+  // initialisation of hardware
+}
+
+// Call onInit right after upload (for testing)
+setTimeout(onInit, 1000);
+```
+
+When saving, you may then want to remove the `setTimeout` line,
+upload, and then save (unless you're sure that calling `onInit` twice
+will not cause problems). See [the page on Saving](/Saving) for more 
+information.
+
 
 ## I typed `save()` but my connected device doesn't work at power on
 
 Some devices (such as LCDs and WiFi) require their own initialisation code which Espruino can't remember. To do that initialisation at boot time, write a function called `onInit` which contains the initialisation code for your device. After typing `save()`, it will be executed at power on or reset.
+
+See [the page on Saving](/Saving) for more information.
 
 
 ## I typed `save()` but Espruino won't work (or stops working quickly) when powered from a computer (it only works from a USB power supply, battery, or the computer when the Web IDE is running)
@@ -210,7 +246,7 @@ function onInit() {
   setTimeout(function() { Serial1.setConsole(); }, 1000);
   // ...
 }
-'''
+```
 
 This will call `setConsole` 1 second after boot, by which time USB should have initialised. Assuming your Espruino is battery powered, unplugging and replugging USB will then move the console back to USB, where the board can be programmed.
 
