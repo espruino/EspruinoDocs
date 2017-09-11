@@ -78,6 +78,13 @@ Not supported by Espruino on the ESP32 (yet):
 
 ## Getting Started
 
+### Installing drivers
+
+Depending on the board and operating system you have, you might want to install the FTDI or Silicon Labs USB driver:
+
+* [FTDI](http://www.ftdichip.com/Drivers/D2XX.htm)
+* [Silicon Labs CP210x](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
 ### Flashing
 
 If your device is not already flashed, below are the instructions.  Flashing involves downloading the latest firmware to your PC and then copying via USB cable to the microcontroller.
@@ -86,6 +93,11 @@ If your device is not already flashed, below are the instructions.  Flashing inv
 build stage and provide the firmware as a download.
 
 #### Build the Firmware
+
+You can get the Espruino firmare from the [Travis cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
+Get the file ending in '_esp32.bin'.
+
+You can also build the Espruino firmware yourself:
 
 The following work in a bash shell environment, you will need git, and other essential build tools (e.g. on Ubuntu run `sudo apt-get install build-essential`).
 
@@ -100,6 +112,8 @@ make clean && BOARD=ESP32 make
 You will have a file called `espruino_esp32.bin`.  This is your ESP32 firmware.
 
 #### The actual flash
+
+Download [esptool](https://github.com/espressif/esptool) if you haven't downloaded it already.
 
 To flash the ESP32 we use `esptool.py`.  Before you run `esptool.py`, make sure
 you know the flashing procedure for the board you have.  Some boards have a flash
@@ -126,6 +140,10 @@ IO0 -> GND (only for flash)
 2. run the following command; and then
 3. leave IO0 floating (not connected) and reset chip
 
+##### ESP-WROOM-32 (dev board)
+
+Flashing can be done by USB, no special actions on pins are needed.
+
 ##### Flashing command
 The following command will write the flash to the ESP32.  Note you need to
 select the correct port, on Windows it will be something like `COM3`.
@@ -137,7 +155,6 @@ esp-idf/components/esptool_py/esptool/esptool.py    \
         --chip esp32                                \
         --port /dev/ttyUSB0                         \
         --baud 921600                               \
-        --before esp32r0                            \
         --after hard_reset write_flash              \
         -z                                          \
         --flash_mode dio                            \
@@ -212,7 +229,7 @@ be quite reliable.
 #### minicom / CuteCom
 
 There are other methods to connect to your ESP32, not just Espruino Web IDE.  Two
-very basic tools are [minicom](https://en.wikipedia.org/wiki/Minicom),
+very basic tools are [CoolTerm](http://freeware.the-meiers.org/),
 [CuteCom](http://cutecom.sourceforge.net/), 
 and [screen](https://www.gnu.org/software/screen/) which may already be installed
 on your system.
@@ -225,16 +242,8 @@ a serial terminal
 screen /dev/ttyUSB0 115200
 ```
 
-*Minicom* is a basic console based tool that allows you to connect to a serial
-device, such as the ESP32.  Below is the command to get you connected to the
-ESP32.
-
-```
-minicom --baudrade 115200 --device /dev/ttyUSB0
-```
-
-*CuteCom* is also a basic GUI tool that allows you to connect to a serial device.
-Run CuteCom and connect via the correct port.
+*CoolTerm* and *CuteCom* are also basic GUI tools that allows you to connect to a serial device.
+Run CoolTerm or CuteCom and connect via the correct port.
 
 ### Running some basic JavaScript
 
@@ -532,7 +541,7 @@ you can then use the filesystem with fs or File objects:
 
 ```JavaScript
 fs.writeFileSync('hello world.txt', 'This is the way the world ends\nHello World\nnot with a bang but a whimper.\n');
-fs.readFileSync();
+fs.readFileSync('hello world.txt');
 ```
 
 ---
