@@ -229,10 +229,11 @@ be quite reliable.
 #### minicom / CuteCom
 
 There are other methods to connect to your ESP32, not just Espruino Web IDE.  Two
-very basic tools are [CoolTerm](http://freeware.the-meiers.org/),
+very basic tools are [minicom](https://en.wikipedia.org/wiki/Minicom),
 [CuteCom](http://cutecom.sourceforge.net/), 
 and [screen](https://www.gnu.org/software/screen/) which may already be installed
 on your system.
+Another cross platform terminal program with a friendly interface is [CoolTerm](http://freeware.the-meiers.org/).
 
 *screen* is usually used for multiplexing terminals, keeping terminal sessions
 alive while you're logged out, and so forth. However, it will also function as
@@ -242,8 +243,16 @@ a serial terminal
 screen /dev/ttyUSB0 115200
 ```
 
-*CoolTerm* and *CuteCom* are also basic GUI tools that allows you to connect to a serial device.
-Run CoolTerm or CuteCom and connect via the correct port.
+*Minicom* is a basic console based tool that allows you to connect to a serial
+device, such as the ESP32.  Below is the command to get you connected to the
+ESP32.
+
+```
+minicom --baudrade 115200 --device /dev/ttyUSB0
+```
+
+*CuteCom* is also a basic GUI tool that allows you to connect to a serial device.
+Run CuteCom and connect via the correct port.
 
 ### Running some basic JavaScript
 
