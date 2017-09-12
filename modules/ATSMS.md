@@ -7,7 +7,8 @@ SMS Send and Receive
 * KEYWORDS: Module,SIM800,SIM900,AT,SMS,GSM
 * USES: AT
 
-The [ATSMS](/modules/ATSMS.js) module uses standard AT commands
+The [ATSMS](/modules/ATSMS.js) module uses standard AT commands to allow you to send and receive SMS text messages
+via a GSM modem module like the [[SIM900]].
 
 
 Wiring
@@ -48,8 +49,8 @@ sms.init(function(err) {
   //sms.send('+441234567890','Hello world!', callback)
 });
 
-sms.on('message', function() {
-  console.log("Got a message!");
+sms.on('message', function(msgIndex) {
+  console.log("Got new message, index ", msgIndex);
 });
 ```
 
@@ -57,6 +58,36 @@ On many devices, Espruino's console will automatically move to `Serial1`
 when USB or Bluetooth is disconnected, and so will stop the GSM modem
 from working. To fix this, work out where you want the console (eg, where
 you're programming Puck.js from) - for instance USB, and add `USB.setConsole(1)`.
+
+### Reacting to received messages
+
+Often you might want to do something in response to a received message.
+In this case you could do something like this:
+
+```
+sms.on('message', function(msgIndex) {
+  console.log("Got message #", msgIndex);
+  sms.get(msg, function(err, msgIndex) {
+    if (err) throw err;
+    print("Read message", msg);
+    var txt = msg.text.toLowerCase();
+    if (txt=="on") LED1.set();
+    if (txt=="off") LED1.reset();
+    // delete all messages to free SIM card memory
+    sms.delete("ALL");
+  });
+});
+```
+
+When notified that we have a message, we read it,
+and turn `LED1` on or off depending on whether the
+text was `on` or `off`. We then delete all
+text messages from memory - as it is possible
+to fill up the SIM card's memory quite quickly!
+
+**Note:** Anybody could send your device a text message!
+It would make sense to check the phone number in `msg.oaddr`
+before you do anything important.
 
 
 Reference
