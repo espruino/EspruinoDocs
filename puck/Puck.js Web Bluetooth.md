@@ -322,6 +322,11 @@ and we could just handle it directly.
 That's what you can do with `Puck.connect(callback)`. Once connected it calls the `callback`
 function with the connection, which you can then use to send and receive data.
 
+**Note:** You can't use `Puck.connect` and `Puck.write/eval` on the same
+connection at the same time. If you want to write to a Puck after having 
+used `Puck.connect`, you need to use `connection.write` and handle 
+any response in the `connection.on("data",` handler.
+
 Try the example below:
 
 ```HTML_demo_link

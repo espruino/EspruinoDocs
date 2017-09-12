@@ -192,6 +192,7 @@ To enter normal mode, just:
 |-------|----|
 | Pico/WiFi | Unplug from USB and re-plug, without pressing the button. |
 | Espruino Board | Press and release **RST** while **BTN1** is not pressed. |
+| Puck.js | Remove and re-insert the battery |
 
 ## When I upload code, some characters are being lost
 
