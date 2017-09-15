@@ -64,3 +64,5 @@ INA226.prototype.read = function() {
     overflow : (flags&4)!=0
   };
 };
+
+exports = INA226;
