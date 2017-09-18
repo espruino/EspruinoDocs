@@ -129,8 +129,10 @@ var AtInitSequence = {
 /*
 openSocket is triggered at the socket creation, as earlier as possible.
 Nevertheless, this function can be delayed to enter in secure mode (since using of encrypted keys can take time in mbed )
+In case of failure with Error code "socket connect failed", try and repeat 5 times the openSocket
 */
-function openSocket(sckt, host, port) {
+function openSocket(sckt, host, port, counter) {
+
   if (dbg) console.log('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1');
 
   at.cmd('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1\r\n',150000, function cb(d) {
@@ -148,7 +150,11 @@ function openSocket(sckt, host, port) {
       return "";
     } else if (d=='+QIOPEN: '+sckt+",566") {
       if (dbg) console.log("AT+QIOPEN failure could not connect socket ...");
-      socks[sckt] = "tobeclosed";
+	    if (counter < 5) {
+	      setTimeout(function cb(){console.log("repeat opening the socket ..."); openSocket(sckt, host, port,(counter+1));}, 3000);
+	    } else {
+          socks[sckt] = "tobeclosed";
+        }
       return "";
     } else if (d=='+QIOPEN: '+sckt+",563") {
       if (dbg) console.log("AT+QIOPEN socket identity has been used..., socket is:" + sckt);
@@ -156,13 +162,13 @@ function openSocket(sckt, host, port) {
       return "";
     } else {
       if (dbg) console.log("AT+QIOPEN failed on socket:" + sckt);
-        if (dbg) {
-          at.cmd("AT+QIGETERROR\r\n",1000, function cb(d) {
-            if (dbg) console.log(d);
-          });
-        }
-        socks[sckt] = "tobeclosed";
-        return "";
+      if (dbg) {
+        at.cmd("AT+QIGETERROR\r\n",1000, function cb(d) {
+          if (dbg) console.log(d);
+        });
+      }
+      socks[sckt] = "tobeclosed";
+      return "";
     }
   });
 }
@@ -263,9 +269,9 @@ var netCallbacks = {
 
       if (port == 443) {
         if (dbg) console.log("delaying the TLS socket opening");
-        setTimeout(function cb(){openSocket(sckt, host, port);}, 3000);
+        setTimeout(function cb(){openSocket(sckt, host, port,0);}, 3000);
       } else {
-        openSocket(sckt, host, port);
+        openSocket(sckt, host, port,0);
       }
     }
     return sckt; // jshint ignore:line
