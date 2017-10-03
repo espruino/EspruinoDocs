@@ -15,6 +15,9 @@ to control devices via SMS text messages.
 The video further down shows how to read data from BLE devices 
 within range and then send that as an SMS text message response.
 
+**Note:** You'll need the latest firmware as of Sewpt 2017 on your Puck.js device for this. That
+means at least 1v95 (when released) or a 'cutting edge' build (http://www.espruino.com/Download).
+
 You'll need
 -----------
 
@@ -154,7 +157,7 @@ function setLight(isOn) {
 
 #### Returning temperature
 
-... Video coming soon ...
+[[http://youtu.be/As2dqUOpEvU]]
 
 The code on the [[Puck.js]] sending the temperature is:
 
@@ -207,7 +210,7 @@ sms.on('message', function(msg) {
 function getTemp(number) {
   console.log("Getting temp");
   NRF.findDevices(function(devs) {
-    devs.forEach(function(dev) {      
+    devs.forEach(function(dev) {
       if (dev.name=="Puck.js 5736") { // <--- change this to the name of your Puck.js
         console.log("Got temp");
         var message = "Temp is "+dev.servicedata["1809"][0];
@@ -216,7 +219,7 @@ function getTemp(number) {
         });
       }
     });
-  });  
+  });
 }
 ```
 
