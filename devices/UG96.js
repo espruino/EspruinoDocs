@@ -492,6 +492,8 @@ function pdpdeacthandler(line) {
         sockData[i] = "";
     }
   });
+
+  return ""
 }
 
 // Dust QIND URC (not currently managed in this version)
@@ -556,6 +558,19 @@ function CfunHandler(line) {
 // re_inject other commands
 function RdyHandler(line) {
   if (dbg) console.log('RdyHandler in: ' + line);
+
+  return "";
+}
+
+// Manage POWERED DOWN URC
+// This is received when the modem has stored its data
+// and deregistered(for instance saving of registered PLMN)
+// Manage the pins so that modem is physically off
+function PoweredDownHandler(line) {
+  if (dbg) console.log('PowerDownHandler in: ' + line);
+
+  console.log("Modem is entering in power down");
+  digitalWrite(pwrkey, pwrkey_active_level);
 
   return "";
 }
@@ -763,7 +778,7 @@ var gprsFuncs = {
             if (signal_quality_report) {
               s = AtInitSequence.AT_PS_ATTACHMENT;
               // check if we're on network
-              if (dbg) console.log('PS attacment is starting. It may take until a minute, please wait ... ');
+              if (dbg) console.log('PS attachment is starting. It may take until a minute, please wait ... ');
               setTimeout(function(){at.cmd('AT+CGATT=1\r\n', 75000, cb);},5000);
             } else {
               // start and wait for the next quality signal report sequence
@@ -991,11 +1006,28 @@ var gprsFuncs = {
     at.cmd('AT+QCELLLOC=1\r\n', 2000, cb);
   },
   "geoLocStop": function() {
-		console.log("Stopping GeoLocalization");
+    console.log("Stopping GeoLocalization");
 
-		geoPos = false;
+    geoPos = false;
 
-		longlat = "";
+    longlat = "";
+  },
+  "turnOff": function() {
+
+    console.log("Turning Off the modem");
+
+    var cb = function(r) {
+      if (r==='OK') {
+          console.log("Please wait, disconnecting and saving data. It may last until 60 s");
+
+          /* wait for POWERED DOWN and manage it in the URCs table */
+		  /* other URCs can be received before the modem has terminated its shut down */
+      } else {
+        console.log("Turn off error : " + r);
+      }
+    };
+    // Normal power down
+    at.cmd('AT+QPOWD=1\r\n', 2000, cb);
   }
 };
 
@@ -1043,6 +1075,7 @@ exports.connect = function(usart, resetOptions, connectedCallback) {
   at.register("+QUSIM:", QusimHandler);
   at.register("+CFUN:", CfunHandler);
   at.register("RDY", RdyHandler);
+  at.register("POWERED DOWN", PoweredDownHandler);
 
   gprsFuncs.reset(connectedCallback);
   return gprsFuncs;
