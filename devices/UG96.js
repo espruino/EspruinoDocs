@@ -104,13 +104,15 @@ var pwrkey;
 var pwrkey_active_level;
 var flowcontrol = false;
 
-/* Geolocaliation variables :  longitude,latitude */
+/* Geolocalisation variables :  longitude,latitude */
 var longlat = "";
 /* Geolocaliation state (running or not) */
 var geoPos = false;
 
 // by default, without setting, debug in the module is disabled
 var dbg = false;
+
+var ccid;
 
 /* modem may have the following initialization states */
 var AtInitSequence = {
@@ -739,6 +741,9 @@ var gprsFuncs = {
           /* Case processing with a response */
           if (r&&r.substr(0,7)=="+QCCID:") {
             if (dbg) console.log("SIM ID :" +r);
+
+            ccid = r.substring(8,r.length-1);
+
             // wait for OK
             return cb;
           } else if (r === 'OK') {
@@ -1028,7 +1033,10 @@ var gprsFuncs = {
     };
     // Normal power down
     at.cmd('AT+QPOWD=1\r\n', 2000, cb);
-  }
+  },
+  "getCCID": function() {
+    return ccid;
+  },
 };
 
 resetOptions = {
