@@ -15,7 +15,7 @@ Simply use it as follows:
 ```
 var g = /* my graphics object */;
 
-var menu = require("menu");
+var menu = require("graphical_menu");
 var m;
 
 // First menu
