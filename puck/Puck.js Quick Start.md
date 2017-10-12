@@ -98,7 +98,10 @@ When your Mac supports BLE, you need to enable Web Bluetooth support:
 
 Windows support in Chrome is not yet available - Windows 10 should be supported in 2017.
 
-For now you'll need to [install the Web IDE application](#with-an-application) instead.
+For now there are two options:
+
+* [Install the Web IDE application](#with-an-application) instead (recommended for now)
+* Use the [Web Bluetooth Polyfill Plugin](https://github.com/urish/web-bluetooth-polyfill) to add Web Bluetooth to Chrome on Windows 10.
 
 #### Linux
 
