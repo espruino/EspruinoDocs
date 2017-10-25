@@ -42,8 +42,7 @@ The following features are only partially or not supported by Espruino on the ES
 - [[PWM]] does not work, low speed software [[PWM]] is usable
 - No [[DAC]]: the esp8266 does not have a DAC.
 - No independently usable serial port (needs Espruino work)
-- **GPIO16 is not currently supported in Espruino, it is not a normal GPIO
-pin but rather is attached to the real-time-clock circuitry.**
+- **GPIO16 is now supported in Espruino as a D16 without watch but with all software functiontions like PWM/I2C/SPI/etc**
 
 The main limitations of Espruino on the esp8266 come from two factors:
 - The esp8266 does not have rich I/O peripheral interfaces, this means protocols need to be run in software, which not only may
@@ -133,8 +132,7 @@ The esp8266 ADC function is available on any pin
 (D0-D15) but really uses a separate pin on the esp8266 (this should
 be changed to an A0 pin).
 
-GPIO16 is not currently supported in Espruino, it is not a normal GPIO
-pin but rather is attached to the real-time-clock circuitry.
+GPIO16 is now supported in Espruino. **Do not use it if you use deep sleep**
 
 ### digitalPulse implementation
 
