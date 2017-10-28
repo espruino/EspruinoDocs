@@ -29,7 +29,7 @@ exports.time = function (options, callback) {
     // Ensure callback is only called once
 
     let finished = false;
-    const finish = (err, result) => {
+    const finish = function(err, result) {
         //if (finished) return;
         finished = true;
 
@@ -48,11 +48,11 @@ exports.time = function (options, callback) {
 
     const socket = dgram.createSocket('udp4');
 
-    socket.on('error', (err) => finish(err));
+    socket.on('error', function(err) { return finish(err) });
 
     // Listen to incoming messages
 
-    socket.on('message', (buffer, rinfo) => {
+    socket.on('message', function(buffer, rinfo) {
         buffer = E.toArrayBuffer(buffer);
 
         const received = Date.now();
@@ -93,7 +93,7 @@ exports.time = function (options, callback) {
     // Set timeout
 
     if (settings.timeout) {
-        timeoutId = setTimeout(() => {
+        timeoutId = setTimeout(function() {
 
             timeoutId = 0;
             return finish(new Error('Timeout'));
@@ -110,7 +110,7 @@ exports.time = function (options, callback) {
     sent = internals.toMsecs(dv, 40);              // Remember the rounded value
 
     // Send NTP request
-    socket.send(E.toString(message), settings.port, settings.host, (err, bytes) => {
+    socket.send(E.toString(message), settings.port, settings.host, function(err, bytes) {
 
         if (err ||
             bytes !== 48) {
@@ -280,11 +280,11 @@ exports.offset = function (options, callback) {
         internals.last.port === options.port &&
         now < internals.last.expires) {
 
-        process.nextTick(() => callback(null, internals.last.offset));
+        process.nextTick(function() { return callback(null, internals.last.offset); });
         return;
     }
 
-    exports.time(options, (err, time) => {
+    exports.time(options, function(err, time) {
 
         if (err) {
             return callback(err, 0);
@@ -317,13 +317,13 @@ exports.start = function (options, callback) {
     }
 
     if (internals.now.intervalId) {
-        process.nextTick(() => callback());
+        process.nextTick(callback);
         return;
     }
 
-    exports.offset(options, (ignoreErr, offset) => {
+    exports.offset(options, function(ignoreErr, offset) {
 
-        internals.now.intervalId = setInterval(() => {
+        internals.now.intervalId = setInterval(function() {
 
             exports.offset(options, ignore);
         }, options.clockSyncRefresh || 24 * 60 * 60 * 1000);                                // Daily
