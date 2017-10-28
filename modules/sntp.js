@@ -20,7 +20,6 @@ exports.time = function (options, callback) {
     const settings = Object.assign({}, options);
     settings.host = settings.host || 'pool.ntp.org';
     settings.port = settings.port || 123;
-    settings.resolveReference = settings.resolveReference || false;
 
     // Declare variables used by callback
 
@@ -87,23 +86,6 @@ exports.time = function (options, callback) {
         message.d = (T4 - T1) - (T3 - T2);
         message.t = ((T2 - T1) + (T3 - T4)) / 2;
         message.receivedLocally = received;
-
-        if (!settings.resolveReference ||
-            message.stratum !== 'secondary') {
-
-            return finish(null, message);
-        }
-
-        // Resolve reference IP address
-
-        if (0) Dns.reverse(message.referenceId, (err, domains) => {
-
-            if (/* $lab:coverage:off$ */ !err /* $lab:coverage:on$ */) {
-                message.referenceHost = domains[0];
-            }
-
-            return finish(null, message);
-        });
 
         return finish(null, message);
     });
