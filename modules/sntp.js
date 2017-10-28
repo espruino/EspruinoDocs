@@ -103,14 +103,11 @@ exports.time = function (options, callback) {
     // Construct NTP message
 
     const message = new Uint8Array(48);
-    for (let i = 0; i < 48; ++i) {                      // Zero message
-        message[i] = 0;
-    }
-
+    const dv = new DataView(message.buffer);
     message[0] = (0 << 6) + (4 << 3) + (3 << 0);        // Set version number to 4 and Mode to 3 (client)
     sent = Date.now();
-    internals.fromMsecs(sent, message, 40);             // Set transmit timestamp (returns as originate)
-    sent = internals.toMsecs(message, 40);              // remember the rounded value
+    internals.fromMsecs(sent, dv, 40);             // Set transmit timestamp (returns as originate)
+    sent = internals.toMsecs(dv, 40);              // Remember the rounded value
 
     // Send NTP request
     socket.send(E.toString(message), settings.port, settings.host, (err, bytes) => {
@@ -125,6 +122,7 @@ exports.time = function (options, callback) {
 
 
 internals.NtpMessage = function (buffer) {
+    var dv = new DataView(buffer);
 
     this.isValid = false;
 
@@ -189,12 +187,11 @@ internals.NtpMessage = function (buffer) {
 
     // Root delay (msecs)
 
-    const rootDelay = 256 * (256 * (256 * buffer[4] + buffer[5]) + buffer[6]) + buffer[7];
-    this.rootDelay = 1000 * (rootDelay / 0x10000);
+    this.rootDelay = 1000 * (dv.getUint32(4) / 0x10000);
 
     // Root dispersion (msecs)
 
-    this.rootDispersion = ((buffer[8] << 8) + buffer[9] + ((buffer[10] << 8) + buffer[11]) / Math.pow(2, 16)) * 1000;
+    this.rootDispersion = 1000 * (dv.getUint32(8) / 0x10000);
 
     // Reference identifier
 
@@ -211,19 +208,19 @@ internals.NtpMessage = function (buffer) {
 
     // Reference timestamp
 
-    this.referenceTimestamp = internals.toMsecs(buffer, 16);
+    this.referenceTimestamp = internals.toMsecs(dv, 16);
 
     // Originate timestamp
 
-    this.originateTimestamp = internals.toMsecs(buffer, 24);
+    this.originateTimestamp = internals.toMsecs(dv, 24);
 
     // Receive timestamp
 
-    this.receiveTimestamp = internals.toMsecs(buffer, 32);
+    this.receiveTimestamp = internals.toMsecs(dv, 32);
 
     // Transmit timestamp
 
-    this.transmitTimestamp = internals.toMsecs(buffer, 40);
+    this.transmitTimestamp = internals.toMsecs(dv, 40);
 
     // Validate
 
@@ -241,37 +238,20 @@ internals.NtpMessage = function (buffer) {
 };
 
 
-internals.toMsecs = function (buffer, offset) {
+internals.toMsecs = function (dv, offset) {
 
-    let seconds = 0;
-    let fraction = 0;
-
-    for (let i = 0; i < 4; ++i) {
-        seconds = (seconds * 256) + buffer[offset + i];
-    }
-
-    for (let i = 4; i < 8; ++i) {
-        fraction = (fraction * 256) + buffer[offset + i];
-    }
-
-    return ((seconds - 2208988800 + (fraction / Math.pow(2, 32))) * 1000);
+    let seconds = dv.getUint32(offset);
+    let fraction = dv.getUint32(offset + 4);
+    return (seconds - 2208988800 + (fraction / Math.pow(2, 32))) * 1000;
 };
 
 
-internals.fromMsecs = function (ts, buffer, offset) {
+internals.fromMsecs = function (ts, dv, offset) {
 
     const seconds = Math.floor(ts / 1000) + 2208988800;
     const fraction = Math.round((ts % 1000) / 1000 * Math.pow(2, 32));
-
-    buffer[offset + 0] = (seconds & 0xFF000000) >> 24;
-    buffer[offset + 1] = (seconds & 0x00FF0000) >> 16;
-    buffer[offset + 2] = (seconds & 0x0000FF00) >> 8;
-    buffer[offset + 3] = (seconds & 0x000000FF);
-
-    buffer[offset + 4] = (fraction & 0xFF000000) >> 24;
-    buffer[offset + 5] = (fraction & 0x00FF0000) >> 16;
-    buffer[offset + 6] = (fraction & 0x0000FF00) >> 8;
-    buffer[offset + 7] = (fraction & 0x000000FF);
+    dv.setUint32(offset, seconds);
+    dv.setUint32(offset + 4, fraction);
 };
 
 
