@@ -65,7 +65,7 @@ require("neopixel").write(B15, [255,0,0]);
 
 This will make the first LED red.
 
-Note that we're using pin `B15` here - if you want to use a different pin (see the wiring up section) then you'll have to change this, but on most devices you'll need to make sure the pin is capable of hardware [[SPI]] `MOSI`. [[Puck.js]] can use any pin for this.
+Note that we're using pin `B15` here - if you want to use a different pin (see the wiring up section) then you'll have to change this, but on most devices you'll need to make sure the pin is capable of hardware [[SPI]] `MOSI`. [Puck.js](/Puck.js) can use any pin for this.
 
 We can do other colours too:
 

@@ -7,7 +7,7 @@ Puck.js with SMS control
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Light,SMS,GSM,LTE,AWOX
 * USES: Puck.js,SIM800,SIM900,ATSMS
 
-This video shows you how use [[Puck.js]] and a GSM modem
+This video shows you how use [Puck.js](/Puck.js) and a GSM modem
 to control devices via SMS text messages.
 
 [[http://youtu.be/xvX2k5vRkg0]]
@@ -21,7 +21,7 @@ means at least 1v95 (when released) or a 'cutting edge' build (http://www.esprui
 You'll need
 -----------
 
-* A [[Puck.js]] device (or other [Espruino board](/Order) if you don't need Bluetooth LE
+* A [Puck.js](/Puck.js) device (or other [Espruino board](/Order) if you don't need Bluetooth LE
 * A [SIM800 or SIM900](/SIM900) module. The one I'm using is designed for a 5v input (if yours isn't you'll need to change the wiring accordingly)
 * A 3.3v voltage regulator (LD1117AV33) if you're not going to use Puck.js's battery
 * A 5v power source 
@@ -159,7 +159,7 @@ function setLight(isOn) {
 
 [[http://youtu.be/As2dqUOpEvU]]
 
-The code on the [[Puck.js]] sending the temperature is:
+The code on the [Puck.js](/Puck.js) sending the temperature is:
 
 ```
 setInterval(function() {

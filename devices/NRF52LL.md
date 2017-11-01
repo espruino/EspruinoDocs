@@ -7,7 +7,7 @@ nRF52 Low Level Interface Library
 * KEYWORDS: Module,nRF52,nRF5x,nRF52832,Puck.js
 * USES: Puck.js
 
-The nRF52 microcontroller used in [[Puck.js]] has a load of really interesting peripherals built-in, not all of which are exposed by Espruino. The microcontroller also contains something called PPI - the "Programmable Peripheral Interconnect". This allows you to 'wire' peripherals together internally.
+The nRF52 microcontroller used in [Puck.js](/Puck.js) has a load of really interesting peripherals built-in, not all of which are exposed by Espruino. The microcontroller also contains something called PPI - the "Programmable Peripheral Interconnect". This allows you to 'wire' peripherals together internally.
 
 PPI lets you connect an `event` (eg. a pin changing state) to a `task` (eg. increment the counter). All of this is done without the processor being involved, allowing for very fast and also very power efficient peripheral use.
 

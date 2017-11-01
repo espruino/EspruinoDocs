@@ -16,7 +16,7 @@ that changes color depending on the temperature.
 You'll need
 -----------
 
-* A [[Puck.js]]
+* A [Puck.js](/Puck.js)
 * A IR controlled RGB Light bulb ([you can find these on eBay](http://www.ebay.com/sch/i.html?_nkw=rgb+led+light+ir+remote+control&_sacat=0))
 * An [Infrared Receiver](Puck.js Infrared) (if your light bulb differs from the one I used)
 
