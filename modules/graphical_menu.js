@@ -23,7 +23,7 @@ exports.list = function(g, items) {
       }
 
       var rows = 0|Math.min((g.getHeight()-y) / options.fontHeight,menuItems.length);
-      var idx = E.clip(options.selected-rows/2,0,menuItems.length-rows);
+      var idx = E.clip(options.selected-(rows>>1),0,menuItems.length-rows);
       var iy = y;
 
       while (rows--) {
