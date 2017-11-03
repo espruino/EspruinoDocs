@@ -213,7 +213,7 @@ function getTemp(number) {
     devs.forEach(function(dev) {
       if (dev.name=="Puck.js 5736") { // <--- change this to the name of your Puck.js
         console.log("Got temp");
-        var message = "Temp is "+dev.servicedata["1809"][0];
+        var message = "Temp is "+dev.serviceData["1809"][0];
         sms.send(number,message, function() {
           print("Sent text!");
         });
