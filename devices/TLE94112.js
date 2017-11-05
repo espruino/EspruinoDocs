@@ -24,7 +24,7 @@ var C = {
 // Addresses of the control registers
 PWM_CH_FREQ_CTRL : 0x33, // PWM clock frequency and frequency modulation of the oscillator
 HB_ACT_CTRL :  [0x03, 0x43, 0x23],
-HB_MODE_CTRL : [0x63, 0x13, 0xA3],
+HB_MODE_CTRL : [0x63, 0x13, 0x53],
 PWM_DC_CTRL :  [0x73, 0x0B, 0x4B],
 
 FW_OL_CTRL :  0x2B,       // LED mode for HS1/2 and active free-wheeling of HB1-6
