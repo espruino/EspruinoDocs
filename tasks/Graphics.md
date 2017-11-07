@@ -20,9 +20,15 @@ Below are a list of currently available modules that will interface to hardware 
 
 * APPEND_KEYWORD: Graphics Driver
 
+**Note:** several of the graphics drivers use offscreen buffers. This means that
+draw operations won't immediately effect the display, and a method needs calling
+to copy the buffer's data onto the screen. By convention this method is usually
+called `.flip()`.
+
 ### Internal Use
 
-You can create a Graphics class which renders to an ArrayBuffer:
+**If you don't already have a graphics object set up** then
+you can create a Graphics class which renders to an ArrayBuffer:
 
 ```
 Graphics.prototype.print = function() {
