@@ -146,5 +146,5 @@ mqtt.on('publish', function (pub) {
   console.log("message: "+pub.message);
 });
 
-mqtt.unsubscribe("test/epruino");
+mqtt.unsubscribe("test/espruino");
 ```
