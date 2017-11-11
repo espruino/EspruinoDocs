@@ -261,7 +261,7 @@ We've got [a proper tutorial on it here](/Puck.js Web Bluetooth)
 
 You can make your own application to control Espruino for whatever platform you need.
 
-For the simplest control, add you need to do is connect to the Puck.js bluetooth
+For the simplest control, all you need to do is connect to the Puck.js bluetooth
 device and connect to the characteristic with ID `6e400002b5a3f393e0a9e50e24dcca9e`.
 You can then write repeatedly to it to send commands to Espruino.
 
