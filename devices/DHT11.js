@@ -16,12 +16,12 @@ DHT11.prototype.read = function (cb, n) {
   if (!n) n=10;
   var d = "";
   var ht = this;
-  pinMode(ht.pin); // set pin state to automatic
   digitalWrite(ht.pin, 0);
+  pinMode(ht.pin,"output"); // force pin state to output
   this.watch = setWatch(function(t) {
     d+=0|(t.time-t.lastTime>0.00005);
   }, ht.pin, {edge:'falling',repeat:true} );
-  setTimeout(function() {pinMode(ht.pin,'input_pullup');},20);
+  setTimeout(function() {pinMode(ht.pin,'input_pullup');pinMode(ht.pin);},20);
   setTimeout(function() {
     clearWatch(ht.watch);
     delete ht.watch;
