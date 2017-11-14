@@ -18,10 +18,13 @@ DHT11.prototype.read = function (cb, n) {
   var ht = this;
   digitalWrite(ht.pin, 0);
   pinMode(ht.pin,"output"); // force pin state to output
+  // start watching for state change
   this.watch = setWatch(function(t) {
     d+=0|(t.time-t.lastTime>0.00005);
   }, ht.pin, {edge:'falling',repeat:true} );
+  // raise pulse after 1ms
   setTimeout(function() {pinMode(ht.pin,'input_pullup');pinMode(ht.pin);},20);
+  // stop looking after 50ms
   setTimeout(function() {
     clearWatch(ht.watch);
     delete ht.watch;
