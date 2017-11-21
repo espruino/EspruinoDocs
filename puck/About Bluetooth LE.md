@@ -122,7 +122,7 @@ but you can subscribe to `notify`, and so can receive any characters as they get
 sent.
 
 If you want to light an LED on a Puck, you can just connect and write
-`LED.set()` and a newline to the `RX` characteristic, and the command will
+`LED.set()` and a newline to the `TX` characteristic, and the command will
 be executed! This works for functions that you've previously defined too.
 
 **Note:** Exposing the JS interpreter to the world isn't remotely secure.
