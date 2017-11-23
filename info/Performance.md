@@ -10,7 +10,11 @@ Please see [[Internals]] for a more technical description of the interpreter's i
 
 Espruino is designed to run on devices with very small amounts of RAM available (down to 8kB) *while still keeping a copy of the source code it is executing so you can edit it on the device*. As such, it makes some compromises that affect the performance in ways you may not expect.
 
-**Is it too slow for you?** Then use the Web IDE to [Compile JavaScript into optimised Thumb Code](/Compilation), or if that isn't fast enough then use [Inline Assembler](/Assembler) instead.
+**Is it too slow for you?**
+
+* Turn on pretokenisation with `E.setFlags({pretokenise:1})`
+* Use the Web IDE to [Compile JavaScript into optimised Thumb Code](/Compilation),
+* For the best speed use [Inline Assembler](/Assembler) instead
 
 
 
@@ -160,6 +164,13 @@ while (1) { A0.set();                 A0.reset();               }
 ```
 
 This applies equally to comments - so it pays to keep comments above or below a function declaration or loop, not inside it.
+
+**Note:** You can turn on 'pretokenisation' with `E.setFlags({pretokenise:1})`.
+Any functions defined after pretokenisation is enables will have all whitespace 
+removed, and any tokens (such as `this`, `function`, `for`, etc) will be turned
+into numeric values. This means that the above (whitespace slowing down
+execution) will not apply - however your original code formatting will be lost,
+which will make debugging significantly more difficult.
 
 
 
@@ -384,4 +395,3 @@ w(x);
 ```
 
 This has the advantage of reducing variable lookups (mentioned above) as well.
-
