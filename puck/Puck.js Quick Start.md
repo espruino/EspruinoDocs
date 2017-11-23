@@ -318,6 +318,7 @@ However there's also much more detailed information:
   * [Global Functions](/Reference#_global) and [E Object](/Reference#E) - for built-in Espruino functionality
 * [List of available modules](/Modules)
 * [Other tutorials](/Tutorials)
+* See other [ways of Programming Puck.js](/Programming)
 * Or check out [our forums](http://forum.espruino.com)
 
 **Note:** Espruino runs on many other devices, and [espruino.com](http://espruino.com)
@@ -344,6 +345,5 @@ As a result, if you've been using Puck.js but don't intend to use the code
 you've uploaded it's recommended that you either unplug the battery, or connect
 to the Puck.js and type `reset()`, to ensure that no code is running in the
 background that might flatten the battery.
-
 
 For more details on power usage, [see here](/Puck.js#power-consumption)

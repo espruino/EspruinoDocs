@@ -203,5 +203,6 @@ Now you've got an idea how to use Espruino:
 * Check out [[Modules]] to see which libraries of code are available to use
 * If you have a [Pico](/Pico) or [Original](/EspruinoBoard) Espruino board then click those links for more in-depth information about your board, as well as for links to tutorials that specifically use your board.
 * See how to use the more advanced features of the [[Web IDE]]
+* Check out other [ways of Programming Espruino](/Programming)
 * Instantly [[Search]] all the Espruino website's documentation (using the box in the top right)
 * If you've got a question, please check out our [[Forum]]

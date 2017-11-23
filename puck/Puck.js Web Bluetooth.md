@@ -427,3 +427,8 @@ console would cause the `>` prompt character to be removed, the text to be
 written, and then `>` to be written again. By writing direct to `Bluetooth` the
 console device is unaware of what's going on and doesn't output any extra
 characters.
+
+Dashboards
+----------
+
+You might also be interested in the [Web Bluetooth Dashboard tutorial](/Web+Bluetooth+Dashboard).
