@@ -389,8 +389,9 @@ Try the example below:
           // Wait for it to reset itself
           setTimeout(function() {
             // Now tell it to write data on the current light level to Bluetooth
-            // 10 times a second
-            connection.write("setInterval(function(){Bluetooth.println(Puck.light());},100);\n",
+            // 10 times a second. Also ensure that when disconnected, Puck.js
+            // resets so the setInterval doesn't keep draining battery.
+            connection.write("setInterval(function(){Bluetooth.println(Puck.light());},100);NRF.on('disconnect', function() {reset()});\n",
               function() { console.log("Ready..."); });
           }, 1500);
         });
@@ -415,15 +416,14 @@ causes Espruino to write the current light value down the Bluetooth link every
 `100ms`.
 * When each line is received, `onLine` gets called and it updates the color
 of the light icon.
+* `NRF.on('disconnect', function() {reset()});` is also sent. This ensures that
+when disconnected, Puck.js resets itself - which makes sure that there isn't 
+a `setInterval` left running that will flatten your battery. If you're making
+something with this you'll almost certainly want to be a bit more subtle - 
+using `clearInterval` to remove *just* the interval you started. 
 
 **Note:** We use `Bluetooth.println` not `console.log` because writing to the
 console would cause the `>` prompt character to be removed, the text to be
 written, and then `>` to be written again. By writing direct to `Bluetooth` the
 console device is unaware of what's going on and doesn't output any extra
 characters.
-
-**Warning:** Even when disconnected, Puck.js will **still** be executing
-`setInterval` which will cause your battery to drain much more quickly than
-if it was idle. The best way to fix this would be to add an event handler
-to the `NRF` class that cleared all intervals when the connection was
-dropped.
