@@ -8,7 +8,7 @@ Web Bluetooth Dashboards
 * USES: Puck.js,Web Bluetooth
 
 Sometimes you'll want to be able to make a webpage with buttons, graphs
-and guages where you can quickly monitor or control your embedded devices.
+and gauges where you can quickly monitor or control your embedded devices.
 This tutorial will show you how to make something like the page below:
 
 ![dashboard](Web Bluetooth Dashboard.png)
@@ -117,7 +117,7 @@ Now, disconnect and update the Web Bluetooth page with what's below
   // Set up the controls we see on the screen    
   var elements = {
     heading : TD.label({x:10,y:10,width:190,height:50,label:"My Dashboard"}),
-    bat : TD.guage({x:10,y:70,width:190,height:220,label:"Battery Level",value:0,min:0,max:100}),
+    bat : TD.gauge({x:10,y:70,width:190,height:220,label:"Battery Level",value:0,min:0,max:100}),
     temp : TD.graph({x:210,y:10,width:400,height:180,label:"Temperature"}),
     redled : TD.toggle({x:210,y:200,width:200,height:90,label:"Red LED",value:0,onchange:function(el,v) {
       Puck.write("LED1.write("+v+");\n");
@@ -221,7 +221,7 @@ so more information can be transferred at once if needed.
   // Set up the controls we see on the screen    
   var elements = {
     heading : TD.label({x:10,y:10,width:190,height:50,label:"My Dashboard"}),
-    light : TD.guage({x:10,y:70,width:190,height:220,label:"Light",value:0,min:0,max:100}),
+    light : TD.gauge({x:10,y:70,width:190,height:220,label:"Light",value:0,min:0,max:100}),
     modal: TD.modal({x:10,y:10,width:190,height:430,label:"Click to connect",onchange:connectDevice})
   }
   for (var i in elements)
