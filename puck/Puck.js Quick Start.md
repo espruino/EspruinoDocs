@@ -88,15 +88,9 @@ If it doesn't:
 * Reboot your Mac
 * **Make sure that you turn off (or un-pair) any Bluetooth devices that were using your internal Bluetooth** - they may stop your Mac from using the new adaptor
 
-When your Mac supports BLE, you need to enable Web Bluetooth support:
-
-* Type `chrome://flags` in the address bar
-* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Mac OS and Chromebook, there is no option available and Web Bluetooth is enabled by default.
-* Restart your browser
-
 #### Windows
 
-Windows support in Chrome is not yet available - Windows 10 should be supported in 2017.
+Windows support in Chrome is not yet available - Windows 10 support is under development as of 2017.
 
 For now there are two options:
 
@@ -105,27 +99,21 @@ For now there are two options:
 
 #### Linux
 
+Linux support in Chrome is not yet available.  However, the ChromeOS support via BlueZ may work:
+
 BlueZ 5.41+ required - you can check by typing `bluetoothd --version`. If it isn't there are some [Bluez installation instructions here](/Web Bluetooth On Linux)
 
 * Type `chrome://flags` in the address bar
-* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`) in Chrome 56 or later, or `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier.
+* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`).
 * Restart your browser
 
 #### Chromebook
 
-All Chromebooks with Bluetooth should support Web Bluetooth
-
-* Type `chrome://flags` in the address bar
-* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Chromebook, there is no option available and Web Bluetooth is enabled by default.
-* Restart your browser
+All Chromebooks with Bluetooth should support Web Bluetooth.
 
 #### Android
 
-Android 6 (Marshmallow) or later required, but Android 5 [works with the latest Chromium builds](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop))
-
-* Type `chrome://flags` in the address bar
-* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later, there is no option available and Web Bluetooth is enabled by default.
-* Restart your browser
+Android 6 (Marshmallow) or later required.
 
 #### iOS (iPhone, iPad)
 
