@@ -15,7 +15,7 @@ to control devices via SMS text messages.
 The video further down shows how to read data from BLE devices 
 within range and then send that as an SMS text message response.
 
-**Note:** You'll need the latest firmware as of Sewpt 2017 on your Puck.js device for this. That
+**Note:** You'll need the latest firmware as of Sept 2017 on your Puck.js device for this. That
 means at least 1v95 (when released) or a 'cutting edge' build (http://www.espruino.com/Download).
 
 You'll need
