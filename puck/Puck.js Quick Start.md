@@ -86,7 +86,7 @@ If it doesn't:
 * Open a terminal and type `sudo nvram bluetoothHostControllerSwitchBehavior=al­ways`
 (to go back to the old behaviour type `sudo nvram -d bluetoothHostControllerSwitchBehavior`)
 * Reboot your Mac
-* **Make sure that you turn off (or un-pair) any Bluetooth devices that were using your internal Bluetooth** - they get stop your Mac from using the new adaptor
+* **Make sure that you turn off (or un-pair) any Bluetooth devices that were using your internal Bluetooth** - they may stop your Mac from using the new adaptor
 
 When your Mac supports BLE, you need to enable Web Bluetooth support:
 
