@@ -90,7 +90,7 @@ If it doesn't:
 
 #### Windows
 
-Windows support in Chrome is not yet available - Windows 10 support is under development as of 2017.
+Windows 10 support is under development as of late 2017.
 
 For now there are two options:
 
@@ -99,7 +99,7 @@ For now there are two options:
 
 #### Linux
 
-Linux support in Chrome is not yet available.  However, the ChromeOS support via BlueZ may work:
+Linux is not officially supported in Chrome.  However, because ChromeOS is supported it can be possible to enable Linux support:
 
 BlueZ 5.41+ required - you can check by typing `bluetoothd --version`. If it isn't there are some [Bluez installation instructions here](/Web Bluetooth On Linux)
 
@@ -113,7 +113,9 @@ All Chromebooks with Bluetooth should support Web Bluetooth.
 
 #### Android
 
-Android 6 (Marshmallow) or later required.
+Android 6 (Marshmallow) or later supported.
+
+Android 5 (Lollipop) devices can use [Chromium installed over ADB to a developer mode device](https://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop).
 
 #### iOS (iPhone, iPad)
 
