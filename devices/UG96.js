@@ -104,13 +104,15 @@ var pwrkey;
 var pwrkey_active_level;
 var flowcontrol = false;
 
-/* Geolocaliation variables :  longitude,latitude */
+/* Geolocalisation variables :  longitude,latitude */
 var longlat = "";
 /* Geolocaliation state (running or not) */
 var geoPos = false;
 
 // by default, without setting, debug in the module is disabled
 var dbg = false;
+
+var ccid;
 
 /* modem may have the following initialization states */
 var AtInitSequence = {
@@ -126,6 +128,52 @@ var AtInitSequence = {
   AT_CURRENT_OPERATOR: 9,
   AT_HW_FLOW_CONTROL: 10,
 };
+/*
+openSocket is triggered at the socket creation, as earlier as possible.
+Nevertheless, this function can be delayed to enter in secure mode (since using of encrypted keys can take time in mbed )
+In case of failure with Error code "socket connect failed", try and repeat 5 times the openSocket
+*/
+function openSocket(sckt, host, port, counter) {
+
+  if (dbg) console.log('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1');
+
+  at.cmd('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1\r\n',150000, function cb(d) {
+    if (d=="OK") {
+      if (dbg) console.log("AT+QIOPEN OK");
+      return cb;
+    } else if (d=='+QIOPEN: '+sckt+",0") {
+      if (dbg) console.log(d);
+      if (dbg) console.log("AT+QIOPEN completed with socket: " + sckt);
+      socks[sckt] = true;
+      return "";
+    } else if (d=='+QIOPEN: '+sckt+",565") {
+      if (dbg) console.log("AT+QIOPEN failure DNS parse failed...");
+      socks[sckt] = "tobeclosed";
+      return "";
+    } else if (d=='+QIOPEN: '+sckt+",566") {
+      if (dbg) console.log("AT+QIOPEN failure could not connect socket ...");
+	    if (counter < 5) {
+	      setTimeout(function cb(){console.log("repeat opening the socket ..."); openSocket(sckt, host, port,(counter+1));}, 3000);
+	    } else {
+          socks[sckt] = "tobeclosed";
+        }
+      return "";
+    } else if (d=='+QIOPEN: '+sckt+",563") {
+      if (dbg) console.log("AT+QIOPEN socket identity has been used..., socket is:" + sckt);
+      socks[sckt] = true;
+      return "";
+    } else {
+      if (dbg) console.log("AT+QIOPEN failed on socket:" + sckt);
+      if (dbg) {
+        at.cmd("AT+QIGETERROR\r\n",1000, function cb(d) {
+          if (dbg) console.log(d);
+        });
+      }
+      socks[sckt] = "tobeclosed";
+      return "";
+    }
+  });
+}
 
 /*
 Closesocket is run because of 2 triggers :
@@ -220,41 +268,13 @@ var netCallbacks = {
 
       socks[sckt] = "Wait";
       sockData[sckt] = "";
-      if (dbg) console.log('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1');
-      at.cmd('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1\r\n',150000, function cb(d) {
-        if (d=="OK") {
-	        if (dbg) console.log("AT+QIOPEN OK");
-	  return cb;
-        } else if (d=='+QIOPEN: '+sckt+",0") {
-	      if (dbg) console.log(d);
-	      if (dbg) console.log("AT+QIOPEN completed with socket: " + sckt);
-          socks[sckt] = true;
-          return "";
-        } else if (d=='+QIOPEN: '+sckt+",565") {
-	      if (dbg) console.log("AT+QIOPEN failure DNS parse failed...");
-          socks[sckt] = "tobeclosed";
-          return "";
-        } else if (d=='+QIOPEN: '+sckt+",566") {
-	      if (dbg) console.log("AT+QIOPEN failure could not connect socket ...");
-          socks[sckt] = "tobeclosed";
-          return "";
-        } else if (d=='+QIOPEN: '+sckt+",563") {
-	      if (dbg) console.log("AT+QIOPEN socket identity has been used..., socket is:" + sckt);
-          socks[sckt] = true;
-          return "";
-        } else {
-	      if (dbg) console.log("AT+QIOPEN failed on socket:" + sckt);
-            if (dbg) {
-                at.cmd("AT+QIGETERROR\r\n",1000, function cb(d) {
-                    if (dbg) console.log(d);
-                });
-            }
-            // do not consider socket is used
-           socks[sckt] = "tobeclosed";
-           //throw new Error('QIOPEN failed: ' + d)
-            return "";
-        }
-      });
+
+      if (port == 443) {
+        if (dbg) console.log("delaying the TLS socket opening");
+        setTimeout(function cb(){openSocket(sckt, host, port,0);}, 3000);
+      } else {
+        openSocket(sckt, host, port,0);
+      }
     }
     return sckt; // jshint ignore:line
   },
@@ -474,6 +494,8 @@ function pdpdeacthandler(line) {
         sockData[i] = "";
     }
   });
+
+  return ""
 }
 
 // Dust QIND URC (not currently managed in this version)
@@ -538,6 +560,19 @@ function CfunHandler(line) {
 // re_inject other commands
 function RdyHandler(line) {
   if (dbg) console.log('RdyHandler in: ' + line);
+
+  return "";
+}
+
+// Manage POWERED DOWN URC
+// This is received when the modem has stored its data
+// and deregistered(for instance saving of registered PLMN)
+// Manage the pins so that modem is physically off
+function PoweredDownHandler(line) {
+  if (dbg) console.log('PowerDownHandler in: ' + line);
+
+  console.log("Modem is entering in power down");
+  digitalWrite(pwrkey, pwrkey_active_level);
 
   return "";
 }
@@ -706,6 +741,9 @@ var gprsFuncs = {
           /* Case processing with a response */
           if (r&&r.substr(0,7)=="+QCCID:") {
             if (dbg) console.log("SIM ID :" +r);
+
+            ccid = r.substring(8,r.length-1);
+
             // wait for OK
             return cb;
           } else if (r === 'OK') {
@@ -745,8 +783,8 @@ var gprsFuncs = {
             if (signal_quality_report) {
               s = AtInitSequence.AT_PS_ATTACHMENT;
               // check if we're on network
-              if (dbg) console.log('PS attacment is starting. It may take until a minute, please wait ... ');
-              at.cmd('AT+CGATT=1\r\n', 75000, cb);
+              if (dbg) console.log('PS attachment is starting. It may take until a minute, please wait ... ');
+              setTimeout(function(){at.cmd('AT+CGATT=1\r\n', 75000, cb);},5000);
             } else {
               // start and wait for the next quality signal report sequence
              setTimeout(function(){at.cmd('AT+CSQ\r\n', 2000, cb);},500);
@@ -973,12 +1011,32 @@ var gprsFuncs = {
     at.cmd('AT+QCELLLOC=1\r\n', 2000, cb);
   },
   "geoLocStop": function() {
-		console.log("Stopping GeoLocalization");
+    console.log("Stopping GeoLocalization");
 
-		geoPos = false;
+    geoPos = false;
 
-		longlat = "";
-  }
+    longlat = "";
+  },
+  "turnOff": function() {
+
+    console.log("Turning Off the modem");
+
+    var cb = function(r) {
+      if (r==='OK') {
+          console.log("Please wait, disconnecting and saving data. It may last until 60 s");
+
+          /* wait for POWERED DOWN and manage it in the URCs table */
+		  /* other URCs can be received before the modem has terminated its shut down */
+      } else {
+        console.log("Turn off error : " + r);
+      }
+    };
+    // Normal power down
+    at.cmd('AT+QPOWD=1\r\n', 2000, cb);
+  },
+  "getCCID": function() {
+    return ccid;
+  },
 };
 
 resetOptions = {
@@ -1025,6 +1083,7 @@ exports.connect = function(usart, resetOptions, connectedCallback) {
   at.register("+QUSIM:", QusimHandler);
   at.register("+CFUN:", CfunHandler);
   at.register("RDY", RdyHandler);
+  at.register("POWERED DOWN", PoweredDownHandler);
 
   gprsFuncs.reset(connectedCallback);
   return gprsFuncs;
