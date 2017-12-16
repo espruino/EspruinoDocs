@@ -105,7 +105,6 @@ The following work in a bash shell environment, you will need git, and other ess
 git clone https://github.com/espruino/Espruino.git
 cd Espruino
 source scripts/provision.sh ESP32
-export ESP_IDF_PATH=$(pwd)/esp-idf
 make clean && BOARD=ESP32 make
 ```
 
