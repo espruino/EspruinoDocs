@@ -92,7 +92,7 @@ If your device is not already flashed, below are the instructions.  Flashing inv
 *Note:* This flashing process is being improved.  We expect to remove the
 build stage and provide the firmware as a download.
 
-#### Build the Firmware
+#### Building Firmware and installing the toolchain
 
 You can get the Espruino firmare from the [Travis cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
 Get the file ending in '_esp32.bin'.
@@ -102,9 +102,12 @@ You can also build the Espruino firmware yourself:
 The following work in a bash shell environment, you will need git, and other essential build tools (e.g. on Ubuntu run `sudo apt-get install build-essential`).
 
 ```sh
+# Get the Espruino source code
 git clone https://github.com/espruino/Espruino.git
 cd Espruino
+# Download and set up the toolchain ('source' is important here)
 source scripts/provision.sh ESP32
+# Clean and rebuild
 make clean && BOARD=ESP32 make
 ```
 
