@@ -59,7 +59,7 @@ Notes
 -----
 
 * `Puck.light()` can be used to get a rough idea of ambient light - to turn off the night light in the day time.
-* Since Puck.js has Bluetoothj, you could use a Bluetooth LE light bulb as well. They're often harder to reverse-engineer though!
+* Since Puck.js has Bluetooth, you could use a Bluetooth LE light bulb as well. They're often harder to reverse-engineer though!
 * Puck.js has RGB lights on board so you could use those for the night light, but I didn't because:
   * The battery would run down pretty quickly (a day or two) with the LEDs on all night
   * The act of powering the LEDs will raise the die temperature of Puck.js, messing up the temperature reading. It's another reason to only measure the temperature every few seconds rather than all the time.
