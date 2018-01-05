@@ -36,19 +36,19 @@ Then inside `espruino-ts-quickstart` directory run command `code .`
 
 It shall run Visual Studio Code IDE and open then project.
 
-![Visual Studio Code main screen](Typescript%20and%20Visual%20Studio%20Code%20IDE/main-screen.png)
+![Visual Studio Code main screen](Typescript and Visual Studio Code IDE/main-screen.png)
 
 Poject has 3 build tasks: `build`, `espruino-console`, `send-to-espruino-console`. To access it press `Ctrl-Shift-B`
 
-![Build commands](Typescript%20and%20Visual%20Studio%20Code%20IDE/build-commands.png)
+![Build commands](Typescript and Visual Studio Code IDE/build-commands.png)
 
 `build` command compiles ts code to javascript and prepares it for espruino use.
 
-![Build output](Typescript%20and%20Visual%20Studio%20Code%20IDE/build-output.png)
+![Build output](Typescript and Visual Studio Code IDE/build-output.png)
 
 `espruino-console` command runs Espruino console (check\adjust `env-config.yaml` config file).
 
-![Espruino console](Typescript%20and%20Visual%20Studio%20Code%20IDE/espruino-console.png)
+![Espruino console](Typescript and Visual Studio Code IDE/espruino-console.png)
 
 `send-to-espruino-console` command uploads compiled code to board (run espruino console before using this command).
 Once you run this command then switch back to espruino-console view.
