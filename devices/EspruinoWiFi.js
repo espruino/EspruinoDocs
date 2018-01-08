@@ -341,7 +341,7 @@ exports.setHostname = function(hostname, callback) {
 in milliseconds, or undefined if there is an error */
 exports.ping = function(addr, callback) {
   var time;
-  this.at.cmd('AT+PING="'+addr+'"\r\n',1000,function cb(d) {
+  at.cmd('AT+PING="'+addr+'"\r\n',1000,function cb(d) {
     if (d && d[0]=="+") {
       time=d.substr(1);
       return cb;
