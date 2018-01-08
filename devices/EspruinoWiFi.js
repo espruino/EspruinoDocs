@@ -329,6 +329,26 @@ exports.scan = function(callback) {
   });
 };
 
+/* Set the host name of the Espruino WiFi - so it can be accessed via DNS. */
+exports.setHostname = function(hostname, callback) {
+  turnOn(MODE.CLIENT, function(err) {
+    if (err) return callback(err);
+    at.cmd("AT+CWHOSTNAME="+JSON.stringify(hostname)+"\r\n",500,callback);
+  });
+};
+
+/* Ping the given address. Callback is called with the ping time 
+in milliseconds, or undefined if there is an error */
+exports.ping = function(addr, callback) {
+  var time;
+  this.at.cmd('AT+PING="'+addr+'"\r\n',1000,function cb(d) {
+    if (d && d[0]=="+") {
+      time=d.substr(1);
+      return cb;
+    } else if (d=="OK") callback(time); else callback();  
+  });
+};
+
 /** This function returns some of the internal state of the WiFi module, and can be used for debugging */
 exports.debug = function() {
   return {
@@ -337,4 +357,3 @@ exports.debug = function() {
     sockData : sockData
   };
 };
-
