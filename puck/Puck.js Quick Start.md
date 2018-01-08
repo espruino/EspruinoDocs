@@ -56,6 +56,24 @@ To get started you have two options:
 * Send individual JavaScript commands to Puck.js without programming it
 
 
+Requirements
+------------
+
+Puck.js uses Bluetooth LE, so you need a Bluetooth 4.0-capable adaptor in your computer (Bluetooth versions before 4.0 won't work). Pretty much all new computers come with Bluetooth 4, but you may need to get an external Bluetooth LE dongle if your computer:
+
+* Is an Apple Mac made before 2012
+* Is a Windows PC 
+* Is a desktop PC - it may not have any wireless support *at all*
+* Is running Linux - much of the built-in Bluetooth LE functionality in laptops is still buggy. External USB adaptors will be much more reliable.
+
+If your computer doesn't have Bluetooth LE then Bluetooth LE USB adaptors and small, cheap (~$10), and easily available. There are two main types of USB Bluetooth Adaptor available:
+
+* **Broadcom chipset** (eg. BCM20702) works well on all platforms.
+* **Cambridge Silicon Radio (CSR)** - these work great on Linux and Windows. However while they used to work on Macs, *Apple removed support in the High Sierra OS update* - so you're better off with a Broadcom module.
+
+To be sure that you get a usable adaptor we'd recommend that you buy ONLY adaptors that explicitly mention `CSR` or `Broadcom` in the descriptuon. **The BlueGiga BLED112 module WILL NOT WORK** - it is a serial port device, not a general purpose Bluetooth adaptor.
+
+
 Using the Espruino IDE
 ----------------------
 
@@ -82,7 +100,7 @@ OS X Yosemite or later required, and check that your Mac supports Bluetooth Low 
 
 If it doesn't:
 
-* Get a Bluetooth 4.0 (or later) adaptor (they cost $5 - $10)
+* Get a Bluetooth 4.0 (or later) adaptor (they cost ~$10) - [see the requirements section above](#requirements().
 * Open a terminal and type `sudo nvram bluetoothHostControllerSwitchBehavior=al­ways`
 (to go back to the old behaviour type `sudo nvram -d bluetoothHostControllerSwitchBehavior`)
 * Reboot your Mac
@@ -90,7 +108,7 @@ If it doesn't:
 
 #### Windows
 
-Windows 10 support is under development as of late 2017.
+Windows 10 support for Web Bluetooth is under development as of late 2017.
 
 For now there are two options:
 
@@ -162,6 +180,7 @@ used normal Espruino USB devices before.
 
 **Note:**
 
+* Bluetooth LE devices like Puck.js are not treated as serial port devices by Windows. If the IDE's connection menu shows devices beginning with the word `COM` (eg. `COM5`), they are not your Puck.js and connecting to them won't work.
 * If using Windows 8.1/10 or later you'll need to pair your Puck.js using the Windows
 Bluetooth menu before it'll appear in the Web IDE.
 * If you're using a Bluetooth dongle with Windows 10 you should use Windows'
