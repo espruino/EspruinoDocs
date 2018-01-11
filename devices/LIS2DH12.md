@@ -10,15 +10,35 @@ The LIS2DH12 is an ultra-low-power high-performance three-axis linear accelerome
 
 You can use the [[LIS2DH12.js]] module with the LIS2DH12 as follows:
 
+SPI
+---
+
 ```
 SPI1.setup({miso:..., mosi:..., sck:...);
 var accel = require("LIS2DH12").connectSPI(SPI1, CS_PIN, function(xyz) {
-   // callback whenever dats is received
+   // callback whenever data is received
    console.log(xyz);
    // prints { "x": 3.90625, "y": -7.8125, "z": 984.375 }
 });
 accel.setPowerMode(on?"low":"powerdown");
 ```
+
+I2C
+---
+
+```
+I2C1.setup({sda:..., scl:...);
+var accel = require("LIS2DH12").connectI2C(I2C1, function(xyz) {
+   // callback whenever data is received
+   console.log(xyz);
+   // prints { "x": 3.90625, "y": -7.8125, "z": 984.375 }
+});
+accel.setPowerMode(on?"low":"powerdown");
+```
+
+**Note:** you can supply a 3rd argument to `connectI2C` containing the I2C
+address if it is non-standard.
+
 
 Reference
 ---------

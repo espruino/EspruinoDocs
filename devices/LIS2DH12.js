@@ -5,6 +5,7 @@ var C = {
   CTRL_REG2:0x21,
   CTRL_REG3:0x22,
   CTRL_REG4:0x23,
+  STATUS_REG:0x27,
   OUT_X_L:0x28,
 
   I_AM_MASK:0x33,
@@ -29,23 +30,16 @@ var C = {
   SCALE16G:3
 };
 
-function LIS2DH12(spi, cs, callback) {
-  this.spi = spi;
-  this.cs = cs;
+function LIS2DH12(r,w, callback) {
+  this.r = r; // read from a register
+  this.w = w; // write to a register
   this.callback = callback;
-  if (this.read(C.WHO_AM_I, 1)[0] != C.I_AM_MASK)
+  if (this.r(C.WHO_AM_I, 1)[0] != C.I_AM_MASK)
     throw "LIS2DH12 WHO_AM_I check failed";
   this.g_scale = C.SCALE2G;
+  this.mode = "powerdown";
   this.interval = undefined;  
 }
-// internal - read from to a register
-LIS2DH12.prototype.read = function(reg,len) {
-  return this.spi.send([reg|0xC0,new Uint8Array(len)], this.cs).slice(1);
-};
-// internal - write to a register
-LIS2DH12.prototype.write = function(reg,data) {
-  return this.spi.write(reg, data, this.cs);
-};
 
 /** Set the power state of the accelerometer. 
   Either :
@@ -58,8 +52,7 @@ LIS2DH12.prototype.write = function(reg,data) {
 LIS2DH12.prototype.setPowerMode = function (mode) {
     var ctrl1RegVal = C.XYZ_EN_MASK; // Enable all axis
     var ctrl4RegVal = this.g_scale<<4; // Set Scale
-    var time_ms = 0;
-    this.data = undefined;
+    var time_ms = 0;    
     switch(mode) {
     case "normal":
         ctrl1RegVal |= C.ODR_MASK_100HZ;
@@ -89,34 +82,62 @@ LIS2DH12.prototype.setPowerMode = function (mode) {
     default:
         throw "Unknown power mode "+JSON.stringify(mode);
     }
-    this.write(C.CTRL_REG1, ctrl1RegVal);
-    this.write(C.CTRL_REG4, ctrl4RegVal);
+    this.w(C.CTRL_REG1, ctrl1RegVal);
+    this.w(C.CTRL_REG4, ctrl4RegVal);
     /* save power mode to check in get functions if power is enabled */
     this.mode = mode;
 
     // set up timer
     if (this.interval) clearInterval(this.interval);
     this.interval = undefined;
-    if (time_ms)
+    if (time_ms && this.callback)
       this.interval = setInterval(function(acc) {
-        acc.data = new DataView(new Uint8Array(acc.read(C.OUT_X_L, 6)).buffer);
-        if (acc.callback) acc.callback(acc.getXYZ());
+         acc.callback(acc.getXYZ());
       }, time_ms, this);
 };
 
-// Get the last read accelerometer readings as 
-// an object with {x,y,z} elements
+/* Get the last read accelerometer readings as 
+an object with {x,y,z,new} elements. new is false if the data hasn't changed since the last read */
 LIS2DH12.prototype.getXYZ = function() {
-  if (!this.data) return undefined;
+  var d = new DataView(new Uint8Array(this.r(C.STATUS_REG, 7)).buffer);
   var scale = 1 / (16 << (this.g_scale)) * 1000 / 1024;  
   return {
-    x: this.data.getInt16(0,1)*scale,
-    y: this.data.getInt16(2,1)*scale,
-    z: this.data.getInt16(4,1)*scale
+    x: d.getInt16(1,1)*scale,
+    y: d.getInt16(3,1)*scale,
+    z: d.getInt16(5,1)*scale,
+    new : (d.getUint8(0)&8)!=0
   };  
+};
+
+/* Call the callback with an accelerometer reading {x,y,z}. If the accelerometer is powered off,
+ power it on, take a reading, and power it off again */
+LIS2DH12.prototype.readXYZ = function(callback) {
+  var isOff = this.mode=="powerdown";
+  var c = this.callback;
+  this.callback = function(xyz) {
+    if (isOff) this.setPowerMode("powerdown");
+    this.callback = c;
+    callback(xyz);
+  };
+  if (isOff) this.setPowerMode("normal");  
 };
 
 // Initialise the LIS2DH12 module with the given SPI interface and CS pins
 exports.connectSPI = function(spi,cs,callback) {
-  return new LIS2DH12(spi,cs,callback);
+  return new LIS2DH12(function(reg,len) { // read
+    return spi.send([reg|0xC0,new Uint8Array(len)], cs).slice(1);
+  }, function(reg,data) { // write
+    return spi.write(reg, data, cs);
+  },callback);
+};
+
+// Initialise the LIS2DH12 module with the given I2C interface (and optional address)
+exports.connectI2C = function(i2c,callback,addr) {
+  addr = addr||0x19;
+  return new LIS2DH12(function(reg,len) { // read
+    i2c.writeTo(addr,reg|128);
+    return i2c.readFrom(addr,len);
+  }, function(reg,data) { // write
+    i2c.writeTo(addr,reg,data);
+  },callback);
 };
