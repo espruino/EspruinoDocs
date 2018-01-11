@@ -38,7 +38,7 @@ You need to wire up as follows:
 
 **The square pin on the PCB is pin 1**
 
-**XSDN is for shitting down/waking up the device.** 
+**XSDN is for shutting down/waking up the device.** 
 You can just connect it straight to VDD if needed.
 
 Software
