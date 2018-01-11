@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
+/* Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 // Based heavily on https://github.com/sparkfun/SparkFun_MPU-9250_Breakout_Arduino_Library
 // TODO: Handle magnetometer
 var C = {
