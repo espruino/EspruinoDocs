@@ -31,6 +31,7 @@ var C = {
   ZA_OFFSET_L : 0x7E,
   INT_STATUS : 0x3A,
   ACCEL_XOUT_H : 0x3B,
+  TEMP_OUT_H : 0x41,
   GYRO_XOUT_H : 0x43,
 };
 
@@ -86,8 +87,8 @@ MPU9250.prototype.calibrateMPU9250 = function() {
     // Set accelerometer full-scale to 2 g, maximum sensitivity
     mpu.w(C.ACCEL_CONFIG, 0x00);
     
-    this.gyrosensitivity  = 131;   // = 131 LSB/degrees/sec
-    this.accelsensitivity = 16384; // = 16384 LSB/g
+    mpu.gyrosensitivity  = 131;   // = 131 LSB/degrees/sec
+    mpu.accelsensitivity = 16384; // = 16384 LSB/g
 
     // Configure FIFO to capture accelerometer and gyro data for bias calculation
     mpu.w(C.USER_CTRL, 0x40);  // Enable FIFO
@@ -281,7 +282,7 @@ MPU9250.prototype.initMPU9250 = function() {
     // c = c & ~0xE0; // Clear self-test bits [7:5]
     c = c & ~0x02; // Clear Fchoice bits [1:0]
     c = c & ~0x18; // Clear AFS bits [4:3]
-    c = c | this.Gscale << 3; // Set full scale range for the gyro
+    c = c | mpu.Gscale << 3; // Set full scale range for the gyro
     // Set Fchoice for the gyro to 11 by writing its inverse to bits 1:0 of
     // GYRO_CONFIG
     // c =| 0x00;
@@ -293,7 +294,7 @@ MPU9250.prototype.initMPU9250 = function() {
     c = mpu.r(C.ACCEL_CONFIG,1)[0];
     // c = c & ~0xE0; // Clear self-test bits [7:5]
     c = c & ~0x18;  // Clear AFS bits [4:3]
-    c = c | this.Ascale << 3; // Set full scale range for the accelerometer
+    c = c | mpu.Ascale << 3; // Set full scale range for the accelerometer
     // Write new ACCEL_CONFIG register value
     mpu.w(C.ACCEL_CONFIG, c);
 
@@ -324,7 +325,7 @@ MPU9250.prototype.initMPU9250 = function() {
 };
 
 MPU9250.prototype.dataReady = function() {
-  return this.r(C.INT_STATUS) & 0x01;
+  return this.r(C.INT_STATUS,1) & 0x01;
 };
 
 MPU9250.prototype.readAccelData = function() {
