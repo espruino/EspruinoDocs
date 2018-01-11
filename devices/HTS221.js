@@ -1,4 +1,4 @@
-/* Copyright (C) 2016 ST Microelectronics. See the file LICENSE for copying permission. */
+/* Copyright (C) 2018 ST Microelectronics, Gordon Williams. See the file LICENSE for copying permission. */
 /*
  * Espruino module for HTS221 temperature sensor (present on ST X-NUCLEO-IKS01A1 expansion board)
  *
