@@ -43,10 +43,10 @@ BH1745.prototype.read = function() {
 exports.connectI2C = function(i2c,options) {  
   options = options||{};
   var addr = options.addr||0x38;
-  return new BH1745(function(reg,len) { // read mpu
+  return new BH1745(function(reg,len) { // read
     i2c.writeTo(addr,reg);
     return i2c.readFrom(addr,len);
-  }, function(reg,data) { // write mpu
+  }, function(reg,data) { // write
     i2c.writeTo(addr,reg,data);
   },options);
 };

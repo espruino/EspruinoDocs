@@ -36,10 +36,10 @@ LPS22HB.prototype.read = function() {
 // Initialise the LPS22HB module with the given I2C interface
 exports.connectI2C = function(i2c,options) {  
   var addr = 0x5C;
-  return new LPS22HB(function(reg,len) { // read mpu
+  return new LPS22HB(function(reg,len) { // read
     i2c.writeTo(addr,reg|128);
     return i2c.readFrom(addr,len);
-  }, function(reg,data) { // write mpu
+  }, function(reg,data) { // write
     i2c.writeTo(addr,reg,data);
   },options);
 };
