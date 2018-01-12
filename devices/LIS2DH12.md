@@ -15,11 +15,11 @@ SPI
 
 ```
 SPI1.setup({miso:..., mosi:..., sck:...);
-var accel = require("LIS2DH12").connectSPI(SPI1, CS_PIN, function(xyz) {
+var accel = require("LIS2DH12").connectSPI(SPI1, CS_PIN, {callback:function(xyz) {
    // callback whenever data is received
    console.log(xyz);
    // prints { "x": 3.90625, "y": -7.8125, "z": 984.375 }
-});
+}});
 accel.setPowerMode(on?"low":"powerdown");
 ```
 
@@ -28,15 +28,15 @@ I2C
 
 ```
 I2C1.setup({sda:..., scl:...);
-var accel = require("LIS2DH12").connectI2C(I2C1, function(xyz) {
+var accel = require("LIS2DH12").connectI2C(I2C1, {callback:function(xyz) {
    // callback whenever data is received
    console.log(xyz);
    // prints { "x": 3.90625, "y": -7.8125, "z": 984.375 }
-});
+}});
 accel.setPowerMode(on?"low":"powerdown");
 ```
 
-**Note:** you can supply a 3rd argument to `connectI2C` containing the I2C
+**Note:** you can supply `addr` to `connectI2C`'s second argument to set an I2C
 address if it is non-standard.
 
 

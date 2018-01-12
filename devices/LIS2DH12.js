@@ -30,10 +30,11 @@ var C = {
   SCALE16G:3
 };
 
-function LIS2DH12(r,w, callback) {
+function LIS2DH12(r,w, options) {
   this.r = r; // read from a register
   this.w = w; // write to a register
-  this.callback = callback;
+  this.options = options;
+  this.callback = options.callback;
   if (this.r(C.WHO_AM_I, 1)[0] != C.I_AM_MASK)
     throw "LIS2DH12 WHO_AM_I check failed";
   this.g_scale = C.SCALE2G;
@@ -102,9 +103,9 @@ LIS2DH12.prototype.getXYZ = function() {
   var d = new DataView(new Uint8Array(this.r(C.STATUS_REG, 7)).buffer);
   var scale = 1 / (16 << (this.g_scale)) * 1000 / 1024;  
   return {
-    x: d.getInt16(1,1)*scale,
-    y: d.getInt16(3,1)*scale,
-    z: d.getInt16(5,1)*scale,
+    x: d.getInt16(1,true)*scale,
+    y: d.getInt16(3,true)*scale,
+    z: d.getInt16(5,true)*scale,
     new : (d.getUint8(0)&8)!=0
   };  
 };
@@ -123,21 +124,24 @@ LIS2DH12.prototype.readXYZ = function(callback) {
 };
 
 // Initialise the LIS2DH12 module with the given SPI interface and CS pins
-exports.connectSPI = function(spi,cs,callback) {
+exports.connectSPI = function(spi,cs,options) {
+  if ("function"==typeof options) options={callback:options};
+  options = options||{};
   return new LIS2DH12(function(reg,len) { // read
     return spi.send([reg|0xC0,new Uint8Array(len)], cs).slice(1);
   }, function(reg,data) { // write
     return spi.write(reg, data, cs);
-  },callback);
+  },options);
 };
 
 // Initialise the LIS2DH12 module with the given I2C interface (and optional address)
-exports.connectI2C = function(i2c,callback,addr) {
-  addr = addr||0x19;
+exports.connectI2C = function(i2c,options) {  
+  options = options||{};
+  addr = options.addr||0x19;
   return new LIS2DH12(function(reg,len) { // read
     i2c.writeTo(addr,reg|128);
     return i2c.readFrom(addr,len);
   }, function(reg,data) { // write
     i2c.writeTo(addr,reg,data);
-  },callback);
+  },options);
 };
