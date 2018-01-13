@@ -2,6 +2,8 @@
 Puck.js and Node-RED with MQTT
 ===============================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Node-RED. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Tutorials,BLE,Bluetooth,Node,Node-red,nodered,MQTT,Pi,Raspberry Pi
 * USES: Puck.js
 
@@ -116,6 +118,43 @@ want something to happen when it changes.
 
 For this you need to use the unhelpfully named `rbe` (Report By Exception)
 block. This will only let messages through if the value in them has changed.
+
+
+Detecting Button presses
+------------------------
+
+Since Puck.js has a button, detecting button presses is an obvious thing
+to want to do. We can't guarantee that every single advertising packet
+Puck.js sends will be received, so we need an error-tolerant way of
+detecting a press.
+
+A simple way to do that is to send a number that increments every time
+the button is pressed. That way, even if some advertising packets are
+missed, as long as the hub detects that the value has changed it'll
+know a button has been pressed.
+
+Some code to do this on Puck.js would be:
+
+```
+var pressCount = 0;
+setWatch(function() {
+  pressCount++;
+  NRF.setAdvertising({
+    0xFFFF : [pressCount]
+  });
+}, BTN, { edge:"rising", repeat:true, debounce:50 });
+```
+
+The choice of 0xFFFF for the advertising is completely random.
+
+You can then use the `rbe` (Report By Exception) block to detect
+when the received count has changed - for example:
+
+![](Puck.js Node-RED/node-button.png)
+
+In this case `show toast` just presents a banner to anyone that is
+currently viewing the UI page. This method could be used for detecting
+any kind of event - not just button presses.
 
 
 Detecting presence

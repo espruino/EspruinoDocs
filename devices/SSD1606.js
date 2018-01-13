@@ -15,7 +15,7 @@
  */
 var C  = {
   GDE021A1: {
-    bpp               : 2,
+    bpp : 2,
     displaySizeX      : 72,
     displaySizeY      : 172,
     lutRegisterData   : new Uint8Array([
@@ -75,6 +75,22 @@ function SSD1606(config) {
     this.hwResetTimeOut = 100;
   }
 }
+
+/** Sets registers to power-on values (not needed by default) */
+SSD1606.prototype.reset = function() {
+  this.scd(0x01, 0xB3);
+  this.scd(0x03, 0xEA);
+  this.scd(0x04, 0x0A);
+  this.scd(0x3A, 0x04);
+  this.scd(0x3B, 0x08);
+  this.scd(0x2C, 0xA0); 
+  this.scd(0x3C, 0x73);
+  this.scd(0x11, 0x03);
+  this.scd(0x4E, 0x00);
+  this.scd(0x4F, 0x00);
+  this.scd(0xF0, 0x1F);
+};
+
 /**
  * Power on the display, using the provided powerPin.
  */

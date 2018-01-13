@@ -2,8 +2,10 @@
 Graphical Web Interface
 ========================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Graphical+Web+Interface. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Wifi,Web Server,Graphical,SVG
-* USES: Internet,CC3000,WS2811
+* USES: Internet,CC3000,WS2811,Espruino Board
 
 ![Web Page](Graphical Web Interface/chrome.png)
 
@@ -247,4 +249,3 @@ The CC3000 takes a while to initialise so you may have to wait a minute or two. 
 When you connect, you should see a picture of the house - and clicking on the windows will turn the relevant lights on and off!
 
 ![Web Page](Graphical Web Interface/chrome.png)
-

@@ -2,6 +2,8 @@
 Light Dependent Resistor
 =====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/LDR. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: LDR,Light,Light Dependent Resistor,Photoresistor,Light,Sensor,GL5537
 
 [Datasheet](/datasheets/GL5537.pdf)

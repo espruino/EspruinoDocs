@@ -2,6 +2,8 @@
 Espruino WiFi
 =============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/WiFi. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Espruino WiFi,WiFi,Wireless,Internet,Radio,ESP8266,Board,PCB,Pinout
 
 ![Espruino WiFi](WiFi/angled.jpg)
@@ -21,15 +23,14 @@ Features
 * ESP8266 WiFi (802.11 b/g/n)
 * All GPIO is 5 volt tolerant (Arduino compatible)
 * RTC with external oscillator
-* On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 5v (please see notes under (pinout)[#pinout] below)
+* On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 5v (please see notes under [pinout](#pinout) below)
 * Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
 * 500mA polyfuse on board
 
 <a name="buy"></a>Buying
 ------
 
-<!-- You can now get an Espruino WiFi from several different distributors. [Click here to see them.](/Order) -->
-Espruino WiFi is currently only available from [our Tindie store](https://www.tindie.com/products/gfwilliams/espruino-wifi).
+You can now get an Espruino WiFi from several different distributors. [Click here to see them.](/Order#wifi)
 
 
 Pinout
@@ -101,10 +102,24 @@ function onInit() {
 }
 ```
 
-Espruino WiFi's module is designed to work similarly to the [ESP8266 native WiFi module](http://www.espruino.com/Reference#Wifi),
-however *you can't use the `WiFi` module directly*. Eventually you will, however this is still in development.
+Espruino WiFi's `EspruinoWiFi` module (code library) is designed to look and behave almost the same as the [ESP8266 native `WiFi` module](http://www.espruino.com/Reference#Wifi). 
+However *you can't use the `WiFi` module directly*, for example by using `require("WiFi")`. You will be able to eventually, however for now you must use `require("EspruinoWiFi")`.
 
 * APPEND_JSDOC: ../devices/EspruinoWiFi.js
+
+
+Access Point Mode
+-----------------
+
+Espruino WiFi can be made into a WiFi access point with:
+
+```
+wifi.startAP('EspruinoAP', { password: '0123456789', authMode: 'wpa2' }, function(err) {
+  if (err) throw err;
+});
+```
+
+See the documentation above for more information. `startAP` and `connect` can be used together to make Espruino become an access point while also connecting to another WiFi network. In that case, it'll have the DHCP-assigned IP address on the WiFi network it is connected to, and the IP address `192.168.4.1` on the access point it has created.
 
 
 Tutorials

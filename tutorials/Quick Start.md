@@ -2,6 +2,8 @@
 Quick Start
 ==========
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Quick+Start. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Quick Start,Getting Started
 * USES: Only Espruino Board,Pico
 
@@ -17,7 +19,8 @@ Plugging in
 <span style="color:red">Please check that there is no bare metal (including your desk!) near the board when you plug it in, as it could short it out.</span>
 
 * **Espruino [Pico](/Pico)** - the Pico is designed to plug right into you computer's USB type A connector, or a USB extension lead. The components (not the text) should usually be facing upwards (so the 4 gold strips are facing the plastic in the USB socket).
-* **Original [Espruino](/EspruinoBoard) and [Espruino WiFi](/EspruinoWiFi)** - just plug the board in with a Micro USB cable and you're done. 
+* **Original [Espruino](/EspruinoBoard) and [Espruino WiFi](/EspruinoWiFi)** - just plug the board in with a Micro USB cable and you're done.
+* **Puck.js** - there is no plug! [see the Puck.js Quick Start Guide](http://www.espruino.com/Puck.js+Quick+Start) instead as the setup is slightly different.
 * **Other Boards** - please [see this page](/Other Boards) for more information.
 
 **Windows Users:** Most versions of Windows won't automatically load the built-in driver for USB com ports. You'll have to download ST's USB driver:
@@ -172,7 +175,7 @@ reset()
 
 If you press the reset button on the board (if your board has one), Espruino will also reset. However we don't recommend this - on most boards this will reset the USB connection as well, so you may need to restart your terminal application, or in some cases even unplug and re-plug the device.
 
-If you power off or reset Espruino using the reset button, it will lose all the code that you wrote. You can save the state of Espruino so this doesn't happen using the `save()` command. 
+If you power off or reset Espruino using the reset button, it will lose all the code that you wrote. You can save the state of Espruino so this doesn't happen using the `save()` command ([more information](/Saving)). 
 
 The `save()` command saves the current state of the pins and on-chip peripherals, as well as all your functions, variables, watches and timers. The commands that you typed in previously *won't be executed again though*. If you want to execute some code when Espruino starts (for example you may need to initialise some external bit of hardware like an LCD), you can use the `init` event on `E`. For example this bit of code lights the red, then green LEDs each time Espruino starts up:
 
@@ -200,5 +203,6 @@ Now you've got an idea how to use Espruino:
 * Check out [[Modules]] to see which libraries of code are available to use
 * If you have a [Pico](/Pico) or [Original](/EspruinoBoard) Espruino board then click those links for more in-depth information about your board, as well as for links to tutorials that specifically use your board.
 * See how to use the more advanced features of the [[Web IDE]]
+* Check out other [ways of Programming Espruino](/Programming)
 * Instantly [[Search]] all the Espruino website's documentation (using the box in the top right)
 * If you've got a question, please check out our [[Forum]]

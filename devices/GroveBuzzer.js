@@ -25,7 +25,7 @@ GroveBuzzer.prototype.beep = function(delay, callback) {
 exports = GroveBuzzer;
 
 /** Play at the specified frequency for the time specified in ms, or 500ms if nothing supplied */
-GroveBuzzer.prototype.freq = function(freq, delay) { 
+GroveBuzzer.prototype.freq = function(freq, delay, callback) { 
   if (isNaN(delay) || delay<=0) delay = 500;
   analogWrite(this.p,0.1,{freq:freq, soft:true});
   var p = this.p;

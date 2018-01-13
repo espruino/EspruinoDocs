@@ -2,6 +2,8 @@
 HMAC Module
 ===========
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/hmac. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,HMAC,Hashlib,Crypto
 
 This [[hmac.js]] module implements a HMAC for Espruino.  It depends on the inclusion of hashlib to compute the checksums.

@@ -2,6 +2,8 @@
 Modules
 =======
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Modules. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Modules,Libraries
 
 In Espruino, Modules are pieces of pre-written code (libraries) that perform common tasks, such as interfacing to different bits of hardware.
@@ -66,12 +68,29 @@ If you need it anyway, you can provide a local minified version or you can chang
 
 ### Stand-alone Espruino
 
-
 If you have an Espruino with an SD card (but you're not using the Web IDE), you can copy the modules you need into a directory called 'node_modules' on the SD card. Now, whenever you write ``` require("modulename") ``` the module will be used.
 
-### WiFi-enabled Espruino
+### Internet-enabled Espruino
 
-**We're working on this - but soon:** If you have a WiFi-enabled Espruino and it is connected to the internet, writing ```require("mymodule")``` will cause it to look on the internet for the module with the name you have given.
+Right now there isn't a way to make Espruino automatically load a module from the internet when required without the Web IDE. This may be added in the future, but the fact that `require` is synchronous while network connections are asynchronous makes this difficult to do reliably until `yield` is added into the interpreter.
+
+Until then, the following asyncronous code will dynamically load a module from the internet on demand.
+
+```
+function loadModule(moduleName, callback) {
+  require("http").get("http://www.espruino.com/modules/"+moduleName+".js", function(res) {
+    var contents = "";
+    res.on('data', function(data) { contents += data; });
+    res.on('close', function() { 
+      Modules.addCached(moduleName, contents); 
+      if (callback) callback();
+    });
+  }).on('error', function(e) {
+    console.log("ERROR", e);
+  });
+}
+```
+
 
 Existing Modules
 ----------------

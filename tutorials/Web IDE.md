@@ -2,6 +2,8 @@
 Espruino Web IDE
 =================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Web+IDE. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Web IDE,Editor,IDE,Install
 * USES: Espruino Board,Puck.js,Espruino Pico,Pico,Espruino WiFi
 
@@ -42,7 +44,7 @@ on how to enable it.
 
 The Web IDE is available as a download for 64 bit Windows:
 
-* [Download for Windows x64 - 0.65.9](/files/espruino_ide_win64_0v65.9.exe)
+* [Download for Windows x64 - 0.66.1](/files/espruino_ide_win64_0v66.1.exe)
 
 #### For Windows 8.1 and later
 

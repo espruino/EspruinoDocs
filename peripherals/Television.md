@@ -2,6 +2,8 @@
 TV Out
 =====
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Television. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: TV,Television,Composite,S-Video,PAL,NTSC,VGA,DVI,HDMI,Graphics Driver
 
 Espruino provides the ability to output black and white [PAL Television](http://en.wikipedia.org/wiki/PAL) or [VGA](http://en.wikipedia.org/wiki/Video_Graphics_Array) signals via the [TV Module](http://www.espruino.com/Reference#tv). This capability is currently only available in 'official' Espruino boards.

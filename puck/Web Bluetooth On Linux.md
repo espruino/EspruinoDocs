@@ -2,7 +2,9 @@
 Web Bluetooth on Linux
 ======================
 
-* KEYWORDS: Tutorials,Puck.js,Web Bluetooth,Linux,Ubuntu,Mint
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Web+Bluetooth+On+Linux. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
+* KEYWORDS: Tutorials,Puck.js,Web Bluetooth,Linux,Ubuntu,Mint,Bluez,Bluetoothd
 * USES: Puck.js,Web Bluetooth
 
 First, you should type `bluetoothd --version` in the terminal,
@@ -68,13 +70,13 @@ mkdir tmp
 cd tmp
 
 # Download new bluez
-wget http://www.kernel.org/pub/linux/bluetooth/bluez-5.43.tar.xz
+wget http://www.kernel.org/pub/linux/bluetooth/bluez-5.45.tar.xz
 
 # Extract it:
-tar xvf bluez-5.43.tar.xz
+tar xvf bluez-5.45.tar.xz
 
 # Configure and compile it:
-cd bluez-5.43
+cd bluez-5.45
 ./configure --prefix=/usr           \
             --mandir=/usr/share/man \
             --sysconfdir=/etc       \

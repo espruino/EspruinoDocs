@@ -2,18 +2,23 @@
 Fonts
 ====
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Fonts. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Graphics,Font,Fonts,Text,Typeface,Module
 
 Espruino has two main fonts built-in. A vector font, and a bitmap font.
+
+These are part of Espruino's built-in [[Graphics]] library.
 
 Vector Font
 ----------
 
 The Vector font is made out of polygons, and it can be resized to any size. This makes it great for displaying big text like numbers.
 
-To use it, just use `Graphics.setFontVector(size)`:
+**Note:** Some non-official Espruino boards don't have vector font support built-in, so all you'll have available is the bitmap font (see below).
 
-assuming you've set up [[Graphics]] as a variable called `g`
+To use it, just use `Graphics.setFontVector(size)`. Assuming you've set up [[Graphics]] as a variable called `g` you can do:
+
 ```
 g.clear();
 g.setFontVector(40);
@@ -22,8 +27,7 @@ g.setFontVector(60);
 g.drawString("World",40,40); // 60px high 
 ```
 
-While the vector font is meant to look great at larger sizes, it doesn't scale down in size very well, so there's the Bitmap Font.
-
+While the vector font is meant to look great at larger sizes, it doesn't scale down in size very well below about 20 pixels high, so there's the Bitmap Font.
 
 Bitmap Font
 ----------
@@ -42,16 +46,18 @@ Often you may want a font that is bigger than the built-in font, but smaller tha
 
 Current modules are:
 
-* [[Font4x4.js]] - tiny 4x4 block font (only digits 0-9)
-* [[Font6x8.js]]
-* [[Font6x12.js]]
-* [[Font8x12.js]]
-* [[Font8x16.js]]
+* [[Font4x4Numeric.js]] - tiny 4x4 fixed width font (only digits 0-9)
+* [[Font4x4.js]] - tiny 4x4 fixed width font by jose1711
+* [[Font4x8Numeric.js]] - 4x8 fixed width font (only digits 0-9)
+* [[Font6x8.js]] - variable width 8px high font
+* [[Font6x12.js]] - variable width 12px high font
+* [[Font8x12.js]] - wider variable width 12px high font
+* [[Font8x16.js]] - variable width 16px high font
 * [[FontDennis8.js]] - An 8 pixel high font by [Dennis Bemmann](https://github.com/pastaclub/espruino-font-dennis8) with most characters for German, Spanish, French, Turkish, etc:
 
 ![FontDennis8.png](Fonts/FontDennis8.png)
 
-Use these like this:
+Use these as follows:
 
 ```
 // On initialisation...
@@ -61,6 +67,8 @@ require("Font8x12").add(Graphics);
 g.setFont8x12();
 g.drawString("Hello World!",0,0);
 ```
+
+For instance if using [[FontDennis8.js]], use `require("FontDennis8")` and `g.setFontDennis8();`.
 
 Custom Fonts
 -----------

@@ -2,11 +2,16 @@
 JavaScript Compilation
 ===================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Compilation. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Compile,Compiler,Compilation,JIT,inline
 
 Normally, when you upload code to Espruino it is executed straight from source - which means that your source code is on the device itself so you can edit it easily.
 
 While this is fast enough for most things, occasionally you may need your code to run faster. Up until now you've had the option of writing [Inline Assembler](/Assembler), but now you can actually compile JavaScript directly into native code.
+
+**Note:** This is an online service that is only provided for [official STM32-based Espruino boards](/Order). It won't work on devices like ESP8266, and Bluetooth LE devices like [Puck.js](/Puck.js) don't currently support it because of bandwidth limitations during the initial connection procedure.
+
 
 How do I use it?
 ---------------
@@ -68,7 +73,6 @@ function f(pin, val) {
   d(pin, val&1);
 }
 ```
-
 If you want extremely fast IO, you can take advantage of `peek32` and `poke32` to access the registers directly - however which registers you write to depends on the chip you're running Espruino on. As of Espruino 1v81 this is a lot easier, as you can query the bit-banded address of the specific pin that you need:
 
 ```
@@ -139,12 +143,14 @@ Caveats
 * No source code for the function is stored on Espruino, so you won't be able to edit it using the left-hand pane.
 * The code that is sent to the Espruino board *is specific to that type of board and version of the Espruino firmware*. To use it on a different board you'll need to send it again using the Web IDE.
 
+
 Performance Notes
 ---------------
 
 * If you access global variables, Espruino will still have to search the symbol table to find them each time the function runs, which will be slow. To speed things up, use local variables or function arguments wherever possible.
 * When accessing non-local variables, if you expect them to be integers then cast the explicitly with `0|` before using them - this will allow the compiler to do fast integer arithmetic with them, rather than using the interpreter's maths routines (which have to cope with doubles and strings).
 * `peek32/peek16/peek8/poke32/poke16/poke8` map down to very fast IO accesses when provided with integer arguments - this is by far the fastest way to access IO.
+
 
 What works and what doesn't?
 ----------------------------
@@ -166,6 +172,7 @@ What works and what doesn't?
 * Creating new global variables
 * Defining un-named functions or functions not in the root scope ( `function a() { "compiled" }  setInterval(a, 1000);` works, `setInterval(function() { "compiled" }, 1000);` doesn't).
 * Functions can not have more than 5 arguments
+
 
 Can I help?
 -----------

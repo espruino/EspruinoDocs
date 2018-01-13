@@ -2,6 +2,8 @@
 Vibration Sensor
 ================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Vibration. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Vibration,Switch,Shake,Movement,SW18010P,SW18015P,SW18020P
 
 ![SW18010P outside](Vibration/outside.jpg)

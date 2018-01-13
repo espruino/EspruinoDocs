@@ -2,6 +2,8 @@
 LPS25HB pressure sensor
 =======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/LPS25HB. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,I2C,LPS25HB,IKS01A1,ST,pressure,sensor
 
 LPS25HB is a pressure sensor that can be used by i2c. This sensor is available on ST X-NUCLEO-IKS01A1 expansion board.

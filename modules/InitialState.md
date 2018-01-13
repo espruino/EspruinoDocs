@@ -2,6 +2,8 @@
 InitialState
 ============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/InitialState. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Initial State,Module,InitialState, IoT, cloud, API
 
 The [InitialState module](/modules/InitialState.js) provides an easy to use

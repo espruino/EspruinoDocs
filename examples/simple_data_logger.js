@@ -3,7 +3,7 @@ Simple Data Logger
 =================
 
 * KEYWORDS: Temperature,Data Logger,History,Google Drive
-* USES: Battery
+* USES: Battery,Espruino Board
 
 ![A Chart](simple_data_logger.png)
 

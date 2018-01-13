@@ -2,6 +2,8 @@
 HTU21D Temperature and RH Sensor
 ================================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/HTU21D. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,I2C,HTU21D,temperature,humidity
 
 The HTU21D is a low-cost, easy to use, highly accurate, digital humidity and temperature sensor.  Use the [HTU21D](/modules/HTU21D.js) ([About Modules](/Modules)) module for it.

@@ -2,13 +2,18 @@
 Bluetooth BLE 4.0 (HM-10)
 =========================
 
-* KEYWORDS: Bluetooth,BLE,HM-10,iBeacon,Wireless,Radio,Transceiver
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bluetooth+BLE. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
+* KEYWORDS: Bluetooth,BLE,HM-10,HM10,iBeacon,Wireless,Radio,Transceiver
 * USES: Espruino,HM-10,Bluetooth
 
-Introduction
------------
+**Note:** This page covers adding Bluetooth LE on the [Original Espruino Board](/EspruinoBoard).
+We now sell [Puck.js](/Puck.js) which is a device that comes with Bluetooth LE capability pre-installed.
 
-Along with (some of) the Kickstarter wireless kits the HC-05 bluetooth module was included to handle wireless connections. However, as some might have already noted, it does not support Bluetooth 4.0 (BLE), which makes it inaccessible from the majority of Apple devices. Also this bluetooth standard consumes more energy than necessary, so it would be nice to have a module at hand, that offers Bluetooth 4.0 (BLE) support.
+Introduction
+-------------
+
+Along with (some of) the Kickstarter wireless kits the [HC-05 bluetooth module](/Bluetooth) was included to handle wireless connections. However, as some might have already noted, it does not support Bluetooth 4.0 (BLE), which makes it inaccessible from the majority of Apple devices. Also this bluetooth standard consumes more energy than necessary, so it would be nice to have a module at hand, that offers Bluetooth 4.0 (BLE) support.
 The HM-10 module is among the choices. It's cheap and compatible with the Espruino board. However, keep in mind that this board is by far more complex, so you might not get the results you want to see instantly without further configuration. By default the modules are configured to connect to each other, but you have to manually specify one module as master.
 
 
@@ -36,7 +41,7 @@ Once wired up, you can test whether the module is working. It uses basically the
 To test if the module works fine just call
 
 ```
-Serial1.on('data', function (data) {console.log(data);}); 
+Serial1.on('data', function (data) {console.log(data);});
 Serial1.print("AT")
 ```
 

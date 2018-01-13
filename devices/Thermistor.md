@@ -2,6 +2,8 @@
 Thermistor Temperature Sensor
 =====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Thermistor. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,Temperature,Temp,thermistor,sensor,10K3A1,10K4A1,20K6A1,PT100,NI1000,LAN1,SAT1,STA1,TAC1,2.2K3A1
 
 **Note:** If you want to see how this module works internally, check out the [[Thermistors]] tutorial.

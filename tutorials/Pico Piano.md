@@ -2,6 +2,8 @@
 Pico Piano
 =========
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pico+Piano. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Pico,Piano,Sound,Music,Stylophone,Waveform
 * USES: Pico,Speaker,Waveform,PicoStarterKit
 

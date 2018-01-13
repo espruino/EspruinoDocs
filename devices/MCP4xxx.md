@@ -2,6 +2,8 @@
 MCP4xxx I2C and SPI digital potentiometers
 ======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MCP4xxx. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,I2C,SPI,digipot,digital potentiometer,ADC,rheostat
 
 Overview

@@ -2,6 +2,8 @@
 Analog RGB LED Control 
 ======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/RGBLed. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,LED,Light,Color,RGB
 
 Using RGB LEDs with Espruino is straightforward and you don't really need any extra modules - you can interact with them directly using the ```digitalWrite()``` and ```analogWrite()``` functions.

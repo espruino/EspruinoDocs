@@ -2,6 +2,8 @@
 Sensirion SHT10 SHT11 & SHT15 Temperature and Relative Humidity Sensor Module
 =====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/SHT1x. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,SHT10,SHT11,SHT15,sensirion,temperature,humidity
 
 Use the [SHT1x](/modules/SHT1x.js) ([About Modules](/Modules)) module for reading data from the Sensirion SHT1x series of devices.

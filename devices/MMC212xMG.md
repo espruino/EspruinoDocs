@@ -2,6 +2,8 @@
 MMC212xMG Dual-axis Magnetic Sensor from MEMSIC used in HDMM01 breakout from Pollin
 ===================================================================================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MMC212xMG. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,I2C,MMC212xMG,magnetic,compass,HDMM01
 
 The MMC212xMG/HDMM01 is a dual-axis magnetic sensor with [[I2C]] interface. It can measure magnetic field with a full range of ±5 gausses and a sensitivity of 512counts/gauss @3.0 V at 25°C. Use the [MMC212xMG](/modules/MMC212xMG.js) ([About Modules](/Modules)) module for it.

@@ -2,6 +2,8 @@
 Sensirion SHT20, SHT21 & SHT25 Temperature and Relative Humidity Sensor
 =====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/SHT2x. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,SHT20,SHT21,SHT25,sensirion,temperature,humidity
 
 Use the [SHT2x](/modules/SHT2x.js) ([About Modules](/Modules)) module for reading data from the Sensirion SHT2x series of devices.

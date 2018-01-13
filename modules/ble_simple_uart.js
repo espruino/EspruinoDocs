@@ -1,7 +1,7 @@
 /* Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 /*
 NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device) {
-  exports.write(device, "digitalPulse(LED3,1,1000)\n", function() { print('Done!'); });
+  require("ble_simple_uart").write(device, "digitalPulse(LED3,1,1000)\n", function() { print('Done!'); });
 });
 */
 exports.write = function(device, text, callback) {

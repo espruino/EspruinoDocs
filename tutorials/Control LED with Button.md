@@ -2,6 +2,8 @@
 Using BTN1 to turn on an LED
 =======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Control+LED+with+Button. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: BTN1,LED1,LED2,LED3,LED,button
 * USES: BTN1,LED1,LED2,LED3,Only Espruino Board
 

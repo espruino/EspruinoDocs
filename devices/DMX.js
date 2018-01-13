@@ -11,7 +11,7 @@ require("DMX").connectRX(pin, 6, function(data) {
 exports.connectRX = function(pin, size, callback) {
   var ser = Serial.find(pin);
   if (!ser) throw "No Serial peripheral found for pin";
-  ser.setup(250000,{rx:pin});
+  ser.setup(250000,{rx:pin, errors:true});
   var dmx = new Uint8Array(size);
   var dmxIdx = 0;
   Serial1.on('data',function(d){dmx.set(d, dmxIdx);dmxIdx+=d.length;});

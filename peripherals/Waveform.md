@@ -2,6 +2,8 @@
 Waveforms
 ========
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Waveform. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Analog,ADC,DAC,A2D,D2A,Built-In,Audio,Wave,Signal,Sound,Music
 
 Espruino contains both [[Analog]] Inputs ([[ADC]]) and [[Analog Outputs]] ([[DAC]]). Functions such as `analogRead` and `analogWrite` can be called at around 1kHz (although with PWM you can get higher frequency outputs). While that's fast enough for control it isn't fast enough to play and record audio.
@@ -20,8 +22,8 @@ Record 128 x 8 bit samples from A0 and then print the result:
 
 ```
 var w = new Waveform(128);
-w.on("finish", function(buf) { 
-  for (var i in buf) 
+w.on("finish", function(buf) {
+  for (var i in buf)
     console.log(buf[i]);
 });
 w.startInput(A0,2000,{repeat:false});
@@ -31,8 +33,8 @@ Do the same, but with 16 bit values:
 
 ```
 var w = new Waveform(128, {bits:16});
-w.on("finish", function(buf) { 
-  for (var i in buf) 
+w.on("finish", function(buf) {
+  for (var i in buf)
     console.log(buf[i]);
 });
 w.startInput(A0,2000,{repeat:false});
@@ -43,7 +45,7 @@ Record Audio continuously (with a double buffer) and output a bar graph to the c
 
 ```
 var w = new Waveform(128,{doubleBuffer:true});
-w.on("buffer", function(buf) { 
+w.on("buffer", function(buf) {
   var l = buf.length;
   var v = E.variance(buf,E.sum(buf)/l)/l;
   console.log("------------------------------------------------------------".substr(0,v));
@@ -53,6 +55,29 @@ w.startInput(A0,2000,{repeat:true});
 
 Type `w.stop()` to stop recording (or playback).
 
+You can also use continuous recording plus the built-in FFT to
+measure frequencies. The following code will record at 1024Hz,
+perform an FFT once a second, and will report back the highest
+frequency detected between 100 and 500 Hz.
+
+```
+var w = new Waveform(1024,{doubleBuffer:true,bits:16});
+var a = new Uint16Array(1024);
+w.on("buffer", function(buf) {
+  a.set(buf);
+  E.FFT(a);
+  var m=0,n=-1;
+  for (var i=100;i<500;i++)if(a[i]>n)n=a[m=i];
+  console.log(m.toFixed(0)+"Hz @ "+n);
+});
+w.startInput(D2,1024,{repeat:true});
+```
+
+**Note:** The FFT will only work on 2^N sized buffers, and the index in
+the buffer equals the frequency in Hz only because each buffer contains
+exactly one second's worth of frequency data.
+
+
 Output
 -----
 
@@ -61,7 +86,7 @@ To output a sine wave to the DAC on A4:
 ```
 var w = new Waveform(256);
 for (var i=0;i<256;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/128)*127;
-analogWrite(A4, 0.5); 
+analogWrite(A4, 0.5);
 w.startOutput(A4, 4000);
 ```
 
@@ -97,7 +122,7 @@ var wave = require("fs").readFile("sound.raw");
 var w = new Waveform(wave.length);
 w.buffer.set(wave);
 
-analogWrite(A4, 0.5); 
+analogWrite(A4, 0.5);
 w.startOutput(A4,4000);
 ```
 
@@ -145,4 +170,3 @@ Using Waveforms
 --------------
 
 * APPEND_USES: Waveform
-

@@ -2,8 +2,10 @@
 KeyPad Timer
 ==========================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/KeyPad+Timer. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Timer,Counter,KeyPad
-* USES: KeyPad
+* USES: KeyPad,Espruino Board
 
 Introduction
 -----------

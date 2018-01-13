@@ -11,6 +11,8 @@ rm -f html/*.js
 rm -f html/refimages/*
 rm -f html/boards/*
 
+nodejs bin/commenter.js
+
 cd ../Espruino
 python scripts/build_board_docs.py PICO_R1_3 pinout
 mv boards/PICO_R1_3.html $DIR/html/boards
@@ -40,10 +42,22 @@ python scripts/build_board_docs.py PUCKJS pinout
 mv boards/PUCKJS.html $DIR/html/boards
 cp boards/img/PUCKJS_.jpg $WEBSITE/www/img
 
+python scripts/build_board_docs.py PUCKJS pinout
+mv boards/PUCKJS.html $DIR/html/boards
+cp boards/img/PUCKJS_.jpg $WEBSITE/www/img
+
+python scripts/build_board_docs.py ESP32 pinout
+mv boards/ESP32.html $DIR/html/boards
+cp boards/img/ESP32.jpg $WEBSITE/www/img
+
+python scripts/build_board_docs.py WIO_LTE pinout
+mv boards/WIO_LTE.html $DIR/html/boards
+cp boards/img/WIO_LTE.jpg $WEBSITE/www/img
+
 cd $DIR
 
 # Built reference docs and references.json
-node bin/build.js || exit 1
+nodejs bin/build.js || exit 1
 
 #rm $WEBSITE/reference/*
 cp html/*.html $WEBSITE/reference/

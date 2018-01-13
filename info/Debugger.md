@@ -2,9 +2,13 @@
 Espruino Debugger
 ===============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Debugger. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Debug,Debugger,Finding Problems
 
-As of Espruino 1v81, there is now a built-in text mode debugger available, which allows you to step through your code line by line. The commands used are almost identical to those in GDB.
+[[http://youtu.be/2ODoIpnTDA4]]
+
+As of Espruino 1v81, there is now a built-in text mode debugger, which allows you to step through your code line by line. The commands used are almost identical to those in GDB.
 
 **Note:** If you have a board with very little flash memory (128kB or less) the debugger may not be included in your build. However it *is* available for all official Espruino boards.
 

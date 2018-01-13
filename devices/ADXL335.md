@@ -2,6 +2,8 @@
 ADXL335 Accelerometer
 ==================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/ADXL335. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,ADXL335,Acceleration,Accelerometer,Analog,Sensor
 
 Simple wrapper module for the cheap and readily available analog ADXL335 accelerometer.

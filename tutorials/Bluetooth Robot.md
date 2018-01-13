@@ -2,6 +2,8 @@
 Bluetooth Voice Controlled Robot
 ============================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bluetooth+Robot. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Robot,Bluetooth,Android,Voice
 * USES: Robot,Motor,Bluetooth,Android,L293D
 

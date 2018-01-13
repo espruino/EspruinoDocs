@@ -2,6 +2,8 @@
 Stepper Motors
 ============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Stepper+Motors. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Stepper,Motor,Steppermotor,Stepper motor
 
 [Stepper motors](http://en.wikipedia.org/wiki/Stepper_motor) generally come in two types, [Unipolar](http://en.wikipedia.org/wiki/Stepper_motor#Unipolar_motors) with 5 or 6 wires, and [Bipolar](http://en.wikipedia.org/wiki/Stepper_motor#Bipolar_motor) with 4 wires.

@@ -2,6 +2,8 @@
 Digole LCD driver (monochrome)
 =======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Digole. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,I2C,Digole,Graphics,Graphics Driver,LCD,Monochrome
 
 Digole manufactures a number of LCD screens with a very MCU-friendly interface. These are available with screen sizes up to around 5". Most of their displays are monochrome in 128x64 or 240x64 sizes, however, they also have color screens, often based on OLED technology. All of their Serial displays use the same interface (however, some commands are different for color vs monochrome). While more expensive than some of the much more capable ILI-based LCDs, they offer larger screen sizes and a much easier interface. Two modules are provided - one using a double buffer and the Espruino's graphics library, and one using the Digole hardware graphics functions. 

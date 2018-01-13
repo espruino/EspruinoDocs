@@ -2,6 +2,8 @@
 EEPROM on Flash
 ===============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/FlashEEPROM. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,Flash,EEPROM,storage,non-volatile,memory,rom,storage
 
 STM32-based chips don't have nonvolatile EEPROM memory (which can be changed one byte at a

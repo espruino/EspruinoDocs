@@ -18,12 +18,15 @@ DHT22.prototype.read = function (cb, n) {
   if (!n) n=10;
   var d = ""; 
   var ht = this;
-  pinMode(ht.pin); // set pin state to automatic
   digitalWrite(ht.pin, 0);
+  pinMode(ht.pin,"output"); // force pin state to output
+  // start watching for state change
   this.watch = setWatch(function(t) {
     d+=0|(t.time-t.lastTime>0.00005);
   }, ht.pin, {edge:'falling',repeat:true} );
-  setTimeout(function() {pinMode(ht.pin,'input_pullup');},1);
+  // raise pulse after 1ms
+  setTimeout(function() {pinMode(ht.pin,'input_pullup');pinMode(ht.pin);},1);
+  // stop looking after 50ms
   setTimeout(function() {
     clearWatch(ht.watch);
     delete ht.watch;

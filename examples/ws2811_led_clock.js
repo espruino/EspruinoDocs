@@ -3,7 +3,7 @@ LED Clock (using WS8111)
 ========================
 
 * KEYWORDS: Clock,Watch,Time
-* USES: WS2811,Clock
+* USES: WS2811,Clock,Espruino Board
 
 This creates a simple clock using strings of WS2811 LEDs.
 

@@ -2,6 +2,8 @@
 KeyPad Matrix
 =============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/KeyPad. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,KeyPad,Key pad,matrix,buttons,button,switch
 
 ![Key Pad](KeyPad/4x4.jpg) ![Key Pad](KeyPad/4x5.jpg)

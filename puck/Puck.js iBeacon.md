@@ -2,6 +2,8 @@
 Puck.js and iBeacons
 =============================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+iBeacon. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,Modules,BLE,Bluetooth,EddyStone,FatBeacon,iBeacon,Beacon
 * USES: Puck.js
 
@@ -50,3 +52,12 @@ NRF.setAdvertising([
 ```
 
 In which case Puck.js will send each advertising packet in turn.
+
+**This library's default behaviour is to overwrite Puck.js's advertising
+(name, services, etc) with iBeacon.** However you can easily add the advertising
+in addition to Espruino's existing advertising by setting the Eddystone
+advertising inside the Advertising Scan Response:
+
+```
+NRF.setScanResponse(require("ble_ibeacon").get(...));
+```

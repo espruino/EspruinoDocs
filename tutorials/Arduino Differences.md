@@ -2,6 +2,8 @@
 Differences between Arduino and Espruino code
 =======================================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Arduino+Differences. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Arduino,C,Porting,Differences
 
 Here are some common 'gotchas' you might encounter when moving from writing Arduino code to writing Espruino code. This might be especially helpful when 'porting' existing code.

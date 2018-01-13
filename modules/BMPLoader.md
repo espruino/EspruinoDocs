@@ -2,6 +2,8 @@
 BMP Loader Module
 ===============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/BMPLoader. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,BMP,Bitmap,Image Loader
 
 This is a really simple bitmap loader that loads a [Windows Bitmap File](http://en.wikipedia.org/wiki/BMP_file_format) into an image that can be used with the [[Graphics]] library.

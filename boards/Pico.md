@@ -2,6 +2,8 @@
 Espruino Pico
 ============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pico. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Espruino Pico,Board,PCB,Pinout
 
 ![Espruino Pico](Pico/angled.jpg)
@@ -26,7 +28,7 @@ Features
 <a name="buy"></a>Buying
 ------
 
-You can now get an Espruino Pico from several different distributors. [Click here to see them.](/Order)
+You can now get an Espruino Pico from several different distributors. [Click here to see them.](/Order#pico)
 
 Pinout
 ------

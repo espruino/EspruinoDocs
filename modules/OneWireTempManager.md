@@ -2,6 +2,8 @@
 OneWireTempManager
 =====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/OneWireTempManager. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: OneWire,1-Wire,DS18B20,Temperature
 
 Module designed to server pull of DS18B20 1-Wire temperature sensors connected to Espruino pins.

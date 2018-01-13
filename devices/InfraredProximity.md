@@ -2,6 +2,8 @@
 Infrared Proximity Sensor
 =========
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/InfraredProximity. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: IR,Infrared,Proximity,Light,Sensor,Phototransistor,TCRT5000
 
 ![Infrared Proximity Sensor](InfraredProximity/module.jpg)

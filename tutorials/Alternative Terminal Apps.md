@@ -2,6 +2,8 @@
 Using Alternative Terminal Apps
 ============================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Alternative+Terminal+Apps. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 **Note:** We're putting a lot of functionality into the Chrome Web App (built in firmware updates, tutorials, module loading, syntax highlighting, etc) so we'd really recommend that you use it (see [[Quick Start]] for details on how to do this. However you can still access Espruino in other ways...
 
 Windows

@@ -2,6 +2,8 @@
 HC-SR04 Ultrasonic Distance Sensor
 =========
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/HC-SR04. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,Ultrasonic Distance Sensor,Sound,Distance,Sensor,HC-SR04
 
 ![Ultrasonic Distance Sensor](HC-SR04/module.jpg)

@@ -2,6 +2,8 @@
 Wii Nunchuck
 ====================================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Wii. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,Accelerometer,I2C,Sensor,Wii,Nunchuck,Joystick,Joy Stick,Button
 
 ![Wii Nunchuck](Wii/nunchuck.jpg)

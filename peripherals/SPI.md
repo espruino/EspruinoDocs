@@ -1,14 +1,56 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Serial Peripheral Interface (SPI)
+SPI - Serial Peripheral Interface
 =============================
+
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/SPI. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Serial Peripheral Interface,SPI,Built-In
 
 The [Serial Peripheral Interface](http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus) is a Serial Bus for peripherals that uses Clock, Data In, and Data Out (and often a Chip Select pin).
 
-[SPI Class](/Reference#SPI) in the reference
+See [SPI Class](/Reference#SPI) in the reference
 
-**Note:** Not all pins are capable of SPI. See the [[Reference]] for your board and look for ```SPI```.
+Hardware SPI
+------------
+
+On most boards there are hardware SPI peripherals. Check out the
+pin diagram on the reference page for your board and look for
+pins marked with an `SPI` tag.
+
+You can use it as follows.
+
+```
+// set up SPI
+SPI1.setup({mosi:B5, miso:B4, sck:B3});
+
+// write data without a response
+SPI1.write([1,2,3,4])
+
+// write data with a response
+var d = SPI1.send([1,2,3,4]);
+```
+
+See the reference for [SPI.setup](/Reference#l_SPI_setup) for more information on
+the arguments that can be passed in.
+
+Software SPI
+------------
+
+If you don't have access to your board's pins, you can also emulate
+SPI in software:
+
+```
+// set up SPI
+var spi = new SPI();
+spi.setup({mosi:B5, miso:B4, sck:B3});
+
+// write data without a response
+spi.write([1,2,3,4])
+
+// write data with a response
+var d = spi.send([1,2,3,4]);
+```
+
 
 Using SPI
 ---------------

@@ -344,6 +344,21 @@ function inferMarkdownFile(filename, fileContents) {
 // -------------------------------------------------------------
 markdownFiles.forEach(function (file) {
    var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
+   
+   if (file.substr(-3)==".md") {
+    var contentLines = contents.split("\n");
+     if (contentLines[3]!="" || contentLines[4].substr(0,6)!="<span " || contentLines[5]!="") {
+       console.log("=============");
+       console.log(JSON.stringify(contentLines[3]));
+       console.log(JSON.stringify(contentLines[4]));
+       console.log(JSON.stringify(contentLines[5]));
+       console.log("=============");
+       throw new Error("Expecting to find warning comment in "+file+", but didn't.");
+     }
+     contentLines.splice(4,2); // remove comment line
+     contents = contentLines.join("\n");
+   }   
+   
    //console.log(file,contents.length);
    // Check over images... ![Image Title](foo.png)
    contents = handleImages(file, contents);
@@ -363,7 +378,7 @@ markdownFiles.forEach(function (file) {
    contents = contents.replace(/\n(\* USES: .*)/g, "<!---\n$1\n--->");
    // TODO - 'Tutorial 2' -> 'Tutorial+2', recognize pages that are references in docs themselves
    var contentLines = contents.split("\n");
-
+   
    var appendMatching = function(regex, kwName, infoList, ifNone) {
      for (i in contentLines) {
        var match = contentLines[i].match(regex);
@@ -372,13 +387,22 @@ markdownFiles.forEach(function (file) {
          var kw = kws[0];
          var links = [ ];
          if (infoList[kw]!=undefined) {
-           var pages = infoList[kw];
+           // deep copy
+           var pages = {};
+           // add keywords
+           for (var k=0;k<kws.length;k++) {
+             if (kws[k][0]!="-" && infoList[kws[k]]!=undefined) {
+               for (var attr in infoList[kws[k]])
+                 pages[attr] = infoList[kws[k]][attr];
+             }
+           }
+           // remove any keywords
            for (j in pages) {
              var a = pages[j];
              if (a["path"]!=file && htmlLinks[a.path]!=undefined) { // if we don't have links it is probably in the reference
                var pageOk = true;
                // if extra keywords specified, they may be to reject certain pages... check
-               for (var k=1;k<kws.length;k++)
+               for (var k=1;k<kws.length;k++) {
                  if (kws[k][0]=="-") {
                    var notkw = kws[k].substr(1);
                    if (infoList[notkw]!=undefined)
@@ -387,7 +411,8 @@ markdownFiles.forEach(function (file) {
                          console.log("REJECTED "+a.path+" from "+file+" because of '-"+notkw+"' keyword");
                          pageOk = false;
                        }
-                 } else WARNING("Unknown keyword option '"+kws[k]+"'");
+                 } 
+               }
                // add page link if ok
                if (pageOk)
                  links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );

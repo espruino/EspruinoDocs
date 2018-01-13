@@ -334,7 +334,7 @@ SX.prototype.setOpMode = function(v) {
 };
 
 SX.prototype.init = function() {
-  var v = sx.r(REG.VERSION);
+  var v = this.r(REG.VERSION);
   if (v===0 || v==255) throw new Error("Radio not found!");
   
   this.setOpMode(RF.OPMODE_SLEEP);
@@ -584,21 +584,21 @@ SX.prototype.setTxConfig = function( options ) {
   // TODO: if 525000000 and  SX1276MB1LAS , use PABOOST, not RFO
   paConfig = ( paConfig & RF.PACONFIG_MAX_POWER_MASK ) | 0x70;
 
-  if (paConfig & RF_PACONFIG_PASELECT_PABOOST) {
+  if (paConfig & RF.PACONFIG_PASELECT_PABOOST) {
     if (options.power > 17) 
-      paDac = ( paDac & RF_PADAC_20DBM_MASK ) | RF_PADAC_20DBM_ON;
+      paDac = ( paDac & RF.PADAC_20DBM_MASK ) | RF.PADAC_20DBM_ON;
     else
-      paDac = ( paDac & RF_PADAC_20DBM_MASK ) | RF_PADAC_20DBM_OFF;
-    if (paDac & RF_PADAC_20DBM_ON) {
+      paDac = ( paDac & RF.PADAC_20DBM_MASK ) | RF.PADAC_20DBM_OFF;
+    if (paDac & RF.PADAC_20DBM_ON) {
       options.power = E.clip(options.power,5,20);
-      paConfig = ( paConfig & RF_PACONFIG_OUTPUTPOWER_MASK ) | ( options.power - 5 ) & 0x0F;
+      paConfig = ( paConfig & RF.PACONFIG_OUTPUTPOWER_MASK ) | ( options.power - 5 ) & 0x0F;
     } else {
       options.power = E.clip(options.power,2,17);
-      paConfig = ( paConfig & RF_PACONFIG_OUTPUTPOWER_MASK ) | ( options.power - 2 ) & 0x0F;
+      paConfig = ( paConfig & RF.PACONFIG_OUTPUTPOWER_MASK ) | ( options.power - 2 ) & 0x0F;
     }
   } else {
     options.power = E.clip(options.power,-1,14);
-    paConfig = ( paConfig & RF_PACONFIG_OUTPUTPOWER_MASK ) | ( options.power + 1 ) & 0x0F;
+    paConfig = ( paConfig & RF.PACONFIG_OUTPUTPOWER_MASK ) | ( options.power + 1 ) & 0x0F;
   }
   this.w( REG.PACONFIG, paConfig );
   this.w( REG.PADAC, paDac );

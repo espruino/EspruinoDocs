@@ -2,6 +2,8 @@
 Graphics Library
 ================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Graphics. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Graphics,LCD,Draw,Line,Fill,Color,Circle,Built-In
 
 Espruino has a built-in graphics library, exposed via the [Graphics](/Reference#Graphics) class.
@@ -18,9 +20,15 @@ Below are a list of currently available modules that will interface to hardware 
 
 * APPEND_KEYWORD: Graphics Driver
 
+**Note:** several of the graphics drivers use offscreen buffers. This means that
+draw operations won't immediately effect the display, and a method needs calling
+to copy the buffer's data onto the screen. By convention this method is usually
+called `.flip()`.
+
 ### Internal Use
 
-You can create a Graphics class which renders to an ArrayBuffer:
+**If you don't already have a graphics object set up** then
+you can create a Graphics class which renders to an ArrayBuffer:
 
 ```
 Graphics.prototype.print = function() {
@@ -41,6 +49,9 @@ g.print()
 //0,1,1,0,0,0,1,1
 ```
 
+See the [`Graphics.createArrayBuffer`](/Reference#l_Graphics_createArrayBuffer) 
+reference for more information on possible arguments that can be used.
+
 Or you can create a Graphics instance which calls your function whenever a pixel needs to be drawn:
 
 ```
@@ -53,8 +64,8 @@ g.drawLine(0,0,2,2)
 //2,2
 ```
 
-Hello World
------------
+Text / Fonts
+-------------
 
 Simple Hello World text using a bitmap font:
 
@@ -77,13 +88,17 @@ g.setColor(0,1,0);
 g.drawString("World",40,40); // 60px high in green
 ```
 
+**Note:** Some non-official Espruino boards don't have
+vector font support built-in.
+
 You can then switch back to the bitmap font using:
 
 ```
 LCD.setFontBitmap();
 ```
 
-For more information, see [[Fonts]]
+**You can also use custom Bitmap Fonts**. For more information, see [[Fonts]]
+
 
 Circles
 -------

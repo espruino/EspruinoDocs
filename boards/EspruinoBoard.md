@@ -2,6 +2,8 @@
 Espruino Board
 =============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/EspruinoBoard. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Espruino,Board,PCB,Pinout
 
 Were you looking for the [Espruino Pico](/Pico)?
@@ -26,6 +28,11 @@ Features
 * 44 GPIO Pins, capable of: 26 PWM Pins, 16 ADC Pins, 3 USARTs, 2 SPI, 2 I2C and 2 DACs
 * Prototype area which can be used in many different configurations, for example: Servo Headers, Up to 14x 500mA outputs, 2x .NET Gadgeteer connectors, or NRF24L01+ wireless transceiver modules
 * Rev 1v4: CE and RoHS certification
+
+<a name="buy"></a>Buying
+------
+
+You can now get an Original Espruino from several different distributors. [Click here to see them.](/Order#original)
 
 Pinout
 ------
@@ -79,7 +86,7 @@ Links to tutorials that you can do using **just** the Espruino board:
 
 Tutorials using the Espruino Board:
 
-* APPEND_USES: EspruinoBoard
+* APPEND_USES: Espruino Board
 
 Power
 ----

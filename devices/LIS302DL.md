@@ -2,6 +2,8 @@
 LIS302DL Accelerometer
 ====================================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/LIS302DL. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: STM32F4DISCOVERY,Accelerometer,LIS302DL,SPI,Sensor
 
 [Datasheet](/datasheets/LIS302DL.pdf)

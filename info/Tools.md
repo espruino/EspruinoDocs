@@ -2,6 +2,8 @@
 Tools and Supplies
 ================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Tools. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Tools,Supplies
 
 **NOTE:** *We'll be fleshing this section out with more details as time goes on...*

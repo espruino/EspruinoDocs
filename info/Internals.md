@@ -2,6 +2,8 @@
 Espruino Interpreter Internals
 ===========================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Internals. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Espruino,Hacking,Internals,Contributing,Implementation
 
 Please see the [[Performance]] section first for a rough overview, and for the practical implications of the implementation.

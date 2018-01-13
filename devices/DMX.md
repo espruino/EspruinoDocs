@@ -2,6 +2,8 @@
 DMX
 ===
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/DMX. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,DMX,DMX512,Digital Multiplex,Stage Lighting
 
 DMX is a standard protocol that's commonly used for digital stage lighting. See the [Wikipedia article on DMX512](https://en.wikipedia.org/wiki/DMX512)
@@ -11,7 +13,7 @@ Here we're only going to cover reception of DMX. Head over to [the forums](http:
 Wiring
 ------
 
-DMX protocol uses the same logic levels as RS232 serial. You can get DMX shields for Arduino which you can wire up (make sure you buy one that can receive!), but you can also use a normal RS232 level converter like a MAX232.
+DMX protocol uses the same logic levels as RS-485. You can get DMX shields for Arduino which you can wire up (make sure you buy one that can receive!), but you can also use a normal RS-485 converter chip such as the MAX485. Modules are available for just a few pounds on eBay.
 
 ## DMX Receive
 

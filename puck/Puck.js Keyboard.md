@@ -2,13 +2,17 @@
 Puck.js and HID Keyboards
 =========================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Keyboard. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,Modules,BLE,Bluetooth,Keyboard,Control,Mouse,HID,Human Interface Device
 * USES: Puck.js
 
 Bluetooth LE HID (Human Interface Devices) are things like Keyboards, Mice,
 and buttons. Puck.js can emulate these, so can simulate keys being pressed.
 
-**Note:** Puck.js's 1v89 firmware doesn't support Bonding (needed by Windows HID devices). Pucks can work as keyboards on Android, Mac OS and Chromebook but until bonding is added they won't work on Windows.
+**Note:** You'll need at least firmware version 1v92 to pair on Windows (it needs the bonding functionality). Earlier firmwares can work as keyboards on Android, Mac OS and Chromebook, but we'd always recommend you're using the latest firmware.
+
+**Note:** Bluetooth HID can't be enabled on an active connection. To make it work (if you're connected wirelessly) you need to upload the code, disconnect, and then reconnect with your Operating System's `Pair` functionality.
 
 BLE HID can be enabled by providing a HID Report to [NRF.setServices](/Reference#l_NRF_setServices),
 however we've provided common types of HID report in modules to make it easier:
@@ -22,11 +26,17 @@ Keyboard support is from the [[ble_hid_keyboard.js]] module.
 ```
 var kb = require("ble_hid_keyboard");
 NRF.setServices(undefined, { hid : kb.report });
-// Send 'a'
-kb.tap(kb.KEY.A, 0, function() {
-  // Followed by capital 'A'
-  kb.tap(kb.KEY.A, kb.MODIFY.SHIFT);
-});
+
+function btnPressed() {
+  // Send 'a'
+  kb.tap(kb.KEY.A, 0, function() {
+    // Followed by capital 'A'
+    kb.tap(kb.KEY.A, kb.MODIFY.SHIFT);
+  });
+}
+
+// trigger btnPressed whenever the button is pressed
+setWatch(btnPressed, BTN, {edge:"rising",repeat:true,debounce:50});
 ```
 
 
@@ -67,7 +77,7 @@ You can emulate a wide variety of other devices by providing your own HID report
 ```
 report = new Uint8Array([
   ]);
-NRF.setServices(undefined, { hid : report });  
+NRF.setServices(undefined, { hid : report });
 ```
 
 You can then call `NRF.sendHIDReport` to send data. For Keyboards it must be an array of the form:

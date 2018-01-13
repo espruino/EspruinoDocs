@@ -2,6 +2,8 @@
 Internet (HTTP)
 ===============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Internet. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Internet,HTTP,Web,TCPIP,TCP/IP,TCP-IP,IP,TCP,Server,Client,Webserver,Built-In,Sockets,HTTPS,TLS
 
 To use the internet in Espruino you need an internet connection. If you're using Espruino under Linux (for example Raspberry Pi or OpenWRT) then you're sorted and can use the examples below directly, otherwise you'll need a module to connect to the internet. Currently your choices are:
@@ -40,6 +42,22 @@ require("http").get("http://www.espruino.com", function(res) {
   var contents = "";
   res.on('data', function(data) { contents += data; });
   res.on('close', function() { console.log(contents); });
+});
+```
+
+### Handling Errors
+
+`http.get` returns an instance of [`httpCRq`](http://www.espruino.com/Reference#httpCRq) which will emit an `error` event if there are problems connecting.
+
+This means you can trap connection errors with something like the following:
+
+```
+require("http").get("http://192.168.12.34", function(res) {
+  var contents = "";
+  res.on('data', function(data) { contents += data; });
+  res.on('close', function() { console.log(contents); });
+}).on('error', function(e) {
+  console.log("ERROR", e);
 });
 ```
 
@@ -121,6 +139,9 @@ function onPageRequest(req, res) {
 require("http").createServer(onPageRequest).listen(8080);
 ```
 
+However for real use cases you'll probably want to use Forms and HTTP POST 
+requests, and [there's an example of doing that here](/Posting+Forms)
+
 ### Transferring files
 
 You may want to serve up files from the SD card. The most obvious route would be to do something like this:
@@ -161,6 +182,8 @@ require("http").createServer(onPageRequest).listen(8080);
 ```
 
 This loads the file a section at a time, and even closes it and the HTTP connection once sending is complete.
+
+**Note:** by default `.pipe` will use a relatively small chunk size (the amount of data read and written in one go). Replacing `f.pipe(res)` with `f.pipe(res, {chunkSize:512});` will drastically increase file transfer speeds as it better matches the block size of SD cards.
 
 
 ### Transferring large amounts of data
@@ -203,7 +226,7 @@ var server = require("net").createServer(function(c) {
   c.write("Hello");
   c.on('data', function(data) {
     console.log(">"+JSON.stringify(data));
-  }
+  });
   c.end();
 });
 server.listen(1234);

@@ -2,6 +2,8 @@
 MCP23xxx I2C and SPI port expanders
 ========================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MCP23xxx. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,port expander,I2C,SPI,MCP23008,MCP23S08,MCP23017,MCP23S17
 
 Overview

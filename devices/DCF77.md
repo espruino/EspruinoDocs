@@ -2,6 +2,8 @@
 DCF77 
 ======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/DCF77. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,Radio,DCF,DCF77,NPL,Rugby Clock,CLoc,Time,wireless,receiver
 
 ![DCF77 module](DCF77.jpg)

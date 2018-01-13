@@ -2,6 +2,8 @@
 Snake Game
 =========
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Snake. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Pico,LCD,Snake,Game
 * USES: Pico,PCD8544,PicoStarterKit
 
@@ -234,8 +236,8 @@ function newApple() {
   // keep coming up with random locations until there
   // is nothing drawn where we want to put the apple
   do {
-    p = { x : 6 + Math.round(Math.random()*(g.getWidth()-6)),
-          y : Math.round(Math.random()*g.getHeight()) };
+    p = { x : Math.round(Math.random()*g.getWidth()),
+          y : 6 + Math.round(Math.random()*(g.getHeight()-6)) };
   } while (g.getPixel(p.x, p.y));
   // draw the apple, and save it inthe array
   g.setPixel(p.x, p.y);
@@ -251,7 +253,7 @@ function start() {
   drawScore();  
   // Setup snake position
   pos = {x:g.getWidth()/2,y:g.getHeight()/2}; // centre of the screen
-  history.push([pos.x, pos.y]); // add to the 'history' list
+  history = [[pos.x, pos.y]]; // reset the 'history' list
   g.setPixel(pos.x, pos.y);
   dir = {x:1,y:0}; // the direction of the snake
   // Now add randomly positioned apples

@@ -2,8 +2,10 @@
 Heater Controller
 ===============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Heater+Controller. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Heater,Temperature,Temp,Controller
-* USES: DS18B20,Resistor,4.7k Resistor,Relay Module
+* USES: DS18B20,Resistor,4.7k Resistor,Relay Module,Espruino Board
 
 Introduction
 -----------
@@ -103,5 +105,3 @@ Now, if the temperature is below 30 degrees C (the value of ```targetTemp```), t
 We use ```targetTemp-1``` and ```targetTemp+1``` in our if statements because we want a bit of [hysteresis](http://en.wikipedia.org/wiki/Hysteresis). This is what is built into all thermostats (for instance in your fridge or house's central heating), and it makes sure that we don't reach the stage where we're turning our bulb on and off every second!
 
 If you type ```sensor.getTemp()``` in the left pane while your code is running, you should be able to see the current temperature. You can even add the line ```console.log(temp);``` after the line ```var temp = sensor.getTemp();``` and re-upload, and Espruino will show you the temperature automatically so you can see how it rises and falls.
-
-

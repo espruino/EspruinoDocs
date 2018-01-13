@@ -2,6 +2,8 @@
 Touchscreen
 ==========
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Touchscreen. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,HYSTM32,HYSTM32_24,HYSTM32_28,HYSTM32_32,Touchscreen,SPI,ADS7843
 
 We've created a [[Touchscreen.js]] module that allows you to easily access the touchscreen on devices that have them built in. If you've wired up your own touchscreen then you will probably need to use the relevant touchscreen module directly though (such as the [[ADS7843]]). 

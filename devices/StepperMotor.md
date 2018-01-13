@@ -2,6 +2,8 @@
 Stepper Motor Module
 ====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/StepperMotor. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Stepper,Motor,Steppermotor,Stepper motor
 
 **Note:** For a more in-depth look at Stepper Motors, see the
@@ -87,6 +89,7 @@ var motor = new StepperMotor({
   stepsPerSec : 100, /* default */
   pattern :  [0b0001,0b0011,0b0010,0b0110,0b0100,0b1100,0b1000,0b1001],
   offpattern : 0b0000, /* default */
+  onstep : undefined, /* default - or specify a function to be called once per step */
 });
 ```
 

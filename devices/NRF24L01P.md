@@ -2,6 +2,8 @@
 NRF24L01+ Wireless Module
 ======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/NRF24L01P. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,NRF,NRF24L01,NRF24L01P,NRF24L01+,Wireless,Radio,Transceiver
 
 ![NRF24L01+ Wireless Module](NRF24L01P/module.jpg)

@@ -2,6 +2,8 @@
 Flashing Lights
 =============
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Flashing+Lights. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Flash,Flashing,Blink,Blinky,LED,LEDs,Light
 * USES: LED,Only Espruino Board
 

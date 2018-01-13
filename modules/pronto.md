@@ -2,6 +2,8 @@
 Infrared 'Pronto Hex' decoder
 =========================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/pronto. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,Modules,IR,Infrared,Pronto,IRDB,IRDB.tk
 * USES: Puck.js,Infrared,IR
 
@@ -30,7 +32,7 @@ var prontoHex = "0000 006C 0000 0022 00AD 00AD 0016 0041 0016 0041 0016 0041 001
 var pulseTimes = require("pronto").decode(prontoHex);
 ```
 
-`pulseTimes` now cmntains an array of pulses in milliseconds that you can use with [`digitalPulse`](/Pico+Infrared)
+`pulseTimes` now contains an array of pulses in milliseconds that you can use with [`digitalPulse`](/Pico+Infrared)
 on normal Espruino boards, or [`Puck.IR`](/Puck.js Infrared) on Puck.js devices:
 
 ### Puck.js

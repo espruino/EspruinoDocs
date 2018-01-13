@@ -3,7 +3,7 @@ LED Volume (VU) Meter
 ==================
 
 * KEYWORDS: VU Meter,Volume Meter,Light Show,Audio
-* USES: WS2811,Waveform
+* USES: WS2811,Waveform,Espruino Board
 
 This creates a simple sound-reactive LED meter on a string of WS2811 Lights. Varying numbers of LEDs light up white in response to the volume of sound detected.
 

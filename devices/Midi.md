@@ -2,6 +2,8 @@
 Midi
 ====
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Midi. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,Midi,Serial,Music
 
 This module uses the event emitter interface to let you choose what message you are

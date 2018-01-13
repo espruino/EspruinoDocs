@@ -2,6 +2,8 @@
 Controlling Bluetooth Lights with Puck.js
 ============================================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+and+Bluetooth+Lightbulbs. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,LED,Light,Lightbulb,Awox,Smartlight
 * USES: Puck.js,Web Bluetooth
 
@@ -22,7 +24,7 @@ function setLight(isOn) {
   }).then(function(service) {
     return service.getCharacteristic("217887f8-0af2-4002-9c05-24c9ecf71600");
   }).then(function(characteristic) {
-    characteristic.writeValue(isOn ? 1 : 0);
+    return characteristic.writeValue(isOn ? 1 : 0);
   }).then(function() {
     gatt.disconnect();
     console.log("Done!");
