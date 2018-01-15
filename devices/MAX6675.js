@@ -14,7 +14,7 @@ MISO = A6; SCK = A5; CS = A7;    // PICO or Espruino WiFi
 //MISO = D12 ;SCK = D14; CS = D13; // ESP8266 >= ESP12
 
 SPI1.setup({ miso:MISO, sck:SCK, baud:1000000 });  
-
+var max=require("MAX6675").connect(SPI1,CS);
 setInterval(function(){console.log(max.getTemp());},2000);
 
 Then call:
@@ -27,7 +27,7 @@ cs is the chip select pin
 
 Get the temperature with:
 
-thermocouple.getTemp();
+max.getTemp();
 
 This returns an object with properties temp (the temperature, in C), fault (fault code; 0 indicates no error), and faultstring (a string describing the fault);
 
@@ -48,5 +48,5 @@ MAX6675.prototype.getTemp = function ()
     if (d.charCodeAt(1) & 0x4)
       return {fault:'no probe detected'};
     else 
-      return { temp : ((d.charCodeAt(0)<<8 | d.charCodeAt(1)) >> 3) *0.25};
+      return { temp : ((d.charCodeAt(0)<<8 | d.charCodeAt(1)) >> 3) *0.25,fault:0};
 };
