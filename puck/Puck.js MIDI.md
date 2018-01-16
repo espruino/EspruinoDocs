@@ -28,7 +28,7 @@ setWatch(function() {
 ```
 
 Then when you next connect to your Puck.js device it will be treated
-as a MIDI instrument. When you press the button, a note will be sent
+as a MIDI instrument. When you press the button, a MIDI command will be sent
 using the `send` function.
 
 You can then even use the [Web MIDI APIs](https://webaudio.github.io/web-midi-api/)
@@ -38,3 +38,12 @@ to receive the MIDI data inside a web page!
 change the name of the Puck.js device to `PuckCC`.
 
 **Note:** You may require a Mac for this work automatically.
+
+`midi.send` sends  a 'control change' command. Often you'll want
+to send a `midi.noteOn(0,note,velocity)` or `midi.noteOff(0,note,0)`
+command instead.
+
+Reference 
+---------
+
+* APPEND_JSDOC: ble_midi.js

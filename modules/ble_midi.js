@@ -6,6 +6,7 @@ midi.init();
 midi.send(channel, controller, value);
 */
 
+/// Turns the device into a MIDI controller
 exports.init = function() {
   NRF.setServices({
     "03B80E5A-EDE8-4B33-A751-6CE34EC4C700": { // MIDI
@@ -28,13 +29,21 @@ exports.init = function() {
   ]);
 };
 
-exports.send = function(channel, controller, value) {
+/// Sends a raw MIDI command
+exports.cmd = function(cmd, d1, d2) {
   NRF.updateServices({
-    "03B80E5A-EDE8-4B33-A751-6CE34EC4C700": { // MIDI
+    "03B80E5A-EDE8-4B33-A751-6CE34EC4C700": {
       "7772E5DB-3868-4112-A1A9-F2669D106BF3": {
-        value: [0x80, 0x80, 0xB0 + channel, controller, value],
+        value: [0x80, 0x80, cmd, d1, d2],
         notify: true
       }
     }
   });
 };
+
+/// Send a 'control change' (0xB0) MIDI command
+exports.send = function(channel, controller, value) { this.cmd(0xB0+channel,controller,value); };
+/// Send a 'note on' (0x90) MIDI command
+exports.noteOn = function(channel, note, velocity) { this.cmd(0x90+channel,note,velocity); };
+/// Send a 'note off' (0x80) MIDI command
+exports.noteOff = function(channel, note, velocity) { this.cmd(0x80+channel,note,velocity); };
