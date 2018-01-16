@@ -42,7 +42,7 @@ function MAX6675(spi,cs) {
     this.cs=cs;
 }
 
-MAX6675.prototype.getTemp = function () 
+MAX6675.prototype.getTemp = function () {
     var d = this.spi.send("\0\0",this.cs);
     //console.log( d.charCodeAt(0).toString(2), d.charCodeAt(1).toString(2));
     if (d.charCodeAt(1) & 0x4)

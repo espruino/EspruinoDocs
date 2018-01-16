@@ -46,4 +46,4 @@ command instead.
 Reference 
 ---------
 
-* APPEND_JSDOC: ble_midi.js
+* APPEND_JSDOC: ../modules/ble_midi.js
