@@ -11,7 +11,7 @@ var C = {
   //green,blue,clear
 };
 
-var MEASUREMENT_TIMES = [ 160,320,640,1280,1560,5120 ];
+var MEASUREMENT_TIMES = [ 160,320,640,1280,2560,5120 ];
 
 function BH1745(r,w,options) {
   this.r = r; // read from a register
