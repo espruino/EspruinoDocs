@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. -->
-OneWire EEPROMs (like DS24B33)
-========================
+DS2xxx OneWire EEPROMs (DS24B33, DS2431, DS28EC20 etc)
+======================================================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/DS2xxx. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
@@ -67,5 +67,3 @@ eeprom.write(address,data)
 ```
 
 `write()` writes the supplied data to the specified address. The data can be a string or an array of bytes. Address may be undefined, in this case, it will read from where last read ended. This handles breaking the write up into pages, and waiting for the write delay period. The write delay is 5ms per page (This means that large writes can be quite slow). 
-
-
