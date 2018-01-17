@@ -30,11 +30,17 @@ var C = {
   SCALE16G:3
 };
 
+/* Initialise LIS2DH12 - called automatically from connectSPI/connectI2C.
+
+options = {
+  callback : function, // function to call when data is ready
+};
+ */
 function LIS2DH12(r,w, options) {
   this.r = r; // read from a register
   this.w = w; // write to a register
-  this.options = options;
-  this.callback = options.callback;
+  this.options = options||{};
+  this.callback = this.options.callback;
   if (this.r(C.WHO_AM_I, 1)[0] != C.I_AM_MASK)
     throw "LIS2DH12 WHO_AM_I check failed";
   this.g_scale = C.SCALE2G;
@@ -91,10 +97,11 @@ LIS2DH12.prototype.setPowerMode = function (mode) {
     // set up timer
     if (this.interval) clearInterval(this.interval);
     this.interval = undefined;
-    if (time_ms && this.callback)
+    if (time_ms && this.callback) {
       this.interval = setInterval(function(acc) {
          acc.callback(acc.getXYZ());
       }, time_ms, this);
+    }
 };
 
 /* Get the last read accelerometer readings as 
@@ -123,10 +130,11 @@ LIS2DH12.prototype.readXYZ = function(callback) {
   if (isOff) this.setPowerMode("normal");  
 };
 
-// Initialise the LIS2DH12 module with the given SPI interface and CS pins
+/* Initialise the LIS2DH12 module with the given SPI interface and CS pins.
+  See 'LIS2DH12' above for options */
 exports.connectSPI = function(spi,cs,options) {
-  if ("function"==typeof options) options={callback:options};
-  options = options||{};
+  if ("function"==typeof options)
+    throw new Error("Use require(LIS2DH12).connectSPI(..., {callback:function() { ... }} instead");
   return new LIS2DH12(function(reg,len) { // read
     return spi.send([reg|0xC0,new Uint8Array(len)], cs).slice(1);
   }, function(reg,data) { // write
@@ -134,10 +142,10 @@ exports.connectSPI = function(spi,cs,options) {
   },options);
 };
 
-// Initialise the LIS2DH12 module with the given I2C interface (and optional address)
+/* Initialise the LIS2DH12 module with the given I2C interface (and optional address with connectI2C(i2c,{addr:...}) )
+See 'LIS2DH12' above for more options */
 exports.connectI2C = function(i2c,options) {  
-  options = options||{};
-  addr = options.addr||0x19;
+  var addr = (options&&options.addr)||0x19;
   return new LIS2DH12(function(reg,len) { // read
     i2c.writeTo(addr,reg|128);
     return i2c.readFrom(addr,len);
