@@ -51,6 +51,8 @@ of how to set up advertising on Puck.js. You can also use [`NRF.findDevices(...)
 and [`NRF.setScan(...)`](/Reference#l_NRF_setScan) to scan for advertising packets
 broadcast by other beacons.
 
+To see how to receive advertising data in your own application, [check out this tutorial](/Puck.js+Advertising).
+
 
 Connecting (Puck as Peripheral)
 --------------------------------
