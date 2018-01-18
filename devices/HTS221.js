@@ -22,7 +22,7 @@
  *   I2C1.setup({scl:B6,sda:B7}); // on EspruinoPico board
  *   I2C1.setup({scl:B8,sda:B9}); // on Nucleo boards
  *   var temp = require("HTS221").connect(I2C1);
-  *   print(temp.getTemperature());
+ *   print(temp.getTemperature());
  *   print(temp.getHumidity());
  *
  */
@@ -35,6 +35,8 @@ var C = {
   CTRL_WHO_AM_I_ADDRESS : 0xF,
   CTRL_AV_CONF : 0x10,
   CTRL_REG1_ADDRESS : 0x20,
+  CTRL_REG3_ADDRESS : 0x22,
+  CTRL_STATUS_ADDRESS : 0x27,
 
   // bits for Control register, register 1
   // Power down control
@@ -62,15 +64,21 @@ var C = {
 
 };
 
-// connect to an I2C port
-exports.connect = function ( i2c ) {
-  return new HTS221( i2c );
+/* Initialise the module. See HTS221 for more information */
+exports.connect = function (i2c, options) {
+  return new HTS221(i2c, options);
 };
 
 /* Create a new HTS221 sensor instance - set up the device
-   and read coefficients */
-function HTS221( i2c ) {
+   and read coefficients.
+   
+   options = {
+     int : pin, // optional - DRDY interrupt pin. If specified, 'data' event will be emitted when data is ready
+   }
+*/
+function HTS221(i2c, options) {
   this.i2c = i2c;
+  this.options = options||{};
   // Set the driver mode, block data rate, output data rate
   this.w(C.CTRL_REG1_ADDRESS, (C.PD_ACTIVE_MODE | C.BDU_NOT_CONTINUOUS_UPDATE | C.ODR_ONE_HZ));
   // Set the average configuration (default)
@@ -103,15 +111,33 @@ function HTS221( i2c ) {
   this.H1_RH = coefficients[1]/2;
   this.H0_T0_OUT = this.r16(0x36, true);
   this.H1_T0_OUT = this.r16(0x3A, true);
+  
+  
+  if (this.options.int) {
+    // Enable DRDY output on pin, active high
+    this.w(C.CTRL_REG3_ADDRESS, 0x04);
+    this.watch = setWatch(function() {
+      this.emit('data', this.get());
+    }.bind(this), this.options.int, {edge:"rising",repeat:true});
+    // ensure we clear DRDY
+    this.get();
+  }
 }
 
+// Power down the HTS221
+HTS221.prototype.stop = function() {
+  if (this.watch) clearWatch(this.watch);
+  this.watch = undefined;
+  this.w(C.CTRL_REG1_ADDRESS, C.PD_POWER_DOWN_MODE);  
+}
 
+// deprecated. It's now done automatically when the HTS221 class is created
 HTS221.prototype.ObtainCalibratedTemperatureCoefficient = function() {
   print("ObtainCalibratedTemperatureCoefficient deprecated. It's now done automatically.");
 }
 
 // Read the temperature in degrees C
-HTS221.prototype.getTemperature= function(callback) {
+HTS221.prototype.getTemperature = function(callback) {
   // Read Ouput registers (H_OUT) 
   // temp msb, temp lsb  
   var T = this.r16(C.DATA_TEMP_OUT_L, true);
@@ -128,6 +154,28 @@ HTS221.prototype.getHumidity = function(callback) {
   return rh;
 };
 
+// Get the current temperature in degrees C and humidity percentage (rh)
+HTS221.prototype.get = function() {
+  return { 
+    temperature : this.getTemperature(),
+    humidity : this.getHumidity()
+  };
+}
+
+// Call the callback with a new humidity & temperature value
+HTS221.prototype.read = function(callback) {  
+  if (this.options.int) {
+    callback(this.get());
+  } else {    
+    var intr = setInterval(function() {
+      if (this.r(C.CTRL_STATUS_ADDRESS)&3) {
+        clearInterval(intr);
+        callback(get());
+      }        
+    }.bind(this), 100);
+    return this.get();
+  }
+};
 
 // read register 
 HTS221.prototype.r = function(addr, cnt) {

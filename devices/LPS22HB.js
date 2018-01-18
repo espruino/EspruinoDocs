@@ -45,7 +45,14 @@ LPS22HB.prototype.stop = function() {
   this.w(C.CTRL_REG3, 0x00); // irq off
 };
 
-// Get the current pressure value
+/* Get the current pressure value. Returns:
+
+{ 
+  pressure : float,     // pressure in hPa
+  temperature : float,  // temperature in degrees C
+  new : bool,           // is this a new reading?
+}
+*/
 LPS22HB.prototype.get = function() {
   var d = this.r(C.STATUS, 6); // status, 3x pressure, 2x temp
   var pressure = (d[3]<<16)|(d[2]<<8)|d[1];
@@ -54,7 +61,7 @@ LPS22HB.prototype.get = function() {
   if (temp&0x8000) temp-=0x10000;
   return {
     pressure : pressure / 4096,
-    temp : temp / 100,
+    temperature : temp / 100,
     new : (d[0]&3)==3
   };
 };

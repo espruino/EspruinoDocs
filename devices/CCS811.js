@@ -25,6 +25,12 @@ var C = {
   BOOTLOADER_APP_START : 0xF4,   
 };
 
+/* Set up the CCS811.
+
+options = {
+  int : pin, // optional - DRDY interrupt pin. If specified, 'data' event with data from 'get' will be emitted when data is ready
+}
+*/
 function CCS811(r,w,options) {
   this.r = r; // read from a register
   this.w = w; // write to a register
@@ -40,16 +46,27 @@ function CCS811(r,w,options) {
     setTimeout(function() {
       if (!ccs.r(C.STATUS_FW_MODE,1)[0]&C.STATUS_FW_MODE)
         throw "CCS811 not in FW mode";
-      // no IRQs, 1 sec drive
-      ccs.w(C.MEAS_MODE, C.MEAS_MODE_DRIVE_MODE_1SEC);
-      // callback - add a 2 sec delay so we have gas values
-      if (ccs.options.callback) 
-        setTimeout(function() { ccs.options.callback() }, 2000);
+      if (ccs.options.int) {
+        ccs.watch = setWatch(function() {
+          ccs.emit('data', ccs.get());
+        }, ccs.options.int, {edge:"falling",repeat:true});
+        // DRDY IRQ, 1 sec drive
+        ccs.w(C.MEAS_MODE, C.MEAS_MODE_DRIVE_MODE_1SEC | C.MEAS_MODE_INT_DATARDY);
+      } else {
+        // 1 sec drive
+        ccs.w(C.MEAS_MODE, C.MEAS_MODE_DRIVE_MODE_1SEC);
+      }
     },100);
   },100);
   
 }
-
+// Shut down the CCS811
+CCS811.prototype.stop = function() {
+  if (this.watch) clearWatch(this.watch);
+  this.watch = undefined;
+  this.w(C.MEAS_MODE, C.MEAS_MODE_DRIVE_MODE_IDLE);
+};
+// Returns true if data is available
 CCS811.prototype.available = function() {
   return (this.r(C.STATUS, 1)[0] & C.STATUS_DATA_READY)!=0;
 };
@@ -62,12 +79,15 @@ CCS811.prototype.available = function() {
    }
    ec02 and TVOC values are clipped to the given ranges - so for instance you'll never see a CO2 value below 400. 
 */
-CCS811.prototype.read = function() {
-  var d = this.r(C.ALG_RESULT_DATA,  5); // could read 8, but don't need last 3
+CCS811.prototype.get = function() {
+  var isNew = (this.r(C.STATUS, 1)[0] & C.STATUS_DATA_READY)!=0;
+  var d = this.r(C.ALG_RESULT_DATA,  4); // could read 8, but don't need last 4
+  /* NOTE: STATUS is 5th data element, but because we've just read
+  ALG_RESULT_DATA, STATUS_DATA_READY is always 0! */
 	return { 
     eCO2 : (d[0]<<8)|d[1],
     TVOC : (d[2]<<8)|d[3],
-    new : (d[4] & C.STATUS_DATA_READY)!=0 
+    new : isNew 
   };
 };
 
