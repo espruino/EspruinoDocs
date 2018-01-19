@@ -46,4 +46,7 @@ command instead.
 Reference 
 ---------
 
+Channels sent to these functions are zero-based, so channel 
+`0` in a function call actually represents channel `1`.
+
 * APPEND_JSDOC: ../modules/ble_midi.js
