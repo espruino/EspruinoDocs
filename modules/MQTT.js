@@ -28,8 +28,7 @@ var TYPE = {
     DISCONNECT : 14
 };
 
-/** No longer a constant */
-//var pakId = Math.floor(Math.random() * 65535);
+var pakId = Math.floor(Math.random() * 65534);
 
 /**
  Return Codes
@@ -56,7 +55,6 @@ function MQTT(server, options) {
     this.password = options.password;
     this.client = false;
     this.connected = false;
-    this.pakId = Math.floor(Math.random() * 65534);
     this.ping_interval =
         this.keep_alive < this.C.PING_INTERVAL ? (this.keep_alive - 5) : this.C.PING_INTERVAL;
     this.protocol_name = options.protocol_name || "MQTT";
@@ -144,8 +142,8 @@ var mqttUid = (function () {
 
 /** Generate PID */
 function mqttPid() {
-    this.pakId = this.pakId > 65534 ? 1 : ++this.pakId;
-    return fromCharCode(this.pakId >> 8) + fromCharCode(this.pakId & 0xFF);
+    pakId = pakId > 65534 ? 1 : ++pakId;
+    return fromCharCode(pakId >> 8) + fromCharCode(pakId & 0xFF);
 }
 
 /** Get PID from message */
