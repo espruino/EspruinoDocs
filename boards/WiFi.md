@@ -109,6 +109,8 @@ function onInit() {
 Espruino WiFi can be made into a WiFi access point with:
 
 ```
+var wifi = require("EspruinoWiFi");
+
 wifi.startAP('EspruinoAP', { password: '0123456789', authMode: 'wpa2' }, function(err) {
   if (err) throw err;
   console.log("Connected!");
