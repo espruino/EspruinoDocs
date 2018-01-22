@@ -294,6 +294,8 @@ possible.
 Firmware Updates
 -----------------
 
+**Note:** Firmware 1v95 is known to have problems pairing and connecting to Windows 10 (all other platforms work fine). This will be fixed in 1v96, however if you are a Windows user we'd recommend staying with 1v94 until 1v96 is released.
+
 ### via nRF Toolbox App (Android & iOS)
 
 * On your Bluetooth LE capable phone, install the `nRF Toolbox` app
