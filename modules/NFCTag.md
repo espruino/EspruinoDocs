@@ -41,7 +41,7 @@ initializer bytes used on the second line:
 |     4 |  0x60 | Memory size (byte multiplied by 8: 0x60 * 8 = 768 bytes) |
 |     5 |  0x00 | Read and Write access (0x00 denotes no restriction)      |
 
-It is writtable using almost any NFC Reader e.g. an Android phone (using [NFC TagWriter by NXP](https://play.google.com/store/apps/details?id=com.nxp.nfc.tagwriter).
+It is writtable using almost any NFC Reader e.g. an Android phone (using [NFC TagWriter by NXP](https://play.google.com/store/apps/details?id=com.nxp.nfc.tagwriter)).
 
 ```
 var data = new Uint8Array(16+768);
