@@ -89,6 +89,7 @@ in Chrome), however it doesn't yet work on Windows without ([some effort](https:
 It does however support using your [headphone jack!](/Headphone)!
 * [Native App](http://www.espruino.com/Web+IDE#as-a-native-application) is needed
 to communicate with Bluetooth LE devices like [Puck.js](/Puck.js) on Windows.
+* [Locally hosted](https://github.com/espruino/EspruinoHub) IDE can be run on a Raspberry Pi, and can allow you to program [Puck.js](/Puck.js) devices through any Web Browser that has access to your local network.
 
 Despite being called a 'Web IDE', the IDE itself (including the fully online version) 
 can function without an internet connection. If you're using modules you may need to 

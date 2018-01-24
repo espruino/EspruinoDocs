@@ -308,6 +308,7 @@ Firmware Updates
 * If choosing the ZIP file opens the ZIP and displays files inside (it can do on some Android 7 devices) then hit back, long-press on the ZIP, and choose `Open` in the top right.
 * Tap `Select Device` and choose the device called `DfuTarg`
 * Now tap `Upload` and wait. The LED should turn blue and the DFU process will start - it will take around 90 seconds to complete
+* After completion, reset Puck.js while keeping the button held for around 10 seconds. The green LED should light, followed by all 3, then the red LED blinking 5 times. Release the button after the blinking has stopped - this will clear out any previously saved code and bonding data that could have caused problems with a new firmware version. 
 
 ### via nRF Connect App (Android)
 
@@ -323,7 +324,7 @@ Firmware Updates
 * Once connected, a `DFU` symbol in a circle will appear in the top right of the App
 * Click it, choose `Distribution Packet (ZIP)`, and your Download. If clicking on the downloaded zip file opens its contents (Android 7 may do this) then long-press on the zip and tap open instead.
 * The DFU process will start - it will take around 90 seconds to complete
-
+* After completion, reset Puck.js while keeping the button held for around 10 seconds. The green LED should light, followed by all 3, then the red LED blinking 5 times. Release the button after the blinking has stopped - this will clear out any previously saved code and bonding data that could have caused problems with a new firmware version.
 
 Troubleshooting
 ---------------
