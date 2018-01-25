@@ -42,9 +42,10 @@ on how to enable it.
 
 ### As a Native application
 
-The Web IDE is available as a download for 64 bit Windows:
+The Web IDE is available as:
 
-* [Download for Windows x64 - 0.68.1](/files/espruino_ide_win64_0v68.1.exe)
+* [Download for Windows 32 bit - 0.68.1](/files/espruino_ide_win32_0v68.1.exe)
+* [Download for Windows 64 bit - 0.68.1](/files/espruino_ide_win64_0v68.1.exe)
 
 #### For Windows 8.1 and later
 
