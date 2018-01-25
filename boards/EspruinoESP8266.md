@@ -34,6 +34,18 @@ Features
 * Built-in Wifi
 * 1700 JS variables
 
+Build Content
+-------------
+
+content | espruino_1v95_esp8266 | espruino_1v95_esp8266_4mb
+ :---  | :--- | :--- 
+Modules | NET<br>TELNET<br><br>CRYPTO<br>NEOPIXEL | NET<br>TELNET<br>GRAPHICS<br>CRYPTO<br>NEOPIXEL
+JS variables| 1700| 1600
+save pages| 3 x 4096 byte | 16 x 4096 byte
+getState()| {"sdkVersion": "2.0.0(5a875ba)",<br>"cpuFrequency": 160, "freeHeap": 10560, "maxCon": 10,<br>"flashMap": "512KB:256/256",<br>"flashKB": 512,<br>"flashChip": "0xXX 0x4013"}|{"sdkVersion": "2.0.0(5a875ba)",<br>"cpuFrequency": 160, "freeHeap": 11888, "maxCon": 10,<br>"flashMap": "4MB:1024/1024",<br>"flashKB": 4096,<br>"flashChip": "0xXX 0x4016"}|
+getFreeFlash()|[{ "addr": 487424, "length": 4096 }]|[{ "addr": 2097152, "length": 1048576 },<br>{ "addr": 3145728, "length": 262144 },<br>{ "addr": 3407872, "length": 262144},<br>{ "addr": 3670016, "length": 262144 },<br>{ "addr": 3932160, "length": 262144 }]
+chip_id and flash_size|4013-4015 use<br>--flash_size 512KB<br>|4016-4018 use<br>--flash_size 4MB-c1
+
 Limitations
 -----------
 The following features are only partially or not supported by Espruino on the ESP8266:

@@ -65,9 +65,7 @@ NFCTag.prototype._write = function(rx) {
 };
 
 /**
- * Change tag
- *
- * setData(data)
+ * Set Tag contents
  */
 NFCTag.prototype.setData = function(data) {
   //shutdown
@@ -84,10 +82,7 @@ NFCTag.prototype.setData = function(data) {
 };
 
 /**
- * Retrieve tag contents
- * 
- * getData();
- * =new Uint8Array(...)
+ * Retrieve tag contents as Uint8Array
  */
 NFCTag.prototype.getData = function() {
   return this._data;
