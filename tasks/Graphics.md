@@ -33,20 +33,20 @@ you can create a Graphics class which renders to an ArrayBuffer:
 ```
 Graphics.prototype.print = function() {
   for (var y=0;y<this.getHeight();y++)
-    console.log(new Uint8Array(this.buffer,this.getWidth()*y,this.getWidth()));
-}
+    console.log(new Uint8Array(this.buffer,this.getWidth()*y,this.getWidth()).toString());
+};
 var g = Graphics.createArrayBuffer(8,8,8);
-g.setColor(1)
-g.drawString("X",0,0)
-g.print()
-//0,0,0,0,0,0,0,0
-//0,1,1,0,0,0,1,1
-//0,1,1,0,0,0,1,1
-//0,0,1,1,0,1,1,0
-//0,0,0,1,1,1,0,0
-//0,0,1,1,0,1,1,0
-//0,1,1,0,0,0,1,1
-//0,1,1,0,0,0,1,1
+g.setColor(1);
+g.drawString("Hi",0,0);
+g.print();
+// 1,0,1,0,0,1,0,0
+// 1,0,1,0,0,0,0,0
+// 1,1,1,0,1,1,0,0
+// 1,0,1,0,0,1,0,0
+// 1,0,1,0,1,1,1,0
+// 0,0,0,0,0,0,0,0
+// 0,0,0,0,0,0,0,0
+// 0,0,0,0,0,0,0,0
 ```
 
 See the [`Graphics.createArrayBuffer`](/Reference#l_Graphics_createArrayBuffer) 
