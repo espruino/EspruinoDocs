@@ -1,6 +1,12 @@
 /* Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 // Based heavily on https://github.com/sparkfun/SparkFun_MPU-9250_Breakout_Arduino_Library
-// TODO: Handle magnetometer
+/*
+
+NOTE: Accelerometer/Gyro readings seem wrong
+
+mpu.r(0x3B,6) => new Uint8Array([128, 0, 128, 0, 254, 86])
+X and Y axes both always report 128,0 as if not enabled, but Z seems to work
+*/
 var C = {
   WHO_AM_I_MPU9250 : 0x75,
   PWR_MGMT_1 : 0x6B,
@@ -33,11 +39,17 @@ var C = {
   ACCEL_XOUT_H : 0x3B,
   TEMP_OUT_H : 0x41,
   GYRO_XOUT_H : 0x43,
+  // magnetometer registers
+  MAG_ST1 : 0x02, // data ready in bit 0
+  MAG_XOUT_L : 0x03,
+  MAG_CNTL1 : 0x0A
 };
 
-function MPU9250(r,w,options) {
-  this.r = r; // read from a register
-  this.w = w; // write to a register
+function MPU9250(r,w,rmag,wmag,options) {
+  this.r = r; // read from a register on main MPU
+  this.w = w; // write to a register on main MPU
+  this.rmag = rmag; // read from a register on magnetometer
+  this.wmag = wmag; // write to a register on magnetometer
   if (this.r(C.WHO_AM_I_MPU9250, 1)[0] != 0x71)
     throw "MPU9250 WHO_AM_I check failed";
     
@@ -320,6 +332,12 @@ MPU9250.prototype.initMPU9250 = function() {
     mpu.w(C.INT_PIN_CFG, 0x22);
     // Enable data ready (bit 0) interrupt
     mpu.w(C.INT_ENABLE, 0x01);
+    
+    // Enable Magnetometer
+    
+    mpu.wmag(C.MAG_CNTL1, 0b10010); // 16 bit, 8 Hz
+    
+    
     return new Promise(function(resolve) {setTimeout(resolve,100)});
   });
 };
@@ -328,45 +346,60 @@ MPU9250.prototype.dataReady = function() {
   return this.r(C.INT_STATUS,1) & 0x01;
 };
 
-MPU9250.prototype.readAccelData = function() {
+// return {x,y,z} for the accelerometer - in G
+MPU9250.prototype.readAccel = function() {
   var d = new DataView(new Uint8Array(this.r(C.ACCEL_XOUT_H, 6)).buffer);
-  return {
-    x: d.getInt16(0,1)/this.accelsensitivity,
-    y: d.getInt16(2,1)/this.accelsensitivity,
-    z: d.getInt16(4,1)/this.accelsensitivity
+  return { // big endian
+    x: d.getInt16(0,0)/this.accelsensitivity,
+    y: d.getInt16(2,0)/this.accelsensitivity,
+    z: d.getInt16(4,0)/this.accelsensitivity
   };  
 };
 
-MPU9250.prototype.readGyroData = function() {
+// return {x,y,z} for the gyro in degrees/second
+MPU9250.prototype.readGyro = function() {
   var d = new DataView(new Uint8Array(this.r(C.GYRO_XOUT_H, 6)).buffer);
-  return {
-    x: d.getInt16(0,1)/this.accelsensitivity,
-    y: d.getInt16(2,1)/this.accelsensitivity,
-    z: d.getInt16(4,1)/this.accelsensitivity
+  return { // big endian
+    x: d.getInt16(0,0)/this.gyrosensitivity,
+    y: d.getInt16(2,0)/this.gyrosensitivity,
+    z: d.getInt16(4,0)/this.gyrosensitivity
   };  
 };
 
-MPU9250.prototype.readMagData = function() {
-  throw "TODO";
+// return {x,y,z} for the magnetometer in millGaus
+MPU9250.prototype.readMag = function() {
+  var d = new DataView(new Uint8Array(this.rmag(C.MAG_XOUT_L, 7)).buffer);
+  // reading 7th byte lets us get more data next time
+  var s = 49120/32760;
+  return { // little endian
+    x: d.getInt16(0,1)*s,
+    y: d.getInt16(2,1)*s,
+    z: d.getInt16(4,1)*s
+  };  
 };
 
-// Initialise the MPU9250 module with the given SPI interface and CS pins
-/*exports.connectSPI = function(spi,cs,options) {
-  return new MPU9250(function(reg,len) { // read
-    return spi.send([reg|0x80,new Uint8Array(len)], cs).slice(1);
-  }, function(reg,data) { // write
-    return spi.write(reg, data, cs);
-  },options);
-};*/
+// return {x,y,z} for all 3 sensors - { accel, gyro, mag }
+MPU9250.prototype.read = function() {
+  return {
+    accel: this.readAccel(),
+    gyro: this.readGyro(),
+    mag: this.readMag()
+  };  
+};
 
 // Initialise the MPU9250 module with the given I2C interface
 exports.connectI2C = function(i2c,options) {
   var ampu = 0x68;
   var amag = 0x0C;
   return new MPU9250(function(reg,len) { // read mpu
-    i2c.writeTo(ampu,reg|128);
+    i2c.writeTo(ampu,reg);
     return i2c.readFrom(ampu,len);
   }, function(reg,data) { // write mpu
     i2c.writeTo(ampu,reg,data);
+  },function(reg,len) { // read mag
+    i2c.writeTo(amag,reg);
+    return i2c.readFrom(amag,len);
+  }, function(reg,data) { // write mag
+    i2c.writeTo(amag,reg,data);
   },options);
 };
