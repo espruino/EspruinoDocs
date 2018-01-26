@@ -15,7 +15,7 @@ var js = fs.readFileSync(fileIn).toString();
 
 // check inf advanced optimization is possible
 var advancedOptimisation = false;
-var jsExterns = fs.readFileSync( "bin/espruino.externs" );
+var jsExterns = fs.readFileSync( __dirname+"/espruino.externs" );
 if (fs.existsSync(fileExterns)) {
   jsExterns += ("\n" + fs.readFileSync(fileExterns).toString());
   advancedOptimisation = true;
