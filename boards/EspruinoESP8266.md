@@ -34,6 +34,18 @@ Features
 * Built-in Wifi
 * 1700 JS variables
 
+Build Content
+-------------
+
+content | espruino_1v95_esp8266 | espruino_1v95_esp8266_4mb
+ :---  | :--- | :--- 
+Modules | NET<br>TELNET<br><br>CRYPTO<br>NEOPIXEL | NET<br>TELNET<br>GRAPHICS<br>CRYPTO<br>NEOPIXEL
+JS variables| 1700| 1600
+save pages| 3 x 4096 byte | 16 x 4096 byte
+getState()| {"sdkVersion": "2.0.0(5a875ba)",<br>"cpuFrequency": 160, "freeHeap": 10560, "maxCon": 10,<br>"flashMap": "512KB:256/256",<br>"flashKB": 512,<br>"flashChip": "0xXX 0x4013"}|{"sdkVersion": "2.0.0(5a875ba)",<br>"cpuFrequency": 160, "freeHeap": 11888, "maxCon": 10,<br>"flashMap": "4MB:1024/1024",<br>"flashKB": 4096,<br>"flashChip": "0xXX 0x4016"}|
+getFreeFlash()|[{ "addr": 487424, "length": 4096 }]|[{ "addr": 2097152, "length": 1048576 },<br>{ "addr": 3145728, "length": 262144 },<br>{ "addr": 3407872, "length": 262144},<br>{ "addr": 3670016, "length": 262144 },<br>{ "addr": 3932160, "length": 262144 }]
+chip_id and flash_size|4013-4015 use<br>--flash_size 512KB<br>|4016-4018 use<br>--flash_size 4MB-c1
+
 Limitations
 -----------
 The following features are only partially or not supported by Espruino on the ESP8266:
@@ -42,8 +54,7 @@ The following features are only partially or not supported by Espruino on the ES
 - [[PWM]] does not work, low speed software [[PWM]] is usable
 - No [[DAC]]: the esp8266 does not have a DAC.
 - No independently usable serial port (needs Espruino work)
-- **GPIO16 is not currently supported in Espruino, it is not a normal GPIO
-pin but rather is attached to the real-time-clock circuitry.**
+- **GPIO16 is now supported in Espruino as a D16 without watch but with all software functiontions like PWM/I2C/SPI/etc**
 
 The main limitations of Espruino on the esp8266 come from two factors:
 - The esp8266 does not have rich I/O peripheral interfaces, this means protocols need to be run in software, which not only may
@@ -133,8 +144,7 @@ The esp8266 ADC function is available on any pin
 (D0-D15) but really uses a separate pin on the esp8266 (this should
 be changed to an A0 pin).
 
-GPIO16 is not currently supported in Espruino, it is not a normal GPIO
-pin but rather is attached to the real-time-clock circuitry.
+GPIO16 is now supported in Espruino. **Do not use it if you use deep sleep**
 
 ### digitalPulse implementation
 

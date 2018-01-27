@@ -3,7 +3,7 @@ Remote Control Helicopter with Wii Nunchuck
 ==================
 
 * KEYWORDS: Helicopter,Flying,Aircraft,Remote Control,Infrared
-* USES: Infrared,Wii,IRReceiver
+* USES: Infrared,Wii,IRReceiver,Espruino Board
 
 This is a simple remote control for infrared remote control helicopters.
 
@@ -72,4 +72,3 @@ var wii;
 function onInit() {
   wii = require("wii_nunchuck").connect(I2C1);
 }
-

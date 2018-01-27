@@ -24,7 +24,7 @@ function setLight(isOn) {
   }).then(function(service) {
     return service.getCharacteristic("217887f8-0af2-4002-9c05-24c9ecf71600");
   }).then(function(characteristic) {
-    characteristic.writeValue(isOn ? 1 : 0);
+    return characteristic.writeValue(isOn ? 1 : 0);
   }).then(function() {
     gatt.disconnect();
     console.log("Done!");

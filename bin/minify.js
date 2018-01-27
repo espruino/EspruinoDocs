@@ -1,4 +1,4 @@
-var http = require("http");
+var https = require("https");
 var fs = require("fs");
 
 if (process.argv.length!=4 && process.argv.length!=5) {
@@ -15,7 +15,7 @@ var js = fs.readFileSync(fileIn).toString();
 
 // check inf advanced optimization is possible
 var advancedOptimisation = false;
-var jsExterns = fs.readFileSync( "bin/espruino.externs" );
+var jsExterns = fs.readFileSync( __dirname+"/espruino.externs" );
 if (fs.existsSync(fileExterns)) {
   jsExterns += ("\n" + fs.readFileSync(fileExterns).toString());
   advancedOptimisation = true;
@@ -44,7 +44,7 @@ var post_data = encodeURIComponent( 'compilation_level' ) + '=' + encodeURICompo
 
 var post_options = {
   host: 'closure-compiler.appspot.com',
-  port: '80',
+  port: '443',
   path: '/compile',
   method: 'POST',
   headers: {
@@ -55,14 +55,19 @@ var post_options = {
 var jsonResponseData = "";
 console.log('Sending to Google Closure Compiler ('+(advancedOptimisation ? 'advanced' : 'simple')+')...');
 // Set up the request
-var post_req = http.request(post_options, function(res) {
+var post_req = https.request(post_options, function(res) {
   res.setEncoding('utf8');
   res.on('data', function (chunk) {
     jsonResponseData += chunk;
   });
   res.on('end', function () {
 
-    var jsonResult = JSON.parse( jsonResponseData );
+    try {
+      var jsonResult = JSON.parse( jsonResponseData );
+    } catch (e) {
+      console.error("Error parsing JSON string:", JSON.stringify(jsonResponseData));
+      process.exit(4);
+    }
 
     if (jsonResult.serverErrors) {
       jsonResult.serverErrors.forEach( function (error) {

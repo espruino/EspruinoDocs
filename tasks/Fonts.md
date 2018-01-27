@@ -8,14 +8,17 @@ Fonts
 
 Espruino has two main fonts built-in. A vector font, and a bitmap font.
 
+These are part of Espruino's built-in [[Graphics]] library.
+
 Vector Font
 ----------
 
 The Vector font is made out of polygons, and it can be resized to any size. This makes it great for displaying big text like numbers.
 
-To use it, just use `Graphics.setFontVector(size)`:
+**Note:** Some non-official Espruino boards don't have vector font support built-in, so all you'll have available is the bitmap font (see below).
 
-assuming you've set up [[Graphics]] as a variable called `g`
+To use it, just use `Graphics.setFontVector(size)`. Assuming you've set up [[Graphics]] as a variable called `g` you can do:
+
 ```
 g.clear();
 g.setFontVector(40);
@@ -24,8 +27,7 @@ g.setFontVector(60);
 g.drawString("World",40,40); // 60px high 
 ```
 
-While the vector font is meant to look great at larger sizes, it doesn't scale down in size very well, so there's the Bitmap Font.
-
+While the vector font is meant to look great at larger sizes, it doesn't scale down in size very well below about 20 pixels high, so there's the Bitmap Font.
 
 Bitmap Font
 ----------

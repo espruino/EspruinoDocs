@@ -89,6 +89,7 @@ var motor = new StepperMotor({
   stepsPerSec : 100, /* default */
   pattern :  [0b0001,0b0011,0b0010,0b0110,0b0100,0b1100,0b1000,0b1001],
   offpattern : 0b0000, /* default */
+  onstep : undefined, /* default - or specify a function to be called once per step */
 });
 ```
 

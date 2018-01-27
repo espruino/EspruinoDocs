@@ -37,5 +37,5 @@ exports.get = function(url) {
 }
 
 exports.advertise = function(url) {
-  NRF.setAdvertising(exports.get(url), {interval:100});
+  NRF.setAdvertising([exports.get(url)], {interval:100});
 };

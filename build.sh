@@ -50,6 +50,10 @@ python scripts/build_board_docs.py ESP32 pinout
 mv boards/ESP32.html $DIR/html/boards
 cp boards/img/ESP32.jpg $WEBSITE/www/img
 
+python scripts/build_board_docs.py WIO_LTE pinout
+mv boards/WIO_LTE.html $DIR/html/boards
+cp boards/img/WIO_LTE.jpg $WEBSITE/www/img
+
 cd $DIR
 
 # Built reference docs and references.json

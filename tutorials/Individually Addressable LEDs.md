@@ -5,7 +5,7 @@ Individually Addressable LEDs
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Individually+Addressable+LEDs. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Individually Addressable LEDs,Light,Lights,LED,LEDs,WS2811,WS2812,WS2812B,APA104,APA106,SK6812,Multicolour,Fairy
-* USES: WS2811
+* USES: WS2811,Espruino Board
 
 ![LED String](Individually Addressable LEDs/string.jpg)
 
@@ -65,7 +65,7 @@ require("neopixel").write(B15, [255,0,0]);
 
 This will make the first LED red.
 
-Note that we're using pin `B15` here - if you want to use a different pin (see the wiring up section) then you'll have to change this, but on most devices you'll need to make sure the pin is capable of hardware [[SPI]] `MOSI`. [[Puck.js]] can use any pin for this.
+Note that we're using pin `B15` here - if you want to use a different pin (see the wiring up section) then you'll have to change this, but on most devices you'll need to make sure the pin is capable of hardware [[SPI]] `MOSI`. [Puck.js](/Puck.js) can use any pin for this.
 
 We can do other colours too:
 

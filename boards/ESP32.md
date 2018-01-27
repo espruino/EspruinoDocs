@@ -78,6 +78,13 @@ Not supported by Espruino on the ESP32 (yet):
 
 ## Getting Started
 
+### Installing drivers
+
+Depending on the board and operating system you have, you might want to install the FTDI or Silicon Labs USB driver:
+
+* [FTDI](http://www.ftdichip.com/Drivers/D2XX.htm)
+* [Silicon Labs CP210x](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
 ### Flashing
 
 If your device is not already flashed, below are the instructions.  Flashing involves downloading the latest firmware to your PC and then copying via USB cable to the microcontroller.
@@ -85,21 +92,30 @@ If your device is not already flashed, below are the instructions.  Flashing inv
 *Note:* This flashing process is being improved.  We expect to remove the
 build stage and provide the firmware as a download.
 
-#### Build the Firmware
+#### Building Firmware and installing the toolchain
+
+You can get the Espruino firmare from the [Travis cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
+Get the file ending in '_esp32.bin'.
+
+You can also build the Espruino firmware yourself:
 
 The following work in a bash shell environment, you will need git, and other essential build tools (e.g. on Ubuntu run `sudo apt-get install build-essential`).
 
 ```sh
+# Get the Espruino source code
 git clone https://github.com/espruino/Espruino.git
 cd Espruino
+# Download and set up the toolchain ('source' is important here)
 source scripts/provision.sh ESP32
-export ESP_IDF_PATH=$(pwd)/esp-idf
+# Clean and rebuild
 make clean && BOARD=ESP32 make
 ```
 
 You will have a file called `espruino_esp32.bin`.  This is your ESP32 firmware.
 
 #### The actual flash
+
+Download [esptool](https://github.com/espressif/esptool) if you haven't downloaded it already.
 
 To flash the ESP32 we use `esptool.py`.  Before you run `esptool.py`, make sure
 you know the flashing procedure for the board you have.  Some boards have a flash
@@ -126,6 +142,10 @@ IO0 -> GND (only for flash)
 2. run the following command; and then
 3. leave IO0 floating (not connected) and reset chip
 
+##### ESP-WROOM-32 (dev board)
+
+Flashing can be done by USB, no special actions on pins are needed.
+
 ##### Flashing command
 The following command will write the flash to the ESP32.  Note you need to
 select the correct port, on Windows it will be something like `COM3`.
@@ -137,7 +157,6 @@ esp-idf/components/esptool_py/esptool/esptool.py    \
         --chip esp32                                \
         --port /dev/ttyUSB0                         \
         --baud 921600                               \
-        --before esp32r0                            \
         --after hard_reset write_flash              \
         -z                                          \
         --flash_mode dio                            \
@@ -216,6 +235,7 @@ very basic tools are [minicom](https://en.wikipedia.org/wiki/Minicom),
 [CuteCom](http://cutecom.sourceforge.net/), 
 and [screen](https://www.gnu.org/software/screen/) which may already be installed
 on your system.
+Another cross platform terminal program with a friendly interface is [CoolTerm](http://freeware.the-meiers.org/).
 
 *screen* is usually used for multiplexing terminals, keeping terminal sessions
 alive while you're logged out, and so forth. However, it will also function as
@@ -520,10 +540,11 @@ This is defined in partitions_espruino.csv in the EspruinoBuildTools repository
 The last 1Mb has been defined as a flash FAT filesystem. It needs to be intialised for first use - this does it in a safe way that won't delete existing files:
 
 ```JavaScript
-var fs = require('fs');
-if ( typeof(fs.readdirSync()) === 'undefined' ) {
-    console.log('Formatting FS');
-    E.flashFatFS({ format: true });
+try {
+  fs.readdirSync();
+ } catch (e) { //'Uncaught Error: Unable to mount media : NO_FILESYSTEM'
+  console.log('Formatting FS - only need to do once');
+  E.flashFatFS({ format: true });
 }
 ```
 
@@ -531,7 +552,7 @@ you can then use the filesystem with fs or File objects:
 
 ```JavaScript
 fs.writeFileSync('hello world.txt', 'This is the way the world ends\nHello World\nnot with a bang but a whimper.\n');
-fs.readFileSync();
+fs.readFileSync('hello world.txt');
 ```
 
 ---

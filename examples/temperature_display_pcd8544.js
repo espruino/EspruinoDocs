@@ -3,7 +3,7 @@ Temperature on a PCD8544 display, with DS18B20 temperature sensor
 =======================================================================
 
 * KEYWORDS: PCD8544,DS18B20,LCD,Temperature,Graphics,Font,Text
-* USES: PCD8544,DS18B20
+* USES: PCD8544,DS18B20,Espruino Board
 
 Using the Nokia 5110 display and the DS18B20 temperature sensor to make a simple temperature display 
 

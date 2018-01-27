@@ -38,7 +38,7 @@ Once you've your Puck.js is powered up it'll start doing two things:
 
 If you have an NFC phone, make sure NFC is on, and then move Puck.js near the NFC receiver on it. A Web page should open that will direct you to some examples. Otherwise, you can go straight to the Puck.js website - [https://www.puck-js.com/go](https://www.puck-js.com/go)
 
-**Note:** unfortunately on Puck.js's default firmware, using NFC causes Puck.js to
+**Note:** unfortunately on the default firmware of early Puck.js devices, using NFC causes Puck.js to
 draw significantly more power than normal until the battery is removed and re-inserted, which
 can run your battery down very quickly (within a few days). Up to date firmwares
 for Puck.js have this fixed - but until you update your firmware please be aware that
@@ -48,12 +48,38 @@ scanning Puck.js with NFC can run down your battery.
 Using Puck.js
 --------------
 
-By default, Puck.js appears as a Bluetooth Low Energy device with a serial port. When you connect to this serial port you get full command-line access to the Espruno Javascript interpreter built into it.
+By default, Puck.js appears as a Bluetooth Low Energy device with a serial port. When you connect to this serial port you get full command-line access to the Espruino Javascript interpreter built into it.
 
 To get started you have two options:
 
 * Use the Espruino IDE or command-line tools to write code to Puck.js
 * Send individual JavaScript commands to Puck.js without programming it
+
+
+Requirements
+------------
+
+Puck.js uses Bluetooth LE, so you need a Bluetooth 4.0-capable adaptor in your computer (Bluetooth versions before 4.0 won't work). Pretty much all new computers come with Bluetooth 4, but you may need to get an external Bluetooth LE dongle if your computer:
+
+* Is an Apple Mac made before 2012
+* Is a Windows PC 
+* Is a desktop PC - it may not have any wireless support *at all*
+* Is running Linux - much of the built-in Bluetooth LE functionality in laptops is still buggy. External USB adaptors will be much more reliable.
+
+If your computer doesn't have Bluetooth LE then Bluetooth LE USB adaptors and small, cheap (~$10), and easily available. There are two main types of USB Bluetooth Adaptor available:
+
+* **Broadcom chipset** (eg. BCM20702) works well on all platforms.
+* **Cambridge Silicon Radio (CSR)** - these work great on Linux and Windows. However while they used to work on Macs, *Apple removed support in the High Sierra OS update* - so you're better off with a Broadcom module.
+
+To be sure that you get a usable adaptor we'd recommend that you buy ONLY adaptors that explicitly mention `CSR` or `Broadcom` in the descriptuon. **The BlueGiga BLED112 module WILL NOT WORK** - it is a serial port device, not a general purpose Bluetooth adaptor.
+
+Common USB Bluetooth adaptors that have been tested and work are:
+
+* [iAmotus UD-400M](https://www.amazon.com/gp/product/B01J3AMITS) - Broadcom BCM20702A1
+* [Plugable USB-BT4LE](https://www.amazon.com/gp/product/B009ZIILLI) - Broadcom BCM20702A1
+* [Whitelabel 06Q Nano](https://www.amazon.com/gp/product/B01AXGYS30) - CSR chipset
+* [Whitelabel BM35](https://www.amazon.com/gp/product/B01J35AUS4) - CSR chipset
+* [Unbranded 'CSR 4.0'](https://www.amazon.com/dp/product/B0775YF36R) - CSR Chipset
 
 
 Using the Espruino IDE
@@ -82,47 +108,40 @@ OS X Yosemite or later required, and check that your Mac supports Bluetooth Low 
 
 If it doesn't:
 
-* Get a Bluetooth 4.0 (or later) adaptor (they cost $5 - $10)
+* Get a Bluetooth 4.0 (or later) adaptor (they cost ~$10) - [see the requirements section above](#requirements().
 * Open a terminal and type `sudo nvram bluetoothHostControllerSwitchBehavior=al­ways`
 (to go back to the old behaviour type `sudo nvram -d bluetoothHostControllerSwitchBehavior`)
 * Reboot your Mac
-* **Make sure that you turn off (or un-pair) any Bluetooth devices that were using your internal Bluetooth** - they get stop your Mac from using the new adaptor
-
-When your Mac supports BLE, you need to enable Web Bluetooth support:
-
-* Type `chrome://flags` in the address bar
-* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Mac OS and Chromebook, there is no option available and Web Bluetooth is enabled by default.
-* Restart your browser
+* **Make sure that you turn off (or un-pair) any Bluetooth devices that were using your internal Bluetooth** - they may stop your Mac from using the new adaptor
 
 #### Windows
 
-Windows support in Chrome is not yet available - Windows 10 should be supported in 2017.
+Windows 10 support for Web Bluetooth is under development as of late 2017.
 
-For now you'll need to [install the Web IDE application](#with-an-application) instead.
+For now there are two options:
+
+* [Install the Web IDE application](#with-an-application) instead (recommended for now)
+* Use the [Web Bluetooth Polyfill Plugin](https://github.com/urish/web-bluetooth-polyfill) to add Web Bluetooth to Chrome on Windows 10.
 
 #### Linux
+
+Linux is not officially supported in Chrome.  However, because ChromeOS is supported it can be possible to enable Linux support:
 
 BlueZ 5.41+ required - you can check by typing `bluetoothd --version`. If it isn't there are some [Bluez installation instructions here](/Web Bluetooth On Linux)
 
 * Type `chrome://flags` in the address bar
-* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`) in Chrome 56 or later, or `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier.
+* You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`).
 * Restart your browser
 
 #### Chromebook
 
-All Chromebooks with Bluetooth should support Web Bluetooth
-
-* Type `chrome://flags` in the address bar
-* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later on Chromebook, there is no option available and Web Bluetooth is enabled by default.
-* Restart your browser
+All Chromebooks with Bluetooth should support Web Bluetooth.
 
 #### Android
 
-Android 6 (Marshmallow) or later required, but Android 5 [works with the latest Chromium builds](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop))
+Android 6 (Marshmallow) or later supported.
 
-* Type `chrome://flags` in the address bar
-* You need to enable `Web Bluetooth` (`chrome://flags/#enable-web-bluetooth`) in Chrome 55 or earlier. For Chrome 56 and later, there is no option available and Web Bluetooth is enabled by default.
-* Restart your browser
+Android 5 (Lollipop) devices can use [Chromium installed over ADB to a developer mode device](https://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop).
 
 #### iOS (iPhone, iPad)
 
@@ -161,10 +180,21 @@ On these you'll need to install a native application. We've created a
 use the Chrome Web Store version at the top of that page, as it won't
 give you access to Bluetooth devices.
 
+Once installed, you need to run `Espruino IDE` - which is confusingly
+similar to the `Espruino Web IDE` which you may have had installed if you'd
+used normal Espruino USB devices before.
+
+![IDE Icon on Windows](Puck.js Quick Start/webidewindows.png)
+
 **Note:**
 
-* If using Windows 8.1 or later you'll need to pair your Puck.js using the Windows
+* Bluetooth LE devices like Puck.js are not treated as serial port devices by Windows. If the IDE's connection menu shows devices beginning with the word `COM` (eg. `COM5`), they are not your Puck.js and connecting to them won't work.
+* If using Windows 8.1/10 or later you'll need to pair your Puck.js using the Windows
 Bluetooth menu before it'll appear in the Web IDE.
+* If you're using a Bluetooth dongle with Windows 10 you should use Windows'
+built-in Bluetooth software, rather than installing the software that came with
+your Bluetooth Dongle. Often the Bluetooth dongle's software will not pair
+with Bluetooth LE devices and expose them via Windows 10's API.
 * If using Windows 7 you'll need to have [set up your Bluetooth adaptor with Zadig first](/Web+IDE#zadig)
 
 On Linux, Mac OS and other platforms you'll need to follow the NPM install
@@ -197,7 +227,7 @@ You can then use the normal [Espruino Web IDE](/Web+IDE).
 Command-Line
 ------------
 
-You can use the Espruno command-line app. It works under [Node.js](https://nodejs.org/en/), so you'll need to:
+You can use the Espruino command-line app. It works under [Node.js](https://nodejs.org/en/), so you'll need to:
 
 * Install [Node](https://nodejs.org/en/)
 * In a command prompt, type `npm install -g espruino` (on Linux you'll want to use `sudo` before the command)
@@ -248,7 +278,7 @@ We've got [a proper tutorial on it here](/Puck.js Web Bluetooth)
 
 You can make your own application to control Espruino for whatever platform you need.
 
-For the simplest control, add you need to do is connect to the Puck.js bluetooth
+For the simplest control, all you need to do is connect to the Puck.js bluetooth
 device and connect to the characteristic with ID `6e400002b5a3f393e0a9e50e24dcca9e`.
 You can then write repeatedly to it to send commands to Espruino.
 
@@ -305,6 +335,7 @@ However there's also much more detailed information:
   * [Global Functions](/Reference#_global) and [E Object](/Reference#E) - for built-in Espruino functionality
 * [List of available modules](/Modules)
 * [Other tutorials](/Tutorials)
+* See other [ways of Programming Puck.js](/Programming)
 * Or check out [our forums](http://forum.espruino.com)
 
 **Note:** Espruino runs on many other devices, and [espruino.com](http://espruino.com)
@@ -331,6 +362,5 @@ As a result, if you've been using Puck.js but don't intend to use the code
 you've uploaded it's recommended that you either unplug the battery, or connect
 to the Puck.js and type `reset()`, to ensure that no code is running in the
 background that might flatten the battery.
-
 
 For more details on power usage, [see here](/Puck.js#power-consumption)

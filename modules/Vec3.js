@@ -52,4 +52,20 @@ Vec3.prototype.mag = function() {
   return Math.sqrt(this.dot(this));
 };
 
+/** Return a vector containing the minimum XYZ components of this and the parameter */
+Vec3.prototype.min = function(v) {
+  return new Vec3(
+    Math.min(this.x,v.x), 
+    Math.min(this.y,v.y), 
+    Math.min(this.z,v.z));
+};
+
+/** Return a vector containing the maximum XYZ components of this and the parameter */
+Vec3.prototype.max = function(v) {
+  return new Vec3(
+    Math.max(this.x,v.x), 
+    Math.max(this.y,v.y), 
+    Math.max(this.z,v.z));
+};
+
 exports = Vec3;

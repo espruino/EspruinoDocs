@@ -7,7 +7,7 @@ Espruino Web IDE
 * KEYWORDS: Web IDE,Editor,IDE,Install
 * USES: Espruino Board,Puck.js,Espruino Pico,Pico,Espruino WiFi
 
-The Web IDE is the preferred way to program Espruino. It's got a syntax-highlighted editor as well as support for dynamically loading modules and for upgrading Espruino's Firmware.
+The Web IDE is the preferred way to program Espruino. It's got a syntax-highlighted editor as well as support for dynamically loading modules and for upgrading Espruino's Firmware. You might want to check out [other ways of programming Espruino devices](/Programming).
 
 Installing
 ----------
@@ -42,9 +42,10 @@ on how to enable it.
 
 ### As a Native application
 
-The Web IDE is available as a download for 64 bit Windows:
+The Web IDE is available as:
 
-* [Download for Windows x64 - 0.65.9](/files/espruino_ide_win64_0v65.9.exe)
+* [Download for Windows 32 bit - 0.68.1](/files/espruino_ide_win32_0v68.1.exe)
+* [Download for Windows 64 bit - 0.68.1](/files/espruino_ide_win64_0v68.1.exe)
 
 #### For Windows 8.1 and later
 
@@ -71,6 +72,12 @@ you should see a list of connectable BLE devices.
 
 If you require a native version of the IDE for other platforms, you can install
 the Development version from GitHub (below):
+
+### Locally hosted version
+
+If you have a Raspberry Pi, you can install the [EspruinoHub](https://github.com/espruino/EspruinoHub)
+software on it, which will allow you to program any Bluetooth LE Espruino devices within range
+of the Pi straight from a Web Browser on any network-connected computer.
 
 ### Development version
 

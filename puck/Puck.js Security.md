@@ -23,12 +23,21 @@ uploaded to Puck.js.
 
 There are a few options:
 
+## Don't allow connections to Puck.js 
+
+With [`NRF.setAdvertising`](http://www.espruino.com/Reference#l_NRF_setAdvertising)
+you can allow Puck.js to keep transmitting advertising data, but ensure that no
+computer can connect to it:
+
+```
+NRF.setAdvertising({}, { connectable:false });
+```
 
 ## Add a password with `E.setPassword("password")`
 
 [See here.](http://www.espruino.com/Reference#l_E_setPassword) This will keep
-the UART service, but will require anyone connecting to enter a password to
-access the Puck.
+the UART service and allow any computer to connect to Puck.js, but will require
+anyone connecting to enter a password to access the Espruino Console.
 
 This isn't perfect as it still allows anyone to connect, just not to access
 the JavaScript prompt.
@@ -100,7 +109,7 @@ You can call [`NRF.sleep()`](http://www.espruino.com/Reference#l_NRF_sleep) and
 off or on.
 
 This will stop the device from advertising its presence, and will make it
-unconnectable by anyone.
+unconnectable by anyone - however it does increase the battery life.
 
 The following code flashes the red or green LED and turns Bluetooth on or
 off.
@@ -116,11 +125,21 @@ setWatch(function() {
 ```
 
 
-## Bonding
+## Bonding / Whitelisting
 
-Bonding isn't implemented in Puck.js yet, but it should be soon. When devices
+As of Espruino 1v92, Bonding is implemented in Puck.js. When devices
 are bonded they will be able to establish secure communications with each
 other.
 
-As part of this, a type of whitelisting is performed by the Bluetooth
-stack itself.
+Puck.js will accept secure or insecure connections - it is up to the
+connecting device to initiate the bonding procedure. If
+`NRF.setWhitelist(true)` has been called, when a device is next
+bonded to Puck.js, it will be added to the whitelist and the whitelist
+will be enabled - stopping other devices from connecting until
+Puck.js is restarted with the button held down.
+
+Puck.js can also handle secure connections and bonding when it connects to other
+devices. Once connected, you can initiate the bonding procedure with the
+[`startBonding`](http://www.espruino.com/Reference#l_BluetoothRemoteGATTServer_startBonding)
+method, and can check the status of the connection with
+[`getSecurityStatus`](http://www.espruino.com/Reference#l_BluetoothRemoteGATTServer_getSecurityStatus).

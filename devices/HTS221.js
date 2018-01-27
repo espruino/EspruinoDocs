@@ -1,4 +1,4 @@
-/* Copyright (C) 2016 ST Microelectronics. See the file LICENSE for copying permission. */
+/* Copyright (C) 2018 ST Microelectronics, Gordon Williams. See the file LICENSE for copying permission. */
 /*
  * Espruino module for HTS221 temperature sensor (present on ST X-NUCLEO-IKS01A1 expansion board)
  *
@@ -21,9 +21,9 @@
  * ----------------------------
  *   I2C1.setup({scl:B6,sda:B7}); // on EspruinoPico board
  *   I2C1.setup({scl:B8,sda:B9}); // on Nucleo boards
- *   var temp = require("HTS221").connect(I2C1, 0);
- *   temp.ObtainCalibratedTemperatureCoefficient();
- *   temp.getTemperature(print);
+ *   var temp = require("HTS221").connect(I2C1);
+ *   print(temp.getTemperature());
+ *   print(temp.getHumidity());
  *
  */
 
@@ -35,6 +35,8 @@ var C = {
   CTRL_WHO_AM_I_ADDRESS : 0xF,
   CTRL_AV_CONF : 0x10,
   CTRL_REG1_ADDRESS : 0x20,
+  CTRL_REG3_ADDRESS : 0x22,
+  CTRL_STATUS_ADDRESS : 0x27,
 
   // bits for Control register, register 1
   // Power down control
@@ -52,50 +54,44 @@ var C = {
   ODR_TWELVE_DOT_FIVE_HZ : 0x3,
 
   // bits for Control register, average conf
-  AVGT_DEFAULT : 0x1B,
+  AVGT_DEFAULT : 0b011011, // default 16/32 samples
 
   // data register
+  DATA_HUMIDITY_OUT_L : 0x28,
+  DATA_HUMIDITY_OUT_H : 0x29,
   DATA_TEMP_OUT_L : 0x2A,
   DATA_TEMP_OUT_H : 0x2B
 
 };
 
-var T0_degC, T1_degC, T0_OUT, T1_OUT, T_OUT;
-
-exports.connect = function (_i2c, debugMode) {
-  return new HTS221(_i2c, debugMode);
+/* Initialise the module. See HTS221 for more information */
+exports.connect = function (i2c, options) {
+  return new HTS221(i2c, options);
 };
 
-/**
- * Create a new HTS221 sensor instance
- * 
- *   Set the driver mode, block data rate, output data rate
- *   Set the average configuration (default)
- */
-function HTS221(_i2c, debugMode) {
-  this.i2c = _i2c;
-  this.debugMode = debugMode; // 0 or 1
-  
+/* Create a new HTS221 sensor instance - set up the device
+   and read coefficients.
+   
+   options = {
+     int : pin, // optional - DRDY interrupt pin. If specified, 'data' event will be emitted when data is ready
+   }
+*/
+function HTS221(i2c, options) {
+  this.i2c = i2c;
+  this.options = options||{};
+  // Set the driver mode, block data rate, output data rate
   this.w(C.CTRL_REG1_ADDRESS, (C.PD_ACTIVE_MODE | C.BDU_NOT_CONTINUOUS_UPDATE | C.ODR_ONE_HZ));
+  // Set the average configuration (default)
   this.w(C.CTRL_AV_CONF, C.AVGT_DEFAULT);
-
-}
-
-
-HTS221.prototype.ObtainCalibratedTemperatureCoefficient= function(callback) {
-
-  //  this.T0_OUT,  this.T1_OUT, this.T1_degC and  this.T0_degC coefficients are factory calibrated
-
   // 1. Read the value of coefficients T0_degC_x8 and T1_degC_x8 from registers
-  var coefficients = this.r(0x32,2);
-        
-  var T0_degC_x8_32 = (coefficients[0] & 0xFF);
-  var T1_degC_x8_33 = (coefficients[1] & 0xFF);
+  var coefficients = this.r(0x32,2);        
+  var T0_degC_x8_32 = coefficients[0];
+  var T1_degC_x8_33 = coefficients[1];
 
   // 2. Read the MSB bits of this.T1_degC (T1.9 and T1.8 bit) and  this.T0_degC (T0.9 and T0.8 bit) from register 0x35
   // to compute  this.T0_degC and this.T1_degC
-  var T1_T0_msb = this.r(0x35, 1);
-  var T1_T0_msb_x8_35 = T1_T0_msb[0] & 0x0F;
+  var T1_T0_msb = this.r(0x35, 1)[0];
+  var T1_T0_msb_x8_35 = T1_T0_msb & 0x0F;
   var T0_degC_x8_10bits = (T1_T0_msb_x8_35 & 0x03)*256 + T0_degC_x8_32;
   var T1_degC_x8_10bits = (T1_T0_msb_x8_35 & 0x0C)*64 + T1_degC_x8_33;
 
@@ -107,92 +103,93 @@ HTS221.prototype.ObtainCalibratedTemperatureCoefficient= function(callback) {
   // 4. Read the value of  this.T0_OUT from registers 0x3C & 0x3D
   // and
   // 5. Read the value of  this.T1_OUT from registers 0x3E & 0x3F.
-  var T0_OUT1 = this.r(0x3C, 1);
-  var T0_OUT_3C = T0_OUT1[0] & 0xFF;
-        
-  var T0_OUT2 = this.r(0x3D, 1);
-  var T0_OUT_3D = T0_OUT2[0] & 0xFF;
-
-  var T1_OUT1 = this.r(0x3E, 1);
-  var T1_OUT_3E = T1_OUT1[0] & 0xFF;
-
-  var T1_OUT2 = this.r(0x3F, 1);
-  var T1_OUT_3F = T1_OUT2[0] & 0xFF;
-
-   this.T0_OUT = (T0_OUT_3D*256) + T0_OUT_3C;
-
-  // manage the negative value (two's complement integers)
-  if (this.T0_OUT > 32767) //0x7FFF
-  {
-      this.T0_OUT -=65536;
-      console.log("this.T0_OUT is negative");
+  this.T0_OUT = this.r16(0x3C, true);
+  this.T1_OUT = this.r16(0x3E, true);
+  // Humidity
+  var coefficients = this.r(0x30,2);        
+  this.H0_RH = coefficients[0]/2;
+  this.H1_RH = coefficients[1]/2;
+  this.H0_T0_OUT = this.r16(0x36, true);
+  this.H1_T0_OUT = this.r16(0x3A, true);
+  
+  
+  if (this.options.int) {
+    // Enable DRDY output on pin, active high
+    this.w(C.CTRL_REG3_ADDRESS, 0x04);
+    this.watch = setWatch(function() {
+      this.emit('data', this.get());
+    }.bind(this), this.options.int, {edge:"rising",repeat:true});
+    // ensure we clear DRDY
+    this.get();
   }
-
-   this.T1_OUT = (T1_OUT_3F*256) + T1_OUT_3E;
-
-  // manage the negative value (two's complement integers)
-  if (this.T1_OUT > 32767) //0x7FFF
-  {
-      this.T1_OUT -=65536;
-      console.log("this.T1_OUT is negative");
-  }
-
-  if(this.debugMode) {
-    console.log(" HTS221 debug : T0_degC_x8_32 = "+T0_degC_x8_32);
-    console.log(" HTS221 debug : T1_degC_x8_33 = "+T1_degC_x8_33);
-    console.log(" HTS221 debug :  this.T0_degC = "+this.T0_degC);
-    console.log(" HTS221 debug :  this.T1_degC = "+this.T1_degC);
-    console.log(" HTS221 debug :  this.T0_OUT = "+this.T0_OUT);
-    console.log(" HTS221 debug :  this.T1_OUT = "+this.T1_OUT);
-  }
-
 }
 
+// Power down the HTS221
+HTS221.prototype.stop = function() {
+  if (this.watch) clearWatch(this.watch);
+  this.watch = undefined;
+  this.w(C.CTRL_REG1_ADDRESS, C.PD_POWER_DOWN_MODE);  
+}
 
-HTS221.prototype.getTemperature= function(callback) {
+// deprecated. It's now done automatically when the HTS221 class is created
+HTS221.prototype.ObtainCalibratedTemperatureCoefficient = function() {
+  print("ObtainCalibratedTemperatureCoefficient deprecated. It's now done automatically.");
+}
+
+// Read the temperature in degrees C
+HTS221.prototype.getTemperature = function(callback) {
   // Read Ouput registers (H_OUT) 
   // temp msb, temp lsb  
-        
-  var outputL = this.r(C.DATA_TEMP_OUT_L, 1);
-  var T_OUT_2A = outputL[0] & 0xFF;
+  var T = this.r16(C.DATA_TEMP_OUT_L, true);
+  var celsiusTemp = ( (this.T1_degC - this.T0_degC) * (T -  this.T0_OUT) / (this.T1_OUT -  this.T0_OUT) ) + this.T0_degC;
+  if (callback) callback(celsiusTemp); // for backwards compatibility
+  return celsiusTemp;
+};
 
-  var outputH = this.r(C.DATA_TEMP_OUT_H, 1);
-  var T_OUT_2B = outputH[0] & 0xFF;
+// Read the humidity percentage (rh)
+HTS221.prototype.getHumidity = function(callback) {
+  var H = this.r16(C.DATA_HUMIDITY_OUT_L, true);
+  var rh = ( (this.H1_RH - this.H0_RH) * (H - this.H0_T0_OUT) / (this.H1_T0_OUT -  this.H0_T0_OUT) ) + this.H0_RH;
+  if (callback) callback(rh); // for backwards compatibility
+  return rh;
+};
 
-
-
-   this.T_OUT = (T_OUT_2B * 256) + T_OUT_2A;
-
-  if (this.T_OUT > 32767) //0x7FFF
-  {
-     this.T_OUT -=65536;
-  }
-
-  var celsiusTemp = ( (this.T1_degC - this.T0_degC) * (this.T_OUT -  this.T0_OUT) / (this.T1_OUT -  this.T0_OUT) ) + this.T0_degC;
-
-  if(this.debugMode) {
-    console.log(" HTS221 debug : DATA_TEMP_OUT_L="+outputL);
-    console.log(" HTS221 debug : DATA_TEMP_OUT_H="+outputH);
-    console.log(" HTS221 debug : temperature in Celsius is "+celsiusTemp);
-  }
-
-  callback(celsiusTemp);
+// Get the current temperature in degrees C and humidity percentage (rh)
+HTS221.prototype.get = function() {
+  return { 
+    temperature : this.getTemperature(),
+    humidity : this.getHumidity()
+  };
 }
 
+// Call the callback with a new humidity & temperature value
+HTS221.prototype.read = function(callback) {  
+  if (this.options.int) {
+    callback(this.get());
+  } else {    
+    var intr = setInterval(function() {
+      if (this.r(C.CTRL_STATUS_ADDRESS)&3) {
+        clearInterval(intr);
+        callback(get());
+      }        
+    }.bind(this), 100);
+    return this.get();
+  }
+};
 
-/***************
- * Helpers
- ***************/
-/* read register */
+// read register 
 HTS221.prototype.r = function(addr, cnt) {
-  if(this.debugMode) console.log(" HTS221 debug : read "+cnt+" bytes at address "+addr);
-
   this.i2c.writeTo({address:C.HTS221_I2C_SLAVE_ADDRESS, stop:false}, 0x80 | addr);
   return this.i2c.readFrom(C.HTS221_I2C_SLAVE_ADDRESS, cnt);
 };
-
-/* write register */
+// read 16 bit regsister
+HTS221.prototype.r16 = function(addr,signed) {
+  var d = this.r(addr,2);
+  var r = (d[1]<<8)|d[0];
+  if (signed && (r&0x8000)) r-=0x10000;
+  return r;
+};
+// write register 
 HTS221.prototype.w = function(addr, data) {
-  if(this.debugMode) console.log(" HTS221 debug : write "+data+" at address "+addr);
   this.i2c.writeTo(C.HTS221_I2C_SLAVE_ADDRESS, addr, data);
 };

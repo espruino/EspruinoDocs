@@ -51,6 +51,8 @@ of how to set up advertising on Puck.js. You can also use [`NRF.findDevices(...)
 and [`NRF.setScan(...)`](/Reference#l_NRF_setScan) to scan for advertising packets
 broadcast by other beacons.
 
+To see how to receive advertising data in your own application, [check out this tutorial](/Puck.js+Advertising).
+
 
 Connecting (Puck as Peripheral)
 --------------------------------
@@ -122,7 +124,7 @@ but you can subscribe to `notify`, and so can receive any characters as they get
 sent.
 
 If you want to light an LED on a Puck, you can just connect and write
-`LED.set()` and a newline to the `RX` characteristic, and the command will
+`LED.set()` and a newline to the `TX` characteristic, and the command will
 be executed! This works for functions that you've previously defined too.
 
 **Note:** Exposing the JS interpreter to the world isn't remotely secure.
@@ -209,7 +211,7 @@ devices[0].gatt.connect().then(function(g) {
 }).then(function(service) {
   return service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
 }).then(function(characteristic) {
-  characteristic.writeValue("LED1.set()\n");
+  return characteristic.writeValue("LED1.set()\n");
 }).then(function() {
   gatt.disconnect();
   console.log("Done!");
@@ -231,7 +233,7 @@ NRF.findDevices(function(devices) {
   }).then(function(service) {
     return service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
   }).then(function(characteristic) {
-    characteristic.writeValue("LED1.set()\n");
+    return characteristic.writeValue("LED1.set()\n");
   }).then(function() {
     gatt.disconnect();
     console.log("Done!");

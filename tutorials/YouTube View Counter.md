@@ -5,7 +5,7 @@ YouTube View Counter
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/YouTube+View+Counter. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: YouTube,Views,JSON,HTTPS,Google API
-* USES: EspruinoWiFi,MAX7219
+* USES: Internet,EspruinoWiFi,MAX7219
 
 [[http://youtu.be/NLYScs3R488]]
 

@@ -387,13 +387,22 @@ markdownFiles.forEach(function (file) {
          var kw = kws[0];
          var links = [ ];
          if (infoList[kw]!=undefined) {
-           var pages = infoList[kw];
+           // deep copy
+           var pages = {};
+           // add keywords
+           for (var k=0;k<kws.length;k++) {
+             if (kws[k][0]!="-" && infoList[kws[k]]!=undefined) {
+               for (var attr in infoList[kws[k]])
+                 pages[attr] = infoList[kws[k]][attr];
+             }
+           }
+           // remove any keywords
            for (j in pages) {
              var a = pages[j];
              if (a["path"]!=file && htmlLinks[a.path]!=undefined) { // if we don't have links it is probably in the reference
                var pageOk = true;
                // if extra keywords specified, they may be to reject certain pages... check
-               for (var k=1;k<kws.length;k++)
+               for (var k=1;k<kws.length;k++) {
                  if (kws[k][0]=="-") {
                    var notkw = kws[k].substr(1);
                    if (infoList[notkw]!=undefined)
@@ -402,7 +411,8 @@ markdownFiles.forEach(function (file) {
                          console.log("REJECTED "+a.path+" from "+file+" because of '-"+notkw+"' keyword");
                          pageOk = false;
                        }
-                 } else WARNING("Unknown keyword option '"+kws[k]+"'");
+                 } 
+               }
                // add page link if ok
                if (pageOk)
                  links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );

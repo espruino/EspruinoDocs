@@ -26,6 +26,7 @@ true              : connected and ready
 // -----------------------------------------------------------------------------------
 var netCallbacks = {
   create : function(host, port) {
+    if (!at) return -1; // disconnected
     /* Create a socket and return its index, host is a string, port is an integer.
     If host isn't defined, create a server socket */  
     if (host===undefined) {
@@ -104,6 +105,7 @@ var netCallbacks = {
   /* Send data. Returns the number of bytes sent - 0 is ok.
   Less than 0  */
   send : function(sckt, data) {
+    if (!at) return -1; // disconnected
     if (at.isBusy() || socks[sckt]=="Wait") return 0;
     if (socks[sckt]<0) return socks[sckt]; // report an error 
     if (!socks[sckt]) return -1; // close it
@@ -237,6 +239,7 @@ function turnOff(mode) {
       callback is called when a connection is made */
 exports.connect = function(apName, options, callback) {
   var apKey = "";
+  callback = callback||function(){};
   if (options.password!==undefined) apKey=options.password;
   turnOn(MODE.CLIENT, function(err) {
     if (err) return callback(err);
@@ -326,6 +329,26 @@ exports.scan = function(callback) {
   });
 };
 
+/* Set the host name of the Espruino WiFi - so it can be accessed via DNS. */
+exports.setHostname = function(hostname, callback) {
+  turnOn(MODE.CLIENT, function(err) {
+    if (err) return callback(err);
+    at.cmd("AT+CWHOSTNAME="+JSON.stringify(hostname)+"\r\n",500,callback);
+  });
+};
+
+/* Ping the given address. Callback is called with the ping time 
+in milliseconds, or undefined if there is an error */
+exports.ping = function(addr, callback) {
+  var time;
+  at.cmd('AT+PING="'+addr+'"\r\n',1000,function cb(d) {
+    if (d && d[0]=="+") {
+      time=d.substr(1);
+      return cb;
+    } else if (d=="OK") callback(time); else callback();  
+  });
+};
+
 /** This function returns some of the internal state of the WiFi module, and can be used for debugging */
 exports.debug = function() {
   return {
@@ -334,4 +357,3 @@ exports.debug = function() {
     sockData : sockData
   };
 };
-

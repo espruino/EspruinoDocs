@@ -170,7 +170,7 @@ To transmit an IR signal, you just need to call [`Puck.IR([...])`](/Reference#l_
 with an array of times in milliseconds. They alternate between the time the signal
 should be `on` and `off` - eg. `[on, off, on, off, on, etc]`.
 
-For example the command to turn on a [cheap IR lightbulb](www.ebay.com/sch/i.html?_nkw=ir+rgb+light+bulb&_sacat=0) is:
+For example the command to turn on a [cheap IR lightbulb](http://www.ebay.com/sch/i.html?_nkw=ir+rgb+light+bulb&_sacat=0) is:
 
 ```
 Puck.IR([9.6,4.9,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,
@@ -179,9 +179,11 @@ Puck.IR([9.6,4.9,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,
   0.7,0.6,1.9,0.5,1.9,0.5,1.9,0.6,1.9,0.5,1.9,0.5,43.1,9.6,2.5,0.5]);
 ```
 
-You can sometimes work this information out based on details online, however
-it's often easier to measure it by attaching an IR receiver to your Puck.js
-(a tutorial on this will be added soon).
+You can sometimes work this information out based on details online (for instance [Pronto codes](/pronto)), however
+it's often easier to measure it by [attaching an IR receiver to your Puck.js](/Puck.js+Infrared).
+
+Puck.js's IR has a range of around 1.5 meters, so it needs to be relatively close to the device it's controlling - however
+range can be increased slightly by removing the silicone cover.
 
 ### NFC - Near Field Communications
 
@@ -282,6 +284,7 @@ for advertising, but values are roughly:
 * One LED lit - 1-2mA
 * 100% CPU usage running JavaScript - 4mA
 * All LEDs lit, 100% CPU usage running JavaScript - 10mA
+* No LEDs lit, using `NRF.findDevices` to scan for devices - 12mA
 
 Puck.js sends advertising data without ever executing JavaScript. To get
 the best power consumption, make sure your code executes as rarely as
@@ -290,6 +293,8 @@ possible.
 
 Firmware Updates
 -----------------
+
+**Note:** Firmware 1v95 is known to have problems pairing and connecting to Windows 10 (all other platforms work fine). This will be fixed in 1v96, however if you are a Windows user we'd recommend staying with 1v94 until 1v96 is released.
 
 ### via nRF Toolbox App (Android & iOS)
 
@@ -300,8 +305,10 @@ Firmware Updates
 * Open the `nRF Toolbox` app
 * Tap the `DFU` icon
 * Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the ZIP file you downloaded
+* If choosing the ZIP file opens the ZIP and displays files inside (it can do on some Android 7 devices) then hit back, long-press on the ZIP, and choose `Open` in the top right.
 * Tap `Select Device` and choose the device called `DfuTarg`
 * Now tap `Upload` and wait. The LED should turn blue and the DFU process will start - it will take around 90 seconds to complete
+* After completion, reset Puck.js while keeping the button held for around 10 seconds. The green LED should light, followed by all 3, then the red LED blinking 5 times. Release the button after the blinking has stopped - this will clear out any previously saved code and bonding data that could have caused problems with a new firmware version. 
 
 ### via nRF Connect App (Android)
 
@@ -317,7 +324,7 @@ Firmware Updates
 * Once connected, a `DFU` symbol in a circle will appear in the top right of the App
 * Click it, choose `Distribution Packet (ZIP)`, and your Download. If clicking on the downloaded zip file opens its contents (Android 7 may do this) then long-press on the zip and tap open instead.
 * The DFU process will start - it will take around 90 seconds to complete
-
+* After completion, reset Puck.js while keeping the button held for around 10 seconds. The green LED should light, followed by all 3, then the red LED blinking 5 times. Release the button after the blinking has stopped - this will clear out any previously saved code and bonding data that could have caused problems with a new firmware version.
 
 Troubleshooting
 ---------------
@@ -336,10 +343,17 @@ See [here](#turning-puck-js-on) for instructions on removing it.
 * Have you enabled Web Bluetooth in `chrome://flags`?
 * You need a Bluetooth LE-capable adaptor (at least Bluetooth 4.0). If your PC doesn't have one, you can [buy one for well under $10](http://www.ebay.com/sch/i.html?_nkw=usb+bluetooth+4+dongle&_sacat=0)
 * **Android** needs to be at least version 6 (or version 5 with recent builds of Chromium)
-* **Windows** isn't currently supported, but it should be (at least for 10 and above) in 2017. Otherwise you'll need to use the packaged version of the Web IDE
+* **Windows** isn't currently supported by Chrome. You can use the [Web Bluetooth Polyfill](https://github.com/urish/web-bluetooth-polyfill), or if you just need the IDE you can use the [packaged version of the Web IDE](/Web+IDE#as-a-native-application)
 * **Linux** needs Bluez 5.41 or above - [see here for instructions on how to install it](/Web Bluetooth On Linux)
 * **MacOS** needs OS X Yosemite or later. Older hardware will need an external USB dongle though - check that `Low Energy` supported in `About this Mac` -> `System Report`/`Bluetooth`  
 * **Chrome OS** works fine
+
+### I can't see my Puck.js in the IDE in Windows
+
+* Are you sure some other device isn't connected to it? See the next item.
+* Are you **sure** you're using the [native Espruino IDE](http://www.espruino.com/Puck.js+Quick+Start#with-an-application) as opposed to the IDE Website or Chrome App?
+* **On Windows 10**, have your paired your Puck using the built-in Windows Bluetooth menu? You need that before the IDE can see it. If you can't pair then your PC may not support Bluetooth LE (even if it supports normal Bluetooth) and you may need an exernal Bluetooth dongle.
+* **On Windows 7** you'll need a supported Bluetooth dongle that [may need setting up with Zadig](/Web+IDE#zadig)
 
 ### I can't see my Puck.js device any more
 
@@ -362,7 +376,7 @@ This often happens if you've turned your Puck into a [HID device](/Puck.js+Keybo
 
 ### Connections to Puck.js sometimes fail
 
-The firmware that Puck.js shipped with only advertises every 700ms, which means
+The firmware that the first Puck.js shipped with only advertises every 700ms, which means
 that some devices/applications find it difficult to connect to it,
 
 We'd recommend that you [update Puck.js's firmware](/Puck.js#firmware-updates)
@@ -397,6 +411,12 @@ Have you been running one of the `Nordic`/`nRF` applications? If so, make sure
 it is closed (Click the square icon to get to the application chooser, and swipe
 the application to the left or right)
 
+### When I disconnect the battery, my code is lost. How do I save it?
+
+It's as easy as typing `save()` in the left-hand side of the IDE. When power is re-applied Espruino will resume where it left off, remembering timers, watches, and even pin state. For certain things (like initialising connected hardware like displays) you'll want to run some code when Espruino starts up, in which case you can just add a function called `onInit()` - this will be executed each time Espruino starts.
+
+For more information, see the [page on Saving](/Saving).
+
 ### I saved some code and my Puck.js no longer works
 
 * [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED will light.
@@ -406,8 +426,14 @@ the application to the left or right)
 
 Puck.js will now have booted without loading the saved code. However it won't
 have deleted your saved code. To do that, you'll need to log in and type
-`save()`. It's also an idea to type `E.setBootCode()` as well, as this will
+`save()`. It's also an idea to type `E.setBootCode("")` as well, as this will
 clear any JS code that was saved if `Save on Send` was turned on in the IDE.
+
+### How can I change my Puck's name?
+
+Check out the reference pages for [NRF.setAdvertising](https://www.espruino.com/Reference#l_NRF_setAdvertising)...
+
+You can simply call `NRF.setAdvertising({},{name:"My Name"});` to change your Puck's advertised name!
 
 ### It's some other problem!
 

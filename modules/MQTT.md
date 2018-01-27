@@ -33,6 +33,12 @@ First off load the module and create a MQTT object using ```require("MQTT").crea
     mqtt.subscribe("test");
   });
 
+  mqtt.on('publish', function (pub) {
+    console.log("topic: "+pub.topic);
+    console.log("message: "+pub.message);
+  });
+
+
   var wlan = require("CC3000").connect();
   wlan.connect( "AccessPointName", "WPA2key", function (s) {
     if (s=="dhcp") {
@@ -50,13 +56,13 @@ but you must already have a network connection.
 **Note:** This is `require("MQTT").connect` and not `mqtt.connect`.
 
 ```js
-require("MQTT").connect({
+var mqtt = require("MQTT").connect({
   host: "192.168.1.10",
 });
 
 // or specify more options
 
-require("MQTT").connect({
+var mqtt = require("MQTT").connect({
   host: "192.168.1.10",
   username: "username",
   password: "password"
@@ -84,23 +90,47 @@ mqtt.connect(client);
 ```
 
 
-Disconnect
------------
+Disconnection
+-------------
 
 If for some reason you want to disconnect and close the socket use the ```disconnect()``` function.
 
 ```
-  mqtt.disconnect();
+mqtt.disconnect();
 ```
+
+You can also be notified when MQTT disconnects:
+
+```
+mqtt.on('disconnected', function() {
+  console.log("Disconnected");
+});
+```
+
+Reconnection
+-------------
+
+To force a reconnection, it's as easy as calling `connect` again on the disconnected event. It is however a good idea to leave a delay between the reconnect attempts:
+
+```
+mqtt.on('disconnected', function() {
+  console.log("MQTT disconnected... reconnecting.");
+  setTimeout(function() {
+    mqtt.connect();
+  }, 1000);
+});
+```
+
 
 Publish
 -----------
 
 At any time during a session you can publish a message to the broker. A topic must be provided to allow the broker to deliver the message to any client with a subscription that matches that topic.
+
 ```
-  var topic = "test/espruino";
-  var message = "hello, world";
-  mqtt.publish(topic, message);
+var topic = "test/espruino";
+var message = "hello, world";
+mqtt.publish(topic, message);
 ```
 
 Subscribe/Unsubscribe
@@ -109,12 +139,12 @@ Subscribe/Unsubscribe
 Subscriptions are managed using the ```subscribe(topic_filter)``` and ```unsubscribe(topic_filter)```functions. A topic filter can be just a specific topic or contain wildcards that matches groups and/or sub-groups of topics. An event, publish, is fired whenever a message is recieved by the client. The event emitter calls the listener with an object containin all the relevant packet information: topic, message, (dup, qos and retain).
 
 ```
-  mqtt.subscribe("test/espruino");
+mqtt.subscribe("test/espruino");
 
-  mqtt.on('publish', function (pub) {
-    console.log("topic: "+pub.topic);
-    console.log("message: "+pub.message);
-  });
+mqtt.on('publish', function (pub) {
+  console.log("topic: "+pub.topic);
+  console.log("message: "+pub.message);
+});
 
-  mqtt.unsubscribe("test/epruino");
+mqtt.unsubscribe("test/espruino");
 ```

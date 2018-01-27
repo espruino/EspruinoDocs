@@ -44,7 +44,7 @@ exports.connect = function(/*=SPI*/spi, /*=PIN*/cs, screens) {
       for (var row=0;row<8;row++) {
         digitalWrite(cs, 0);
         for (var i=screens-1;i>=0;i--) {
-          spi.send([8-row, val[i+row*screens]]);
+          spi.write([8-row, val[i+row*screens]]);
         }
         digitalWrite(cs, 1);
       }

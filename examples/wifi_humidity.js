@@ -3,7 +3,7 @@ WiFi Xively Humidity/Temperature Sensor with Display
 =================================
 
 * KEYWORDS: WiFi,Wireless,Xively,IoT
-* USES: Internet,CC3000,DHT11,PCD8544,Xively
+* USES: Internet,CC3000,DHT11,PCD8544,Xively,Espruino Board
 
 ![WiFi Humidity](wifi_humidity.jpg)
 
@@ -139,4 +139,3 @@ function onTimer() {
 }
 
 onInit();
-

@@ -30,11 +30,26 @@ setWatch(function(e) {
 }, D1, {edge:"both",repeat:true});
 ```
 
-You can also use the following to output the contents of the `d` array
+You can use the following to output the contents of the `d` array
 rounded to 1 decimal place (which is much more readable):
 
 ```
 console.log(d.map(a=>a.toFixed(1)).toString())
+```
+
+In fact adding the following code will automatically print the received 
+Infrared code as soon as you have sent it:
+
+```
+var lastLen = 0;
+setInterval(function() {
+  if (d.length && d.length==lastLen) {
+    d.shift(); // remove first element
+    console.log(d.map(a=>a.toFixed(1)).toString());
+    d=[];
+  }
+  lastLen = d.length;
+},200);
 ```
 
 For the particular light bulb used in the video, the codes are as follows:

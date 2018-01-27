@@ -82,6 +82,11 @@ Temperature
 
 * APPEND_JSDOC: GroveTemperature.js
 
+Moisture Sensor
+---------------
+
+* APPEND_JSDOC: GroveMoistureSensor.js
+
 Relay
 ----
 

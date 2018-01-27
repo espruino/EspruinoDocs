@@ -171,6 +171,10 @@ If you get pulsing Red/Green LEDs, it's because you actually pressed the button 
 
 If you get a glowing blue LED, it's because you pressed **BTN1** too quickly after pressing **RST**. Try again and leave a bit more of a gap.
 
+### Puck.js
+
+See [the instructions on the Puck.js page](/Puck.js#i-saved-some-code-and-my-puck-js-no-longer-works)
+
 ### Finally
 
 This will make Espruino start without loading your saved code. You can then connect with the Web IDE and type `save()` to overwrite your saved program with the 'empty' state that Espruino is now in.
@@ -188,20 +192,64 @@ To enter normal mode, just:
 |-------|----|
 | Pico/WiFi | Unplug from USB and re-plug, without pressing the button. |
 | Espruino Board | Press and release **RST** while **BTN1** is not pressed. |
+| Puck.js | Remove and re-insert the battery |
+
+## When I upload code, some characters are being lost
+
+Most likely this is because you're uploading code that is doing calculations
+that are taking a long time to finish - and so Espruino is unable to process
+the data that is being received quickly enough. 
+
+When you upload code to Espruino, it is executed as it is received (allowing 
+you to upload more code than might otherwise fit into RAM).
+
+In many cases, you will actually want the code to run *at power on* rather
+than when you upload (eg. WiFi connection or LCD initialisation). In these
+cases you could put your code inside a function called `onInit`:
+
+```
+// variables
+// function declarations
+
+function onInit() {
+  // initialisation of hardware
+}
+
+// Call onInit right after upload (for testing)
+setTimeout(onInit, 1000);
+```
+
+When saving, you may then want to remove the `setTimeout` line,
+upload, and then save (unless you're sure that calling `onInit` twice
+will not cause problems). See [the page on Saving](/Saving) for more 
+information.
 
 
 ## I typed `save()` but my connected device doesn't work at power on
 
 Some devices (such as LCDs and WiFi) require their own initialisation code which Espruino can't remember. To do that initialisation at boot time, write a function called `onInit` which contains the initialisation code for your device. After typing `save()`, it will be executed at power on or reset.
 
+See [the page on Saving](/Saving) for more information.
+
 
 ## I typed `save()` but Espruino won't work (or stops working quickly) when powered from a computer (it only works from a USB power supply, battery, or the computer when the Web IDE is running)
 
 This is because you're printing information to the console.
 
-When you are not connected to a computer via USB, Espruino writes any console data to the Serial port. However when you are connected to a computer, Espruino writes down USB. **If no terminal application is running on your computer**, it won't accept any incoming data down USB. When Espruino fills up its output buffer, it waits for the computer to accept the data rather than throwing it away, and this is what causes your program not to work.
+When you are not connected to a computer via USB, Espruino automatically moves the console (left-hand side of the IDE) to the Serial port. However when you are connected to a computer, Espruino writes down USB. **If no terminal application is running on your computer** then your computer won't accept any incoming data down USB, and Espruino can't tell whether that is because the IDE is connected but busy, or because no app is running at all. Espruino won't throw away any of the data that you send down USB, so when Espruino fills up its output buffer, it stops and waits for the computer to accept the data, and this is what causes your program not to work.
 
-To fix this, either remove your `console.log` and `print` statements, or explicitly set the console to be on the Serial port at startup with `function onInit() { Serial1.setConsole(); }`. However the second option will mean that you will no longer be able to program Espruino from USB unless you reset it.
+To fix this, either remove your `console.log` and `print` statements, or explicitly set the console to be on the Serial port at startup with `function onInit() { Serial1.setConsole(true); }`. However the second option will mean that you will no longer be able to program Espruino from USB unless you reset it or you code calls `USB.setConsole();` to move the console back.
+
+A second option is to use simply call `Serial1.setConsole();` (without `true` as an argument). This will move the console to Serial1 *until USB is connected again*. Running this from `onInit` may not work, since `onInit` will likely be called at startup *before the USB connection is made with your PC*. In that case, the console will move to `Serial1`, but just a fraction of a second later, USB will connect and the console will move to USB. Instead, you could do:
+
+```
+function onInit() {
+  setTimeout(function() { Serial1.setConsole(); }, 1000);
+  // ...
+}
+```
+
+This will call `setConsole` 1 second after boot, by which time USB should have initialised. Assuming your Espruino is battery powered, unplugging and replugging USB will then move the console back to USB, where the board can be programmed.
 
 
 ## <a name="console"></a>Espruino works when connected to a computer, but stops when powered from something else

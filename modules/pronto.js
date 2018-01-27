@@ -1,4 +1,5 @@
 /* Copyright (c) 2017 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
+/* Pronto Hex decoder - http://www.espruino.com/pronto */
 exports.decode = function (d) {
   var a=d.trim().split(" ").map(function(x){return parseInt(x,16);});
   var freq = 4145146/a[1];

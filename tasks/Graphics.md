@@ -20,28 +20,37 @@ Below are a list of currently available modules that will interface to hardware 
 
 * APPEND_KEYWORD: Graphics Driver
 
+**Note:** several of the graphics drivers use offscreen buffers. This means that
+draw operations won't immediately effect the display, and a method needs calling
+to copy the buffer's data onto the screen. By convention this method is usually
+called `.flip()`.
+
 ### Internal Use
 
-You can create a Graphics class which renders to an ArrayBuffer:
+**If you don't already have a graphics object set up** then
+you can create a Graphics class which renders to an ArrayBuffer:
 
 ```
 Graphics.prototype.print = function() {
   for (var y=0;y<this.getHeight();y++)
-    console.log(new Uint8Array(this.buffer,this.getWidth()*y,this.getWidth()));
-}
+    console.log(new Uint8Array(this.buffer,this.getWidth()*y,this.getWidth()).toString());
+};
 var g = Graphics.createArrayBuffer(8,8,8);
-g.setColor(1)
-g.drawString("X",0,0)
-g.print()
-//0,0,0,0,0,0,0,0
-//0,1,1,0,0,0,1,1
-//0,1,1,0,0,0,1,1
-//0,0,1,1,0,1,1,0
-//0,0,0,1,1,1,0,0
-//0,0,1,1,0,1,1,0
-//0,1,1,0,0,0,1,1
-//0,1,1,0,0,0,1,1
+g.setColor(1);
+g.drawString("Hi",0,0);
+g.print();
+// 1,0,1,0,0,1,0,0
+// 1,0,1,0,0,0,0,0
+// 1,1,1,0,1,1,0,0
+// 1,0,1,0,0,1,0,0
+// 1,0,1,0,1,1,1,0
+// 0,0,0,0,0,0,0,0
+// 0,0,0,0,0,0,0,0
+// 0,0,0,0,0,0,0,0
 ```
+
+See the [`Graphics.createArrayBuffer`](/Reference#l_Graphics_createArrayBuffer) 
+reference for more information on possible arguments that can be used.
 
 Or you can create a Graphics instance which calls your function whenever a pixel needs to be drawn:
 
@@ -55,8 +64,8 @@ g.drawLine(0,0,2,2)
 //2,2
 ```
 
-Hello World
------------
+Text / Fonts
+-------------
 
 Simple Hello World text using a bitmap font:
 
@@ -79,13 +88,17 @@ g.setColor(0,1,0);
 g.drawString("World",40,40); // 60px high in green
 ```
 
+**Note:** Some non-official Espruino boards don't have
+vector font support built-in.
+
 You can then switch back to the bitmap font using:
 
 ```
 LCD.setFontBitmap();
 ```
 
-For more information, see [[Fonts]]
+**You can also use custom Bitmap Fonts**. For more information, see [[Fonts]]
+
 
 Circles
 -------

@@ -139,6 +139,9 @@ function onPageRequest(req, res) {
 require("http").createServer(onPageRequest).listen(8080);
 ```
 
+However for real use cases you'll probably want to use Forms and HTTP POST 
+requests, and [there's an example of doing that here](/Posting+Forms)
+
 ### Transferring files
 
 You may want to serve up files from the SD card. The most obvious route would be to do something like this:
@@ -223,7 +226,7 @@ var server = require("net").createServer(function(c) {
   c.write("Hello");
   c.on('data', function(data) {
     console.log(">"+JSON.stringify(data));
-  }
+  });
   c.end();
 });
 server.listen(1234);

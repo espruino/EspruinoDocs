@@ -39,7 +39,9 @@ To see how to get started with the [official boards](/Order), just follow our [Q
  | [**ESP8266**](/EspruinoESP8266) | Xtensa | 80Mhz | 1023 | €10 | N | 1 | 1 | N | N | N | WiFi |
  | [**micro:bit**](/MicroBit) | nRF51822 | 16Mhz | 200 | - | Y | 1 | 1 | Y | N | N | Bluetooth LE, LED matrix |
  | [**ESP32**](/ESP32) | Xtensa | 240Mhz | 5000 | $10 | N | 2 | 2 | N | N | Flash FS | WiFi |
-
+ | [**Ruuvitag**](/Ruuvitag) | nRF52832 | 64Mhz | 2000 | $28 | N | 1 | 1 | Y | N | N | Bluetooth LE, Environment sensors |
+ | [**Seeed Wio LTE**](/WioLTE) | STM32F405 | 168Mhz | 5450 | $25 | Y | 6 | 3 | Y | N | Y | LTE |
+ 
 **Key:** `Y`=Yes, `N`=No, `U`=Yes, but currently unimplemented
 
 You can also see these boards listed with thumbnails at the top of [the reference page](/Reference).
@@ -220,3 +222,11 @@ Please see [the Micro:bit page](/MicroBit) for more information.
 ### ESP32
 
 Please see [the ESP32 page](/ESP32) for more information.
+
+### Ruuvitag
+
+Please see [the Ruuvitag page](/Ruuvitag) for more information.
+
+### Seeed Wio LTE
+
+Please see [the Wio LTE page](/WioLTE) for more information.

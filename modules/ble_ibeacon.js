@@ -10,7 +10,7 @@ require("ble_ibeacon").advertise({
 
 exports.get = function(options) {
   if (!options.uuid || options.uuid.length != 16)
-    throw "Invalid UUID: must be exactly 16 bytes"
+    throw new Error("Invalid UUID: must be exactly 16 bytes");
   var d = [0x1a,  // Length of manufacturer data
     0xff,  // Param: Manufacturer data
     0x4c, 0x00,  // Apple company id
@@ -29,5 +29,5 @@ exports.get = function(options) {
 };
 
 exports.advertise = function(options) {
-  NRF.setAdvertising(exports.get(options), {interval:100});
+  NRF.setAdvertising([exports.get(options)], {interval:100});
 };
