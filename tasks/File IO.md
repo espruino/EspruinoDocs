@@ -9,16 +9,9 @@ File IO and SD cards
 To access files from Espruino (if you're not getting them from the [[Internet]]) you'll need an SD card.
 
 On the original [Espruino board](/EspruinoBoard) there's a Micro SD card slot built-in,
-or on the [Espruino Pico](/Pico) you'll have to wire a card up externally and then
-tell Espruino about it with [E.connectSDCard](http://www.espruino.com/Reference#l_E_connectSDCard):
-
-```
-// Wire up up MOSI, MISO, SCK and CS pins (along with 3.3v and GND)
-SPI1.setup({mosi:B5, miso:B4, sck:B3});
-E.connectSDCard(SPI1, B6 /*CS*/);
-// see what's on the device
-console.log(require("fs").readdirSync());
-```
+or on the [Espruino Pico](/Pico) or other boards you'll have to wire a card up externally and then
+tell Espruino about it with [E.connectSDCard](http://www.espruino.com/Reference#l_E_connectSDCard)
+(see `Wiring` below).
 
 Espruino has two main forms of File IO available:
 
@@ -153,8 +146,35 @@ setDeepSleep(1);
 ```
 
 
-Wiring up an SD card adapter
-----------------------------
+Wiring
+------
+
+You need to connect 6 wires from the SD card. For example:
+
+| SD Card   | Espruino |
+|-----------|----------|
+| DI/CMD    | B5       |
+| DO/DAT0   | B4       |
+| SCLK/CLK  | B3       |
+| CD/CS/DAT3| B6       |
+| VDD       | 3.3v     |
+| VSS/GND   | GND      |
+
+
+**Note:** you can use software [[SPI]] for SD cards, in which case you
+can use any available GPIO pins on your device.
+
+**Note:** We'd strongly suggest you add a pullup resistor from CD/CS pin to 3.3v. It is
+good practise to avoid accidental writes before Espruino is initialised, and some cards
+will not work reliably without one.
+
+```
+// Wire up up MOSI, MISO, SCK and CS pins (along with 3.3v and GND)
+SPI1.setup({mosi:B5, miso:B4, sck:B3});
+E.connectSDCard(SPI1, B6 /*CS*/);
+// see what's on the device
+console.log(require("fs").readdirSync());
+```
 
 For the Espruino [[Pico]], there is [an adaptor shim available](/Shims#microsd-0-1-adaptor) that makes connecting an SD card a lot easier!
 
@@ -170,15 +190,14 @@ Example code for the above wiring:
 
 ```
 /* 
-  R: the following function is auto-called when the Espruino is booting up
-     to flash the Espruino & save the following to its flash, just call 'save()' in the IDE
+  The following function is automatically called when Espruino is booting up.
+  To save the following to Espruino's flash, just call 'save()' in the IDE
 */
 function onInit() {
-  // initial SPI1 for SDCard module
+  // initialise SPI1 for SDCard module
   SPI1.setup({sck:A5, miso:A6, mosi:A7 });
-  E.connectSDCard(SPI1,B1/*CS*/);
+  E.connectSDCard(SPI1,B1 /*CS*/);
   console.log(require("fs").readdirSync());
   // ...
 }
 ```
-
