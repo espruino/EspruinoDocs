@@ -63,7 +63,7 @@ function sendToggle() {
   }
 }
 
-// Call this function when the button is pressed
+// Call sendToggle when the button is pressed
 setWatch(sendToggle, BTN, { edge:"rising", debounce:50, repeat: true });
 ```
 
@@ -146,6 +146,9 @@ function sendToggle() {
     }
   }
 }
+
+// Call sendToggle when the button is pressed
+setWatch(sendToggle, BTN, { edge:"rising", debounce:50, repeat: true });
 ```
 
 * Replace the name of the Puck (`Puck.js 7fcf`) with the name of your Puck.
