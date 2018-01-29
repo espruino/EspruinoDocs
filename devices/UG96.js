@@ -498,70 +498,71 @@ function pdpdeacthandler(line) {
   return ""
 }
 
-// Dust QIND URC (not currently managed in this version)
+// Dust QIND URC
 // it conveyed
-//	+QIND: SMS DONE SMS initialization finished
+//  +QIND: SMS DONE SMS initialization finished
 //  +QIND: PB DONE Phonebook initialization finished
-// 1st option : dust the line (selected in the code)
-//
-// 2nd option : dust only this message (to have in mind)
-//var colon = line.indexOf("\r\n");
-//var endstr = line.substr(colon,line.length);
-//console.log(line.substr(colon,line.length));
-// re_inject other commands
-//return endstr;
 function QindHandler(line) {
   if (dbg) console.log('QindHandler in: ' + line);
 
-  return "";
+  //return "";
+
+  console.log('New QinHandler processing');
+
+  var colon = line.indexOf("\r\n");
+  var endstr = line.substr(colon,line.length);
+  console.log(line.substr(colon,line.length));
+  //re_inject other commands
+  return endstr;
 }
 
-// Dust QSIM URC (not currently managed in this version)
+// Dust QSIM URC
 // it gives SIM technology
 //	+QUSIM: 0 Use SIM card
 //  +QUSIM: 1 Use USIM card
-// 1st option : dust the line (selected in the code)
-//
-// 2nd option : dust only this message (to have in mind)
-//var colon = line.indexOf("\r\n");
-//var endstr = line.substr(colon,line.length);
-//console.log(line.substr(colon,line.length));
-// re_inject other commands
-//return endstr;
 function QusimHandler(line) {
   if (dbg) console.log('QusimHandler in: ' + line);
 
-  return "";
+  //return "";
+
+  console.log('New QusimHandler processing');
+
+  var colon = line.indexOf("\r\n");
+  var endstr = line.substr(colon,line.length);
+  console.log(line.substr(colon,line.length));
+  //re_inject other commands
+  return endstr;
 }
 
-// Dust CFUN URC (not currently managed in this version)
-// 1st option : dust the line (selected in the code)
-//
-// 2nd option : dust only this message (to have in mind)
-//var colon = line.indexOf("\r\n");
-//var endstr = line.substr(colon,line.length);
-//console.log(line.substr(colon,line.length));
-// re_inject other commands
-//return endstr;
+// Dust CFUN URC
 function CfunHandler(line) {
   if (dbg) console.log('CfunHandler in: ' + line);
 
-  return "";
+  // return "";
+
+  console.log('New CfunHandler processing');
+
+  var colon = line.indexOf("\r\n");
+  var endstr = line.substr(colon,line.length);
+  console.log(line.substr(colon,line.length));
+  //re_inject other commands
+  return endstr;
 }
 
 // Dust CFUN URC (not currently managed in this version)
 // It means : "ME initialization is successful"
-// 1st option : dust the line (selected in the code)
-//
-// 2nd option : dust only this message (to have in mind)
-//var colon = line.indexOf("\r\n");
-//var endstr = line.substr(colon,line.length);
-//console.log(line.substr(colon,line.length));
-// re_inject other commands
 function RdyHandler(line) {
   if (dbg) console.log('RdyHandler in: ' + line);
 
-  return "";
+  // return "";
+
+  console.log('New RdyHandler processing');
+
+  var colon = line.indexOf("\r\n");
+  var endstr = line.substr(colon,line.length);
+  console.log(line.substr(colon,line.length));
+  //re_inject other commands
+  return endstr;
 }
 
 // Manage POWERED DOWN URC
