@@ -9,8 +9,17 @@ var ENCR_FLAGS = ["open","wep","wpa_psk","wpa2_psk","wpa_wpa2_psk"];
 var wifiMode = 0;
 var at;
 var socks = [];
+var sockUDP = [];
 var sockData = ["","","","",""];
 var MAXSOCKETS = 5;
+
+function udpToIPAndPort(data) {
+  return {
+    ip : data.charCodeAt(0)+"."+data.charCodeAt(1)+"."+data.charCodeAt(2)+"."+data.charCodeAt(3),
+    port : data.charCodeAt(5)<<8 | data.charCodeAt(4),
+    len : data.charCodeAt(7)<<8 | data.charCodeAt(6) // length of data
+  };
+}
 
 /*
 `socks` can have the following states:
@@ -21,15 +30,17 @@ true              : connected and ready
 "Wait"            : waiting for connection (client), or for data to be sent
 "WaitClose"       : We asked to close it, but it hasn't been opened yet
 "Accept"          : opened by server, waiting for 'accept' to be called
+"UDP"             : reserved for UDP, but not yet opened
 */
 
 // -----------------------------------------------------------------------------------
 var netCallbacks = {
-  create : function(host, port) {
+  create : function(host, port, type) {
+    //console.log("CREATE ",arguments);
     if (!at) return -1; // disconnected
     /* Create a socket and return its index, host is a string, port is an integer.
-    If host isn't defined, create a server socket */  
-    if (host===undefined) {
+    If host isn't defined, create a server socket */
+    if (host===undefined && type!=2) {
       sckt = MAXSOCKETS;
       socks[sckt] = "Wait";
       sockData[sckt] = "";
@@ -44,25 +55,36 @@ var netCallbacks = {
         }
       });
       return MAXSOCKETS;
-    } else {  
+    } else {
       var sckt = 0;
       while (socks[sckt]!==undefined) sckt++; // find free socket
       if (sckt>=MAXSOCKETS) return -7; // SOCKET_ERR_MAX_SOCK
-      socks[sckt] = "Wait";
       sockData[sckt] = "";
-      at.cmd('AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n',10000, function cb(d) {
+      socks[sckt] = "Wait";
+      var cmd;
+      if (type==2) {
+        // If there's a port specified, make a server now - otherwise reserve the socket and do it later
+        if (port) cmd = 'AT+CIPSTART='+sckt+',"UDP","255.255.255.255",'+port+','+port+',2\r\n';
+        else socks[sckt] = "UDP";
+        sockUDP[sckt] = true;
+      } else {
+        cmd = 'AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n';
+        delete sockUDP[sckt];
+      }
+      if (cmd) at.cmd(cmd,10000,function cb(d) {
         if (d!="OK") socks[sckt] = -6; // SOCKET_ERR_NOT_FOUND
       });
     }
     return sckt;
   },
   /* Close the socket. returns nothing */
-  close : function(sckt) {    
+  close : function(sckt) {
+    //console.log("CLOSE ",arguments);
     if (socks[sckt]=="Wait")
       socks[sckt]="WaitClose";
     else if (socks[sckt]!==undefined) {
       // socket may already have been closed (eg. received 0,CLOSE)
-      if (socks[sckt]<0)
+      if (socks[sckt]<0 || socks[sckt]=="UDP")
         socks[sckt] = undefined;
       else
       // we need to a different command if we're closing a server
@@ -84,7 +106,7 @@ var netCallbacks = {
   },
   /* Receive data. Returns a string (even if empty).
   If non-string returned, socket is then closed */
-  recv : function(sckt, maxLen) {    
+  recv : function(sckt, maxLen, type) {
     if (sockData[sckt]) {
       var r;
       if (sockData[sckt].length > maxLen) {
@@ -104,37 +126,54 @@ var netCallbacks = {
   },
   /* Send data. Returns the number of bytes sent - 0 is ok.
   Less than 0  */
-  send : function(sckt, data) {
+  send : function(sckt, data, type) {
     if (!at) return -1; // disconnected
     if (at.isBusy() || socks[sckt]=="Wait") return 0;
-    if (socks[sckt]<0) return socks[sckt]; // report an error 
+    if (socks[sckt]<0) return socks[sckt]; // report an error
     if (!socks[sckt]) return -1; // close it
+    //console.log("SEND ",arguments);
+    if (socks[sckt]=="UDP") {
+      var d = udpToIPAndPort(data);
+      socks[sckt]="Wait";
+      at.cmd('AT+CIPSTART='+sckt+',"UDP","'+d.ip+'",'+d.port+','+d.port+',2\r\n',10000,function(d) {
+        if (d!="OK") socks[sckt] = -6; // SOCKET_ERR_NOT_FOUND
+      });
+      return 0;
+    }
     //console.log("Send",sckt,data);
-   
-    var cmd = 'AT+CIPSEND='+sckt+','+data.length+'\r\n';
-    at.cmd(cmd, 10000, function cb(d) {       
+    var returnVal = data.length;
+    var extra = "";
+    if (type==2) { // UDP
+      var d = udpToIPAndPort(data);
+      extra = ',"'+d.ip+'",'+d.port;
+      data = data.substr(8,d.len);
+      returnVal = 8+d.len;
+    }
+
+    var cmd = 'AT+CIPSEND='+sckt+','+data.length+extra+'\r\n';
+    at.cmd(cmd, 10000, function cb(d) {
       if (d=="OK") {
         at.register('> ', function() {
           at.unregister('> ');
-          at.write(data);          
+          at.write(data);
           return "";
         });
         return cb;
       } else if (d=="Recv "+data.length+" bytes") {
-        // all good, we expect this 
+        // all good, we expect this
         return cb;
       } else if (d=="SEND OK") {
         // we're ready for more data now
         if (socks[sckt]=="WaitClose") netCallbacks.close(sckt);
         socks[sckt]=true;
       } else {
-        socks[sckt]=undefined; // uh-oh. Error.      
-        at.unregister('> '); 
+        socks[sckt]=undefined; // uh-oh. Error.
+        at.unregister('> ');
       }
     });
     // if we obey the above, we shouldn't get the 'busy p...' prompt
     socks[sckt]="Wait"; // wait for data to be sent
-    return data.length;
+    return returnVal;
   }
 };
 
@@ -146,14 +185,20 @@ function ipdHandler(line) {
   var parms = line.substring(5,colon).split(",");
   parms[1] = 0|parms[1];
   var len = line.length-(colon+1);
+  var sckt = parms[0];
+  if (sockUDP[sckt]) {
+    var ip = (parms[2]||"0.0.0.0").split(".").map(function(x){return 0|x;});
+    var p = 0|parms[3]; // port
+    sockData[sckt] += String.fromCharCode(ip[0],ip[1],ip[2],ip[3],p&255,p>>8,len&255,len>>8);
+  }
   if (len>=parms[1]) {
    // we have everything
-   sockData[parms[0]] += line.substr(colon+1,parms[1]);
+   sockData[sckt] += line.substr(colon+1,parms[1]);
    return line.substr(colon+parms[1]+1); // return anything else
-  } else { 
+  } else {
    // still some to get - use getData to request a callback
-   sockData[parms[0]] += line.substr(colon+1,len);
-   at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });   
+   sockData[sckt] += line.substr(colon+1,len);
+   at.getData(parms[1]-len, function(data) { sockData[sckt] += data; });
    return "";
   }
 }
@@ -164,7 +209,7 @@ function changeMode(callback, err) {
   at.cmd("AT+CWMODE="+wifiMode+"\r\n", 1000, function(cwm) {
     if (cwm!="no change" && cwm!="OK" && cwm!="WIFI DISCONNECT")
       callback("CWMODE failed: "+(cwm?cwm:"Timeout"));
-    else      
+    else
       callback(null);
   });
 }
@@ -183,7 +228,7 @@ function turnOn(mode, callback) {
   wifiMode |= mode;
   if (wasOff) {
     WIFI_SERIAL.setup(115200, { rx: A3, tx : A2 });
-    at = require("AT").connect(WIFI_SERIAL);  
+    at = require("AT").connect(WIFI_SERIAL);
     at.register("+IPD", ipdHandler);
     at.registerLine("0,CONNECT", sckOpen);
     at.registerLine("1,CONNECT", sckOpen);
@@ -194,17 +239,20 @@ function turnOn(mode, callback) {
     at.registerLine("1,CLOSED", sckClosed);
     at.registerLine("2,CLOSED", sckClosed);
     at.registerLine("3,CLOSED", sckClosed);
-    at.registerLine("4,CLOSED", sckClosed);  
+    at.registerLine("4,CLOSED", sckClosed);
     exports.at = at;
     require("NetworkJS").create(netCallbacks);
     at.cmd("\r\nAT+RST\r\n", 10000, function cb(d) {
-      if (d=="ready" || d=="Ready.") setTimeout(function() { 
-        at.cmd("ATE0\r\n",1000,function cb(d) { // turn off echo    
+      if (d=="ready" || d=="Ready.") setTimeout(function() {
+        at.cmd("ATE0\r\n",1000,function cb(d) { // turn off echo
           if (d=="ATE0") return cb;
           if (d=="OK") {
-            at.cmd("AT+CIPMUX=1\r\n",1000,function(d) { // turn on multiple sockets
-              if (d!="OK") callback("CIPMUX failed: "+(d?d:"Timeout"));
-              else changeMode(callback);
+            at.cmd("AT+CIPDINFO=1\r\n",1000,function(d) {
+              if (d!="OK") return callback("CIPDINFO failed: "+(d?d:"Timeout"));
+              at.cmd("AT+CIPMUX=1\r\n",1000,function(d) { // turn on multiple sockets
+                if (d!="OK") callback("CIPMUX failed: "+(d?d:"Timeout"));
+                else changeMode(callback);
+              });
             });
           }
           else callback("ATE0 failed: "+(d?d:"Timeout"));
@@ -218,7 +266,7 @@ function turnOn(mode, callback) {
     digitalWrite(WIFI_CHPD, 1); // turn on wifi
   } else {
     changeMode(callback);
-  }  
+  }
 }
 
 function turnOff(mode) {
@@ -234,7 +282,7 @@ function turnOff(mode) {
   }
 }
 
-/** Power on the ESP8266 and connect to the access point 
+/** Power on the ESP8266 and connect to the access point
       apName is the name of the access point
       options can contain 'password' which is the AP's password
       callback is called when a connection is made */
@@ -249,7 +297,7 @@ exports.connect = function(apName, options, callback) {
       if (d!="OK") setTimeout(callback,0,"WiFi connect failed: "+(d?d:"Timeout"));
       else setTimeout(callback,0,null);
     });
-  });  
+  });
 };
 
 /** Disconnect from the WiFi network and power down the
@@ -258,18 +306,18 @@ exports.disconnect = function() {
   turnOff(MODE.CLIENT);
 };
 
-/** Get the IP and MAC address when connected to an AP and call 
+/** Get the IP and MAC address when connected to an AP and call
 `callback(err, { ip : ..., mac : ...})`. If err isn't null,
 it contains a string describing the error. This doesn't work
 when only in AP mode (the IP address is always 192.168.4.1) */
 exports.getIP = function(callback) {
-  var ip = {}; 
-  at.cmd("AT+CIFSR\r\n", 1000, function cb(d) { 
+  var ip = {};
+  at.cmd("AT+CIFSR\r\n", 1000, function cb(d) {
     if (d===undefined) { callback("Timeout"); return; }
     else if (d.substr(0,12)=="+CIFSR:STAIP") ip.ip = d.slice(14,-1);
     else if (d.substr(0,13)=="+CIFSR:STAMAC") ip.mac = d.slice(15,-1);
     else if (d=="OK") { callback(null, ip); return; }
-    return cb; 
+    return cb;
   });
 };
 
@@ -279,7 +327,7 @@ exports.getIP = function(callback) {
      options.authMode - "open", "wpa2", "wpa", "wpa_wpa2"
      options.channel - the channel of the AP
 */
-exports.startAP = function(ssid, options, callback) {  
+exports.startAP = function(ssid, options, callback) {
   options = options||{};
   if (!options.password || options.password.length<8) throw new Error("Password must be at least 8 characters");
   var enc = options.password?"3":"0"; // wpa2 or open
@@ -298,19 +346,18 @@ exports.startAP = function(ssid, options, callback) {
     if (err) return callback(err);
     at.cmd("AT+CWSAP="+JSON.stringify(ssid)+","+JSON.stringify(options.password)+","+options.channel+","+enc+"\r\n", 5000, function(cwm) {
       if (cwm!="OK") callback("CWSAP failed: "+(cwm?cwm:"Timeout"));
-      else callback(null);        
+      else callback(null);
     });
   });
 };
 
-/* Stop being an access point and disable the AP operation mode. 
+/* Stop being an access point and disable the AP operation mode.
    AP mode can be re-enabled by calling startAP. */
 exports.stopAP = function() {
   turnOff(MODE.AP);
 };
 
-
-/* Scan for access points, and call the callback(err, result) with 
+/* Scan for access points, and call the callback(err, result) with
    an array of {ssid, authMode, rssi, mac, channel} */
 exports.scan = function(callback) {
   var aps = [];
@@ -338,7 +385,7 @@ exports.setHostname = function(hostname, callback) {
   });
 };
 
-/* Ping the given address. Callback is called with the ping time 
+/* Ping the given address. Callback is called with the ping time
 in milliseconds, or undefined if there is an error */
 exports.ping = function(addr, callback) {
   var time;
@@ -346,7 +393,7 @@ exports.ping = function(addr, callback) {
     if (d && d[0]=="+") {
       time=d.substr(1);
       return cb;
-    } else if (d=="OK") callback(time); else callback();  
+    } else if (d=="OK") callback(time); else callback();
   });
 };
 
