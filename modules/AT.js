@@ -9,12 +9,29 @@ exports.connect = function (ser) {
   var dbg = false;
   var line = "";  
   var lineCallback;
+  var dataCount = 0;
+  var dataCallback;
   var delim = "\r";
   var handlers = {};
   var lineHandlers = {};
   var waiting = [];  
 
   ser.on("data", function(d) {    
+    // if we need to, send bytes off to callback right away
+    if (dataCount) {
+      if (d.length<=dataCount) {
+        dataCount -= d.length;
+        dataCallback(d);
+        if (dataCount==0) dataCallback=undefined;
+        return;
+      } else { // we're done
+        dataCallback(d.substr(0,dataCount));
+        d = d.substr(dataCount);
+        dataCount = 0;
+        dataCallback=undefined;
+      }
+    }    
+    // otherwise process line by line...
     line += d;
     if (dbg) console.log("] "+JSON.stringify(line)+" <--- "+JSON.stringify(d));
     if (line[0]=="\n") line=line.substr(1);
@@ -134,7 +151,13 @@ exports.connect = function (ser) {
     "unregister" : function(key) {
       delete handlers[key];
     },    
-    "isBusy" : function() { return lineCallback!==undefined; }
+    "isBusy" : function() { return lineCallback!==undefined; },
+    // get 
+    "getData" : function(charCount, callback) {
+      if (dataCount) throw new Error("Already grabbing data");
+      dataCount = charCount;
+      dataCallback = callback;
+    },    
   };
   return at;
 }

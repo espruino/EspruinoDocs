@@ -418,10 +418,10 @@ function receiveHandler(line) {
 
 	return line.substr(colon+parms[1]+3); // return anything else
   } else {
-	// still some to get
-	sockData[parms[0]] += line.substr(colon+2,len);
-
-   return "+D,"+parms[0]+","+(parms[1]-len)+":"; // return +D so receiveHandler2 gets called next time
+	 // still some to get - use getData to request a callback
+	 sockData[parms[0]] += line.substr(colon+2,len);
+   at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; }); 
+   return "";  
   }
 }
 function receiveHandler2(line) {
@@ -439,10 +439,10 @@ function receiveHandler2(line) {
 
    return line.substr(colon+parms[1]+1); // return anything else
   } else {
-   // still some to get
+   // still some to get - use getData to request a callback
    sockData[parms[0]] += line.substr(colon+1,len);
-
-   return "+D,"+parms[0]+","+(parms[1]-len)+":"; // return +D so receiveHandler2 gets called next time
+   at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });  
+   return ""; 
   }
 }
 

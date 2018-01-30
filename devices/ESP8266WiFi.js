@@ -147,9 +147,10 @@ function ipdHandler(line) {
    sockData[parms[0]] += line.substr(colon+1,parms[1]);
    return line.substr(colon+parms[1]+1); // return anything else
   } else { 
-   // still some to get
-   sockData[parms[0]] += line.substr(colon+1,len);
-   return "+IPD,"+parms[0]+","+(parms[1]-len)+":"; // return IPD so we get called next time    
+    // still some to get - use getData to request a callback
+    sockData[parms[0]] += line.substr(colon+1,len);
+    at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });   
+    return "";
   }
 }
 

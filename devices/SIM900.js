@@ -166,13 +166,14 @@ function receiveHandler(line) {
   parms[1] = 0|parms[1];
   var len = line.length-(colon+3);
   if (len>=parms[1]) {
-   // we have everything
-   sockData[parms[0]] += line.substr(colon+3,parms[1]);
-   return line.substr(colon+parms[1]+3); // return anything else
+    // we have everything
+    sockData[parms[0]] += line.substr(colon+3,parms[1]);
+    return line.substr(colon+parms[1]+3); // return anything else
   } else { 
-   // still some to get
-   sockData[parms[0]] += line.substr(colon+3,len);
-   return "+D,"+parms[0]+","+(parms[1]-len)+":"; // return +D so receiveHandler2 gets called next time    
+    // still some to get - use getData to request a callback
+    sockData[parms[0]] += line.substr(colon+3,len);
+    at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });   
+    return "";   
   }
 }
 function receiveHandler2(line) {
@@ -182,13 +183,14 @@ function receiveHandler2(line) {
   parms[1] = 0|parms[1];
   var len = line.length-(colon+1);
   if (len>=parms[1]) {
-   // we have everything
-   sockData[parms[0]] += line.substr(colon+1,parms[1]);
-   return line.substr(colon+parms[1]+1); // return anything else
+    // we have everything
+    sockData[parms[0]] += line.substr(colon+1,parms[1]);
+    return line.substr(colon+parms[1]+1); // return anything else
   } else { 
-   // still some to get
-   sockData[parms[0]] += line.substr(colon+1,len);
-   return "+D,"+parms[0]+","+(parms[1]-len)+":"; // return +D so receiveHandler2 gets called next time    
+    // still some to get - use getData to request a callback
+    sockData[parms[0]] += line.substr(colon+1,len);
+    at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });   
+    return "";
   }
 }
 var gprsFuncs = {
