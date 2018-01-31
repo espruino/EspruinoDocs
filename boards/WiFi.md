@@ -82,8 +82,9 @@ function getPage() {
 }
 ```
 
-**Note:** If you want Espruino to connect at power on, make sure that you
-call the WiFi initialisation code inside an `onInit` function - eg:
+**Note:** If you want Espruino to connect at power on after you have
+saved, make sure that you call the WiFi initialisation code inside an
+`onInit` function - eg:
 
 ```
 var WIFI_NAME = "";
@@ -117,13 +118,22 @@ wifi.startAP('EspruinoAP', { password: '0123456789', authMode: 'wpa2' }, functio
 });
 ```
 
-See the documentation above for more information. `startAP` and `connect` can be used together to make Espruino become an access point while also connecting to another WiFi network. In that case, it'll have the DHCP-assigned IP address on the WiFi network it is connected to, and the IP address `192.168.4.1` on the access point it has created.
+See the reference below for more information. `startAP` and `connect` can be used together to make Espruino become an access point while also connecting to another WiFi network. In that case, it'll have the DHCP-assigned IP address on the WiFi network it is connected to, and the IP address `192.168.4.1` on the access point it has created.
 
+### WiFi events
+
+You can also be notified on particular WiFi events:
+
+```
+wifi.on('associated',function() { console.log("We're connected to an AP"); });
+wifi.on('connected',function() { console.log("We have an IP Address"); });
+wifi.on('disconnected',function() { console.log("We disconnected"); });
+```
 
 Reference
 ---------
 
-Espruino WiFi's `EspruinoWiFi` module (code library) is designed to look and behave almost the same as the [ESP8266 native `WiFi` module](http://www.espruino.com/Reference#Wifi). 
+Espruino WiFi's `EspruinoWiFi` module (code library) is designed to look and behave almost the same as the [ESP8266 native `WiFi` module](http://www.espruino.com/Reference#Wifi).
 However *you can't use the `WiFi` module directly*, for example by using `require("WiFi")`. You will be able to it future firmware versions, however for now you must use `require("EspruinoWiFi")`.
 
 * APPEND_JSDOC: ../devices/EspruinoWiFi.js

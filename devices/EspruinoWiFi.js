@@ -1,5 +1,6 @@
 var WIFI_BOOT = A13;
 var WIFI_CHPD = A14;
+var WIFI_CTS = A15;
 var WIFI_SERIAL = Serial2;
 digitalWrite(WIFI_CHPD, 0); // make sure WiFi starts off
 
@@ -227,7 +228,10 @@ function turnOn(mode, callback) {
   var wasOff = wifiMode == 0;
   wifiMode |= mode;
   if (wasOff) {
-    WIFI_SERIAL.setup(115200, { rx: A3, tx : A2 });
+    if (process.version=="1v91") {
+      WIFI_CTS.reset(); // 1v91 ships on WiFI boards, but it doesn't have flow control :(
+      WIFI_SERIAL.setup(115200, { rx: A3, tx : A2 });
+    } else WIFI_SERIAL.setup(115200, { rx: A3, tx : A2, cts : WIFI_CTS });
     at = require("AT").connect(WIFI_SERIAL);
     at.register("+IPD", ipdHandler);
     at.registerLine("0,CONNECT", sckOpen);
@@ -240,6 +244,9 @@ function turnOn(mode, callback) {
     at.registerLine("2,CLOSED", sckClosed);
     at.registerLine("3,CLOSED", sckClosed);
     at.registerLine("4,CLOSED", sckClosed);
+    at.registerLine("WIFI CONNECTED", function() { exports.emit("associated"); });
+    at.registerLine("WIFI GOT IP", function() { exports.emit("connected"); });
+    at.registerLine("WIFI DISCONNECTED", function() { exports.emit("disconnected"); });
     exports.at = at;
     require("NetworkJS").create(netCallbacks);
     at.cmd("\r\nAT+RST\r\n", 10000, function cb(d) {
@@ -247,11 +254,14 @@ function turnOn(mode, callback) {
         at.cmd("ATE0\r\n",1000,function cb(d) { // turn off echo
           if (d=="ATE0") return cb;
           if (d=="OK") {
-            at.cmd("AT+CIPDINFO=1\r\n",1000,function(d) {
+            at.cmd("AT+CIPDINFO=1\r\n",1000,function(d) { // enable IP Info in +IPD
               if (d!="OK") return callback("CIPDINFO failed: "+(d?d:"Timeout"));
               at.cmd("AT+CIPMUX=1\r\n",1000,function(d) { // turn on multiple sockets
-                if (d!="OK") callback("CIPMUX failed: "+(d?d:"Timeout"));
-                else changeMode(callback);
+                if (d!="OK") return callback("CIPMUX failed: "+(d?d:"Timeout"));
+                at.cmd('AT+UART_CUR=115200,8,1,0,2\r\n',500,function(d) { // enable flow control
+                  if (d!="OK") return callback("UART_CUR failed: "+(d?d:"Timeout"));
+                  else changeMode(callback);
+                });
               });
             });
           }
@@ -341,7 +351,6 @@ exports.startAP = function(ssid, options, callback) {
     if (enc===undefined) throw new Error("Unknown authMode "+options.authMode);
   }
   if (options.channel===undefined) options.channel=5;
-
   turnOn(MODE.AP, function(err) {
     if (err) return callback(err);
     at.cmd("AT+CWSAP="+JSON.stringify(ssid)+","+JSON.stringify(options.password)+","+options.channel+","+enc+"\r\n", 5000, function(cwm) {
@@ -377,6 +386,45 @@ exports.scan = function(callback) {
   });
 };
 
+/* Calls the callback with {ip,gateway,netmask,mac} of the WiFi Access Point*/
+exports.getAPIP = function(callback) {
+  var ip = {};
+  at.cmd("AT+CIPAP_CUR?\r\n", 1000, function cb(d) {
+    if (d===undefined) { callback("Timeout"); return; }
+    if (d=="OK") {
+      at.cmd("AT+CIPAPMAC_CUR?\r\n", 1000, function cbm(d) {
+        if (d===undefined) { callback("Timeout"); return; }
+        if (d=="OK") { callback(null, ip); return; }
+        if (d.substr(0,14)=="+CIPAPMAC_CUR")
+          ip.mac = JSON.parse(d.substr(10));
+        return cbm;
+      });
+      return;
+    }
+    if (d.substr(0,10)=="+CIPAP_CUR") {
+      d = d.split(":");
+      ip[d[1]] = JSON.parse(d[2]);
+    }
+    return cb;
+  });
+};
+
+/* Set WiFi access point details. Call with
+either: wifi.setAPIP({ip:"192.168.1.1"}, callback)
+or: wifi.setAPIP({ip:"192.168.1.1", gateway:"192.168.1.1", netmask:"255.255.255.0"}, callback)
+*/
+exports.setAPIP = function(settings, callback) {
+  var args = [JSON.stringify(settings.ip)];
+  if (settings.gateway) {
+    args.push(JSON.stringify(settings.gateway));
+    args.push(JSON.stringify(settings.netmask||"255.255.255.0"));
+  }
+  at.cmd("AT+CIPAP_CUR="+args.join(",")+"\r\n", 3000, function(d) {
+    if (d=="OK") callback(null);
+    else return callback("setAPIP failed: "+(d?d:"Timeout"));
+  });
+};
+
 /* Set the host name of the Espruino WiFi - so it can be accessed via DNS. */
 exports.setHostname = function(hostname, callback) {
   turnOn(MODE.CLIENT, function(err) {
@@ -396,6 +444,21 @@ exports.ping = function(addr, callback) {
     } else if (d=="OK") callback(time); else callback();
   });
 };
+
+/* Switch to a higher communication speed with WiFi, with flow control.
+true=921600, false=115200, or a number=use that baud rate.
+eg. wifi.turbo(true,callback) or wifi.turbo(1843200,callback) */
+exports.turbo = function(enable, callback) {
+  var newbaud = enable ? ((enable===true)?921600:enable) : 115200;
+  at.cmd('AT+UART_CUR='+newbaud+',8,1,0,2\r\n',500,function(d) {
+    if (d!="OK") {
+      if (callback) callback("Baud rate switch to "+newbaud+" failed: "+(d?d:"Timeout"));
+    } else {
+      WIFI_SERIAL.setup(newbaud, { rx: A3, tx : A2, cts : WIFI_CTS });
+      if (callback) callback(null);
+    }
+  });
+}
 
 /** This function returns some of the internal state of the WiFi module, and can be used for debugging */
 exports.debug = function() {

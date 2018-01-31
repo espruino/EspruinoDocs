@@ -1,22 +1,22 @@
 /* Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 /* AT command interface library. This provides a callback-based way to send
- * AT commands with timeouts, and also to listen for their responses. It 
+ * AT commands with timeouts, and also to listen for their responses. It
  * greatly simplifies the task of writing drivers for ESP8266 or GSM */
 
 /* TODO: something odd about Espruino on linux seems to mean that
  * extra '\n' get inserted */
 exports.connect = function (ser) {
   var dbg = false;
-  var line = "";  
+  var line = "";
   var lineCallback;
   var dataCount = 0;
   var dataCallback;
   var delim = "\r";
   var handlers = {};
   var lineHandlers = {};
-  var waiting = [];  
+  var waiting = [];
 
-  ser.on("data", function(d) {    
+  ser.on("data", function(d) {
     // if we need to, send bytes off to callback right away
     if (dataCount) {
       if (d.length<=dataCount) {
@@ -30,22 +30,19 @@ exports.connect = function (ser) {
         dataCount = 0;
         dataCallback=undefined;
       }
-    }    
+    }
     // otherwise process line by line...
     line += d;
-    if (dbg) console.log("] "+JSON.stringify(line)+" <--- "+JSON.stringify(d));
+    if (dbg) console.log("] "+JSON.stringify(d));
     if (line[0]=="\n") line=line.substr(1);
     if (handlers) {
-      // hack - when bug #540 gets fixed we won't need this:
-      if (handlers[">"] && line[0]==">")
-        line = handlers[">"](line);
       for (var h in handlers) {
         if (line.substr(0,h.length)==h) {
           line = handlers[h](line);
           //console.log("HANDLER] "+JSON.stringify(line));
         }
       }
-    }    
+    }
     var i = line.indexOf(delim);
     while (i>=0) {
       var l = line.substr(0,i);
@@ -58,8 +55,8 @@ exports.connect = function (ser) {
             handled = true;
           }
         if (!handled) {
-          if (lineCallback) { 
-            lineCallback(l); 
+          if (lineCallback) {
+            lineCallback(l);
           }// else console.log(":"+JSON.stringify(l));
         }
       }
@@ -78,10 +75,10 @@ exports.connect = function (ser) {
       i = line.indexOf(delim);
     }
   });
-  
+
   var at = {
-    "debug" : function() {
-      dbg = true;
+    "debug" : function(en) { // enable with undefined or true, disable with false
+      dbg = (en!==false);
       return {
         line:line,
         lineCallback:lineCallback,
@@ -90,7 +87,7 @@ exports.connect = function (ser) {
         waiting:waiting
       };
     },
-    /* send command - if timeout is set, we wait for a response. The callback may return 
+    /* send command - if timeout is set, we wait for a response. The callback may return
      * a function if it wants more data. Eg 'return function(d) {};' */
     "cmd" : function(command, timeout, callback) {
       if (lineCallback) {
@@ -104,8 +101,8 @@ exports.connect = function (ser) {
           lineCallback = undefined;
           if (callback) callback();
         }, timeout);
-        var cb = function(d) {          
-          lineCallback = undefined;     
+        var cb = function(d) {
+          lineCallback = undefined;
           var n;
           if (callback && (n=callback(d))) {
             // if callback returned a function, keep listening
@@ -150,14 +147,14 @@ exports.connect = function (ser) {
     // unregister for a certain type of response (starting with)
     "unregister" : function(key) {
       delete handlers[key];
-    },    
+    },
     "isBusy" : function() { return lineCallback!==undefined; },
-    // get 
+    // forward the next charCount characters to the callback function
     "getData" : function(charCount, callback) {
       if (dataCount) throw new Error("Already grabbing data");
       dataCount = charCount;
       dataCallback = callback;
-    },    
+    },
   };
   return at;
 }
