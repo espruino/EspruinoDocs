@@ -8,6 +8,7 @@ var MODE = { CLIENT : 1, AP : 2 };
 var ENCR_FLAGS = ["open","wep","wpa_psk","wpa2_psk","wpa_wpa2_psk"];
 
 var wifiMode = 0;
+var connected = false;
 var at;
 var socks = [];
 var sockUDP = [];
@@ -38,7 +39,7 @@ true              : connected and ready
 var netCallbacks = {
   create : function(host, port, type) {
     //console.log("CREATE ",arguments);
-    if (!at) return -1; // disconnected
+    if (!at || !connected) return -1; // disconnected
     /* Create a socket and return its index, host is a string, port is an integer.
     If host isn't defined, create a server socket */
     if (host===undefined && type!=2) {
@@ -244,9 +245,9 @@ function turnOn(mode, callback) {
     at.registerLine("2,CLOSED", sckClosed);
     at.registerLine("3,CLOSED", sckClosed);
     at.registerLine("4,CLOSED", sckClosed);
-    at.registerLine("WIFI CONNECTED", function() { exports.emit("associated"); });
+    at.registerLine("WIFI CONNECTED", function() { connected = true; exports.emit("associated"); });
     at.registerLine("WIFI GOT IP", function() { exports.emit("connected"); });
-    at.registerLine("WIFI DISCONNECTED", function() { exports.emit("disconnected"); });
+    at.registerLine("WIFI DISCONNECTED", function() { connected=false; exports.emit("disconnected"); });
     exports.at = at;
     require("NetworkJS").create(netCallbacks);
     at.cmd("\r\nAT+RST\r\n", 10000, function cb(d) {
@@ -316,21 +317,6 @@ exports.disconnect = function() {
   turnOff(MODE.CLIENT);
 };
 
-/** Get the IP and MAC address when connected to an AP and call
-`callback(err, { ip : ..., mac : ...})`. If err isn't null,
-it contains a string describing the error. This doesn't work
-when only in AP mode (the IP address is always 192.168.4.1) */
-exports.getIP = function(callback) {
-  var ip = {};
-  at.cmd("AT+CIFSR\r\n", 1000, function cb(d) {
-    if (d===undefined) { callback("Timeout"); return; }
-    else if (d.substr(0,12)=="+CIFSR:STAIP") ip.ip = d.slice(14,-1);
-    else if (d.substr(0,13)=="+CIFSR:STAMAC") ip.mac = d.slice(15,-1);
-    else if (d=="OK") { callback(null, ip); return; }
-    return cb;
-  });
-};
-
 /* Create a WiFi access point allowing stations to connect.
      ssid - the AP's SSID
      options.password - the password - must be at least 8 characters (or 10 if all numbers)
@@ -386,7 +372,49 @@ exports.scan = function(callback) {
   });
 };
 
-/* Calls the callback with {ip,gateway,netmask,mac} of the WiFi Access Point*/
+/** Get the IP and MAC address when connected to an AP and call
+`callback(err, { ip : ..., mac : ...})`. If err isn't null,
+it contains a string describing the error. You must be connected to
+an access point to be able to call this successfully. For AP mode use getAPIP */
+exports.getIP = function(callback) {
+  var ip = {};
+  at.cmd("AT+CIFSR\r\n", 1000, function cb(d) {
+    if (d===undefined) { callback("Timeout"); return; }
+    else if (d.substr(0,12)=="+CIFSR:STAIP") ip.ip = d.slice(14,-1);
+    else if (d.substr(0,13)=="+CIFSR:STAMAC") ip.mac = d.slice(15,-1);
+    else if (d=="OK") { callback(null, ip); return; }
+    return cb;
+  });
+};
+
+/* Set WiFi station IP address. Call with
+either: wifi.setAPIP(undefined, callback) // enable DHCP (the default) - can take a few seconds to complete
+either: wifi.setAPIP({ip:"192.168.1.9"}, callback) // disable DHCP, use static IP
+or: wifi.setIP({ip:"192.168.1.9", gateway:"192.168.1.1", netmask:"255.255.255.0"}, callback) // disable DHCP, use static IP
+You must be connected to an access point to be able to call this successfully
+*/
+exports.setIP = function(settings, callback) {
+  var cmd, timeout;
+  if (typeof settings!="object" || !settings.ip) {
+    cmd = "AT+CWDHCP_CUR=1,1\r\n";
+    timeout = 20000;
+  } else {
+    var args = [JSON.stringify(settings.ip)];
+    if (settings.gateway) {
+      args.push(JSON.stringify(settings.gateway));
+      args.push(JSON.stringify(settings.netmask||"255.255.255.0"));
+    }
+    cmd = "AT+CIPSTA_CUR="+args.join(",")+"\r\n";
+    timeout = 3000;
+  }
+  at.cmd(cmd, timeout, function(d) {
+    if (d=="OK") callback(null);
+    else return callback("setIP failed: "+(d?d:"Timeout"));
+  });
+};
+
+/* Calls the callback with {ip,gateway,netmask,mac} of the WiFi Access Point.
+You must be in AP mode with startAP to get useful values returned. */
 exports.getAPIP = function(callback) {
   var ip = {};
   at.cmd("AT+CIPAP_CUR?\r\n", 1000, function cb(d) {
@@ -412,6 +440,7 @@ exports.getAPIP = function(callback) {
 /* Set WiFi access point details. Call with
 either: wifi.setAPIP({ip:"192.168.1.1"}, callback)
 or: wifi.setAPIP({ip:"192.168.1.1", gateway:"192.168.1.1", netmask:"255.255.255.0"}, callback)
+You must be in AP mode with startAP to be able to call this successfully
 */
 exports.setAPIP = function(settings, callback) {
   var args = [JSON.stringify(settings.ip)];
