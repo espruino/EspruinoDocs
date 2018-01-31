@@ -109,7 +109,7 @@ function getWeather() {
   // do an HTTP request
   require("http").get(WEATHER_URL, function(res) {
     // console.log("Response: ",res);
-    
+
     // read the whole response into a variable
     // note: this works here but isn't a great idea - big responses can
     // easily use up all the available memory
@@ -129,16 +129,13 @@ function onInit() {
   console.log("Init ESP8266...");
   wifi = require("ESP8266WiFi").connect(Serial2, function(err) {
     if (err) throw err;
-    wifi.reset(function(err) {
+    console.log("Connecting to WiFi");
+    wifi.connect(WLAN_NAME, WLAN_KEY, function(err) {
       if (err) throw err;
-      console.log("Connecting to WiFi");
-      wifi.connect(WLAN_NAME, WLAN_KEY, function(err) {
-        if (err) throw err;
-        console.log("Connected");
-        // Now start getting weather...
-        setInterval(getWeather, 60000); // every 60s
-        getWeather(); // do the first one right away
-      });
+      console.log("Connected");
+      // Now start getting weather...
+      setInterval(getWeather, 60000); // every 60s
+      getWeather(); // do the first one right away
     });
   });
   // Setup SPI for LCD

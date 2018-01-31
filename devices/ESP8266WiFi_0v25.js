@@ -10,15 +10,13 @@ Serial2.setup(115200, { rx: A3, tx : A2 });
 
 console.log("Connecting to ESP8266");
 var wifi = require("ESP8266").connect(Serial2, function() {
-  wifi.reset(function() {
-    console.log("Connecting to WiFi");
-    wifi.connect("SSID","key", function() {
-      console.log("Connected");
-      require("http").get("http://www.espruino.com", function(res) {
-        console.log("Response: ",res);
-        res.on('data', function(d) {
-          console.log("--->"+d);
-        });
+  console.log("Connecting to WiFi");
+  wifi.connect("SSID","key", function() {
+    console.log("Connected");
+    require("http").get("http://www.espruino.com", function(res) {
+      console.log("Response: ",res);
+      res.on('data', function(d) {
+        console.log("--->"+d);
       });
     });
   });

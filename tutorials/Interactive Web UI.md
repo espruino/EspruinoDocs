@@ -15,7 +15,7 @@ Introduction
 If you're using Ethernet or WiFi in your project, a modern user interface will make it look significantly more professional.
 
 Often, doing this with raw HTML is quite a painful process. However, modern web browsers support
-[SVG](http://en.wikipedia.org/wiki/Scalable_Vector_Graphics) elements which allow you to embed 
+[SVG](http://en.wikipedia.org/wiki/Scalable_Vector_Graphics) elements which allow you to embed
 (and modify) vector graphics as if they were normal HTML elements.
 
 In this tutorial we'll show you how to create a modern-looking user interface in a vector graphics
@@ -39,7 +39,7 @@ Software
 
 First off, you need to run [Inkscape](http://www.inkscape.org/en/) and design some graphics. I just created a simple temperature dial with some basic parts - a ring, text, up/down arrows, and a needle (shown in grey).
 
-![inkscape](Interactive Web UI/inkscape.png) 
+![inkscape](Interactive Web UI/inkscape.png)
 
 When you have something like this, make sure you right-click on each item, go to `Object Properties`, and set the `id` to something simple. I've chosen `ring`, `label`, `up`, `dn`, and `needle`. Then, save the file as a `Plain SVG` file using `Save As`. This will remove any Inkscape-specific tags that aren't needed. Finally, create a simple HTML file and paste it in (I've already removed a few extra tags):
 
@@ -137,9 +137,9 @@ function touchHandler(event) {
     default: return;
   }
   var simulatedEvent = document.createEvent("MouseEvent");
-  simulatedEvent.initMouseEvent(type, true, true, window, 1, 
-                            first.screenX, first.screenY, 
-                            first.clientX, first.clientY, false, 
+  simulatedEvent.initMouseEvent(type, true, true, window, 1,
+                            first.screenX, first.screenY,
+                            first.clientX, first.clientY, false,
                             false, false, false, 0/*left*/, null);
   first.target.dispatchEvent(simulatedEvent);
   event.preventDefault();
@@ -147,7 +147,7 @@ function touchHandler(event) {
 document.addEventListener("touchstart", touchHandler, true);
 document.addEventListener("touchmove", touchHandler, true);
 document.addEventListener("touchend", touchHandler, true);
-document.addEventListener("touchcancel", touchHandler, true); 
+document.addEventListener("touchcancel", touchHandler, true);
 
 // rotate needle to correct position
 var pos = 50;
@@ -269,17 +269,14 @@ var WIFI_PASS = "wifi_key";
 Serial2.setup(9600, { rx: A3, tx : A2 });
 var wifi = require("ESP8266WiFi").connect(Serial2, function(err) {
   if (err) throw err;
-  wifi.reset(function(err) {
+  console.log("Connecting to WiFi");
+  wifi.connect(WIFI_NAME, WIFI_PASS, function(err) {
     if (err) throw err;
-    console.log("Connecting to WiFi");
-    wifi.connect(WIFI_NAME, WIFI_PASS, function(err) {
-      if (err) throw err;
-      console.log("Connected");
-      // print IP address
-      wifi.getIP(console.log);
-      // Create a server
-      require("http").createServer(pageHandler).listen(80);
-    });
+    console.log("Connected");
+    // print IP address
+    wifi.getIP(console.log);
+    // Create a server
+    require("http").createServer(pageHandler).listen(80);
   });
 });*/
 
@@ -295,4 +292,3 @@ Paste this into the right-hand side of the Web IDE, being sure to uncomment the 
 The WiFi will take a while to connect, but when it does Espruino will print its IP address. You can then connect to that with a web browser, for instance to `http://192.168.1.84`.
 
 When you connect, you should see UI - served entirely off of the Espruino. If you then move the dial or click the buttons, and HTTP POST request will be made to the Espruino, which will then interpret that request and call `setPos` with the new value (which will change the brightness of the Red LED).
-

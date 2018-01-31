@@ -28,7 +28,7 @@ The [shim collection](https://www.tindie.com/products/gfwilliams/espruino-pico-a
 It consists of:
 
 
-### ESP8266 ESP01 0.05" Shim 
+### ESP8266 ESP01 0.05" Shim
 
 ![](Shims/esp8266_esp01_shim_rev2.png)
 
@@ -74,23 +74,20 @@ This board may need an Espruino Pico rev 1v4 board (or an Espruino rev 1v3 with 
 
 ```
 // make sure the Espruino console doesn't interfere with ESP8266 if we're not connected to USB
-USB.setConsole(); 
+USB.setConsole();
 // Start ESP8266
 Serial1.setup(115200, { rx: B7, tx : B6 });
 var wifi = require("ESP8266WiFi_0v25").connect(Serial1, function(err) {
   if (err) throw err;
-  wifi.reset(function(err) {
+  console.log("Connecting to WiFi");
+  wifi.connect("WiFi_Name","WPA2_Key", function(err) {
     if (err) throw err;
-    console.log("Connecting to WiFi");
-    wifi.connect("WiFi_Name","WPA2_Key", function(err) {
-      if (err) throw err;
-      console.log("Connected");
-      // Now you can do something, like an HTTP request
-      require("http").get("http://www.pur3.co.uk/hello.txt", function(res) {
-        console.log("Response: ",res);
-        res.on('data', function(d) {
-          console.log("--->"+d);
-        });
+    console.log("Connected");
+    // Now you can do something, like an HTTP request
+    require("http").get("http://www.pur3.co.uk/hello.txt", function(res) {
+      console.log("Response: ",res);
+      res.on('data', function(d) {
+        console.log("--->"+d);
       });
     });
   });
@@ -183,7 +180,7 @@ Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/maste
 
 **Note 2:** On rev 1.0 of this board, GND is not connected. You will have manually to add a wire from GND of the Espruino Pico to pin 6 of the micro SD card connector. Adding a 0.1uF decoupling capacitor across the voltage rail is also a good idea.
 
-**Note:** The resistor `R1` is for a 1206-size 100k pullup resistor for the `CS` line. This should 
+**Note:** The resistor `R1` is for a 1206-size 100k pullup resistor for the `CS` line. This should
 be added as it avoids unintentional SD card accesses that could occur before the Espruino Pico has set
 up the CS line properly.
 
