@@ -40,7 +40,7 @@ going use:
 ```
 var wifi = require("Wifi");
 wifi.disconnect()
-wifi.startAP("my-ssid", {password:"my-password"});
+wifi.startAP("my-ssid", {password:"my-password",authMode:"wpa_wpa2"});
 ```
 You should see the access point appear on your phone or laptop if you do a wifi scan.
 You can verify the ESP8266's IP address using `wifi.getAPIP()`, it should be 192.168.4.1.
@@ -74,7 +74,7 @@ Finally, you need to save the settings so they persist across hard-resets and po
 wifi.save()
 ```
 
-At this point you can power cycle your ESP8266 and then reconnect from the IDE (you may have to 
+At this point you can power cycle your ESP8266 and then reconnect from the IDE (you may have to
 manually disconnect first, the IDE is slow at detecting that the connection got cut).
 Note that the saving of the wifi settings means that your program code should not configure
 the wifi unless you want special effects that cannot be achieved simply by saving your current
@@ -113,11 +113,3 @@ wifi is connected or not, whether the IP address changes over time, etc.
 If you need to make outbound calls, the recommended approach is to retry until successful
 instead of waiting for a connection because that is a more robust approach which can deal
 with errors other than just the loss of wifi association.
-
-
-
-
-
-
-
-
