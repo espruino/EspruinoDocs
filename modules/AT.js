@@ -91,6 +91,7 @@ exports.connect = function (ser) {
      * a function if it wants more data. Eg 'return function(d) {};' */
     "cmd" : function(command, timeout, callback) {
       if (lineCallback) {
+        if (dbg) console.log("Queued "+JSON.stringify(command));
         waiting.push([command, timeout, callback])
         return;
       }
@@ -100,6 +101,8 @@ exports.connect = function (ser) {
         var tmr = setTimeout(function() {
           lineCallback = undefined;
           if (callback) callback();
+          if (lineCallback===undefined && waiting.length>0)
+            at.cmd.apply(at,waiting.shift());
         }, timeout);
         var cb = function(d) {
           lineCallback = undefined;
@@ -110,10 +113,8 @@ exports.connect = function (ser) {
             lineCallback = cb;
             callback = n;
           } else clearTimeout(tmr);
-          if (lineCallback===undefined && waiting.length>0) {
-            var w = waiting.shift();
-            at.cmd(w[0], w[1], w[2]);
-          }
+          if (lineCallback===undefined && waiting.length>0)
+            at.cmd.apply(at,waiting.shift());
         };
         lineCallback = cb;
       }

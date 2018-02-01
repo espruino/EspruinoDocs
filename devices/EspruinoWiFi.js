@@ -74,7 +74,10 @@ var netCallbacks = {
         delete sockUDP[sckt];
       }
       if (cmd) at.cmd(cmd,10000,function cb(d) {
-        if (d!="OK") socks[sckt] = -6; // SOCKET_ERR_NOT_FOUND
+        //console.log("CIPSTART "+JSON.stringify(d));
+        if (d=="ALREADY CONNECTED") return cb; // we're expecting an ERROR too
+        // x,CONNECT should have been received between times. If it hasn't appeared, it's an error.
+        if (d!="OK" || socks[sckt]!==true) socks[sckt] = -6; // SOCKET_ERR_NOT_FOUND
       });
     }
     return sckt;
@@ -154,6 +157,7 @@ var netCallbacks = {
 
     var cmd = 'AT+CIPSEND='+sckt+','+data.length+extra+'\r\n';
     at.cmd(cmd, 10000, function cb(d) {
+      //console.log("SEND "+JSON.stringify(d));
       if (d=="OK") {
         at.register('> ', function() {
           at.unregister('> ');
@@ -161,8 +165,9 @@ var netCallbacks = {
           return "";
         });
         return cb;
-      } else if (d=="Recv "+data.length+" bytes") {
+      } else if (d=="Recv "+data.length+" bytes" || d=="busy s...") {
         // all good, we expect this
+        // Not sure why we get "busy s..." in this case (2 sends one after the other) but it all seems ok.
         return cb;
       } else if (d=="SEND OK") {
         // we're ready for more data now
@@ -217,8 +222,20 @@ function changeMode(callback, err) {
 }
 
 function sckOpen(ln) {
-  //console.log("CONNECT", JSON.stringify(ln));
-  socks[ln[0]] = socks[ln[0]]=="Wait" ? true : "Accept";
+  var sckt = ln[0];
+  //console.log("SCKOPEN", JSON.stringify(ln),"current",JSON.stringify(socks[sckt]));
+  if (socks[sckt]===undefined && socks[MAXSOCKETS]) {
+    // if we have a server and the socket randomly opens, it's a new connection
+    socks[sckt] = "Accept";
+  } else if (socks[sckt]=="Wait") {
+    // everything's good - we're connected
+    socks[sckt] = true;
+  } else {
+    // Otherwise we had an error - timeout? but it's now open. Close it.
+    at.cmd('AT+CIPCLOSE='+sckt+'\r\n',1000, function(d) {
+      socks[sckt] = undefined;
+    });
+  }
 }
 function sckClosed(ln) {
   //console.log("CLOSED", JSON.stringify(ln));
