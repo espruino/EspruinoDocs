@@ -25,7 +25,7 @@ To save space, most modules are provided as a minified version and the Web IDE t
 
 For example, using ```require("ADNS5050");``` will make the Web IDE loading the minified module from [http://www.espruino.com/modules/ADNS5050.min.js](http://www.espruino.com/modules/ADNS5050.min.js).
 
-##### Load Module from Github
+#### Load Module from Github
 
 For now, as you can type a URL into require, you can actually just pull a module right off GitHub:
 
@@ -41,7 +41,7 @@ require("https://github.com/espruino/EspruinoDocs/blob/d4996cb3179abe260c030ed02
 
 The URL comes from clicking ```<>``` by the commit you were interested in.
 
-##### Load Module from NPM
+#### Load Module from NPM
 
 If you activate this option in Web IDE, you can load modules from the NPM repository. Right now it:
 
@@ -51,7 +51,7 @@ If you activate this option in Web IDE, you can load modules from the NPM reposi
 
 For example using ```require("async");``` will make the Web IDE loading the tar.gz file (with automatic extraction) of the module from [http://registry.npmjs.org/async](http://registry.npmjs.org/async).
 
-##### Load Module from local folder
+#### Load Module from local folder
 
 If you are using a local project folder, the Web IDE will automatically create an empty modules folder inside. Put a module there and you can load it with ```require("myCustomModule");```.
 
