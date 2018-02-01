@@ -63,10 +63,10 @@ setInterval( function() {
 }, 100 );
 ```
 
-**Note**
+**Note** It's important to make sure that the sensor will not be used during an asynchronous measuring.
 
-It's important to make sure that the sensor will not be used during an asynchronous measuring.
 This is an incorrect usage:
+
 ```JavaScript
 I2C1.setup( {scl: B8, sda: B9, bitrate: 50000 } );
 var htu = require('HTU21D').connect( I2C1 );
@@ -79,11 +79,12 @@ htu.getHumidity( function( humidity ) {
 ```
 
 The humidity is slightly temperature dependent but you can compensate this dependency if you have the current temperature:
+
 ```JavaScript
 I2C1.setup( {scl: B8, sda: B9 } );
 var htu = require('HTU21D').connect( I2C1 );
 var temp = htu.readTemperature();
-var humidity = htu.readHumidity(); 
+var humidity = htu.readHumidity();
 humdity = htu.getCompensatedHumidity( humidity, temp ); // improve accuracy
 console.log("Temperature = " + temp.toFixed(2) + " °C" );
 console.log("Humidity    = " + humidity.toFixed(2) + " %" );
@@ -155,6 +156,14 @@ to detect a voltage supply less than 2.25V:
 console.log( "End of battery = " + htu.isEndOfBattery() ); // → false
 ```
 
+Troubleshooting
+---------------
+
+**The humidity returned is -6**
+
+The HTU21D datasheet states that this response (equivalent to an actual reading of 0 from the sensor)
+means that the humidity sensor is open circuit (eg. broken). The temperature will probably still
+work but you'll need to get a new sensor if you need to measure humidity.
 
 Buying
 -----
