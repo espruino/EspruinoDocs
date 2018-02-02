@@ -311,7 +311,7 @@ MQTT.prototype.connect = function (client) {
 /** Disconnect from server */
 MQTT.prototype.disconnect = function () {
     if (!this.client) return;
-    this.client.write(fromCharCode(TYPE.DISCONNECT << 4) + "\x00");
+    try { this.client.write(fromCharCode(TYPE.DISCONNECT << 4) + "\x00"); } catch(e) {}
     this.client.end();
     this.client = false;
 };
