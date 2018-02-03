@@ -14,6 +14,7 @@ See the [Graphics](/Graphics) library page for more information.
 
 <input type="file" id="fileLoader"/><br/>
 <input type="checkbox" id="diffusion" onchange="imageLoaded()"/>Diffusion?</input>
+<input type="checkbox" id="invert" onchange="imageLoaded()"/>invert?</input>
 
 <canvas id="canvas" style="display:none;"></canvas>
 
@@ -26,6 +27,7 @@ See the [Graphics](/Graphics) library page for more information.
   function imageLoaded() {
     if (img === undefined) return;
     var diffusion = document.getElementById("diffusion").checked;
+    var invert = document.getElementById("invert").checked;
     var canvas = document.getElementById("canvas")
     canvas.width = img.width*2;
     canvas.height = img.height;
@@ -42,6 +44,7 @@ See the [Graphics](/Graphics) library page for more information.
         var c = (data[n*4]+data[n*4+1]+data[n*4+2])/ 3;
         var thresh = 128;
         if (diffusion) thresh=Math.random()*254+1;
+        if (invert) c=255-c;
         if (c>thresh) {
           bitData[n>>3] |= 128>>(n&7);
           data[n*4]=255;
