@@ -1,4 +1,4 @@
-<!--- Copyright (c) 2018 Your Name. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2018 Joachim Klein. See the file LICENSE for copying permission. -->
 LSM6DSL
 =====================
 
@@ -10,8 +10,8 @@ For testing I used a NUCLEO-STM32F401 + X-NUCLEO-IKS01A2.  [LSM6DSL](/modules/LS
 The IKDS01A1 shield includes the following sensors:
 * [LPS22HB](/modules/LPS22HB.js)  
 * [HTS221](/modules/HTS221.js)
-* LSM6DS0 
-* [LIS3MDL](/modules/LIS3MDL.js)
+* [LSM6DSL](/modules/LSM6DSL.js)
+* LSM303AGR
 
 ## Required Resources
 This module require the following resources:
@@ -37,7 +37,7 @@ var MyLSM = require("LSM6DSL").connect(I2C1);
 MyLSM.enable({interrupt:true, mode:"slow", sensor:"gyro"}); 
   
 ```
-## Diagnostic data
+## Diagnostic Data
 To verify our configuration we can use the logReg function.
 This function will dump all relevant register values, including configuration 
 and status registers to the serial interface.
@@ -47,7 +47,7 @@ This function is intended to be used only during development.
 MyLSM.logReg();
 
 ```
-## Read Sensor data
+## Read Sensor Data
 The sensor data is read and stored in object variables.
 There exist three functions to read out sensor data.
 - update: Read Gyro and accelerator data from sensor
@@ -65,7 +65,7 @@ MyLSM.updateG();
 MyLSM.updateXL();
 
 ```
-## Use Sensor data
+## Use Sensor Data
 The sensor data is read and stored in object variables.
 Return value is in g for the Accelerometer and Degree (Change) for the Gyro.
 Currently calibration is not implemented, therefore you have to take care about the drift.
@@ -90,7 +90,7 @@ print("G_Y:  " + MyLSM.G_Y);
 print("G_Z:  " + MyLSM.G_Z);  
 
 ```
-## Komplex example
+## Komplex Example
 This example configure the LSM6DSL and enable the interrupts.
 The push button on the Nucleo Board is used to turn on and of reading of results.
 Since the LIS6DSL waits for the next measurement until the
@@ -149,4 +149,4 @@ setWatch(io_interrupt, B5,
   Reference
   ---------
 
-  * APPEND_JSDOC: LIS3MDL.js
+  * APPEND_JSDOC: LSM6DSL.js
