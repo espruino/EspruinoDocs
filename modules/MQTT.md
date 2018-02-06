@@ -148,3 +148,17 @@ mqtt.on('publish', function (pub) {
 
 mqtt.unsubscribe("test/espruino");
 ```
+
+Events
+------
+
+`mqtt` emits the following events:
+
+* `connect` and `connected` (sent at the same time)
+* `disconnected` and `close` (sent at the same time)
+* `error(message)`
+* `publish({topic,message,dup,qos,retain})` and `message(topic, message)` (sent at the same time)
+* `subscribed` - mqtt.subscribe succeeded
+* `subscribed_fail` - `mqtt.subscribe` failed
+* `unsubscribed`- mqtt.unsubscribe succeeded
+* `ping_reply` - A reply to the ping was received

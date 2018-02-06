@@ -64,7 +64,7 @@ function MQTT(server, options) {
 /** 'public' constants here */
 MQTT.prototype.C = {
     DEF_QOS        : 0,    // Default QOS level
-    CONNECT_TIMEOUT: 5000, // Time (ms) to wait for CONNACK
+    CONNECT_TIMEOUT: 10000, // Time (ms) to wait for CONNACK
     PING_INTERVAL  : 40    // Server ping interval (s)
 };
 
@@ -116,10 +116,10 @@ function mqttPacket(cmd, variable, payload) {
 function parsePublish(data) {
     if (data.length >= 3 && typeof data !== "undefined") {
         var cmd = data.charCodeAt(0);
-        var var_len = data.charCodeAt(1) << 8 | data.charCodeAt(2);
+        var topic_len = data.charCodeAt(1) << 8 | data.charCodeAt(2);
         return {
-            topic  : data.substr(3, var_len),
-            message: data.substr(3 + var_len, data.length - var_len),
+            topic  : data.substr(3, topic_len),
+            message: data.substr(3 + topic_len + 2, data.length - topic_len - 5),
             dup    : (cmd & 0x8) >> 3,
             qos    : (cmd & 0x6) >> 1,
             retain : cmd & 0x1
@@ -209,7 +209,6 @@ MQTT.prototype.connect = function (client) {
 
         // Incoming data
         client.on('data', function (data) {
-
             if (mqo.partData) {
                 data = mqo.partData + data;
                 mqo.partData = '';
@@ -234,6 +233,10 @@ MQTT.prototype.connect = function (client) {
             if (type === TYPE.PUBLISH) {
                 var parsedData = parsePublish(data.charAt(0) + pData);
                 if (parsedData !== undefined) {
+                    if(parsedData.qos == 1)
+                      client.write(fromCharCode(TYPE.PUBACK << 4) + "\x02" + getPid(pData));
+                    else if(parsedData.qos == 2)
+                      client.write(fromCharCode(TYPE.PUBREC << 4) + "\x02" + getPid(pData));
                     mqo.emit('publish', parsedData);
                     mqo.emit('message', parsedData.topic, parsedData.message);
                 }
@@ -249,8 +252,21 @@ MQTT.prototype.connect = function (client) {
             else if (type === TYPE.PUBCOMP) {
             }
             else if (type === TYPE.SUBACK) {
+                if(pData.length > 0)
+                {
+                  if(pData[pData.length - 1] == 0x80)
+                  {
+                    //console.log("Subscription failed");
+                    mqo.emit('subscribed_fail');
+                  } else {
+                    //console.log("Subscription succesfull");
+                    mqo.emit('subscribed');
+                  }
+                }
             }
             else if (type === TYPE.UNSUBACK) {
+                //console.log("Unsubscription succesful.");
+                mqo.emit('unsubscribed');
             }
             else if (type === TYPE.PINGREQ) {
                 client.write(fromCharCode(TYPE.PINGRESP << 4) + "\x00");
@@ -283,9 +299,7 @@ MQTT.prototype.connect = function (client) {
             }
             else {
                 mqo.emit('error', "MQTT unsupported packet type: " + type);
-                console.log("[MQTT]" + data.split("").map(function (c) {
-                        return c.charCodeAt(0);
-                    }));
+                //console.log("[MQTT]" + data.split("").map(function (c) { return c.charCodeAt(0); }));
             }
         });
 
