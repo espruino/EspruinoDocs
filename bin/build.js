@@ -383,7 +383,7 @@ markdownFiles.forEach(function (file) {
      for (i in contentLines) {
        var match = contentLines[i].match(regex);
        if (match!=null) {
-         var kws = match[1].toLowerCase().split(",");
+         var kws = match[1].toLowerCase().split(",").map(function(x){return x.trim();});
          var kw = kws[0];
          var links = [ ];
          if (infoList[kw]!=undefined) {
