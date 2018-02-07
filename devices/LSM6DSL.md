@@ -1,16 +1,16 @@
 <!--- Copyright (c) 2018 Joachim Klein. See the file LICENSE for copying permission. -->
-LSM6DSL
-=======
+LSM6DSL Accelerometer and 3D Gyroscope
+======================================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/LSM6DSL. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Shield, LSM6DSL, I2C, Gyro, Accelerometer, Sensor
+* KEYWORDS: Module,Shield,LSM6DSL,I2C,Gyro,Accelerometer,Gyroscope,Sensor
 
 This module is used to initialize and setup a STMicroelectronis LSM6DSL.
 For testing I used a NUCLEO-STM32F401 + X-NUCLEO-IKS01A2.  [LSM6DSL](/modules/LSM6DSL.js) 
 
 The IKDS01A1 shield includes the following sensors:
-* [LPS22HB](/modules/LPS22HB.js)  
+* [LPS22HB](/modules/LPS22HB.js)
 * [HTS221](/modules/HTS221.js)
 * [LSM6DSL](/modules/LSM6DSL.js)
 * LSM303AGR
