@@ -347,7 +347,7 @@ markdownFiles.forEach(function (file) {
    
    if (file.substr(-3)==".md") {
     var contentLines = contents.split("\n");
-     if (contentLines[3]!="" || contentLines[4].substr(0,6)!="<span " || contentLines[5]!="") {
+     if (contentLines[3].trim()!="" || contentLines[4].trim().substr(0,6)!="<span " || contentLines[5].trim()!="") {
        console.log("=============");
        console.log(JSON.stringify(contentLines[3]));
        console.log(JSON.stringify(contentLines[4]));
