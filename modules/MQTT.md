@@ -6,7 +6,7 @@ MQTT Client
 
 * KEYWORDS: Module,MQTT,protocol,client,Internet
 
-A very simple [MQTT](http://mqtt.org/) client implementation for Espruino. MQTT is a lightweight publish-subscribe protocol built for reliable machine-2-machine communication with a very small footprint. It provides efficient and robust communication mechanisms as well as QOS. This module only implements a subset of the MQTT protocol. As of now only QOS 0 (at most once) is truly supported. Encryption and authentication is not supported. The module has been tested with Mosquitto-1.3.5. Use the [MQTT](/modules/MQTT.js) ([About Modules](/Modules)) module for it.
+A simple [MQTT](http://mqtt.org/) client implementation for Espruino. MQTT is a lightweight publish-subscribe protocol built for reliable machine-2-machine communication with a very small footprint. It provides efficient and robust communication mechanisms as well as QOS. This module only implements a subset of the MQTT protocol. As of now only QOS 0 (at most once) is truly supported. Encryption and keys are not supported. The module has been tested with Mosquitto-1.3.5. Use the [MQTT](/modules/MQTT.js) ([About Modules](/Modules)) module for it.
 
 The module exports the function `create(server, options)` that returns a new MQTT object using the provided arguments. The server argument is the MQTT broker ip address, and options is an optional object that can used to pass non-default parameters - see the code below for the parameters and their options.
 
@@ -17,15 +17,15 @@ First off load the module and create a MQTT object using ```require("MQTT").crea
 
 ```js
   var server = "192.168.1.10"; // the ip of your MQTT broker
-  var options = { // all optional - the defaults are below
-    client_id : "random", // the client ID sent to MQTT - it's a good idea to define your own static one based on `getSerial()`
-    keep_alive: 60, // keep alive time in seconds
-    port: 1883, // port number
+  var options = { // ALL OPTIONAL - the defaults are below
+    client_id : "random",   // the client ID sent to MQTT - it's a good idea to define your own static one based on `getSerial()`
+    keep_alive: 60,         // keep alive time in seconds
+    port: 1883,             // port number
     clean_session: true,
-    username: "username", // default is undefined
-    password: "password",  // default is undefined
-    protocol_name: "MQTT", // or MQIsdp, etc..
-    protocol_level: 4, // protocol level
+    username: "username",   // default is undefined
+    password: "password",   // default is undefined
+    protocol_name: "MQTT",  // or MQIsdp, etc..
+    protocol_level: 4,      // protocol level
   };
   var mqtt = require("MQTT").create(server, options /*optional*/);
 
