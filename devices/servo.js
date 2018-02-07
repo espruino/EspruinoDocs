@@ -12,12 +12,17 @@ s.move(0.5, 3000); // move to position 0.5 over 3 seconds
 // move to position 0 over 1 second, then move to position 1
 s.move(0, 1000, function() {
   s.move(1, 1000);
-}); 
+});
 ```
 */
 
-exports.connect = function (pin) {
+exports.connect = function (pin,options) {
   var interval, currentPos;
+  var offs = 1, mul = 1;
+  if (options && options.range) {
+    mul = options.range;
+    offs = 1.5-(mul/2);
+  }
 
   return {move:function(pos, time, callback) {
     if (time===undefined) time = 1000;
@@ -34,7 +39,7 @@ exports.connect = function (pin) {
         if (callback) callback();
       }
       currentPos = pos*amt + initial*(1-amt);
-      digitalPulse(pin, 1, 1+E.clip(currentPos,0,1));
+      digitalPulse(pin, 1, offs+E.clip(currentPos,0,1)*mul);
       amt += 1000.0 / (20*time);
     }, 20);
   }};

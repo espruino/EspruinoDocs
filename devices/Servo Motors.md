@@ -20,9 +20,9 @@ Just take a power source (4xAA batteries, or a 3.7v LiPo battery) and connect ne
 For information on wiring up your Espruino Board for Servo Motors, see the [[Pin Strip]] page.
 
 Servo Motor Module
-----------
+------------------
 
-If you just want to move servo motors around in the simplest possible way, use the [[servo.js]] module. 
+If you just want to move servo motors around in the simplest possible way, use the [[servo.js]] module.
 
 Just use `require("servo").connect` with the pin the servo motor is attached to, and call `move` with a position between 0 and 1, and an optional parameter specifying the time taken to move, and another parameter that is a function to call when the movement is finished:
 
@@ -36,13 +36,20 @@ s.move(0.5, 3000); // move to position 0.5 over 3 seconds
 // move to position 0 over 1 second, then move to position 1
 s.move(0, 1000, function() {
   s.move(1, 1000);
-}); 
+});
 ```
+
+**Note:** By default the servo module limits the range of pulses to between 1ms and 2ms
+to avoid damage to your servo motor. This is what [Wikipedia](https://en.wikipedia.org/wiki/Servo_control) implies
+is the correct range. However some servo motors will accept a wider range of input
+pulses which will move the motor further. You can configure the servo module to
+output a range of 2ms using `require("servo").connect(C7,{range:2});`
+(which will output between 0.5ms and 2.5ms).
 
 The module will handle everything else, making sure that the Servo motor is not being continually pulsed when it has had time to reach the correct position.
 
-However there are other ways of controlling servos...
- 
+There are other ways of controlling servos...
+
 Simple Control
 ------------
 
@@ -76,7 +83,7 @@ You can also stop sending the servo commands with:
 
 ```JavaScript
 clearInterval(interval)
-``` 
+```
 
 Moving Automatically
 ------------------
@@ -113,7 +120,7 @@ setServo(A1, 0.5); // set servo connected to A1 to the halfway position
 
 Note that some pins don't have hardware timers on them. You can find which ones do by typing: 'analogWrite()'
 
-Using 
+Using
 -----
 
 * APPEND_USES: Servo Motor
