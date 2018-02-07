@@ -297,7 +297,8 @@ function turnOn(mode, callback) {
   }
 }
 
-function turnOff(mode) {
+function turnOff(mode, callback) {
+  callback = callback||function(){};
   wifiMode &= ~mode;
   if (!wifiMode) {
     WIFI_SERIAL.removeAllListeners();
@@ -305,8 +306,9 @@ function turnOff(mode) {
     exports.at = undefined;
     digitalWrite(WIFI_CHPD, 0); // turn off Wifi
     socks = []; // force close of all sockets
+    setTimeout(callback,1);
   } else {
-    changeMode(function(){}, null);
+    changeMode(callback, null);
   }
 }
 
@@ -330,8 +332,8 @@ exports.connect = function(apName, options, callback) {
 
 /** Disconnect from the WiFi network and power down the
 ESP8266. */
-exports.disconnect = function() {
-  turnOff(MODE.CLIENT);
+exports.disconnect = function(callback) {
+  turnOff(MODE.CLIENT, callback);
 };
 
 /* Create a WiFi access point allowing stations to connect.
@@ -365,8 +367,8 @@ exports.startAP = function(ssid, options, callback) {
 
 /* Stop being an access point and disable the AP operation mode.
    AP mode can be re-enabled by calling startAP. */
-exports.stopAP = function() {
-  turnOff(MODE.AP);
+exports.stopAP = function(callback) {
+  turnOff(MODE.AP, callback);
 };
 
 /* Scan for access points, and call the callback(err, result) with
@@ -407,7 +409,7 @@ exports.getIP = function(callback) {
 /* Set WiFi station IP address. Call with
 either: wifi.setAPIP(undefined, callback) // enable DHCP (the default) - can take a few seconds to complete
 either: wifi.setAPIP({ip:"192.168.1.9"}, callback) // disable DHCP, use static IP
-or: wifi.setIP({ip:"192.168.1.9", gateway:"192.168.1.1", netmask:"255.255.255.0"}, callback) // disable DHCP, use static IP
+or: wifi.setIP({ip:"192.168.1.9", gw:"192.168.1.1", netmask:"255.255.255.0"}, callback) // disable DHCP, use static IP
 You must be connected to an access point to be able to call this successfully
 */
 exports.setIP = function(settings, callback) {
@@ -417,8 +419,8 @@ exports.setIP = function(settings, callback) {
     timeout = 20000;
   } else {
     var args = [JSON.stringify(settings.ip)];
-    if (settings.gateway) {
-      args.push(JSON.stringify(settings.gateway));
+    if (settings.gw) {
+      args.push(JSON.stringify(settings.gw));
       args.push(JSON.stringify(settings.netmask||"255.255.255.0"));
     }
     cmd = "AT+CIPSTA_CUR="+args.join(",")+"\r\n";
@@ -430,7 +432,7 @@ exports.setIP = function(settings, callback) {
   });
 };
 
-/* Calls the callback with {ip,gateway,netmask,mac} of the WiFi Access Point.
+/* Calls the callback with {ip,gw,netmask,mac} of the WiFi Access Point.
 You must be in AP mode with startAP to get useful values returned. */
 exports.getAPIP = function(callback) {
   var ip = {};
@@ -448,6 +450,7 @@ exports.getAPIP = function(callback) {
     }
     if (d.substr(0,10)=="+CIPAP_CUR") {
       d = d.split(":");
+      if (d[1]=="gateway")d[1]=="gw";
       ip[d[1]] = JSON.parse(d[2]);
     }
     return cb;
@@ -456,13 +459,13 @@ exports.getAPIP = function(callback) {
 
 /* Set WiFi access point details. Call with
 either: wifi.setAPIP({ip:"192.168.1.1"}, callback)
-or: wifi.setAPIP({ip:"192.168.1.1", gateway:"192.168.1.1", netmask:"255.255.255.0"}, callback)
+or: wifi.setAPIP({ip:"192.168.1.1", gw:"192.168.1.1", netmask:"255.255.255.0"}, callback)
 You must be in AP mode with startAP to be able to call this successfully
 */
 exports.setAPIP = function(settings, callback) {
   var args = [JSON.stringify(settings.ip)];
-  if (settings.gateway) {
-    args.push(JSON.stringify(settings.gateway));
+  if (settings.gw) {
+    args.push(JSON.stringify(settings.gw));
     args.push(JSON.stringify(settings.netmask||"255.255.255.0"));
   }
   at.cmd("AT+CIPAP_CUR="+args.join(",")+"\r\n", 3000, function(d) {
@@ -491,9 +494,13 @@ exports.ping = function(addr, callback) {
   });
 };
 
-/* Switch to a higher communication speed with WiFi, with flow control.
-true=921600, false=115200, or a number=use that baud rate.
-eg. wifi.turbo(true,callback) or wifi.turbo(1843200,callback) */
+/* Switch to using a higher communication speed with the WiFi module.
+
+* `true` = 921600 baud
+* `false` = 115200
+* `1843200` (or any number) = use a specific baud rate.
+*
+eg. `wifi.turbo(true,callback)` or `wifi.turbo(1843200,callback)` */
 exports.turbo = function(enable, callback) {
   var newbaud = enable ? ((enable===true)?921600:enable) : 115200;
   at.cmd('AT+UART_CUR='+newbaud+',8,1,0,2\r\n',500,function(d) {

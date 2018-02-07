@@ -56,13 +56,13 @@ Using WiFi
 
 ### Connecting to an AP
 
-To use wifi, simply require the EspruinoWiFi module and call `connect`:
+To use wifi, simply require the `Wifi` module and call `connect`:
 
 ```
 var WIFI_NAME = "";
 var WIFI_OPTIONS = { password : "" };
 
-var wifi = require("EspruinoWiFi");
+var wifi = require("Wifi");
 wifi.connect(WIFI_NAME, WIFI_OPTIONS, function(err) {
   if (err) {
     console.log("Connection error: "+err);
@@ -93,7 +93,7 @@ var WIFI_OPTIONS = { password : "" };
 var wifi;
 
 function onInit() {
-  wifi = require("EspruinoWiFi");
+  wifi = require("Wifi");
   wifi.connect(WIFI_NAME, WIFI_OPTIONS, function(err) {
     if (err) {
       console.log("Connection error: "+err);
@@ -110,7 +110,7 @@ function onInit() {
 Espruino WiFi can be made into a WiFi access point with:
 
 ```
-var wifi = require("EspruinoWiFi");
+var wifi = require("Wifi");
 
 wifi.startAP('EspruinoAP', { password: '0123456789', authMode: 'wpa2' }, function(err) {
   if (err) throw err;
@@ -133,11 +133,15 @@ wifi.on('disconnected',function() { console.log("We disconnected"); });
 Reference
 ---------
 
-Espruino WiFi's `EspruinoWiFi` module (code library) is designed to look and behave almost the same as the [ESP8266 native `WiFi` module](http://www.espruino.com/Reference#Wifi).
-However *you can't use the `WiFi` module directly*, for example by using `require("WiFi")`. You will be able to it future firmware versions, however for now you must use `require("EspruinoWiFi")`.
+On Espruino firmwares version 1v96 and later, WiFi functionality is now
+built in via the [`Wifi` module](http://www.espruino.com/Reference#Wifi)
+accessed with `require("Wifi")`.
+
+On earlier (pre-1v96) versions of the Espruino WiFi firmware, WiFi functionality
+was implemented with the `EspruinoWiFi` JS module which is accessed with
+`require("EspruinoWiFi")`.
 
 * APPEND_JSDOC: ../devices/EspruinoWiFi.js
-
 
 
 Tutorials
