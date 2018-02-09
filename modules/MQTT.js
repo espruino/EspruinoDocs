@@ -111,18 +111,17 @@ function mqttPacket(cmd, variable, payload) {
 }
 
 /** PUBLISH packet parser - returns object with topic and message */
-function parsePublish(data) {
-    if (data.length >= 3 && typeof data !== "undefined") {
-        var cmd = data.charCodeAt(0);
+function parsePublish(cmd,data) {
+    if (data.length >= 2 && typeof data !== "undefined") {
         var qos = (cmd & 0x6) >> 1;
-        var topic_len = data.charCodeAt(1) << 8 | data.charCodeAt(2);
-        var msg_start = 3 + topic_len + (qos?2:0); // skip message ID if QoS!=0
+        var topic_len = data.charCodeAt(0) << 8 | data.charCodeAt(1);
+        var msg_start = 2 + topic_len + (qos?2:0); // skip message ID if QoS!=0
         return {
-            topic  : data.substr(3, topic_len),
+            topic  : data.substr(2, topic_len),
             message: data.substr(msg_start, data.length - msg_start),
             dup    : (cmd & 0x8) >> 3,
             qos    : qos,
-            pid    : qos?data.substr(3+topic_len,2):0,
+            pid    : qos?data.substr(2+topic_len,2):0,
             retain : cmd & 0x1
         };
     }
@@ -232,7 +231,7 @@ MQTT.prototype.connect = function (client) {
             if (type !== TYPE.PINGRESP) pinger();
 
             if (type === TYPE.PUBLISH) {
-                var parsedData = parsePublish(data.charAt(0) + pData);
+                var parsedData = parsePublish(data[0],pData);
                 if (parsedData !== undefined) {
                     if(parsedData.qos)
                       client.write(fromCharCode(((parsedData.qos == 1)?TYPE.PUBACK:TYPE.PUBREC) << 4) + "\x02" + parsedData.pid);
