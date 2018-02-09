@@ -77,6 +77,7 @@ function mqttStr(s) {
     return fromCharCode(s.length >> 8, s.length & 255) + s;
 }
 
+
 /** MQTT packet length formatter - algorithm from reference docs */
 function mqttPacketLength(length) {
     var encLength = '';
@@ -97,13 +98,12 @@ function mqttPacketLengthDec(length) {
     var mul = 1;
     var bytes = 0;
     var decL = 0;
-    do {
-        var lb = (length.charCodeAt(bytes++));
+    var lb = 128;
+    while ((bytes < 5) && (lb & 128)) {
+        lb = (length.charCodeAt(bytes++));
         decL += mul * (lb & 127);
-        mul *= 128;
-        if (mul > 2097152) return 0;
-        if ((lb & 128) === 0) break;
-    } while (bytes < 5);
+        mul *= 128;        
+    }
     return {"decLen": decL, "lenBy": bytes};
 }
 

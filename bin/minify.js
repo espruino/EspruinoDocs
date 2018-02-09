@@ -29,8 +29,10 @@ if (!advancedOptimisation) {
 
 // Now send to closure compiler
 
+var compilation_level = advancedOptimisation ? 'ADVANCED_OPTIMIZATIONS' : 'SIMPLE_OPTIMIZATIONS';
+console.log("compilation_level =",compilation_level);
 // Couldn't use querystring library because of the multiple existence of 'output_info'.
-var post_data = encodeURIComponent( 'compilation_level' ) + '=' + encodeURIComponent( advancedOptimisation ? 'ADVANCED_OPTIMIZATIONS' : 'SIMPLE_OPTIMIZATIONS' )
+var post_data = encodeURIComponent( 'compilation_level' ) + '=' + encodeURIComponent( compilation_level )
     + '&output_format=json'
     + '&output_info=compiled_code'
     + '&output_info=errors'
