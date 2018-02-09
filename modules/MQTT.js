@@ -95,15 +95,13 @@ function mqttPacketLength(length) {
 
 /** MQTT packet length decoder - algorithm from reference docs */
 function mqttPacketLengthDec(length) {
-    var mul = 1;
     var bytes = 0;
     var decL = 0;
-    var lb = 128;
-    while ((bytes < 5) && (lb & 128)) {
-        lb = (length.charCodeAt(bytes++));
-        decL += mul * (lb & 127);
-        mul *= 128;        
-    }
+    var lb = 0;
+    do {
+      lb = length.charCodeAt(bytes);
+      decL |= (lb & 127) << (bytes++*7);
+    } while ((lb & 128) && (bytes < 4))
     return {"decLen": decL, "lenBy": bytes};
 }
 
@@ -119,7 +117,7 @@ function parsePublish(data) {
         var topic_len = data.charCodeAt(1) << 8 | data.charCodeAt(2);
         return {
             topic  : data.substr(3, topic_len),
-            message: data.substr(3 + topic_len + 2, data.length - topic_len - 5),
+            message: data.substr(3 + topic_len, data.length - topic_len - 3),
             dup    : (cmd & 0x8) >> 3,
             qos    : (cmd & 0x6) >> 1,
             retain : cmd & 0x1
