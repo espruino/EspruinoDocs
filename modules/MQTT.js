@@ -114,12 +114,15 @@ function mqttPacket(cmd, variable, payload) {
 function parsePublish(data) {
     if (data.length >= 3 && typeof data !== "undefined") {
         var cmd = data.charCodeAt(0);
+        var qos = (cmd & 0x6) >> 1;
         var topic_len = data.charCodeAt(1) << 8 | data.charCodeAt(2);
+        var msg_start = 3 + topic_len + (qos?2:0); // skip message ID if QoS!=0
         return {
             topic  : data.substr(3, topic_len),
-            message: data.substr(3 + topic_len, data.length - topic_len - 3),
+            message: data.substr(msg_start, data.length - msg_start),
             dup    : (cmd & 0x8) >> 3,
-            qos    : (cmd & 0x6) >> 1,
+            qos    : qos,
+            pid    : qos?data.substr(3+topic_len,2):0,
             retain : cmd & 0x1
         };
     }
@@ -146,7 +149,7 @@ function mqttPid() {
 
 /** Get PID from message */
 function getPid(data) {
-    return fromCharCode(data.charCodeAt(0)) + fromCharCode(data.charCodeAt(1));
+    return data.substr(0,2);
 }
 
 /** PUBLISH control packet */
@@ -231,10 +234,8 @@ MQTT.prototype.connect = function (client) {
             if (type === TYPE.PUBLISH) {
                 var parsedData = parsePublish(data.charAt(0) + pData);
                 if (parsedData !== undefined) {
-                    if(parsedData.qos == 1)
-                      client.write(fromCharCode(TYPE.PUBACK << 4) + "\x02" + getPid(pData));
-                    else if(parsedData.qos == 2)
-                      client.write(fromCharCode(TYPE.PUBREC << 4) + "\x02" + getPid(pData));
+                    if(parsedData.qos)
+                      client.write(fromCharCode(((parsedData.qos == 1)?TYPE.PUBACK:TYPE.PUBREC) << 4) + "\x02" + parsedData.pid);
                     mqo.emit('publish', parsedData);
                     mqo.emit('message', parsedData.topic, parsedData.message);
                 }
