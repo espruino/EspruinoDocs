@@ -13,6 +13,7 @@ setInterval(function() {
 */
 exports.connect = function(/*=PIN*/trig, /*=PIN*/echo, callback) {
   var riseTime = 0;
+  trig.reset(); // lower the trigger, as it would have been floating
   setWatch(function(e) { // check for rising edge
     riseTime=e.time;
   }, echo, { repeat:true, edge:'rising'  });
