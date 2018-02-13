@@ -97,7 +97,7 @@ FlashEEPROM.prototype._write = function(n, addr, data) {
   this.flash.write(new Uint8Array([addr, data.length, data.length>>8, 0]), n);
   // write data
   n+=4;
-  if (data.length % 4) {
+  if (data.length & 3) {
     var d = new Uint8Array((data.length+3)&~3);
     d.set(data);
     data = d;
