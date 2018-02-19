@@ -44,8 +44,8 @@ on how to enable it.
 
 The Web IDE is available as:
 
-* [Download for Windows 32 bit - 0.68.5](/files/espruino_ide_win32_0v68.5.exe)
-* [Download for Windows 64 bit - 0.68.5](/files/espruino_ide_win64_0v68.5.exe)
+* [Download for Windows 32 bit - 0.68.6](/files/espruino_ide_win32_0v68.6.exe)
+* [Download for Windows 64 bit - 0.68.6](/files/espruino_ide_win64_0v68.6.exe)
 
 #### For Windows 8.1 and later
 
