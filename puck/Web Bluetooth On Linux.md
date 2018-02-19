@@ -12,13 +12,42 @@ and see which version of Bluez you have - then follow the
 correct set of instructions below:
 
 
-Bluez >= 5.41: Ubuntu 16.10 and newer
+Bluez 5.41 and later: Ubuntu 16.10 and newer
 ---------------------------------------
 
 Bluetooth *may* work out of the box - try following the [Web Bluetooth getting
 started code](/Puck.js Quick Start) and see if it works.
 
-However, on Bluez 5.41 you still need to enable the Experimental flags. Edit
+If it doesn't we'd recommend installing the latest Bluez version as it seems
+significantly more reliable, but Bluez 5.41 can still work with Web Bluetooth.
+See the headings below in either case...
+
+
+Recommended - Install latest Bluez from Debian
+----------------------------------------------
+
+This advice originally [came from here](https://gist.github.com/MichaelLawton/a56371969a18d2f735a77ed1ac4b5512).
+You can also compile from source as well (see below), but this method is very easy if you have Debian, Ubuntu ot Linux Mint.
+
+Look in the Debian package repository or the latest version of Bluez:
+
+* Go to http://ftp.debian.org/debian/pool/main/b/bluez/
+* Look a filename of the form `bluez_*_amd64.deb` (or whatever your platform is)
+and download it. As of writing this is `bluez_5.47-1+b1_amd64.deb`
+* Bluez needs a later version of libreadline too, so look in http://ftp.debian.org/debian/pool/main/r/readline/
+* Find a file of the form `	libreadline*_amd64.deb` and download it. As of writing it is `libreadline7_7.0-3_amd64.deb`
+* Install `libreadline` with `sudo dpkg -i libreadline7_7.0-3_amd64.deb`
+* Install `bluez` with `sudo dpkg -i bluez_5.47-1+b1_amd64.deb`
+* Restart `bluetoothd` with `sudo /etc/init.d/bluetooth restart`
+
+And you're done!
+
+
+Bluez 5.41
+----------
+
+Bluez 5.41 comes installed by default on a few systems now and does work,
+however you still need to enable the Experimental flags. Edit
 the Bluetooth config and add the experimental flag there:
 
 ```
@@ -47,11 +76,11 @@ sudo systemctl restart bluetooth
 (Originally from [Adafruit](https://learn.adafruit.com/install-bluez-on-the-raspberry-pi/installation))
 
 
-Bluez < 5.41: Ubuntu 16.04, Mint 18 and older
--------------------------------------------------
+Installing latest Bluez from Source (Bluez before 5.41)
+--------------------------------------------------
 
 **Note:** Alan Assis worked this out and documented it [here](https://acassis.wordpress.com/2016/06/28/how-to-get-chrome-web-bluetooth-working-on-linux/).
-All I've done is tweak it slightly to use a newer bluez (and to modify things that didn't work for me)
+All I've done is tweak it slightly to use a newer bluez
 
 **Note 2:** Ubuntu 16.10 comes with `bluez` 5.41 already, but the experimental interface flag is needed for this version. This means you'll have to build it again with the appropriate flag.
 
