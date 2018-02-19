@@ -128,6 +128,11 @@ var AtInitSequence = {
   AT_CURRENT_OPERATOR: 9,
   AT_HW_FLOW_CONTROL: 10,
 };
+
+/* TimeOut Id for the send procedure */
+var idWaitingPrompt = 0;
+var idWaitingModemRsp = 0;
+
 /*
 openSocket is triggered at the socket creation, as earlier as possible.
 Nevertheless, this function can be delayed to enter in secure mode (since using of encrypted keys can take time in mbed )
@@ -135,11 +140,31 @@ In case of failure with Error code "socket connect failed", try and repeat 5 tim
 */
 function openSocket(sckt, host, port, counter) {
 
+  /* 2nd solution (to avoid the opening of a socket while either a AT response or a sending is being processed */
+  if (busy) {
+    if (dbg) console.log("Opening is not yet possible, busy state on socket " + sckt);
+    if (counter < 5) {
+      setTimeout(function cb(){console.log("opening later..."); openSocket(sckt, host, port, counter+1);}, 500);
+    } else {
+      if (dbg) console.log("Force the closure of socket " + sckt);
+      socks[sckt] = "tobeclosed";
+    }
+  } else if (at.isBusy()) {
+    if (dbg) console.log("Opening is not yet possible, AT busy state on socket " + sckt);
+    if (counter < 5) {
+      setTimeout(function cb(){console.log("opening later..."); openSocket(sckt, host, port, counter+1);}, 500);
+    } else {
+      if (dbg) console.log("Force the closure of socket " + sckt);
+      socks[sckt] = "tobeclosed";
+    }
+  } else {
   if (dbg) console.log('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1');
 
-  at.cmd('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1\r\n',150000, function cb(d) {
+  at.cmd('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1\r\n',15000, function cb(d) {
     if (d=="OK") {
       if (dbg) console.log("AT+QIOPEN OK");
+      if (dbg) console.log("EXPECTING FOR +QIOPEN: <connectID>,<err>");
+      // waiting for +QIOPEN: <connectID>,<err>
       return cb;
     } else if (d=='+QIOPEN: '+sckt+",0") {
       if (dbg) console.log(d);
@@ -148,31 +173,40 @@ function openSocket(sckt, host, port, counter) {
       return "";
     } else if (d=='+QIOPEN: '+sckt+",565") {
       if (dbg) console.log("AT+QIOPEN failure DNS parse failed...");
-      socks[sckt] = "tobeclosed";
+      if (counter < 5) {
+        setTimeout(function cb(){console.log("repeat opening the socket ..."); openSocket(sckt, host, port,(counter+1));}, 1000);
+      } else {
+        if (dbg) console.log("Force the closure of socket " + sckt);
+        socks[sckt] = "tobeclosed";
+      }
       return "";
     } else if (d=='+QIOPEN: '+sckt+",566") {
       if (dbg) console.log("AT+QIOPEN failure could not connect socket ...");
 	    if (counter < 5) {
 	      setTimeout(function cb(){console.log("repeat opening the socket ..."); openSocket(sckt, host, port,(counter+1));}, 3000);
 	    } else {
+          if (dbg) console.log("Force the closure of socket " + sckt);
           socks[sckt] = "tobeclosed";
         }
       return "";
     } else if (d=='+QIOPEN: '+sckt+",563") {
       if (dbg) console.log("AT+QIOPEN socket identity has been used..., socket is:" + sckt);
-      socks[sckt] = true;
+      //socks[sckt] = true;
+      socks[sckt] = "tobeclosed";
       return "";
     } else {
       if (dbg) console.log("AT+QIOPEN failed on socket:" + sckt);
-      if (dbg) {
+      /*if (dbg) {
         at.cmd("AT+QIGETERROR\r\n",1000, function cb(d) {
           if (dbg) console.log(d);
         });
-      }
+      }*/
+      //if (dbg) console.log("Force the closure of socket " + sckt);
       socks[sckt] = "tobeclosed";
       return "";
     }
   });
+  }
 }
 
 /*
@@ -192,24 +226,54 @@ In this last case, either a new closing is initiated (remote if first attemps wa
 or triggered from this module when data buffer is emptied
 - Mark this socket as tobeclosed, will be closed when data buffer emptied
 */
-function closeSocket(socket) {
+function closeSocket(socket, counter) {
   if(socks[socket]) {
-    if (busy) {
+    if ((sockData[socket].length > 0) && (counter < 5)) {
+      console.log("socket " + socket + " is emptying...");
+      setTimeout(function cb(){console.log("closing later..."); closeSocket(socket, (counter+1));}, 500);
+	} else if (busy) {
       if (dbg) console.log("at register currenly programmed");
-      setTimeout(function cb(){console.log("closing later..."); closeSocket(socket);}, 1500);
+      if (counter < 5) {
+        setTimeout(function cb(){console.log("closing later..."); closeSocket(socket, (counter+1));}, 500);
+      } else {
+        if (dbg) console.log("several busy situation on socket " + socket);
+        socks[socket] = undefined;
+      }
     } else if (at.isBusy()){
       if (dbg) console.log("AT busy");
-      setTimeout(function cb(){console.log("closing again..."); closeSocket(socket);}, 1500);
+      if (counter < 5) {
+        setTimeout(function cb(){console.log("closing again..."); closeSocket(socket, (counter+1));}, 500);
+      } else {
+        if (dbg) console.log("several AT busy situation on socket " + socket);
+        socks[socket] = undefined;
+      }
     } else {
       if (dbg) console.log("sending AT+QICLOSE for socket " + socket);
-      at.cmd('AT+QICLOSE='+socket+"\r\n",1000, function(d) {
-        if (dbg) console.log(d);
+      at.cmd('AT+QICLOSE='+socket+"\r\n",2000, function cb(d) {
+
+        /* case processing with no response (timeOut) */
+        if (d===undefined) {
+          if (counter < 5) {
+            setTimeout(function cb(){console.log("closing again..."); closeSocket(socket, (counter+1));}, 500);
+          } else {
+            if (dbg) console.log("cannot properly close socket " + socket);
+           socks[socket] = undefined;
+          }
+          return "";
+        }
+
+        /* case processing with a response */
+        //if (dbg) console.log(d);
         if (d=="OK") {
-          if (dbg) console.log("socket " + socket + " is closed");
+          if (dbg) console.log("socket " + socket + " is properly closed");
           socks[socket] = undefined;
+          return "";
         } else {
-          if (dbg) console.log("cannot close socket now" + socket +",error=" + d);
-          socks[socket] = "tobeclosed";
+          //if (dbg) console.log("cannot close now socket " + socket +",error=" + d);
+          if (dbg) console.log("socket " + socket + " is not yet closed");
+          //socks[socket] = "tobeclosed";
+          //socks[socket] = undefined;
+          return cb;
         }
       });
     }
@@ -221,23 +285,36 @@ function closeSocket(socket) {
 /*
 abortWaiting frees the registering (preventive)
 */
-function abortWaitingPrompt() {
-  console.log("Abort waiting prompt (for sending data)");
+function abortWaitingPrompt(socket) {
+  if (dbg) console.log("Abort waiting prompt (for sending data) on socket " + socket);
   busy = false;
+  idWaitingPrompt = 0;
+  if (idWaitingModemRsp) {
+    clearTimeout(idWaitingModemRsp);
+    idWaitingModemRsp = 0;
+    at.unregisterLine('SEND OK');
+    at.unregisterLine('SEND FAIL');
+    at.unregisterLine('ERROR');
+  }
   at.unregister('>');
+  socks[socket]="tobeclosed";
 }
 
-function abortWaitingModemRsp() {
-  console.log("Abort waiting modem response (sending data)");
+function abortWaitingModemRsp(socket) {
+  if (dbg) console.log("Abort waiting modem response (sending data) on socket " + socket);
+  if (dbg) console.log("idWaitingModemRsp = " + idWaitingModemRsp);
   busy = false;
+  idWaitingModemRsp = 0;
   at.unregisterLine('SEND OK');
   at.unregisterLine('SEND FAIL');
   at.unregisterLine('ERROR');
+  socks[socket]="tobeclosed";
 }
 
 var netCallbacks = {
   create: function(host, port) {
     var sckt = 0;
+
     /* Create a socket and return its index, host is a string, port is an integer.
     If host isn't defined, create a server socket */
     if (host===undefined) {
@@ -259,11 +336,8 @@ var netCallbacks = {
       if (sckt>=MAXSOCKETS) //throw new Error('No free sockets.')
 	  {
         if (dbg) console.log("WORKAROUND closing the socket: " + sckt);
-		sckt--;
-		at.cmd('AT+QICLOSE='+sckt+"\r\n",1000, function(d) {
-		if (dbg) console.log(d);
-        socks[sckt] = undefined;
-		});
+        sckt--;
+        closeSocket(sckt, 0);
 	  }
 
       socks[sckt] = "Wait";
@@ -275,13 +349,15 @@ var netCallbacks = {
       } else {
         openSocket(sckt, host, port,0);
       }
+
+      if (dbg) console.log("(create) sckt " + sckt + " state = " + socks[sckt]);
     }
     return sckt; // jshint ignore:line
   },
   /* Close the socket. returns nothing */
   close: function(sckt) {
     if (dbg) console.log("(local) Closing of the socket: " + sckt);
-    closeSocket(sckt);
+    closeSocket(sckt, 0);
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
   accept: function(sckt) {
@@ -326,17 +402,25 @@ var netCallbacks = {
 
     busy = true;
 
-    var idWaitingPrompt = setTimeout(function(){abortWaitingPrompt()},1000);
+    idWaitingModemRsp = setTimeout(function(){abortWaitingModemRsp(sckt)},6000);
+    idWaitingPrompt = setTimeout(function(){abortWaitingPrompt(sckt)},5000);
+
+    if (dbg) console.log("idWaitingModemRsp = " + idWaitingModemRsp);
+    if (dbg) console.log("idWaitingPrompt = " + idWaitingPrompt);
+
 
     at.register('>', function() {
       if (dbg) console.log("Prompt coming, sending data ...");
       at.unregister('>');
+      if (dbg) console.log("idWaitingPrompt = " + idWaitingPrompt);
       clearTimeout(idWaitingPrompt);
+      idWaitingPrompt = 0;
+      if (dbg) console.log("writing data amount of " +data.length);
       at.write(data);
       return "";
     });
 
-    var idWaitingModemRsp = setTimeout(function(){abortWaitingModemRsp()},1000);
+    //idWaitingModemRsp = setTimeout(function(){abortWaitingModemRsp(sckt)},15000);
 
 	/* wait for the modem response */
     at.registerLine('SEND OK', function() {
@@ -345,36 +429,50 @@ var netCallbacks = {
       at.unregisterLine('SEND FAIL');
       at.unregisterLine('ERROR');
       clearTimeout(idWaitingModemRsp);
+      idWaitingModemRsp = 0;
       busy = false;
       return "";
     });
 
 	/* connection has been established but sending buffer is full */
 	/* wait for the modem response */
-     at.registerLine('SEND FAIL', function() {
+     at.registerLine('SEND FAIL', function(sckt) {
       if (dbg) console.log("UGxx - SEND FAIL");
       at.unregisterLine('SEND OK');
       at.unregisterLine('SEND FAIL');
       at.unregisterLine('ERROR');
       clearTimeout(idWaitingModemRsp);
+      idWaitingModemRsp = 0;
       busy = false;
-      socks[sckt]=="tobeclosed"
+      socks[sckt]="tobeclosed";
       return "";
     });
 
 	/* connection has not been established, abnormally closed, or parameter is incorrect */
-     at.registerLine('ERROR', function() {
+     at.registerLine('ERROR', function(sckt) {
       if (dbg) console.log("UGxx - ERROR communication");
+      if (idWaitingPrompt)
+      {
+        at.unregister('>');
+        clearTimeout(idWaitingPrompt);
+        idWaitingPrompt = 0;
+      }
       at.unregisterLine('SEND OK');
       at.unregisterLine('SEND FAIL');
       at.unregisterLine('ERROR');
       clearTimeout(idWaitingModemRsp);
+      idWaitingModemRsp = 0;
       busy = false;
-      socks[sckt]=="tobeclosed"
+      socks[sckt]="tobeclosed";
       return "";
     });
 
+    if (dbg) console.log("AT+QISEND="+sckt+","+data.length);
+
+    // Just write some data, don't wait for a response
     at.write('AT+QISEND='+sckt+','+data.length+'\r\n');
+    if (dbg) console.log("(send) sckt " + sckt + " state = " + socks[sckt]);
+    if (dbg) console.log("send " + data.length);
     return data.length;
   }
 };
@@ -413,9 +511,9 @@ function receiveHandler(line) {
   var len = line.length-(colon+2);
 
   if (len>=parms[1]) {
-   // we have everything
-	sockData[parms[0]] += line.substr(colon+2,parms[1]);
-
+    // we have everything
+    if (socks[parms[0]] == true)
+    sockData[parms[0]] += line.substr(colon+2,parms[1]);
 	return line.substr(colon+parms[1]+3); // return anything else
   } else {
 	 // still some to get - use getData to request a callback
@@ -480,7 +578,7 @@ function closehandler(line) {
 
   parms[1] = 0|parms[1];
 
-  closeSocket(parms[1]);
+  closeSocket(parms[1], 0);
   return ""
 }
 
@@ -507,8 +605,6 @@ function QindHandler(line) {
 
   //return "";
 
-  console.log('New QinHandler processing');
-
   var colon = line.indexOf("\r\n");
   var endstr = line.substr(colon,line.length);
   console.log(line.substr(colon,line.length));
@@ -525,8 +621,6 @@ function QusimHandler(line) {
 
   //return "";
 
-  console.log('New QusimHandler processing');
-
   var colon = line.indexOf("\r\n");
   var endstr = line.substr(colon,line.length);
   console.log(line.substr(colon,line.length));
@@ -539,8 +633,6 @@ function CfunHandler(line) {
   if (dbg) console.log('CfunHandler in: ' + line);
 
   // return "";
-
-  console.log('New CfunHandler processing');
 
   var colon = line.indexOf("\r\n");
   var endstr = line.substr(colon,line.length);
@@ -555,8 +647,6 @@ function RdyHandler(line) {
   if (dbg) console.log('RdyHandler in: ' + line);
 
   // return "";
-
-  console.log('New RdyHandler processing');
 
   var colon = line.indexOf("\r\n");
   var endstr = line.substr(colon,line.length);
@@ -819,7 +909,7 @@ var gprsFuncs = {
               s = AtInitSequence.AT_AUTOMATIC_OPERATOR_SELECTION;
               setTimeout(function(){at.cmd('AT+COPS=0\r\n', 180000, cb);},2000);
             } else if(attRetry<4) {
-              if (dbg) console.log("Retrying CGATT");
+              if (dbg) console.log("Retrying CGATT with retry " + attRetry);
               s = AtInitSequence.AT_PS_ATTACHMENT;
               if (dbg) console.log('PS attacment is attempting again. It may take until a minute, please wait ... ');
               setTimeout(function(){at.cmd('AT+CGATT=1\r\n', 75000, cb);},2000*attRetry);
