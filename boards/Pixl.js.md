@@ -21,6 +21,8 @@ is available to buy. This is expected to be at the beginning of April.
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+![Pixl.js](Pixl.js/back.jpg)
+
 Features
 --------
 
@@ -28,12 +30,12 @@ Features
 * Espruino JavaScript interpreter pre-installed
 * nRF52832 SoC - 64MHz ARM Cortex M4, 64kB RAM, 512kB Flash
 * 54mm diagonal, 128 x 64 Sunlight readable monochrome display with white backlight
-* 20 GPIO in Arduino footprint (capable of PWM, SPI, I2C, UART, Analog Input)
+* 20x GPIO in Arduino footprint (capable of PWM, SPI, I2C, UART, Analog Input)
 * Support for GSM, LTE, WiFi and Ethernet Arduino shields
 * 3v to 16v input range
 * CR2032 battery holder, or Micro USB (power only)
-* 4 3mm mounting holes
-* 4 Buttons
+* 4x 3mm mounting holes
+* 4x Buttons
 * Built in thermometer and battery level sensors
 * NFC tag programmable from JavaScript
-* Dimensions: 60mm, 53mm, 15mm
+* Dimensions: 60mm x 53mm x 15mm
