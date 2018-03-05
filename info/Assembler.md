@@ -45,13 +45,13 @@ This is handled as follows:
 
 **Note:**
 
-* This only works on ARM-based microcontrollers - ARM Thumb assembler will not work on ESP8266.
+* This only works on ARM-based microcontrollers - ARM Thumb assembler will not work on ESP8266/ESP32.
 * The assembler is only partially implemented so will only parse some opcodes at the moment. If you find something missing [please let us know!](https://github.com/espruino/EspruinoTools/issues)
-* If this is a bit hardcore for you, there's now the option of [Compiled JavaScript](/Compilation)
+* If this is a bit hardcore for you, there are now the options of [Compiled JavaScript](/Compilation) or [Inline C](/InlineC)
 
 For an ARM Thumb reference, [see this link](https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf)
 
-Argument Specifiers / Call Signature
+Argument Specifiers / Call Signature<a name="arguments"></a>
 --------------------------------
 
 The first argument of `E.asm` (and `E.nativeCall`) is the signature of the call, of the type:

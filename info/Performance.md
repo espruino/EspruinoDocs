@@ -8,14 +8,15 @@ Espruino Performance Notes
 
 Please see [[Internals]] for a more technical description of the interpreter's implementation.
 
-Espruino is designed to run on devices with very small amounts of RAM available (down to 8kB) *while still keeping a copy of the source code it is executing so you can edit it on the device*. As such, it makes some compromises that affect the performance in ways you may not expect.
+Espruino is designed to run on devices with very small amounts of RAM available (under 8kB) *while still keeping a copy of the source code so you can debug and edit on the device*. As such, it makes some compromises that affect the performance in ways you may not expect.
 
 **Is it too slow for you?**
 
-* Turn on pretokenisation with `E.setFlags({pretokenise:1})`
-* Use the Web IDE to [Compile JavaScript into optimised Thumb Code](/Compilation),
-* For the best speed use [Inline Assembler](/Assembler) instead
+JavaScript on Embedded devices will never be as efficient as compiled code, so we've made it easy for you to add extremely fast code *where it is needed*:
 
+* Use the Web IDE to [compile JavaScript into optimised Thumb Code](/Compilation)
+* Create functions with [Inline C](/InlineC) or [Inline Assembler](/Assembler)
+* Recompile the Espruino firmware [with your own C code](/Extending+Espruino+1)
 
 
 ESPRUINO EXECUTES CODE DIRECTLY FROM SOURCE
@@ -77,7 +78,7 @@ main:
 
 It's 270 bytes long. So you've saved 31 bytes over the original code, but now your code is totally uneditable and unreadable.
 
-If you compiled this into native code with the Espruino [Compiler](http://www.espruino.com/Compilation), the size of the binary would be 1136 bytes. 
+If you compiled this into native code with the Espruino [Compiler](http://www.espruino.com/Compilation), the size of the binary would be 1136 bytes.
 
 But what if you rewrote it in C and compiled it in GCC with size optimisation turned on. That'll be efficient, right?
 
@@ -128,7 +129,7 @@ Nope. 290 bytes.
 However, if you minified your code with the closure compiler you'd get:
 
 ```
-var a,b,c;for(b=0;32>b;b++){c="";for(a=0;32>a;a++){for(var 
+var a,b,c;for(b=0;32>b;b++){c="";for(a=0;32>a;a++){for(var
 d=0,e=0,f=0,g=4*a/32-2,h=4*b/32-2;8>f&4>d*d+e*e;)var k=d*d
 -e*e+g,e=2*d*e+h,d=k,f=f+1;c+=" *"[f&1]}print(c)};
 ```
@@ -143,12 +144,12 @@ It's editable, *just about* readable, and it's only 167 bytes - so *it is smalle
 | GCC Compiled C code (`-Os`) | 290 |
 | Minified JS | 167 |
 
-So by executing from source, we use around the same amount of memory as we would if we compiled or used bytecode, while still having everything we need to edit and debug the code on-chip. 
+So by executing from source, we use around the same amount of memory as we would if we compiled or used bytecode, while still having everything we need to edit and debug the code on-chip.
 
 However, if you need to make things smaller, you can minify the JavaScript functions you don't need to edit, which will use less RAM than even size-optimised C code!
 
 ### What does executing from source mean?
- 
+
 The size of your source code will affect the code execution speed.
 
 On the Espruino board a simple loop will create roughly a 4kHz square wave (so 4000 iterations of the loop per second) using code like this:
@@ -160,13 +161,13 @@ while (1) {A0.set();A0.reset();}
 While code like this will toggle a pin at around 3.5kHz.
 
 ```
-while (1) { A0.set();                 A0.reset();               } 
+while (1) { A0.set();                 A0.reset();               }
 ```
 
 This applies equally to comments - so it pays to keep comments above or below a function declaration or loop, not inside it.
 
 **Note:** You can turn on 'pretokenisation' with `E.setFlags({pretokenise:1})`.
-Any functions defined after pretokenisation is enables will have all whitespace 
+Any functions defined after pretokenisation is enabled will have all whitespace
 removed, and any tokens (such as `this`, `function`, `for`, etc) will be turned
 into numeric values. This means that the above (whitespace slowing down
 execution) will not apply - however your original code formatting will be lost,
@@ -210,7 +211,7 @@ array.forEach(function(data) {
 ```
 
 This sets `A0`..`A7`, but then sets `CLK` to `1`, and then to `0`.
- 
+
 
 
 ESPRUINO STORES NORMAL ARRAYS AND OBJECTS IN LINKED LISTS
@@ -239,19 +240,19 @@ or even (see below):
 ```
 myArray.forEach(digitalWrite.bind(null,[A0,A1,A2,A3]));
 ```
- 
+
 
 
 EVERY DATATYPE IN ESPRUINO IS BASED ON A SINGLE 16 BYTE STORAGE UNIT
 ------------------------------------------------------------
 
-This makes allocation and deallocation very fast for Espruino and avoids memory fragmentation. However, if you allocate a single boolean it will still take up 16 bytes of memory. 
+This makes allocation and deallocation very fast for Espruino and avoids memory fragmentation. However, if you allocate a single boolean it will still take up 16 bytes of memory.
 
 This may seem inefficient, but if you compare this with a naive malloc/free implementation you'll realise that it saves a significant amount of RAM.
 
 **Note:** on smaller devices (with less than 1024 variables) Espruino uses 12 bytes per storage unit (not 16).
 
- 
+
 
 ARRAYS AND OBJECTS USE TWO STORAGE UNITS PER ELEMENT (ONE FOR THE KEY, AND ONE FOR THE VALUE)
 ---------------------------------------------------------------------------------
@@ -265,7 +266,7 @@ If the name (index) of an element is a string that is greater than 10 characters
 * An integer index with a boolean value
 * An integer index with an integer value between -32768 and 32767 (on parts with 12 byte storage units, the range of allowable values may be less)
 * A short (4 chars or less) string index with an integer value between -32768 and 32767, eg `{ boom : 123 }`
- 
+
 You can check how many storage units a data structure is using up with [`E.getSizeOf(...)`](http://www.espruino.com/Reference#l_E_getSizeOf)
 
 
@@ -348,11 +349,11 @@ function go() {
 
 Because `counter` is further up the scope chain.
 
-`LED1.write(1)` is also slightly faster (~5%) than `digitalWrite(LED1,1)` because there is only 
+`LED1.write(1)` is also slightly faster (~5%) than `digitalWrite(LED1,1)` because there is only
 one global lookup for `LED1`. Once `LED1` is found, Espruino knows that it is a Pin, so only
 has to look within the Pin for the `write` method.
 
-Variables also take a little longer to find if their names are longer. You might want to 
+Variables also take a little longer to find if their names are longer. You might want to
 consider storing a function that you use a lot locally, for instance instead of:
 
 ```

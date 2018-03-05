@@ -10,7 +10,7 @@ Normally, when you upload code to Espruino it is executed straight from source -
 
 While this is fast enough for most things, occasionally you may need your code to run faster. Up until now you've had the option of writing [Inline Assembler](/Assembler), but now you can actually compile JavaScript directly into native code.
 
-**Note:** This is an online service that is only provided for [official STM32-based Espruino boards](/Order). It won't work on devices like ESP8266, and Bluetooth LE devices like [Puck.js](/Puck.js) don't currently support it because of bandwidth limitations during the initial connection procedure.
+**Note:** This is an online service that is only provided for [official Espruino boards](/Order). It won't work on devices like ESP8266 or ESP32.
 
 
 How do I use it?
@@ -111,13 +111,13 @@ function toggler() {
   // toggle B2 on and off 1 million times
   var cnt = 1000000;
   for (var i=0;i<cnt;i++) {
-    poke32(GPIOB, PIN2); // on 
+    poke32(GPIOB, PIN2); // on
     poke32(GPIOB, PIN2 << 16); // off
   }
 }
 ```
 
-For what to do on an **STM32F1**, take a look at the [[Assembler]] page. 
+For what to do on an **STM32F1**, take a look at the [[Assembler]] page.
 
 Direct access can be done with other peripherals as well - check out the reference manual for the MCU on your board for more information on which addresses to write to. The correct reference manual is linked from the [Pico Board](/Pico) and [Original Espruino Board](/EspruinoBoard) pages under the 'Information' heading.
 
