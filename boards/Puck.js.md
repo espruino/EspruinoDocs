@@ -4,7 +4,7 @@ Puck.js
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Espruino,Puck,Puckjs,Puck.js,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE
+* KEYWORDS: Espruino,Puck,Puckjs,Puck.js,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE
 
 ![Puck.js](Puck.js/board.jpg)
 
@@ -88,8 +88,8 @@ Other tutorials using Puck.js:
 
 * APPEND_USES: Puck.js
 
-Pinout
-------
+<a name="pinout"></a>Pinout
+---------------------------
 
 * APPEND_PINOUT: PUCKJS
 
@@ -104,6 +104,7 @@ Information
 * [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjs_brd.pdf)
 * [3D Case design files](https://github.com/espruino/EspruinoBoard/tree/master/Puck.js/case)
 * [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
+* [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
 
 
 On-board LEDs, Button and GPIO
@@ -241,8 +242,8 @@ Serial Console
 
 When power is first applied, Puck.js checks if pin `D28` is at 3.3v (which will be the
 case if it is connected to a Serial port's transmit line). If it is, it initialises
-the on-chip UART on `D28` (Puck.js RX) and `D29` (Puck.js TX) and puts the Puck.js
-console (REPL) on it.
+the on-chip UART on `D28` (Puck.js RX) and `D29` (Puck.js TX) and puts the Espruino
+console (REPL) on it at 9600 baud.
 
 To use it, connect to a 3.3v output USB to TTL converter as follows:
 
@@ -294,7 +295,7 @@ possible.
 Firmware Updates
 -----------------
 
-**Note:** Firmware 1v95 is known to have problems pairing and connecting to Windows 10 (all other platforms work fine). This will be fixed in 1v96, however if you are a Windows user we'd recommend staying with 1v94 until 1v96 is released.
+**Note:** Firmware 1v95 is known to have problems pairing and connecting to Windows 10 (all other platforms work fine). This is fixed in 1v96 and later, so we'd recommend that you always use the latest firmware.
 
 ### via nRF Toolbox App (Android & iOS)
 
@@ -308,7 +309,7 @@ Firmware Updates
 * If choosing the ZIP file opens the ZIP and displays files inside (it can do on some Android 7 devices) then hit back, long-press on the ZIP, and choose `Open` in the top right.
 * Tap `Select Device` and choose the device called `DfuTarg`
 * Now tap `Upload` and wait. The LED should turn blue and the DFU process will start - it will take around 90 seconds to complete
-* After completion, reset Puck.js while keeping the button held for around 10 seconds. The green LED should light, followed by all 3, then the red LED blinking 5 times. Release the button after the blinking has stopped - this will clear out any previously saved code and bonding data that could have caused problems with a new firmware version. 
+* After completion, reset Puck.js while keeping the button held for around 10 seconds. The green LED should light, followed by all 3, then the red LED blinking 5 times. Release the button after the blinking has stopped - this will clear out any previously saved code and bonding data that could have caused problems with a new firmware version.
 
 ### via nRF Connect App (Android)
 
@@ -320,7 +321,7 @@ Firmware Updates
 * Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Connect` app
 * It should show some Bluetooth devices, including one called `DfuTarg`
-* Click `Connect` to the right of `DfuTarg` 
+* Click `Connect` to the right of `DfuTarg`
 * Once connected, a `DFU` symbol in a circle will appear in the top right of the App
 * Click it, choose `Distribution Packet (ZIP)`, and your Download. If clicking on the downloaded zip file opens its contents (Android 7 may do this) then long-press on the zip and tap open instead.
 * The DFU process will start - it will take around 90 seconds to complete

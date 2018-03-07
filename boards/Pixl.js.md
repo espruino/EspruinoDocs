@@ -4,7 +4,7 @@ Pixl.js
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pixl.js. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Espruino,Pixl,Pixljs,Pixl.js,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Graphics
+* KEYWORDS: Espruino,Pixl,Pixljs,Pixl.js,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Graphics
 
 ![Pixl.js](Pixl.js/board.jpg)
 
