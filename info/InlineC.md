@@ -170,6 +170,7 @@ When you run this native function, the ARM processor in Espruino executes the co
 Caveats
 ------
 
-* Arithmetic with floats, doubles and uint64 can be problematic since it requires functions that won't be compiled.
+* Arithmetic with floats, doubles and uint64 may not work since it requires functions that won't be compiled in.
+* There is no C preprocessor - so `#define`/etc won't work
 * `Ctrl+C` and Exception handling won't work. If there's a loop in your compiled function then you'll only be able to break out of it by resetting the board.
 * The code that is sent to the Espruino board *is specific to that type of board and version of the Espruino firmware*. To use it on a different board you'll need to send it again using the Web IDE.
