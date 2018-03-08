@@ -54,6 +54,18 @@ python scripts/build_board_docs.py WIO_LTE pinout
 mv boards/WIO_LTE.html $DIR/html/boards
 cp boards/img/WIO_LTE.jpg $WEBSITE/www/img
 
+python scripts/build_board_docs.py MDBT42Q pinout
+mv boards/MDBT42Q.html $DIR/html/boards
+cp boards/img/MDBT42Q.jpg $WEBSITE/www/img
+
+python scripts/build_board_docs.py THINGY52 pinout
+mv boards/THINGY52.html $DIR/html/boards
+cp boards/img/THINGY52.jpg $WEBSITE/www/img
+
+python scripts/build_board_docs.py NRF52832DK pinout
+mv boards/NRF52832DK.html $DIR/html/boards
+cp boards/img/NRF52832DK.jpg $WEBSITE/www/img
+
 cd $DIR
 
 # Built reference docs and references.json
