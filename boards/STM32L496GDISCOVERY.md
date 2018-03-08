@@ -37,7 +37,7 @@ Getting Started
 ----------------
 
 * Plug the Discovery board in via the `USB STLINK` USB connector.
-* Go to http://www.espruino.com/binaries and download the latest file named `espruino_*v_stm32l496gdiscovery.bin`
+* Go to http://www.espruino.com/binaries and download the latest file named `espruino_*_stm32l496gdiscovery.bin`
 * Save it to the `DIS_L496ZG` drive that should have appeared on your computer and wait for the LEDs on the board to stop flashing
 
 And you're ready to go! Follow the [Getting Started Guide](/Quick+Start) for details

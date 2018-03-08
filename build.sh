@@ -66,6 +66,10 @@ python scripts/build_board_docs.py NRF52832DK pinout
 mv boards/NRF52832DK.html $DIR/html/boards
 cp boards/img/NRF52832DK.jpg $WEBSITE/www/img
 
+python scripts/build_board_docs.py STM32L496GDISCOVERY pinout
+mv boards/STM32L496GDISCOVERY.html $DIR/html/boards
+cp boards/img/STM32L496GDISCOVERY.jpg $WEBSITE/www/img
+
 cd $DIR
 
 # Built reference docs and references.json
