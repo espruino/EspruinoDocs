@@ -37,7 +37,8 @@ Getting Started
 ----------------
 
 * Plug the Discovery board in via the `USB STLINK` USB connector.
-* Go to http://www.espruino.com/binaries and download the latest file named `espruino_*_stm32l496gdiscovery.bin`
+* Go to http://www.espruino.com/binaries (or http://www.espruino.com/binaries/travis/master/
+  for the absolute latest builds) and download the latest file named `espruino_*_stm32l496gdiscovery.bin`
 * Save it to the `DIS_L496ZG` drive that should have appeared on your computer and wait for the LEDs on the board to stop flashing
 
 And you're ready to go! Follow the [Getting Started Guide](/Quick+Start) for details
@@ -54,5 +55,8 @@ Information
 
 <a name="pinout"></a>Pinout
 ---------------------------
+
+**Note:** All pins on Arduino headers are available via [the `Nucleo` object](http://www.espruino.com/Reference#Nucleo),
+eg. `Nucleo.A1`.
 
 * APPEND_PINOUT: STM32L496GDISCOVERY

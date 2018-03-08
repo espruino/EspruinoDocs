@@ -41,7 +41,8 @@ your device.
 * Pull off the Thingy:52 case
 * Attach the ribbon cable to the Thingy and to the `Debug Out` port on the nRF52 DK
 * Plug the nRF52 DK in and turn the Thingy:52 on
-* Go to http://www.espruino.com/binaries and download the latest file named `espruino_*_thingy52.hex`
+* Go to http://www.espruino.com/binaries (or http://www.espruino.com/binaries/travis/master/
+  for the absolute latest builds) and download the latest file named `espruino_*_thingy52.hex`
 * Save it to the `JLINK` drive that should have appeared on your computer and wait for the LEDs on the nRF52 DK to stop flashing
 * The red LED on the Thingy should flash to show Espruino has started. If it doesn't,
 power the Thingy off and back on.
