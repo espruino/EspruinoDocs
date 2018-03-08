@@ -48,10 +48,10 @@ This is the bare miniumum you'll need for a dashboard, so what does it all do?
 * The `<meta>` tag makes sure the page renders at a 640 pixel width on devices
 like phones and tablets. You can adjust this once you've figured out how wide
 you want your dashboard.
-* The single-line `<link>` and `<script>` tags bring in what we need for our dashboards and controlling Puck.js 
+* The single-line `<link>` and `<script>` tags bring in what we need for our dashboards and controlling Puck.js
 * The bigger `<script>` tag contains the code for our Dashboard elements. We'll stick
 all our elements in `elements` so we have an easy way to reference them - but you don't have
-to do this. 
+to do this.
 * `TD.label` creates a label component, and x, y, width and height are in pixels. For
  more types of component you can have in the dashboard, [take a look in tinydash.js](https://github.com/espruino/TinyDash/blob/master/tinydash.js)
 
@@ -66,7 +66,7 @@ via the Web IDE:
 
 ```
 // our historical data
-var history = new Int16Array(100); 
+var history = new Int16Array(100);
 
 // Get Data and store it in RAM
 function logData() {
@@ -77,14 +77,14 @@ function logData() {
 }
 
 // Start recording
-setInterval(logData, 1000); 
+setInterval(logData, 1000);
 ```
 
 It'll log a new temperature value to the `history` variable every second.
 
-Now, disconnect and update the Web Bluetooth page with what's below 
+Now, disconnect and update the Web Bluetooth page with what's below
 (or you can click `Try Me!` on the code snippet below).
-  
+
 ```HTML_demo_link
 <html>
  <head>
@@ -132,13 +132,13 @@ Now, disconnect and update the Web Bluetooth page with what's below
   </script>
  </body>
 </html>
-``` 
+```
 
 So how does this work?
 
 * First, we define all the dashboard components we want in `elements`.
-* At the end, we add `TD.modal`. This covers all the components and when clicked, 
-calls `connectDevice` to initiate the Web Bluetooth connection (for security a 
+* At the end, we add `TD.modal`. This covers all the components and when clicked,
+calls `connectDevice` to initiate the Web Bluetooth connection (for security a
 connection can't be made automatically in Web Bluetooth).
 * After a connection is made, we use `Puck.eval` to request the battery
 percentage, and then in a different request we get the entire contents of
@@ -161,7 +161,7 @@ For the example we'll use the same `Puck.light` function to get realtime
 light data, but have extended the Web Bluetooth example to output JSON
 so more information can be transferred at once if needed.
 
-```
+```HTML_demo_link
 <html>
  <head>
   <title>Dashboard</title>
@@ -189,7 +189,7 @@ so more information can be transferred at once if needed.
         alert("Couldn't connect!");
         return;
       }
-      connection = c; 
+      connection = c;
       // remove modal window
       elements.modal.remove();
       // Handle the data we get back, and call 'onLine'
@@ -216,7 +216,7 @@ so more information can be transferred at once if needed.
           }, 1500);
         });
       });
-   
+
   }
   // Set up the controls we see on the screen    
   var elements = {
