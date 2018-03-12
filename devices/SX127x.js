@@ -606,8 +606,8 @@ SX.prototype.setTxConfig = function( options ) {
   this.mask(REG.MODEMCONFIG2, RF.MODEMCONFIG2_SF_MASK & RF.MODEMCONFIG2_RXPAYLOADCRC_MASK,
             ( options.datarate << 4 ) | ( options.crcOn << 2 ) );
 
-  this.w( REG.PREAMBLEMSB, ( preambleLen >> 8 ) & 0x00FF );
-  this.w( REG.PREAMBLELSB, preambleLen & 0xFF );
+  this.w( REG.PREAMBLEMSB, ( options.preambleLen >> 8 ) & 0x00FF );
+  this.w( REG.PREAMBLELSB, options.preambleLen & 0xFF );
 };
 
 exports.connect = function(options) {
