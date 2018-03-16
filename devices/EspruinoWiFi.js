@@ -7,8 +7,8 @@ digitalWrite(WIFI_CHPD, 0); // make sure WiFi starts off
 var MODE = { CLIENT : 1, AP : 2 };
 var ENCR_FLAGS = ["open","wep","wpa_psk","wpa2_psk","wpa_wpa2_psk"];
 
-var wifiMode = 0;
-var connected = false;
+var wifiMode = 0; // Uses MODE enum
+var connected = 0; // Uses MODE enum
 var at;
 var socks = [];
 var sockUDP = [];
@@ -38,7 +38,7 @@ true              : connected and ready
 // -----------------------------------------------------------------------------------
 var netCallbacks = {
   create : function(host, port, type) {
-    //console.log("CREATE ",arguments);
+    //console.log("CREATE ",arguments,connected);
     if (!at || !connected) return -1; // disconnected
     /* Create a socket and return its index, host is a string, port is an integer.
     If host isn't defined, create a server socket */
@@ -262,9 +262,9 @@ function turnOn(mode, callback) {
     at.registerLine("2,CLOSED", sckClosed);
     at.registerLine("3,CLOSED", sckClosed);
     at.registerLine("4,CLOSED", sckClosed);
-    at.registerLine("WIFI CONNECTED", function() { connected = true; exports.emit("associated"); });
+    at.registerLine("WIFI CONNECTED", function() { connected != MODE.CLIENT; exports.emit("associated"); });
     at.registerLine("WIFI GOT IP", function() { exports.emit("connected"); });
-    at.registerLine("WIFI DISCONNECTED", function() { connected=false; exports.emit("disconnected"); });
+    at.registerLine("WIFI DISCONNECTED", function() { connected &= ~MODE.CLIENT; exports.emit("disconnected"); });
     exports.at = at;
     require("NetworkJS").create(netCallbacks);
     at.cmd("\r\nAT+RST\r\n", 10000, function cb(d) {
@@ -296,7 +296,6 @@ function turnOn(mode, callback) {
     changeMode(callback);
   }
 }
-
 function turnOff(mode, callback) {
   callback = callback||function(){};
   wifiMode &= ~mode;
@@ -360,7 +359,10 @@ exports.startAP = function(ssid, options, callback) {
     if (err) return callback(err);
     at.cmd("AT+CWSAP="+JSON.stringify(ssid)+","+JSON.stringify(options.password)+","+options.channel+","+enc+"\r\n", 5000, function(cwm) {
       if (cwm!="OK") callback("CWSAP failed: "+(cwm?cwm:"Timeout"));
-      else callback(null);
+      else {
+        connected |= MODE.AP;
+	callback(null);
+      }
     });
   });
 };
@@ -368,6 +370,7 @@ exports.startAP = function(ssid, options, callback) {
 /* Stop being an access point and disable the AP operation mode.
    AP mode can be re-enabled by calling startAP. */
 exports.stopAP = function(callback) {
+  connected &= ~MODE.AP;
   turnOff(MODE.AP, callback);
 };
 
