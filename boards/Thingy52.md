@@ -99,8 +99,19 @@ Thingy.onColor = function(callback) { ... }
 // Get one callback with a new color value `{r,g,b,c}`
 Thingy.getColor = function(callback) { ... }
 
+// Returns the state of the battery (immediately, or via callback) as { charging : bool, voltage : number }
+Thingy.getBattery = function(callback) { ... }
+
+// Make a simple beep noise. frequency in Hz, length in milliseconds. Both are optional.
+Thingy.beep = function(freq, length) { ... }
+
 // Play a sound, supply a string/uint8array/arraybuffer, samples per second, and a callback to use when done
+// This can play up to 3 sounds at a time (assuming ~4000 samples per second)
 Thingy.sound = function(waveform, pitch, callback) { ... }
+
+// Record audio for the given number of samples, at 8192kHz 8 bit.
+// This can then be fed into Thingy.sound(waveform, 8192). RAM is scarce, so realistically 1 sec is a maximum.
+exports.record = function(samples, callback) 
 ```
 
 You can also enable the graphical editor blocks for Thingy:52 in the Web IDE
