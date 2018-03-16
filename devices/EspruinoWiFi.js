@@ -262,7 +262,7 @@ function turnOn(mode, callback) {
     at.registerLine("2,CLOSED", sckClosed);
     at.registerLine("3,CLOSED", sckClosed);
     at.registerLine("4,CLOSED", sckClosed);
-    at.registerLine("WIFI CONNECTED", function() { connected != MODE.CLIENT; exports.emit("associated"); });
+    at.registerLine("WIFI CONNECTED", function() { connected |= MODE.CLIENT; exports.emit("associated"); });
     at.registerLine("WIFI GOT IP", function() { exports.emit("connected"); });
     at.registerLine("WIFI DISCONNECTED", function() { connected &= ~MODE.CLIENT; exports.emit("disconnected"); });
     exports.at = at;
@@ -520,6 +520,7 @@ exports.turbo = function(enable, callback) {
 exports.debug = function() {
   return {
     wifiMode : wifiMode,
+    connected : connected,
     socks : socks,
     sockData : sockData
   };
