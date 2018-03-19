@@ -49,6 +49,9 @@ at.cmd("AT+FOO\r\n", 1000, function cb(d) {
 
 // Are we waiting for the response to a command?
 if (at.isBusy()) ...
+
+// forward the next charCount characters received to the callback function
+at.getData(charCount, callback)
 ```
 
 Using
