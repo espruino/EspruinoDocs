@@ -17,12 +17,14 @@ Getting Started
 
 ### On the Espruino Pico/WiFi Boards
 
-Hold down the button, and then plug the board in while keeping it held (then release):
+Hold down the button, and then plug the board in while keeping it held (then release after connecting):
 
-* **If the Red and Green LEDs lit brightly for a fraction of a second, then they start 'pulsing'** everything is fine - you're now in bootloader mode
-* **If the Red LED flashes briefly when plugging in**, the button wasn't pressed, or isn't working.
+* **If Red and Green light brightly for a fraction of a second, then they start 'pulsing'** everything is fine - you're now in bootloader mode
+* **If Red flashes briefly when plugging in**, the button wasn't pressed, or isn't working.
 * **If nothing lights up at all**, there is a bad USB cable/connection, so no power
-* **If the Red and Green LEDs stay lit brightly** the bootloader has started, but no USB connection could be made. This could be due to a bad cable (try plugging the board in directly), or if that doesn't work it could be drivers - see the next troubleshooting headings.
+* **If Red and Green stay lit brightly** the bootloader has started, but no USB connection could be made. This could be due to a bad cable (try plugging the board in directly), or if that doesn't work it could be drivers - see the next troubleshooting headings.
+* **Green lights for a second, then red flashes and both go out** - the board has booted into Espruino without loading saved code. This happens when the button is held down for >2 secs after booting. To enter the bootloader, you need to release the button less than a second after applying power.
+
 
 ### On the Original Espruino Board
 
@@ -65,6 +67,12 @@ In order to stop this happening in the future, click 'Disconnect' before resetti
 ## In Windows, Espruino was working and now it won't connect
 
 See above.
+
+## I can't get my board into bootloader mode
+
+On official Espruino boards you enter bootloader mode by holding the button held down while resetting or powering them up.
+
+On any of the newer boards (WiFi, Puck.js, etc) holding the button down for longer than a second or two at boot will cause the board to exit the bootloader and enter Espruino without loading any of the code that you might have saved to Flash memory (to allow you to easily recover if you wrote code that you didn't intend to). As a result, to enter the bootloader you need to make sure that you release the button as soon after applying power (or resetting) as you can.
 
 
 ## I tried to reflash my Espruino Board, and now it won't work
@@ -198,9 +206,9 @@ To enter normal mode, just:
 
 Most likely this is because you're uploading code that is doing calculations
 that are taking a long time to finish - and so Espruino is unable to process
-the data that is being received quickly enough. 
+the data that is being received quickly enough.
 
-When you upload code to Espruino, it is executed as it is received (allowing 
+When you upload code to Espruino, it is executed as it is received (allowing
 you to upload more code than might otherwise fit into RAM).
 
 In many cases, you will actually want the code to run *at power on* rather
@@ -221,7 +229,7 @@ setTimeout(onInit, 1000);
 
 When saving, you may then want to remove the `setTimeout` line,
 upload, and then save (unless you're sure that calling `onInit` twice
-will not cause problems). See [the page on Saving](/Saving) for more 
+will not cause problems). See [the page on Saving](/Saving) for more
 information.
 
 
