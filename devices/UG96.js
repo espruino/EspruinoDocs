@@ -139,8 +139,6 @@ Nevertheless, this function can be delayed to enter in secure mode (since using 
 In case of failure with Error code "socket connect failed", try and repeat 5 times the openSocket
 */
 function openSocket(sckt, host, port, counter) {
-
-  /* 2nd solution (to avoid the opening of a socket while either a AT response or a sending is being processed */
   if (busy) {
     if (dbg) console.log("Opening is not yet possible, busy state on socket " + sckt);
     if (counter < 5) {
@@ -162,8 +160,7 @@ function openSocket(sckt, host, port, counter) {
 
   at.cmd('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1\r\n',15000, function cb(d) {
     if (d=="OK") {
-      if (dbg) console.log("AT+QIOPEN OK");
-      if (dbg) console.log("EXPECTING FOR +QIOPEN: <connectID>,<err>");
+      //if (dbg) console.log("AT+QIOPEN OK on socket" +sckt);
       // waiting for +QIOPEN: <connectID>,<err>
       return cb;
     } else if (d=='+QIOPEN: '+sckt+",0") {
@@ -182,16 +179,15 @@ function openSocket(sckt, host, port, counter) {
       return "";
     } else if (d=='+QIOPEN: '+sckt+",566") {
       if (dbg) console.log("AT+QIOPEN failure could not connect socket ...");
-	    if (counter < 5) {
-	      setTimeout(function cb(){console.log("repeat opening the socket ..."); openSocket(sckt, host, port,(counter+1));}, 3000);
-	    } else {
+        if (counter < 5) {
+          setTimeout(function cb(){console.log("repeat opening the socket ..."); openSocket(sckt, host, port,(counter+1));}, 3000);
+        } else {
           if (dbg) console.log("Force the closure of socket " + sckt);
           socks[sckt] = "tobeclosed";
         }
       return "";
     } else if (d=='+QIOPEN: '+sckt+",563") {
       if (dbg) console.log("AT+QIOPEN socket identity has been used..., socket is:" + sckt);
-      //socks[sckt] = true;
       socks[sckt] = "tobeclosed";
       return "";
     } else {
@@ -302,7 +298,6 @@ function abortWaitingPrompt(socket) {
 
 function abortWaitingModemRsp(socket) {
   if (dbg) console.log("Abort waiting modem response (sending data) on socket " + socket);
-  if (dbg) console.log("idWaitingModemRsp = " + idWaitingModemRsp);
   busy = false;
   idWaitingModemRsp = 0;
   at.unregisterLine('SEND OK');
@@ -405,22 +400,15 @@ var netCallbacks = {
     idWaitingModemRsp = setTimeout(function(){abortWaitingModemRsp(sckt)},6000);
     idWaitingPrompt = setTimeout(function(){abortWaitingPrompt(sckt)},5000);
 
-    if (dbg) console.log("idWaitingModemRsp = " + idWaitingModemRsp);
-    if (dbg) console.log("idWaitingPrompt = " + idWaitingPrompt);
-
-
     at.register('>', function() {
       if (dbg) console.log("Prompt coming, sending data ...");
       at.unregister('>');
-      if (dbg) console.log("idWaitingPrompt = " + idWaitingPrompt);
       clearTimeout(idWaitingPrompt);
       idWaitingPrompt = 0;
       if (dbg) console.log("writing data amount of " +data.length);
       at.write(data);
       return "";
     });
-
-    //idWaitingModemRsp = setTimeout(function(){abortWaitingModemRsp(sckt)},15000);
 
 	/* wait for the modem response */
     at.registerLine('SEND OK', function() {
@@ -512,9 +500,10 @@ function receiveHandler(line) {
 
   if (len>=parms[1]) {
     // we have everything
-    if (socks[parms[0]] == true)
-    sockData[parms[0]] += line.substr(colon+2,parms[1]);
-	return line.substr(colon+parms[1]+3); // return anything else
+    if (socks[parms[0]] == true) {
+      sockData[parms[0]] += line.substr(colon+2,parms[1]);
+    }
+    return line.substr(colon+parms[1]+3); // return anything else
   } else {
 	 // still some to get - use getData to request a callback
 	 sockData[parms[0]] += line.substr(colon+2,len);
@@ -706,7 +695,7 @@ var gprsFuncs = {
           else
           {
             if(r === 'OK') {
-              console.log("AT passed");
+              console.log("Synchronisation with module passed");
 
               s = AtInitSequence.AT_RSP_FORMAT;
               at.cmd("ATV1\r\n",1000,cb);
@@ -863,7 +852,13 @@ var gprsFuncs = {
               signal_quality_report = false;
             } else {
               signal_quality_report = true;
-              if (dbg) console.log("Info signal :" +r);
+
+              var rssi = r.substring(6,r.length).split(",");
+              rssi[0] = 0|rssi[0];
+
+              var quality_level_dbm = -113 + 2*rssi[0];
+
+              console.log("quality_level_dbm = " + quality_level_dbm + "dBm");
 
               // comment on quality signal for user to be done here
             }
@@ -878,7 +873,7 @@ var gprsFuncs = {
               setTimeout(function(){at.cmd('AT+CGATT=1\r\n', 75000, cb);},5000);
             } else {
               // start and wait for the next quality signal report sequence
-             setTimeout(function(){at.cmd('AT+CSQ\r\n', 2000, cb);},500);
+             setTimeout(function(){at.cmd('AT+CSQ\r\n', 2000, cb);},1000);
             }
           } else if(r) {
 				callback('Error in QCCID: ' + r);
@@ -999,6 +994,7 @@ var gprsFuncs = {
     } else {
         reset_pulse(callback);
     }
+    console.log("Cellular module initialization started, please wait ...");
   },
   "getVersion": function(callback) {
     at.cmd("AT+GMR\r\n", 1000, function(d) {
@@ -1114,10 +1110,10 @@ var gprsFuncs = {
 
     var cb = function(r) {
       if (r==='OK') {
-          console.log("Please wait, disconnecting and saving data. It may last until 60 s");
+        console.log("Please wait, disconnecting and saving data. It may last until 60 s");
 
-          /* wait for POWERED DOWN and manage it in the URCs table */
-		  /* other URCs can be received before the modem has terminated its shut down */
+        /* wait for POWERED DOWN and manage it in the URCs table */
+        /* other URCs can be received before the modem has terminated its shut down */
       } else {
         console.log("Turn off error : " + r);
       }
