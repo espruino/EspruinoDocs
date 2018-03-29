@@ -511,27 +511,6 @@ function receiveHandler(line) {
    return "";  
   }
 }
-function receiveHandler2(line) {
-
-  var colon = line.indexOf(":");
-  if (colon<0) {
-	return line; // not enough data here at the moment
-  }
-  var parms = line.substring(3,colon).split(",");
-  parms[1] = 0|parms[1];
-  var len = line.length-(colon+1);
-  if (len>=parms[1]) {
-   // we have everything
-   sockData[parms[0]] += line.substr(colon+1,parms[1]);
-
-   return line.substr(colon+parms[1]+1); // return anything else
-  } else {
-   // still some to get - use getData to request a callback
-   sockData[parms[0]] += line.substr(colon+1,len);
-   at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });  
-   return ""; 
-  }
-}
 
 /*
 When TCP socket service is closed by remote peer or network error, this function is entered
@@ -1162,7 +1141,6 @@ exports.connect = function(usart, resetOptions, connectedCallback) {
   require("NetworkJS").create(netCallbacks);
 
   at.register("+QIURC: \"recv\"", receiveHandler);
-  at.register("+D", receiveHandler2);
   at.register("+QIURC: \"closed\"", closehandler);
   at.register("+QIURC: \"pdpdeact\"", pdpdeacthandler);
 
