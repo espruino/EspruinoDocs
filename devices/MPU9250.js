@@ -15,7 +15,7 @@ var C = {
   INT_ENABLE : 0x38,
   FIFO_EN : 0x23,
   I2C_MST_CTRL : 0x24,
-  USER_CTRL : 0x6A,  
+  USER_CTRL : 0x6A,
   SMPLRT_DIV : 0x19,
   CONFIG : 0x1A,
   GYRO_CONFIG : 0x1B,
@@ -50,29 +50,28 @@ function MPU9250(r,w,rmag,wmag,options) {
   this.w = w; // write to a register on main MPU
   this.rmag = rmag; // read from a register on magnetometer
   this.wmag = wmag; // write to a register on magnetometer
-  if (this.r(C.WHO_AM_I_MPU9250, 1)[0] != 0x71)
-    throw "MPU9250 WHO_AM_I check failed";
-    
+
   this.Ascale = 0; //AFS_2G
   this.Gscale = 0; //GFS_250DPS
   this.gyrosensitivity  = 131;   // = 131 LSB/degrees/sec
   this.accelsensitivity = 16384; // = 16384 LSB/g
+  this.samplerate = 200; // Hz - default
 }
 
 MPU9250.prototype.calibrateMPU9250 = function() {
-  var mpu = this;
+  /*var mpu = this;
   var gyro_bias = [0,0,0];
   var accel_bias = [0,0,0];
   return (new Promise(function(resolve) {
     // Write a one to bit 7 reset bit; toggle reset device
-    mpu.w(C.PWR_MGMT_1, 0x80);  
+    mpu.w(C.PWR_MGMT_1, 0x80);
     setTimeout(resolve,100);
   })).then(function() {
     // get stable time source; Auto select clock source to be PLL gyroscope
     // reference if ready else use the internal oscillator, bits 2:0 = 001
     mpu.w(C.PWR_MGMT_1, 0x01);
     mpu.w(C.PWR_MGMT_2, 0x00);
-    return new Promise(function(resolve) {setTimeout(resolve,200)});
+    return new Promise(function(resolve) {setTimeout(resolve,200);});
   }).then(function() {
     // Configure device for bias calculation
     // Disable all interrupts
@@ -87,7 +86,7 @@ MPU9250.prototype.calibrateMPU9250 = function() {
     mpu.w(C.USER_CTRL, 0x00);
     // Reset FIFO and DMP
     mpu.w(C.USER_CTRL, 0x0C);
-    return new Promise(function(resolve) {setTimeout(resolve,15)});
+    return new Promise(function(resolve) {setTimeout(resolve,15);});
   }).then(function() {
     // Configure MPU6050 gyro and accelerometer for bias calculation
     // Set low-pass filter to 188 Hz
@@ -98,7 +97,7 @@ MPU9250.prototype.calibrateMPU9250 = function() {
     mpu.w(C.GYRO_CONFIG, 0x00);
     // Set accelerometer full-scale to 2 g, maximum sensitivity
     mpu.w(C.ACCEL_CONFIG, 0x00);
-    
+
     mpu.gyrosensitivity  = 131;   // = 131 LSB/degrees/sec
     mpu.accelsensitivity = 16384; // = 16384 LSB/g
 
@@ -108,7 +107,7 @@ MPU9250.prototype.calibrateMPU9250 = function() {
     // MPU-9150)
     mpu.w(C.FIFO_EN, 0x78);
     // accumulate 40 samples in 40 milliseconds = 480 bytes
-    return new Promise(function(resolve) {setTimeout(resolve,40)});
+    return new Promise(function(resolve) {setTimeout(resolve,40);});
   }).then(function() {
     // At end of sample accumulation, turn off FIFO sensor read
     // Disable gyro and accelerometer sensors for FIFO
@@ -254,17 +253,22 @@ MPU9250.prototype.calibrateMPU9250 = function() {
                     accel_bias[1]/mpu.accelsensitivity,
                     accel_bias[2]/mpu.accelsensitivity ]
     }
+  });*/
+  return new Promise(function(resolve) {
+    resolve("calibrateMPU9250 not working at the moment");
   });
-}
+};
 
 MPU9250.prototype.initMPU9250 = function() {
+  if (this.r(C.WHO_AM_I_MPU9250, 1)[0] != 0x71)
+    throw "MPU9250 WHO_AM_I check failed";
   var mpu = this;
   return (new Promise(function(resolve) {
       // wake up device
     // Clear sleep mode bit (6), enable all sensors
     mpu.w(C.PWR_MGMT_1, 0x00);
     setTimeout(resolve,100); // Wait for all registers to reset
-  })).then(function() {    
+  })).then(function() {
     // Get stable time source
     // Auto select clock source to be PLL gyroscope reference if ready else
     mpu.w(C.PWR_MGMT_1, 0x01);
@@ -281,9 +285,7 @@ MPU9250.prototype.initMPU9250 = function() {
     mpu.w(C.CONFIG, 0x03);
 
     // Set sample rate = gyroscope output rate/(1 + SMPLRT_DIV)
-    // Use a 200 Hz rate; a rate consistent with the filter update rate
-    // determined inset in CONFIG above.
-    mpu.w(C.SMPLRT_DIV, 0x04);
+    mpu.w(C.SMPLRT_DIV, Math.clip(Math.round(1000/mpu.samplerate)-1,0,255));
 
     // Set gyroscope full scale range
     // Range selects FS_SEL and AFS_SEL are 0 - 3, so 2-bit values are
@@ -332,12 +334,12 @@ MPU9250.prototype.initMPU9250 = function() {
     mpu.w(C.INT_PIN_CFG, 0x22);
     // Enable data ready (bit 0) interrupt
     mpu.w(C.INT_ENABLE, 0x01);
-    
+
     // Enable Magnetometer
-    
+
     mpu.wmag(C.MAG_CNTL1, 0b10010); // 16 bit, 8 Hz
-    
-    
+
+
     return new Promise(function(resolve) {setTimeout(resolve,100)});
   });
 };
@@ -353,7 +355,7 @@ MPU9250.prototype.readAccel = function() {
     x: d.getInt16(0,0)/this.accelsensitivity,
     y: d.getInt16(2,0)/this.accelsensitivity,
     z: d.getInt16(4,0)/this.accelsensitivity
-  };  
+  };
 };
 
 // return {x,y,z} for the gyro in degrees/second
@@ -363,7 +365,7 @@ MPU9250.prototype.readGyro = function() {
     x: d.getInt16(0,0)/this.gyrosensitivity,
     y: d.getInt16(2,0)/this.gyrosensitivity,
     z: d.getInt16(4,0)/this.gyrosensitivity
-  };  
+  };
 };
 
 // return {x,y,z} for the magnetometer in millGaus
@@ -375,7 +377,7 @@ MPU9250.prototype.readMag = function() {
     x: d.getInt16(0,1)*s,
     y: d.getInt16(2,1)*s,
     z: d.getInt16(4,1)*s
-  };  
+  };
 };
 
 // return {x,y,z} for all 3 sensors - { accel, gyro, mag }
@@ -383,8 +385,9 @@ MPU9250.prototype.read = function() {
   return {
     accel: this.readAccel(),
     gyro: this.readGyro(),
-    mag: this.readMag()
-  };  
+    mag: this.readMag(),
+    new: this.dataReady() // reading INT_STATUS resets the dataready IRQ line
+  };
 };
 
 // Initialise the MPU9250 module with the given I2C interface

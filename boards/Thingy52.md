@@ -72,8 +72,14 @@ IOEXT0/1/2/3
 // Get repeated callbacks with {x,y,z}. Call with no argument to disable
 Thingy.onAcceleration = function(callback) { ... }
 
-// Get one callback with a new acceleration value
+// Get one callback with a new {x,y,z} acceleration value
 Thingy.getAcceleration = function(callback) { ... }
+
+// Get repeated callbacks with {accel,gyro,mag} from the MPU at 10Hz. Call with no argument to disable
+Thingy.onMPU = function(callback) { ... }
+
+// Get one callback with a {accel,gyro,mag} value from the MPU
+Thingy.getMPU = function(callback) { ... }
 
 // Get repeated callbacks with {pressure,temperature}. Call with no argument to disable
 Thingy.onPressure = function(callback) { ... }
@@ -111,7 +117,7 @@ Thingy.sound = function(waveform, pitch, callback) { ... }
 
 // Record audio for the given number of samples, at 8192kHz 8 bit.
 // This can then be fed into Thingy.sound(waveform, 8192). RAM is scarce, so realistically 1 sec is a maximum.
-exports.record = function(samples, callback) 
+exports.record = function(samples, callback)
 ```
 
 You can also enable the graphical editor blocks for Thingy:52 in the Web IDE
