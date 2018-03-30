@@ -121,12 +121,13 @@ var AtInitSequence = {
   AT_ECHO_OFF: 2,
   AT_CPIN: 3,
   AT_SHOW_SIM_ID: 4,
-  AT_QUERY_SIGNAL_QUALITY: 5,
-  AT_PS_ATTACHMENT: 6,
-  AT_AUTOMATIC_OPERATOR_SELECTION: 7,
-  AT_LIST_CURRENT_OPERATORS: 8,
-  AT_CURRENT_OPERATOR: 9,
-  AT_HW_FLOW_CONTROL: 10,
+  AT_RADIO_ON: 5,
+  AT_QUERY_SIGNAL_QUALITY: 6,
+  AT_PS_ATTACHMENT: 7,
+  AT_AUTOMATIC_OPERATOR_SELECTION: 8,
+  AT_LIST_CURRENT_OPERATORS: 9,
+  AT_CURRENT_OPERATOR: 10,
+  AT_HW_FLOW_CONTROL: 11,
 };
 
 /* TimeOut Id for the send procedure */
@@ -806,9 +807,9 @@ var gprsFuncs = {
             // wait for OK
             return cb;
           } else if (r === 'OK') {
-            s = AtInitSequence.AT_QUERY_SIGNAL_QUALITY;
-            // check the signal quality in the field
-            at.cmd('AT+CSQ\r\n', 2000, cb);
+            s = AtInitSequence.AT_RADIO_ON;
+            // Set the modem with full functionality
+            at.cmd('AT+CFUN=1\r\n', 15000, cb);
           } else if(r) {
             callback('Error in QCCID: ' + r);
           }
@@ -816,6 +817,25 @@ var gprsFuncs = {
           /* case processing with no response */
           if (r===undefined) {
             callback('AT+QCCID time-out !!!');
+          }
+          break;
+
+        case AtInitSequence.AT_RADIO_ON:
+
+          if (dbg) console.log("debug AT_RADIO_ON :" +r);
+
+          /* Case processing with a response */
+          if (r === 'OK') {
+            s = AtInitSequence.AT_QUERY_SIGNAL_QUALITY;
+            // check the signal quality in the field
+            at.cmd('AT+CSQ\r\n', 2000, cb);
+          } else if(r) {
+            callback('Error in CFUN: ' + r);
+          }
+
+          /* case processing with no response */
+          if (r===undefined) {
+            callback('AT+CFUN time-out !!!');
           }
           break;
 
