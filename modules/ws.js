@@ -62,14 +62,13 @@
 
 /** Minify String.fromCharCode() call */
 var strChr = String.fromCharCode;
-var crypto = require('crypto');
 
 function buildKey() {
   var randomString = btoa(Math.random().toString(36).substr(2, 18));
   var toHash = randomString + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
   return {
     source: randomString,
-    hashed: btoa(crypto.SHA1(toHash))
+    hashed: btoa(require('crypto').SHA1(toHash))
   }
 }
 
@@ -251,7 +250,7 @@ exports.createServer = function(callback, wscallback) {
   var server = require('http').createServer(function (req, res) {
     if (req.headers.Connection && req.headers.Connection.indexOf("Upgrade")>=0) {
       var key = req.headers["Sec-WebSocket-Key"];
-      var accept = btoa(E.toString(crypto.SHA1(key+"258EAFA5-E914-47DA-95CA-C5AB0DC85B11")));
+      var accept = btoa(E.toString(require('crypto').SHA1(key+"258EAFA5-E914-47DA-95CA-C5AB0DC85B11")));
       res.writeHead(101, {
           'Upgrade': 'websocket',
           'Connection': 'Upgrade',
