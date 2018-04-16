@@ -205,11 +205,14 @@ for (i in exampleFiles) {
   var slashStar = contents.indexOf("/*");
   var starSlash = contents.indexOf("*/",slashStar);
   if (slashStar>=0 && starSlash>=0) {
-    var newFile = "<!--- Copyright (c) 2014 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->\n";
+    var markdown = contents.substr(slashStar+2, starSlash-(3+slashStar)).trim();
+    var newFile = "";
+    if (markdown.indexOf("Copyright")<0)
+      newFile += "<!--- Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->\n";
 //    newFile += exampleFile+"\n";
 //    newFile += "====================================\n";
 //    newFile += "\n";
-    newFile += contents.substr(slashStar+2, starSlash-(3+slashStar)).trim() + "\n";
+    newFile += markdown + "\n";
     newFile += "\n\n";
     newFile += "Source Code\n";
     newFile += "-----------\n\n";
@@ -344,7 +347,7 @@ function inferMarkdownFile(filename, fileContents) {
 // -------------------------------------------------------------
 markdownFiles.forEach(function (file) {
    var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
-   
+
    if (file.substr(-3)==".md") {
     var contentLines = contents.split("\n");
      if (contentLines[3].trim()!="" || contentLines[4].trim().substr(0,6)!="<span " || contentLines[5].trim()!="") {
@@ -357,8 +360,8 @@ markdownFiles.forEach(function (file) {
      }
      contentLines.splice(4,2); // remove comment line
      contents = contentLines.join("\n");
-   }   
-   
+   }
+
    //console.log(file,contents.length);
    // Check over images... ![Image Title](foo.png)
    contents = handleImages(file, contents);
@@ -378,7 +381,7 @@ markdownFiles.forEach(function (file) {
    contents = contents.replace(/\n(\* USES: .*)/g, "<!---\n$1\n--->");
    // TODO - 'Tutorial 2' -> 'Tutorial+2', recognize pages that are references in docs themselves
    var contentLines = contents.split("\n");
-   
+
    var appendMatching = function(regex, kwName, infoList, ifNone) {
      for (i in contentLines) {
        var match = contentLines[i].match(regex);
@@ -411,7 +414,7 @@ markdownFiles.forEach(function (file) {
                          console.log("REJECTED "+a.path+" from "+file+" because of '-"+notkw+"' keyword");
                          pageOk = false;
                        }
-                 } 
+                 }
                }
                // add page link if ok
                if (pageOk)
