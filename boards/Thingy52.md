@@ -115,9 +115,9 @@ Thingy.beep = function(freq, length) { ... }
 // This can play up to 3 sounds at a time (assuming ~4000 samples per second)
 Thingy.sound = function(waveform, pitch, callback) { ... }
 
-// Record audio for the given number of samples, at 8192kHz 8 bit.
+// Record audio for the given number of samples, at 8192 Hz 8 bit.
 // This can then be fed into Thingy.sound(waveform, 8192). RAM is scarce, so realistically 1 sec is a maximum.
-exports.record = function(samples, callback)
+Thingy.record = function(samples, callback)
 ```
 
 You can also enable the graphical editor blocks for Thingy:52 in the Web IDE
