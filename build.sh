@@ -42,9 +42,9 @@ python scripts/build_board_docs.py PUCKJS pinout
 mv boards/PUCKJS.html $DIR/html/boards
 cp boards/img/PUCKJS_.jpg $WEBSITE/www/img
 
-python scripts/build_board_docs.py PUCKJS pinout
-mv boards/PUCKJS.html $DIR/html/boards
-cp boards/img/PUCKJS_.jpg $WEBSITE/www/img
+python scripts/build_board_docs.py PIXLJS pinout
+mv boards/PIXLJS.html $DIR/html/boards
+cp boards/img/PIXLJS.png $WEBSITE/www/img
 
 python scripts/build_board_docs.py ESP32 pinout
 mv boards/ESP32.html $DIR/html/boards

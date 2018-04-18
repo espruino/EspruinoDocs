@@ -111,7 +111,7 @@ On-board LEDs, Button and GPIO
 -------------------------------
 
 Puck.js contains LEDs and a button that can be accessed in the same way
-as othe Espruino devices.
+as other Espruino devices.
 
 ### LEDs
 
@@ -138,7 +138,7 @@ setWatch(function() {
 
 ### GPIO pins
 
-GPIO pins are numbered D0 to D31. Their numbers are usually written on the PCB.
+GPIO pins are numbered `D0` to `D31`. Their numbers are usually written on the PCB.
 
 You can use the same `digitalWrite`/`digitalRead` commands with these that you
 do with the buttons, but you can also use [[PWM]], [[I2C]], [[SPI]] and [[Analog]].
@@ -249,10 +249,10 @@ To use it, connect to a 3.3v output USB to TTL converter as follows:
 
 | Puck.js  | USB->TTL converter |
 |----------|--------------------|
-| GND      | GND                |
-| D28      | RX ( -> PC )       |
-| D29      | TX ( <- PC )       |
-| 3V       | 3.3v (Optional - to run without a battery) |
+| `GND`    | `GND`              |
+| `D28`    | `RX` ( -> PC )     |
+| `D29`    | `TX` ( <- PC )     |
+| `3V`     | `3.3v` (Optional - to run without a battery) |
 
 You can now use the normal Espruino Web IDE, or a serial terminal application at 9600 baud.
 
