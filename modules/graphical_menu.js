@@ -7,34 +7,38 @@ exports.list = function(g, items) {
     options.selected = 0;
   if (!options.fontHeight)
     options.fontHeight = 6;
+  var x = 0|options.x;
+  var x2 = options.x2||(g.getWidth()-1);
   var y = 0|options.y;
+  var y2 = options.y2||(g.getHeight()-1);
   if (options.title)
     y += options.fontHeight+2;
 
   var menuItems = Object.keys(items).slice(1); // remove first item
- 
+
   var l = {
     draw : function() {
       g.clear();
       g.setColor(-1);
       if (options.title) {
-        g.drawString(options.title,(g.getWidth()-g.stringWidth(options.title))/2,y-options.fontHeight-2);
-        g.drawLine(0,y-2,g.getWidth(),y-2);
+        g.drawString(options.title,x+(x2-x-g.stringWidth(options.title))/2,y-options.fontHeight-2);
+        g.drawLine(x,y-2,x2,y-2);
       }
 
-      var rows = 0|Math.min((g.getHeight()-y) / options.fontHeight,menuItems.length);
+      var rows = 0|Math.min((y2-y) / options.fontHeight,menuItems.length);
       var idx = E.clip(options.selected-(rows>>1),0,menuItems.length-rows);
       var iy = y;
 
       while (rows--) {
         if (idx==options.selected) {
-          g.fillRect(0,iy,g.getWidth()-1,iy+options.fontHeight-1);
+          g.fillRect(x,iy,x2,iy+options.fontHeight-1);
           g.setColor(0);
         }
-        g.drawString(menuItems[idx++],0,iy);
+        g.drawString(menuItems[idx++],x,iy);
         g.setColor(-1);
         iy += options.fontHeight;
       }
+      if (options.preflip) options.preflip();
       if (g.flip) g.flip();
     },
     select : function() {

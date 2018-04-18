@@ -7,7 +7,7 @@ Graphical Menu
 * KEYWORDS: Module,Modules,Menu,Menus,Selection,Graphics
 * USES: Graphics
 
-This is a very simple, lightweight menu library for displays that use
+This is a very simple, lightweight menu library ([[graphical_menu.js]]) for displays that use
 Espruino's [[Graphics]] library.
 
 Simply use it as follows:
@@ -37,14 +37,14 @@ var submenu = {
   "Two" : undefined,
   "< Back" : function() { m=menu.list(g, mainmenu); },
 };
-                                         
+
 
 function onInit() {
   // Create and display the first menu
   m = menu.list(g, mainmenu);
 }
 
-setWatch(function() { 
+setWatch(function() {
   m.move(-1); // up
 }, BTNU, {repeat:true,debounce:50,edge:"rising"});
 
@@ -69,7 +69,17 @@ var menuinfo = {
     "selected": 0, // optional, first selected menu item's index
     "fontHeight": 0, // optional, height of the font being used
     "y": 0, // optional, y offset of menu
+    "x": 0, // optional, x offset of menu
+    "x2": g.getWidth()-1, // optional, x coordinate of right of menu
+    "y2": g.getHeight()-1, // optional, y coordinate of bottom of menu
+    "preflip": function() {} // optional, function to be called before menu is drawn
   },
   "menu text" : function() { called when menu item selected };
 };
 ```
+
+And `menu.list` returns an object containing the following functions:
+
+* `draw()` - draw the menu to the screen (usually happens automatically)
+* `select()` - 'select' the current menu item - call this when the 'action' button is pressed
+* `move(n)` - if `n=-1`, select the menu item above the current one, if it's `1` select the item below the current one
