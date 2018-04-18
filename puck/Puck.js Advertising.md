@@ -1,15 +1,15 @@
 <!--- Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Puck.js Advertising with Node.js/Python/C#/Android
-===================================================
+BLE Advertising with Node.js/Python/C#/Android
+===============================================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Advertising. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,BLE,Bluetooth,Node,Nodejs,node.js,python,c#,android,advert,advertising,Pi,Raspberry Pi
-* USES: Puck.js
+* USES: Puck.js,BLE,Only BLE
 
 You can communicate with Puck.js via Bluetooth LE in three main ways:
 
-* Connect to Puck.js from another device and send data down the Nordic 
+* Connect to Puck.js from another device and send data down the Nordic
 UART service (or a custom one!) - most devices (PC, Mac, Linux, Android) can only connect to a maximum of 5 or 6 devices at a time.
 * Have Puck.js connect to device and communicate with that device's services - most devices can only accept one concurrent connection.
 * Have Puck.js advertise data that any device with in range - while only in one direction (from Puck.js to a listening device), you can have as many Pucks sending data as you want.
@@ -33,7 +33,7 @@ and upload the following code:
 
 ```
 var presses = 0;
-NRF.setAdvertising({},{manufacturer: 0x0590, manufacturerData:[presses]}); 
+NRF.setAdvertising({},{manufacturer: 0x0590, manufacturerData:[presses]});
 
 setWatch(function() {                                                          
   presses++;                                                                   
@@ -49,7 +49,7 @@ data when no devices are connected to it.
 
 **Note:** `manufacturerData` is an array of bytes (values between 0 and 255).
 Larger values will be truncated. You can also specify a String, for instance
-with `NRF.setAdvertising({},{manufacturer: 0x0590, manufacturerData:"Hello"});`. 
+with `NRF.setAdvertising({},{manufacturer: 0x0590, manufacturerData:"Hello"});`.
 Specifying too much data (more than 21 bytes) may result in a `DATA_SIZE` exception.
 
 
@@ -67,13 +67,13 @@ NRF.findDevices(print)
 and you'd get something like:
 
 ```
-[ 
-  BluetoothDevice { 
-    "id": "de:70:d9:0c:eb:86 random", 
-    "rssi": -44, 
-    "data": new Uint8Array([2, 1, 5, 4, 255, 144, 5, 11, 20, 9, 69, 115, 112, 114, 117, 105, 110, 111, 32, 78, 82, 70, 53, 50, 56, 51, 50, 68, 75]).buffer, 
-    "manufacturer": 1424, 
-    "manufacturerData": new Uint8Array([0]).buffer, 
+[
+  BluetoothDevice {
+    "id": "de:70:d9:0c:eb:86 random",
+    "rssi": -44,
+    "data": new Uint8Array([2, 1, 5, 4, 255, 144, 5, 11, 20, 9, 69, 115, 112, 114, 117, 105, 110, 111, 32, 78, 82, 70, 53, 50, 56, 51, 50, 68, 75]).buffer,
+    "manufacturer": 1424,
+    "manufacturerData": new Uint8Array([0]).buffer,
     "name": "Puck.js eb86"
    }
  ]
@@ -120,12 +120,12 @@ function onDiscovery(peripheral) {
   // peripheral.advertisement.manufacturerData   - manufacturer-specific data
   // peripheral.advertisement.serviceData        - normal advertisement service data
   // ignore devices with no manufacturer data
-  if (!peripheral.advertisement.manufacturerData) return; 
+  if (!peripheral.advertisement.manufacturerData) return;
   // output what we have
   console.log(
     peripheral.address,
     JSON.stringify(peripheral.advertisement.localName),
-    JSON.stringify(peripheral.advertisement.manufacturerData) 
+    JSON.stringify(peripheral.advertisement.manufacturerData)
   );
 }
 

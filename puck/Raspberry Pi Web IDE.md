@@ -5,7 +5,7 @@ Web IDE on a Raspberry Pi
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Raspberry+Pi+Web+IDE. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,BLE,Bluetooth,Node,command-line,Pi,Raspberry Pi
-* USES: Puck.js
+* USES: Puck.js,BLE,Only BLE
 
 If you want to use Node-RED on your Raspberry Pi there is also a
 [Node-RED Tutorial](/Puck.js Node-RED).

@@ -1,11 +1,11 @@
 <!--- Copyright (c) 2017 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Exercise Machine controlled Video 
+Exercise Machine controlled Video
 =================================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Exercise+Machine. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Exercise,Cross Trainer,HID
-* USES: Puck.js
+* USES: Puck.js,BLE,Only BLE
 
 [[http://youtu.be/8h01nn2oW-c]]
 
@@ -76,9 +76,9 @@ function setPlaying(play) {
 }
 
 
-NRF.on('connect', function(addr) { 
+NRF.on('connect', function(addr) {
   setInterval(function() {
-    if (rotations >= PLAYSPEED && 
+    if (rotations >= PLAYSPEED &&
         lastRotations >= PLAYSPEED) {
       // if both the last time periods have been fast enough
       // start playing
@@ -93,7 +93,7 @@ NRF.on('connect', function(addr) {
   }, 2000);
 });
 
-NRF.on('disconnect', function() { 
+NRF.on('disconnect', function() {
   // Remove any intervals
   clearInterval();
 });

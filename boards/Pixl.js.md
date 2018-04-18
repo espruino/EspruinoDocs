@@ -49,9 +49,17 @@ Tutorials
 
 First, it's best to check out the [Getting Started Guide](/Puck.js+Quick+Start)
 
-Other tutorials using Pixl.js:
+Tutorials using Pixl.js:
 
 * APPEND_USES: Pixl.js
+
+Tutorials using Bluetooth LE:
+
+* APPEND_USES: Only BLE,-Pixl.js
+
+Tutorials using Bluetooth LE and functionality that may not be part of Pixl.js:
+
+* APPEND_USES: BLE,-Only BLE,-Pixl.js
 
 
 <a name="pinout"></a>Pinout

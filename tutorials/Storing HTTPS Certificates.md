@@ -5,7 +5,7 @@ Storing HTTPS Certificates
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Storing+HTTPS+Certificates. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Wifi,IoT,HTTPS,TLS,Certificates,certificate,Keys,key
-* USES: Internet,Pico,ESP8266,HTTPS,EspruinoWiFi
+* USES: Internet,Pico,ESP8266,HTTPS,EspruinoWiFi,FlashEEPROM
 
 Introduction
 -------------
@@ -21,6 +21,9 @@ However, sometimes (especially when using AT-command based devices) you may
 not have enough RAM free to store the keys and all your code. In this case you'll
 want to use something like the code below. This stores the keys without using
 any modules (like [[FlashEEPROM]]) that might have taken up precious RAM.
+
+**Note:** On modern Espruino builds you can also use the [Storage Module](/Reference#t_Storage)
+which is built-in and uses the same flash area as saved code.
 
 
 Software
@@ -61,7 +64,7 @@ function fwrite(data) {
 var okey, ocert, oca;
 
 /* Now erase all data in our flash page, and write the keys one at a time. So we don't mess up our
-code upload by blocking Espruino, we'll do each one after a timeout. */ 
+code upload by blocking Espruino, we'll do each one after a timeout. */
 setTimeout(function() {
   // Erase all data in that flash page
   flash.erasePage(addr);
@@ -95,7 +98,7 @@ function sendForm() {
     ca : oca,
     cert : ocert
   };
-  
+
   console.log("Connecting...");
   require("http").request(options, function(res)  {
     console.log("Connected!");
@@ -128,7 +131,7 @@ function onInit() {
       console.log("Connecting to WiFi");
       wifi.connect(WIFI_NAME,WIFI_OPTIONS.password, onConnected);
     });
-  }, 2000); 
+  }, 2000);
 }
 
 // For Espruino WiFi
@@ -163,7 +166,7 @@ openssl verify -CAfile ca-crt.pem client1-crt.pem
 ```
 
 Then you need to get your keys into a format that can be used by Espruino.
-The following commands just strip off the first and last lines and remove 
+The following commands just strip off the first and last lines and remove
 all the carriage returns - this could be done by hand if needed.
 
 ```

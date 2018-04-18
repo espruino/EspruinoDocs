@@ -5,7 +5,7 @@ Getting Started with Puck.js
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Quick+Start. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,Quick Start,Getting Started,Web Bluetooth,BLE
-* USES: Puck.js,Web Bluetooth
+* USES: Puck.js,Web Bluetooth,BLE,Only BLE
 
 
 Your Puck.js shipped with a battery installed, but with a small plastic tab inserted to keep it turned off.
@@ -62,7 +62,7 @@ Requirements
 Puck.js uses Bluetooth LE, so you need a Bluetooth 4.0-capable adaptor in your computer (Bluetooth versions before 4.0 won't work). Pretty much all new computers come with Bluetooth 4, but you may need to get an external Bluetooth LE dongle if your computer:
 
 * Is an Apple Mac made before 2012
-* Is a Windows PC 
+* Is a Windows PC
 * Is a desktop PC - it may not have any wireless support *at all*
 * Is running Linux - much of the built-in Bluetooth LE functionality in laptops is still buggy. External USB adaptors will be much more reliable.
 

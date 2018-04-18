@@ -59,7 +59,7 @@ to save to Flash memory though ([more information](/Saving)).
 When you do that, the sensors will require initialising at power on (so may
   not work if you 'just' save your code). You'll need to create an `onInit`
   function like this, where you turn the sensors' power on at boot time:
-  
+
 ```
 var Ruuvitag = require("Ruuvitag");
 
@@ -70,8 +70,19 @@ function onInit() {
 }
 ```
 
+Tutorials
+---------
+
+Tutorials using Bluetooth LE:
+
+* APPEND_USES: Only BLE
+
+Tutorials using Bluetooth LE and functionality that may not be part of Ruuvitag:
+
+* APPEND_USES: BLE,-Only BLE
+
 
 Reference
 ---------
- 
+
 * APPEND_JSDOC: Ruuvitag.js

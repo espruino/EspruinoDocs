@@ -39,6 +39,34 @@ Any `.js` files in `examples` have a webpage created that uses the comments as m
 
 All other `.js` files are treated as modules. They are minified using Google's online closure compiler and the SIMPLE_OPTIMISATIONS flag. To get advanced optimisations, you must add the exact text `@compilation_level ADVANCED_OPTIMIZATIONS` into the comments at the head of the file.
 
+## Common keywords
+
+Common keywords for USES/APPEND_USES are:
+
+```
+// Boards
+Espruino Board
+EspruinoWiFi
+Pico
+Puck.js
+Pixl.js
+MicroBit
+
+// Other things
+Internet       An internet connection
+Graphics       Graphics Library
+Waveform       Waveform Library
+AT             AT Command library
+Speaker
+PWM
+Infrared
+ESP8266        ESP8266 attached to an Espruino
+BLE            Bluetooth LE (eg via Puck.js) but may need board-specific hardware
+Only BLE       Bluetooth LE (eg via Puck.js) but applicable to anything
+Web Bluetooth
+
+```
+
 ## Build Requirements
 
 ### Step 1: Obtain Espruino Source Code

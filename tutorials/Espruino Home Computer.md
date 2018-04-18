@@ -5,7 +5,7 @@ Espruino Home Computer
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Espruino+Home+Computer. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: PC,Computer,Spectrum,Commodore,Micro,Home PC
-* USES: Television,KeyPad,Pico,Breadboard,Graphics
+* USES: Television,KeyPad,Pico,Breadboard,Graphics,VT100,KeyPad
 
 [[http://youtu.be/0d3uGQUm7tM]]
 

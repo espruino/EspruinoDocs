@@ -1,11 +1,11 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Controlling Other Pucks
-========================
+Controlling Other BLE Espruino Devices
+======================================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Controlling+Other+Pucks. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,Controlling,BLE,Bluetooth
-* USES: Puck.js,Web Bluetooth
+* USES: Puck.js,Web Bluetooth,BLE,Only BLE
 
 There are two main ways for one Puck to control another:
 

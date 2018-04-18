@@ -5,9 +5,9 @@ Temperature Controlled Night Light with Puck.js
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Night+Light. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,LED,Light,Lightbulb,IR,Infrared,Night,Nightlight,Temperature
-* USES: Puck.js,Infrared
+* USES: Puck.js,Infrared,BLE
 
-If you've got a baby you're supposed to keep room temperature between 16 
+If you've got a baby you're supposed to keep room temperature between 16
 and 20 degrees Celsius - but how do you know at night? Here, we'll make a night light
 that changes color depending on the temperature.
 
@@ -43,7 +43,7 @@ function tempTest() {
     Puck.IR(light.cold);
   else if (temp <= 20)
     Puck.IR(light.normal);
-  else 
+  else
     Puck.IR(light.hot);
 }
 

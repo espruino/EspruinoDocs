@@ -84,9 +84,17 @@ Tutorials
 
 First, it's best to check out the [Getting Started Guide](/Puck.js+Quick+Start)
 
-Other tutorials using Puck.js:
+Tutorials using Puck.js:
 
 * APPEND_USES: Puck.js
+
+Tutorials using Bluetooth LE:
+
+* APPEND_USES: Only BLE,-Puck.js
+
+Tutorials using Bluetooth LE and functionality that may not be part of Puck.js:
+
+* APPEND_USES: BLE,-Only BLE,-Puck.js
 
 <a name="pinout"></a>Pinout
 ---------------------------

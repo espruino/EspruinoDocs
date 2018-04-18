@@ -433,7 +433,7 @@ markdownFiles.forEach(function (file) {
    };
 
    appendMatching(/^\* APPEND_KEYWORD: (.*)/ , "APPEND_KEYWORD", fileInfo.keywords, "");
-   appendMatching(/^\* APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, "No tutorials use this yet.");
+   appendMatching(/^\* APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, " * No tutorials are available yet");
    // try and handle module documentation
    for (i in contentLines) {
      var match;

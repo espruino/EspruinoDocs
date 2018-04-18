@@ -5,7 +5,7 @@ Puck.js Security and Access Control
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Security. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Security,Safe,Password,Login,Hack,Access Control
-* USES: Puck.js
+* USES: Puck.js,BLE,Only BLE
 
 When you take the plastic separator out of Puck.js's battery compartment, it'll
 start up, and will be connectable (and programmable) by anyone.
@@ -23,7 +23,7 @@ uploaded to Puck.js.
 
 There are a few options:
 
-## Don't allow connections to Puck.js 
+## Don't allow connections to Puck.js
 
 With [`NRF.setAdvertising`](http://www.espruino.com/Reference#l_NRF_setAdvertising)
 you can allow Puck.js to keep transmitting advertising data, but ensure that no

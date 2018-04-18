@@ -170,6 +170,14 @@ Tutorials using the micro:bit Board:
 
 * APPEND_USES: MicroBit
 
+Tutorials using Bluetooth LE:
+
+* APPEND_USES: Only BLE,-MicroBit
+
+Tutorials using Bluetooth LE and functionality that may not be part of the micro:bit:
+
+* APPEND_USES: BLE,-Only BLE,-MicroBit
+
 
 Buying
 -------

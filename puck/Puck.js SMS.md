@@ -5,14 +5,14 @@ Puck.js with SMS control
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+SMS. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Light,SMS,GSM,LTE,AWOX
-* USES: Puck.js,SIM800,SIM900,ATSMS
+* USES: Puck.js,SIM800,SIM900,ATSMS,BLE,Only BLE
 
 This video shows you how use [Puck.js](/Puck.js) and a GSM modem
 to control devices via SMS text messages.
 
 [[http://youtu.be/xvX2k5vRkg0]]
 
-The video further down shows how to read data from BLE devices 
+The video further down shows how to read data from BLE devices
 within range and then send that as an SMS text message response.
 
 **Note:** You'll need the latest firmware as of Sept 2017 on your Puck.js device for this. That
@@ -24,7 +24,7 @@ You'll need
 * A [Puck.js](/Puck.js) device (or other [Espruino board](/Order) if you don't need Bluetooth LE
 * A [SIM800 or SIM900](/SIM900) module. The one I'm using is designed for a 5v input (if yours isn't you'll need to change the wiring accordingly)
 * A 3.3v voltage regulator (LD1117AV33) if you're not going to use Puck.js's battery
-* A 5v power source 
+* A 5v power source
 * A [[Breadboard]] and patch wires if you're planning on assembling as in the video
 
 
@@ -83,7 +83,7 @@ sms.init(function(err) {
       console.log("No Messages");
   });
 
-  // and to send a message: 
+  // and to send a message:
   //sms.send('+441234567890','Hello world!', callback)
 });
 
@@ -121,7 +121,7 @@ sms.init(function(err) {
       console.log("No Messages");
   });
 
-  // and to send a message: 
+  // and to send a message:
   //sms.send('+441234567890','Hello world!', callback)
 });
 
@@ -189,7 +189,7 @@ sms.init(function(err) {
       console.log("No Messages");
   });
 
-  // and to send a message: 
+  // and to send a message:
   //sms.send('+441234567890','Hello world!', callback)
 });
 

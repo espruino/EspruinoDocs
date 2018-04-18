@@ -5,7 +5,7 @@ Puck.js Music Controller
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Music+Control. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Car,Hands free,Handsfree,Music,Playback,Play,Pause,Next Track
-* USES: Puck.js
+* USES: Puck.js,BLE,Only BLE
 
 [[http://youtu.be/3iZ9j_ga6zs]]
 

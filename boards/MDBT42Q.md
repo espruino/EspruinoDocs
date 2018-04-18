@@ -70,13 +70,18 @@ Tutorials
 
 First, it's best to check out the [Puck.js Getting Started Guide](/Puck.js+Quick+Start)
 
-Most tutorials that use Puck.js also apply to the MDBT42Q module:
-
-* APPEND_USES: Puck.js
-
 Tutorials using MDBT42Q:
 
 * APPEND_USES: MDBT42Q
+
+Tutorials using Bluetooth LE:
+
+* APPEND_USES: Only BLE,-MDBT42Q
+
+Tutorials using Bluetooth LE and functionality that may not be part of the MDBT42Q module:
+
+* APPEND_USES: BLE,-Only BLE,-MDBT42Q
+
 
 
 <a name="pinout"></a>Pinout

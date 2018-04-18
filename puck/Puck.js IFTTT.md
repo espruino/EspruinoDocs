@@ -5,7 +5,7 @@ Puck.js and If This Then That
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+IFTTT. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Light,Magnet,Magnetometer,Door
-* USES: Puck.js
+* USES: Puck.js,BLE,Only BLE
 
 [If This Then That](https://ifttt.com) has a [Maker Applet](https://ifttt.com/maker)
 that allows you to trigger things easily from the internet.

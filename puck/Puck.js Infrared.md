@@ -5,7 +5,7 @@ Infrared Record and Playback with Puck.js
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Infrared. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,LED,Light,Lightbulb,IR,Infrared
-* USES: Puck.js,Web Bluetooth
+* USES: Puck.js,Web Bluetooth,BLE
 
 This video shows you how to control Infrared devices using Puck.js.
 
@@ -37,7 +37,7 @@ rounded to 1 decimal place (which is much more readable):
 console.log(d.map(a=>a.toFixed(1)).toString())
 ```
 
-In fact adding the following code will automatically print the received 
+In fact adding the following code will automatically print the received
 Infrared code as soon as you have sent it:
 
 ```

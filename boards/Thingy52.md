@@ -129,13 +129,17 @@ Tutorials
 
 First, it's best to check out the [Puck.js Getting Started Guide](/Puck.js+Quick+Start)
 
-Most tutorials that use Puck.js also apply to the Thingy:52:
-
-* APPEND_USES: Puck.js
-
 Tutorials using Thingy:52:
 
 * APPEND_USES: Thingy52
+
+Tutorials using Bluetooth LE:
+
+* APPEND_USES: Only BLE,-Thingy52
+
+Tutorials using Bluetooth LE and functionality that may not be part of Thingy:52:
+
+* APPEND_USES: BLE,-Only BLE,-Thingy52
 
 Information
 -----------

@@ -5,7 +5,7 @@ Puck.js and Eddystone Beacons
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Eddystone. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,Modules,BLE,Bluetooth,EddyStone,FatBeacon,iBeacon,Beacon,Physical Web
-* USES: Puck.js
+* USES: Puck.js,BLE,Only BLE
 
 **Note:** For iBeacons, see [this page](/Puck.js iBeacon)
 
@@ -34,13 +34,13 @@ only notify you for certain URLs.
 
 The URLs:
 
-* Must be HTTPS URLs 
+* Must be HTTPS URLs
 * Must be [less than or equal to 17 characters long](https://github.com/google/eddystone/tree/master/eddystone-url)
 
 Realistically the easiest way to do this is to use [Goo.gl](https://goo.gl/) as a URL shortener. You can still use
 `#` to pass data - for instance `https://goo.gl/D8sjLK#42`.
 
-While you only have 17 characters, `https://`, `www.`, `.com`, `.org`, `.edu`, `.net`, `.info`, `.biz` and `.gov` 
+While you only have 17 characters, `https://`, `www.`, `.com`, `.org`, `.edu`, `.net`, `.info`, `.biz` and `.gov`
 in URLs are automatically shortened. So for example `require("ble_eddystone").advertise("https://www.esprino.com/Puck.js")` is
 still fine, even if it would appear to be far too long.
 

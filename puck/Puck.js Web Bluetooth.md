@@ -5,7 +5,7 @@ Using Puck.js from a Web Bluetooth Website
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Web+Bluetooth. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,GitHub,Web Bluetooth,BLE
-* USES: Puck.js,Web Bluetooth
+* USES: Puck.js,Web Bluetooth,BLE,Only BLE
 
 **Note:** Web Bluetooth currently works on Mac OS, Android, Chromebook, Linux and
 iOS (with [this app](https://itunes.apple.com/us/app/webble/id1193531073)). Google
@@ -324,8 +324,8 @@ That's what you can do with `Puck.connect(callback)`. Once connected it calls th
 function with the connection, which you can then use to send and receive data.
 
 **Note:** You can't use `Puck.connect` and `Puck.write/eval` on the same
-connection at the same time. If you want to write to a Puck after having 
-used `Puck.connect`, you need to use `connection.write` and handle 
+connection at the same time. If you want to write to a Puck after having
+used `Puck.connect`, you need to use `connection.write` and handle
 any response in the `connection.on("data",` handler.
 
 Try the example below:
@@ -417,10 +417,10 @@ causes Espruino to write the current light value down the Bluetooth link every
 * When each line is received, `onLine` gets called and it updates the color
 of the light icon.
 * `NRF.on('disconnect', function() {reset()});` is also sent. This ensures that
-when disconnected, Puck.js resets itself - which makes sure that there isn't 
+when disconnected, Puck.js resets itself - which makes sure that there isn't
 a `setInterval` left running that will flatten your battery. If you're making
-something with this you'll almost certainly want to be a bit more subtle - 
-using `clearInterval` to remove *just* the interval you started. 
+something with this you'll almost certainly want to be a bit more subtle -
+using `clearInterval` to remove *just* the interval you started.
 
 **Note:** We use `Bluetooth.println` not `console.log` because writing to the
 console would cause the `>` prompt character to be removed, the text to be

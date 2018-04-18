@@ -1,11 +1,11 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-About Bluetooth LE
-===================
+About Bluetooth LE (BLE)
+========================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/About+Bluetooth+LE. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Tutorials,Puck.js,About,BLE,Bluetooth
-* USES: Puck.js
+* KEYWORDS: Tutorials,Puck.js,About,BLE,Bluetooth,Bluetooth LE
+* USES: Puck.js,BLE,Only BLE
 
 What follows is a really quick Bluetooth LE intro - for more
 details we'd suggest that you check out the links on the

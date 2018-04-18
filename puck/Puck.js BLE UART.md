@@ -5,7 +5,7 @@ Puck.js and BLE UARTs
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+BLE+UART. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,Modules,BLE,Bluetooth,NUS,Nordic UART,UART
-* USES: Puck.js
+* USES: Puck.js,BLE,Only BLE
 
 By default, Puck.js presents a `Nordic UART` service that provides
 serial port-like access to the Espruino REPL. You can disable it with
@@ -64,8 +64,8 @@ NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device
   return uart.eval('E.getTemperature()');
 }).then(function(data) {
   print("Got temperature "+data);
-  uart.disconnect(); 
-}); 
+  uart.disconnect();
+});
 ```
 
 However you can also use `on('data'` and `write` as you need to:
@@ -76,9 +76,9 @@ NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device
 }).then(function(uart) {
   uart.on('data', function(d) { print("Got:"+JSON.stringify(d)); });
   uart.write("digitalPulse(LED,1,10);\n"); // .then(...)
-  setTimeout(function() { 
-    uart.disconnect(); 
-    console.log("Disconnected"); 
+  setTimeout(function() {
+    uart.disconnect();
+    console.log("Disconnected");
   }, 2000);
 });
 ```

@@ -5,7 +5,7 @@ Puck.js and BLE Printers
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Printer. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,Modules,BLE,Bluetooth,Printer,Receipt Printer
-* USES: Puck.js,Graphics
+* USES: Puck.js,Graphics,BLE,Only BLE
 
 [![Koolertron BLE printer](Puck.js Printer/koolertron.jpg)](http://www.koolertron.com/koolertron-58mm-mini-portable-bluetooth-40-wireless-receipt-thermal-printer-compatible-with-apple-and-android-p-648.html)
 

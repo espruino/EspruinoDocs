@@ -5,7 +5,7 @@ Puck.js MIDI
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+MIDI. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,Modules,BLE,Bluetooth,MIDI,Web MIDI
-* USES: Puck.js
+* USES: Puck.js,BLE,Only BLE
 
 Puck.js can be programmed to appear as any type of Bluetooth LE device, and this
 includes a Bluetooth LE MIDI controller.
@@ -43,10 +43,10 @@ change the name of the Puck.js device to `PuckCC`.
 to send a `midi.noteOn(0,note,velocity)` or `midi.noteOff(0,note,0)`
 command instead.
 
-Reference 
+Reference
 ---------
 
-Channels sent to these functions are zero-based, so channel 
+Channels sent to these functions are zero-based, so channel
 `0` in a function call actually represents channel `1`.
 
 * APPEND_JSDOC: ../modules/ble_midi.js
