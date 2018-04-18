@@ -5,7 +5,7 @@ Pico LCD Display Hello World
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pico+LCD+Hello+World. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Pico,LCD,Hello World
-* USES: Pico,PCD8544,PicoStarterKit
+* USES: Pico,PCD8544,PicoStarterKit,Graphics
 
 Introduction
 -----------
@@ -28,7 +28,7 @@ Wiring Up
 
 ![Wiring](Pico LCD Hello World.gif)
 
-Wiring this up is really simple, because the LCD draws so little power that we can power it from Espruino's GPIO lines... 
+Wiring this up is really simple, because the LCD draws so little power that we can power it from Espruino's GPIO lines...
 
 * Put the Espruino Pico on the breadboard with the USB connector facing left
 * Put the LCD directly above it, **aligned to the right** (so the pin on the Pico nearest the USB connector should not be connected to anything)

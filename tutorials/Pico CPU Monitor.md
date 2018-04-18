@@ -5,7 +5,7 @@ Controlling Pico from a Computer
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pico+CPU+Monitor. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Pico,LCD,CPU Usage,Connecting to PC
-* USES: Pico,PCD8544,PicoStarterKit
+* USES: Pico,PCD8544,PicoStarterKit,Graphics
 
 Introduction
 -----------
@@ -49,7 +49,7 @@ function onInit() {
     draw(10);
   });
 }
-  
+
 function draw(usage) {
   if (!initialised || usage===undefined) return;
   usage = parseFloat(usage.toString().replace(",",".")); // deal with numbers in the format `1,234` as opposed to `1.234`
@@ -68,7 +68,7 @@ function draw(usage) {
     ang = Math.PI*i/100;
     g.setPixel(42-30*Math.cos(ang), 47-Math.sin(ang)*30);
   }
-  g.flip(); 
+  g.flip();
 }
 ```
 

@@ -1,9 +1,9 @@
-/* 
+/*
 Image Slideshow with ILI9341 display
 ====================================
 
 * KEYWORDS: Slideshow,Image,Graphics
-* USES: ILI9341,Pico,SD
+* USES: ILI9341,Pico,SD,Graphics
 
 ![Slideshow](slideshow_ili9341.jpg)
 
@@ -88,7 +88,7 @@ function onInit() {
   files = require("fs").readdirSync();
 
   // Turn LCD backlight on
-  A6.set(); 
+  A6.set();
   // Set up LCD (we're using software SPI to avoid wiring the LCD up properly)
   gspi.setup({sck:A7, /*miso:A5, */mosi:B1});
   g = require("ILI9341").connect(gspi, gdc, gce, B13, function() {
@@ -129,8 +129,7 @@ function updateScreen(filename) {
 function nextSlide() {
   var r = (E.hwRand()&0xFFFFFF)%files.length;
   // load
-  updateScreen(files[r]);  
+  updateScreen(files[r]);
   // reschedule again in 5 seconds
   setTimeout(nextSlide, 5000);
 }
-

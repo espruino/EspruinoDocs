@@ -49,7 +49,7 @@ g.print();
 // 0,0,0,0,0,0,0,0
 ```
 
-See the [`Graphics.createArrayBuffer`](/Reference#l_Graphics_createArrayBuffer) 
+See the [`Graphics.createArrayBuffer`](/Reference#l_Graphics_createArrayBuffer)
 reference for more information on possible arguments that can be used.
 
 Or you can create a Graphics instance which calls your function whenever a pixel needs to be drawn:
@@ -110,10 +110,10 @@ The three required arguments are `x,y,rad`. The `x` and `y` coordinates for the 
 
 ```JavaScript
 // Draw a circle
-g.drawCircle(100,100,50); // A circle with a radius of 50, centred at 100x100 
+g.drawCircle(100,100,50); // A circle with a radius of 50, centred at 100x100
 
 // Draw a filled circle
-g.fillCircle(100,100,50); // A filled circle with a radius of 50, centred at 100x100 
+g.fillCircle(100,100,50); // A filled circle with a radius of 50, centred at 100x100
 ```
 
 However if you want to add your own support in earlier versions then you
@@ -230,3 +230,8 @@ var img = {
   buffer : E.toArrayBuffer(atob("AAAAAAAAeAAAf/4AH/+bAH/ABQBoAAeAaAADwHQAAf5aAfCfS/8/sUXP//1G//AdQ/wAHUAAAB1AAAAdQAAAHWAAABNgAAAeYAAAEOAAABDgAAAQ8AAAGPgAABz4AAAcfAAAnD4AP/A+B//AHz//wA///4AAP+AAABgAAAAAAAA="))
 };
 ```
+
+
+### Tutorials using Graphics
+
+* APPEND_USES: Graphics

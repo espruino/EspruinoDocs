@@ -1,9 +1,9 @@
-/* 
+/*
 WiFi Xively Humidity/Temperature Sensor with Display
 =================================
 
 * KEYWORDS: WiFi,Wireless,Xively,IoT
-* USES: Internet,CC3000,DHT11,PCD8544,Xively,Espruino Board
+* USES: Internet,CC3000,DHT11,PCD8544,Xively,Espruino Board,Graphics
 
 ![WiFi Humidity](wifi_humidity.jpg)
 
@@ -13,7 +13,7 @@ To set this up:
 
 * Head over to [Xively](http://xively.com)
 * Get an account
-* Create a new 'Public Device' 
+* Create a new 'Public Device'
 * Create two channels on the device, `humidity`, and `temperature`
 * Copy the API key and the Feed ID and replace the placeholders in the code below with them.
 * Replace the placeholders for your WiFi access point name and key
@@ -80,7 +80,7 @@ function onInit() {
     g.clear();
     g.drawString("DHCP....",5,20);
     g.flip();
-    wlan.connect( "YOUR_WIFI_NAME", "YOUR_WIFI_KEY", function (s) { 
+    wlan.connect( "YOUR_WIFI_NAME", "YOUR_WIFI_KEY", function (s) {
       if (s=="dhcp") {
         g.clear();
         g.drawString("DHCP Complete.",5,20);
@@ -97,7 +97,7 @@ function onInit() {
 function putXively(a) {
     content = JSON.stringify({
      version : "1.0.0",
-     datastreams : [ 
+     datastreams : [
        { id:"humidity", current_value: a.rh.toString() },
        { id:"temperature", current_value: a.temp.toString() }]
     });
@@ -128,9 +128,9 @@ function onTimer() {
     g.drawString("Temperature",1,0);
     g.drawString("Humidity",1,24);
     g.drawString("Offline:"+ticksSinceConnect,1,42);
-    g.setFontVector(15);    
-    g.drawString(a.temp,48,0); 
-    g.drawString(a.rh,48,24); 
+    g.setFontVector(15);
+    g.drawString(a.temp,48,0);
+    g.drawString(a.rh,48,24);
     g.flip();
 
     putXively(a);

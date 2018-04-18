@@ -5,7 +5,7 @@ AA/AAA Battery Charger
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Battery+Charger. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: AA,AAA,Battery Charger
-* USES: Pico,PCD8544,ADC,Breadboard
+* USES: Pico,PCD8544,ADC,Breadboard,Graphics
 
 Introduction
 ------------
@@ -16,7 +16,7 @@ Many AA or AAA battery chargers charge batteries in pairs, but plenty of devices
 
 If you're anything like me you'll end up with a lot of rechargeable batteries, none of which end up being charged properly, and some of which turn out to be completely unusable. It'd be perfect if you had a low-power battery charger that you could leave on all the time, that would charge your batteries individually, automatically discharge them, and give you an idea of their real capacity. That's what you'll make in this tutorial!
 
-**Note:** To make this nice and simple, the charger uses Espruino's GPIO pins to directly charge and discharge the batteries. This means it can't charge batteries very quickly (it can take *days* to charge and discharge them!). 
+**Note:** To make this nice and simple, the charger uses Espruino's GPIO pins to directly charge and discharge the batteries. This means it can't charge batteries very quickly (it can take *days* to charge and discharge them!).
 
 
 You'll Need
@@ -41,14 +41,14 @@ Wiring Up
 * Plug the [[PCD8544]] into the breadboard below the [[Pico]], with 2 pins sticking out to the right of the [[Pico]] (it should overlap the GND wire)
 * Take a patch wire and connect from pin `B1` on the [[Pico]] to the top of a column 5 pins to the right of the Pico (see the picture)
 * Fold a 75 Ohm resistor, cut it to length, and add it diagonally between the 5th column right of the Pico and the 6th.
-* Now add 3 more sets of wires and resistors, from pins `A7`, `A6` and `A5`, to new columns, each with 7 columns of pins between it and the last. **Note:** This works for AAA batteries - for AA you will need to space the columns out a bit more. 
+* Now add 3 more sets of wires and resistors, from pins `A7`, `A6` and `A5`, to new columns, each with 7 columns of pins between it and the last. **Note:** This works for AAA batteries - for AA you will need to space the columns out a bit more.
 * Cut the pins on your battery holders down so they'll fit in the breadboard, and then place the battery holders in the breadboard at an angle: With the `+` contact relative to the resistor (as shown below), and with the `-` contact in the bottom `-` row of pins on the breadboard.
 
 ![Battery Charger](Battery Charger/batholder.jpg)
 
 * Now add 2 wires for the LCD: `B10` to the pin nearest the [[Pico]], and `B13` to the pin right on the edge.
 
-And you're done! 
+And you're done!
 
 
 Software
@@ -105,8 +105,8 @@ function onInterval() {
   var time = getTime() - lastInterval;
   lastInterval = getTime();
   var hrs = time/3600; // fractions of an hour
-  
-  // for each battery... 
+
+  // for each battery...
   var volts = getBatteryVoltages();
   for (var i=0;i<4;i++) {
     // update charge counters
@@ -119,13 +119,13 @@ function onInterval() {
       batCharge[i] = 1; // now charge
     if (volts[i] < 0) {
       // no battery - reset to defaults
-      batCharge[i] = 0; 
+      batCharge[i] = 0;
       cntCharge[i] = 0;
       cntDischarge[i] = 0;
     }
     digitalWrite(BATS[i], batCharge[i]);
   }
-  
+
   // now update display
   g.clear();
   g.drawString("Battery Charger",0,0);
@@ -159,7 +159,7 @@ function onInit() {
   g.drawStringCenter = function(txt,x,y) {
     this.drawString(txt, x-this.stringWidth(txt)/2, y);
   };
-  
+
   lastInterval = getTime();
   setInterval(onInterval, 2000);
 }
@@ -193,6 +193,3 @@ Next Steps
 
 * One easy next step is to extend your Battery charger to charge more than just 4 batteries. By using the analog pins on the small 0.05" pins on the end of the Pico, you could charge another 5 batteries (so 9 in total). However the chip in Espruino is rated to provide 25mA on each pin, and 100mA in total - so you would need to be careful not to exceed this by trying to charge all the batteries at once.
 * You could also use FETs, or something like a motor driver IC to allow you to 'fast charge' your batteries.
-
-
-

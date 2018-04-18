@@ -5,7 +5,7 @@ YouTube View Counter
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/YouTube+View+Counter. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: YouTube,Views,JSON,HTTPS,Google API
-* USES: Internet,EspruinoWiFi,MAX7219
+* USES: Internet,EspruinoWiFi,MAX7219,Graphics
 
 [[http://youtu.be/NLYScs3R488]]
 
@@ -24,7 +24,7 @@ Just connect as follows:
 
 | MAX7219 | Espruino |
 |---------|----------|
-| VCC     | VUSB or 3.3V | 
+| VCC     | VUSB or 3.3V |
 | GND     | GND      |
 | DOUT    | B3       |
 | CS      | B4       |
@@ -97,7 +97,7 @@ function getPage() {
   require("http").get("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+VIDEO_ID+"&key="+API_KEY, function(res) {
     var data = "";
     res.on('data', function(d) { data += d; });
-    res.on('close', function() { 
+    res.on('close', function() {
       var json = JSON.parse(data);
       updateCount(json.items[0].statistics.viewCount);
     });
@@ -108,7 +108,7 @@ function onInit() {
   var spi = new SPI();
   spi.setup({ mosi:B3, sck:B5 });
   disp = require("MAX7219").connect(spi, B4, 4);
-  
+
   wifi = require("EspruinoWiFi");
   wifi.connect(WIFI_NAME, WIFI_OPTIONS, function(err) {
     if (err) {

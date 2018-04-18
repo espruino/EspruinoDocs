@@ -5,7 +5,7 @@
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pico+Wire+Loop+Game. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Pico,LCD,Game,Wire Loop
-* USES: Pico,PCD8544,PicoStarterKit,Speaker
+* USES: Pico,PCD8544,PicoStarterKit,Speaker,Graphics
 
 [[http://youtu.be/uyOHnJVVBiI]]
 
@@ -73,7 +73,7 @@ function hasHit(callback) {
   score++;
 
   var i = 1;
-  
+
   // This will make the beeping and flashing
   function siren() {
     if (i>7) {
@@ -87,7 +87,7 @@ function hasHit(callback) {
       callback();
       return;
     }
-    
+
     // every other time around the loop:
     if (i&1) {
       digitalWrite(LED1, 1); // turn red LED on

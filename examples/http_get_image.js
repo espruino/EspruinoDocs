@@ -1,9 +1,9 @@
-/* 
+/*
 HTTP Image Loader
 =================
 
 * KEYWORDS: WiFi,Wireless,Image,Bitmap
-* USES: Internet,CC3000,PCD8544,BMPLoader
+* USES: Internet,CC3000,PCD8544,BMPLoader,Graphics
 
 This code gets a 1 bit bitmap off the internet every 10 seconds, and displays it on a [[PCD8544]] LCD.
 
@@ -20,7 +20,7 @@ function get() {
   var bmpString = "";
   require("http").get("http://www.espruino.com/images/espruino_84_48_1bpp.bmp", function(res) {
     res.on('data', function(data) { bmpString += data; });
-    res.on('close', function() { 
+    res.on('close', function() {
       var img = require("BMPLoader").load(bmpString);
       g.drawImage(img, 0, 0);
       g.flip();
@@ -42,7 +42,7 @@ function onInit() {
     g.flip();
     // setup wlan
     wlan = require("CC3000").connect();
-    wlan.connect( "YOUR_WIFI_NAME", "YOUR_WIFI_KEY", function (s) { 
+    wlan.connect( "YOUR_WIFI_NAME", "YOUR_WIFI_KEY", function (s) {
       g.clear();
       g.drawString(">"+s,0,0);
       g.flip();

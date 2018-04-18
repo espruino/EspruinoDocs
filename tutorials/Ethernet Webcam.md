@@ -5,7 +5,7 @@ Ethernet Webcam Display
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Ethernet+Webcam. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Webcam,Ethernet,Internet,
-* USES: Internet,WIZnet,HTTP,RGB123
+* USES: Internet,WIZnet,HTTP,RGB123,Graphics
 
 [[http://youtu.be/yK7VKg68uII]]
 
@@ -119,7 +119,7 @@ function onPageRequest(req,res) {
 
 // Set up LEDs
 SPI2.setup({baud:3200000, mosi:B15});
-var leds = Graphics.createArrayBuffer(16,16,24,{zigzag:true}); 
+var leds = Graphics.createArrayBuffer(16,16,24,{zigzag:true});
 leds.flip = function() { SPI2.send4bit(leds.buffer, 0b0001, 0b0011); };
 leds.clear();
 
@@ -134,6 +134,6 @@ function onInit() {
 onInit();
 ```
 
-Just copy and paste the code into the right-hand side of the Web IDE, and click `Send to Espruino`. It should start working instantly! 
+Just copy and paste the code into the right-hand side of the Web IDE, and click `Send to Espruino`. It should start working instantly!
 
 The Espruino's IP address will be printed when it starts up, so you'll know where you have to connect to share your webcam.

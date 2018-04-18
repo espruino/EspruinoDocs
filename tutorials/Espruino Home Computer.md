@@ -5,7 +5,7 @@ Espruino Home Computer
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Espruino+Home+Computer. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: PC,Computer,Spectrum,Commodore,Micro,Home PC
-* USES: Television,KeyPad,Pico,Breadboard
+* USES: Television,KeyPad,Pico,Breadboard,Graphics
 
 [[http://youtu.be/0d3uGQUm7tM]]
 
@@ -103,7 +103,7 @@ var KEYMAPUPPER = [
   "\x01|ZXCVBNM<>? \x80\x83\x81",
   ];
 
-/* If a char in the keymap is >=128, 
+/* If a char in the keymap is >=128,
 subtract 128 and look in this array for
 multi-character key codes*/
 var KEYEXTRA = [
@@ -120,7 +120,7 @@ function setShift(s) {
   hasShift = s;
   digitalWrite(LED1, s);
 }
-  
+
 // Convert an actual key into a sequence of characters
 // And send to Loopback (where the console is)
 function handleKeyPress(e) {
@@ -133,7 +133,7 @@ function handleKeyPress(e) {
   var key = hasShift ? KEYMAPUPPER[ky][kx] : KEYMAPLOWER[ky][kx];
   if (key=="\x01") {
     setShift(!hasShift);
-  } else { 
+  } else {
     setShift(false);
     if (key && key.length) {
       if (key.charCodeAt(0)>127)
@@ -143,10 +143,10 @@ function handleKeyPress(e) {
     }
   }
 }
-  
+
 var term; // the terminal
 var g; // graphics
-  
+
 function onInit() {
   // set up the keypad
   require("KeyPad").connect(KEYROW, KEYCOL, handleKeyPress);
@@ -162,7 +162,7 @@ function onInit() {
   // use a larger font instead of the default
   require("Font8x12").add(Graphics);
   g.setFont8x12();
-  
+
   // Set up the terminal
   term = require("VT100").connect(g, {
     charWidth : 8,

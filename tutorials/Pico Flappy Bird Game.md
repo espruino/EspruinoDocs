@@ -5,7 +5,7 @@ Flappy Bird Game
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pico+Flappy+Bird+Game. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Pico,LCD,Game,Flappy Bird,FlappyBird
-* USES: Pico,PCD8544,PicoStarterKit
+* USES: Pico,PCD8544,PicoStarterKit,Pixl.js,Graphics
 
 [[http://youtu.be/OvQdiNA2YhM]]
 
@@ -23,17 +23,28 @@ You'll Need
 * A [Nokia 5110 LCD](/PCD8544)
 * [[Breadboard]]
 
+or:
+
+* An Espruino [Pixl.js](/Pixl.js)
+
 Software
 -------
 
-Everything's detailed in the video above, but if you just want the software then it's copied below:
+Everything's detailed in the video above, but if you just want the software then it's copied below.
+
+* For a Pico copy the code as-is.
+* For Pixl.js, just comment/uncomment the lines commented with `for Pico and LCD` and `for Pixl.js`
 
 ```
+// for Pico and LCD
 A5.write(0); // GND
 A7.write(1); // VCC
-
 var BUTTON = B3;
 pinMode(BUTTON,"input_pulldown");
+var g;
+// for Pixl.js
+//var BUTTON = BTN1;
+
 var SPEED = 0.5;
 var BIRDIMG = {
   width : 8, height : 8, bpp : 1,
@@ -51,7 +62,7 @@ var BIRDIMG = {
 };
 
 
-var g;
+
 var birdy, birdvy;
 var wasPressed = false;
 var running = false;
@@ -72,8 +83,8 @@ function gameStart() {
   birdy = 48/2;
   birdvy = 0;
   barriers = [];
-  newBarrier(42);
-  newBarrier(84);
+  for (var i=42;i<g.getWidth();i+=42)
+    newBarrier(i);
   score = 0;
 }
 
@@ -83,7 +94,7 @@ function gameStop() {
 
 function draw() {
   var buttonState = BUTTON.read();
-  
+
   g.clear();
   if (!running) {
     g.drawString("Game Over!",25,10);
@@ -95,11 +106,11 @@ function draw() {
     wasPressed = buttonState;
     return;
   }
-  
+
   if (buttonState && !wasPressed)
     birdvy -= 2;
   wasPressed = buttonState;
-  
+
   score++;
   birdvy += 0.2;
   birdvy *= 0.8;
@@ -124,13 +135,14 @@ function draw() {
   });
   while (barriers.length && barriers[0].x2<=0) {
     barriers.shift();
-    newBarrier(84);
+    newBarrier(g.getWidth());
   }
 
   g.flip();
 }
 
-function onInit() {
+// For Pico and LCD
+function onInit() {  
   // Setup SPI
   var spi = new SPI();
   spi.setup({ sck:B1, mosi:B10 });
@@ -142,8 +154,12 @@ function onInit() {
   });
 }
 
+// For Pixl.js
+//function onInit() {  
+//  gameStart();
+//  setInterval(draw, 50);
+//}
 
 // Finally, start everything going
 onInit();
 ```
-

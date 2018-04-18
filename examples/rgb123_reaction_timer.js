@@ -3,7 +3,7 @@ Reaction Timer using RGB123
 =================================
 
 * KEYWORDS: Reaction,Timer,Timing
-* USES: RGB123,Button
+* USES: RGB123,Button,Graphics
 
 
 This uses an [[RGB123]] 16x8 display (on B15), and scrolls the text "Test your reaction time!". When a button is pressed, it goes to a short timer `3..2..1..` and then after a random time period it lights up bright red and you have to press the button... It then tells you your reaction time and goes back to the start.
@@ -23,7 +23,7 @@ var BUTTON = A1;
 var LIGHT = A0;
 pinMode(BUTTON,"input_pullup");
 SPI2.setup({baud:3200000, mosi:B15});
-var g = Graphics.createArrayBuffer(16,8,24,{zigzag:true}); 
+var g = Graphics.createArrayBuffer(16,8,24,{zigzag:true});
 g.flip = function() { SPI2.send4bit(this.buffer, 0b0001, 0b0011); };
 require("Font6x8").add(Graphics);
 var textPos = -16;
@@ -52,10 +52,10 @@ function scrollHandler() {
 }
 
 function countdownHandler() {
-  g.clear();  
+  g.clear();
   g.setFont6x8();
   var text;
-  
+
   if (countdownCount==0) {
     g.setColor(0,0.2,0);
     text = "3";
@@ -66,11 +66,11 @@ function countdownHandler() {
     g.setColor(0,0.0,0.2);
     text = "1";
   }
-  g.drawString(text,(g.getWidth()-g.stringWidth(text))/2,1);  
+  g.drawString(text,(g.getWidth()-g.stringWidth(text))/2,1);
   g.flip();
-  
+
   countdownCount++;
-  if (countdownCount>2) {    
+  if (countdownCount>2) {
     setTimeout('changeState("doTest")', 500);
   }
 
@@ -78,10 +78,10 @@ function countdownHandler() {
 
 
 function tooEarlyHandler() {
-  g.clear();  
+  g.clear();
   g.setFont6x8();
   var text;
-  
+
   if (countdownCount==0) {
     g.setColor(0,0.2,0);
     text = ":-(";
@@ -93,9 +93,9 @@ function tooEarlyHandler() {
     g.setFontBitmap();
     text = "Soon";
   }
-  g.drawString(text,(g.getWidth()-g.stringWidth(text))/2,1);  
+  g.drawString(text,(g.getWidth()-g.stringWidth(text))/2,1);
   g.flip();
-  
+
   countdownCount++;
   if (countdownCount>3) {
     setTimeout('changeState("scrolling")', 500);
@@ -103,10 +103,10 @@ function tooEarlyHandler() {
 }
 
 function testFinishedHandler() {
-  g.clear();  
+  g.clear();
   g.setFont6x8();
   var text="",y=0;
-  
+
   if (countdownCount==0) {
     g.setColor(0,0.2,0);
     text = "You";
@@ -118,9 +118,9 @@ function testFinishedHandler() {
     g.setFontBitmap(); y=2;
     text = Math.round(testValue*1000);
   }
-  g.drawString(text,(g.getWidth()-g.stringWidth(text))/2,y);  
+  g.drawString(text,(g.getWidth()-g.stringWidth(text))/2,y);
   g.flip();
-  
+
   countdownCount++;
   if (countdownCount>6) {
     setTimeout('changeState("scrolling")', 500);
@@ -160,14 +160,14 @@ function changeState(newState, time) {
   if (state == "earlyPress") {
     setInterval(tooEarlyHandler, 1000);
     digitalWrite(LIGHT, 0);
-    countdownCount = 0;    
+    countdownCount = 0;
   }
   if (state == "buttonHit") {
     testValue = time - testStartTime;
     console.log("Got time "+testValue);
     digitalWrite(LIGHT, 0);
     setInterval(testFinishedHandler, 1000);
-    countdownCount = 0;  
+    countdownCount = 0;
   }
 }
 
@@ -177,7 +177,7 @@ function changeState(newState, time) {
 function buttonPress(e) {
   if (state=="scrolling")
     changeState("countdown");
-  else if (state == "countdown" || state=="doTest")    
+  else if (state == "countdown" || state=="doTest")
     changeState("earlyPress");
   else if (state=="inTest")
     changeState("buttonHit", e.time);

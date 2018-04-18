@@ -5,6 +5,7 @@ Fonts
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Fonts. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Graphics,Font,Fonts,Text,Typeface,Module
+* USES: Graphics
 
 Espruino has two main fonts built-in. A vector font, and a bitmap font.
 
@@ -24,7 +25,7 @@ g.clear();
 g.setFontVector(40);
 g.drawString("Hello",0,0); // 40px high
 g.setFontVector(60);
-g.drawString("World",40,40); // 60px high 
+g.drawString("World",40,40); // 60px high
 ```
 
 While the vector font is meant to look great at larger sizes, it doesn't scale down in size very well below about 20 pixels high, so there's the Bitmap Font.
@@ -77,7 +78,7 @@ You can also create your own fonts. To do this, see [`g.setFontCustom(...)`](/Re
 
 You'll need a string containing a column-first, most significant bit first, 1 bit per pixel bitmap containing the font bitmap. Optionally you can also have another string containing the widths of each character.
 
-Matt Brailsford has made an excellent [online font converter](http://ebfc.mattbrailsford.com/) specifically for creating fonts for Espruino. 
+Matt Brailsford has made an excellent [online font converter](http://ebfc.mattbrailsford.com/) specifically for creating fonts for Espruino.
 ... or for an example of how to create the data programmatically, take a look at
 [the JS file used to make Espruino's font modules](https://github.com/espruino/Espruino/blob/master/scripts/create_custom_font.js).
 
