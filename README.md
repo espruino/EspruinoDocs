@@ -50,7 +50,9 @@ EspruinoWiFi
 Pico
 Puck.js
 Pixl.js
+MDBT42Q
 MicroBit
+Thingy52
 
 // Other things
 Internet       An internet connection

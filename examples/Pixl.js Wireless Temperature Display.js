@@ -1,6 +1,6 @@
 /*<!-- Copyright (c) 2018 Gordon Williams. See the file LICENSE for copying permission. -->
-Pixl.js Remote Temperature Display
-===========================
+Pixl.js Wireless Temperature Display
+=====================================
 
 * KEYWORDS: Temperature Sensor,Display
 * USES: Pixl.js,Puck.js,Graphics,BLE
@@ -13,6 +13,10 @@ as 'manufacturer data', with Espruino's own manufacturer code `0x590`.
 of all devices it has found that are advertising with the manufacturer code `0x590`,
 along with their battery level and temperature.
 
+**Note:** [Pixl.js Wireless Weather Station](/Pixl.js Wireless Weather Station)
+is very similar but uses a [Thingy:52](/Thingy52) as a sensor. The Weather
+Station example uses significantly more power as it scans constantly (this
+scans for 1 second every minute).
 */
 
 // -------------------------------------------------------------------
