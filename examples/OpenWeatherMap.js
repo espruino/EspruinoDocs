@@ -31,6 +31,19 @@ You only have to fill in your network ID, Network Password and your open Weather
 This example was tested with ESP32 and should also work with any other Espruino with network connection (wifi).
 
 Time in this example is GMT! This is important if you like to use sunrise and sunset time.
+If you like to use the second example, please put a comment around the first example.
+
+
+Example: Download Weather Forecast
+--------------------------------------
+
+This example downloads the weather for the next 5 days with a 3 hour resolution.
+You only have to fill in your network ID, Network Password and your open Weather Map API Key.
+This example was tested with ESP32 and should also work with any other Espruino with network connection (wifi).
+
+You should put the weather example into comments and remove the comments from this example to use it.
+
+Time in this example is GMT! This is important if you like to use sunrise and sunset time.
 */
 var wifi = require("Wifi");
 var http = require("http");
@@ -38,7 +51,6 @@ var http = require("http");
 // Request your own Key at: http://openweathermap.com/
 var API_Key = "<your API Key>";
 var Location = "2912573";
-var OWM = "https://api.openweathermap.org/data/2.5/weather";
 var SSID = "<your network ID>";
 var PSWD = "<your network PSWD>";
 
@@ -68,20 +80,59 @@ function DumpWeather( OWMData ) {
 
 }
 
+/*
+ This function dump the data which is received when forecast was requested.
+*/
+function DumpForecast( OWMData ) {
+  //console.log(OWMData);    
+  for (i=0; i < OWMData.cnt; i++ )
+  {
+    console.log(OWMData.list[i].dt_txt + " - " + (OWMData.list[i].main.temp-273.15) );
+  }
+}
+
+/* Generate the OWM Request 
+This function generates a string which can be used to request the weather data.
+*/
+function GetOWM_Request ( RequestType, LocationID, APIKey )
+{
+  var OWM = "https://api.openweathermap.org/data/2.5/";
+  var Result = "error";
+  if ( ( RequestType == "weather") || (( RequestType == "forecast")) )
+  {
+    Result = OWM + RequestType+ "?id=" + Location + "&appid=" + APIKey;
+  } else {
+    console.log ( "unsupported OWM Request" );
+  }
+  return Result;
+}
+
 function DoInit() {
   print(wifi.getStatus()  );
   print(wifi.stopAP()  );
-  //wifi.setHostname("MyDevice");
   wifi.connect(SSID, { password:PSWD}, function(err) { OnConnect(err); } );
   print(wifi.getStatus()  );
 
-
-  print ("Request: "+OWM+"?id="+Location+"&APPID="+API_Key);
-  http.get(OWM+"?id="+Location+"&APPID="+API_Key, function(res) {
+  var Req = "";
+  // Request weather data
+  Req = GetOWM_Request("weather", Location, API_Key);
+  print ("Request: "+ Req);
+  http.get(Req, function(res) {
     var contents = "";
     res.on('data', function(data) { contents += data; });
     res.on('close', function() { DumpWeather(JSON.parse(contents)); });
+  }); 
+
+  /* 
+  // Reqeust forecast data
+  Req = GetOWM_Request("forecast", Location, API_Key);
+  print ("Request: "+ Req);
+  http.get( Req, function(res) {
+    var contents = "";
+    res.on('data', function(data) { contents += data; });
+    res.on('close', function() { DumpForecast(JSON.parse(contents)); });
   });
+  */
 
   wifi.on('disconnected', function(details) {
     print("Lost Connection" + details );
