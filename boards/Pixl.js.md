@@ -38,10 +38,27 @@ Powering Pixl.js
 Pixl.js can be powered in multiple ways:
 
 * **Micro USB** - the Micro USB connector can easily provide power to your Pixl.js (there is no data connection)
-* **CR2032 Lithium Battery** - normal CR2032 batteries will power Pixl.js with the LCD for around 4 days
+* **CR2032 Lithium Battery** - a CR2032 battery will power Pixl.js for around 20 days with light JavaScript usage
 * **`Vin` pins** - available via the Arduino header, or the separate pin header to the side. You can supply 3v - 16v which is regulated down to 3.3v for Pixl.js
 * **CR2032 LiPo battery** - you can not use a CR2032 LiPo battery without some minor modifications as the voltage is too high. There is a small solder jumper below the CR2032 holder. Cut the existing connection and solder between the other two pads. This causes the battery to be connected via the voltage regulator. **Note:** the LiPo will then be connected directly to Vin, and you will be unable to use the USB for power (as it'll connect to LiPo to 5v).
 * **CR2032 battery backup** - the CR2032 can be used as a backup when Vin/USB power is not present. Cut the trace in the solder jumper below the CR2032 holder, and add a surface mount diode to the two pads to the right of it.
+
+
+Power Consumption
+-----------------
+
+All power figures below are with the LCD on:
+
+* Advertising - 320uA
+* Connected via BLE - 500uA
+* Backlight on - 5mA
+* 100% CPU usage running JavaScript - 5mA
+* Backlight on, 100% CPU usage running JavaScript - 10mA
+* Using NRF.findDevices to scan for devices - 12mA
+
+This means that when running off a CR2032 battery you could expect around 20 days of battery life with light JavaScript usage and no backlight.
+
+Pixl.js sends advertising data without ever executing JavaScript. To get the best power consumption, make sure your code executes as rarely as possible.
 
 
 Tutorials
