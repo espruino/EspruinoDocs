@@ -199,7 +199,8 @@ that you have previously defined on the Puck as well.
 
 **Note:** The format is `/ble/write/de:vi:ce:ad:dr/service/characteristic`, so
 you don't have to write to the Nordic UART on Puck.js. You can define your own
-services and write directly to those.
+services and write directly to those (the format is either `6e400001b5a3f393e0a9e50e24dcca9e` 
+for 128 bit uuids or `abcd` for 16 bit UUIDs).
 
 
 More!
