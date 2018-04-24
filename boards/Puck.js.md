@@ -4,10 +4,11 @@ Puck.js
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Espruino,Puck,Puckjs,Puck.js,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE
+* KEYWORDS: Espruino,Official Board,Puck,Puckjs,Puck.js,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE
 
 ![Puck.js](Puck.js/board.jpg)
 
+* BUYFROM: £30,£21.60,https://shop.espruino.com/puckjs,/Order#puckjs
 
 Features
 --------
@@ -31,16 +32,14 @@ Features
 * Dimensions of bare PCB: 29mm dia, 9mm thick
 
 
-<a name="buy"></a>Buying
-------
+Accessories
+-----------
 
-You can now get Puck.js from several different distributors. [Click here to see them.](/Order#puckjs)
+You can also buy kits of different color cases for Puck.js from the
+[Espruino Shop](https://shop.espruino.com/puckjs-accessories) or [our Tindie store](https://www.tindie.com/stores/gfwilliams/)
 
-You can also buy kits of different color cases for Puck.js from [our Tindie store](https://www.tindie.com/stores/gfwilliams/):
-
-[![Black cases](Puck.js/col1.jpg)](https://www.tindie.com/products/gfwilliams/puckjs-black-cases/)
-[![Primary color case kit](Puck.js/col4.jpg)](https://www.tindie.com/products/gfwilliams/puckjs-cases-red-yellow-green-blue/)
-[![All color case kit](Puck.js/col5.jpg)](https://www.tindie.com/products/gfwilliams/puckjs-cases-black-red-yellow-green-blue/)
+[![Black cases](Puck.js/col1.jpg)](https://shop.espruino.com/puckjs-cover-black)
+[![Color case kit](Puck.js/col5.jpg)](https://shop.espruino.com/puckjs-cover-selection)
 
 
 Turning Puck.js on
@@ -447,3 +446,9 @@ You can simply call `NRF.setAdvertising({},{name:"My Name"});` to change your Pu
 ### It's some other problem!
 
 Check out the [main troubleshooting page](/Troubleshooting) and also the [Espruino Forums](http://forum.espruino.com/)
+
+
+Other Official Espruino Boards
+------------------------------
+
+* APPEND_KEYWORD: Official Board

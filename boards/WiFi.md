@@ -4,9 +4,11 @@ Espruino WiFi
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/WiFi. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Espruino WiFi,WiFi,Wireless,Internet,Radio,ESP8266,Board,PCB,Pinout
+* KEYWORDS: Espruino,Official Board,Espruino WiFi,WiFi,Wireless,Internet,Radio,ESP8266,Board,PCB,Pinout
 
 ![Espruino WiFi](WiFi/angled.jpg)
+
+* BUYFROM: £30,£21.60,https://shop.espruino.com/wifi,/Order#espruino-wifi
 
 **Note:** Espruino WiFi provides an easy, well-supported way to get on the Internet, however it's not the only way to access a WiFi network from an Espruino board. [See here](/Internet#related-pages) for more information.
 
@@ -26,12 +28,6 @@ Features
 * On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 5v (please see notes under [pinout](#pinout) below)
 * Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
 * 500mA polyfuse on board
-
-<a name="buy"></a>Buying
-------
-
-You can now get an Espruino WiFi from several different distributors. [Click here to see them.](/Order#wifi)
-
 
 Pinout
 ------
@@ -182,3 +178,9 @@ Just:
 * Hold down the Espruino WiFi's button while plugging it into USB
 * Use the DFU tool to flash the firmware. Using the GUI on windows, or with the command `sudo dfu-util -a 0 -s 0x08000000 -D espruino_binary_file.bin` for `dfu-util` on Mac/Linux.
 * Un-short the `BOOT0/BTN` jumper to re-use the original Espruino Bootloader. If you used a Pencil mark then you may need to use cleaning fluid and a small brush to totally clear out the graphite.
+
+
+Other Official Espruino Boards
+------------------------------
+
+* APPEND_KEYWORD: Official Board

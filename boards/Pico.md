@@ -4,9 +4,11 @@ Espruino Pico
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pico. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Espruino Pico,Board,PCB,Pinout
+* KEYWORDS: Espruino,Official Board,Espruino Pico,Board,PCB,Pinout
 
 ![Espruino Pico](Pico/angled.jpg)
+
+* BUYFROM: £20,£14.40,https://shop.espruino.com/pico,/Order#pico
 
 Features
 -------
@@ -24,11 +26,6 @@ Features
 * On-board FET can be used to drive high-current outputs
 * Rev 1v4: 500mA polyfuse on board
 * Rev 1v4: CE and RoHS certification
-
-<a name="buy"></a>Buying
-------
-
-You can now get an Espruino Pico from several different distributors. [Click here to see them.](/Order#pico)
 
 Pinout
 ------
@@ -199,9 +196,16 @@ Just:
 
 **Note:** If you can't access the bottom side of the board (maybe it is soldered down), on rev 1v3 boards BOOT0 is available via a gold teardrop-shaped pad on the top of the board. Short this to 3.3v while applying power to enable DFU mode (holding down the button is then not required).
 
+
 Advanced Debugging
 ----------------
 
 The Pico also has SWD Debug connections on the back of it. An ST-Link debugger (or ST Discovery/Nucleo board) can be connected to these connections for fast firmware uploads and source-level debugging of the interpreter itself.
 
 See the [[AdvancedDebug]] page for more information.
+
+
+Other Official Espruino Boards
+------------------------------
+
+* APPEND_KEYWORD: Official Board

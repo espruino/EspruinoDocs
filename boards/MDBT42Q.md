@@ -4,9 +4,11 @@ Raytac MDBT42Q
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MDBT42Q. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Espruino,MDBT42Q,MDBT42,nRF52832,nRF52,Nordic,Pinout,Bluetooth,BLE,Bluetooth LE
+* KEYWORDS: Espruino,Official Board,MDBT42Q,MDBT42,nRF52832,nRF52,Nordic,Pinout,Bluetooth,BLE,Bluetooth LE
 
 ![Raytac MDBT42Q](MDBT42Q/board.jpg)
+
+* BUYFROM: £12,£5.96,https://shop.espruino.com/mdbt42q
 
 This is the Bluetooth module that we use in [Puck.js](/Puck.js) and [Pixl.js](/Pixl.js)
 devices. You can [buy it from us](https://shop.espruino.com/mdbt42q) with the
@@ -28,12 +30,6 @@ Features
 * Built in thermometer
 * NFC tag programmable from JavaScript (when an antenna is connected)
 * Dimensions: 16mm x 10mm x 2.2mm thick
-
-
-<a name="buy"></a>Buying
-------
-
-You can buy pre-programmed MDBT42Q modules [direct from us](https://shop.espruino.com/mdbt42q)
 
 
 Getting Started
@@ -140,3 +136,9 @@ pin `D0` connected to VDD, then release it after a second.
 
 This will enable the bootloader mode, and you can then connect with the
 nRF connect app.
+
+
+Other Official Espruino Boards
+------------------------------
+
+* APPEND_KEYWORD: Official Board

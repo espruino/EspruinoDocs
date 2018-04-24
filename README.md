@@ -22,6 +22,7 @@ Documentation files are written [GitHub Markdown](https://help.github.com/articl
     * APPEND_USES: part              ; Append a list of pages that have this part in their USES_PARTS list
     * APPEND_JSDOC: filename         ; Append JavaScript documentation based on the JS in the given file
     * APPEND_PINOUT: boardname       ; Append Pinout for the given board
+    * BUYFROM: normalprice,bulkprice,link1,link2  ; Append a floating 'buy from' window
 
 It also looks for a title (second line, after copyright notices) which it uses to create the title of the HTML page (and of links to it).
 
@@ -66,7 +67,15 @@ ESP8266        ESP8266 attached to an Espruino
 BLE            Bluetooth LE (eg via Puck.js) but may need board-specific hardware
 Only BLE       Bluetooth LE (eg via Puck.js) but applicable to anything
 Web Bluetooth
+```
 
+Common keywords for KEYWORDS/APPEND_KEYWORDS are:
+
+```
+Espruino
+Official Board
+PCB 
+Pinout                 Page contains pinout info
 ```
 
 ## Build Requirements

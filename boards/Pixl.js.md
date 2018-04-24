@@ -4,9 +4,11 @@ Pixl.js
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pixl.js. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Espruino,Pixl,Pixljs,Pixl.js,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Graphics
+* KEYWORDS: Espruino,Official Board,Pixl,Pixljs,Pixl.js,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Graphics
 
 ![Pixl.js](Pixl.js/board.jpg)
+
+* BUYFROM: £36,£25.92,https://shop.espruino.com/pixljs
 
 Features
 --------
@@ -24,12 +26,6 @@ Features
 * Built in thermometer and battery level sensors
 * NFC tag programmable from JavaScript
 * Dimensions: 60mm x 53mm x 15mm (2.4 x 2.1 x 0.6 inches)
-
-
-<a name="buy"></a>Buying
-------
-
-You can now buy Pixl.js [from the Espruino Store](https://shop.espruino.com/pixljs)
 
 
 Powering Pixl.js
@@ -174,3 +170,9 @@ stop this, execute `Serial1.setConsole(true)` to force the console to stay on
 **Note:** Serial1 is not enabled by default because it requires the high speed
 oscillator to stay on, which increases power draw a huge amount. If you connect
 the UART but don't power down and power on Pixl.js, you won't get a serial port.
+
+
+Other Official Espruino Boards
+------------------------------
+
+* APPEND_KEYWORD: Official Board

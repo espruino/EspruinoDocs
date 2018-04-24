@@ -434,9 +434,9 @@ markdownFiles.forEach(function (file) {
 
    appendMatching(/^\* APPEND_KEYWORD: (.*)/ , "APPEND_KEYWORD", fileInfo.keywords, "");
    appendMatching(/^\* APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, " * No tutorials are available yet");
-   // try and handle module documentation
    for (i in contentLines) {
      var match;
+     // try and handle module documentation
      match = contentLines[i].match(/^\* APPEND_JSDOC: (.*)/);
      if (match!=null) {
        var jsfilename = file.substr(0, file.lastIndexOf("/")+1) + match[1];
@@ -446,6 +446,22 @@ markdownFiles.forEach(function (file) {
        /* setting the language to Java lets it be highlighted correctly
        while not adding the 'send to Espruino' icon */
        contentLines[i] = "```Java\n"+doc+"```\n";
+     }
+     // handle buy links
+     match = contentLines[i].match(/^\* BUYFROM:(.*)/);
+     if (match!=null) {
+       var info = match[1].trim().split(",");
+
+       var html = `<div style="float:right;z-index:-1" class="panel panel-info" >
+    <div class="panel-heading"><h4 style="text-align:center;margin:0px;">Buy Now</h4></div>
+    <div class="panel-body center-block">
+      <h1 style="margin-top:0px"><a name="buy"></a><small>From</small>  ${info[0]}</h1>
+      <p><small>Or ${info[1]} in volume</small></p>`;
+      html += `      <a role="button" class="btn btn-primary" style="width:100%" href="${info[2]}">Espruino Shop</a><br/>`;
+      if (info[3]) html += `      <a role="button" class="btn btn-default" style="width:100%" href="${info[3]}">Distributors</a>`;
+      html += `   </div>
+  </div>`;
+      contentLines[i] = html;
      }
    }
 

@@ -41,7 +41,10 @@ To see how to get started with the [official boards](/Order), just follow our [Q
  | [**ESP32**](/ESP32) | Xtensa | 240Mhz | 5000 | $10 | N | 2 | 2 | N | N | Flash FS | WiFi |
  | [**Ruuvitag**](/Ruuvitag) | nRF52832 | 64Mhz | 2000 | $28 | N | 1 | 1 | Y | N | N | Bluetooth LE, Environment sensors |
  | [**Seeed Wio LTE**](/WioLTE) | STM32F405 | 168Mhz | 5450 | $25 | Y | 6 | 3 | Y | N | Y | LTE |
- 
+ | [**Nordic Thingy:52**](/Thingy52) | nRF52832 | 64Mhz | 2000 | $40 | N | 1 | 1 | Y | N | N | Environment & 9 Axis sensors, Mic and Speaker |
+ | [**nRF52832DK DK**](/nRF52832DK) | nRF52832 | 64Mhz | 2000 | $40 | N | 1 | 1 | Y | Y | N | |
+ | [**STM32L496GDISCOVERY**](/STM32L496GDISCOVERY) | STM32L496AGI6 | 168Mhz | 19200 | $70 | Y | 3 | 4 | N | Y | Y | Optional LTE/GSM modules |
+
 **Key:** `Y`=Yes, `N`=No, `U`=Yes, but currently unimplemented
 
 You can also see these boards listed with thumbnails at the top of [the reference page](/Reference).
