@@ -1,18 +1,21 @@
-<!--- Copyright (c) 2018 Your Name. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2018 Joachim Klein. See the file LICENSE for copying permission. -->
 LIS3MDL
-=====================
+=======
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/LIS3MDL. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Shield, LIS3MDL, Magentic-Sensor
+* KEYWORDS: Shield, LIS3MDL, Magentic-Sensor, Compass, Magnetometer
 
-This module is used to initialize and setup a STMicroelectronis LIS3MDL.
-For testing I used a NUCLEO-STM32F401 + X-NUCLEO-IKS01A1. [LIS3MDL](/modules/LIS3MDL.js). 
+The [LIS3MDL](http://www.st.com/en/mems-and-sensors/lis3mdl.html) is an ultra-low-power high-performance three-axis magnetic sensor. Support is provided with the
+[[LIS3MDL.js]] module.
+
+This module was tested with the NUCLEO-STM32F401 + X-NUCLEO-IKS01A1.
+
 The IKDS01A1 shield includes the following sensors:
-* [LPS25HB](/modules/LPS25HB.js)  
-* [HTS221](/modules/HTS221.js)
-* LSM6DS0 
-* [LIS3MDL](/modules/LIS3MDL.js)
+* [LPS25HB](/LPS25HB)  
+* [HTS221](/HTS221)
+* [LSM6DS0](/LSM6DSL)
+* [LIS3MDL](/LIS3MDL)
 
 ## Required Resources
 This module require the following resources:
@@ -44,7 +47,7 @@ print ("Temp:"+temp.GetTemperature());
 ```
 ## Diagnostic data
 To verify our configuration we can use the logReg function.
-This function will dump all relevant register values, including configuration 
+This function will dump all relevant register values, including configuration
 and status registers to the serial interface.
 This function is intended to be used only during development.
 ```
@@ -57,7 +60,7 @@ The return value should be 61 (dec).
 print(temp.GetID()); // Who I am
 ```
 
-  Reference
-  ---------
+Reference
+---------
 
-  * APPEND_JSDOC: LIS3MDL.js
+* APPEND_JSDOC: LIS3MDL.js
