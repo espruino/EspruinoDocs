@@ -279,7 +279,14 @@
   "ArrayBuffer": {
     "!type": "fn(byteLength: number) -> ?",
     "!doc": "<p>Create an Array Buffer object</p>\n",
-    "!url": "http://www.espruino.com/Reference#l_ArrayBuffer_ArrayBuffer"
+    "!url": "http://www.espruino.com/Reference#l_ArrayBuffer_ArrayBuffer",
+    "prototype": {
+      "byteLength": {
+        "!type": "number",
+        "!doc": "<p>The length, in bytes, of the ArrayBuffer</p>\n",
+        "!url": "http://www.espruino.com/Reference#l_ArrayBuffer_byteLength"
+      }
+    }
   },
   "ArrayBufferView": {
     "!type": "fn()",
@@ -576,11 +583,6 @@
         "!doc": "<p>Write a character or array of data to the serial port</p>\n<p>This method writes unmodified data, eg <code>Serial.write([1,2,3])</code> is equivalent to <code>Serial.write(&quot;\\1\\2\\3&quot;)</code>. If you&#39;d like data converted to a string first, use <code>Serial.print</code>.</p>\n",
         "!url": "http://www.espruino.com/Reference#l_Serial_write"
       },
-      "onData": {
-        "!type": "fn(function: ?)",
-        "!doc": "<p>Serial.onData(func) has now been replaced with the event Serial.on(<code>data</code>, func)</p>\n",
-        "!url": "http://www.espruino.com/Reference#l_Serial_onData"
-      },
       "available": {
         "!type": "fn() -> number",
         "!doc": "<p>Return how many bytes are available to read. If there is already a listener for data, this will always return 0.</p>\n",
@@ -663,14 +665,19 @@
         "!url": "http://www.espruino.com/Reference#l_Date_getTimezoneOffset"
       },
       "getTime": {
-        "!type": "fn(timeValue: number) -> number",
-        "!doc": "<p>Set the time/date of this Date class</p>\n",
+        "!type": "fn() -> number",
+        "!doc": "<p>Return the number of milliseconds since 1970</p>\n",
         "!url": "http://www.espruino.com/Reference#l_Date_getTime"
       },
       "valueOf": {
         "!type": "fn() -> number",
         "!doc": "<p>Return the number of milliseconds since 1970</p>\n",
         "!url": "http://www.espruino.com/Reference#l_Date_valueOf"
+      },
+      "setTime": {
+        "!type": "fn(timeValue: number) -> number",
+        "!doc": "<p>Set the time/date of this Date class</p>\n",
+        "!url": "http://www.espruino.com/Reference#l_Date_setTime"
       },
       "getHours": {
         "!type": "fn() -> number",
@@ -1027,6 +1034,11 @@
       "!type": "fn(data: ?) -> bool",
       "!doc": "",
       "!url": "http://www.espruino.com/Reference#l_E_sendUSBHID"
+    },
+    "getBattery": {
+      "!type": "fn() -> number",
+      "!doc": "<p>In devices that come with batteries, this function returns\nthe battery charge percentage as an integer between 0 and 100.</p>\n<p><strong>Note:</strong> this is an estimation only, based on battery voltage.\nThe temperature of the battery (as well as the load being drawn\nfrom it at the time <code>E.getBattery</code> is called) will affect the\nreadings.</p>\n",
+      "!url": "http://www.espruino.com/Reference#l_E_getBattery"
     },
     "unmountSD": {
       "!type": "fn()",
@@ -2087,7 +2099,7 @@
     "!url": "http://www.espruino.com/Reference#Pixl",
     "getBatteryPercentage": {
       "!type": "fn() -> number",
-      "!doc": "<p>Return an approximate battery percentage remaining based on\na normal CR2032 battery (2.8 - 2.2v)</p>\n",
+      "!doc": "<p>DEPRECATED - Please use <code>E.getBattery()</code> instead.</p>\n<p>Return an approximate battery percentage remaining based on\na normal CR2032 battery (2.8 - 2.2v)</p>\n",
       "!url": "http://www.espruino.com/Reference#l_Pixl_getBatteryPercentage"
     },
     "setContrast": {
@@ -2157,7 +2169,7 @@
     },
     "getFreeFlash": {
       "!type": "fn() -> ?",
-      "!doc": "<p><strong>Note:</strong> This is deprecated. Use <code>require(&quot;flash&quot;).getFree()</code></p>\n",
+      "!doc": "<p><strong>Note:</strong> This is deprecated. Use <code>require(&quot;Flash&quot;).getFree()</code></p>\n",
       "!url": "http://www.espruino.com/Reference#l_ESP8266_getFreeFlash"
     },
     "crc32": {
@@ -2878,7 +2890,7 @@
     },
     "getBatteryPercentage": {
       "!type": "fn() -> number",
-      "!doc": "<p>Return an approximate battery percentage remaining based on\na normal CR2032 battery (2.8 - 2.2v)</p>\n",
+      "!doc": "<p>DEPRECATED - Please use <code>E.getBattery()</code> instead.</p>\n<p>Return an approximate battery percentage remaining based on\na normal CR2032 battery (2.8 - 2.2v).</p>\n",
       "!url": "http://www.espruino.com/Reference#l_Puck_getBatteryPercentage"
     },
     "selfTest": {
@@ -3136,6 +3148,16 @@
     "!type": "fn(str: ?) -> ?",
     "!doc": "<p>Convert any groups of characters of the form &#39;%ZZ&#39;, into characters with hex code &#39;0xZZ&#39;</p>\n",
     "!url": "http://www.espruino.com/Reference#l__global_decodeURIComponent"
+  },
+  "SDA": {
+    "!type": "+Pin",
+    "!doc": "<p>The pin marked SDA on the Arduino pin footprint. This is connected directly to pin A4.</p>\n",
+    "!url": "http://www.espruino.com/Reference#l__global_SDA"
+  },
+  "SCL": {
+    "!type": "+Pin",
+    "!doc": "<p>The pin marked SDA on the Arduino pin footprint. This is connected directly to pin A5.</p>\n",
+    "!url": "http://www.espruino.com/Reference#l__global_SCL"
   },
   "MOS1": {
     "!type": "+Pin",
