@@ -7,7 +7,7 @@ LSM6DSL Accelerometer and 3D Gyroscope
 * KEYWORDS: Module,Shield,LSM6DSL,I2C,Gyro,Accelerometer,Gyroscope,Sensor
 
 This module is used to initialize and setup a STMicroelectronis LSM6DSL.
-For testing I used a NUCLEO-STM32F401 + X-NUCLEO-IKS01A2.  [LSM6DSL](/modules/LSM6DSL.js) 
+For testing I used a NUCLEO-STM32F401 + X-NUCLEO-IKS01A2.  [LSM6DSL](/modules/LSM6DSL.js)
 
 The IKDS01A1 shield includes the following sensors:
 * [LPS22HB](/modules/LPS22HB.js)
@@ -23,7 +23,7 @@ This module require the following resources:
 
 ## Enable and use the Sensor
 In this example the Sensor is enabled in normal operating mode, with interrupt enabled.
-Speed is slow (12.5 Hz). It is a good idea to use a low frequency. 
+Speed is slow (12.5 Hz). It is a good idea to use a low frequency.
 If interrupts are used keep in mind, that a higher frequency will cause a high interrupt load.
 
 If no settings are used for the enable function the following default configuration is used:
@@ -36,12 +36,12 @@ If no settings are used for the enable function the following default configurat
 I2C1.setup({scl:B8,sda:B9, bitrate:400000});
 
 var MyLSM = require("LSM6DSL").connect(I2C1);
-MyLSM.enable({interrupt:true, mode:"slow", sensor:"gyro"}); 
-  
+MyLSM.enable({interrupt:true, mode:"slow", sensor:"gyro"});
+
 ```
 ## Diagnostic Data
 To verify our configuration we can use the logReg function.
-This function will dump all relevant register values, including configuration 
+This function will dump all relevant register values, including configuration
 and status registers to the serial interface.
 This function is intended to be used only during development.
 ```
@@ -76,7 +76,7 @@ Also it seems that Degree is not exact what is expected.
 - XL_X
 - XL_Y
 - XL_Z
-- G_X 
+- G_X
 - G_Y
 - G_Z
 
@@ -99,8 +99,8 @@ Since the LIS6DSL waits for the next measurement until the
 previous value is read this allows us to start and stop the sensor.
 As you can see it is also required to read the sensor at the beginning to start first measurement.
 
-Please be aware that his example will not work from flash. 
-Use the E.init() function for configuration if it should run from flash. 
+Please be aware that his example will not work from flash.
+Use the E.init() function for configuration if it should run from flash.
 
 To start the sensor press the push button on the Nucleo Board.
 ```
@@ -140,10 +140,10 @@ function io_RunMode ( )
     }
 }
 
-setWatch(io_RunMode, BTN, 
+setWatch(io_RunMode, BTN,
 {repeat:true, edge:"rising"});
 
-setWatch(io_interrupt, B5, 
+setWatch(io_interrupt, B5,
 {repeat:true, edge:"rising"});
 
 
