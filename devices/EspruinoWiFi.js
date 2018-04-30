@@ -342,6 +342,7 @@ exports.disconnect = function(callback) {
      options.channel - the channel of the AP
 */
 exports.startAP = function(ssid, options, callback) {
+  callback = callback||function(){};
   options = options||{};
   if (!options.password || options.password.length<8) throw new Error("Password must be at least 8 characters");
   var enc = options.password?"3":"0"; // wpa2 or open
@@ -481,7 +482,9 @@ exports.setAPIP = function(settings, callback) {
 exports.setHostname = function(hostname, callback) {
   turnOn(MODE.CLIENT, function(err) {
     if (err) return callback(err);
-    at.cmd("AT+CWHOSTNAME="+JSON.stringify(hostname)+"\r\n",500,callback);
+    at.cmd("AT+CWHOSTNAME="+JSON.stringify(hostname)+"\r\n",500,function(d) {
+      callback(d=="OK"?null:d);
+    });
   });
 };
 
