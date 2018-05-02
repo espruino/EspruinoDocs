@@ -39,7 +39,7 @@ going use:
 
 ```
 var wifi = require("Wifi");
-wifi.disconnect()
+wifi.disconnect();
 wifi.startAP("my-ssid", {password:"my-password",authMode:"wpa_wpa2"});
 ```
 You should see the access point appear on your phone or laptop if you do a wifi scan.
@@ -65,13 +65,13 @@ You probably want to assign a DNS name to your ESP8266 so you don't need to chas
 the ticket for that is:
 
 ```
-wifi.setHostname("my-esp")
+wifi.setHostname("my-esp");
 ```
 
 Finally, you need to save the settings so they persist across hard-resets and power cycles:
 
 ```
-wifi.save()
+wifi.save();
 ```
 
 At this point you can power cycle your ESP8266 and then reconnect from the IDE (you may have to
