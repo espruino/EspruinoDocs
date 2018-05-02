@@ -10,6 +10,15 @@ Pixl.js
 
 * BUYFROM: £36,£25.92,https://shop.espruino.com/pixljs
 
+A smart LCD with Bluetooth LE. Monitor and control other Bluetooth LE devices,
+act as a wireless display, create your own smart conference badge, or even
+just display the status of your code - all while drawing tiny amounts of
+power.
+
+Pixl.js's unique design allows you to use the Arduino footprint to interface
+with the huge array of existing Arduino shields, while still using the LCD
+and buttons.
+
 Features
 --------
 
