@@ -2,6 +2,8 @@
 /* Simple graphics menu library - http://www.espruino.com/graphical_menu */
 exports.list = function(g, items) {
   var options = items[""];
+  var menuItems = Object.keys(items);
+  if (options) menuItems.splice(menuItems.indexOf(""),1);
   if (!(options instanceof Object)) options = {};
   if (options.selected === undefined)
     options.selected = 0;
@@ -13,8 +15,7 @@ exports.list = function(g, items) {
   var y2 = options.y2||(g.getHeight()-1);
   if (options.title)
     y += options.fontHeight+2;
-
-  var menuItems = Object.keys(items).slice(1); // remove first item
+  
 
   var l = {
     draw : function() {
