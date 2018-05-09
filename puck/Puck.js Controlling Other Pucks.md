@@ -129,11 +129,11 @@ function sendToggle() {
         busy = false;
         // Now actually send the toggle command
         sendToggle();
-      }).catch(function() {
-        if (connected) connected.disconnect();
+      }).catch(function() {        
         connected=false;
         digitalPulse(LED1, 1, 500); // light red if we had a problem
         busy = false;
+        if (connected) connected.disconnect();
       });
     } else {
       txCharacteristic.writeValue("toggle()\n").then(function() {
