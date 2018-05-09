@@ -302,9 +302,7 @@ possible.
 Firmware Updates
 -----------------
 
-**Note:** Firmware 1v95 is known to have problems pairing and connecting to Windows 10 (all other platforms work fine). This is fixed in 1v96 and later, so we'd recommend that you always use the latest firmware.
-
-### via nRF Toolbox App (Android & iOS)
+### via nRF Toolbox App (iOS & Android)
 
 * On your Bluetooth LE capable phone, install the `nRF Toolbox` app
 * Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
