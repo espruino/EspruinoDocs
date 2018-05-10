@@ -5,6 +5,8 @@ Platform Game
 * KEYWORDS: Game,Platform,Platformer,Mario,Super Mario
 * USES: Pixl.js,Graphics
 
+![Platform](Platform Game.jpg)
+
 This code creates a Mario-style platform game on [Pixl.js](/Pixl.js):
 
 * The bottom two buttons move left and right
