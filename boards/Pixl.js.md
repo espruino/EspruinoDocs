@@ -43,8 +43,8 @@ Powering Pixl.js
 Pixl.js can be powered in multiple ways:
 
 * **Micro USB** - the Micro USB connector can easily provide power to your Pixl.js (there is no data connection)
-* **CR2032 Lithium Battery** - a CR2032 battery will power Pixl.js for around 20 days with light JavaScript usage
-* **`Vin` pins** - available via the Arduino header, or the separate pin header to the side. You can supply 3v - 16v which is regulated down to 3.3v for Pixl.js
+* **CR2032 Lithium battery** - a CR2032 battery will power Pixl.js for around 20 days with light JavaScript usage
+* **`Vin` pins** - available via the Arduino header, or the separate pin header to the side. You can supply 3v - 16v which is regulated down to 3.3v for Pixl.js. The unpopulated pins to the side are spaces to accommodate a connector for [JST PHR-2 Batteries](/Battery).
 * **CR2032 LiPo battery** - you can not use a CR2032 LiPo battery without some minor modifications as the voltage is too high. There is a small solder jumper below the CR2032 holder. Cut the existing connection and solder between the other two pads. This causes the battery to be connected via the voltage regulator. **Note:** the LiPo will then be connected directly to Vin, and you will be unable to use the USB for power (as it'll connect to LiPo to 5v).
 * **CR2032 battery backup** - the CR2032 can be used as a backup when Vin/USB power is not present. Cut the trace in the solder jumper below the CR2032 holder, and add a surface mount diode to the two pads to the right of it.
 
@@ -81,7 +81,7 @@ Resetting Pixl.js this way will not clear out any saved code. To do that, reset 
 Tutorials
 --------
 
-First, it's best to check out the [Getting Started Guide](/Puck.js+Quick+Start)
+First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#pixljs)
 
 Tutorials using Pixl.js:
 

@@ -81,7 +81,7 @@ Puck.js will have reset.
 Tutorials
 --------
 
-First, it's best to check out the [Getting Started Guide](/Puck.js+Quick+Start)
+First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#puckjs)
 
 Tutorials using Puck.js:
 
@@ -344,7 +344,7 @@ See [here](#turning-puck-js-on) for instructions on removing it.
 
 ### Web Bluetooth doesn't appear in my Web IDE connection options
 
-* Try following [these instructions](Puck.js Quick Start#with_web_bluetooth)
+* Try following [these instructions](Quick+Start+BLE#with_web_bluetooth)
 * Do you have an up to date version of Chrome? (`Help` -> `About Google Chrome`) - it should be at least version 51
 * Have you enabled Web Bluetooth in `chrome://flags`?
 * You need a Bluetooth LE-capable adaptor (at least Bluetooth 4.0). If your PC doesn't have one, you can [buy one for well under $10](http://www.ebay.com/sch/i.html?_nkw=usb+bluetooth+4+dongle&_sacat=0)
@@ -357,7 +357,7 @@ See [here](#turning-puck-js-on) for instructions on removing it.
 ### I can't see my Puck.js in the IDE in Windows
 
 * Are you sure some other device isn't connected to it? See the next item.
-* Are you **sure** you're using the [native Espruino IDE](http://www.espruino.com/Puck.js+Quick+Start#with-an-application) as opposed to the IDE Website or Chrome App?
+* Are you **sure** you're using the [native Espruino IDE](http://www.espruino.com/Quick+Start+BLE#with-an-application) as opposed to the IDE Website or Chrome App?
 * **On Windows 10**, have your paired your Puck using the built-in Windows Bluetooth menu? You need that before the IDE can see it. If you can't pair then your PC may not support Bluetooth LE (even if it supports normal Bluetooth) and you may need an exernal Bluetooth dongle.
 * **On Windows 7** you'll need a supported Bluetooth dongle that [may need setting up with Zadig](/Web+IDE#zadig)
 

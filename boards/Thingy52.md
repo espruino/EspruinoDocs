@@ -47,7 +47,7 @@ your device.
 * The red LED on the Thingy should flash to show Espruino has started. If it doesn't,
 power the Thingy off and back on.
 
-And you're ready to go! Follow the [Puck.js Getting Started Guide](/Puck.js+Quick+Start) for details
+And you're ready to go! Follow the [Getting Started Guide](/Quick+Start+BLE#thingy52) for details
 on getting the IDE connected wirelessly.
 
 
@@ -127,7 +127,7 @@ by clicking `Settings` -> `General` ->  `Graphical Editor Extensions`-> `Nordic 
 Tutorials
 --------
 
-First, it's best to check out the [Puck.js Getting Started Guide](/Puck.js+Quick+Start)
+First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#thingy52)
 
 Tutorials using Thingy:52:
 
@@ -180,5 +180,5 @@ Firmware Updates
 -----------------
 
 As of writing, the Thingy:52 bootloader is signed with a private key, so
-you need to write firmware using an nRF52 DK board. See the `Getting Started`
+you need to write firmware using an nRF52 DK board. See the [`Getting Started`](#getting-started)
 guide above.

@@ -45,7 +45,7 @@ It is recommended to connect all the `GND` pins together (especially when
 designing a PCB) but it is not absolutely required - you can boot the
 MDBT42Q module with just two wires.
 
-Once powered up follow the [Puck.js Getting Started Guide](/Puck.js+Quick+Start) for details
+Once powered up follow the [Getting Started Guide](/Quick+Start+BLE#mdbt42q) for details
 on getting the IDE connected wirelessly. You can also [use a wired connection](#serial-console)
 if you prefer.
 
@@ -64,7 +64,7 @@ boot and also indicates bootloader mode.
 Tutorials
 --------
 
-First, it's best to check out the [Puck.js Getting Started Guide](/Puck.js+Quick+Start)
+First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#mdbt42q)
 
 Tutorials using MDBT42Q:
 
@@ -88,6 +88,8 @@ Tutorials using Bluetooth LE and functionality that may not be part of the MDBT4
 **Note:** The nRF52 port has one available I2C, SPI and USART (and infinite software SPI and I2C).
 Unlike other Espruino boards, these peripherals can be used on *any* pin.
 
+The MDBT42Q must be powered with a voltage between 1.7v and 3.6v. **You can
+not connect a LiPo battery to it without a voltage regulator**.
 
 Information
 -----------
