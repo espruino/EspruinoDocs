@@ -17,6 +17,11 @@ Quick Start
 
 For the best experience, please use one of [our official Espruino Boards](/Order).
 
+## Already got the IDE connected?
+
+Please [take a look here](/Quick+Start+Code) for a quick walkthrough
+on how to write code for Espruino.
+
 <script>
 if (window.location.hash=="#pixljs" || window.location.hash=="#puckjs")
   window.location.pathname = "/Quick+Start+BLE";

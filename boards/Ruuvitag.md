@@ -90,3 +90,9 @@ Reference
 ---------
 
 * APPEND_JSDOC: Ruuvitag.js
+
+
+Firmware Updates
+-----------------
+
+Check out [Ruuvi's DFU instructions](https://lab.ruuvi.com/dfu/)

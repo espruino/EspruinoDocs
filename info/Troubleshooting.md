@@ -8,7 +8,7 @@ Troubleshooting
 
 What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Forum](http://forum.espruino.com).
 
-**Do you have a [Puck.js](/Puck.js)?** Check out the [Puck specific troubleshooting page](/Puck.js#troubleshooting)
+**Do you have a Bluetooth LE device like [Puck.js](/Puck.js) or [Pixl.js](/Pixl.js)?** Check out the [Puck specific troubleshooting page](/Troubleshooting+BLE)
 
 Getting Started
 =============
@@ -32,7 +32,7 @@ Hold down the RST button. Do the blue and red lights glow dimly? If not, there's
 
 Hold down BTN1, and then press and release RST while keeping BTN1 held. The Blue and Red LEDs should now light brightly for a fraction of a second, and the Blue LED should be pulsing. If not, there is some issue with USB. Try another USB cable (it's surprising how often this is at fault, *even if it works for other devices*) and if that doesn't work, see the next troubleshooting headings.
 
-### On Puck.js
+### On a Bluetooth LE device
 
 Check out the [Puck.js troubleshooting page](/Puck.js#troubleshooting)
 
@@ -375,3 +375,11 @@ This is usually one of four reasons:
 * The device's address is incorrect - sometimes people quote the address as being twice as large as it actually is. If in doubt, try dividing the address by two or multiplying it by two.
 * The device isn't powered or ground isn't shared (see the point above)
 * The SDA and SCL wires are mixed up. SDA should be connected to SDA, and SCL to SCL.
+
+
+Something else is wrong!
+-------------------------
+
+Check out the [Espruino Forums](http://forum.espruino.com/)
+
+Is your device a Bluetooth device? Check out the [Bluetooth Troubleshooting page](/Troubleshooting+BLE)

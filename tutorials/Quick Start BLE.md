@@ -11,7 +11,7 @@ Quick Start (Bluetooth LE)
 Turning On
 ----------
 
-<span class="specific puckjs"><h3>Puck.js</h3>
+### <a class="specific puckjs"></a>Puck.js
 
 Your Puck.js shipped with a battery installed, but with a small plastic tab inserted to keep it turned off.
 
@@ -35,8 +35,7 @@ improving the software and adding new features.
 
 To get the best out of it, we'd recommend that you [update Puck.js's firmware](/Puck.js#firmware-updates) first.
 
-</span>
-<span class="specific pixljs"><h3>Pixl.js</h3>
+### <a class="specific pixljs"></a>Pixl.js
 
 To turn on your Pixl.js you have three main options:
 
@@ -49,8 +48,7 @@ improving the software and adding new features.
 
 To get the best out of it, we'd recommend that you [update Pixl.js's firmware](/Pixl.js#firmware-updates) first.
 
-</span>
-<span class="specific mdbt42q"><h3>MDBT42Q</h3>
+### <a class="specific mdbt42q"></a>MDBT42Q
 
 Check out [the MDBT42Q](/MDBT42Q#pinout) page for more information about powering the MDBT42Q.
 
@@ -59,22 +57,19 @@ improving the software and adding new features.
 
 To get the best out of it, we'd recommend that you [update the firmware](/MDBT42Q#firmware-updates) first.
 
-</span>
-<span class="specific ruuvitag"><h3>Ruuvitag</h3>
+### <a class="specific ruuvitag"></a>Ruuvitag
 
 Check out [Ruuvi's getting started page](https://lab.ruuvi.com/start/) for more information about powering MDBT42Q.
 
-</span>
-<span class="specific thingy52"><h3>Nordic Thingy:52</h3>
+### <a class="specific thingy52"></a>Nordic Thingy:52
 
 You'll need to have your Thingy:52 flashed with Espruino and powered on. [Check out the Thingy:52 page](/Thingy52#getting-started) for more information.
 
-</span>
-<span class="specific nrf52832dk"><h3>Nordic nRF52832DK</h3>
+### <a class="specific nrf52832dk"></a>Nordic nRF52832DK
 
-Simply plug your nRF52832DK into a USB connector. [You need to have it pre-flashed with Espruino](/nRF52832DK#getting-started).
+Simply plug your nRF52832DK into a USB connector. [You need to have it flashed with Espruino](/nRF52832DK#getting-started).
 
-</span>
+### <a class="specific end"></a>
 
 Once your device is powered up it'll start advertising itself via Bluetooth Low Energy.
 
@@ -85,11 +80,11 @@ can direct your NFC-capable phone to the relevant URLs.
 Requirements
 ------------
 
-For Bluetooth LE you need a Bluetooth 4.0-capable adaptor in your computer (Bluetooth versions before 4.0 won't work). Pretty much all new computers come with Bluetooth 4, but you may need to get an external Bluetooth LE dongle if your computer:
+For Bluetooth LE you need a Bluetooth 4.0-capable adaptor in your computer (Bluetooth versions before 4.0 won't work). Pretty much all new computers come with Bluetooth 4, but you *may* need to get an external Bluetooth LE dongle if your computer:
 
 * Is an Apple Mac made before 2012
-* Is a Windows PC
-* Is a desktop PC - it may not have any wireless support *at all*
+* Is a Windows PC (especially pre-windows 10)
+* Is a Desktop PC - it may not have any wireless support *at all*
 * Is running Linux - much of the built-in Bluetooth LE functionality in laptops is still buggy. External USB adaptors will be much more reliable.
 
 If your computer doesn't have Bluetooth LE then Bluetooth LE USB adaptors and small, cheap (~$10), and easily available. There are two main types of USB Bluetooth Adaptor available:
@@ -111,12 +106,14 @@ Common USB Bluetooth adaptors that have been tested and work are:
 Using your Espruino device
 ---------------------------
 
-By default, Espruino appears as a Bluetooth Low Energy device with a serial port. When you connect to this serial port you get full command-line access to the Espruino Javascript interpreter built into it. **Note:** Bluetooth LE serial ports (known as 'Nordic UART') will not appear in your Operating System's list of serial devices.
+By default, Espruino appears as a Bluetooth Low Energy device with a serial port. When you connect to this serial port you get full command-line access to the Espruino Javascript interpreter built into it.
+
+**Note:** Bluetooth LE serial ports (known as 'Nordic UART') will not appear in your Operating System's list of serial devices.
 
 To get started you have two options:
 
 * [Use the Espruino IDE](#using-the-espruino-ide) or command-line tools to write code to Espruino
-* Send individual JavaScript commands to Espruino without programming it
+* [Send individual JavaScript commands](#sending-individual-commands) to Espruino without programming it
 
 
 
@@ -195,7 +192,7 @@ webpage viewed with [WebBLE](https://itunes.apple.com/us/app/webble/id1193531073
 
 * Go to the [Puck.js site](https://puck-js.com/go). It should tell you that you have Web Bluetooth.
 * Click the [Web IDE option](/ide).
-* Click the orange icon in the Top Left: ![Connect icon](Quick Start BLE/connect.png)
+* Click the orange **Connect/Disconnect** icon in the Top Left: ![Connect icon](Quick Start BLE/connect.png)
 * You may see a list of connection options - choose `Web Bluetooth`:
 
 ![Web Bluetooth setting](Quick Start BLE/connect2.png)
@@ -226,8 +223,8 @@ used normal Espruino USB devices before.
 
 **Note:**
 
-* Bluetooth LE devices like Puck.js are not treated as serial port devices by Windows. If the IDE's connection menu shows devices beginning with the word `COM` (eg. `COM5`), they are not your device and connecting to them won't work.
-* If using Windows 8.1/10 or later you'll need to pair your Puck.js using the Windows
+* Bluetooth LE Serial devices (Nordic UART Service) like Espruino are not treated as serial port devices by Windows. If the IDE's connection menu shows devices beginning with the word `COM` (eg. `COM5`), they are not your device and connecting to them won't work.
+* If using Windows 8.1/10 or later you'll need to pair your Espruino device using the Windows
 Bluetooth menu before it'll appear in the Web IDE.
 * If you're using a Bluetooth dongle with Windows 10 you should use Windows'
 built-in Bluetooth software, rather than installing the software that came with
@@ -259,13 +256,11 @@ In the worst case, you don't have any computers that allow you to communicate us
 
 But all is not lost! With many devices you can connect directly using a USB-TTL converter:
 
-<ul>
-<span class="specific puckjs"><li>[Connecting Serial to Puck.js](/Puck.js#serial-console).</li></span>
-<span class="specific pixljs"><li>[Connecting Serial to Pixl.js](/Pixl.js#serial-console).</li></span>
-<span class="specific puckjs"><li>[Connecting Serial to to the MDBT42Q](/MDBT42Q#serial-console).</li></span>
-<span class="specific thingy52"><li>[Connecting Serial to to the Thingy:52](/Thingy52#serial-console).</li></span>
-<span class="specific nrf52832dk"><li>The nRF52832DK has [USB serial built-in](/nRF52832DK#serial-console).</li></span>
-</ul>
+* [Connecting Serial to Puck.js](/Puck.js#serial-console)
+* [Connecting Serial to Pixl.js](/Pixl.js#serial-console)
+* [Connecting Serial to to the MDBT42Q](/MDBT42Q#serial-console)
+* [Connecting Serial to to the Thingy:52](/Thingy52#serial-console)
+* The nRF52832DK has [USB serial built-in](/nRF52832DK#serial-console)
 
 You can then use the normal [Espruino Web IDE](/Web+IDE), which has [separate instructions for Getting Started](/Quick+Start+USB)
 
@@ -340,79 +335,72 @@ Type in `LED1.set()` and click send.
 Having Trouble?
 -----------------------------
 
-Check out the [Troubleshooting](/Puck.js#troubleshooting) page, or ask on
-[our forums](http://forum.espruino.com)
+Try:
+
+* The [Bluetooth Troubleshooting](/Troubleshooting+BLE) page
+* [General Troubleshooting](/Troubleshooting)
+* Or ask on [our forums](http://forum.espruino.com) if you can't find the answer you need
 
 
 <a id="next"></a>What now?
 ---------------------------
 
-If you're using any version of the Web IDE, you can click on the Book icon in
-the top right, then:
+**Please [try the walkthrough](/Quick+Start+Code) to get started writing
+your first code for Espruino**
 
-* **Tour** for a quick tour of the various parts of the Web IDE
-* **Tutorial** for a step by step guide to writing your first code on Espruino
+There's lots of detailed information on specific boards, as well
+as a list of tutorials for them:
 
-![Web Bluetooth setting](Quick Start BLE/tutorial.png)
+* [Puck.js](/Puck.js)
+* [Pixl.js](/Pixl.js)
+* [MDBT42Q](/MDBT42Q)
+* [Thingy:52](/Thingy52)
+* [nRF52832DK](/nRF52832DK)
+* [RuuviTag](/RuuviTag)
 
-Or you can follow the [Quick Start guide](/Quick+Start+USB#start-writing-code-)
-for USB Espruino Boards.
+There is more general information:
 
-<span class="specific puckjs">
-You can check out some of the Puck.js tutorials:
-
-* APPEND_USES: Puck.js
-
-</span><span class="specific pixljs">
-
-You can check out some of the Pixl.js tutorials:
-
-* APPEND_USES: Pixl.js
-</span>
-
-Or tutorials that will work on any Bluetooth LE device:
-
-* APPEND_USES: Only BLE
-
-However there's also much more detailed information:
-
-* [Puck.js Reference](/Puck.js) and [Troubleshooting](/Puck.js#troubleshooting)
-* [How to use Puck.js on board Peripherals](/Puck.js#on-board-peripherals)
+* [Bluetooth Troubleshooting](/Troubleshooting+BLE)
 * [Language Reference](/Reference), specifically:
   * [Puck Object](/Reference#Puck) - for Puck.js specific functionality
+  * [Pixl Object](/Reference#Pixl) - for Pixl.js specific functionality
   * [NRF Object](/Reference#NRF) - for nRF52 Bluetooth functionality
   * [Global Functions](/Reference#_global) and [E Object](/Reference#E) - for built-in Espruino functionality
+* Instantly [Search](/Search) all the Espruino website's documentation (using the box in the top right)
 * [List of available modules](/Modules)
-* [Other tutorials](/Tutorials)
-* See other [ways of Programming Puck.js](/Programming)
+* [Tutorials](/Tutorials)
+* [Frequently Asked Questions](/FAQ)
+* See other [ways of Programming Espruino devices](/Programming)
 * Or check out [our forums](http://forum.espruino.com)
 
 **Note:** Espruino runs on many other devices, and [espruino.com](http://espruino.com)
-caters for all of them. Unless a tutorial explicitly says it is for Puck.js it's
+caters for all of them. Unless [a tutorial](/Tutorials) explicitly says it is for your device it's
 possible that you will have to change some pin names and wiring to match
-[the pins on the Puck.js](/Puck.js#pinout).
+the pins that you used on your device.
 
 
 Power Usage
 ------------
 
-When idle (as it comes after the battery is plugged in) Puck.js draws around 20uA,
-allowing it to run for around a year on a battery. When it's running a small amount
-of JavaScript code once a minute or when a button is pressed that figure won't be
-a great deal higher.
+Out of the box, Espruino bluetooth devices don't draw that much power and can
+run for a while on a battery (see your board's specific reference page for
+more information). When they're running a small amount
+of JavaScript code once a minute or when a button is pressed the battery
+life won't be impacted significantly.
 
 However, it's very easy to draw more power:
 
-* Staying connected to Puck.js will draw 10x more power than idle
-* Lighting a single LED will draw around 100x more power than Puck.js does at idle
-* Running JavaScript code all the time will draw 200x more power than at idle
+* Staying connected via Bluetooth will often draw around 10x more power than idle
+* Lighting a LED can draw around 100x more power than when idle
+* Running JavaScript code continuously will draw around 200x more power than at idle
 
-As a result, if you've been using Puck.js but don't intend to use the code
-you've uploaded it's recommended that you either unplug the battery, or connect
-to the Puck.js and type `reset()`, to ensure that no code is running in the
+As a result, if you've been using your device but don't intend to use the code
+you've uploaded it's recommended that you either remove the battery, or connect
+to your device and type `reset()`, to ensure that no code is running in the
 background that might flatten the battery.
 
-For more details on power usage, [see here](/Puck.js#power-consumption)
+* [Puck.js power consumption](/Puck.js#power-consumption)
+* [Pixl.js power consumption](/Pixl.js#power-consumption)
 
 
 <script>
@@ -423,7 +411,14 @@ if (window.location.hash=="#puckjs") device="puckjs";
 if (device) {
   var divs = document.getElementsByClassName("specific");
   for (var i=0;i<divs.length;i++)
-    if (!divs[i].classList.contains(device))
-      divs[i--].remove();
+    if (!divs[i].classList.contains(device)) {
+      // delete until the next heading node
+      var p = divs[i--].parentNode;
+      do {
+        var n = p.nextSibling;
+        p.remove();
+        p=n;
+      } while (p.nodeName.toUpperCase()[0]!="H");
+    }
 }
 </script>

@@ -76,7 +76,18 @@ Occasionally you may want to hard-reset Pixl.js. To do this:
 
 For short (1 second) periods of time you can also just short out the 3v power rail. Do to this take something metallic and touch it between the top of the CR2032 Battery/holder and the USB socket's metal outer.
 
-Resetting Pixl.js this way will not clear out any saved code. To do that, reset Pixl.js while keeping `BTN1` held for around 10 seconds (even while Pixl.js says `SELF TEST` `Release BTN1`. Once Pixl.js displays `Removed saved code from Flash` you can release it.
+Resetting Pixl.js this way will not clear out any saved code - see [Hard Reset](#hard-reset) below.
+
+
+Hard Reset
+----------
+
+To clear out all saved code, reset Pixl.js while keeping `BTN1` held for around 10 seconds (even while Pixl.js says `SELF TEST` `Release BTN1`).
+
+Once Pixl.js displays `Removed saved code from Flash` you can release it - this will clear out any previously saved code and bonding data that could have caused problems.
+
+**Note:** If you release `BTN1` when instructed by the text `Release BTN1` then a self-test will be performed. Saved code will not be loaded from flash, *but will not be erased from flash either* - a subsequent reset will start Espruino up loading the saved code as normal.
+
 
 Tutorials
 --------
@@ -94,6 +105,10 @@ Tutorials using Bluetooth LE:
 Tutorials using Bluetooth LE and functionality that may not be part of Pixl.js:
 
 * APPEND_USES: BLE,-Only BLE,-Pixl.js
+
+There are [many more tutorials](/Tutorials) that may not be specifically for
+you device but will probably work with some tweaking. [Try searching](/Search)
+to find what you want.
 
 
 <a name="pinout"></a>Pinout
@@ -131,7 +146,7 @@ Information
 * [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
 
 
-On-board LED, Buttons and GPIO
+<a name="onboard"></a>On-board LED, Buttons and GPIO
 -------------------------------
 
 ### LED
@@ -207,7 +222,7 @@ Firmware Updates
 * If choosing the ZIP file opens the ZIP and displays files inside (it can do on some Android 7 devices) then hit back, long-press on the ZIP, and choose `Open` in the top right.
 * Tap `Select Device` and choose the device called `DfuTarg`
 * Now tap `Upload` and wait. Pixl.js's LCD should show a connection and the DFU process will start - it will take around 90 seconds to complete
-* After completion, reset Pixl.js while keeping `BTN1` held for around 10 seconds (even while Pixl.js says `SELF TEST` `Release BTN1`. Once Pixl.js displays `Removed saved code from Flash` you can release it - this will clear out any previously saved code and bonding data that could have caused problems with a new firmware version.
+* If you have problems after completion, perform a [Hard Reset](#hard-reset)
 
 ### via nRF Connect App (Android)
 
@@ -223,7 +238,14 @@ Firmware Updates
 * Once connected, a `DFU` symbol in a circle will appear in the top right of the App
 * Click it, choose `Distribution Packet (ZIP)`, and your Download. If clicking on the downloaded zip file opens its contents (Android 7 may do this) then long-press on the zip and tap open instead.
 * The DFU process will start - it will take around 90 seconds to complete
-* After completion, reset Pixl.js while keeping `BTN1` held for around 10 seconds (even while Pixl.js says `SELF TEST` `Release BTN1`. Once Pixl.js displays `Removed saved code from Flash` you can release it - this will clear out any previously saved code and bonding data that could have caused problems with a new firmware version.
+* If you have problems after completion, perform a [Hard Reset](#hard-reset)
+
+
+Troubleshooting
+---------------
+
+Please check out the [Bluetooth Troubleshooting](Troubleshooting+BLE) or [General Troubleshooting](/Troubleshooting) pages.
+
 
 Other Official Espruino Boards
 ------------------------------
