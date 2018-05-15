@@ -8,7 +8,7 @@ Pixl.js
 
 ![Pixl.js](Pixl.js/board.jpg)
 
-* BUYFROM: £36,£25.92,https://shop.espruino.com/pixljs
+* BUYFROM: £36,£25.92,https://shop.espruino.com/pixljs,/Order#pixljs
 
 A smart LCD with Bluetooth LE. Monitor and control other Bluetooth LE devices,
 act as a wireless display, create your own smart conference badge, or even
@@ -28,7 +28,7 @@ Features
 * 54mm diagonal, 128 x 64 Sunlight readable monochrome display with white backlight
 * 20x GPIO in Arduino footprint (capable of PWM, SPI, I2C, UART, Analog Input)
 * Support for GSM, LTE, WiFi and Ethernet Arduino shields
-* 3v to 16v input range
+* 2.5v to 16v input range (0.3mA idle)
 * CR2032 battery holder, or Micro USB (power only)
 * 4x 3mm mounting holes
 * 4x Buttons
@@ -142,6 +142,9 @@ Information
 
 ![Pixl.js](Pixl.js/back.jpg)
 
+* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_sch.pdf)
+* [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_brd.pdf)#
+* [Eagle CAD files](https://github.com/espruino/EspruinoBoard/tree/master/Pixl.js/eagle)
 * [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
 * [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
 
