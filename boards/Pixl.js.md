@@ -94,6 +94,8 @@ Tutorials
 
 First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#pixljs)
 
+[See below](#onboard) for more information about using the onboard peripherals as well.
+
 Tutorials using Pixl.js:
 
 * APPEND_USES: Pixl.js
@@ -149,8 +151,31 @@ Information
 * [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
 
 
-<a name="onboard"></a>On-board LED, Buttons and GPIO
+<a name="onboard"></a>On-board LCD, LED, Buttons and GPIO
 -------------------------------
+
+### LCD
+
+Pixl.js's display outputs the REPL (JavaScript console) by default, so any calls
+like `print("Hello")` or `console.log("World")` will output to the LCD when there
+is no computer connected via Bluetooth or [Serial](#serial-console). Any errors
+generated when there is no connection will also be displayed on the LCD.
+
+To write text to the LCD regardless of connection state you can use `Terminal.println("your text")`.
+
+You can also output graphics on Pixl.js's display via the global variable `g`
+that is an instance of the [Graphics class](/Reference#Graphics). The display
+is double-buffered, so when you want the changes you made to be displayed
+you need to call `g.flip()`:
+
+```
+// Draw a pattern with lines
+g.clear();
+for (i=0;i<64;i+=7.9) g.drawLine(0,i,i,63);
+g.drawString("Hello World",30,30);
+// Update the display when done
+g.flip();
+```
 
 ### LED
 
