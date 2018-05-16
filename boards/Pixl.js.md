@@ -94,7 +94,7 @@ Tutorials
 
 First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#pixljs)
 
-[See below](#onboard) for more information about using the onboard peripherals as well.
+There is more information below about using the [LCD](#lcd) and [onboard peripherals](#onboard) as well.
 
 Tutorials using Pixl.js:
 
@@ -150,18 +150,13 @@ Information
 * [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
 * [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
 
+<a name="onboard"></a>LCD Screen
+--------------------------------
 
-<a name="onboard"></a>On-board LCD, LED, Buttons and GPIO
--------------------------------
-
-### LCD
-
-Pixl.js's display outputs the REPL (JavaScript console) by default, so any calls
-like `print("Hello")` or `console.log("World")` will output to the LCD when there
-is no computer connected via Bluetooth or [Serial](#serial-console). Any errors
-generated when there is no connection will also be displayed on the LCD.
-
-To write text to the LCD regardless of connection state you can use `Terminal.println("your text")`.
+Pixl.js's displays the REPL (JavaScript console) by
+default, so any calls like `print("Hello")` or `console.log("World")` will output
+to the LCD when there is no computer connected via Bluetooth or [Serial](#serial-console).
+Any errors generated when there is no connection will also be displayed on the LCD.
 
 You can also output graphics on Pixl.js's display via the global variable `g`
 that is an instance of the [Graphics class](/Reference#Graphics). The display
@@ -176,6 +171,39 @@ g.drawString("Hello World",30,30);
 // Update the display when done
 g.flip();
 ```
+
+### Screen updates
+
+`g.flip()` only updates the area of the screen that has been
+modified by `Graphics` commands. If you're modifying the underlying buffer
+(`g.buffer`) then use `g.flip(true)` to update the entire screen contents.
+
+### Contrast
+
+You can change the LCD screen's contrast with `Pixl.setContrast(0.5)` with
+a number between 0 and 1.
+
+You can also write single byte commands to the ST7567 LCD controller using
+the `Pixl.lcdw(...)` command if you want to experiment with different LCD modes.
+
+### Terminal
+
+Pixl.js's LCD acts as a VT100 Terminal. To write text to the LCD regardless of
+connection state you can use `Terminal.println("your text")`. Scrolling
+and simple VT100 control characters will be honoured.
+
+You can even move the JavaScript console (REPL) to the LCD while connected
+via Bluetooth, and use your bluetooth connection as a simple keyboard using
+the following commands:
+
+```
+Bluetooth.on("data",d=>Terminal.inject(d));
+Terminal.setConsole();
+```
+
+
+<a name="onboard"></a>On-board LED, Buttons and GPIO
+------------------------------------------------------
 
 ### LED
 
