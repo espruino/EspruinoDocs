@@ -457,8 +457,8 @@ markdownFiles.forEach(function (file) {
     <div class="panel-body center-block">
       <h1 style="margin-top:0px"><a name="buy"></a><small>From</small>  ${info[0]}</h1>
       <p><small>Or ${info[1]} in volume</small></p>`;
-      html += `      <a role="button" class="btn btn-primary" style="width:100%" href="${info[2]}">Espruino Shop</a><br/>`;
-      if (info[3]) html += `      <a role="button" class="btn btn-default" style="width:100%" href="${info[3]}">Distributors</a>`;
+      html += `      <a role="button" class="btn btn-primary" style="width:100%" href="${info[2]}">Espruino Shop &#x1F1EC;&#x1F1E7;</a><br/>`;
+      if (info[3]) html += `      <a role="button" class="btn btn-default" style="width:100%" href="${info[3]}">Distributors &#x1F30E;</a>`;
       html += `   </div>
   </div>`;
       contentLines[i] = html;
