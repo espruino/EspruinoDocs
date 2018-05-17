@@ -1,4 +1,4 @@
-<!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 I2C - Inter-Integrated Circuit
 ==============================
 
@@ -28,7 +28,7 @@ var d = I2C1.readFrom(0x52, 6);
 I2C1.writeTo(0x52, 0);
 ```
 
-See the reference for I2C.setup](/Reference#l_I2C_setup) for more information on
+See the reference for [I2C.setup](/Reference#l_I2C_setup) for more information on
 the arguments that can be passed in.
 
 Software I2C
@@ -49,8 +49,23 @@ var d = i2c.readFrom(0x52, 6);
 i2c.writeTo(0x52, 0);
 ```
 
+See the reference for [I2C.setup](/Reference#l_I2C_setup) for more information on
+the arguments that can be passed in.
+
+Speed (bit rate)
+----------------
+
+Pretty much all I2C devices are guaranteed to support 100kBits/sec transfer
+speed for I2C, so that is the default in Espruino. However you can specify
+higher speeds with `bitrate` in [I2C.setup](/Reference#l_I2C_setup) if your
+device supports it, eg:
+
+```
+i2c.setup({ scl : B6, sda: B7, bitrate: 400000 });
+```
+
 
 Using I2C
----------------
+----------
 
 * APPEND_KEYWORD: I2C
