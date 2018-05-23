@@ -112,7 +112,6 @@ There are [many more tutorials](/Tutorials) that may not be specifically for
 you device but will probably work with some tweaking. [Try searching](/Search)
 to find what you want.
 
-
 <a name="pinout"></a>Pinout
 ---------------------------
 
@@ -124,7 +123,7 @@ Pins on the Arduino header are accessed via the built-in variables `D0`..`D13` a
 Unlike other Espruino boards, these peripherals can be used on *any* pin.
 
 
-Arduino Shields
+<a name="arduino"></aArduino Shields
 ---------------
 
 Pixl.js is a 3.3v device, and is only designed for 3.3v shields.
@@ -138,6 +137,11 @@ connector labelled `3.3 5V Vin`, and you can apply solder to:
 * **short 3.3 to 5v** - the 5v pin will be connected to regulated 3.3v power (note: max power draw is 150mA)
 * **short Vin to 5v** - the 5v pin will be connected to 5v (when connected via USB) or whatever the voltage provided on Vin is
 
+### Shields
+
+Here are some of the [Arduino shields](Arduino) that we have tested and documented:
+
+* APPEND_KEYWORD: Arduino Shield
 
 Information
 -----------
@@ -145,7 +149,7 @@ Information
 ![Pixl.js](Pixl.js/back.jpg)
 
 * [Circuit Diagram](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_sch.pdf)
-* [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_brd.pdf)#
+* [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_brd.pdf)
 * [Eagle CAD files](https://github.com/espruino/EspruinoBoard/tree/master/Pixl.js/eagle)
 * [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
 * [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)

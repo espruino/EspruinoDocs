@@ -1,19 +1,20 @@
-<!--- Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Arduino Pico adaptor board
-=======================
+==========================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/ArduinoPico. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,Arduino,Pico,Adaptor
 * USES: Arduino,Pico
 
-There is now an Arduino adaptor shield that converts the Espruino Pico into an Arduino form factor. It is available as part of the [Shim Collection](/Shims) available from [Tindie](https://www.tindie.com/products/gfwilliams/espruino-pico-adaptor-pack/)
+There is now an Arduino adaptor shield that converts the Espruino Pico into an [Arduino](/Arduino) form factor. It is available as part of the [Shim Collection](/Shims) available from [Tindie](https://www.tindie.com/products/gfwilliams/espruino-pico-adaptor-pack/)
 
 [![](ArduinoPico/arduino.png)](https://www.tindie.com/products/gfwilliams/espruino-pico-adaptor-pack/)
 
 Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/arduino.brd)
  and [schematic](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/arduino.sch)
 
+Check out some of the  [Arduino Shields](/Arduino) you can use with this adaptor.
 
 Wiring
 ------

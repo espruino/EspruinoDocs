@@ -10,6 +10,8 @@ SMS Send and Receive
 The [ATSMS](/modules/ATSMS.js) module uses standard AT commands to allow you to send and receive SMS text messages
 via a GSM modem module like the [[SIM900]].
 
+**Note:** If you want to connect to the internet, check out [this page](/Internet#related-pages)
+for a list of modules for various GSM/LTE modems.
 
 Wiring
 ------
@@ -36,7 +38,7 @@ var sms = new ATSMS(Serial1);
 sms.init(function(err) {
   if (err) throw err;
   console.log("Initialised!");
-  
+
   sms.list("ALL", function(err,list) {
     if (err) throw err;
     if (list.length)
@@ -45,7 +47,7 @@ sms.init(function(err) {
       console.log("No Messages");
   });
 
-  // and to send a message: 
+  // and to send a message:
   //sms.send('+441234567890','Hello world!', callback)
 });
 

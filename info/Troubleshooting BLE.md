@@ -117,7 +117,7 @@ If you just want to reset your Puck.js you can also lift the battery away from t
 slightly with a fingernail (although this doesn't work on [Pixl.js](/Pixl.js)).
 
 
-Puck.js
+[Puck.js](/Puck.js)
 -------
 
 ### My Puck.js is not working when it arrives
@@ -142,6 +142,33 @@ To get out, just take the battery out and re-insert it without pressing the butt
 Take it apart again, and place the area on the back with the text `Puck.js`
 against the ledge on the plastic case (the dimples in the case should
 align with the holes in the PCB).
+
+[Pixl.js](/Pixl.js)
+-------
+
+### I'm no longer seeing text I print on the LCD
+
+Anything from `print` or `console.log` is printed to the current console
+device (set with `TheDevice.setConsole()`. By default, this will be the LCD
+(eg. `Terminal.setConsole()`).
+
+However:
+
+* If you're connected to Pixl.js via Bluetooth, the console will automatically
+move to the Bluetooth connection.
+* If a (serial port has been detected at boot)[/Pixl.js#serial-console], the
+console will automatically be moved to that.
+
+To force the console back to the LCD you can use `Terminal.setConsole()`
+(eg. in the `onInit` function) which will keep the console on the LCD
+until something (like a Bluetooth connection) changes it. Otherwise you
+can use `Terminal.setConsole(true)` which will keep the console on the LCD
+regardless of what happens. This second method will mean that you are
+unable to reprogram the device until it is reset or the console is set
+to the device you're programming it from.
+
+If you just want to write to the Terminal regardless of where the console is,
+use `Terminal.println(...)`
 
 
 Using your device

@@ -4,12 +4,12 @@ Saving code on Espruino
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Saving. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Save,saving,write,flash,flashing,save(),load,non-volatile
+* KEYWORDS: Save,saving,write,flash,flashing,save(),load,non-volatile,onInit
 
 When you upload code to Espruino normally, it is stored in Espruino's RAM.
 If you reset the board or power is lost, all your code will be lost.
 
-However it's easy to save your code to flash memory and make it permanent. 
+However it's easy to save your code to flash memory and make it permanent.
 There are two main ways to do it with Espruino.
 
 `save()`
@@ -40,9 +40,9 @@ you uploaded* - **not** at the time the device started, or even the time you
 typed `save()`.
 
 However, this means that any code that was executed at upload time will not
-be re-executed. For instance you may have some external hardware like an LCD 
-display connected to Espruino - after applying power, the LCD will need to be 
-initialised (since it can not remember its state). In this case you can 
+be re-executed. For instance you may have some external hardware like an LCD
+display connected to Espruino - after applying power, the LCD will need to be
+initialised (since it can not remember its state). In this case you can
 create a function called `onInit` (or add a `E.on('init', function() { ... })`
 listener) that is automatically called by the interpreter when it
 initialises.
@@ -50,7 +50,7 @@ initialises.
 Once code is saved, you can return the interpreter to a 'clean' state
 with `reset()`. This won't clear out any of the saved data in flash, so
 if you reboot the device (or call `load()`) it will re-load your previously
-saved state. To completely clear out  saved code, run `reset()` and *then* 
+saved state. To completely clear out  saved code, run `reset()` and *then*
 run `save()` to save the clean state back into flash memory.
 
 ### Pros
@@ -77,7 +77,7 @@ Save on Send
 ------------
 
 `Save on Send` is an option in the Espruino IDE. Behind the scenes it uses
-the `E.setBootCode` command to save JS code directly into Espruino's 
+the `E.setBootCode` command to save JS code directly into Espruino's
 flash memory. When Espruino boots up, it then executes the JavaScript code.
 
 This is similar to the way you'd program a 'normal' microcontroller.
@@ -89,10 +89,10 @@ the device is powered on (in contrast to what happens when you use `save()`.
 `Save on Send` (in the Communications section of the IDE) has three settings:
 
 * `No` - code is uploaded to RAM, but can be saved with `save()` (as above)
-* `Yes` - JavaScript code is saved to flash and loaded even after boot. 
+* `Yes` - JavaScript code is saved to flash and loaded even after boot.
 If `reset()` is called, Espruino will remove all code from RAM and will
 not execute the saved JS code.
-* `Yes, execute even after reset()` - JavaScript code is saved to flash and 
+* `Yes, execute even after reset()` - JavaScript code is saved to flash and
 loaded even after boot. If `reset()` is called, Espruino will remove all
 `save()`d code from RAM, but will still execute the JS code that you saved. See
 the 'Both Options' section.

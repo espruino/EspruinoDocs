@@ -10,6 +10,8 @@ WIZnet WIZ550io/W5500 Ethernet module
 
 The [WIZnet WIZ550io module](http://wizwiki.net/wiki/doku.php?id=products:wiz550io:allpages) contains a W5500 chip - it implements TCP/IP on-chip, so you just plug an Ethernet cable in one end, and SPI into the other.
 
+For the WIZnet W5100, [see this page](/arduino-w5100)
+
 Support is provided in Espruino, but **you will have to use a special build of Espruino designed for it** as there isn't enough space in flash to hold both CC3000 and WIZnet drivers.
 
 To get the latest WIZnet binary:
@@ -117,7 +119,7 @@ require("http").get("http://192.168.1.50", function(res) {
 
 For more examples, please see the [[Internet]] page.
 
-Using 
+Using
 -----
 
 * APPEND_USES: WIZnet
