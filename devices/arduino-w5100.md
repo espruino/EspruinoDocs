@@ -1,101 +1,159 @@
 <!--- Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Arduino GPRS/GSM shield (SIM900)
+Arduino Ethernet and SD card shield (WIZnet W5100)
 ==================================================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/arduino-w5100. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Arduino,Shield,Arduino Shield,GSM,GPRS,SIM900,Internet
-* USES: Pixl.js,SIM900
+* KEYWORDS: Arduino,Shield,Arduino Shield,Ethernet,Internet,W5100,WIZnet,microsd,microsd card
+* USES: Pixl.js,W5100,WIZnet
 
-![WIZnet SIM900 Ethernet shield](arduino-sim900.jpg)
+![WIZnet W5100 Ethernet shield](arduino-w5100.jpg)
 
-The SIM900 is a common shield for GSM communication on Arduino.
+Standard Arduino Ethernet shields use the WIZnet W5100 chip, which provides
+hardware support for TCP/IP. The W5100 is supported out of the box by [Pixl.js](/Pixl.js)
 
-You can use the SIM900 in two ways with all official Espruino
-boards:
-
-* Internet using the [SIM900](/SIM900) software module
-* SMS Text messages using the [ATSMS](/ATSMS) module
+Most other offical Espruino boards have firmware with support for the
+[WIZnet W5500](/WIZnet) and will not work with the W5100 without
+a special firmware build.
 
 Wiring
 ------
 
-The SIM900 can draw big burts of current and may not work reliably if
-powered off of USB. For a reliable connection we'd recommend powering
-it directly off a LiPo battery using the on-board connector.
+The Ethernet shield shown above exposes the W5100 through pins on
+the Arduino 2x3 pin `ICSP` header (which isn't present on [Pixl.js](/Pixl.js))
+rather than the standard Arduino footprint.
 
-Check the position of the jumpers by the aerial. If these
-are in the `SWSerial` position you'll need to use `{ rx: D7, tx : D8 }`,
-otherwise if it's `Xduino` use `{ rx: D0, tx : D1 }`.
+To connect it up, you will need to add 3 wires to the shield (mirroring the
+  connections there would be on an Arduino UNO board), connecting:
 
-**Note:** If using `D0` and `D1` on [Pixl.js](/Pixl.js) you should be aware
-that if `D0` is powered at boot, Espruino's console will [automatically be moved
-to it](/Pixl.js#serial-console). You can avoid this by calling `Terminal.setConsole();`
-from `onInit()`.
+* ICSP MOSI to `D11`
+* ICSP MISO to `D12`
+* ICSP SCK to `D13`
 
+```
+ ---------------------------------
+|              D13  D12  D11      |
+|              SCK MISO  MOSI     |
+|                                  \
+| ETH                               |
+| JACK                              |
+|                                   |
+|                        MISO ---   |
+|                        SCK  MOSI  |
+|                        ---- GND   |
+|                                   |
+|                         SD CARD   |
+|                                   |
+|                                   |
+| RESET                            /
+ ----------------------------------
+```
+
+The easiest method is to remove the `ICSP` header completely and add wires on
+the underside of the board.
+
+## Pinout
+
+This board has the following connections:
+
+| Pin | Connection |
+|-----|------------|
+| D13 | SCK        |
+| D12 | MISO       |
+| D11 | MOSI       |
+| D10 | W5100 CS   |
+| D4  | SD Card CS |
+| D2  | W5100 IRQ  |
 
 Software
 ---------
-## Internet
+
+## Ethernet
+
+First, you need to set up communications with the WIZnet chip:
 
 ```
-// Connect to serial device
-Serial1.setup(115200, { rx: D0, tx : D1 });
+SPI1.setup({ mosi:D11, miso:D12, sck:D13 });
+var eth = require("WIZnet").connect(SPI1, D10 /*CS*/);
+```
 
-console.log("Connecting to SIM900 module");
-var gprs = require('SIM900').connect(Serial1, undefined/*reset*/, function(err) {
-  if (err) throw err;
-  gprs.connect('APN', 'USERNAME', 'PASSWORD', function(err) {
-    if (err) throw err;
-    gprs.getIP(function(err, ip) {
-      if (err) throw err;
-      console.log('IP:' + ip);
-      require("http").get("http://www.pur3.co.uk/hello.txt", function(res) {
-        console.log("Response: ",res);
-        res.on('data', function(d) {
-          console.log("--->"+d);
-        });
-      });
-    });
+Unlike the W5500 the W5100 doesn't come in a module with a pre-assigned
+MAC address set. You can either set one and then use DHCP to get an IP address:
+
+```
+eth.setIP({mac:"00:08:dc:ab:cd:ef"});
+eth.setIP();
+```
+
+or can set the IP address manually:
+
+```
+eth.setIP({
+  ip:"192.168.1.123",
+  subnet:"255.255.255.0",
+  gateway:"192.168.1.1",
+  dns:"8.8.8.8",
+  mac:"00:08:dc:ab:cd:ef"
+});
+```
+
+Now you're ready to go - you can request a webpage:
+
+```
+require("http").get("http://www.pur3.co.uk/hello.txt", function(res) {
+  res.on('data', function(d) {
+    console.log("--->"+d);
   });
 });
 ```
 
-See the [SIM900 module documentation](/SIM900) for more information.
+**Note:** there is currently an issue in the W5100 library that causes
+Espruino to pause for 30 seconds when closing a socket, however everything
+else works.
 
-## SMS
+Or can even start a web server:
 
 ```
-// Connect to serial device
-Serial1.setup(115200, { rx: D0, tx : D1 });
-var ATSMS = require("ATSMS");
-var sms = new ATSMS(Serial1);
-//Use sms.at.debug(); here if you want debug messages
+function pageHandler(req, res) {
+  res.writeHead(200);
+  res.end("Hello World");
+}
 
-sms.init(function(err) {
-  if (err) throw err;
-  console.log("Initialised!");
-
-  sms.list("ALL", function(err,list) {
-    if (err) throw err;
-    if (list.length)
-      console.log(list);
-    else
-      console.log("No Messages");
-  });
-
-  // and to send a message:
-  //sms.send('+441234567890','Hello world!', callback)
-});
-
-sms.on('message', function(msgIndex) {
-  console.log("Got new message, index ", msgIndex);
-});
+require("http").createServer(pageHandler).listen(80);
+console.log("Connect to http://"+eth.getIP().ip)
 ```
 
-See the [ATSMS module documentation](/ATSMS) for more information.
+Functions that are available on `eth` are documented in [the Ethernet Class](/Reference#Ethernet)
+
+See the [Internet](/Internet) page for more examples
+of things you can do on Espruino  with an Internet connection.
+
+## SD Card
+
+All you need to do to set up the SD card is:
+
+```
+// Setup SPI - no need to call this if you've already set up Ethernet
+SPI1.setup({ mosi:D11, miso:D12, sck:D13 });
+// Configure the SD card
+E.connectSDCard(SPI1, D4 /*CS*/);
+```
+
+Then:
+
+```
+// see what's on the device
+console.log(require("fs").readdirSync());
+// write
+require("fs")writeFileSync("test.txt","Some Data");
+// read
+print(require("fs").readFileSync("test.txt"));
+```
+
+See [the page on File IO](/File+IO) for more information.
+
 
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=arduino+sim900+shield)
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=arduino+w5100+shield)

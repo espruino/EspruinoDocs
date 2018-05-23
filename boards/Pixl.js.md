@@ -123,7 +123,7 @@ Pins on the Arduino header are accessed via the built-in variables `D0`..`D13` a
 Unlike other Espruino boards, these peripherals can be used on *any* pin.
 
 
-<a name="arduino"></aArduino Shields
+<a name="arduino"></a>Arduino Shields
 ---------------
 
 Pixl.js is a 3.3v device, and is only designed for 3.3v shields.
