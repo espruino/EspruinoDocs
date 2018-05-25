@@ -33,7 +33,63 @@ Getting Started
 ----------------
 
 **Note:** Nordic Thingy devices **do not have Espruino
-pre-installed**. As of writing, you will need a Nordic
+pre-installed**. You'll have to update the firmware yourself.
+
+There are two options:
+
+### Over the air firmware updates
+
+This can be done with any iPhone or Android phone/tablet from the last few years,
+but will take a few minutes.
+
+**Note: After following these instructions your Thingy will *only* be able to
+run Espruino** unless you buy a nRF52 DK and use that to write the original
+Thingy:52 firmware back (see the second option for updating firmware).
+
+
+#### If you haven't installed Espruino on the Thingy before:
+
+If you haven't installed Espruino before, you need to change the SoftDevice on your Thingy.
+
+* Install the `nRF Toolbox` app on your device
+* Go to http://www.espruino.com/binaries and download `espruino_*_thingy52_softdevice.zip`
+and `espruino_*_thingy52_app.zip` to your device.
+* Pull off the Thingy:52 case
+* Turn the Thingy:52 off if it was on (using the sliding switch)
+* Hold down the silver button on the top of the Thingy while turning the power on.
+The LED should quickly start pulsing Yellow, showing the Thingy is in bootloader mode.
+* Open the `nRF Toolbox` app
+* Tap the `DFU` icon
+* Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the `espruino_*_thingy52_softdevice.zip` ZIP file you downloaded
+* If choosing the ZIP file opens the ZIP and displays files inside (it can do on some Android 7 devices) then hit back, long-press on the ZIP, and choose `Open` in the top right.
+* If a `Select scope` window appears, choose `All`
+* Tap `Select Device` and choose the device called `ThingyDfu`
+* Now tap `Upload` and wait. The update will take around 90 seconds to complete
+
+Now, you need to follow the next set of instructions:
+
+#### If you have installed Espruino on the Thingy before:
+
+* Turn the Thingy:52 off if it was on (using the sliding switch)
+* Hold down the silver button on the top of the Thingy while turning the power on.
+The LED should quickly start pulsing Yellow, showing the Thingy is in bootloader mode.
+* Open the `nRF Toolbox` app
+* Tap the `DFU` icon
+* Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the `espruino_*_thingy52_app.zip` ZIP file you downloaded
+* If choosing the ZIP file opens the ZIP and displays files inside (it can do on some Android 7 devices) then hit back, long-press on the ZIP, and choose `Open` in the top right.
+* If a `Select scope` window appears, choose `All`
+* Tap `Select Device` and choose the device called `ThingyDfu`
+* Now tap `Upload` and wait. The update will take around 90 seconds to complete
+* Turn the Thingy off and back on
+* If the Red LED **doesn't** blink once when you turn the Thingy back on, you need to force it to delete any saved information. Turn it off, then turn it on and then press the button as soon after as you can. This may take a few attempts as pressing too soon will cause the Thingy to enter bootloader mode (pulsing yellow).
+
+You now have Espruino installed!
+
+
+### Updates with the nRF52 DK
+
+This has the advantage of allowing you to use 'cutting edge' Espruino builds,
+and is much faster. However you will need a Nordic
 [nRF52 DK](https://www.nordicsemi.com/eng/Products/Bluetooth-low-energy/nRF52-DK)
 and a [2x5 pin 0.05" ribbon cable](https://www.adafruit.com/product/1675) to program
 your device.

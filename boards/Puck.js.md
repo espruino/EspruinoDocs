@@ -326,6 +326,7 @@ Firmware Updates
 * Tap the `DFU` icon
 * Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the ZIP file you downloaded
 * If choosing the ZIP file opens the ZIP and displays files inside (it can do on some Android 7 devices) then hit back, long-press on the ZIP, and choose `Open` in the top right.
+* If a `Select scope` window appears, choose `All`
 * Tap `Select Device` and choose the device called `DfuTarg`
 * Now tap `Upload` and wait. The LED should turn blue and the DFU process will start - it will take around 90 seconds to complete
 * If you have problems after completion, perform a [Hard Reset](#hard-reset)
