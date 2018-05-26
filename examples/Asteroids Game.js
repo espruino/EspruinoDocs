@@ -5,6 +5,8 @@ Asteroids Game
 * KEYWORDS: Game,Asteroids
 * USES: Pixl.js,Graphics
 
+![Asteroids](Asteroids Game.jpg)
+
 This code creates an Asteroids game on [Pixl.js](/Pixl.js):
 
 * The bottom two buttons rotate left and right

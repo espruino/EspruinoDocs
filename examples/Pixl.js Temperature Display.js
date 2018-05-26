@@ -5,6 +5,8 @@ Pixl.js Temperature Display
 * KEYWORDS: Temperature Sensor,Display
 * USES: Pixl.js,Graphics
 
+![Pixl.js Temperature Display](Pixl.js Temperature Display.jpg)
+
 [Pixl.js](/Pixl.js) has an on-chip temperature sensor, and can be set up to
 display the temperature with tiny amount of code.
 

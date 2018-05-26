@@ -4,7 +4,7 @@ SeeedStudio Grove System
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Grove. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Module,SeeedStudio,Grove,System
+* KEYWORDS: Module,SeeedStudio,Grove,System,Arduino,Arduino Shield
 
 ![Grove System](Grove.jpg)
 
@@ -27,16 +27,18 @@ To make this easier we've added some modules with these arrays already defined, 
 
 | Adaptor | Module |
 |---------|--------|
+| Standard Arduino | [[arduino-grove.js]] |
 | [Arduino Adaptor shield for Pico](/ArduinoPico) | [[GroveArduinoPico.js]] |
 | Pico Mini Adaptor Shield | [[GrovePico.js]] |
 
-Once you're using the correct module, for instance with `var grove = require("GrovePico");`, 
-you can then access the relevant pins just by typing `grove.NAME` where `NAME` is the name 
+Once you're using the correct module, for instance with `var grove = require("GrovePico");`,
+you can then access the relevant pins just by typing `grove.NAME` where `NAME` is the name
 written on the Grove board. For instance for a button connected to `D2` on the Pico Shield,
 you'd simply do:
 
 ```
-var grove = require("GrovePico");
+var grove = require("arduino-grove").connect(); // for Pixl.js
+var grove = require("GrovePico"); // for Pico Grove adaptor shield
 new (require("GroveButton"))(grove.D2, function(e) {
   if (e.state) console.log("Pressed");
   else console.log("Released");

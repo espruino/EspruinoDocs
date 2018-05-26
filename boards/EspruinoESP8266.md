@@ -32,19 +32,20 @@ Features
 * 1 Analog input (0..1V)
 * None of the GPIO are 5 volt tolerant!
 * Built-in Wifi
-* 1700 JS variables
+* 1600 JS variables
 
 Build Content
 -------------
 
-content | espruino_1v95_esp8266 | espruino_1v95_esp8266_4mb
+content | espruino_1v98_esp8266 | espruino_1v98_esp8266_4mb
  :---  | :--- | :--- 
-Modules | NET<br>TELNET<br><br>CRYPTO<br>NEOPIXEL | NET<br>TELNET<br>GRAPHICS<br>CRYPTO<br>NEOPIXEL
+Modules | NET<br>TELNET<br><br>CRYPTO, only SHA1<br>NEOPIXEL | NET<br>TELNET<br>GRAPHICS<br>CRYPTO only SHA1<br>NEOPIXEL
 JS variables| 1700| 1600
-save pages| 3 x 4096 byte | 16 x 4096 byte
+save pages| 4 x 4096 byte | 16 x 4096 byte
 getState()| {"sdkVersion": "2.0.0(5a875ba)",<br>"cpuFrequency": 160, "freeHeap": 10560, "maxCon": 10,<br>"flashMap": "512KB:256/256",<br>"flashKB": 512,<br>"flashChip": "0xXX 0x4013"}|{"sdkVersion": "2.0.0(5a875ba)",<br>"cpuFrequency": 160, "freeHeap": 11888, "maxCon": 10,<br>"flashMap": "4MB:1024/1024",<br>"flashKB": 4096,<br>"flashChip": "0xXX 0x4016"}|
-getFreeFlash()|[{ "addr": 487424, "length": 4096 }]|[{ "addr": 2097152, "length": 1048576 },<br>{ "addr": 3145728, "length": 262144 },<br>{ "addr": 3407872, "length": 262144},<br>{ "addr": 3670016, "length": 262144 },<br>{ "addr": 3932160, "length": 262144 }]
+getFreeFlash()| n/a <br> use 'Storage' module to save data|[{ "addr": 2097152, "length": 1048576 },<br>{ "addr": 3145728, "length": 262144 },<br>{ "addr": 3407872, "length": 262144},<br>{ "addr": 3670016, "length": 262144 },<br>{ "addr": 3932160, "length": 262144 }]
 chip_id and flash_size|4013-4015 use<br>--flash_size 512KB<br>|4016-4018 use<br>--flash_size 4MB-c1
+max image size| 468 KB|812 KB
 
 Limitations
 -----------
@@ -88,13 +89,21 @@ The default initial configuration is for an access point with an SSID like `ESP_
 up.
 
 Using the wifi is documented in the [Wifi library reference](http://www.espruino.com/Reference#Wifi).
-The "getting started 3-liner" is:
+The "getting started" is:
 ```
 var wifi = require("Wifi");
-wifi.connect("my-ssid", {password:"my-pwd"}, function(ap){ console.log("connected:", ap); });
-wifi.stopAP();
+wifi.connect(ssid, {password:password}, function(e) {
+  if (e) {
+    console.log('error during connect:',e);
+    wifi.disconnect();
+  } else {
+    console.log('connected to',ssid);
+    wifi.stopAP();
+    //wifi.save();
+  }
+});
 ```
-You may want to add `wifi.setDHCPHostname("espruino")`.
+You may want to add `wifi.setHostname("espruino")`.
 Once you're happy with your connection, you can use `wifi.save()` to persist it, so you don't have
 to reconnect each time you reset your ESP8266.
 
@@ -173,7 +182,7 @@ not have hardware support for I2C (contrary to what the datasheet seems
 to imply). The software implementation has the following limitations:
 - operates at approx 300Khz
 - is master-only
-- does not support clock stretching (a method by which slaves can slow down the master)
+- support clock stretching since 1v92 (a method by which slaves can slow down the master)
 
 The I2C interface can be bound to almost any pin pair, but you
 should avoid GPIO15 because it needs to be pulled-down at boot time

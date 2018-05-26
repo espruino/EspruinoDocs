@@ -23,6 +23,8 @@ Using
 
 Ruuvitag can be used like any other Espruino Bluetooth LE device, with full access to the [NRF](http://www.espruino.com/Reference#NRF) class for BLE Functionality.
 
+Check out the [Getting Started Guide](/Quick+Start+BLE#ruuvitag)
+
 However to use the built-in sensors you will need to use the Ruuvitag library. For instance to get data, use:
 
 ```
@@ -73,6 +75,8 @@ function onInit() {
 Tutorials
 ---------
 
+First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#ruuvitag)
+
 Tutorials using Bluetooth LE:
 
 * APPEND_USES: Only BLE
@@ -86,3 +90,9 @@ Reference
 ---------
 
 * APPEND_JSDOC: Ruuvitag.js
+
+
+Firmware Updates
+-----------------
+
+Check out [Ruuvi's DFU instructions](https://lab.ruuvi.com/dfu/)

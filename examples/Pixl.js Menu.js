@@ -5,6 +5,8 @@ Pixl.js Menus
 * KEYWORDS: Menu
 * USES: Pixl.js
 
+![Pixl.js Menu](Pixl.js Menu.jpg)
+
 Pixl.js contains a simple menu system based on [the graphical_menu module](graphical_menu).
 
 To use it just call `Pixl.menu(...);` with an object where each field's name
@@ -21,7 +23,7 @@ var mainmenu = {
   },
   "Backlight On" : function() { LED1.set(); },
   "Backlight Off" : function() { LED1.reset(); },
-  "Submenu" : function() { Pixl.menu(submenu); },
+  "> Second Menu" : function() { Pixl.menu(submenu); },
   "Exit" : function() { Pixl.menu(); },
 };
 

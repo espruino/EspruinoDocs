@@ -1,4 +1,4 @@
-<!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 SPI - Serial Peripheral Interface
 =============================
 
@@ -50,6 +50,21 @@ spi.write([1,2,3,4])
 // write data with a response
 var d = spi.send([1,2,3,4]);
 ```
+
+Speed (baud rate)
+----------------
+
+Pretty much all SPI devices are guaranteed to support 100kBits/sec transfer
+speed, so that is the default in Espruino. However you can specify
+higher speeds with `bitrate` in [SPI.setup](/Reference#l_SPI_setup) if your
+device supports it, eg:
+
+```
+SPI1.setup({ mosi:B5, miso:B4, sck:B3, baud: 400000 });
+```
+
+**Note:** baud rate is **ignored** for software SPI - it will always
+send as fast as possible.
 
 
 Using SPI

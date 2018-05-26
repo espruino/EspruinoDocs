@@ -4,7 +4,7 @@ File IO and SD cards
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/File+IO. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: File,Filesystem,File IO,SD card,microSD card
+* KEYWORDS: File,Filesystem,File IO,SD card,microSD card,SD,microsd
 
 To access files from Espruino (if you're not getting them from the [[Internet]]) you'll need an SD card.
 
@@ -19,8 +19,8 @@ Espruino has two main forms of File IO available:
 FS Library - Simple Node.js-compatible File IO
 -----------------------------------------
 
-The [fs](http://www.espruino.com/Reference#fs) library allows you to read directories, 
-read, write, stat and delete files. See [here](http://www.espruino.com/Reference#fs) 
+The [fs](http://www.espruino.com/Reference#fs) library allows you to read directories,
+read, write, stat and delete files. See [here](http://www.espruino.com/Reference#fs)
 for more details about the specific functions.
 
 We've tried to keep it a lot like the [Node FS Library](https://nodejs.org/api/fs.html) however
@@ -53,8 +53,8 @@ E.openFile - Stream File IO
 While we'd have liked to keep a node.js-compatible Filesystem stream API, Node's
 implementation just didn't make sense on a Microcontroller.
 
-Instead we have developed our own simple API. Just use 
-[`E.openFile`](http://www.espruino.com/Reference#l_E_openFile) to open a file. This 
+Instead we have developed our own simple API. Just use
+[`E.openFile`](http://www.espruino.com/Reference#l_E_openFile) to open a file. This
 returns a [File](http://www.espruino.com/Reference#File) Object, which has functions
 such as `read`, `write` and `seek` on it.
 
@@ -68,7 +68,7 @@ setInterval(function() {
   var val = f.read(1).charCodeAt(0);
   analogWrite(A0, val/256);
 }, 100);
-``` 
+```
 
 Or the following would take a series of readings and write them as a comma-separated file:
 
@@ -84,7 +84,7 @@ setInterval(function() {
   ];
   f.write(readings.join(", ")+"\n");
 }, 100);
-``` 
+```
 
 Finally you'll need to close the file with `f.close()` or you may get corruption.
 
@@ -189,7 +189,7 @@ Example of wiring it up to the Espruino Pico:
 Example code for the above wiring:
 
 ```
-/* 
+/*
   The following function is automatically called when Espruino is booting up.
   To save the following to Espruino's flash, just call 'save()' in the IDE
 */

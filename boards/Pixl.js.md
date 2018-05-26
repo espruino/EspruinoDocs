@@ -8,7 +8,7 @@ Pixl.js
 
 ![Pixl.js](Pixl.js/board.jpg)
 
-* BUYFROM: £36,£25.92,https://shop.espruino.com/pixljs
+* BUYFROM: £36,£25.92,https://shop.espruino.com/pixljs,/Order#pixljs
 
 A smart LCD with Bluetooth LE. Monitor and control other Bluetooth LE devices,
 act as a wireless display, create your own smart conference badge, or even
@@ -28,7 +28,7 @@ Features
 * 54mm diagonal, 128 x 64 Sunlight readable monochrome display with white backlight
 * 20x GPIO in Arduino footprint (capable of PWM, SPI, I2C, UART, Analog Input)
 * Support for GSM, LTE, WiFi and Ethernet Arduino shields
-* 3v to 16v input range
+* 2.5v to 16v input range (0.3mA idle)
 * CR2032 battery holder, or Micro USB (power only)
 * 4x 3mm mounting holes
 * 4x Buttons
@@ -43,8 +43,8 @@ Powering Pixl.js
 Pixl.js can be powered in multiple ways:
 
 * **Micro USB** - the Micro USB connector can easily provide power to your Pixl.js (there is no data connection)
-* **CR2032 Lithium Battery** - a CR2032 battery will power Pixl.js for around 20 days with light JavaScript usage
-* **`Vin` pins** - available via the Arduino header, or the separate pin header to the side. You can supply 3v - 16v which is regulated down to 3.3v for Pixl.js
+* **CR2032 Lithium battery** - a CR2032 battery will power Pixl.js for around 20 days with light JavaScript usage
+* **`Vin` pins** - available via the Arduino header, or the separate pin header to the side. You can supply 3v - 16v which is regulated down to 3.3v for Pixl.js. The unpopulated pins to the side are spaces to accommodate a connector for [JST PHR-2 Batteries](/Battery).
 * **CR2032 LiPo battery** - you can not use a CR2032 LiPo battery without some minor modifications as the voltage is too high. There is a small solder jumper below the CR2032 holder. Cut the existing connection and solder between the other two pads. This causes the battery to be connected via the voltage regulator. **Note:** the LiPo will then be connected directly to Vin, and you will be unable to use the USB for power (as it'll connect to LiPo to 5v).
 * **CR2032 battery backup** - the CR2032 can be used as a backup when Vin/USB power is not present. Cut the trace in the solder jumper below the CR2032 holder, and add a surface mount diode to the two pads to the right of it.
 
@@ -66,10 +66,35 @@ This means that when running off a CR2032 battery you could expect around 20 day
 Pixl.js sends advertising data without ever executing JavaScript. To get the best power consumption, make sure your code executes as rarely as possible.
 
 
+Resetting Pixl.js
+-----------------
+
+Occasionally you may want to hard-reset Pixl.js. To do this:
+
+* **With a CR2032 Battery** - Remove and replace the battery. It helps to remove the battery by pushing it out from behind using something thin like a matchstick. If you intend to reset Pixl.js multiple times you can only half-insert the battery to make it easier to remove.
+* **On USB Power** - disconnect and re-connect the USB plug
+
+For short (1 second) periods of time you can also just short out the 3v power rail. Do to this take something metallic and touch it between the top of the CR2032 Battery/holder and the USB socket's metal outer.
+
+Resetting Pixl.js this way will not clear out any saved code - see [Hard Reset](#hard-reset) below.
+
+
+Hard Reset
+----------
+
+To clear out all saved code, reset Pixl.js while keeping `BTN1` held for around 10 seconds (even while Pixl.js says `SELF TEST` `Release BTN1`).
+
+Once Pixl.js displays `Removed saved code from Flash` you can release it - this will clear out any previously saved code and bonding data that could have caused problems.
+
+**Note:** If you release `BTN1` when instructed by the text `Release BTN1` then a self-test will be performed. Saved code will not be loaded from flash, *but will not be erased from flash either* - a subsequent reset will start Espruino up loading the saved code as normal.
+
+
 Tutorials
 --------
 
-First, it's best to check out the [Getting Started Guide](/Puck.js+Quick+Start)
+First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#pixljs)
+
+There is more information below about using the [LCD](#lcd) and [onboard peripherals](#onboard) as well.
 
 Tutorials using Pixl.js:
 
@@ -83,6 +108,9 @@ Tutorials using Bluetooth LE and functionality that may not be part of Pixl.js:
 
 * APPEND_USES: BLE,-Only BLE,-Pixl.js
 
+There are [many more tutorials](/Tutorials) that may not be specifically for
+you device but will probably work with some tweaking. [Try searching](/Search)
+to find what you want.
 
 <a name="pinout"></a>Pinout
 ---------------------------
@@ -95,7 +123,7 @@ Pins on the Arduino header are accessed via the built-in variables `D0`..`D13` a
 Unlike other Espruino boards, these peripherals can be used on *any* pin.
 
 
-Arduino Shields
+<a name="arduino"></a>Arduino Shields
 ---------------
 
 Pixl.js is a 3.3v device, and is only designed for 3.3v shields.
@@ -109,18 +137,77 @@ connector labelled `3.3 5V Vin`, and you can apply solder to:
 * **short 3.3 to 5v** - the 5v pin will be connected to regulated 3.3v power (note: max power draw is 150mA)
 * **short Vin to 5v** - the 5v pin will be connected to 5v (when connected via USB) or whatever the voltage provided on Vin is
 
+### Shields
+
+Here are some of the [Arduino shields](Arduino) that we have tested and documented:
+
+* APPEND_KEYWORD: Arduino Shield
 
 Information
 -----------
 
 ![Pixl.js](Pixl.js/back.jpg)
 
+* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_sch.pdf)
+* [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_brd.pdf)
+* [Eagle CAD files](https://github.com/espruino/EspruinoBoard/tree/master/Pixl.js/eagle)
 * [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
 * [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
 
+<a name="onboard"></a>LCD Screen
+--------------------------------
 
-On-board LED, Buttons and GPIO
--------------------------------
+Pixl.js's displays the REPL (JavaScript console) by
+default, so any calls like `print("Hello")` or `console.log("World")` will output
+to the LCD when there is no computer connected via Bluetooth or [Serial](#serial-console).
+Any errors generated when there is no connection will also be displayed on the LCD.
+
+You can also output graphics on Pixl.js's display via the global variable `g`
+that is an instance of the [Graphics class](/Reference#Graphics). The display
+is double-buffered, so when you want the changes you made to be displayed
+you need to call `g.flip()`:
+
+```
+// Draw a pattern with lines
+g.clear();
+for (i=0;i<64;i+=7.9) g.drawLine(0,i,i,63);
+g.drawString("Hello World",30,30);
+// Update the display when done
+g.flip();
+```
+
+### Screen updates
+
+`g.flip()` only updates the area of the screen that has been
+modified by `Graphics` commands. If you're modifying the underlying buffer
+(`g.buffer`) then use `g.flip(true)` to update the entire screen contents.
+
+### Contrast
+
+You can change the LCD screen's contrast with `Pixl.setContrast(0.5)` with
+a number between 0 and 1.
+
+You can also write single byte commands to the ST7567 LCD controller using
+the `Pixl.lcdw(...)` command if you want to experiment with different LCD modes.
+
+### Terminal
+
+Pixl.js's LCD acts as a VT100 Terminal. To write text to the LCD regardless of
+connection state you can use `Terminal.println("your text")`. Scrolling
+and simple VT100 control characters will be honoured.
+
+You can even move the JavaScript console (REPL) to the LCD while connected
+via Bluetooth, and use your bluetooth connection as a simple keyboard using
+the following commands:
+
+```
+Bluetooth.on("data",d=>Terminal.inject(d));
+Terminal.setConsole();
+```
+
+
+<a name="onboard"></a>On-board LED, Buttons and GPIO
+------------------------------------------------------
 
 ### LED
 
@@ -179,6 +266,44 @@ stop this, execute `Serial1.setConsole(true)` to force the console to stay on
 **Note:** Serial1 is not enabled by default because it requires the high speed
 oscillator to stay on, which increases power draw a huge amount. If you connect
 the UART but don't power down and power on Pixl.js, you won't get a serial port.
+
+Firmware Updates
+-----------------
+
+### via nRF Toolbox App (iOS & Android)
+
+* On your Bluetooth LE capable phone, install the `nRF Toolbox` app
+* Download the latest `espruino_xxx_pixljs.zip` file from [the binaries folder](/binaries)
+* [Reset Pixl.js](#resetting-pixl-js) with `BTN1` held down. The display will show `BOOTLOADER` `RELEASE BTN1 FOR DFU`. Make sure release `BTN1` before the progress bar reaches the end.
+* The display should now show `DFU STARTED` `READY TO UPDATE`
+* Open the `nRF Toolbox` app
+* Tap the `DFU` icon
+* Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the ZIP file you downloaded
+* If choosing the ZIP file opens the ZIP and displays files inside (it can do on some Android 7 devices) then hit back, long-press on the ZIP, and choose `Open` in the top right.
+* If a `Select scope` window appears, choose `All`
+* Tap `Select Device` and choose the device called `DfuTarg`
+* Now tap `Upload` and wait. Pixl.js's LCD should show a connection and the DFU process will start - it will take around 90 seconds to complete
+* If you have problems after completion, perform a [Hard Reset](#hard-reset)
+
+### via nRF Connect App (Android)
+
+* On your Bluetooth LE capable phone, install the `nRF Connect` app
+* Download the latest `espruino_xxx_pixljs.zip` file from [the binaries folder](/binaries)
+* [Reset Pixl.js](#resetting-pixl-js) with `BTN1` held down. The display will show `BOOTLOADER` `RELEASE BTN1 FOR DFU`. Make sure release `BTN1` before the progress bar reaches the end.
+* The display should now show `DFU STARTED` `READY TO UPDATE`
+* Open the `nRF Connect` app
+* It should show some Bluetooth devices, including one called `DfuTarg`
+* Click `Connect` to the right of `DfuTarg`
+* Once connected, a `DFU` symbol in a circle will appear in the top right of the App
+* Click it, choose `Distribution Packet (ZIP)`, and your Download. If clicking on the downloaded zip file opens its contents (Android 7 may do this) then long-press on the zip and tap open instead.
+* The DFU process will start - it will take around 90 seconds to complete
+* If you have problems after completion, perform a [Hard Reset](#hard-reset)
+
+
+Troubleshooting
+---------------
+
+Please check out the [Bluetooth Troubleshooting](Troubleshooting+BLE) or [General Troubleshooting](/Troubleshooting) pages.
 
 
 Other Official Espruino Boards

@@ -5,6 +5,8 @@ Dinosaur Game
 * KEYWORDS: Game,Dinosaur,T-Rex,Trex,Chrome Game,Offline Game
 * USES: Pixl.js,Graphics
 
+![Dinosaur](Dinosaur Game.jpg)
+
 This code creates a Dinosaur game on [Pixl.js](/Pixl.js), similar to the
 one available in the Chrome Web Browser when you're offline:
 

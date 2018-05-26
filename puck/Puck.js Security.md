@@ -52,9 +52,11 @@ This means it will only be accessible via reads and writes to the `LoopbackB`
 variable. If someone connects to Puck.js they will still get access to the UART,
 but will be unable to do anything.
 
-Anything they write will become available on the `Bluetooth` variable.
+Anything written to the Bluetooth UART will still be available on the `Bluetooth`
+variable via `Bluetooth.on('data', function(data) { ... })` and you can write
+responses with `Bluetooth.write(...)`.
 
-**Note:** you will no longer be able to program the Puck until you reset it,
+**Note:** you will no longer be able to program the Puck until you reset it
 or programatically call `Bluetooth.setConsole()`.
 
 
@@ -143,3 +145,17 @@ devices. Once connected, you can initiate the bonding procedure with the
 [`startBonding`](http://www.espruino.com/Reference#l_BluetoothRemoteGATTServer_startBonding)
 method, and can check the status of the connection with
 [`getSecurityStatus`](http://www.espruino.com/Reference#l_BluetoothRemoteGATTServer_getSecurityStatus).
+
+## Disable the `dump()` and `E.dumpStr()` commands
+
+These commands allow someone with console access to Espruino to easily
+dump the program code that's stored in the device.
+
+You can disable them with `global.dump=function(){};E.dumpStr=function(){};`,
+*however* this is not full protection: with some work it is possible to
+re-enable them, and even without them, console access to Espruino allows
+you to read the state of the interpreter, so you can still reconstruct
+most of the code even without `dump()`.
+
+If you're worried about code readout then it's best to disable the
+console completely (see above).
