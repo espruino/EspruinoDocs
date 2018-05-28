@@ -21,7 +21,7 @@ Full details on flashing can be found on <a name="firmware-updates"></a>[Seeed's
 
 Binaries can be found in:
 
-* the [Downloadable zip of firmare](/Download) (current version)
+* the [Downloadable zip of firmare](/Download#Wio_LTE) (current version)
 * the [binaries folder](/binaries) (current version)
 * the [automatic Travis Builds](https://www.espruino.com/binaries/travis/master/) (cutting edge builds)
 

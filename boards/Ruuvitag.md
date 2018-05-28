@@ -14,7 +14,7 @@ The Ruuvitag is a Bluetooth LE beacon with an environment sensor and acceleromet
 
 Binaries can be found in:
 
-* the [Downloadable zip of firmare](/Download) (current version)
+* the [Downloadable zip of firmare](/Download#ruuvitag) (current version)
 * the [binaries folder](/binaries) (current version)
 * the [automatic Travis Builds](https://www.espruino.com/binaries/travis/master/) (cutting edge builds)
 

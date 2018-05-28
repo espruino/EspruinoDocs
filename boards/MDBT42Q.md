@@ -132,6 +132,8 @@ the UART but don't power down and power on the MDBT42Q, you won't get a serial p
 Firmware Updates
 -----------------
 
+Up to date firmwares are available from [the Download page](/Download#mdbt42q).
+
 Check out the [Puck.js firmware update instructions](/Puck.js#firmware-updates)
 for full details. All you need to do is apply power to your module with
 pin `D0` connected to VDD, then release it after a second.

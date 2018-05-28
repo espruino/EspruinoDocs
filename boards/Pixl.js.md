@@ -273,7 +273,7 @@ Firmware Updates
 ### via nRF Toolbox App (iOS & Android)
 
 * On your Bluetooth LE capable phone, install the `nRF Toolbox` app
-* Download the latest `espruino_xxx_pixljs.zip` file from [the binaries folder](/binaries)
+* Download the latest `espruino_xxx_pixljs.zip` file from [the Download page](/Download#pixljs)
 * [Reset Pixl.js](#resetting-pixl-js) with `BTN1` held down. The display will show `BOOTLOADER` `RELEASE BTN1 FOR DFU`. Make sure release `BTN1` before the progress bar reaches the end.
 * The display should now show `DFU STARTED` `READY TO UPDATE`
 * Open the `nRF Toolbox` app
@@ -288,7 +288,7 @@ Firmware Updates
 ### via nRF Connect App (Android)
 
 * On your Bluetooth LE capable phone, install the `nRF Connect` app
-* Download the latest `espruino_xxx_pixljs.zip` file from [the binaries folder](/binaries)
+* Download the latest `espruino_xxx_pixljs.zip` file from [the Download page](/Download#pixljs)
 * [Reset Pixl.js](#resetting-pixl-js) with `BTN1` held down. The display will show `BOOTLOADER` `RELEASE BTN1 FOR DFU`. Make sure release `BTN1` before the progress bar reaches the end.
 * The display should now show `DFU STARTED` `READY TO UPDATE`
 * Open the `nRF Connect` app

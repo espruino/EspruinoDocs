@@ -319,7 +319,7 @@ Firmware Updates
 ### via nRF Toolbox App (iOS & Android)
 
 * On your Bluetooth LE capable phone, install the `nRF Toolbox` app
-* Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
+* Download the latest `espruino_xxx_pixljs.zip` file from [the Download page](/Download#puckjs)
 * [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED should be lit
 * Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Toolbox` app
@@ -336,7 +336,7 @@ Firmware Updates
 [[http://youtu.be/N3CJbl29vy0]]
 
 * On your Bluetooth LE capable phone, install the `nRF Connect` app
-* Download the latest `espruino_xxx_puckjs.zip` file from [the binaries folder](/binaries)
+* Download the latest `espruino_xxx_pixljs.zip` file from [the Download page](/Download#puckjs)
 * [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED should be lit
 * Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Connect` app
