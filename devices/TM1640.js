@@ -16,23 +16,15 @@ exports.connect = function(pins, callback) {
   pinMode(pins.clk, 'output');
   pinMode(pins.din, 'output');
 
-  var c = digitalWrite.bind(null, [pins.clk]);
-  var d = digitalWrite.bind(null, [pins.din]);
+  var c = digitalWrite.bind(null, pins.clk);
+  var d = digitalWrite.bind(null, pins.din);
+  var s = shiftOut.bind(null, pins.din, {clk: pins.clk, clkPol: 0, clkPinsClk: 1, repeat: 8});
   var g = Graphics.createArrayBuffer(8,8,1);
   var intensity = 1;
 
-  function send(data) {
-    for (var i = 0; i < 8; i++) {
-      c(LOW);
-      d(data & 1 ? HIGH : LOW);
-      data >>= 1;
-      c(HIGH);
-    }
-  }
-
   function sendCommand(cmd) {
     d(LOW);
-    send(cmd);
+    s(cmd);
     d(HIGH);
   }
 
@@ -42,8 +34,8 @@ exports.connect = function(pins, callback) {
       // sendData(i,b[i]) - send row byte
       sendCommand(0x44);
       d(LOW);
-      send(0xC0 | i);
-      send(b[i]);
+      s(0xC0 | i);
+      s(b[i]);
       d(HIGH);
 
       // strobe
