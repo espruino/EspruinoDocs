@@ -262,7 +262,7 @@ This will call `setConsole` 1 second after boot, by which time USB should have i
 
 ## <a name="console"></a>Espruino works when connected to a computer, but stops when powered from something else
 
-Do you have a Serial device connected to pins `B6`/`B7` on the [Pico](/Pico) or [WiFi](/WiFi), or `A9`/`A10` on the [Original Espruino](/EspruinoBoard)? When disconnected from USB, Espruino's 'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` - which is on those pins. If you've got a Serial device on those pins then it won't work.
+Do you have a Serial device connected to pins `B6`/`B7` on the [Pico](/Pico) or [WiFi](/WiFi), or `A9`/`A10` on the [Original Espruino](/Original)? When disconnected from USB, Espruino's 'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` - which is on those pins. If you've got a Serial device on those pins then it won't work.
 
 To fix this, right at the top of your code that runs on initialisation (eg. the `onInit` function or `E.on('init', ...)` event), add the line `USB.setConsole()`, which will force the console onto USB.
 

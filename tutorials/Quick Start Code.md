@@ -191,7 +191,7 @@ Now you've got an idea how to use Espruino:
 * Have a look at your board's reference page - it contains more in-depth information about your board, as well as for links to tutorials that specifically use your board:
   * Espruino [Pico](/Pico)
   * Espruino [WiFi](/WiFi)
-  * [Original](/EspruinoBoard) Espruino
+  * [Original](/Original) Espruino
   * [Puck.js](/Puck.js)
   * [Pixl.js](/Pixl.js)
   * [MDBT42Q](/MDBT42Q)

@@ -33,7 +33,7 @@ Features
 This board can be [purchsed direct from ST or from distributors](http://www.st.com/en/evaluation-tools/32l496gdiscovery.html#samplebuy-scroll).
 
 
-Getting Started
+Getting Started<a name="firmware-updates"></a>
 ----------------
 
 * Plug the Discovery board in via the `USB STLINK` USB connector.

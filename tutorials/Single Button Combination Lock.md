@@ -15,7 +15,7 @@ If you want to make an electronic lock, the obvious way is to use something like
 You'll Need
 ----------
 
-* One [Espruino Board](/EspruinoBoard)
+* One [Espruino Board](/Original)
 
 Wiring Up
 --------

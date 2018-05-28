@@ -18,7 +18,7 @@ Quick links
 
 * [Download the latest ESP8266 firmware release](http://www.espruino.com/Download)
 * [Download 'cutting edge' ESP8266 firmwares](http://www.espruino.com/binaries/travis/master/) - these may not always work
-* [Tutorial on flashing the esp8266](ESP8266_Flashing)
+* [Tutorial on flashing the esp8266](ESP8266_Flashing)<a name="firmware-updates"></a>
 * [Espruino ESP8266 Forum](http://forum.espruino.com/microcosms/925/)
 * [Using Wifi on the ESP8266](ESP8266_WifiUsage)
 * [Gitter chat about Espruino](https://gitter.im/espruino/Espruino) (not focused on esp8266 but
@@ -38,7 +38,7 @@ Build Content
 -------------
 
 content | espruino_1v98_esp8266 | espruino_1v98_esp8266_4mb
- :---  | :--- | :--- 
+ :---  | :--- | :---
 Modules | NET<br>TELNET<br><br>CRYPTO, only SHA1<br>NEOPIXEL | NET<br>TELNET<br>GRAPHICS<br>CRYPTO only SHA1<br>NEOPIXEL
 JS variables| 1700| 1600
 save pages| 4 x 4096 byte | 16 x 4096 byte
@@ -158,10 +158,10 @@ GPIO16 is now supported in Espruino. **Do not use it if you use deep sleep**
 ### digitalPulse implementation
 
 The `digitalPulse` function is implemented by busy-waiting between pulse transitions (unlike on other Espruino
-boards where `digitalPulse` is asynchronous). 
+boards where `digitalPulse` is asynchronous).
 
-This means that if you specify a series of 10 500us pulses the esp8266 will busy-wait for 5ms in order to toggle 
-the output pin at the right moment. Other than the fact that your program will not do anything else during this 
+This means that if you specify a series of 10 500us pulses the esp8266 will busy-wait for 5ms in order to toggle
+the output pin at the right moment. Other than the fact that your program will not do anything else during this
 time, this also prevents Wifi processing and empirically, somewhere after 10ms-50ms
 the watchdog timeout will kick in and reset the chip.
 
@@ -298,7 +298,7 @@ the flash beyond 1MB can be used for a forthcoming spiffs filesystem.
 is told to use an OTA layout with two 256KB firmwares but in fact a single 400KB+
 firmware is loaded and care is used not to conflict with the 2x256KB layout.
 
-The result of all this is the following: 
+The result of all this is the following:
 
 Start    | Start  | Length | Function
 --------:|-------:|-------:|:----------------------------------------
@@ -380,7 +380,7 @@ Loading Espruino
 Espruino can be loaded into the esp8266 using any of the flashing techniques applicable
 to the esp8266 itself.  A variety of tools are available to assist with this.
 
-The Espruino ESP8266 firmware [is now distributed alongside all the other firmwares on the 
+The Espruino ESP8266 firmware [is now distributed alongside all the other firmwares on the
 Espruino Website](http://www.espruino.com/Download).
 
 Power Consumption
@@ -403,9 +403,9 @@ Power Consumption
 
 Currently ESP8266 can support three low power modes: Light Sleep, Modem Sleep and Deep Sleep.
 
-Modem-Sleep requires the CPU to be working, as in PWM or I2S applications. According to 802.11 standards (like U-APSD), it saves power to shut down the Wi-Fi Modem circuit while maintaining a Wi-Fi connection with no data transmission. 
+Modem-Sleep requires the CPU to be working, as in PWM or I2S applications. According to 802.11 standards (like U-APSD), it saves power to shut down the Wi-Fi Modem circuit while maintaining a Wi-Fi connection with no data transmission.
 
-During Light-Sleep, the CPU may be suspended in applications like Wi-Fi switch. Without data transmission, the Wi-Fi Modem circuit can be turned off and CPU suspended to save power according to the 802.11 standard (U-APSD). 
+During Light-Sleep, the CPU may be suspended in applications like Wi-Fi switch. Without data transmission, the Wi-Fi Modem circuit can be turned off and CPU suspended to save power according to the 802.11 standard (U-APSD).
 
 Deep-Sleep does not require Wi-Fi connection to be maintained. For application with long time lags between data transmission, e.g. a temperature sensor that checks the temperature every 100s.
 E.g. sleep 300s and waking up to connect to the AP (taking about 0.3~1s), the overall average current is less than 1mA.

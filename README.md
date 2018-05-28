@@ -74,7 +74,7 @@ Common keywords for KEYWORDS/APPEND_KEYWORDS are:
 ```
 Espruino
 Official Board
-PCB 
+PCB
 Pinout                 Page contains pinout info
 ```
 
@@ -155,7 +155,7 @@ You can load a development version of the website locally.  It will *not* look e
 $ npm start
 ```
 
-Then load up a page in a browser: [http://localhost:3040/EspruinoBoard](http://localhost:3040/EspruinoBoard)
+Then load up a page in a browser: [http://localhost:3040/Original](http://localhost:3040/Original)
 
 # Troubleshooting
 

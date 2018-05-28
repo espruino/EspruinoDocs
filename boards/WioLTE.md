@@ -17,7 +17,7 @@ It contains:
 * 6 [Grove](/Grove) Connectors
 * Nano SIM and TF card 2 in 1 socket
 
-Full details on flashing can be found on [Seeed's website](https://github.com/SeeedDocument/Wio_LTE#software-updates)
+Full details on flashing can be found on <a name="firmware-updates"></a>[Seeed's website](https://github.com/SeeedDocument/Wio_LTE#software-updates)
 
 Binaries can be found in:
 
@@ -34,7 +34,7 @@ Using
 -----
 
 **Seeed has a [complete Getting Started Guide here](https://github.com/SeeedDocument/Wio_LTE)
-which is the best source of information** 
+which is the best source of information**
 
 Seeed Wio LTE can be used much like any other Espruino USB device, with
 the exception of the on-board LED which needs to be accessed with the
@@ -48,14 +48,14 @@ WioLTE.LED(r,g,b); // Output a color on the LED (values range 0..255)
 ```
 
 There are also built-in variables for each of the [Grove](/Grove)
-connectors marked on the board. These are two-element arrays of Pins: 
+connectors marked on the board. These are two-element arrays of Pins:
 
 ```
 WioLTE.D38
 WioLTE.D20
 WioLTE.A6
 WioLTE.A4
-WioLTE.I2C 
+WioLTE.I2C
 WioLTE.UART
 ```
 
@@ -111,7 +111,7 @@ To use this functionality, you need to `require` the `wiolte` module
 with `require('wiolte')`.
 
 An example showing how to connect, use the [[Internet]] connection,
-GPS, and SMS is below: 
+GPS, and SMS is below:
 
 ```
 var board;

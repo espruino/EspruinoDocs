@@ -27,7 +27,7 @@ Connect as follows:
 | 7    | MISO      | A6         | SPI MISO |
 | 8    | IRQ       | unused     | GPIO In |
 
-**Note:** These pins are suggested for the [Original Espruino Board](/EspruinoBoard) as they are in the middle, leaving the edges free for IO. However you can use any GPIO pins you want (with software [[SPI]] you needn't use SPI pins either).
+**Note:** These pins are suggested for the [Original Espruino Board](/Original) as they are in the middle, leaving the edges free for IO. However you can use any GPIO pins you want (with software [[SPI]] you needn't use SPI pins either).
 
 For the [[Pico]] there is [an adaptor shim available](/Shims#nrf24l01p-0-05-shim) as part of the [shim collection](/Shims#shim-collection) that makes the NRF24 a lot easier to solder!
 
@@ -48,7 +48,7 @@ Notes
 * Devices have a transmit and a receive address
 * Devices can only transmit **or** receive. They can't do both at the same time
 * Transmits are acknowledged - a module knows if the data it sent was received
-* The NRF24 module can be unreliable at the higher 
+* The NRF24 module can be unreliable at the higher
 
 The Espruino module allows you to send and receive strings. It does this by sending enough packets to contain the string plus a terminating zero. It will retry, but it is possible for parts of the string to get missed out.
 
@@ -162,10 +162,10 @@ You can send individual packets using ```NRF.send(data)```, where data is an arr
 
 Reference
 --------------
- 
+
 * APPEND_JSDOC: NRF24L01P.js
 
-Using 
+Using
 -----
 
 * APPEND_USES: NRF24L01+

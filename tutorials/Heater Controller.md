@@ -25,7 +25,7 @@ Here we'll show you a very quick, easy way to control the temperature of somethi
 You'll Need
 ----------
 
-* An [Espruino Board](/EspruinoBoard)
+* An [Espruino Board](/Original)
 * A [[DS18B20]] temperature sensor
 * A 4.7k resistor (for the temperature sensor)
 * A heater of some kind. I'll be using a [P21W](http://www.ebay.com/sch/i.html?_nkw=P21W+12V+21W+-led) car indicator bulb, and a 5v Power Supply that will supply at least 1 Amp to power it

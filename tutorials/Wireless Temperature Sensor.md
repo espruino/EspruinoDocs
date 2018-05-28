@@ -17,7 +17,7 @@ This is a quick and easy Wireless Temperature Sensor. One Espruino reads the tem
 You'll Need
 ----------
 
-* Two [Espruino Boards](/EspruinoBoard) wired up with an [NRF24L01+](/NRF24L01P) module
+* Two [Espruino Boards](/Original) wired up with an [NRF24L01+](/NRF24L01P) module
 * A [[DS18B20]] Temperature sensor and 4.7k resistor
 * A [Nokia 5110 LCD](/PCD8544)
 

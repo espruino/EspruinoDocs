@@ -241,7 +241,7 @@ You can write directly to the hardware in order to perform IO very quickly. Howe
 
 Useful docs are:
 
-* STM32F103 reference (see [[EspruinoBoard]])
+* STM32F103 reference (see [[Original]])
 * [STM32F1 header file](https://github.com/espruino/Espruino/blob/master/targetlibs/stm32f1/lib/stm32f10x.h) - see `GPIO_BASE` and `GPIO_TypeDef`.
 
 GPIOA's Output data register is `0x4001080C` (which sets ALL pins on that port). To set individual pins you can write to BSRR = `0x40010810` and to clear them you can write to BRR = `0x40010814`

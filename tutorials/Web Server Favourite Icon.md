@@ -24,7 +24,7 @@ In this tutorial we'll just make sure we serve up two different webpages, the ic
 You'll Need
 ----------
 
-* One [Espruino Board](/EspruinoBoard)
+* One [Espruino Board](/Original)
 * A [[CC3000]] WiFi module
 
 Wiring Up

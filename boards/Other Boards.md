@@ -15,7 +15,7 @@ These are other boards that Espruino compiles for, but which aren't 'officially 
 *   The modules, tutorials and examples are designed for the Espruino Board and may not work
 *   The Web IDE may have to employ 'throttling' for error free communications - significantly slowing down your experience.
 *   You cannot update the firmware for other boards via the Web IDE
-*   We're not able to support you if you have problems using these boards. If you want support, get an [official board](/EspruinoBoard)
+*   We're not able to support you if you have problems using these boards. If you want support, get an [official board](/Order)
 *   The community is responsible for maintaining these boards, and as such releases are not subject to the same level of testing.
 
 **Note:** ST Nucleo and Discovery boards are sold at a low price, for evaluation purposes only. According to the [Evaluation products license agreement](http://www.st.com/st-web-ui/static/active/en/resource/legal/legal_agreement/license_agreement/EvaluationProductLicenseAgreement.pdf) that comes with each board, you must **not use them as part of a finished product**. If you want to do that, please check out our [official boards](/Order).

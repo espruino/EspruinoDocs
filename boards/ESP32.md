@@ -85,7 +85,7 @@ Depending on the board and operating system you have, you might want to install 
 * [FTDI](http://www.ftdichip.com/Drivers/D2XX.htm)
 * [Silicon Labs CP210x](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
 
-### Flashing
+### Flashing<a name="firmware-updates"></a>
 
 If your device is not already flashed, below are the instructions.  Flashing involves downloading the latest firmware to your PC and then copying via USB cable to the microcontroller.
 
@@ -232,7 +232,7 @@ be quite reliable.
 
 There are other methods to connect to your ESP32, not just Espruino Web IDE.  Two
 very basic tools are [minicom](https://en.wikipedia.org/wiki/Minicom),
-[CuteCom](http://cutecom.sourceforge.net/), 
+[CuteCom](http://cutecom.sourceforge.net/),
 and [screen](https://www.gnu.org/software/screen/) which may already be installed
 on your system.
 Another cross platform terminal program with a friendly interface is [CoolTerm](http://freeware.the-meiers.org/).

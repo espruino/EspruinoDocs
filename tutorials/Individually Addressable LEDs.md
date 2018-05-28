@@ -42,7 +42,7 @@ You'll Need
 Wiring Up
 ---------
 
-Check out [the neopixel library reference](/Reference#neopixel) - WS2811 style LEDs can be quite picky about the voltage of the data wire. Using the Original [Espruino](/EspruinoBoard) and [Pico](/Pico) is easy, but other boards may require a little more thought.
+Check out [the neopixel library reference](/Reference#neopixel) - WS2811 style LEDs can be quite picky about the voltage of the data wire. Using the Original [Espruino](/Original) and [Pico](/Pico) is easy, but other boards may require a little more thought.
 
 Your WS2811 LED light chain should have two ends, with 3 wires at each end (some may be duplicated). The colours for these are Red, White and Green. Red is 5v power, White is Ground, and Green is Signal. If you have instructions with your LED light chain, please use those instead.
 

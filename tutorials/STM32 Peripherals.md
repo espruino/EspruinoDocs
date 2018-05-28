@@ -13,7 +13,7 @@ to you in JavaScript.
 
 If you want to really make the most of the hardware, you'll have to access it directly. Here,
 we'll detail how to access the timer hardware to measure pulse length on the STM32
-microcontrollers used in the [Original Espruino](/EspruinoBoard) and the [Espruino Pico](/Pico).
+microcontrollers used in the [Original Espruino](/Original) and the [Espruino Pico](/Pico).
 
 
 Documentation
@@ -21,7 +21,7 @@ Documentation
 
 The best source of documentation on the chip's peripherals come from the manufacturer
 themselves - [ST](http://www.st.com). You'll need the Reference Manual and Datasheet for the particular
-chip. The easiest way to do this is to go to the page on espruino.com for your board ([Original](/EspruinoBoard) or 
+chip. The easiest way to do this is to go to the page on espruino.com for your board ([Original](/Original) or 
 [Pico](/Pico) and to find the links there).
 
 We're going to cover the [Pico](/Pico), so [this is the STM32F401CD Reference Manual](/datasheets/STM32F401xD_ref.pdf)

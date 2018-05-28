@@ -19,7 +19,7 @@ There's a WebServer on the CC3000 which serves up a webpage that contains a text
 You'll Need
 ----------
 
-* One [Espruino Board](/EspruinoBoard)
+* One [Espruino Board](/Original)
 * A [[CC3000]] WiFi module
 
 Wiring Up

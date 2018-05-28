@@ -15,7 +15,7 @@ Plugging in
 <span style="color:red">Please check that there is no bare metal (including your desk!) near the board when you plug it in, as it could short it out.</span>
 
 * **Espruino [Pico](/Pico)** - the Pico is designed to plug right into you computer's USB type A connector, or a USB extension lead. The components (not the text) should usually be facing upwards (so the 4 gold strips are facing the plastic in the USB socket).
-* **Original [Espruino](/EspruinoBoard), [Espruino WiFi](/EspruinoWiFi) and [Wio LTE](/WioLTE)** - just plug the board in with a Micro USB cable and you're done.
+* **Original [Espruino](/Original), [Espruino WiFi](/EspruinoWiFi) and [Wio LTE](/WioLTE)** - just plug the board in with a Micro USB cable and you're done.
 * **[Puck.js](/Puck.js)** - there is no plug! [see the Bluetooth LE Quick Start Guide](http://www.espruino.com/Quick+Start+BLE) instead as the setup is slightly different.
 * **[Pixl.js](/Pixl.js)** - the USB plug is only for power [see the Bluetooth LE Quick Start Guide](http://www.espruino.com/Quick+Start+BLE) instead as the setup is slightly different.
 * **Other Boards** - please [see this page](/Other Boards) for more information.
@@ -67,7 +67,7 @@ Now you've got an idea how to use Espruino:
 
 * Have a look at the [[Tutorials]] and [[Reference]] pages
 * Check out [[Modules]] to see which libraries of code are available to use
-* If you have a [Pico](/Pico), [WiFi](/WiFi) or [Original](/EspruinoBoard) Espruino board then click those links for more in-depth information about your board, as well as for links to tutorials that specifically use your board.
+* If you have a [Pico](/Pico), [WiFi](/WiFi) or [Original](/Original) Espruino board then click those links for more in-depth information about your board, as well as for links to tutorials that specifically use your board.
 * See how to use the more advanced features of the [[Web IDE]]
 * Check out other [ways of Programming Espruino](/Programming)
 * Instantly [Search](/Search) all the Espruino website's documentation (using the box in the top right)

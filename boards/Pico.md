@@ -178,6 +178,17 @@ pinMode(B0, "af_opendrain");analogWrite(B0, 0.5, {freq:100}); // output a 100Hz 
 
 The jumper can be shorted by scribbling over it with a normal HB pencil. See the [[Pico FET Output]] tutorial for an example.
 
+
+Firmware Updates
+-----------------
+
+We'd **strongly** recommend that you use the Web IDE to update the firmware
+on this board - See [The Download page](/Download#flashing) for instructions.
+
+In case you manage to erase all your board's flash memory you can use the
+on-chip bootloader though - see below.
+
+
 Advanced Reflashing
 -----------------
 

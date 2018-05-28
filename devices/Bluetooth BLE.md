@@ -7,8 +7,8 @@ Bluetooth BLE 4.0 (HM-10)
 * KEYWORDS: Bluetooth,BLE,HM-10,HM10,iBeacon,Wireless,Radio,Transceiver
 * USES: Espruino,HM-10,Bluetooth
 
-**Note:** This page covers adding Bluetooth LE on the [Original Espruino Board](/EspruinoBoard).
-We now sell [Puck.js](/Puck.js) which is a device that comes with Bluetooth LE capability pre-installed.
+**Note:** This page covers adding Bluetooth LE on the [Original Espruino Board](/Original).
+We now [sell Espruino devices](https://shop.espruino.com/ble) with Bluetooth LE capability pre-installed.
 
 Introduction
 -------------

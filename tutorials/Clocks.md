@@ -22,7 +22,7 @@ When you use the 32kHz internal oscillator, please note that pin C15 on the pin 
 You'll Need
 ----------
 
-* One [Espruino Board](/EspruinoBoard)
+* One [Espruino Board](/Original)
 * A 32Khz Watch Crystal
 
 Buying a Crystal

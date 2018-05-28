@@ -11,7 +11,7 @@ Espruino Kits
 [![thumbnail](Espruino Kits/breadboard.jpg)](/Breadboard)
 [![thumbnail](Espruino Kits/CC3000.jpg)](/CC3000)
 [![thumbnail](Espruino Kits/DS18B20.jpg)](/DS18B20)
-[![thumbnail](Espruino Kits/espruino.jpg)](/EspruinoBoard)
+[![thumbnail](Espruino Kits/espruino.jpg)](/Original)
 [![thumbnail](Espruino Kits/GL5537.jpg)](/LDR)
 [![thumbnail](Espruino Kits/irprox.jpg)](/InfraredProximity)
 [![thumbnail](Espruino Kits/keypad.jpg)](/KeyPad)
@@ -84,7 +84,7 @@ Original Espruino KickStarter
 
 |                                   | Low Power Wireless | Multicolour Lights | Starter | Wireless Experimenter | WiFi Wireless | Ultimate WiFi |
 |-----------------------------------|--------------------|--------------------|---------|-----------------------|---------------|---------------|
-| [Espruino Board](/EspruinoBoard)  | 2                  | 1                  | 1       | 5                     | 4             | 4             |
+| [Espruino Board](/Original)  | 2                  | 1                  | 1       | 5                     | 4             | 4             |
 | HC-05 [[Bluetooth]]               |                    |                    |         | 5 (or 2)              | 2             | 2             |
 | [[NRF24L01P]] Wireless            | 2                  |                    |         | 0 (or 4)              | 2             | 2             |
 | [[CC3000]] WiFi                   |                    |                    |         |                       | 1             | 1             |

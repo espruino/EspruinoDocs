@@ -35,7 +35,7 @@ Getting Started
 **Note:** Nordic Thingy devices **do not have Espruino
 pre-installed**. You'll have to update the firmware yourself.
 
-There are two options:
+There are two options:<a name="firmware-updates"></a>
 
 ### Over the air firmware updates
 

@@ -10,7 +10,7 @@ Ruuvitag
 
 The Ruuvitag is a Bluetooth LE beacon with an environment sensor and accelerometer built in.
 
-Full details on flashing Ruuvitag can be found at [https://ruu.vi/setup](https://ruu.vi/setup/)
+<a name="firmware-updates"></a>Full details on flashing Ruuvitag can be found at [https://ruu.vi/setup](https://ruu.vi/setup/)
 
 Binaries can be found in:
 

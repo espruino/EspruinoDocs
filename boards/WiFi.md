@@ -34,7 +34,7 @@ Pinout
 
 * APPEND_PINOUT: ESPRUINOWIFI
 
-<span style="color: red">**Note:** Unlike [Espruino Pico](/Pico) and the [original Espruino board](/EspruinoBoard), Espruno WiFi **doesn't** contain any
+<span style="color: red">**Note:** Unlike [Espruino Pico](/Pico) and the [original Espruino board](/Original), Espruno WiFi **doesn't** contain any
 battery switchover circuitry. The `+`/`+VUSB` pin is connected straight to **USB 5V**, and shouldn't be used to power the
 WiFi board while Micro USB is plugged in, unless it is via a diode from 5V.</span>
 
@@ -161,6 +161,16 @@ Troubleshooting
 -------------
 
 Please see the [[Troubleshooting]] section.
+
+
+Firmware Updates
+-----------------
+
+We'd **strongly** recommend that you use the Web IDE to update the firmware
+on this board - See [The Download page](/Download#flashing) for instructions.
+
+In case you manage to erase all your board's flash memory you can use the
+on-chip bootloader though - see below.
 
 
 Advanced Reflashing

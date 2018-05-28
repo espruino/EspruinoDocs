@@ -12,7 +12,7 @@ Introduction
 
 On most Arduinos, if you want to keep track of time then you have to use an external RTC (Real Time Clock) chip.
 
-Both the [[Pico]] and the original [Espruino Board](/EspruinoBoard) have one built-in though. As an example we'll make a simple clock using the LCD display.
+Both the [[Pico]] and the original [Espruino Board](/Original) have one built-in though. As an example we'll make a simple clock using the LCD display.
 
 **Note:** While the Pico has an RTC built in, by default it doesn't have an accurate watch crystal and so uses its internal oscillator which isn't that accurate. It won't keep proper time over a month, but in conjunction with some other time source (an internet connection, or [the NPL time signal](http://en.wikipedia.org/wiki/Time_from_NPL)) it'll be just fine.
 

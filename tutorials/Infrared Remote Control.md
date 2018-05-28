@@ -19,7 +19,7 @@ Do you want to control IR devices from Espruino instead?  Check out [using Puck.
 You'll Need
 ----------
 
-* One [Espruino Board](/EspruinoBoard)
+* One [Espruino Board](/Original)
 * An Infrared Receiver
 
 Getting an Infrared Receiver

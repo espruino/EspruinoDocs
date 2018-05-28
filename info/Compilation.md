@@ -119,7 +119,7 @@ function toggler() {
 
 For what to do on an **STM32F1**, take a look at the [[Assembler]] page.
 
-Direct access can be done with other peripherals as well - check out the reference manual for the MCU on your board for more information on which addresses to write to. The correct reference manual is linked from the [Pico Board](/Pico) and [Original Espruino Board](/EspruinoBoard) pages under the 'Information' heading.
+Direct access can be done with other peripherals as well - check out the reference manual for the MCU on your board for more information on which addresses to write to. The correct reference manual is linked from the [Pico Board](/Pico) and [Original Espruino Board](/Original) pages under the 'Information' heading.
 
 There's a tutorial [on accessing low-level STM32 peripherals here](/STM32+Peripherals)
 

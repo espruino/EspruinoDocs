@@ -18,7 +18,7 @@ All you need is a very simple circuit using a few cents worth of components. You
 Wiring
 -------
 
-| Serial pin | [Original Espruino](/EspruinoBoard) | [Pico](/Pico) |
+| Serial pin | [Original Espruino](/Original) | [Pico](/Pico) |
 |----|-------|---------|
 | RX | A10 | B7 |
 | TX | A9  | B6 |
@@ -65,7 +65,7 @@ anywhere between 0 and 3.3v. In order to avoid noise and to be error tolerant, t
 * If the voltage is below 0.8v it's a Logic 0
 * If the voltage is between 0.8v and 2v, the logic level *stays the same*.
 
-At the same time, the headphone output of your computer generally produces -1V to +1V. so a voltage 
+At the same time, the headphone output of your computer generally produces -1V to +1V. so a voltage
 swing of 2 volts. If we could shift that (by adding about 1.5V) then it'd produce 0.5V to 2.5V - just
 enough for the microcontroller.
 
@@ -73,7 +73,7 @@ So that's what we do:
 
 * Use the internal 40k pull-up resistor on Espruino's RX pin (turned on by default),
 and add a 47k pull-down resistor (R1), so it sits at a voltage of about 1.5v.
-* Add a capacitor between the headphone output and the RX pin - this charges up slowly, 
+* Add a capacitor between the headphone output and the RX pin - this charges up slowly,
 and shifts the voltage level.
 
 And then it's just up to the PC to output the correct sounds (signals) on the headphone jack.
@@ -85,11 +85,11 @@ suggest including one.
 
 ### Receive from Espruino
 
-Receiving is even easier, as we can use some software in the PC to decode the signals that come from Espruino. 
+Receiving is even easier, as we can use some software in the PC to decode the signals that come from Espruino.
 All we care about is making sure the signals aren't so big that they might damage your computer.
 
-So all we do is use a potential divider (R2 and R3) to convert the 3.3v Espruino TX signal into a 1.6v 
-signal for the microphone. In fact if you didn't care much about your computer, you could just connect 
+So all we do is use a potential divider (R2 and R3) to convert the 3.3v Espruino TX signal into a 1.6v
+signal for the microphone. In fact if you didn't care much about your computer, you could just connect
 directly and the computer's input protection circuitry would probably protect it - **buy we really don't
 recommend that at all!**
 
@@ -108,7 +108,7 @@ Using
 Normal Web IDE
 ------------
 
-* Start the [Web IDE](/webide) 
+* Start the [Web IDE](/webide)
 * Go to `Settings`, then `Communications`. Under `Connect over Audio`, choose `Normal Signal Polarity`
 * Exit settings, and click the `Connect` button, choose `Audio`
 * In the left-hand pane, press `enter`, then type `LED1.set()` then type enter again. It should light the LED.
@@ -150,7 +150,7 @@ And then to send and execute code, do something like the following:
 
 ```
 // audio_serial_invert = true; // if your computer needed the inverted polarity
-audio_serial_write("digitalWrite(LED1,1);\n"); 
+audio_serial_write("digitalWrite(LED1,1);\n");
 ```
 
 [[https://youtu.be/BQDZNFXygrM]]
@@ -166,4 +166,3 @@ More examples and information are available on:
 
 * [This page on GitHub](https://github.com/espruino/EspruinoOrion)
 * [This forum post](http://forum.espruino.com/conversations/257732/)
-

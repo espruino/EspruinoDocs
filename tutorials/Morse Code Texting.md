@@ -17,7 +17,7 @@ This code will make a little device that lets you type out your message like a n
 You'll Need
 ----------
 
-* An [Espruino Board](/EspruinoBoard) 
+* An [Espruino Board](/Original) 
 * A [[KeyPad]]
 * A [[Speaker]]
 

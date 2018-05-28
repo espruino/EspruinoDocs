@@ -19,7 +19,7 @@ This is done by embedding an SVG image into an HTML file. SVG elements can then 
 You'll Need
 ----------
 
-* One [Espruino Board](/EspruinoBoard)
+* One [Espruino Board](/Original)
 * A [[CC3000]] WiFi module
 * A [model house](http://www.hazelwilliams.net/)
 * A string of 8 [[WS2811]] Lights

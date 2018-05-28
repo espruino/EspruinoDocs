@@ -32,8 +32,8 @@ that can be used to add Bluetooth LE UART capability to other Espruino devices.
 ### Serial / UART
 
 When not connected to a computer by USB, Espruino boards usually open up a serial
-port on two of their pins at 9600 baud so that they can be programmed via Serial. 
-The pins used for this are detailed in the Pinout section of your board's specific 
+port on two of their pins at 9600 baud so that they can be programmed via Serial.
+The pins used for this are detailed in the Pinout section of your board's specific
 reference page (eg [the Pico](/Pico#pinout), where they're marked with `!`).
 
 To save power, [Puck.js](/Puck.js) only powers up the serial port if it detects
@@ -41,8 +41,8 @@ a voltage on the RX pin at boot time. See [Puck.js](/Puck.js#serial-console)
 
 ### Bluetooth UART
 
-The [Original Espruino Board](/EspruinoBoard) has a footprint on the back for 
-an [HC-05/HC-06 Bluetooth Module](/Bluetooth). Once soldered, it uses the 
+The [Original Espruino Board](/Original) has a footprint on the back for 
+an [HC-05/HC-06 Bluetooth Module](/Bluetooth). Once soldered, it uses the
 standard Serial port (detailed above) for communication. For more information
 [see here](/Bluetooth).
 
@@ -69,14 +69,14 @@ However, using `reset()` will break your connection.
 
 ### Headphone Jack
 
-Yes, it is even possible to program Espruino from your headphone jack with a 
+Yes, it is even possible to program Espruino from your headphone jack with a
 few external components! [See here!](/Headphone)
 
 
 Applications
 ------------
 
-### Espruino Web IDE 
+### Espruino Web IDE
 
 This is what we'd suggest you use for programming Espruino. It comes in a few
 flavours:
@@ -91,8 +91,8 @@ It does however support using your [headphone jack!](/Headphone)!
 to communicate with Bluetooth LE devices like [Puck.js](/Puck.js) on Windows.
 * [Locally hosted](https://github.com/espruino/EspruinoHub) IDE can be run on a Raspberry Pi, and can allow you to program [Puck.js](/Puck.js) devices through any Web Browser that has access to your local network.
 
-Despite being called a 'Web IDE', the IDE itself (including the fully online version) 
-can function without an internet connection. If you're using modules you may need to 
+Despite being called a 'Web IDE', the IDE itself (including the fully online version)
+can function without an internet connection. If you're using modules you may need to
 download 'offline data' under settings first though!
 
 ### Espruino Command-line tool

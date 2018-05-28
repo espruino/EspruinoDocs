@@ -28,7 +28,7 @@ Espruino can't output two tones at once, but it can output one tone on each pin.
 You'll Need
 ----------
 
-* An [Espruino Board](/EspruinoBoard) 
+* An [Espruino Board](/Original) 
 * A [[KeyPad]] (not required - see the last part of the tutorial)
 * A [[Speaker]]
 

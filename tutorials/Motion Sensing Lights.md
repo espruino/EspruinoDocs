@@ -19,7 +19,7 @@ Sure, you can buy those - but what if you want it to light up in an awesome way 
 You'll Need
 ----------
 
-* An [Espruino Board](/EspruinoBoard)
+* An [Espruino Board](/Original)
 * [[WS2811]] Lights
 * A [[Pyroelectric]] motion sensor - or something else you can use to detect movement
 

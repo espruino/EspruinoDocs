@@ -41,7 +41,7 @@ Unless you have a storage oscilloscope, working out the protocol of your particu
 You'll Need
 ----------
 
-* An [Espruino Board](/EspruinoBoard) 
+* An [Espruino Board](/Original) 
 * A [[433Mhz]] Radio transmitter/receiver pair
 * A [[CC3000]] module (if you want to web-enable your sockets)
 

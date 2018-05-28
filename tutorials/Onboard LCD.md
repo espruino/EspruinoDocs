@@ -17,7 +17,7 @@ The [[PCD8544]] LCD uses so little power that it can easily be powered directly 
 You'll Need
 ----------
 
-* One [Espruino Board](/EspruinoBoard)
+* One [Espruino Board](/Original)
 * A [[PCD8544]] LCD Display and some pin strip (this should come with it)
 
 Wiring Up

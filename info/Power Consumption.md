@@ -6,11 +6,11 @@ Power Consumption
 
 * KEYWORDS: Power,Watts,Efficiency,Milliamps,Microamps,Sleep,Stop,Standby,Deep Sleep
 
-**Note:** This information is mainly relevant to the [Original Espruino](/EspruinoBoard) and [[Pico]] boards. Most other boards do not have the same power save functionality.
+**Note:** This information is mainly relevant to the [Original Espruino](/Original), [[Pico]], and [[WiFi]] boards. Espruino Bluetooth LE boards enter deep sleep automatically (see the reference for your specific board for detailed power consumption figures).
 
-Espruino can run in one of 3 different modes.
+Espruino on STM32 can run in one of 3 different modes.
 
-| Mode  | [Original Espruino](/EspruinoBoard) 1v4 | [[Pico]]  | Notes |
+| Mode  | [Original Espruino](/Original) 1v4 | [[Pico]]  | Notes |
 |-------|---------------------------------|-------------------|------|
 | Run   | ~35mA (57 hours)                | 32mA              | Espruino is executing code and running at 72Mhz |
 | Sleep | ~12mA (7 days)                  | ~11mA             | Espruino has stopped the clock to the CPU, but all peripherals are still running and can wake it up |
@@ -43,7 +43,7 @@ For deep sleep to work, you must:
 * Have no pending callbacks from setIntervals/setTimeout that are **less than 1.5 seconds** away (this is less on the [[Pico]]). Espruino uses the real time clock for wakeups, and the RTC can only wake up on a second by second basis.
 * Not have any [[Waveform]]s running, and not have a `digitalPulse(...)` command that is yet to finish
 
-**Note:** Espruino won't enter deep sleep as soon as you execute ```setDeepSleep(1)```. It'll wait until all the bullet points above are satisfied, and then it'll enter it. For example you can type ```setDeepSleep(1)``` while you're connected to your PC via USB, and Espruino will only enter deep sleep mode once you unplug from USB. 
+**Note:** Espruino won't enter deep sleep as soon as you execute ```setDeepSleep(1)```. It'll wait until all the bullet points above are satisfied, and then it'll enter it. For example you can type ```setDeepSleep(1)``` while you're connected to your PC via USB, and Espruino will only enter deep sleep mode once you unplug from USB.
 
 `setDeepSleep(...)` sets a flag internally - so you only need to call it once (not each time you want to go to sleep).
 

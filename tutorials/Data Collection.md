@@ -146,7 +146,7 @@ usually via [SPI](/SPI) or [I2C](/I2C).
 
 For the maximum amount of storage, you can also write to [SD cards](/File+IO).
 
-The [original Espruino board](/EspruinoBoard) has a micro SD card slot
+The [original Espruino board](/Original) has a micro SD card slot
 pre-installed. While other Espruino boards don't have one, you can easily
 wire one up to any of the boards.
 

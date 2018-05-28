@@ -15,7 +15,7 @@ If you want to make an electronic lock, using a [[KeyPad]] is the obvious way. T
 You'll Need
 ----------
 
-* One [Espruino Board](/EspruinoBoard)
+* One [Espruino Board](/Original)
 * A [[KeyPad]]
 
 Wiring Up

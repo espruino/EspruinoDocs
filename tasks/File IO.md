@@ -8,7 +8,7 @@ File IO and SD cards
 
 To access files from Espruino (if you're not getting them from the [[Internet]]) you'll need an SD card.
 
-On the original [Espruino board](/EspruinoBoard) there's a Micro SD card slot built-in,
+On the original [Espruino board](/Original) there's a Micro SD card slot built-in,
 or on the [Espruino Pico](/Pico) or other boards you'll have to wire a card up externally and then
 tell Espruino about it with [E.connectSDCard](http://www.espruino.com/Reference#l_E_connectSDCard)
 (see `Wiring` below).

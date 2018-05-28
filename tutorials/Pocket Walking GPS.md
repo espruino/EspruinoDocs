@@ -17,7 +17,7 @@ This is extremely useful, and in fact most GPS's have the functionality built in
 You'll Need
 ----------
 
-* One [Espruino Board](/EspruinoBoard)
+* One [Espruino Board](/Original)
 * A [Nokia 5110 LCD](/PCD8544)
 * A [[GPS]] module
 * A [[Battery]]

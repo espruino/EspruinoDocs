@@ -21,7 +21,7 @@ In this case, we're going to (very badly) simulate water running down a thin cha
 You'll Need
 ----------
 
-* An [Espruino Board](/EspruinoBoard) wired up for [[Servo Motors]]
+* An [Espruino Board](/Original) wired up for [[Servo Motors]]
 * 6 [[Servo Motors]], arranged next to each other
 
 Wiring Up
