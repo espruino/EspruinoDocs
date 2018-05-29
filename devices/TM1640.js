@@ -16,24 +16,20 @@ exports.connect = function(pins, callback) {
   pinMode(pins.clk, 'output');
   pinMode(pins.din, 'output');
 
-  var c = digitalWrite.bind(null, [pins.clk]);
-  var d = digitalWrite.bind(null, [pins.din]);
+  var spi = new SPI();
+  spi.setup({mosi:pins.din, sck:pins.clk, mode:3, order:'lsb'});
+  var s = spi.write.bind(spi);
+  var cL = digitalWrite.bind(null, pins.clk, 0);
+  var cH = digitalWrite.bind(null, pins.clk, 1);
+  var dL = digitalWrite.bind(null, pins.din, 0);
+  var dH = digitalWrite.bind(null, pins.din, 1);
   var g = Graphics.createArrayBuffer(8,8,1);
   var intensity = 1;
 
-  function send(data) {
-    for (var i = 0; i < 8; i++) {
-      c(LOW);
-      d(data & 1 ? HIGH : LOW);
-      data >>= 1;
-      c(HIGH);
-    }
-  }
-
-  function sendCommand(cmd) {
-    d(LOW);
-    send(cmd);
-    d(HIGH);
+  var sendCommand = function(cmd) {
+    dL();
+    s(cmd);
+    dH();
   }
 
   g.flip = function() {
@@ -41,20 +37,20 @@ exports.connect = function(pins, callback) {
     for(var i=0;i<8;i++) {
       // sendData(i,b[i]) - send row byte
       sendCommand(0x44);
-      d(LOW);
-      send(0xC0 | i);
-      send(b[i]);
-      d(HIGH);
+      dL();
+      s(0xC0 | i);
+      s(b[i]);
+      dH();
 
       // strobe
-      d(LOW);
-      c(LOW);
-      c(HIGH);
-      d(HIGH);
+      dL();
+      cL();
+      cH();
+      dH();
     }
 
     sendCommand(0x88|intensity);
-  }
+  };
 
   g.setContrast = function(v) {
     intensity = v>7 ? 7 : v;
@@ -64,8 +60,8 @@ exports.connect = function(pins, callback) {
   g.clear();
 
   // init
-  d(HIGH);
-  c(HIGH);
+  dH();
+  cH();
 
   if (callback) callback();
   return g;
