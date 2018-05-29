@@ -1,4 +1,4 @@
-<!--- Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Pixl.js Home Computer
 ======================
 
@@ -80,12 +80,12 @@ second 2 are going to the Pixl.js, and the third 2 are to keypads 4 and 3.
 * Add labels for the keys on your keyboard as below. If you're not in the UK you'll probably want to make your own key labels,
 but you will need to change the `KEYMAP` variables in the code below.
 
-![Installed Puck.js](Pixl.js Home Computer/full.jpg)
+![Installed Pixl.js](Pixl.js Home Computer/full.jpg)
 
 Software
 --------
 
-Make sure your Puck.js has up to date firmware!
+Make sure your Pixl.js has up to date firmware!
 
 Put the following in the right-hand side of the Web IDE, click `Send to Espruino`, and when that is done type `save()` in the left-hand side.
 

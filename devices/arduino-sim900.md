@@ -17,6 +17,7 @@ boards:
 * Internet using the [SIM900](/SIM900) software module
 * SMS Text messages using the [ATSMS](/ATSMS) module
 
+
 Wiring
 ------
 
@@ -32,6 +33,11 @@ otherwise if it's `Xduino` use `{ rx: D0, tx : D1 }`.
 that if `D0` is powered at boot, Espruino's console will [automatically be moved
 to it](/Pixl.js#serial-console). You can avoid this by calling `Terminal.setConsole();`
 from `onInit()`.
+
+This module needs powering on with a long press of the power key. You can however
+add a blob of solder to the `JP` solder jumper (near pin `D9`) which will connect
+the `D9` pin to the power key, allowing Espruino to turn the module on and off
+manually.
 
 
 Software
@@ -94,6 +100,13 @@ sms.on('message', function(msgIndex) {
 ```
 
 See the [ATSMS module documentation](/ATSMS) for more information.
+
+
+Using
+-----
+
+* APPEND_USES: arduino-sim900
+
 
 Buying
 -----

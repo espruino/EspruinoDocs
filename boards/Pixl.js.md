@@ -17,7 +17,7 @@ power.
 
 Pixl.js's unique design allows you to use the Arduino footprint to interface
 with the huge array of existing Arduino shields, while still using the LCD
-and buttons.
+and buttons. Add Ethernet, WiFi, Motor drivers, even GSM. No soldering required!
 
 Features
 --------
@@ -37,7 +37,7 @@ Features
 * Dimensions: 60mm x 53mm x 15mm (2.4 x 2.1 x 0.6 inches)
 
 
-Powering Pixl.js
+<a name="powering"></a>Powering Pixl.js
 ------------------
 
 Pixl.js can be powered in multiple ways:

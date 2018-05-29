@@ -152,6 +152,10 @@ print(require("fs").readFileSync("test.txt"));
 
 See [the page on File IO](/File+IO) for more information.
 
+Using
+-----
+
+* APPEND_USES: arduino-w5100
 
 Buying
 -----

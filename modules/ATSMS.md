@@ -4,8 +4,8 @@ SMS Send and Receive
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/ATSMS. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Module,SIM800,SIM900,AT,SMS,GSM
-* USES: AT
+* KEYWORDS: Module,SIM800,SIM900,AT,SMS,GSM,Text Message,Text
+* USES: AT,SIM900,arduino-sim900
 
 The [ATSMS](/modules/ATSMS.js) module uses standard AT commands to allow you to send and receive SMS text messages
 via a GSM modem module like the [[SIM900]].
