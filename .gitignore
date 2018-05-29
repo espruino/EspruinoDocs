@@ -1,3 +1,5 @@
+.externalToolBuilders/
+.settings/
 *~
 html/*.html
 html/*.jpg
@@ -11,5 +13,5 @@ node_modules
 references.json
 /.project
 npm-debug.log
-*/orig
+orig
 *.thumb.*
