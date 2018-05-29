@@ -84,7 +84,7 @@ mkdir -p $WEBSITE/www/refimages
 rm $WEBSITE/www/refimages/*
 cp html/refimages/* $WEBSITE/www/refimages
 # Resize any images that might be too big, and remove metadata
-mogrify -resize "600x800>" -strip $WEBSITE/www/refimages/*
+#mogrify -resize "600x800>" -strip $WEBSITE/www/refimages/*
 
 # -----------------------------------
 bash buildmodules.sh

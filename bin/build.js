@@ -7,10 +7,13 @@ var fs = require('fs');
 var path = require('path');
 if (fs.existsSync==undefined) fs.existsSync = path.existsSync;
 var common = require("./common.js");
+var child_process = require('child_process');
 
 var BASEDIR = path.resolve(__dirname, "..");
 var HTML_DIR = BASEDIR+"/html/";
 var IMAGE_DIR = "refimages/";
+var THUMB_WIDTH = 180;
+var THUMB_HEIGHT = 140;
 
 var ESPRUINO_DIR = path.resolve(BASEDIR, "../Espruino");
 var FUNCTION_KEYWORD_FILE = path.resolve(BASEDIR, "../Espruino/function_keywords.js");
@@ -48,12 +51,84 @@ function WARNING(s) {
   console.log("WARNING: "+s);
 }
 
+function createSafeFilename(filename) {
+  filename = filename.replace(/\//g,"_");
+  filename = filename.replace(/\+/g,"_");
+  filename = filename.replace(/ /g,"_");
+  return filename;
+}
+
+function convertHTML(str) {
+    var entityPairs = [
+        {character: '&', html: '&amp;'},
+        {character: '<', html: '&lt;'},
+        {character: '>', html: '&gt;'},
+        {character: "'", html: '&apos;'},
+        {character: '"', html: '&quot;'},
+    ];
+
+    entityPairs.forEach(function(pair){
+        var reg = new RegExp(pair.character, 'g');
+        str = str.replace(reg, pair.html);
+    });
+    return str;
+}
+
+// MD files
 var markdownFiles = common.getMarkdown(BASEDIR).map(function (file) {
   return path.relative(BASEDIR, file);
+});
+// JS files
+var exampleDir = path.resolve(BASEDIR,"examples");
+var exampleFiles = fs.readdirSync(exampleDir).filter(function(file) {
+  return file.substr(-3) == ".js";
+}).map(function(file) {
+  return path.relative(BASEDIR, path.resolve(exampleDir,file));
 });
 
 var preloadedFiles = {};
 var fileTitles = {};
+
+// Create thumbnail images
+var markdownThumbs = {};
+markdownFiles.concat(exampleFiles).forEach(function(filename) {
+  //console.log(filename);
+  var baseName = filename.slice(0,-3);
+  var sourceImage;
+  if (fs.existsSync(baseName+".thumb.png"))
+    sourceImage = baseName+".thumb.png";
+  else if (fs.existsSync(baseName+".thumb.jpg"))
+    sourceImage = baseName+".thumb.jpg";
+  else if (fs.existsSync(baseName+".thumb.svg"))
+    sourceImage = baseName+".thumb.svg";    
+  else if (fs.existsSync(baseName+".png"))
+    sourceImage = baseName+".png";
+  else if (fs.existsSync(baseName+".jpg"))
+    sourceImage = baseName+".jpg";
+  if (!sourceImage) {
+    var contents = fs.readFileSync(filename).toString();
+    var match = contents.match(/!\[[^\]]*\]\(([^\)]*)\)/);
+    if (match)
+      sourceImage = filename.substr(0,filename.lastIndexOf("/")+1)+match[1];
+  }
+  if (sourceImage) {
+    var dstImage = IMAGE_DIR+createSafeFilename(baseName)+"_thumb.png";
+    var radius = 6;
+    var roundcorners = `\\( +clone -crop ${radius}x${radius}+0+0  -fill white -colorize 100% -draw 'fill black circle ${radius-1},${radius-1} ${radius-1},0' -background White -alpha shape \\( +clone -flip \\) \\( +clone -flop \\) \\( +clone -flip \\) \\) -flatten`;
+    child_process.exec(`convert "${sourceImage}" -resize "${THUMB_WIDTH}x${THUMB_HEIGHT}>" ${roundcorners} -gravity South -extent ${THUMB_WIDTH}x${THUMB_HEIGHT} -strip "${path.resolve(HTML_DIR, dstImage)}"`);
+    console.log("THUMBNAIL "+filename+" --> "+dstImage);
+    markdownThumbs[filename] = dstImage;
+  } else {
+    console.log("NO THUMBNAIL FOR "+filename);
+  }
+});
+// Add 'unknown' thumbnail
+{
+  let dstImage = IMAGE_DIR+"no_thumb.png";
+  child_process.exec(`convert files/blank_thumb.png -resize "${THUMB_WIDTH}x${THUMB_HEIGHT}>" -gravity Center -extent ${THUMB_WIDTH}x${THUMB_HEIGHT} -strip "${path.resolve(HTML_DIR, dstImage)}"`);
+  markdownThumbs[""] = dstImage;
+}
+
 
 function addToList(keywords, k, fileInfo) {
   k = k.toLowerCase();
@@ -175,14 +250,12 @@ function handleImages(file, contents) {
 /*        console.log("IMAGE -----------------------------");
         console.log(imageName);
         console.log(imagePath);*/
-        var newPath = /*htmlLinks[file]+"_"+*/imageName;
-        console.log(newPath);
-        newPath = newPath.replace(/\//g,"_");
-        newPath = newPath.replace(/\+/g,"_");
-        newPath = newPath.replace(/ /g,"_");
-        newPath = IMAGE_DIR+newPath
-        //console.log("Copying "+imagePath+" to "+HTML_DIR+newPath);
-        fs.createReadStream(imagePath).pipe(fs.createWriteStream(path.resolve(HTML_DIR, newPath)));
+        console.log(imageName);
+        var newPath = IMAGE_DIR + createSafeFilename(/*htmlLinks[file]+"_"+*/imageName);
+        var finalImagePath = path.resolve(HTML_DIR, newPath);
+        //console.log("Copying "+imagePath+" to "+finalImagePath);
+        //fs.createReadStream(imagePath).pipe(fs.createWriteStream(finalImagePath));
+        child_process.exec(`convert "${imagePath}" -resize "600x800>" -strip "${finalImagePath}"`);
         // now rename the image in the tag
         contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
       } else {
@@ -195,11 +268,7 @@ function handleImages(file, contents) {
 }
 
 // Now handle our simple 'example' files
-var exampleDir = path.resolve(BASEDIR,"examples");
-var exampleFiles = fs.readdirSync(exampleDir);
-for (i in exampleFiles) {
-  var exampleFile = path.relative(BASEDIR, path.resolve(exampleDir,exampleFiles[i]));
-  if (exampleFile.substr(-3) != ".js") continue;
+exampleFiles.forEach(function(exampleFile) {
   console.log("Example File "+exampleFile);
   var contents = fs.readFileSync(exampleFile).toString();
   var slashStar = contents.indexOf("/*");
@@ -224,8 +293,7 @@ for (i in exampleFiles) {
     preloadedFiles[exampleFile] = newFile;
 
   } else WARNING(exampleFile+" has no comment block at the start");
-
-}
+});
 
 
 
@@ -417,13 +485,30 @@ markdownFiles.forEach(function (file) {
                  }
                }
                // add page link if ok
-               if (pageOk)
-                 links.push("* ["+a.title+"]("+htmlLinks[a.path]+")" );
+               if (pageOk) {
+                 console.log(a);
+                 links.push(a);
+               }
              }
            }
          }
+
          if (links.length>0) {
-           contentLines[i] = links.join("\n");
+           var contentThumbs = [];
+           // Put ones with thumbnails first, otherwise alphabetical
+           links = links.sort(function(a,b) {
+             var d = ((b.path in markdownThumbs)?1:0) - ((a.path in markdownThumbs)?1:0);
+             if (d) return d;
+             if (a.title > b.title) return 1;
+             if (a.title < b.title) return -1;
+             return 0;
+           });
+           // Output images
+           links.forEach(function(a) {
+             var thumb = (a.path in markdownThumbs) ? markdownThumbs[a.path] : markdownThumbs[""];
+             contentThumbs.push(`<a class="thumblink" href="${htmlLinks[a.path]}" title="convertHTML(${a.title})"><img src="${thumb}" alt="convertHTML(${a.title})" title="${convertHTML(a.title)}"></img><span>${convertHTML(a.title)}</span></a>`);
+           });
+           contentLines[i] = contentThumbs.join("");
          } else {
            WARNING(kwName+" for '"+kw+"' in "+file+" found nothing");
            contentLines[i] = ifNone;
