@@ -3,7 +3,7 @@ Pixl.js Bluetooth to Ethernet MQTT Bridge
 =========================================
 
 * KEYWORDS: Bridge,IoT,MQTT
-* USES: Pixl.js,Ethernet,W5100,MQTT,arduino-5100
+* USES: Pixl.js,BLE,Only BLE,Ethernet,W5100,MQTT,arduino-5100
 
 ![Pixl.js BLE Ethernet Bridge](Pixl.js BLE Ethernet Bridge.jpg)
 

@@ -5,6 +5,8 @@ Pixl.js Wireless Weather Station
 * KEYWORDS: Temperature Sensor,Display
 * USES: Pixl.js,Thingy52,Graphics,BLE
 
+![Pixl.js Wireless Weather Station](Pixl.js Wireless Weather Station.jpg)
+
 In the [Pixl.js Wireless Temperature Display](/Pixl.js Wireless Temperature Display) example
 we used a [Puck.js](/Puck.js) to transmit temperature information.
 

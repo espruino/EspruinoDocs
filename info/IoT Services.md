@@ -4,7 +4,7 @@ IoT Services
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/IoT+Services. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: IoT,Server,Service,Broker,Cloud Services,Hosted Services,Data Services,Cubitic,Xively,IFTTT,Dweet,Internet
+* KEYWORDS: Tutorials,IoT,Server,Service,Broker,Cloud Services,Hosted Services,Data Services,Cubitic,Xively,IFTTT,Dweet,Internet
 * USES: Internet,ESP8266,CC3000,WIZnet,GSM
 
 There are [quite a lot](http://postscapes.com/companies/iot-cloud-services) of IoT cloud service providers around at the moment. We've collected some sample code for a selection of them below. If you've got some code you'd like to share, please contribute it (you can submit changes via [this page on GitHub](https://github.com/espruino/EspruinoDocs/blob/master/info/IoT%20Services.md)).
@@ -55,12 +55,12 @@ var connected = function(d) {
          connected();
        }
      });
-   } else { 
+   } else {
      connected();
    }
 });  
 ```
- 
+
 Cubitic.io
 ---------
 
@@ -81,11 +81,11 @@ function putCubitic(event, data) {
     port: '80',
     path:'/v1/event/'+event,
     method:'POST',
-    headers: { 
+    headers: {
       "Content-Type":"application/json",
-      "cubitic-appid":CUBITIC.APPID, 
+      "cubitic-appid":CUBITIC.APPID,
       "Authorization":"Bearer "+CUBITIC.TOKEN,
-      "Content-Length":content.length 
+      "Content-Length":content.length
     }
   };
   require("http").request(options, function(res)  {
@@ -142,10 +142,10 @@ Dweet.io
 
 ```
 // Espruino 1v81 and later don't need this function
-function encodeURIComponent(s) { 
+function encodeURIComponent(s) {
   var ok = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
   var r = "";
-  for (var i=0;i<s.length;i++) { 
+  for (var i=0;i<s.length;i++) {
     if (ok.indexOf(s[i])>=0) r+=s[i];
     else r+= "%"+(256+s.charCodeAt(i)).toString(16).toUpperCase().substr(-2);
   }
@@ -156,7 +156,7 @@ function putDweet(dweet_name, a, callback) {
   var data = "";
   for (var n in a) {
     if (data.length) data+="&";
-    data += encodeURIComponent(n)+"="+encodeURIComponent(a[n]); 
+    data += encodeURIComponent(n)+"="+encodeURIComponent(a[n]);
   }
   var options = {
     host: 'dweet.io',
@@ -215,7 +215,7 @@ function putXively(a, callback) {
     };
     for (var i in a)
       data.datastreams.push({id:i, current_value:a[i]});
-    content = JSON.stringify(data); 
+    content = JSON.stringify(data);
     var options = {
       host: 'api.xively.com',
       port: '80',

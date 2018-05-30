@@ -7,9 +7,13 @@ Advanced Debug
 * KEYWORDS: Debug,SWD,JTAG,ICD,STLink,ST-Link
 * USES: Espruino Board,Pico
 
-While Espruino can be compiled and debugged on a Host PC, sometimes you'll need to be able to debug the hardware itself. You can do this using SWD pins and an ST-Link device.
+While Espruino can be compiled and debugged on a Host PC, sometimes you'll need to be able to debug the hardware itself.
 
-We'd suggest using an STM32DISCOVERY board (not the VLDISCOVERY). 
+* On STM32-based devices you can do this using SWD pins and an ST-Link device, see below.
+* On Nordic-based devices you need to connect a Nordic [nRF52832DK](/nRF52832DK) to
+the two labelled SWD pins. **This is not covered on this page**.
+
+We'd suggest using an STM32DISCOVERY board (not the VLDISCOVERY).
 
 Make sure you disconnect the two ST-LINK jumpers first, then connect as detailed below. You can then use a normal debugger such as [st-link](https://github.com/texane/stlink) on linux.
 
@@ -24,7 +28,7 @@ Connect wires onto the 6 pin SWD connector as follows:
 | 2 | SWCLK      | A14 |
 | 3 | GND        | GND |
 | 4 | SWDIO      | A13 |
-| 5 | NRST       | | 
+| 5 | NRST       | |
 | 6 | SWO        | |
 
 Espruino Pico
@@ -33,6 +37,11 @@ Espruino Pico
 The Six SWD connections are available on six circular pads on the back of the [[Pico]]. Pin one is unmarked, but is nearest the USB connector.
 
 You only actually need to connect pins 2,3 and 4 - but you can connect more if you want to.
+
+Espruino WiFi
+--------------------
+
+SWD SWCLK and SWDIO are available via two labelled circular pads on the top of the board, by the USB connector.
 
 Gotchas
 ------

@@ -4,7 +4,7 @@ JavaScript Compilation
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Compilation. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Compile,Compiler,Compilation,JIT,inline
+* KEYWORDS: Built-In,Compile,Compiler,Compilation,JIT,inline
 
 Normally, when you upload code to Espruino it is executed straight from source - which means that your source code is on the device itself so you can edit it easily.
 

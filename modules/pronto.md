@@ -7,6 +7,8 @@ Infrared 'Pronto Hex' decoder
 * KEYWORDS: Module,Modules,IR,Infrared,Pronto,IRDB,IRDB.tk
 * USES: Puck.js,Infrared,IR
 
+![An IR remote](pronto.jpg)
+
 While you can [plug in an IR receiver and decode IR signals](/Puck.js Infrared),
 it requires you to have an IR receiver and is a bit fiddly.
 

@@ -100,7 +100,7 @@ markdownFiles.concat(exampleFiles).forEach(function(filename) {
   else if (fs.existsSync(baseName+".thumb.jpg"))
     sourceImage = baseName+".thumb.jpg";
   else if (fs.existsSync(baseName+".thumb.svg"))
-    sourceImage = baseName+".thumb.svg";    
+    sourceImage = baseName+".thumb.svg";
   else if (fs.existsSync(baseName+".png"))
     sourceImage = baseName+".png";
   else if (fs.existsSync(baseName+".jpg"))
@@ -506,7 +506,7 @@ markdownFiles.forEach(function (file) {
            // Output images
            links.forEach(function(a) {
              var thumb = (a.path in markdownThumbs) ? markdownThumbs[a.path] : markdownThumbs[""];
-             contentThumbs.push(`<a class="thumblink" href="${htmlLinks[a.path]}" title="convertHTML(${a.title})"><img src="${thumb}" alt="convertHTML(${a.title})" title="${convertHTML(a.title)}"></img><span>${convertHTML(a.title)}</span></a>`);
+             contentThumbs.push(`<a class="thumblink" href="${htmlLinks[a.path]}" title="${convertHTML(a.title)})"><img src="${thumb}" alt="${convertHTML(a.title)}" title="${convertHTML(a.title)}"></img><span>${convertHTML(a.title)}</span></a>`);
            });
            contentLines[i] = contentThumbs.join("");
          } else {
@@ -569,9 +569,22 @@ markdownFiles.forEach(function (file) {
      html = html.replace(regex, pinout);
    }
 
-   //
-   github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+path.relative(BASEDIR, file);
-   html = '<div style="min-height:700px;">' + html + '</div>'+
+   // work out of we have any images that might be at the top of the page
+   var hasImageContent = html.indexOf("<iframe ")>=0; // do we have a video?
+   // do we have an image in the first few lines of markdown?
+   for (var i=0;i<15 && i<contentLines.length;i++)
+     if (contentLines[i].match(/!\[[^\]]*\]\(([^\)]*)\)/)) // find an image tag
+       hasImageContent = true;
+   // if there's no image/video then we add the thumbnail in the top-right
+   var thumbnail = "";
+   if (!hasImageContent && file in markdownThumbs)
+     thumbnail = `<img class="topthumbnail" src="${markdownThumbs[file]}">`;
+  // GitHub link
+   var github_url = "https://github.com/espruino/EspruinoDocs/blob/master/"+path.relative(BASEDIR, file);
+   // assemble final page
+   html = '<div style="min-height:700px;">' +
+          thumbnail +
+          html + '</div>'+
           '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues/new?title='+file+'">let us know</a>.</p>';
 
    fs.writeFileSync(htmlFiles[file], html);

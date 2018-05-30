@@ -5,6 +5,8 @@ Pixl.js Wireless Temperature Display
 * KEYWORDS: Temperature Sensor,Display
 * USES: Pixl.js,Puck.js,Graphics,BLE
 
+![Pixl.js Wireless Temperature Display](Pixl.js Wireless Temperature Display.jpg)
+
 Here we're using the on-chip temperature sensor of [Puck.js](/Puck.js) devices
 to turn them into beacons. They'll advertise the temperature and battery level
 as 'manufacturer data', with Espruino's own manufacturer code `0x590`.

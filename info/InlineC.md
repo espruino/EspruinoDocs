@@ -4,7 +4,7 @@ Inline C code
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/InlineC. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Compile,Compiler,Compilation,C,C++,inline
+* KEYWORDS: Built-In,Compile,Compiler,Compilation,C,C++,inline
 
 Normal code for Espruino is written in JavaScript. However for some tasks this won't
 be fast enough, or you may have existing C code that you wish to use.
