@@ -18,7 +18,7 @@ OPT3001.prototype.off = function() {
   this.w(REG.CONFIG,0xc810);
 };
 OPT3001.prototype.read = function() {
-  return this.r(REG.RESULT0);
+  return this.r(REG.RESULT);
 };
 
 exports.OPT3001 = OPT3001;
@@ -28,7 +28,6 @@ exports.connectI2C = function(i2c, options) {
   return (new OPT3001(options, function(reg) { // read 16 bits
     i2c.writeTo(a, reg);
     var r = i2c.readFrom(a,2);
-    print(r);
     return r[1] | r[0]<<8;
   }, function(reg, data) { // write
     i2c.writeTo(a, [reg, data]);
