@@ -233,3 +233,8 @@ Please see [the Ruuvitag page](/Ruuvitag) for more information.
 ### Seeed Wio LTE
 
 Please see [the Wio LTE page](/WioLTE) for more information.
+
+Official Espruino Boards
+-------------------------
+
+* APPEND_KEYWORD: Official Board

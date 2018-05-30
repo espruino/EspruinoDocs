@@ -95,7 +95,7 @@ build stage and provide the firmware as a download.
 #### Building Firmware and installing the toolchain
 
 You can get the Espruino firmare from the [Travis cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
-Get the file ending in '_esp32.bin'.
+Get the file ending in `_esp32.bin`.
 
 You can also build the Espruino firmware yourself:
 
@@ -577,3 +577,9 @@ EXCVADDR: 0xfffffffc  LBEG    : 0x4000c2e0  LEND    : 0x4000c2f6  LCOUNT  : 0x00
 ```
 **Cause:** if it happens whenever wifi tries to connect then the chip is not getting enough power.
 **Solution:** use a designated power source (not the USB serial adapter), add capacitors to the power line
+
+
+Official Espruino Boards
+-------------------------
+
+* APPEND_KEYWORD: Official Board

@@ -426,3 +426,8 @@ Further reading
 
 The esp8266 has its own [community](http://www.esp8266.com/), free books, videos and more.
 For esp8266 questions not related to Espruino, it is recommended to research using those resources.
+
+Official Espruino Boards
+-------------------------
+
+* APPEND_KEYWORD: Official Board

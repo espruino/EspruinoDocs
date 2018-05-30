@@ -183,3 +183,9 @@ Buying
 -------
 
 micro:bits are currently available to buy [in the UK](https://www.element14.com/community/community/stem-academy/microbit) and [in the United States](https://www.techwillsaveus.com/shop/microbit/).
+
+
+Official Espruino Boards
+-------------------------
+
+* APPEND_KEYWORD: Official Board

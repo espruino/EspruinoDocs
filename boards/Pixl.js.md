@@ -48,6 +48,15 @@ Pixl.js can be powered in multiple ways:
 * **CR2032 LiPo battery** - you can not use a CR2032 LiPo battery without some minor modifications as the voltage is too high. There is a small solder jumper below the CR2032 holder. Cut the existing connection and solder between the other two pads. This causes the battery to be connected via the voltage regulator. **Note:** the LiPo will then be connected directly to Vin, and you will be unable to use the USB for power (as it'll connect to LiPo to 5v).
 * **CR2032 battery backup** - the CR2032 can be used as a backup when Vin/USB power is not present. Cut the trace in the solder jumper below the CR2032 holder, and add a surface mount diode to the two pads to the right of it.
 
+### `Vin` pins
+
+As mentioned above you can solder a JS connector (part number `B2B-PH-K-S` to Pixl.js):
+
+![JST pins on Pixl.js](Pixl.js/jst.jpg)
+
+**Note:** This connects stright to the `Vin` pins, so you should use USB
+*or* CR2032 *or* the JST connector, but not more than one at the same time!
+
 
 Power Consumption
 -----------------
