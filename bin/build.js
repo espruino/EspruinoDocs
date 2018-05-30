@@ -115,7 +115,7 @@ markdownFiles.concat(exampleFiles).forEach(function(filename) {
     var dstImage = IMAGE_DIR+createSafeFilename(baseName)+"_thumb.png";
     var radius = 6;
     var roundcorners = `\\( +clone -crop ${radius}x${radius}+0+0  -fill white -colorize 100% -draw 'fill black circle ${radius-1},${radius-1} ${radius-1},0' -background White -alpha shape \\( +clone -flip \\) \\( +clone -flop \\) \\( +clone -flip \\) \\) -flatten`;
-    child_process.exec(`convert "${sourceImage}" -resize "${THUMB_WIDTH}x${THUMB_HEIGHT}>" ${roundcorners} -gravity South -extent ${THUMB_WIDTH}x -strip +set date:\* "${path.resolve(HTML_DIR, dstImage)}"`);
+    child_process.exec(`convert "${sourceImage}" -resize "${THUMB_WIDTH}x${THUMB_HEIGHT}>" ${roundcorners} -gravity South -extent ${THUMB_WIDTH}x -strip -define png:include-chunk=none "${path.resolve(HTML_DIR, dstImage)}"`);
     console.log("THUMBNAIL "+filename+" --> "+dstImage);
     markdownThumbs[filename] = dstImage;
   } else {
@@ -125,7 +125,7 @@ markdownFiles.concat(exampleFiles).forEach(function(filename) {
 // Add 'unknown' thumbnail
 {
   let dstImage = IMAGE_DIR+"no_thumb.png";
-  child_process.exec(`convert files/blank_thumb.png -resize "${THUMB_WIDTH}x${THUMB_HEIGHT}>" -gravity Center -extent ${THUMB_WIDTH}x${THUMB_HEIGHT} -strip +set date:\* "${path.resolve(HTML_DIR, dstImage)}"`);
+  child_process.exec(`convert files/blank_thumb.png -resize "${THUMB_WIDTH}x${THUMB_HEIGHT}>" -gravity Center -extent ${THUMB_WIDTH}x${THUMB_HEIGHT} -strip -define png:include-chunk=none "${path.resolve(HTML_DIR, dstImage)}"`);
   markdownThumbs[""] = dstImage;
 }
 
@@ -255,7 +255,7 @@ function handleImages(file, contents) {
         var finalImagePath = path.resolve(HTML_DIR, newPath);
         //console.log("Copying "+imagePath+" to "+finalImagePath);
         //fs.createReadStream(imagePath).pipe(fs.createWriteStream(finalImagePath));
-        child_process.exec(`convert "${imagePath}" -resize "600x800>" -strip +set date:\* "${finalImagePath}"`);
+        child_process.exec(`convert "${imagePath}" -resize "600x800>" -strip -define png:include-chunk=none "${finalImagePath}"`);
         // now rename the image in the tag
         contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
       } else {
