@@ -19,10 +19,10 @@ exports.connect = function(pins, callback) {
   var spi = new SPI();
   spi.setup({mosi:pins.din, sck:pins.clk, mode:3, order:'lsb'});
   var s = spi.write.bind(spi);
-  var cL = digitalWrite.bind(null, pins.clk, 0);
-  var cH = digitalWrite.bind(null, pins.clk, 1);
-  var dL = digitalWrite.bind(null, pins.din, 0);
-  var dH = digitalWrite.bind(null, pins.din, 1);
+  var cL = pins.clk.reset.bind(pins.clk);
+  var cH = pins.clk.set.bind(pins.clk);
+  var dL = pins.din.reset.bind(pins.din);
+  var dH = pins.din.set.bind(pins.din);
   var g = Graphics.createArrayBuffer(8,8,1);
   var intensity = 1;
 
