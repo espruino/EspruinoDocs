@@ -115,7 +115,7 @@ markdownFiles.concat(exampleFiles).forEach(function(filename) {
     var dstImage = IMAGE_DIR+createSafeFilename(baseName)+"_thumb.png";
     var radius = 6;
     var roundcorners = `\\( +clone -crop ${radius}x${radius}+0+0  -fill white -colorize 100% -draw 'fill black circle ${radius-1},${radius-1} ${radius-1},0' -background White -alpha shape \\( +clone -flip \\) \\( +clone -flop \\) \\( +clone -flip \\) \\) -flatten`;
-    child_process.exec(`convert "${sourceImage}" -resize "${THUMB_WIDTH}x${THUMB_HEIGHT}>" ${roundcorners} -gravity South -extent ${THUMB_WIDTH}x${THUMB_HEIGHT} -strip "${path.resolve(HTML_DIR, dstImage)}"`);
+    child_process.exec(`convert "${sourceImage}" -resize "${THUMB_WIDTH}x${THUMB_HEIGHT}>" ${roundcorners} -strip "${path.resolve(HTML_DIR, dstImage)}"`);
     console.log("THUMBNAIL "+filename+" --> "+dstImage);
     markdownThumbs[filename] = dstImage;
   } else {
