@@ -5,7 +5,7 @@ Quick Start (USB)
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Quick+Start+USB. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Quick Start,Getting Started,USB
-* USES: Only Espruino Board,Pico
+* USES: Only Espruino Board,Pico,EspruinoWiFi,nRF52832DK,WioLTE,STM32L496GDISCOVERY
 
 [[http://youtu.be/32mewNGxax4]]
 

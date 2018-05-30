@@ -147,8 +147,11 @@ Tutorials using the Espruino WiFi Board:
 
 * APPEND_USES: EspruinoWiFi
 
-There aren't currently many tutorials using this board, however it can be used just like the [Espruino Pico](/Pico), which has a lot of tutorials available.
+There aren't currently many tutorials specifically for the Espruino WiFi,
+however it can be used just like the [Espruino Pico](/Pico), which has many
+more tutorials available:
 
+* APPEND_USES: Pico,-EspruinoWiFi
 
 Hardware Limitations
 ------------------

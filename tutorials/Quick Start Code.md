@@ -5,7 +5,7 @@ Quick Start (Writing Code)
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Quick+Start+Code. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Quick Start,Getting Started
-* USES: Only Espruino Board,Pico
+* USES: Only Espruino Board,Pico,EspruinoWiFi,nRF52832DK,WioLTE,STM32L496GDISCOVERY,Puck.js,Pixl.js,MDBT42Q,Ruuvitag,Thingy52
 
 Getting connected
 ------------------
