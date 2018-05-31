@@ -10,15 +10,25 @@ var REG = {
 function OPT3001(options,r,w) {
   this.r=r;
   this.w=w;
-  this.w(REG.CONFIG,0b1100110000010000);
-  print(this.r(REG.MANUFACTUREID)); // 0x5449
-  print(this.r(REG.DEVICEID));  // 0x3001
+  if (this.r(REG.MANUFACTUREID) != 0x5449)
+    throw new Error("Unexpected Manufacturer ID");
+  if (this.r(REG.DEVICEID) != 0x3001)
+    throw new Error("Unexpected Device ID");
+  this.on();
 }
-OPT3001.prototype.off = function() {
-  this.w(REG.CONFIG,0xc810);
+/** Turn the sensor on, taking continuous readings */
+OPT3001.prototype.on = function() {
+  this.w(REG.CONFIG,0b1100110000010000);
 };
+/** Turn the sensor off */
+OPT3001.prototype.off = function() {
+  this.w(REG.CONFIG,0b1100100000010000);
+};
+/** Returns the last reading in Lux */
 OPT3001.prototype.read = function() {
-  return this.r(REG.RESULT);
+  var d = this.r(REG.RESULT);
+  var lux =  0.01 * ((d&0x0FFF) << (d>>12))
+  return lux;
 };
 
 exports.OPT3001 = OPT3001;
@@ -30,6 +40,6 @@ exports.connectI2C = function(i2c, options) {
     var r = i2c.readFrom(a,2);
     return r[1] | r[0]<<8;
   }, function(reg, data) { // write
-    i2c.writeTo(a, [reg, data]);
+    i2c.writeTo(a, [reg, data>>8, data]);
   }));
 };
