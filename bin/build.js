@@ -1,7 +1,25 @@
-// Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission.
+// Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission.
 // Generate keywords.js, and convert Markdown into HTML
 
 // needs marked + jsdoc + tern + acorn
+
+console.log("Espruino documentation builder");
+console.log("--------------------------------");
+var OFFLINE = true;
+var THUMBNAILS = true;
+for (var i=2;i<process.argv.length;i++) {
+  var a = process.argv[i];
+  if (a=="--website") OFFLINE = false;
+  else if (a=="--no-thumbs") THUMBNAILS = false;
+  else {
+    console.log("Usage:");
+    console.log("    build.js           # Build for offline viewing");
+    console.log("    build.js --website # Build to be used on Espruino website");
+    console.log("");
+    console.log("         --no-thumbs    Skip creating thumbnails");
+    process.exit(1);
+  }
+}
 
 var fs = require('fs');
 var path = require('path');
@@ -74,16 +92,21 @@ function convertHTML(str) {
     return str;
 }
 
+var fileDates = {};
 // MD files
 var markdownFiles = common.getMarkdown(BASEDIR).map(function (file) {
-  return path.relative(BASEDIR, file);
+  var p = path.relative(BASEDIR, file);
+  fileDates[p] = new Date(fs.statSync(p).ctime).getTime();
+  return p;
 });
 // JS files
 var exampleDir = path.resolve(BASEDIR,"examples");
 var exampleFiles = fs.readdirSync(exampleDir).filter(function(file) {
   return file.substr(-3) == ".js";
 }).map(function(file) {
-  return path.relative(BASEDIR, path.resolve(exampleDir,file));
+  var p = path.relative(BASEDIR, path.resolve(exampleDir,file));
+  fileDates[p] = new Date(fs.statSync(p).ctime).getTime();
+  return p;
 });
 
 var preloadedFiles = {};
@@ -91,7 +114,7 @@ var fileTitles = {};
 
 // Create thumbnail images
 var markdownThumbs = {};
-markdownFiles.concat(exampleFiles).forEach(function(filename) {
+if (THUMBNAILS) markdownFiles.concat(exampleFiles).forEach(function(filename) {
   //console.log(filename);
   var baseName = filename.slice(0,-3);
   var sourceImage;
@@ -310,7 +333,10 @@ markdownFiles.forEach(function (file) {
   htmlFile = htmlFile.replace(/ /g,"+");
   htmlFile = htmlFile.substring(0,htmlFile.lastIndexOf("."));
   htmlFiles[file] = HTML_DIR+htmlFile+".html";
-  htmlLinks[file] = htmlFile;
+  if (OFFLINE)
+    htmlLinks[file] = htmlFile+".html";
+  else
+    htmlLinks[file] = htmlFile;
 });
 
 fs.writeFileSync(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,1)+";");
@@ -413,6 +439,11 @@ function inferMarkdownFile(filename, fileContents) {
     });
 }
 
+function getThumbLinkHTML(a) {
+  var thumb = (a.path in markdownThumbs) ? markdownThumbs[a.path] : markdownThumbs[""];
+  return `<a class="thumblink" href="${htmlLinks[a.path]}" title="${convertHTML(a.title)})"><img src="${thumb}" alt="${convertHTML(a.title)}" title="${convertHTML(a.title)}"></img><span>${convertHTML(a.title)}</span></a>`
+}
+
 // -------------------------------------------------------------
 markdownFiles.forEach(function (file) {
    var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
@@ -506,8 +537,7 @@ markdownFiles.forEach(function (file) {
            });
            // Output images
            links.forEach(function(a) {
-             var thumb = (a.path in markdownThumbs) ? markdownThumbs[a.path] : markdownThumbs[""];
-             contentThumbs.push(`<a class="thumblink" href="${htmlLinks[a.path]}" title="${convertHTML(a.title)})"><img src="${thumb}" alt="${convertHTML(a.title)}" title="${convertHTML(a.title)}"></img><span>${convertHTML(a.title)}</span></a>`);
+             contentThumbs.push(getThumbLinkHTML(a));
            });
            contentLines[i] = contentThumbs.join("");
          } else {
@@ -552,7 +582,7 @@ markdownFiles.forEach(function (file) {
    }
 
    contentLines.splice(0,1); // remove first line (copyright)
-
+   var title = contentLines[0];
    contents = contentLines.join("\n");
 
    // Get Markdown
@@ -560,7 +590,6 @@ markdownFiles.forEach(function (file) {
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
 
    // Check for Pinouts
-
    var regex = /<ul>\n<li>APPEND_PINOUT: (.*)<\/li>\n<\/ul>/;
    var match = html.match(regex);
    if (match!=null) {
@@ -569,6 +598,10 @@ markdownFiles.forEach(function (file) {
      var pinout = fs.readFileSync(htmlfilename).toString();
      html = html.replace(regex, pinout);
    }
+
+   // If compiling for offline, quick hack to modify most links to go direct
+   if (OFFLINE)
+     html = html.replace(/(<[aA] .*href=")\/([^"#]*)/g, '$1$2.html');
 
    // work out of we have any images that might be at the top of the page
    var hasImageContent = html.indexOf("<iframe ")>=0; // do we have a video?
@@ -588,13 +621,41 @@ markdownFiles.forEach(function (file) {
           html + '</div>'+
           '<p style="text-align:right;font-size:75%;">This page is auto-generated from <a href="'+github_url+'">GitHub</a>. If you see any mistakes or have suggestions, please <a href="https://github.com/espruino/EspruinoDocs/issues/new?title='+file+'">let us know</a>.</p>';
 
+   if (OFFLINE) {
+     html = `<html><head>
+  <title>${title}</title>
+  <link rel="stylesheet" href="offline.css" type="text/css" />
+  </head>
+  <body style="background-image:none;">
+    <div id="wrap">${html}</div>
+  </body>
+</html>
+     `;
+   }
+
    fs.writeFileSync(htmlFiles[file], html);
 });
 
-
 // -----------------------------------------------------------
-// Finally write out the references
+// write out the references
 var refPath = path.resolve(BASEDIR, "references.json");
 console.log("---------------------");
 console.log("Writing references to "+refPath);
 fs.writeFileSync(refPath, JSON.stringify(urls,null,1));
+
+// -----------------------------------------------------------
+// Newest tutorials
+/*child_process.exec(
+  'git log --name-status | grep "^A" | cut -c3- | grep -e ".*\.md$" -e "examples/.*\.js$" | grep -v "^boards" | head -20',
+  function(error, stdout, stderr){
+    var newTutorials = stdout.split("\n").map(x=>x.trim());
+    newTutorials.forEach(tutorial=>{
+      var p = path.relative(BASEDIR, tutorial);
+      if (!p) return;
+      var thumb = getThumbLinkHTML({
+        path: p,
+        title: fileTitles[p]
+      });
+      console.log(thumb);
+    });
+  });*/
