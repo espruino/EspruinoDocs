@@ -62,7 +62,7 @@ exports.connect = function(pins, callback) {
   // init
   dH();
   cH();
-
-  if (callback) callback();
+  // use setTimeout so the user's 'g=TM1640.connect' command will have had time to execute
+  if (callback) setTimeout(callback,10,g);
   return g;
 };
