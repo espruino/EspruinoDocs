@@ -1,0 +1,170 @@
+h1 { font-size: 30px; font-weight: bold; }
+h2 { font-size: 24px; font-weight: bold; }
+h3 { font-size: 20px; font-weight: bold; }
+h4 { font-size: 18px; font-weight: bold; }
+
+table {
+  border-collapse:collapse;
+  margin-left: 24px;
+}
+table,th,td {
+  border: 1px sol**id #CCC;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+tbody>tr:nth-child(odd) {
+  background-color: #EEE;
+}
+thead>tr {
+  background-color: #DDD;
+}
+
+.invisible tbody>tr:nth-child(odd) {
+  background-color: transparent;
+}
+
+.invisible thead>tr {
+  background-color: transparent;
+}
+
+table.invisible {
+  border: 0px;
+  background-color: transparent;
+}
+
+.invisible th,td{
+  border: 0px;
+  background-color: transparent;
+}
+
+
+.thumblink {
+  position: relative;
+  width:190px;
+  height: 150px;
+  vertical-align: bottom;
+  display: inline-block;
+  padding: 4px;
+  border: 1px solid #ddd;
+  margin: 2px;
+}
+
+.thumblink img {
+  position: absolute;
+  bottom: 4px;
+}
+
+.thumblink span {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 4px;
+  /*white-space: nowrap;*/
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  text-shadow: -2px 0 3px #ffffff, 2px 0 3px #ffffff, 0 -3px 3px #ffffff, 0 2px 2px #FFFFFF;
+}
+
+/* Thumbnail used right at top of page */
+.topthumbnail {
+  float:right;
+  margin:10px;
+  margin-top:0;
+}
+
+/* highlight.js syntax highlighting */
+/* github.com style (c) Vasily Polovnyov <vast@whiteants.net> */
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}

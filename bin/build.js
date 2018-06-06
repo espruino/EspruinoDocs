@@ -38,23 +38,9 @@ var FUNCTION_KEYWORD_FILE = path.resolve(BASEDIR, "../Espruino/function_keywords
 var KEYWORD_JS_FILE = path.resolve(HTML_DIR, "keywords.js");
 
 var marked = require('marked');
-//var pygmentize = require('pygmentize-bundled')
-//var hljs = require('highlight.js')
-
-
 // Set default options except highlight which has no default
-marked.setOptions({
+var markedOptions = {
   gfm: true, // github markdown
-// yay. both broken.
-/*  highlight: function (code, lang) {
-    return hljs.highlightAuto(lang, code).value;
-  },*/
-/*  highlight: function (code, lang, callback) {
-    pygmentize({ lang: lang, format: 'html' }, code, function (err, result) {
-      if (err) return callback(err);
-      callback(null, result.toString());
-    });
-  },*/
   tables: true,
   breaks: false,
   pedantic: false,
@@ -62,8 +48,29 @@ marked.setOptions({
   smartLists: true,
   smartypants: false,
   langPrefix: 'lang-'
-});
+};
+if (OFFLINE) {
+  var hljs;
+  try {
+    hljs = require('highlight.js')
+    markedOptions.highlight = function (code) {
+      return hljs.highlightAuto(code).value;
+    };
+  } catch(e) {
+    console.log("======================================================");
+    console.log(" highlight.js not installed - not syntax highlighting");
+    console.log("======================================================");
+    var d = Date.now()+2000;
+    while (Date.now()<d);
+  }
+}
+marked.setOptions(markedOptions);
 
+if (OFFLINE) {
+  // if offline, copy the offline.css file in
+  fs.createReadStream(path.resolve(BASEDIR, "bin/offline.css")).pipe(
+    fs.createWriteStream(path.resolve(HTML_DIR, "offline.css")));
+}
 
 function WARNING(s) {
   console.log("WARNING: "+s);

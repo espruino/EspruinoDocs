@@ -5,6 +5,8 @@ html/*.html
 html/*.jpg
 html/*.png
 html/*.gif
+html/*.css
+html/img/*
 html/refimages/*
 html/boards/*
 html/keywords.js
