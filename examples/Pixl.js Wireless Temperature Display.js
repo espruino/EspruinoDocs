@@ -45,7 +45,7 @@ function scanForDevices() {
     devs.forEach(function(dev) {
       if (dev.manufacturer!=0x590) return;
       var d = new DataView(dev.manufacturerData);
-      g.drawString(`${dev.name}: ${d.getUint8(0)}'C (${d.getUint8(0)}% bat)`,0,idx*6);
+      g.drawString(`${dev.name}: ${d.getInt8(1)}'C (${d.getUint8(0)}% bat)`,0,idx*6);
       idx++;
     });
     if (!idx) g.drawString("(no devices found)");
