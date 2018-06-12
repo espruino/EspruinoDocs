@@ -60,11 +60,22 @@ We just need to make a simple Bulb + battery circuit here, where instead of a sw
 
 ### Relay module to Espruino
 
+**Remove the jumper on the relay that sits between `JD-VCC` and `VCC`**
+
 | Relay Module | Espruino   |
-| --- | --------- |
-| GND |  GND      |
-| VCC |  Bat (5V) |
-| IN1 |  A0       |
+| ------ | --------- |
+| GND    |  GND      |
+| JD-VCC |  Bat (5V) |
+| VCC    |  3.3v     |
+| IN1    |  A0       |
+
+**Note:** The wiring shown on the picture shows the relay module powered
+solely from 5v with the jumper connected. This will work but on some
+relay modules the relay may not turn off reliably. On 5v-capable pins
+you can fix this with the command `pinMode(A0, "opendrain");`, but `A0` 
+on the [Original Espruino Board](/Original) isn't 5v tolerant (it is 
+on the [Pico](/Pico)). Instead, we remove the jumper and power the relay
+from 5v while running the input part of the relay module at 3.3v.
 
 
 Software
