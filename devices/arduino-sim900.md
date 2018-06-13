@@ -5,7 +5,7 @@ Arduino GPRS/GSM shield (SIM900)
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/arduino-sim900. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Arduino,Shield,Arduino Shield,GSM,GPRS,SIM900,Internet
-* USES: Pixl.js,SIM900
+* USES: Pixl.js,SIM900,ATSMS
 
 ![WIZnet SIM900 shield](arduino-sim900.jpg)
 

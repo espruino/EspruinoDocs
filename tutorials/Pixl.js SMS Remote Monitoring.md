@@ -5,7 +5,7 @@ Pixl.js SMS Remote Monitoring
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pixl.js+SMS+Remote+Monitoring. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Remote Monitoring,GSM,SMS,Text message
-* USES: Pixl.js,BLE,Only BLE,SIM900,arduino-sim900
+* USES: Pixl.js,BLE,Only BLE,SIM900,arduino-sim900,ATSMS
 
 ![Pixl.js SMS Remote Monitoring](Pixl.js SMS Remote Monitoring.jpg)
 
