@@ -36,7 +36,7 @@ var ctr = ll.timer(3,{type:"counter"});
 // Set up and enable PPI
 ll.ppiEnable(0, btn.eIn, ctr.tCount);
 /* This function triggers a Task by hand to 'capture' the counter's
-value. It can then be read back from the relevant `cc` register */ 
+value. It can then be read back from the relevant `cc` register */
 function getCtr() {
   poke32(ctr.tCapture[0],1);
   return peek32(ctr.cc[0]);
@@ -62,7 +62,40 @@ ll.ppiEnable(1, tmr.eCompare[0], t1.tOut);
 poke32(tmr.tStart,1);
 ```
 
+Toggle the state of `LED` every time the comparator changes.
+
+```
+var ll = require("NRF52LL");
+// set up LED as an output
+digitalWrite(LED,0);
+// create a 'toggle' task for the LED
+var tog = ll.gpiote(0, {type:"task",pin:LED,lo2hi:1,hi2lo:1,initialState:0});
+// compare D31 against vref/2
+var comp = ll.lpcomp({pin:D31,vref:8});
+// use a PPI to trigger the toggle event
+ll.ppiEnable(0, comp.eCross, tog.tOut);
+
+```
+
 Reference
 ---------
- 
+
 * APPEND_JSDOC: NRF52LL.js
+
+
+LPCOMP
+------
+
+LPCOMP is a low-power comparator. You can use it as follows:
+
+```
+// Compare D31 with 8/16 of vref (half voltage)
+o = ll.lpcomp({pin:D31,vref:8});
+// or {pin:D31,vref:D2} to compare with pin D2
+
+// Read the current value of the comparator
+console.log(o.sample());
+// Return an object {up,down,cross} showing how
+// the state changed since the last call
+console.log(o.compare());
+```
