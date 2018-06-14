@@ -83,6 +83,15 @@ Reference
 * APPEND_JSDOC: NRF52LL.js
 
 
+Interrupts
+----------
+
+Espruino doesn't allow you to react to interrupts from these peripherals
+directly, however you can change the state of an external pin (see the
+examples above) and can then short that pin to another pin that you can
+use as an input with `setWatch`.
+
+
 LPCOMP
 ------
 
