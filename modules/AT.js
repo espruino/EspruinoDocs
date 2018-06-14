@@ -11,14 +11,17 @@ exports.connect = function (ser) {
   var lineCallback;
   var dataCount = 0;
   var dataCallback;
-  var delim = "\r";
   var handlers = {};
   var lineHandlers = {};
   var waiting = [];
 
-  ser.on("data", function(d) {
+  ser.on("data", function cb(d) {
     // if we need to, send bytes off to callback right away
     if (dataCount) {
+      if (line) {
+        d=line+d;
+        line="";
+      }
       if (d.length<=dataCount) {
         dataCount -= d.length;
         dataCallback(d);
@@ -43,12 +46,12 @@ exports.connect = function (ser) {
         }
       }
     }
-    var i = line.indexOf(delim);
+    var i = line.indexOf("\r");
     while (i>=0) {
       var l = line.substr(0,i);
       //console.log("]>"+JSON.stringify(l));
-      if (l.length>0) {
-        var handled = false;
+      var handled = false;
+      if (l.length>0) {        
         for (var h in lineHandlers)
           if (l.substr(0,h.length)==h) {
             lineHandlers[h](l);
@@ -60,7 +63,8 @@ exports.connect = function (ser) {
           }// else console.log(":"+JSON.stringify(l));
         }
       }
-      line = line.substr(i+delim.length);
+      line = line.substr(i+1);
+      if (handled&&dataCount) return cb("");
       if (line[0]=="\n") line=line.substr(1);
       if (line.length && handlers) {
         // hack - when bug #540 gets fixed we won't need this:
@@ -72,7 +76,7 @@ exports.connect = function (ser) {
             //console.log("HANDLER] "+JSON.stringify(line));
           }
       }
-      i = line.indexOf(delim);
+      i = line.indexOf("\r");
     }
   });
 
@@ -84,7 +88,8 @@ exports.connect = function (ser) {
         lineCallback:lineCallback,
         handlers:handlers,
         lineHandlers:lineHandlers,
-        waiting:waiting
+        waiting:waiting,
+        dataCount:dataCount
       };
     },
     /* send command - if timeout is set, we wait for a response. The callback may return
@@ -131,7 +136,7 @@ exports.connect = function (ser) {
         finalCallback(d);
       });
     },
-    // register for a certain type of response (as a full line)
+    // register for a certain type of response (as a full line). If key matches the first few characters...
     "registerLine" : function(key, callback) {
       if (lineHandlers[key]) throw new Error(key+" already registered");
       lineHandlers[key] = callback;

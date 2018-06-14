@@ -1,6 +1,6 @@
 /* Copyright (c) 2015 Gordon Williams, Tobias Schwalm. See the file LICENSE for copying permission. */
 /*
-Library for interfacing to the SIM900A. 
+Library for interfacing to the SIM900A.
 Uses the 'NetworkJS' library to provide a JS endpoint for HTTP.
 
 ```
@@ -41,9 +41,9 @@ function unregisterSocketCallbacks(sckt) {
 var netCallbacks = {
   create: function(host, port) {
     /* Create a socket and return its index, host is a string, port is an integer.
-    If host isn't defined, create a server socket */  
+    If host isn't defined, create a server socket */
     if (host===undefined) {
-      sckt = MAXSOCKETS;
+      var sckt = MAXSOCKETS;
       socks[sckt] = "Wait";
       sockData[sckt] = "";
       at.cmd("AT+CIPSERVER=1,"+port+"\r\n", 10000, function(d) {
@@ -65,14 +65,14 @@ var netCallbacks = {
         if (d=="OK") {
           at.registerLine(sckt + ', CONNECT OK', function() {
             at.unregisterLine(sckt + ', CONNECT OK');
-            at.unregisterLine(sckt + ', CONNECT FAIL');  
+            at.unregisterLine(sckt + ', CONNECT FAIL');
             socks[sckt] = true;
             return "";
           });
           at.registerLine(sckt + ', CONNECT FAIL', function() {
             at.unregisterLine(sckt + ', CONNECT FAIL');
             at.unregisterLine(sckt + ', CONNECT OK');
-            at.unregisterLine(sckt + ', CLOSED');  
+            at.unregisterLine(sckt + ', CLOSED');
             socks[sckt] = undefined;
             return "";
           });
@@ -85,7 +85,7 @@ var netCallbacks = {
           });
         } else {
           socks[sckt] = undefined;
-          return "";    
+          return "";
         }
       });
     }
@@ -95,10 +95,10 @@ var netCallbacks = {
   close: function(sckt) {
     if(socks[sckt]) {
       // ,1 = 'fast' close
-      at.cmd('AT+CIPCLOSE='+sckt+",1\r\n",1000, function(/*d*/) {   
+      at.cmd('AT+CIPCLOSE='+sckt+",1\r\n",1000, function(/*d*/) {
         socks[sckt] = undefined;
       });
-      
+
     }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
@@ -153,7 +153,7 @@ var netCallbacks = {
       at.unregisterLine(sckt + ', SEND FAIL');
       busy = false;
       return -1;
-    });  
+    });
     at.write('AT+CIPSEND='+sckt+','+data.length+'\r\n');
     return data.length;
   }
@@ -169,11 +169,11 @@ function receiveHandler(line) {
     // we have everything
     sockData[parms[0]] += line.substr(colon+3,parms[1]);
     return line.substr(colon+parms[1]+3); // return anything else
-  } else { 
+  } else {
     // still some to get - use getData to request a callback
     sockData[parms[0]] += line.substr(colon+3,len);
-    at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });   
-    return "";   
+    at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });
+    return "";
   }
 }
 function receiveHandler2(line) {
@@ -186,15 +186,14 @@ function receiveHandler2(line) {
     // we have everything
     sockData[parms[0]] += line.substr(colon+1,parms[1]);
     return line.substr(colon+parms[1]+1); // return anything else
-  } else { 
+  } else {
     // still some to get - use getData to request a callback
     sockData[parms[0]] += line.substr(colon+1,len);
-    at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });   
+    at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });
     return "";
   }
 }
 var gprsFuncs = {
-  receiveHandler: receiveHandler,
   "debug" : function() {
     return {
       socks:socks,
@@ -207,8 +206,8 @@ var gprsFuncs = {
     var cb = function(r) {
       switch(s) {
         case 0:
-          if(r === 'IIIIATE0' || 
-            r === 'IIII' + String.fromCharCode(255) + 'ATE0' || 
+          if(r === 'IIIIATE0' ||
+            r === 'IIII' + String.fromCharCode(255) + 'ATE0' ||
             r === 'ATE0') {
             return cb;
           } else if(r === 'OK') {
