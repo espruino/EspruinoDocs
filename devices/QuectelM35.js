@@ -5,9 +5,7 @@ var MAXSOCKETS = 6;
 var rst;
 var busy = false;
 
-function dbg(t) {
-  print("[M35]",t);
-}
+function dbg() {} // don't print anything by default. gprs.debug() enables it
 
 var netCallbacks = {
   create: function(host, port) {
@@ -21,7 +19,7 @@ var netCallbacks = {
             busy = false;
           }
         });
-      }    
+      }
     if (host===undefined) { // server socket
       // need QILPORT, QISERVER
       dbg("Server not implemented");
@@ -97,7 +95,7 @@ var netCallbacks = {
 };
 
 //Handle +RECEIVE input data
-function receiveHandler(line) {  
+function receiveHandler(line) {
   var parms = line.substring(10).split(",");
   dbg(parms);
   at.getData(0|parms[1], function(data) { sockData[0|parms[0]] += data; });
@@ -105,7 +103,7 @@ function receiveHandler(line) {
 function socketHandler(line) {
   dbg(line);
   var sckt = line[0];
-  line = line.substr(3);  
+  line = line.substr(3);
   if (line=="CONNECT OK") {
     socks[sckt] = true;
   } else  if (line=="CONNECT FAIL") {
@@ -134,7 +132,9 @@ function atcmd(cmd,timeout) {
 }
 
 var gprsFuncs = {
-  "debug" : function() {
+  "debug" : function(on) {
+    if (on || on===undefined) dbg = function(t){print("[M35]",t);}
+    else dbg = function(){};
     return {
       socks:socks,
       sockData:sockData
@@ -156,7 +156,7 @@ exports.connect = function(usart, options, callback) {
   options = options || {};
   usart.removeAllListeners();
   gprsFuncs.at = at = require('AT').connect(usart);
-  at.debug();
+  // at.debug();
   require("NetworkJS").create(netCallbacks);
   at.registerLine("+RECEIVE", receiveHandler);
   for (var i=0;i<MAXSOCKETS;i++)
@@ -171,9 +171,9 @@ exports.connect = function(usart, options, callback) {
     if (d.split(",")[1]!=1) throw new Error("GSM not registered, "+d);
     dbg("Forcing GPRS connect");
     return atcmd("AT+CGATT=1",10000); // attach to GPRS service
-  }).then(function() {    
+  }).then(function() {
     return atcmd("AT+CGREG?"); // Check GPRS registered
-  }).then(function(d) { 
+  }).then(function(d) {
     if (d.split(",")[1]==2) throw new Error("GPRS still connecting, "+d);
     if (d.split(",")[1]!=1) throw new Error("GPRS not registered, "+d);
     return atcmd("AT+COPS?"); // Operator
@@ -185,7 +185,9 @@ exports.connect = function(usart, options, callback) {
   }).then(function() {
     return atcmd("AT+QIPROMPT=0"); // No send prompt of '>'
   }).then(function() {
-    if (callback) callback();
+    if (callback) callback(null);
+  }).catch(function(e) {
+    if (callback) callback(e);
   });
   return gprsFuncs;
 };

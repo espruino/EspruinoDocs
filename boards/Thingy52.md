@@ -5,6 +5,7 @@ Nordic Thingy:52
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Thingy52. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Espruino,Thingy52,Thingy,Thingy:52,nRF52832,nRF52,Nordic,Pinout,Bluetooth,BLE,Bluetooth LE
+* USES: LIS2DH12,MPU9250,LPS22HB,HTS221,CCS811,BH1745
 
 ![Nordic Thingy:52](Thingy52/board.jpg)
 
@@ -22,6 +23,14 @@ Features
 * Configurable RGB LED and button.
 * Long battery life with Li-ion battery and charging via USB.
 
+It contains the following sensors:
+
+* [[LIS2DH12]]
+* [[MPU9250]]
+* [[LPS22HB]]
+* [[HTS221]]
+* [[CCS811]]
+* [[BH1745]]
 
 <a name="buy"></a>Buying
 ------
@@ -173,7 +182,7 @@ Thingy.sound = function(waveform, pitch, callback) { ... }
 
 // Record audio for the given number of samples, at 8192 Hz 8 bit.
 // This can then be fed into Thingy.sound(waveform, 8192). RAM is scarce, so realistically 1 sec is a maximum.
-Thingy.record = function(samples, callback)
+Thingy.record = function(samples, callback)  { ... }
 ```
 
 You can also enable the graphical editor blocks for Thingy:52 in the Web IDE
