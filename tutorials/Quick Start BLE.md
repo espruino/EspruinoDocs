@@ -352,7 +352,7 @@ There's lots of detailed information on specific boards, as well
 as a list of tutorials for them:
 
 * [Puck.js](/Puck.js)
-* [Pixl.js](/Pixl.js)
+* [Pixl.js](/Pixl.js) and [Pixl.js Getting Started video](https://www.youtube.com/watch?v=pawHDr4i3jI)
 * [MDBT42Q](/MDBT42Q)
 * [Thingy:52](/Thingy52)
 * [nRF52832DK](/nRF52832DK)
