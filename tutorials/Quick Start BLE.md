@@ -50,7 +50,7 @@ To get the best out of it, we'd recommend that you [update Pixl.js's firmware](/
 
 ### <a class="specific mdbt42q"></a>MDBT42Q
 
-Check out [the MDBT42Q](/MDBT42Q#pinout) page for more information about powering the MDBT42Q.
+Check out [the MDBT42Q](/MDBT42Q#getting-started) page for more information about powering the MDBT42Q.
 
 While pre-programmed MDBT42Q modules from us ship with firmware that's fine for simple tasks, we're constantly
 improving the software and adding new features.
@@ -333,7 +333,7 @@ Type in `LED1.set()` and click send.
 
 
 Having Trouble?
------------------------------
+----------------
 
 Try:
 

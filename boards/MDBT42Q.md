@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Raytac MDBT42Q
-==============
+MDBT42Q Bluetooth Module
+========================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MDBT42Q. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
@@ -11,12 +11,14 @@ Raytac MDBT42Q
 * BUYFROM: £12,£5.96,https://shop.espruino.com/mdbt42q
 
 This is the Bluetooth module that we use in [Puck.js](/Puck.js) and [Pixl.js](/Pixl.js)
-devices. You can [buy it from us](https://shop.espruino.com/mdbt42q) with the
-Espruino firmware pre-installed.
+devices. You can get it with Espruino installed in two forms:
+
+* [Breakout board](https://shop.espruino.com/mdbt42q-breakout) with 0.1" pins, voltage regulator, Button and LEDs
+* [Bare module](https://shop.espruino.com/mdbt42q-module) (0.7mm pin pitch, surface mount)
 
 **Note:** We only provide support for MDBT42 modules purchased from us. Other
-modules won't have a bootloader installed so need connecting to a programmer
-in order to have firmware installed.
+modules don't have a bootloader installed and will need connecting to a programmer
+tool to have firmware installed.
 
 
 Features
@@ -31,9 +33,28 @@ Features
 * NFC tag programmable from JavaScript (when an antenna is connected)
 * Dimensions: 16mm x 10mm x 2.2mm thick
 
+### Breakout board features
+
+* 2.5 - 16v voltage input, 20uA power draw when advertising
+* 0.1" pin header (With 22 GPIO, 7 analog inputs)
+* Red and Green LEDs
+* Button
+
 
 Getting Started
 ----------------
+
+### Breakout board
+
+Apply power between the `V+`/`Vin` and `GND` pins. Any voltage between 2.5 and 16 volts
+will work - just be careful not to get the polarity wrong! Check [the pinout](#pinout) below
+for more information on the location of pins.
+
+Once powered up follow the [Getting Started Guide](/Quick+Start+BLE#mdbt42q) for details
+on getting the IDE connected wirelessly. You can also [use a wired connection](#serial-console)
+if you prefer.
+
+### Bare Module
 
 All you need to get the MDBT42Q working is to apply power between the `VDD` and
 `GND` pins. A 3v non-rechargeable lithium cell is ideal for this (LiPo batteries
@@ -53,12 +74,16 @@ if you prefer.
 On-board peripherals
 --------------------
 
-While there are no buttons or LEDs on the module, the MDBT42Q build assumes:
+While there are no buttons or LEDs on the bare module, the MDBT42Q build assumes
+the following (which are connected on the breakout board):
 
 * There is a button (`BTN`/`BTN1`) between pin `D0` and 3.3v. Pulling this high on boot
 enables the bootloader.
 * There is a LED (`LED`/`LED1`) between pin `D1` and GND. This is flashes at
 boot and also indicates bootloader mode.
+
+The breakout board also contains a green LED on pin `D2`. As of build 1v99 this
+isn't mapped to a built-in variable, but a simple `global.LED2=D2` command will add it.
 
 
 Tutorials
@@ -88,8 +113,10 @@ Tutorials using Bluetooth LE and functionality that may not be part of the MDBT4
 **Note:** The nRF52 port has one available I2C, SPI and USART (and infinite software SPI and I2C).
 Unlike other Espruino boards, these peripherals can be used on *any* pin.
 
-The MDBT42Q must be powered with a voltage between 1.7v and 3.6v. **You can
-not connect a LiPo battery to it without a voltage regulator**.
+The bare MDBT42Q module must be powered with a voltage between 1.7v and 3.6v. **You can
+not connect a LiPo battery to it without a voltage regulator**. However the breakout board
+contains a regulator that will work off of 2.5 to 16 volts.
+
 
 Information
 -----------
@@ -97,6 +124,8 @@ Information
 [![MDBT42Q library](MDBT42Q/lbr.png)](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/MDBT42/mdbt42.lbr)
 
 * [Eagle CAD footprint](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/MDBT42/mdbt42.lbr)
+* [Eagle design files](https://github.com/espruino/EspruinoBoard/tree/master/MDBT42/eagle) for breakout board and simple beacon
+* [PDF schematic and board layouts](https://github.com/espruino/EspruinoBoard/tree/master/MDBT42/pdf) for breakout board and simple beacon
 * [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
 * [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
 
@@ -104,19 +133,19 @@ Information
 Serial Console
 ---------------
 
-When power is first applied, the MDBT42Q checks if pin `D8` is at 3.3v (which will be the
+When power is first applied, the MDBT42Q checks if pin `D8` (labelled `RX` on the breakout board) is at 3.3v (which will be the
 case if it is connected to a Serial port's transmit line). If it is, it initialises
 the on-chip UART on `D8` (MDBT42Q RX) and `D6` (MDBT42Q TX) and puts the Espruino
 console (REPL) on it at 9600 baud.
 
 To use it, connect to a 3.3v output USB to TTL converter as follows:
 
-| MDBT42Q  | USB->TTL converter |
-|----------|--------------------|
-| GND      | GND                |
-| D8       | RX ( -> PC )       |
-| D6       | TX ( <- PC )       |
-| 3V       | 3.3v (Optional - to run without a battery) |
+| MDBT42Q     | USB->TTL converter |
+|-------------|--------------------|
+| `GND`       | `GND`                |
+| `D8` (`RX`) | `TX` ( <- PC )       |
+| `D6` (`TX`) | `RX` ( -> PC )       |
+| `3V`        | 3.3v (Optional - to run without a battery) |
 
 You can now use the normal Espruino Web IDE, or a serial terminal application at 9600 baud.
 
@@ -136,10 +165,10 @@ Up to date firmwares are available from [the Download page](/Download#mdbt42q).
 
 Check out the [Puck.js firmware update instructions](/Puck.js#firmware-updates)
 for full details. All you need to do is apply power to your module with
-pin `D0` connected to VDD, then release it after a second.
-
-This will enable the bootloader mode, and you can then connect with the
-nRF connect app.
+pin `D0` connected to VDD (or `BTN` held down on the breakout board), then
+release it after a second to enter bootloader mode. The module will advertise
+itself as `DfuTarg`, and you can then connect with the `nRF Connect` app and
+write new firmware.
 
 
 Other Official Espruino Boards
