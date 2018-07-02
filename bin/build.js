@@ -276,21 +276,23 @@ function handleImages(file, contents) {
     if (tagMid>=0 && tagEnd>=0) {
       // we've found a tag - do stuff
       var imageName = contents.substring(tagMid+2, tagEnd);
-      var imagePath = directory+"/"+imageName;
-      if (fs.existsSync(imagePath)) {
-/*        console.log("IMAGE -----------------------------");
-        console.log(imageName);
-        console.log(imagePath);*/
-        console.log(imageName);
-        var newPath = IMAGE_DIR + createSafeFilename(/*htmlLinks[file]+"_"+*/imageName);
-        var finalImagePath = path.resolve(HTML_DIR, newPath);
-        //console.log("Copying "+imagePath+" to "+finalImagePath);
-        //fs.createReadStream(imagePath).pipe(fs.createWriteStream(finalImagePath));
-        child_process.exec(`convert "${imagePath}" -resize "600x800>" +repage -strip -define png:include-chunk=none "${finalImagePath}"`);
-        // now rename the image in the tag
-        contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
-      } else {
-        WARNING(file+": Image '"+imagePath+"' does not exist");
+      if (imageName.substr(0,5)!="data:") {
+        var imagePath = directory+"/"+imageName;
+        if (fs.existsSync(imagePath)) {
+  /*        console.log("IMAGE -----------------------------");
+          console.log(imageName);
+          console.log(imagePath);*/
+          console.log(imageName);
+          var newPath = IMAGE_DIR + createSafeFilename(/*htmlLinks[file]+"_"+*/imageName);
+          var finalImagePath = path.resolve(HTML_DIR, newPath);
+          //console.log("Copying "+imagePath+" to "+finalImagePath);
+          //fs.createReadStream(imagePath).pipe(fs.createWriteStream(finalImagePath));
+          child_process.exec(`convert "${imagePath}" -resize "600x800>" +repage -strip -define png:include-chunk=none "${finalImagePath}"`);
+          // now rename the image in the tag
+          contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
+        } else {
+          WARNING(file+": Image '"+imagePath+"' does not exist");
+        }
       }
     }
     tagStart = contents.indexOf("![", tagStart+1);
