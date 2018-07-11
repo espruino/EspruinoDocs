@@ -25,7 +25,9 @@ Basic Usage
 * Initialise a peripheral you want to send tasks to
 * Set up and Enable a PPI to wire the two together
 
-For instance the following will count the number of times the BTN pin changes state:
+The following are some examples:
+
+Count the number of times the BTN pin changes state (GPIO + counter timer):
 
 ```
 var ll = require("NRF52LL");
@@ -43,7 +45,7 @@ function getCtr() {
 }
 ```
 
-Or the following will create a square wave on pin `D0`, with the inverse of the square wave on `D1`:
+Or the following will create a square wave on pin `D0`, with the inverse of the square wave on `D1` (GPIO):
 
 ```
 var ll = require("NRF52LL");
@@ -62,7 +64,7 @@ ll.ppiEnable(1, tmr.eCompare[0], t1.tOut);
 poke32(tmr.tStart,1);
 ```
 
-Toggle the state of `LED` every time the comparator changes.
+Toggle the state of `LED` every time `D31`'s analog value goes above `VCC/2` (low power comparator + GPIO).
 
 ```
 var ll = require("NRF52LL");
@@ -74,7 +76,115 @@ var tog = ll.gpiote(0, {type:"task",pin:LED,lo2hi:1,hi2lo:1,initialState:0});
 var comp = ll.lpcomp({pin:D31,vref:8});
 // use a PPI to trigger the toggle event
 ll.ppiEnable(0, comp.eCross, tog.tOut);
+```
 
+Count how many times `D31` crosses `VCC/2` in 10 seconds  (low power comparator + counter timer).
+
+```
+var ll = require("NRF52LL");
+// source of events - compare D31 against vref/2
+var comp = ll.lpcomp({pin:D31,vref:8});
+// A place to recieve events - a counter
+var ctr = ll.timer(3,{type:"counter"});
+// Set up and enable PPI
+ll.ppiEnable(0, comp.eCross, ctr.tCount);
+/* This function triggers a Task by hand to 'capture' the counter's value. It can then clear it and read back the relevant `cc` register */
+function getCtr() {
+  poke32(ctr.tCapture[0],1);
+  poke32(ctr.tClear,1); // reset it
+  return peek32(ctr.cc[0]);
+}
+// Every 10 seconds, wake and print out the number of crosses
+setInterval(function() {
+  print(getCtr());
+}, 10000);
+```
+
+Make one reading from the ADC:
+
+```
+var saadc = ll.saadc({
+  channels : [ { // channel 0
+    pin:D31,
+    gain:1/4,
+    tacq:40,
+    refvdd:true,
+  } ]
+});
+print(saadc.sample()[0]);
+```
+
+Read a buffer of data from the ADC, alternating between 2 pins (ADC).
+It's also possible to use `.sample(...)` for this, but this example
+shows you how to use it in more detail.
+
+```
+// Buffer to fill with data
+var buf = new Uint16Array(128);
+// source of events - compare D31 against vref/2
+var saadc = ll.saadc({
+  channels : [ { // channel 0
+    pin:D31,
+    gain:1/4,
+    tacq:40,
+    refvdd:true,
+  }, { // channel 1
+    pin:D30,
+    gain:1/4,
+    tacq:40,
+    refvdd:true,
+  } ],
+  samplerate:2047, // 16Mhz / 2047 = 7816 Hz auto-sampling
+  dma:{ptr:E.getAddressOf(buf,true), cnt:buf.length},
+});
+// Start sampling until the buffer is full
+poke32(saadc.eEnd,0); // clear flag so we can test
+poke32(saadc.tStart,1);
+poke32(saadc.tSample,1); // start!
+while (!peek32(saadc.eEnd)); // wait until it ends
+poke32(saadc.tStop,1);
+print("Done!", buf);
+```
+
+Use the RTC to toggle the state of an LED:
+
+```
+var ll = require("NRF52LL");
+
+// set up LED as an output
+digitalWrite(LED,0);
+// create a 'toggle' task for the LED
+var tog = ll.gpiote(0, {type:"task",pin:LED,lo2hi:1,hi2lo:1,initialState:0});
+
+// set up the rtc
+var rtc = ll.rtc(2);
+poke32(rtc.prescaler, 4095); // 32kHz / 4095 = 8 Hz
+rtc.enableEvent("eTick");
+poke32(rtc.tStart,1); // start RTC
+// use a PPI to trigger the toggle event
+ll.ppiEnable(0, rtc.eTick, tog.tOut);
+```
+
+Use the RTC to measure how long a button has been held down for:
+
+```
+var ll = require("NRF52LL");
+// Source of events - the button
+// Note: this depends on the polarity of the physical button (this assumes that 0=pressed)
+var btnu = ll.gpiote(0, {type:"event",pin:BTN,lo2hi:1,hi2lo:0});
+var btnd = ll.gpiote(1, {type:"event",pin:BTN,lo2hi:0,hi2lo:1});
+// A place to recieve Tasks - the RTC
+var rtc = ll.rtc(2);
+poke32(rtc.prescaler, 0); // no prescaler, 32 kHz
+poke32(rtc.tStop, 1); // ensure RTC is stopped
+// Set up and enable PPI to start and stop the RTC
+ll.ppiEnable(0, btnd.eIn, rtc.tStart);
+ll.ppiEnable(1, btnu.eIn, rtc.tStop);
+// Every so often, check the RTC and report the result
+setInterval(function() {
+  print(peek32(rtc.counter));
+  poke32(rtc.tClear, 1);  
+}, 5000);
 ```
 
 Reference
