@@ -488,7 +488,7 @@ BME680.prototype.get_sensor_data = function() {
 
 // Request the sensor takes another reading
 BME680.prototype.perform_measurement = function() {
-  bme.set_sensor_mode(C.FORCED_MODE);
+  this.set_sensor_mode(C.FORCED_MODE);
 };
 
 BME680.prototype.calc_temperature = function(temp_adc) {
