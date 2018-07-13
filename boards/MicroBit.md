@@ -30,8 +30,10 @@ devices with low flash memory" will not be included)
 * Low program memory (Espruino on micro:bit has only 350 vars available, whereas
 on other devices it has over 10 times that)
 
+[[http://youtu.be/0FgjHf4UEwQ]]
+
 If you want the full experience, please consider buying [an official Espruino Board](http://www.espruino.com/Order).
-[Puck.js](http://www.espruino.com/Puck.js) is especially useful if you want to
+[Puck.js](http://www.espruino.com/Puck.js) and [Pixl.js](http://www.espruino.com/Pixl.js)  are especially useful if you want to
 experiment with Bluetooth LE.
 
 Flashing Espruino
