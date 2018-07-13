@@ -37,7 +37,7 @@ experiment with Bluetooth LE.
 Flashing Espruino
 ------------------
 
-<a name="firmware-updates"></a>There is a build of Espruino designed specifically for the micro:bit. Releases are available from the [Download page](/Download) - however you may also download 'cutting edge' builds [from here](http://www.espruino.com/binaries/travis/master/) - these are updated every time something changes in Espruino's source code, so may occasionally not work.
+<a name="firmware-updates"></a>There is a build of Espruino designed specifically for the micro:bit. Releases are available from the [Download page](/Download#microbit) - however you may also download 'cutting edge' builds [from here](http://www.espruino.com/binaries/travis/master/) - these are updated every time something changes in Espruino's source code, so may occasionally not work.
 
 To flash onto your micro:bit:
 
