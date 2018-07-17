@@ -64,7 +64,8 @@
 var strChr = String.fromCharCode;
 
 function buildKey() {
-  var randomString = btoa(Math.random().toString(36).substr(2, 18));
+  var randomString = btoa(Math.random().toString(36).substr(2, 8)+
+                          Math.random().toString(36).substr(2, 8));
   var toHash = randomString + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
   return {
     source: randomString,
