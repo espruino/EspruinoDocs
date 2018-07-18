@@ -158,10 +158,10 @@ Thingy.onHumidity = function(callback) { ... }
 // Get one callback with a new {humidity,temperature} value
 Thingy.getHumidity = function(callback) { ... }
 
-// Get repeated callbacks with air quality `{eC02,TVOC}`. Call with no argument to disable
+// Get repeated callbacks with air quality `{eCO2,TVOC}`. Call with no argument to disable
 Thingy.onGas = function(callback) { ... }
 
-//Get one callback with a new air quality value `{eC02,TVOC}`. This may not be useful as the sensor takes a while to warm up and produce useful values
+//Get one callback with a new air quality value `{eCO2,TVOC}`. This may not be useful as the sensor takes a while to warm up and produce useful values
 Thingy.getGas = function(callback) { ... }
 
 // Get repeated callbacks with color `{r,g,b,c}`. Call with no argument to disable
