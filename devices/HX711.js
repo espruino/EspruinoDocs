@@ -24,8 +24,7 @@ function HX711(options) {
     as the clock and send the data we want. */
   this.spi = new SPI(); // use software SPI
   this.spi.setup({miso:this.miso, mosi:this.sck, baud: 2000000/*ignored atm*/});
-  this.miso.read(); // force input
-  this.sck.write(0); // idle
+  this.sck.write(0); // idle, but on
   this.zero = 0;
 }
 
@@ -38,6 +37,7 @@ HX711.prototype.readRaw = function() {
   if (!finalClk) throw "Invalid mode";
   var c = 0b10101010;
   var d = this.spi.send([c,c,c,c,c,c,finalClk]);
+  // mosi left as 0, so power on.
   function ex(x) { return ((x&128)?8:0)|((x&32)?4:0)|((x&8)?2:0)|((x&2)?1:0); }
   var val = (ex(d[0])<<20)|(ex(d[1])<<16)|(ex(d[2])<<12)|(ex(d[3])<<8)|(ex(d[4])<<4)|ex(d[5]);
   if (val&0x800000) val-=0x1000000; // two's complement
@@ -47,12 +47,17 @@ HX711.prototype.readRaw = function() {
 HX711.prototype.tare = function() {
   this.zero = this.readRaw();
 };
+/// Read the ADC and return the result in grams (based on options.lsbGrams)
 HX711.prototype.readGrams = function() {
   return (this.readRaw() - this.zero) * this.lsbGrams;
 };
 /// Is data ready for retrieval?
 HX711.prototype.isReady = function() {
   return !this.miso.read();
+};
+/// Set whether the ADC is in standby mode or not
+HX711.prototype.setStandby = function(isStandby) {
+  this.sck.write(isStandby);
 };
 
 exports.connect = function(options) {
