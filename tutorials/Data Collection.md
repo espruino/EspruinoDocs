@@ -53,7 +53,7 @@ or `Date.now()` will give the number of milliseconds since 1970.
 The time reported is according to Espruino's Real-Time Clock. You can set it
 with `setTime(secondsSince1970)`, or can turn on `Set Current Time` in the
 Web IDE's Communication Settings and the time will be set automatically next time code is
-uploaded. (If you're using the [Puck.js](/Puck.js+Web+Bluetooth#extra-features) 
+uploaded. (If you're using the [Puck.js](/Puck.js+Web+Bluetooth#extra-features)
 Web Bluetooth library you can also use `Puck.setTime()` on a Web Bluetooth website).
 
 
@@ -65,7 +65,7 @@ a few options here:
 
 ### RAM - JavaScript variables
 
-The simplest (but most inefficient) option is just to store data in a 
+The simplest (but most inefficient) option is just to store data in a
 JavaScript array, for instance:
 
 ```
@@ -87,7 +87,7 @@ function storeMyData(data) {
   // ensure there are less than 500 elements in the array
   while (log.length >= 500) log.shift();
   // append a new item to the array
-  log.push(data); 
+  log.push(data);
 }
 ```
 
@@ -104,9 +104,7 @@ Storing as JavaScript variables is easy, but uses a lot of memory (~32 bytes
 you can store it in a much more compact form.
 
 For instance, if we know that each reading is a number then we can use a
-fixed size 32 bit floating point buffer for it:var buffer = new ArrayBuffer(8);
-var uint8 = new Uint8Array(buffer);
-uint8.set([1,2,3]);
+fixed size 32 bit floating point buffer for it:
 
 ```
 var log = new Float32Array(1000);
@@ -121,25 +119,81 @@ function storeMyData(data) {
 
 This will use up only 4 bytes per item instead of the previous solution's 32.
 
-You can also use `Float64Array` (8 bytes) for very accurate numbers, 
+You can also use `Float64Array` (8 bytes) for very accurate numbers,
 `Uint8Array/Int8Array` (1 byte) for integer numbers, or
 `Uint16Array/Int16Array/Uint32Array/Int32Array`.
 
-In the code above we rotate around the buffer writing data. It means that when
-you come to output the data you'll need to work backwards from `logIndex` to
-output data in the right order.
+In the code above we rotate *around* the buffer writing data rather than
+shifting elements in the array itself (because the `push` and `shift`
+methods aren't available on Typed Arrays like `Float32Array`). It
+means that when you come to output the data you'll need to work backwards from
+`logIndex` to output data in the right order.
+
+However if you *do* want to rotate data in the buffer itself, you can do it
+efficiently using the `.set` method on the array:
+
+```
+function storeMyData(data) {
+  // shift elements backwards - note the 4, because a Float32 is 4 bytes
+  log.set(new Float32Array(log.buffer, 4 /*bytes*/));
+  // add ad final element
+  log[log.length-1] = data;
+}
+```
+
+This is still slower than the `logIndex` method above, but it does make
+outputting and graphing the data much easier.
 
 ### Flash memory
 
 So far we've only written to RAM, however some Espruino boards have big
 areas of flash memory that you can use.
 
-To do this, you can use the [`require("Flash")`](/Reference#Flash) to write
-data - but is relatively advances and requires all your data as a series of bytes.
+You can use the [`require("Flash")`](/Reference#Flash) to write bytes straight
+to flash - but this is relatively advanced and requires you to deal with pages
+and page erasure.
+
+On Espruino 1v97 and above there is the [`Storage` module](/Reference#Storage)
+which implements a simple filesystem in the area of flash memory that is also
+used to save your program code.
+
+The Storage module implements wear levelling and deals with flash page boundaries
+and pages for you, so is much easier to use. The example below will write text
+into a log file, and will alternate between `log1` and `log2` as needed:
+
+```
+var storage = require("Storage");
+var FILESIZE = 2048;
+var file = {
+  name : "",
+  offset : FILESIZE, // force a new file to be generated at first
+};
+
+// Add new data to a log file or switch log files
+function saveData(txt) {
+  var l = txt.length;
+  if (file.offset+l>FILESIZE) {
+    // need a new file...
+    file.name = file.name=="log2"?"log1":"log2";
+    // write data to file - this will overwrite the last one
+    storage.write(file.name,txt,0,FILESIZE);
+    file.offset = l;
+  } else {
+    // just append
+    storage.write(file.name,txt,file.offset);
+    file.offset += l;
+  }
+}
+
+// Write some data
+setInterval(function() {
+  saveData(getTime()+","+E.getTemperature()+"\n");
+}, 1000);
+```
 
 ### External Flash/EEPROM Memory
 
-You can also wire up external memory such as Flash or [EEPROMs](/EEPROMs) - 
+You can also wire up external memory such as Flash or [EEPROMs](/EEPROMs) -
 usually via [SPI](/SPI) or [I2C](/I2C).
 
 ### SD card
@@ -154,7 +208,7 @@ For simple logging, you might choose to use a text format that you
 can read on a PC like CSV:
 
 ```
-function storeMyData(data) { 
+function storeMyData(data) {
   var csvline = (new Date()).toString() + "," + data + "\n";
   require("fs").appendFileSync("mydata.csv", csvline);
 }
@@ -192,7 +246,7 @@ from `logIndex+1` forwards so that everything is kept in order.
 Simple Example
 --------------
 
-For this example we'll use features that are easy to use and available in all 
+For this example we'll use features that are easy to use and available in all
 boards: the Temperature Sensor, and Typed Arrays.
 
 Simply copy and paste the following code in to the right hand side of the ide,
@@ -205,7 +259,7 @@ var logIndex = 0; // index of last logged data item
 var timePeriod = 60*1000; // every minute
 var lastReadingTime; // time of last reading
 
-// Store data into RAM 
+// Store data into RAM
 function storeMyData(data) {
   logIndex++;
   if (logIndex>=log.length) logIndex=0;
@@ -221,7 +275,7 @@ function getData() {
 
 // Dump our data in a human-readable format
 function exportData() {
-  for (var i=1;i<=log.length;i++) { 
+  for (var i=1;i<=log.length;i++) {
     var time = new Date(lastReadingTime - (log.length-i)*timePeriod);
     var data = log[(i+logIndex)%log.length];
     console.log(time.toString()+"\t"+data);
@@ -229,13 +283,13 @@ function exportData() {
 }
 
 // Start recording
-setInterval(getData, timePeriod); 
+setInterval(getData, timePeriod);
 ```
 
 The Espruino board will start logging one minute after upload, and will keep
 logging every minute after that. Because the `Float32Array` is 100 items long,
 it'll keep only the last 100 readings. You can easily increase the length of
-the array - most espruino boards will handle at least 5000 items, many will 
+the array - most espruino boards will handle at least 5000 items, many will
 allow more.
 
 To get your data, simply type `exportData()` in the left-hand side of the
@@ -246,11 +300,11 @@ directly into a spreadsheet like Google Sheets.
 Further Improvements
 --------------------
 
-You may well want to store more than one data item - in which case you 
+You may well want to store more than one data item - in which case you
 could either store multiple items in the `log` array, or could have
 one `log` array per type of data (eg. one for temperature, one for light).
 
-We could also store our data more efficiently. If we only cared about 
+We could also store our data more efficiently. If we only cared about
 temperature to the nearest degree we could swap `Float32Array` for `Int8Array`
 and store 4 times as much data (as long as the temperature was between -128 and 127
   degrees C, as that is the range of `Int8Array`).
