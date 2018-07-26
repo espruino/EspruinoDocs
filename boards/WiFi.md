@@ -8,7 +8,7 @@ Espruino WiFi
 
 ![Espruino WiFi](WiFi/angled.jpg)
 
-* BUYFROM: £30,£21.60,https://shop.espruino.com/wifi,/Order#espruino-wifi
+* BUYFROM: £30,£21.60,https://shop.espruino.com/wifi,/Order#wifi
 
 **Note:** Espruino WiFi provides an easy, well-supported way to get on the Internet, however it's not the only way to access a WiFi network from an Espruino board. [See here](/Internet#related-pages) for more information.
 
