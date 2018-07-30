@@ -321,7 +321,7 @@ Firmware Updates
 * On your Bluetooth LE capable phone, install the `nRF Toolbox` app
 * Download the latest `espruino_xxx_puckjs.zip` file from [the Download page](/Download#puckjs)
 * [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED should be lit
-* Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
+* Release the button within 3 seconds of inserting the battery - either the Red LED should light instead or on new Puck.js devices, Green will light more brightly. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Toolbox` app
 * Tap the `DFU` icon
 * Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the ZIP file you downloaded
@@ -338,7 +338,7 @@ Firmware Updates
 * On your Bluetooth LE capable phone, install the `nRF Connect` app
 * Download the latest `espruino_xxx_puckjs.zip` file from [the Download page](/Download#puckjs)
 * [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED should be lit
-* Release the button within 3 seconds of inserting the battery - the Red LED should light instead. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
+* Release the button within 3 seconds of inserting the battery - either the Red LED should light instead or on new Puck.js devices, Green will light more brightly. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
 * Open the `nRF Connect` app
 * It should show some Bluetooth devices, including one called `DfuTarg`
 * Click `Connect` to the right of `DfuTarg`
