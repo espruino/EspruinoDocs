@@ -286,8 +286,11 @@ function handleImages(file, contents) {
           var newPath = IMAGE_DIR + createSafeFilename(/*htmlLinks[file]+"_"+*/imageName);
           var finalImagePath = path.resolve(HTML_DIR, newPath);
           //console.log("Copying "+imagePath+" to "+finalImagePath);
-          //fs.createReadStream(imagePath).pipe(fs.createWriteStream(finalImagePath));
-          child_process.exec(`convert "${imagePath}" -resize "600x800>" +repage -strip -define png:include-chunk=none "${finalImagePath}"`);
+          // copy gifs - so we don't break anything on optimised animations
+          if (imagePath.substr(-4)==".gif")
+            fs.createReadStream(imagePath).pipe(fs.createWriteStream(finalImagePath));
+          else
+            child_process.exec(`convert "${imagePath}" -resize "600x800>" +repage -strip -define png:include-chunk=none "${finalImagePath}"`);
           // now rename the image in the tag
           contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
         } else {
