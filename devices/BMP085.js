@@ -58,7 +58,7 @@ BMP085.prototype.readS16 = function(reg) {
   this.i2c.writeTo(0x77, reg);
   var d = this.i2c.readFrom(0x77, 2);
   var i = (d[0] << 8) | d[1];
-  return (i>=32767) ? i - 65536 : i;
+  return (i>32767) ? i - 65536 : i;
 };
 
 /* Read single byte from register reg*/

@@ -94,9 +94,9 @@ ADXL345.prototype.read = function() {
 	var x = (gdat[1] << 8) | gdat[0];
 	var y = (gdat[3] << 8) | gdat[2];
 	var z = (gdat[5] << 8) | gdat[4];
-	x=(x>=32767) ? x - 65536 : x;
-	y=(y>=32767) ? y - 65536 : y;
-	z=(z>=32767) ? z - 65536 : z;
+	x=(x>32767) ? x - 65536 : x;
+	y=(y>32767) ? y - 65536 : y;
+	z=(z>32767) ? z - 65536 : z;
 	return {x:x/256, y:y/256, z:z/256};
 }
 

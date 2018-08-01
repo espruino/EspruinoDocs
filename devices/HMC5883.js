@@ -46,9 +46,9 @@ HMC5883.prototype.readc = function() {
 	var x = (gdat[0] << 8) | gdat[1];
 	var y = (gdat[2] << 8) | gdat[3];
 	var z = (gdat[4] << 8) | gdat[5];
-	x=(x>=32767) ? x - 65536 : x;
-	y=(y>=32767) ? y - 65536 : y;
-	z=(z>=32767) ? z - 65536 : z;
+	x=(x>32767) ? x - 65536 : x;
+	y=(y>32767) ? y - 65536 : y;
+	z=(z>32767) ? z - 65536 : z;
 	var o=(x==-4096 || y==-4096 || z==-4096);
 	return {x:x*f, y:y*f, z:z*f, overflow:o};
 }

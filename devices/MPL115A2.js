@@ -60,7 +60,7 @@ MPL115A2.prototype.readS16 = function(reg) {
   var d = this.i2c.readFrom(C.MPL115A2_ADDRESS, 2);
   var i = (d[0] << 8) | d[1];
   
-  return (i >= 32767) ? i - 65536 : i;
+  return (i > 32767) ? i - 65536 : i;
 };
 
 /* Get the raw temperature value. Conversion takes approx. 4.5ms

@@ -28,9 +28,9 @@ I2C.prototype.readAcc = function(reg,count) {
   // reconstruct 16 bit data
   var a = [d[0] | (d[1]<<8), d[2] | (d[3]<<8), d[4] | (d[5]<<8)];
   // deal with sign bit
-  if (a[0]>=32767) a[0]-=65536; 
-  if (a[1]>=32767) a[1]-=65536;
-  if (a[2]>=32767) a[2]-=65536;
+  if (a[0]>32767) a[0]-=65536; 
+  if (a[1]>32767) a[1]-=65536;
+  if (a[2]>32767) a[2]-=65536;
   return a;
 }
 ``` 

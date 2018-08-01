@@ -211,7 +211,7 @@ MPU6050.prototype.readS16 = function(reg) {
   this.i2c.writeTo(this.addr, reg);
   var d = this.i2c.readFrom(this.addr, 2);
   var i = (d[0] << 8) | d[1];
-  return (i>=32767) ? i - 65536 : i;
+  return (i>32767) ? i - 65536 : i;
 };
 
 /* Read 6 bytes and return 3 signed integer values */
@@ -221,9 +221,9 @@ MPU6050.prototype.readSXYZ = function(reg) {
   var x = (bytes[0] << 8) | bytes[1];
   var y = (bytes[2] << 8) | bytes[3];
   var z = (bytes[4] << 8) | bytes[5];
-  x = (x>=32767) ? x - 65536 : x;
-  y = (y>=32767) ? y - 65536 : y;
-  z = (z>=32767) ? z - 65536 : z;
+  x = (x>32767) ? x - 65536 : x;
+  y = (y>32767) ? y - 65536 : y;
+  z = (z>32767) ? z - 65536 : z;
   return [x, y ,z];
 };
 
