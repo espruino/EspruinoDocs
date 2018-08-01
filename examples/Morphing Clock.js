@@ -190,8 +190,9 @@ function showTime() {
   }
   var n = 0;
   animInterval = setInterval(function() {
-    n += 0.05;
+    n += 1/16; /* 16px wide, so need 16(17) steps */
     if (n>=1) {
+      n=1;
       clearInterval(animInterval);
       animInterval=0;
     }
