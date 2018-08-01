@@ -53,7 +53,7 @@ function QuectelStart(debug_quectel, debug_at) {
    pwrkey_active_level: 0,
   };
   gprs = require('UG96').connect(Serial3, resetOptions, function(err) {
-    console.log("connectCB entered...");
+    log("connectCB entered...");
     if (err) throw err;
     setTimeout(doConnect,30000);
   });
@@ -65,7 +65,7 @@ function QuectelStart(debug_quectel, debug_at) {
 
 function doConnect() {
   gprs.connect(APN, USERNAME, PASSWORD, function(err) {
-    console.log("gprs.connectCB entered...");
+    log("gprs.connectCB entered...");
     if (err) throw err;
     gprs.getIP(print);
 
@@ -134,6 +134,13 @@ var AtInitSequence = {
 var idWaitingPrompt = 0;
 var idWaitingModemRsp = 0;
 
+function log(msg) {
+  console.log(msg);
+}
+function dbglog(msg) {
+  if (dbg) console.log(msg);
+}
+
 /*
 openSocket is triggered at the socket creation, as earlier as possible.
 Nevertheless, this function can be delayed to enter in secure mode (since using of encrypted keys can take time in mbed )
@@ -141,64 +148,64 @@ In case of failure with Error code "socket connect failed", try and repeat 5 tim
 */
 function openSocket(sckt, host, port, counter) {
   if (busy) {
-    if (dbg) console.log("Opening is not yet possible, busy state on socket " + sckt);
+    dbglog("Opening is not yet possible, busy state on socket " + sckt);
     if (counter < 5) {
-      setTimeout(function cb(){console.log("opening later..."); openSocket(sckt, host, port, counter+1);}, 500);
+      setTimeout(function cb(){log("opening later..."); openSocket(sckt, host, port, counter+1);}, 500);
     } else {
-      if (dbg) console.log("Force the closure of socket " + sckt);
+      dbglog("Force the closure of socket " + sckt);
       socks[sckt] = "tobeclosed";
     }
   } else if (at.isBusy()) {
-    if (dbg) console.log("Opening is not yet possible, AT busy state on socket " + sckt);
+    dbglog("Opening is not yet possible, AT busy state on socket " + sckt);
     if (counter < 5) {
-      setTimeout(function cb(){console.log("opening later..."); openSocket(sckt, host, port, counter+1);}, 500);
+      setTimeout(function cb(){log("opening later..."); openSocket(sckt, host, port, counter+1);}, 500);
     } else {
-      if (dbg) console.log("Force the closure of socket " + sckt);
+      dbglog("Force the closure of socket " + sckt);
       socks[sckt] = "tobeclosed";
     }
   } else {
-  if (dbg) console.log('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1');
+  dbglog('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1');
 
   at.cmd('AT+QIOPEN=1,'+sckt+',"TCP",'+JSON.stringify(host)+','+port+',0,1\r\n',15000, function cb(d) {
     if (d=="OK") {
-      //if (dbg) console.log("AT+QIOPEN OK on socket" +sckt);
+      //dbglog("AT+QIOPEN OK on socket" +sckt);
       // waiting for +QIOPEN: <connectID>,<err>
       return cb;
     } else if (d=='+QIOPEN: '+sckt+",0") {
-      if (dbg) console.log(d);
-      if (dbg) console.log("AT+QIOPEN completed with socket: " + sckt);
+      dbglog(d);
+      dbglog("AT+QIOPEN completed with socket: " + sckt);
       socks[sckt] = true;
       return "";
     } else if (d=='+QIOPEN: '+sckt+",565") {
-      if (dbg) console.log("AT+QIOPEN failure DNS parse failed...");
+      dbglog("AT+QIOPEN failure DNS parse failed...");
       if (counter < 5) {
-        setTimeout(function cb(){console.log("repeat opening the socket ..."); openSocket(sckt, host, port,(counter+1));}, 1000);
+        setTimeout(function cb(){log("repeat opening the socket ..."); openSocket(sckt, host, port,(counter+1));}, 1000);
       } else {
-        if (dbg) console.log("Force the closure of socket " + sckt);
+        dbglog("Force the closure of socket " + sckt);
         socks[sckt] = "tobeclosed";
       }
       return "";
     } else if (d=='+QIOPEN: '+sckt+",566") {
-      if (dbg) console.log("AT+QIOPEN failure could not connect socket ...");
+      dbglog("AT+QIOPEN failure could not connect socket ...");
         if (counter < 5) {
-          setTimeout(function cb(){console.log("repeat opening the socket ..."); openSocket(sckt, host, port,(counter+1));}, 3000);
+          setTimeout(function cb(){log("repeat opening the socket ..."); openSocket(sckt, host, port,(counter+1));}, 3000);
         } else {
-          if (dbg) console.log("Force the closure of socket " + sckt);
+          dbglog("Force the closure of socket " + sckt);
           socks[sckt] = "tobeclosed";
         }
       return "";
     } else if (d=='+QIOPEN: '+sckt+",563") {
-      if (dbg) console.log("AT+QIOPEN socket identity has been used..., socket is:" + sckt);
+      dbglog("AT+QIOPEN socket identity has been used..., socket is:" + sckt);
       socks[sckt] = "tobeclosed";
       return "";
     } else {
-      if (dbg) console.log("AT+QIOPEN failed on socket:" + sckt);
+      dbglog("AT+QIOPEN failed on socket:" + sckt);
       /*if (dbg) {
         at.cmd("AT+QIGETERROR\r\n",1000, function cb(d) {
-          if (dbg) console.log(d);
+          dbglog(d);
         });
       }*/
-      //if (dbg) console.log("Force the closure of socket " + sckt);
+      //dbglog("Force the closure of socket " + sckt);
       socks[sckt] = "tobeclosed";
       return "";
     }
@@ -226,48 +233,48 @@ or triggered from this module when data buffer is emptied
 function closeSocket(socket, counter) {
   if(socks[socket]) {
     if ((sockData[socket].length > 0) && (counter < 5)) {
-      console.log("socket " + socket + " is emptying...");
-      setTimeout(function cb(){console.log("closing later..."); closeSocket(socket, (counter+1));}, 500);
+      log("socket " + socket + " is emptying...");
+      setTimeout(function cb(){log("closing later..."); closeSocket(socket, (counter+1));}, 500);
 	} else if (busy) {
-      if (dbg) console.log("at register currenly programmed");
+      dbglog("at register currenly programmed");
       if (counter < 5) {
-        setTimeout(function cb(){console.log("closing later..."); closeSocket(socket, (counter+1));}, 500);
+        setTimeout(function cb(){log("closing later..."); closeSocket(socket, (counter+1));}, 500);
       } else {
-        if (dbg) console.log("several busy situation on socket " + socket);
+        dbglog("several busy situation on socket " + socket);
         socks[socket] = undefined;
       }
     } else if (at.isBusy()){
-      if (dbg) console.log("AT busy");
+      dbglog("AT busy");
       if (counter < 5) {
-        setTimeout(function cb(){console.log("closing again..."); closeSocket(socket, (counter+1));}, 500);
+        setTimeout(function cb(){log("closing again..."); closeSocket(socket, (counter+1));}, 500);
       } else {
-        if (dbg) console.log("several AT busy situation on socket " + socket);
+        dbglog("several AT busy situation on socket " + socket);
         socks[socket] = undefined;
       }
     } else {
-      if (dbg) console.log("sending AT+QICLOSE for socket " + socket);
+      dbglog("sending AT+QICLOSE for socket " + socket);
       at.cmd('AT+QICLOSE='+socket+"\r\n",2000, function cb(d) {
 
         /* case processing with no response (timeOut) */
         if (d===undefined) {
           if (counter < 5) {
-            setTimeout(function cb(){console.log("closing again..."); closeSocket(socket, (counter+1));}, 500);
+            setTimeout(function cb(){log("closing again..."); closeSocket(socket, (counter+1));}, 500);
           } else {
-            if (dbg) console.log("cannot properly close socket " + socket);
+            dbglog("cannot properly close socket " + socket);
            socks[socket] = undefined;
           }
           return "";
         }
 
         /* case processing with a response */
-        //if (dbg) console.log(d);
+        //dbglog(d);
         if (d=="OK") {
-          if (dbg) console.log("socket " + socket + " is properly closed");
+          dbglog("socket " + socket + " is properly closed");
           socks[socket] = undefined;
           return "";
         } else {
-          //if (dbg) console.log("cannot close now socket " + socket +",error=" + d);
-          if (dbg) console.log("socket " + socket + " is not yet closed");
+          //dbglog("cannot close now socket " + socket +",error=" + d);
+          dbglog("socket " + socket + " is not yet closed");
           //socks[socket] = "tobeclosed";
           //socks[socket] = undefined;
           return cb;
@@ -275,7 +282,7 @@ function closeSocket(socket, counter) {
       });
     }
   } else {
-    if (dbg) console.log("socket already closed");
+    dbglog("socket already closed");
   }
 }
 
@@ -283,7 +290,7 @@ function closeSocket(socket, counter) {
 abortWaiting frees the registering (preventive)
 */
 function abortWaitingPrompt(socket) {
-  if (dbg) console.log("Abort waiting prompt (for sending data) on socket " + socket);
+  dbglog("Abort waiting prompt (for sending data) on socket " + socket);
   busy = false;
   idWaitingPrompt = 0;
   if (idWaitingModemRsp) {
@@ -298,7 +305,7 @@ function abortWaitingPrompt(socket) {
 }
 
 function abortWaitingModemRsp(socket) {
-  if (dbg) console.log("Abort waiting modem response (sending data) on socket " + socket);
+  dbglog("Abort waiting modem response (sending data) on socket " + socket);
   busy = false;
   idWaitingModemRsp = 0;
   at.unregisterLine('SEND OK');
@@ -314,7 +321,7 @@ var netCallbacks = {
     /* Create a socket and return its index, host is a string, port is an integer.
     If host isn't defined, create a server socket */
     if (host===undefined) {
-      if (dbg) console.log("WARNING: this has not been fully ported for UGxx");
+      dbglog("WARNING: this has not been fully ported for UGxx");
       sckt = MAXSOCKETS;
       socks[sckt] = "Wait";
       sockData[sckt] = "";
@@ -331,7 +338,7 @@ var netCallbacks = {
       while (socks[sckt]!==undefined) sckt++; // find free socket
       if (sckt>=MAXSOCKETS) //throw new Error('No free sockets.')
 	  {
-        if (dbg) console.log("WORKAROUND closing the socket: " + sckt);
+        dbglog("WORKAROUND closing the socket: " + sckt);
         sckt--;
         closeSocket(sckt, 0);
 	  }
@@ -340,27 +347,27 @@ var netCallbacks = {
       sockData[sckt] = "";
 
       if (port == 443) {
-        if (dbg) console.log("delaying the TLS socket opening");
+        dbglog("delaying the TLS socket opening");
         setTimeout(function cb(){openSocket(sckt, host, port,0);}, 3000);
       } else {
         openSocket(sckt, host, port,0);
       }
 
-      if (dbg) console.log("(create) sckt " + sckt + " state = " + socks[sckt]);
+      dbglog("(create) sckt " + sckt + " state = " + socks[sckt]);
     }
     return sckt; // jshint ignore:line
   },
   /* Close the socket. returns nothing */
   close: function(sckt) {
-    if (dbg) console.log("(local) Closing of the socket: " + sckt);
+    dbglog("(local) Closing of the socket: " + sckt);
     closeSocket(sckt, 0);
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
   accept: function(sckt) {
-    if (dbg) console.log("Accept Socket",sckt);
+    dbglog("Accept Socket "+sckt);
     for (var i=0;i<MAXSOCKETS;i++) {
       if (sockData[i] && socks[i]===undefined) {
-        //if (dbg) console.log("Socket accept "+i,JSON.stringify(sockData[i]),socks[i]);
+        //dbglog("Socket accept "+i+" "+JSON.stringify(sockData[i]),socks[i]);
         socks[i] = true;
         return i;
       }
@@ -394,7 +401,7 @@ var netCallbacks = {
     if (busy || at.isBusy() || socks[sckt]=="Wait") return 0;
     if (socks[sckt]=="tobeclosed") return -1; // request closing
     if (!socks[sckt]) return -1; // error - close it
-    if (data.length > 1460) { if (dbg) console.log("data too big"); return -1; } // error - close it
+    if (data.length > 1460) { dbglog("data too big"); return -1; } // error - close it
 
     busy = true;
 
@@ -402,18 +409,18 @@ var netCallbacks = {
     idWaitingPrompt = setTimeout(function(){abortWaitingPrompt(sckt)},5000);
 
     at.register('>', function() {
-      if (dbg) console.log("Prompt coming, sending data ...");
+      dbglog("Prompt coming, sending data ...");
       at.unregister('>');
       clearTimeout(idWaitingPrompt);
       idWaitingPrompt = 0;
-      if (dbg) console.log("writing data amount of " +data.length);
+      dbglog("writing data amount of " +data.length);
       at.write(data);
       return "";
     });
 
 	/* wait for the modem response */
     at.registerLine('SEND OK', function() {
-      if (dbg) console.log("UGxx - SEND OK");
+      dbglog("UGxx - SEND OK");
       at.unregisterLine('SEND OK');
       at.unregisterLine('SEND FAIL');
       at.unregisterLine('ERROR');
@@ -426,7 +433,7 @@ var netCallbacks = {
 	/* connection has been established but sending buffer is full */
 	/* wait for the modem response */
      at.registerLine('SEND FAIL', function(sckt) {
-      if (dbg) console.log("UGxx - SEND FAIL");
+      dbglog("UGxx - SEND FAIL");
       at.unregisterLine('SEND OK');
       at.unregisterLine('SEND FAIL');
       at.unregisterLine('ERROR');
@@ -439,7 +446,7 @@ var netCallbacks = {
 
 	/* connection has not been established, abnormally closed, or parameter is incorrect */
      at.registerLine('ERROR', function(sckt) {
-      if (dbg) console.log("UGxx - ERROR communication");
+      dbglog("UGxx - ERROR communication");
       if (idWaitingPrompt)
       {
         at.unregister('>');
@@ -456,12 +463,12 @@ var netCallbacks = {
       return "";
     });
 
-    if (dbg) console.log("AT+QISEND="+sckt+","+data.length);
+    dbglog("AT+QISEND="+sckt+","+data.length);
 
     // Just write some data, don't wait for a response
     at.write('AT+QISEND='+sckt+','+data.length+'\r\n');
-    if (dbg) console.log("(send) sckt " + sckt + " state = " + socks[sckt]);
-    if (dbg) console.log("send " + data.length);
+    dbglog("(send) sckt " + sckt + " state = " + socks[sckt]);
+    dbglog("send " + data.length);
     return data.length;
   }
 };
@@ -508,8 +515,8 @@ function receiveHandler(line) {
   } else {
 	 // still some to get - use getData to request a callback
 	 sockData[parms[0]] += line.substr(colon+2,len);
-   at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; }); 
-   return "";  
+   at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });
+   return "";
   }
 }
 
@@ -530,16 +537,16 @@ Note the trick to convert string into integer with this instruction :
 parms[1] = 0|parms[1];
 */
 function closehandler(line) {
-  if (dbg) console.log("closehandler:" + line);
+  dbglog("closehandler:" + line);
 
   var colon = line.indexOf("\r\n");
 
   if (colon<0) {
-    if (dbg) console.log("not enough data " + line);
+    dbglog("not enough data " + line);
 
     var colon = line.indexOf("\r");
     if (colon<0) {
-      if (dbg) console.log("definitively not enough data " + line);
+      dbglog("definitively not enough data " + line);
       return line;
     }
   }
@@ -552,9 +559,9 @@ function closehandler(line) {
 }
 
 function pdpdeacthandler(line) {
-  if (dbg) console.log("pdpdeacthandler:" + line);
+  dbglog("pdpdeacthandler:" + line);
   at.cmd("AT+QIDEACT=1\r\n",1000, function(d) {
-    if (dbg) console.log(d);
+    dbglog(d);
     // reset internal state
     for (var i=0;i<MAXSOCKETS;i++) {
         socks[i] = undefined;
@@ -570,13 +577,13 @@ function pdpdeacthandler(line) {
 //  +QIND: SMS DONE SMS initialization finished
 //  +QIND: PB DONE Phonebook initialization finished
 function QindHandler(line) {
-  if (dbg) console.log('QindHandler in: ' + line);
+  dbglog('QindHandler in: ' + line);
 
   //return "";
 
   var colon = line.indexOf("\r\n");
   var endstr = line.substr(colon,line.length);
-  console.log(line.substr(colon,line.length));
+  log(line.substr(colon,line.length));
   //re_inject other commands
   return endstr;
 }
@@ -586,26 +593,26 @@ function QindHandler(line) {
 //	+QUSIM: 0 Use SIM card
 //  +QUSIM: 1 Use USIM card
 function QusimHandler(line) {
-  if (dbg) console.log('QusimHandler in: ' + line);
+  dbglog('QusimHandler in: ' + line);
 
   //return "";
 
   var colon = line.indexOf("\r\n");
   var endstr = line.substr(colon,line.length);
-  console.log(line.substr(colon,line.length));
+  log(line.substr(colon,line.length));
   //re_inject other commands
   return endstr;
 }
 
 // Dust CFUN URC
 function CfunHandler(line) {
-  if (dbg) console.log('CfunHandler in: ' + line);
+  dbglog('CfunHandler in: ' + line);
 
   // return "";
 
   var colon = line.indexOf("\r\n");
   var endstr = line.substr(colon,line.length);
-  console.log(line.substr(colon,line.length));
+  log(line.substr(colon,line.length));
   //re_inject other commands
   return endstr;
 }
@@ -613,13 +620,13 @@ function CfunHandler(line) {
 // Dust CFUN URC (not currently managed in this version)
 // It means : "ME initialization is successful"
 function RdyHandler(line) {
-  if (dbg) console.log('RdyHandler in: ' + line);
+  dbglog('RdyHandler in: ' + line);
 
   // return "";
 
   var colon = line.indexOf("\r\n");
   var endstr = line.substr(colon,line.length);
-  console.log(line.substr(colon,line.length));
+  log(line.substr(colon,line.length));
   //re_inject other commands
   return endstr;
 }
@@ -629,9 +636,9 @@ function RdyHandler(line) {
 // and deregistered(for instance saving of registered PLMN)
 // Manage the pins so that modem is physically off
 function PoweredDownHandler(line) {
-  if (dbg) console.log('PowerDownHandler in: ' + line);
+  dbglog('PowerDownHandler in: ' + line);
 
-  console.log("Modem is entering in power down");
+  log("Modem is entering in power down");
   digitalWrite(pwrkey, pwrkey_active_level);
 
   return "";
@@ -666,7 +673,7 @@ var gprsFuncs = {
       switch(s) {
         case AtInitSequence.AT_SYNCHRO:
 
-          if (dbg) console.log("debug AT_SYNCHRO :" +r);
+          dbglog("debug AT_SYNCHRO :" +r);
 
           if(r === 'AT') {
             // wait for OK
@@ -675,21 +682,21 @@ var gprsFuncs = {
           else
           {
             if(r === 'OK') {
-              console.log("Synchronisation with module passed");
+              log("Synchronisation with module passed");
 
               s = AtInitSequence.AT_RSP_FORMAT;
               at.cmd("ATV1\r\n",1000,cb);
             }   else {
               s = AtInitSequence.AT_SYNCHRO;
               atSync++;
-              if (dbg) console.log("AT sync failed: " +r);
+              dbglog("AT sync failed: " +r);
 
               if (atSync <= 10) {
                 setTimeout(function(){at.cmd('AT\r\n', 1000, cb);},500);
               }
                 else {
-                  if (dbg) console.log("No OK return after 10 times");
-                  if (dbg) console.log("Check the module is power on");
+                  dbglog("No OK return after 10 times");
+                  dbglog("Check the module is power on");
                   callback('Error in AT sync: ' + r);
               }
             }
@@ -697,7 +704,7 @@ var gprsFuncs = {
           break;
         case AtInitSequence.AT_RSP_FORMAT:
 
-          if (dbg) console.log("debug AT_RSP_FORMAT :" +r);
+          dbglog("debug AT_RSP_FORMAT :" +r);
 
           /* Case processing with a response */
           if(r === 'OK') {
@@ -713,14 +720,14 @@ var gprsFuncs = {
 
           /* case processing with no response */
           if (r===undefined) {
-           if (dbg) console.log("Cannot set TA response format");
+           dbglog("Cannot set TA response format");
            callback('ATV1 time-out !!!');
           }
           break;
 
         case AtInitSequence.AT_ECHO_OFF:
 
-          if (dbg) console.log("debug AT_ECHO_OFF :" +r);
+          dbglog("debug AT_ECHO_OFF :" +r);
 
           /* Case processing with a response */
           if(r === 'IIIIATE0' ||
@@ -730,7 +737,7 @@ var gprsFuncs = {
             // wait for OK
             return cb;
           } else if(r === 'OK') {
-            if (dbg) console.log("ATE0 passed: " +r);
+            dbglog("ATE0 passed: " +r);
             if (flowcontrol) {
               s = AtInitSequence.AT_HW_FLOW_CONTROL;
               at.cmd('AT+IFC=2,2\r\n', 2000, cb);
@@ -739,7 +746,7 @@ var gprsFuncs = {
               at.cmd('AT+CPIN?\r\n', 5000, cb);
             }
           } else if (r === 'atE0') {
-            if (dbg) console.log("UGxx returns " + r);
+            dbglog("UGxx returns " + r);
             s = AtInitSequence.AT_CPIN;
             at.cmd('AT+CPIN?\r\n', 5000, cb);
           } else if(r) {
@@ -748,7 +755,7 @@ var gprsFuncs = {
 
           /* case processing with no response */
           if (r===undefined) {
-            if (dbg) console.log('ATE0 time-out !!!');
+            dbglog('ATE0 time-out !!!');
             s = AtInitSequence.AT_CPIN;
             at.cmd('AT+CPIN?\r\n', 5000, cb);
           }
@@ -756,11 +763,11 @@ var gprsFuncs = {
 
         case AtInitSequence.AT_HW_FLOW_CONTROL:
 
-          if (dbg) console.log("debug AT_HW_FLOW_CONTROL :" +r);
+          dbglog("debug AT_HW_FLOW_CONTROL :" +r);
 
           /* Case processing with a response */
           if(r === 'OK') {
-            if (dbg) console.log("HW flow control establismnent succeeded");
+            dbglog("HW flow control establismnent succeeded");
 
             s = AtInitSequence.AT_CPIN;
             at.cmd('AT+CPIN?\r\n', 5000, cb);
@@ -774,7 +781,7 @@ var gprsFuncs = {
 
         case AtInitSequence.AT_CPIN:
 
-          if (dbg) console.log("debug AT_CPIN :" +r);
+          dbglog("debug AT_CPIN :" +r);
 
           /* Case processing with a response */
           if(r === '+CPIN: READY') {
@@ -789,18 +796,18 @@ var gprsFuncs = {
 
           /* case processing with no response */
           if (r===undefined) {
-           if (dbg) console.log("SIM cannot be read, SIM is either protected, blocked or not accessible");
+           dbglog("SIM cannot be read, SIM is either protected, blocked or not accessible");
            callback('AT+CPIN time-out !!!');
           }
           break;
 
         case AtInitSequence.AT_SHOW_SIM_ID:
 
-          if (dbg) console.log("debug AT_SHOW_SIM_ID :" +r);
+          dbglog("debug AT_SHOW_SIM_ID :" +r);
 
           /* Case processing with a response */
           if (r&&r.substr(0,7)=="+QCCID:") {
-            if (dbg) console.log("SIM ID :" +r);
+            dbglog("SIM ID :" +r);
 
             ccid = r.substring(8,r.length-1);
 
@@ -822,7 +829,7 @@ var gprsFuncs = {
 
         case AtInitSequence.AT_RADIO_ON:
 
-          if (dbg) console.log("debug AT_RADIO_ON :" +r);
+          dbglog("debug AT_RADIO_ON :" +r);
 
           /* Case processing with a response */
           if (r === 'OK') {
@@ -841,13 +848,13 @@ var gprsFuncs = {
 
         case AtInitSequence.AT_QUERY_SIGNAL_QUALITY:
 
-          if (dbg) console.log("debug AT_QUERY_SIGNAL_QUALITY :" +r);
+          dbglog("debug AT_QUERY_SIGNAL_QUALITY :" +r);
 
           /* Case processing with a response */
           if (r&&r.substr(0,5)=="+CSQ:") {
             // check signal is detectable before attempting attachment
             if (r&&r.substr(0,11)=="+CSQ: 99,99") {
-              if (dbg) console.log("Signal not known or not detectable yet");
+              dbglog("Signal not known or not detectable yet");
               signal_quality_report = false;
             } else {
               signal_quality_report = true;
@@ -857,7 +864,7 @@ var gprsFuncs = {
 
               var quality_level_dbm = -113 + 2*rssi[0];
 
-              console.log("quality_level_dbm = " + quality_level_dbm + "dBm");
+              log("quality_level_dbm = " + quality_level_dbm + "dBm");
 
               // comment on quality signal for user to be done here
             }
@@ -868,7 +875,7 @@ var gprsFuncs = {
             if (signal_quality_report) {
               s = AtInitSequence.AT_PS_ATTACHMENT;
               // check if we're on network
-              if (dbg) console.log('PS attachment is starting. It may take until a minute, please wait ... ');
+              dbglog('PS attachment is starting. It may take until a minute, please wait ... ');
               setTimeout(function(){at.cmd('AT+CGATT=1\r\n', 75000, cb);},5000);
             } else {
               // start and wait for the next quality signal report sequence
@@ -887,25 +894,25 @@ var gprsFuncs = {
 
         case AtInitSequence.AT_PS_ATTACHMENT:
 
-          if (dbg) console.log("debug AT_PS_ATTACMENT :" +r);
+          dbglog("debug AT_PS_ATTACMENT :" +r);
 
           if(r === 'OK') {
-            console.log("PS attachment succeeded");
+            log("PS attachment succeeded");
             s = AtInitSequence.AT_CURRENT_OPERATOR;
             at.cmd('AT+COPS?\r\n', 20000, cb);
           } else if(r) {
             attRetry = attRetry +1;
-            if (dbg) console.log('Error in CGATT: ' + r + " - retry: " + attRetry);
+            dbglog('Error in CGATT: ' + r + " - retry: " + attRetry);
             // CGATT has probably been called too early: let's give 3 (re)tries before concluding we do have an unrecoverable PS registration failure
             // First we will force the modem to search a network and register (regardless of PS service)
             if(1==attRetry) {
-              if (dbg) console.log("Trying an automatic registration first. It may take until 3 minutes, please wait ...");
+              dbglog("Trying an automatic registration first. It may take until 3 minutes, please wait ...");
               s = AtInitSequence.AT_AUTOMATIC_OPERATOR_SELECTION;
               setTimeout(function(){at.cmd('AT+COPS=0\r\n', 180000, cb);},2000);
             } else if(attRetry<4) {
-              if (dbg) console.log("Retrying CGATT with retry " + attRetry);
+              dbglog("Retrying CGATT with retry " + attRetry);
               s = AtInitSequence.AT_PS_ATTACHMENT;
-              if (dbg) console.log('PS attacment is attempting again. It may take until a minute, please wait ... ');
+              dbglog('PS attacment is attempting again. It may take until a minute, please wait ... ');
               setTimeout(function(){at.cmd('AT+CGATT=1\r\n', 75000, cb);},2000*attRetry);
             } else {callback('Unrecoverable Error, PS attachment failed: ' + r);}
           }
@@ -913,28 +920,28 @@ var gprsFuncs = {
 
         case AtInitSequence.AT_AUTOMATIC_OPERATOR_SELECTION:
           // We do not check the return code, instead we ask for the COPS status
-          if (dbg) console.log("COPS returns: " + r);
+          dbglog("COPS returns: " + r);
           s = AtInitSequence.AT_LIST_CURRENT_OPERATORS;
           setTimeout(function(){at.cmd('AT+COPS?\r\n', 10000, cb);},5000);
           break;
 
         case AtInitSequence.AT_LIST_CURRENT_OPERATORS:
           // Let's do a blind retry of CGATT in 30sec from now (let's give time to the modem to handle the 3GPP re-attempts)
-          if (dbg) console.log(r + " - Now retrying PS attachment");
+          dbglog(r + " - Now retrying PS attachment");
           s = AtInitSequence.AT_PS_ATTACHMENT;
           setTimeout(function(){at.cmd('AT+CGATT=1\r\n', 30000, cb);},30000);
           break;
 
         case AtInitSequence.AT_CURRENT_OPERATOR:
 
-          if (dbg) console.log("debug AT_CURRENT_OPERATOR :" +r);
+          dbglog("debug AT_CURRENT_OPERATOR :" +r);
 
           /* Case processing with a response */
           if(r === 'OK') {
             callback(null);
           }
           else if (r&&r.substr(0,6)=="+COPS:") {
-            console.log("currently selected operator :" +r);
+            log("currently selected operator :" +r);
             // wait for OK
             return cb;
           } else if(r) {
@@ -983,7 +990,7 @@ var gprsFuncs = {
         sockData[i] = "";
     }
     if (rst === undefined && pwrkey===undefined) return gprsFuncs.init(callback);
-    if (dbg) console.log("Here we go trhough reset sequence");
+    dbglog("Here we go trhough reset sequence");
     // ensure reset is not active
     if (rst) digitalWrite(rst, !rst_active_level);
     // there is either pwr_key or reset, if pwrkey start with it,
@@ -993,7 +1000,7 @@ var gprsFuncs = {
     } else {
         reset_pulse(callback);
     }
-    console.log("Cellular module initialization started, please wait ...");
+    log("Cellular module initialization started, please wait ...");
   },
   "getVersion": function(callback) {
     at.cmd("AT+GMR\r\n", 1000, function(d) {
@@ -1005,24 +1012,24 @@ var gprsFuncs = {
     var cb = function(r) {
       switch(s) {
         case 0:
-          if (dbg) console.log("connect callback after PDP context configuration");
+          dbglog("connect callback after PDP context configuration");
           if(r === 'OK') {
             s = 1;
 
-            if (dbg) console.log("PDP context successfully configured");
+            dbglog("PDP context successfully configured");
             at.cmd('AT+QIACT=1\r\n', 30000, cb);
           } else if(r) {
             callback('Error in ' + s + ': ' + r);
           }
           if (r===undefined) {
-            if (dbg) console.log("PDP context activation failed, timeout...");
+            dbglog("PDP context activation failed, timeout...");
           }
           break;
 
         case 1:
-          if (dbg) console.log("connect callback after PDP context activation");
+          dbglog("connect callback after PDP context activation");
           if(r === 'OK') {
-            console.log("PDP context successfully activated");
+            log("PDP context successfully activated");
             callback(null);
           }
           else if(r) {
@@ -1033,7 +1040,7 @@ var gprsFuncs = {
           break;
       }
     };
-    if (dbg) console.log("in the connect function: AT+QICSGP stage");
+    dbglog("in the connect function: AT+QICSGP stage");
     at.cmd('AT+QICSGP=1,1,"'+apn + '", "' + username + '", "' + password + '"\r\n', 30000, cb);
   },
   "initflowctrl" : function(flowcontrol_modem = false) {
@@ -1042,51 +1049,51 @@ var gprsFuncs = {
   "getIP": function(callback) {
     var ip = "";
     var cb = function(r) {
-      if (dbg) console.log("AT+CGPADDR callback: " + r);
+      dbglog("AT+CGPADDR callback: " + r);
       if (r===undefined) {
-        if (dbg) console.log("timeout : any IP address allocated ...");
+        dbglog("timeout : any IP address allocated ...");
           callback(null,ip);
       } else if (r==='OK') {
         callback(null,ip);
-        console.log("IP address allocated, modem is ready to use");
+        log("IP address allocated, modem is ready to use");
       }
       else {
         ip = ip +r;
-        if (dbg) console.log(r);
+        dbglog(r);
         return cb;
       }
     };
 
-    if (dbg) console.log("getIP is AT+CGPADDR");
+    dbglog("getIP is AT+CGPADDR");
     at.cmd('AT+CGPADDR=1\r\n', 30000, cb);
   },
   "geoLocGet": function(callback) {
-    console.log("Getting geolocalization data");
+    log("Getting geolocalization data");
     callback(longlat);
   },
   "geoLocStart": function(period) {
-    console.log("Starting GeoLocalization");
-    if (period < 10000) console.log("unpredictive behaviour with period not greater than 10 s !");
+    log("Starting GeoLocalization");
+    if (period < 10000) log("unpredictive behaviour with period not greater than 10 s !");
     geoPos = true;
 
     var cb = function(r) {
         if (r===undefined) {
-          if (dbg) console.log("GeoLocalization timeout");
+          dbglog("GeoLocalization timeout");
           longlat = "";
         } else if (r==='OK') {
-          console.log("GeoLocalization acquisition done : " + longlat);
+          log("GeoLocalization acquisition done : " + longlat);
         } else if (r&&r.substr(0,10)=="+QCELLLOC:") {
           var pos_last = r.length;
           var pos_space = r.indexOf(" ");
           longlat = r.substring(1+pos_space,pos_last);
 
-          if (dbg) console.log(longlat);
+          dbglog(longlat);
 
           /* wait for OK */
           return cb;
         } else {
           longlat = "";
-          console.log("Geolocalization error : " + r);
+          log("Geolocalization error : " + r);
         }
       if (geoPos) {
         /* new trigger */
@@ -1097,7 +1104,7 @@ var gprsFuncs = {
     at.cmd('AT+QCELLLOC=1\r\n', 2000, cb);
   },
   "geoLocStop": function() {
-    console.log("Stopping GeoLocalization");
+    log("Stopping GeoLocalization");
 
     geoPos = false;
 
@@ -1105,16 +1112,16 @@ var gprsFuncs = {
   },
   "turnOff": function() {
 
-    console.log("Turning Off the modem");
+    log("Turning Off the modem");
 
     var cb = function(r) {
       if (r==='OK') {
-        console.log("Please wait, disconnecting and saving data. It may last until 60 s");
+        log("Please wait, disconnecting and saving data. It may last until 60 s");
 
         /* wait for POWERED DOWN and manage it in the URCs table */
         /* other URCs can be received before the modem has terminated its shut down */
       } else {
-        console.log("Turn off error : " + r);
+        log("Turn off error : " + r);
       }
     };
     // Normal power down
@@ -1135,7 +1142,7 @@ resetOptions = {
 /*
 This is the 'exported' (named function)
 it can be used with :
-require('UG96.js').connect(Serial, resetOptions, function(err) { console.log("connecting..."); });
+require('UG96.js').connect(Serial, resetOptions, function(err) { log("connecting..."); });
 
 This sets the pins to turn on, reset the module.
 This loads the submodules required to work with.
