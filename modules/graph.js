@@ -16,8 +16,8 @@ exports.drawAxes = function(g, data, options) {
   }
   var ox = options.x||0;
   var oy = options.y||0;
-  var ow = options.width||(g.getWidth()-1);
-  var oh = options.height||(g.getHeight()-1);
+  var ow = options.width||(g.getWidth()-(ox+1));
+  var oh = options.height||(g.getHeight()-(oy+1));
   // work out spacing
   var o = 6; // size of axes
   if (options.axes) {
@@ -41,8 +41,9 @@ exports.drawAxes = function(g, data, options) {
   }
   var dx = maxx-minx;
   var dy = maxy-miny;
+  if (!dy) dy=1;
   function getx(x) { return ox+ow*(x-minx)/dx; }
-  function gety(y) { return oy+oh*(maxy-y)/dy; }
+  function gety(y) { return oy+oh-y/dy; }
   // Draw grid pips and labels
   if (options.gridx) {
     g.setFontAlign(0,-1,0); // top align, centered
