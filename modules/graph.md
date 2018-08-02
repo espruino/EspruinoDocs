@@ -58,7 +58,7 @@ Draws a graph with axes, auto-scaled to the nearest `5` points and labelled:
 ```
 var data = [1,3,8,10,12,10,8,3,1];
 g.clear();
-exports.drawBar(g, data, {
+require("graph").drawBar(g, data, {
   miny: 0,
   axes : true,
   gridx : 1,
