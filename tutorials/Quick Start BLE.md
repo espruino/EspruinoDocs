@@ -157,8 +157,13 @@ which means the web-based Espruino IDE cannot receive data over Bluetooth.
 
 For now there are two options:
 
-* [Install the Espruino Native IDE application](#with-an-application) instead (recommended for now)
+* [Install the Espruino Native IDE application](#with-an-application) instead (recommended)
 * Use the [Web Bluetooth Polyfill Plugin](https://github.com/urish/web-bluetooth-polyfill) to add Web Bluetooth to Chrome on Windows 10 (this can be tricky to install).
+
+**Neither the Online IDE [`espruino.com/ide`](/ide) nor the
+[Chrome Web App](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo)
+will work to access Bluetooth Low Energy devices on Windows unless you install
+the polyfill above.** Please try the [Native IDE](#with-an-application) first - this is by far the easiest option.
 
 #### Linux
 

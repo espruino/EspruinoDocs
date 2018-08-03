@@ -20,9 +20,9 @@ This video is from the [[Quick Start]] page, which contains extra information on
 
 [[http://youtu.be/32mewNGxax4]]
 
-**Note:** As of December 2016, the Windows version of the Web IDE from the Chrome Web Store doesn't
-support Bluetooth Low Energy, needed for communicating with Puck.js. If you're using Windows
-you'll need to use the Native Application (below).
+**Note:** On Windows, the Web IDE from the Chrome Web Store doesn't
+support Bluetooth Low Energy, needed for communicating with Bluetooth LE
+Espruino device. If you're using Windows you'll need to use the Native Application (below).
 
 ### Online
 
@@ -33,6 +33,8 @@ Just follow [this link to the Online Web IDE](https://www.espruino.com/ide)
 
 **Note:**
 
+* Windows doesn't fully support Web Bluetooth yet, so this won't work. You'll
+need to install the Native application (below).
 * Due to security restrictions, the online Web IDE can't access USB
 devices, so you'll be unable to use it with USB Espruino boards (you need the
 Native or Web Store versions).
