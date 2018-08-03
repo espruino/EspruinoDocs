@@ -43,7 +43,7 @@ exports.drawAxes = function(g, data, options) {
   var dy = maxy-miny;
   if (!dy) dy=1;
   function getx(x) { return ox+ow*(x-minx)/dx; }
-  function gety(y) { return oy+oh-y/dy; }
+  function gety(y) { return oy+oh-oh*(y-miny)/dy; }
   // Draw grid pips and labels
   if (options.gridx) {
     g.setFontAlign(0,-1,0); // top align, centered
