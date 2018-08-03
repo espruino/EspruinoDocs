@@ -302,13 +302,7 @@ MQTT.prototype.connect = function (client) {
         });
 
         client.on('end', function () {
-            if (mqo.connected) {
-                mqo.connected = false;
-                if (mqo.pintr) clearInterval(mqo.pintr);
-                mqo.pintr = mqo.ctimo = undefined;
-                mqo.emit('disconnected');
-                mqo.emit('close');
-            }
+            mqo._scktClosed();
         });
 
         mqo.client = client;
@@ -320,10 +314,27 @@ MQTT.prototype.connect = function (client) {
     }
 };
 
+/** Called internally when the connection closes  */
+MQTT.prototype._scktClosed = function () {
+  if (this.connected) {
+    this.connected = false;
+    this.client = false;
+    if (this.pintr) clearInterval(this.pintr);
+    if (this.ctimo) clearInterval(this.ctimo);
+    this.pintr = this.ctimo = undefined;
+    this.emit('disconnected');
+    this.emit('close');
+  }
+};
+
 /** Disconnect from server */
 MQTT.prototype.disconnect = function () {
     if (!this.client) return;
-    try { this.client.write(fromCharCode(TYPE.DISCONNECT << 4) + "\x00"); } catch(e) {}
+    try {
+      this.client.write(fromCharCode(TYPE.DISCONNECT << 4) + "\x00");
+    } catch(e) {
+      return this._scktClosed();
+    }
     this.client.end();
     this.client = false;
 };
@@ -331,7 +342,11 @@ MQTT.prototype.disconnect = function () {
 /** Publish message using specified topic */
 MQTT.prototype.publish = function (topic, message, qos) {
     if (!this.client) return;
-    this.client.write(mqttPublish(topic, message.toString(), (qos || this.C.DEF_QOS)));
+    try {
+      this.client.write(mqttPublish(topic, message.toString(), (qos || this.C.DEF_QOS)));
+    } catch (e) {
+      this._scktClosed();
+    }
 };
 
 /** Subscribe to topic (filter) */
@@ -372,14 +387,18 @@ MQTT.prototype.subscribe = function (topics, opts, callback) {
 
 /** Unsubscribe to topic (filter) */
 MQTT.prototype.unsubscribe = function (topic) {
-    if (!this.client) return;
-    this.client.write(mqttUnsubscribe(topic));
+  if (!this.client) return;
+  this.client.write(mqttUnsubscribe(topic));
 };
 
 /** Send ping request to server */
 MQTT.prototype.ping = function () {
-    if (!this.client) return;
+  if (!this.client) return;
+  try {
     this.client.write(fromCharCode(TYPE.PINGREQ << 4) + "\x00");
+  } catch (e) {
+    this._scktClosed();
+  }
 };
 
 /* Packet specific functions *******************/
