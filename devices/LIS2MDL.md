@@ -16,7 +16,7 @@ I2C
 
 ```
 I2C1.setup({sda:..., scl:...);
-var mag = require("LIS2DH12").connectI2C(I2C1);
+var mag = require("LIS2MDL").connectI2C(I2C1);
 print(mag.read()); // prints { x: ..., y: ..., z: ... }
 ```
 
