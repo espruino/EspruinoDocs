@@ -3,7 +3,7 @@ Pixl.js Pong
 ======================
 
 * KEYWORDS: Pong,Game,Games,Bat
-* USES: Pixl.js
+* USES: Pixl.js,Graphics
 
 [[https://youtu.be/lLB_F-eCMbg]]
 
