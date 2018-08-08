@@ -1,23 +1,23 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Puck.js and BLE UARTs
-======================
+Bluetooth LE UARTs (NUS)
+========================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+BLE+UART. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,Modules,BLE,Bluetooth,NUS,Nordic UART,UART
 * USES: Puck.js,BLE,Only BLE
 
-By default, Puck.js presents a `Nordic UART` service that provides
-serial port-like access to the Espruino REPL. You can disable it with
-[NRF.setServices({},{uart:false})](/Reference#l_NRF_setServices) if needed.
+By default, Bluetooth LE Espruino devices like [Puck.js](/Puck.js) present a
+`Nordic UART` service that provides serial port-like access to the Espruino 
+REPL. You can disable it with [NRF.setServices({},{uart:false})](/Reference#l_NRF_setServices) if needed.
 
-The 'puck.js' helper script allows you to access this UART with
+The `puck.js` helper script allows you to access this UART from a Web Browser with
 Web Bluetooth - see [the Web Bluetooth Guide](/Puck.js Web Bluetooth)
 
 Writing
 -------
 
-If you want to connect to this UART service on one Puck from another Puck,
+If you want to connect to this UART service on one Espruino device from another Espruino device,
 you can use the [[ble_simple_uart.js]] module to send data.
 
 Just use as follows:
