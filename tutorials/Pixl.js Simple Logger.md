@@ -2,6 +2,8 @@
 Pixl.js Simple Logger
 ======================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pixl.js+Simple+Logger. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Log,Logging,Count,Counting,
 * USES: Pixl.js,Graphics,graph,BLE,Only BLE,Puck.js
 

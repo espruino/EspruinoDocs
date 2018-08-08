@@ -1,8 +1,8 @@
 /*<!-- Copyright (c) 2018 Gordon Williams. See the file LICENSE for copying permission. -->
-Pixl.js Pong
+Pixl.js Pong Game
 ======================
 
-* KEYWORDS: Pong,Game,Games,Bat
+* KEYWORDS: Pong,Game,Bat
 * USES: Pixl.js,Graphics
 
 [[https://youtu.be/lLB_F-eCMbg]]
@@ -22,6 +22,7 @@ To use this, wire:
 Web IDE, copy and paste the following code into the right-hand side of the
 IDE, and click the upload button!
 
+For a two-player, two-Pixl.js based version of Pong, [see this page](/Pixl.js+Multiplayer+Pong)
 */
 
 var BATSIZE = 8;
