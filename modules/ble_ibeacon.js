@@ -18,13 +18,13 @@ exports.get = function(options) {
     0x15,  // length of remaining data
   ];
   d.push.apply(d, options.uuid);
-  d.push([
+  d.push(
     options.major >> 8,
     options.major & 0xff,
     options.minor >> 8,
     options.minor & 0xff,
     options.rssi
-  ]);
+  );
   return [].slice.call(d);
 };
 
