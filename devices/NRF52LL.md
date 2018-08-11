@@ -32,7 +32,7 @@ Count the number of times the BTN pin changes state (GPIO + counter timer):
 ```
 var ll = require("NRF52LL");
 // Source of events - the button
-var btn = ll.gpiote(0, {type:"event",pin:BTN,lo2hi:1,hi2lo:1});
+var btn = ll.gpiote(0, {type:"event",pin:BTN.getInfo().num,lo2hi:1,hi2lo:1});
 // A place to recieve Tasks - a counter
 var ctr = ll.timer(3,{type:"counter"});
 // Set up and enable PPI
@@ -53,8 +53,8 @@ var ll = require("NRF52LL");
 digitalWrite(D0,0);
 digitalWrite(D1,0);
 // create two 'toggle' tasks, one for each pin
-var t0 = ll.gpiote(0, {type:"task",pin:D0,lo2hi:1,hi2lo:1,initialState:0});
-var t1 = ll.gpiote(1, {type:"task",pin:D1,lo2hi:1,hi2lo:1,initialState:1});
+var t0 = ll.gpiote(0, {type:"task",pin:D0.getInfo().num,lo2hi:1,hi2lo:1,initialState:0});
+var t1 = ll.gpiote(1, {type:"task",pin:D1.getInfo().num,lo2hi:1,hi2lo:1,initialState:1});
 // create a timer that counts up to 1000 and back at full speed
 var tmr = ll.timer(3,{cc:[1000],cc0clear:1});
 // use two PPI to trigger toggle events
@@ -71,7 +71,7 @@ var ll = require("NRF52LL");
 // set up LED as an output
 digitalWrite(LED,0);
 // create a 'toggle' task for the LED
-var tog = ll.gpiote(0, {type:"task",pin:LED,lo2hi:1,hi2lo:1,initialState:0});
+var tog = ll.gpiote(0, {type:"task",pin:LED.getInfo().num,lo2hi:1,hi2lo:1,initialState:0});
 // compare D31 against vref/2
 var comp = ll.lpcomp({pin:D31,vref:8});
 // use a PPI to trigger the toggle event
@@ -154,7 +154,7 @@ var ll = require("NRF52LL");
 // set up LED as an output
 digitalWrite(LED,0);
 // create a 'toggle' task for the LED
-var tog = ll.gpiote(0, {type:"task",pin:LED,lo2hi:1,hi2lo:1,initialState:0});
+var tog = ll.gpiote(0, {type:"task",pin:LED.getInfo().num,lo2hi:1,hi2lo:1,initialState:0});
 
 // set up the rtc
 var rtc = ll.rtc(2);
@@ -171,8 +171,8 @@ Use the RTC to measure how long a button has been held down for:
 var ll = require("NRF52LL");
 // Source of events - the button
 // Note: this depends on the polarity of the physical button (this assumes that 0=pressed)
-var btnu = ll.gpiote(0, {type:"event",pin:BTN,lo2hi:1,hi2lo:0});
-var btnd = ll.gpiote(1, {type:"event",pin:BTN,lo2hi:0,hi2lo:1});
+var btnu = ll.gpiote(0, {type:"event",pin:BTN.getInfo().num,lo2hi:1,hi2lo:0});
+var btnd = ll.gpiote(1, {type:"event",pin:BTN.getInfo().num,lo2hi:0,hi2lo:1});
 // A place to recieve Tasks - the RTC
 var rtc = ll.rtc(2);
 poke32(rtc.prescaler, 0); // no prescaler, 32 kHz
