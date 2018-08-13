@@ -15,12 +15,13 @@ exports.list = function(g, items) {
   var y2 = options.y2||(g.getHeight()-1);
   if (options.title)
     y += options.fontHeight+2;
-  
+
 
   var l = {
     draw : function() {
       g.clear();
       g.setColor(-1);
+      if (options.predraw) options.predraw();
       if (options.title) {
         g.drawString(options.title,x+(x2-x-g.stringWidth(options.title))/2,y-options.fontHeight-2);
         g.drawLine(x,y-2,x2,y-2);
