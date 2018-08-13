@@ -21,7 +21,7 @@ exports.list = function(g, items) {
     draw : function() {
       g.clear();
       g.setColor(-1);
-      if (options.predraw) options.predraw();
+      if (options.predraw) options.predraw(g);
       if (options.title) {
         g.drawString(options.title,x+(x2-x-g.stringWidth(options.title))/2,y-options.fontHeight-2);
         g.drawLine(x,y-2,x2,y-2);
@@ -40,7 +40,7 @@ exports.list = function(g, items) {
         g.setColor(-1);
         iy += options.fontHeight;
       }
-      if (options.preflip) options.preflip();
+      if (options.preflip) options.preflip(g);
       if (g.flip) g.flip();
     },
     select : function() {

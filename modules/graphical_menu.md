@@ -72,9 +72,10 @@ var menuinfo = {
     "x": 0, // optional, x offset of menu
     "x2": g.getWidth()-1, // optional, x coordinate of right of menu
     "y2": g.getHeight()-1, // optional, y coordinate of bottom of menu
-    "predraw": function() {} // optional, function to be called before menu is drawn
-                             // (you could for instance set the font in here)
-    "preflip": function() {} // optional, function to be called after menu is drawn, before it's sent to the screen
+    "predraw": function(gfx) {} // optional, function called before menu is drawn
+                                // (you could for instance set the font in here)
+    "preflip": functiongfx() {} // optional, function called after menu is drawn,
+                                // before it's sent to the screen
   },
   "menu text" : function() { called when menu item selected };
 };
