@@ -7,7 +7,7 @@ Door Controlled Light with Puck.js
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Light,Magnet,Magnetometer,Door
 * USES: Puck.js,BLE
 
-This video shows you how to control devices from Puck.js when a door opens.
+This video shows you how to control devices from [Puck.js](/Puck.js) when a door opens.
 
 It uses the Magnetometer to sense when a Magnet is near the Puck.
 
