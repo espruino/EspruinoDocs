@@ -55,6 +55,8 @@ function MQTT(server, options) {
     this.password = options.password;
     this.client = false;
     this.connected = false;
+    /* if keep_alive is less than the ping interval we need to use
+      a shorter ping interval, otherwise we'll just time out! */
     this.ping_interval =
         this.keep_alive < this.C.PING_INTERVAL ? (this.keep_alive - 5) : this.C.PING_INTERVAL;
     this.protocol_name = options.protocol_name || "MQTT";
@@ -228,8 +230,6 @@ MQTT.prototype.connect = function (client) {
                 client.emit('data', data.substr(pLen));
             }
 
-            if (type !== TYPE.PINGRESP) pinger();
-
             if (type === TYPE.PUBLISH) {
                 var parsedData = parsePublish(data[0],pData);
                 if (parsedData !== undefined) {
@@ -279,7 +279,7 @@ MQTT.prototype.connect = function (client) {
                 var returnCode = pData.charCodeAt(3);
                 if (RETURN_CODES[returnCode] === 'ACCEPTED') {
                     mqo.connected = true;
-                    pinger();
+                    pinger(); // start pinging
                     mqo.emit('connected');
                     mqo.emit('connect');
                 }
