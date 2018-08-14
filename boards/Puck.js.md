@@ -108,8 +108,8 @@ Tutorials using Bluetooth LE and functionality that may not be part of Puck.js:
 
 * APPEND_USES: BLE,-Only BLE,-Puck.js
 
-<a name="pinout"></a>Pinout
----------------------------
+Pinout
+--------
 
 * APPEND_PINOUT: PUCKJS
 

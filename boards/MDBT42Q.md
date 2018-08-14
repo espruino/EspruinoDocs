@@ -105,8 +105,8 @@ Tutorials using Bluetooth LE and functionality that may not be part of the MDBT4
 
 
 
-<a name="pinout"></a>Pinout
----------------------------
+Pinout
+--------
 
 * APPEND_PINOUT: MDBT42Q
 

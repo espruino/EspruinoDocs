@@ -121,8 +121,8 @@ There are [many more tutorials](/Tutorials) that may not be specifically for
 you device but will probably work with some tweaking. [Try searching](/Search)
 to find what you want.
 
-<a name="pinout"></a>Pinout
----------------------------
+Pinout
+--------
 
 * APPEND_PINOUT: PIXLJS
 

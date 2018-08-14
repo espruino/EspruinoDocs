@@ -53,8 +53,8 @@ Information
 * [Dicovery board information](http://www.st.com/en/evaluation-tools/32l496gdiscovery.html)
 
 
-<a name="pinout"></a>Pinout
----------------------------
+Pinout
+--------
 
 **Note:** All pins on Arduino headers are available via [the `Nucleo` object](http://www.espruino.com/Reference#Nucleo),
 eg. `Nucleo.A1`.
