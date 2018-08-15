@@ -11,6 +11,8 @@ issues. **For more general problems, please look at [the main Troubleshooting pa
 
 If your problem isn't covered, please post in the [Forum](http://forum.espruino.com).
 
+* APPEND_TOC
+
 Getting Connected
 -----------------
 

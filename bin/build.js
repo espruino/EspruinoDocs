@@ -3,20 +3,27 @@
 
 // needs marked + jsdoc + tern + acorn
 
+
 console.log("Espruino documentation builder");
 console.log("--------------------------------");
 var OFFLINE = true;
-var THUMBNAILS = true;
+var PROCESS_THUMBNAILS = true; // create thumbnails
+var PROCESS_INFERENCE = true;  // type inference
+var PROCESS_IMAGE_RESIZE = true;      // resize images
 for (var i=2;i<process.argv.length;i++) {
   var a = process.argv[i];
   if (a=="--website") OFFLINE = false;
-  else if (a=="--no-thumbs") THUMBNAILS = false;
+  else if (a=="--no-thumbs") PROCESS_THUMBNAILS = false;
+  else if (a=="--no-infer") PROCESS_INFERENCE = false;
+  else if (a=="--no-resize") PROCESS_IMAGE_RESIZE = false;
   else {
     console.log("Usage:");
     console.log("    build.js           # Build for offline viewing");
     console.log("    build.js --website # Build to be used on Espruino website");
     console.log("");
     console.log("         --no-thumbs    Skip creating thumbnails");
+    console.log("         --no-infer     Skip type inference on code (for reference links)");
+    console.log("         --no-resize    Skip image resizing");
     process.exit(1);
   }
 }
@@ -121,7 +128,7 @@ var fileTitles = {};
 
 // Create thumbnail images
 var markdownThumbs = {};
-if (THUMBNAILS) markdownFiles.concat(exampleFiles).forEach(function(filename) {
+if (PROCESS_THUMBNAILS) markdownFiles.concat(exampleFiles).forEach(function(filename) {
   //console.log(filename);
   var baseName = filename.slice(0,-3);
   var sourceImage;
@@ -287,7 +294,7 @@ function handleImages(file, contents) {
           var finalImagePath = path.resolve(HTML_DIR, newPath);
           //console.log("Copying "+imagePath+" to "+finalImagePath);
           // copy gifs - so we don't break anything on optimised animations
-          if (imagePath.substr(-4)==".gif")
+          if (imagePath.substr(-4)==".gif" || !PROCESS_IMAGE_RESIZE)
             fs.createReadStream(imagePath).pipe(fs.createWriteStream(finalImagePath));
           else
             child_process.exec(`convert "${imagePath}" -resize "600x800>" +repage -strip -define png:include-chunk=none "${finalImagePath}"`);
@@ -598,7 +605,7 @@ markdownFiles.forEach(function (file) {
    contents = contentLines.join("\n");
 
    // Get Markdown
-   inferMarkdownFile(file, contents);
+   if (PROCESS_INFERENCE) inferMarkdownFile(file, contents);
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
 
    // Check for Pinouts
@@ -609,6 +616,31 @@ markdownFiles.forEach(function (file) {
      console.log("APPEND_PINOUT "+htmlfilename);
      var pinout = fs.readFileSync(htmlfilename).toString();
      html = html.replace(regex, pinout);
+   }
+
+   // Check for TOC and create it if needed
+   var tocTag = "<li>APPEND_TOC</li>";
+   var tocIdx = html.indexOf(tocTag);
+   if (tocIdx>=0) {
+     // parse out all headings, and create lists based on them
+     regex = /<([hH])([123]) id="([a-z\-]*)"[^>]*>/g;
+     var toc = "";
+     var currentLevel = 1;
+     var m = regex.exec(html);
+     while (m) {
+       if (m.index > tocIdx) { // only add headings from AFTER this TOC tag
+         var heading = {level:0|m[2], hash:m[3]};
+         var endIdx = html.indexOf("</"+m[1]+m[2], m.index);
+         heading.title = html.substring(m.index+m[0].length, endIdx);
+         heading.title = heading.title.replace(/<\/?a[^>]*>/g,""); // remove anchors
+         while (currentLevel<heading.level) { toc+="<ul>";currentLevel++; }
+         while (currentLevel>heading.level) { toc+="</ul>";currentLevel--; }
+         toc += '<li><a href="#'+heading.hash+'">'+heading.title+"</a></li>\n";
+       }
+       m = regex.exec(html);
+     }
+     while (currentLevel>1) { toc+="</ul>";currentLevel--; }
+     html = html.substr(0,tocIdx) + toc + html.substr(tocIdx+tocTag.length);
    }
 
    // If compiling for offline, quick hack to modify most links to go direct

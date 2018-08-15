@@ -8,10 +8,12 @@ Troubleshooting
 
 What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Forum](http://forum.espruino.com).
 
-**Do you have a Bluetooth LE device like [Puck.js](/Puck.js) or [Pixl.js](/Pixl.js)?** Check out the [Puck specific troubleshooting page](/Troubleshooting+BLE)
+**Do you have a Bluetooth LE device like [Puck.js](/Puck.js) or [Pixl.js](/Pixl.js)?** Check out the [Bluetooth specific troubleshooting page](/Troubleshooting+BLE)
+
+* APPEND_TOC
 
 Getting Started
-=============
+===============
 
 ## My board doesn't seem to be recognized by my computer
 
@@ -92,7 +94,7 @@ As Espruino itself won't work, the IDE won't know what type of board it is suppo
 This may happen if you are using an ST Discovery board and haven't yet installed the Espuino firmware. Some of these boards are automatically recognized by Windows as a completely different kind of device (because of the 'demo software' that comes installed). Install the firmware as described on the Download page, disconnect the board a reconnect it again.
 
 Using Espruino
-============
+==============
 
 
 ## I just upgraded Espruino to the latest version, and now I'm getting `ReferenceError` messages
