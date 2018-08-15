@@ -20,6 +20,10 @@ devices. You can get it with Espruino installed in two forms:
 modules don't have a bootloader installed and will need connecting to a programmer
 tool to have firmware installed.
 
+Contents
+--------
+
+* APPEND_TOC
 
 Features
 --------

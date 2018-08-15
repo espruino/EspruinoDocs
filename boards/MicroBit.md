@@ -36,6 +36,11 @@ If you want the full experience, please consider buying [an official Espruino Bo
 [Puck.js](http://www.espruino.com/Puck.js) and [Pixl.js](http://www.espruino.com/Pixl.js)  are especially useful if you want to
 experiment with Bluetooth LE.
 
+Contents
+--------
+
+* APPEND_TOC
+
 Flashing Espruino
 ------------------
 

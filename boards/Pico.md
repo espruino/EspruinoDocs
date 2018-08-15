@@ -10,6 +10,11 @@ Espruino Pico
 
 * BUYFROM: £20,£14.40,https://shop.espruino.com/pico,/Order#pico
 
+Contents
+--------
+
+* APPEND_TOC
+
 Features
 -------
 

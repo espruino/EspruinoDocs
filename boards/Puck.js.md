@@ -10,6 +10,11 @@ Puck.js
 
 * BUYFROM: £30,£21.60,https://shop.espruino.com/puckjs,/Order#puckjs
 
+Contents
+--------
+
+* APPEND_TOC
+
 Features
 --------
 

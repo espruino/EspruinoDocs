@@ -13,6 +13,11 @@ To find out how to connect an ESP8266 board to another Espruino board (as a Wifi
 **Warning:** Espruino on the ESP8266 defaults to 115200 baud on its serial interface. This means you
 will need to adjust this setting in the IDE if you use that. (Other Espruino ports default to 9600 baud.)
 
+Contents
+--------
+
+* APPEND_TOC
+
 Quick links
 -----------
 

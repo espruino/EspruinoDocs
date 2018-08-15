@@ -18,6 +18,11 @@ Binaries can be found in:
 * the [binaries folder](/binaries) (current version)
 * the [automatic Travis Builds](https://www.espruino.com/binaries/travis/master/) (cutting edge builds)
 
+Contents
+--------
+
+* APPEND_TOC
+
 Using
 -----
 

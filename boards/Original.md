@@ -10,8 +10,12 @@ Original Espruino Board
 
 * BUYFROM: £25,£18,https://shop.espruino.com/original,/Order#original
 
-The Espruino board is an officially Supported board - it comes pre-programmed with Espruino, so you just plug it in and it works.
+The Espruino board is an officially supported board - it comes pre-programmed with Espruino, so you just plug it in and it works.
 
+Contents
+--------
+
+* APPEND_TOC
 
 Features
 -------

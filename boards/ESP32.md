@@ -11,6 +11,10 @@ Espruino on ESP32
 **Warning:** Espruino on the ESP32 defaults to 115200 baud on its serial interface. This means you
 will need to adjust this setting in the IDE if you use that. (Other Espruino ports default to 9600 baud.)
 
+Contents
+--------
+
+* APPEND_TOC
 
 ## Overview
 

@@ -10,6 +10,10 @@ STM32L496G Discovery Board
 
 The 32L496GDISCOVERY Discovery board is a complete demonstration and development platform for STMicroelectronics ARM® Cortex®-M4 core-based STM32L496AG microcontroller.
 
+Contents
+--------
+
+* APPEND_TOC
 
 Features
 --------

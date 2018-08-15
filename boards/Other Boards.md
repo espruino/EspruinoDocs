@@ -21,11 +21,16 @@ These are other boards that Espruino compiles for, but which aren't 'officially 
 
 To see how to get started with the [official boards](/Order), just follow our [Quick Start](/Quick+Start) guide, or you can [Order one here](/Order).
 
+Contents
+--------
+
+* APPEND_TOC
+
 ## Boards that Espruino works on
 
  |      | **Chip** | **Speed**<br>MHz | **Vars** | **Cost** | **USB** | **UART** | **SPI** | **Bat** | **Other** |
  |------|----------|-----------|----------|----------|---------|-----------|----------|---------|-----------|
-  | **Official Boards** |  |  |  |  |  |  |  |  |  | 
+  | **Official Boards** |  |  |  |  |  |  |  |  |  |
  | [**Espruino Original**](/Original) | STM32F104 | 72 | 2200 | £21 | Y | 3 | 2 | Y | Micro SD, Optional Bluetooth Serial, Proto area |
  | [**Espruino Pico**](/Pico) | STM32F401 | 84 | 5100 | £17 | Y | 3 | 2 | Y |  |
  | [**Espruino WiFi**](/WiFi) | STM32F411 | 100 | 7100 | £25 | Y | 3 | 2 | N |  WiFi |

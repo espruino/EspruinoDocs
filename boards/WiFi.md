@@ -12,6 +12,11 @@ Espruino WiFi
 
 **Note:** Espruino WiFi provides an easy, well-supported way to get on the Internet, however it's not the only way to access a WiFi network from an Espruino board. [See here](/Internet#related-pages) for more information.
 
+Contents
+--------
+
+* APPEND_TOC
+
 Features
 -------
 

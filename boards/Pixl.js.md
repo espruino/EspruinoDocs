@@ -19,6 +19,11 @@ Pixl.js's unique design allows you to use the Arduino footprint to interface
 with the huge array of existing Arduino shields, while still using the LCD
 and buttons. Add Ethernet, WiFi, Motor drivers, even GSM. No soldering required!
 
+Contents
+--------
+
+* APPEND_TOC
+
 Features
 --------
 
