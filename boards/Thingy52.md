@@ -4,7 +4,7 @@ Nordic Thingy:52
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Thingy52. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Espruino,Thingy52,Thingy,Thingy:52,nRF52832,nRF52,Nordic,Pinout,Bluetooth,BLE,Bluetooth LE
+* KEYWORDS: Third Party Board,Espruino,Thingy52,Thingy,Thingy:52,nRF52832,nRF52,Nordic,Pinout,Bluetooth,BLE,Bluetooth LE
 * USES: LIS2DH12,MPU9250,LPS22HB,HTS221,CCS811,BH1745
 
 ![Nordic Thingy:52](Thingy52/board.jpg)
