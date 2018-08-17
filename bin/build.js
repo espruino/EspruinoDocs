@@ -263,10 +263,16 @@ function createKeywordsJS(keywords) {
     kw[keyword] = kwd;
     for (idx in keywordPages) {
       var data = keywordPages[idx];
-      var f = (data["path"].substr(0,1)=="/") ? data["path"] : htmlLinks[data["path"]];
-      if (f==undefined) WARNING("No file info for "+data["path"]);
+      var path = data["path"].split("#")[0];
+      var hash = data["path"].split("#")[1];
+      hash = hash?"#"+hash:"";
+      var f = (path.substr(0,1)=="/") ? path : htmlLinks[path];
+      if (f==undefined) {
+        WARNING("No file info for "+data["path"]);
+        process.exit(1);
+      }
       kwd.push({ title : data["title"],
-                 file : f });
+                 file : f+hash });
     }
   }
   return kw;
@@ -357,9 +363,6 @@ markdownFiles.forEach(function (file) {
   else
     htmlLinks[file] = htmlFile;
 });
-
-fs.writeFileSync(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,1)+";");
-
 
 // ---------------------------------------------- Inference code
 /* Works out which of Espruino's built-in commands are used in which
@@ -636,6 +639,13 @@ markdownFiles.forEach(function (file) {
          while (currentLevel<heading.level) { toc+="<ul>";currentLevel++; }
          while (currentLevel>heading.level) { toc+="</ul>";currentLevel--; }
          toc += '<li><a href="#'+heading.hash+'">'+heading.title+"</a></li>\n";
+         // add keywords
+         var pageInfo = {
+           path : file+"#"+heading.hash,
+           title : title+": "+heading.title,
+         };
+         fileTitles[pageInfo.path] = pageInfo.title;
+         addToList(fileInfo.keywords, heading.title, pageInfo);
        }
        m = regex.exec(html);
      }
@@ -686,6 +696,8 @@ var refPath = path.resolve(BASEDIR, "references.json");
 console.log("---------------------");
 console.log("Writing references to "+refPath);
 fs.writeFileSync(refPath, JSON.stringify(urls,null,1));
+// Write out keywords
+fs.writeFileSync(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,1)+";");
 
 // -----------------------------------------------------------
 // Newest tutorials
