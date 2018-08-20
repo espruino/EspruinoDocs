@@ -214,6 +214,94 @@ Is there an editor that can be used instead of typing everything into a terminal
 
 Yes. [Check here for details of your available options](/Programming)
 
+## What are the two panes of the Web IDE for?
+
+The left-hand side is a simple terminal. When Espruino is plugged in, you are communicating directly with it. You can write expressions, create and read variables, and even write and execute code while your program is running. When you type enter after writing an expression, it is executed immediately. If you want to clear what you wrote, or break out of a running function, press `Ctrl+C`.
+
+The right-hand side is a JavaScript editor. It's syntax highlighted and has code completion, but what you write is only uploaded to Espruino when you click the `Send to Espruino` button. See below:
+
+
+When is code executed?
+---------------------------
+
+When you write code in the right-hand pane of the Espruino IDE and click `Send to Espruino`, by default the code is sent to Espruino almost as if you copied and pasted it into the left-hand pane (this doesn't have to be the case - see [the Saving page](/Saving)).
+
+This means that if you write `var a = analogRead(A0);`, the value of `a` will be set to the voltage on `A0` *at the time you uploaded your code*. It won't be updated again, even after a reboot.
+
+When you type `save()`, a *copy of the current state of the interpreter* is saved into Flash memory, **not** a copy of the code that you originally uploaded.
+
+If you want to do something when Espruino reboots, add one or more event handlers for the `init` event on `E`:
+
+```
+E.on('init', function() {
+  // ...
+});
+```
+
+This will then be loaded every time Espruino starts up. If you create a function called `onInit`, that will be executed too:
+
+```
+function onInit() {
+ // ...
+}
+```
+
+But of course there can only be one `onInit` function, so if you copy and paste two bits of code with two `onInit` functions then the second function will overwrite the first. See [the Saving page](/Saving) for more information.
+
+
+Why is code executed at upload time?
+-------------------------------------
+
+The alternative to executing at upload time is to store a complete copy of the program text in memory, and to then execute that when everything has been received. The problem is that in a device with very limited amounts of memory, you need twice as much memory to upload code (sometimes more!), because you have to store the textual representation and the representation in the interpreter.
+
+Take the following code as an example:
+
+```
+var a = new Uint8Array([128,129,130, ... , 253,254,255]);
+var b = new Uint8Array([128,129,130, ... , 253,254,255]);
+var c = new Uint8Array([128,129,130, ... , 253,254,255]);
+```
+
+The textual form of each array uses roughly `512` bytes. The form in the interpreter takes only `128` bytes, because it's a 128 element byte array.
+
+By executing each line in turn, Espruino only needs `512 + 128*3` bytes maximum during upload - however if executing all at once it would need `512*3 + 128*3` bytes.
+
+If you're uploading *direct to flash memory* rather than RAM then this is less of an issue as usually there is a lot more flash memory than RAM. Espruino supports this via `Save on Send` - check out [the Saving page](/Saving) for more information. It has some benefits, but also some drawbacks - for instance you can no longer save your changes if you use the left-hand side of the IDE to modify your program.
+
+
+How do modules work?
+-------------------------
+
+Espruino contains a mix of built-in and dynamically loaded modules of code that can be used with the `require(...)` function. Built-in modules are documented in the [[Reference]], and can be used without any need for the Web IDE and an internet connection. However on some boards you may find that these modules are not included (as there may not be enough space).
+
+Dynamically loaded modules are uploaded to Espruino by the Web IDE *on demand*. They are usually documented on the main Espruino site, under [[Modules]]. When you type something like `require("PCD8544")` and then click `Send to Espruino` in the Web IDE, the Web IDE scans your code for any `require` statements, and if it doesn't think they are built-in, it looks online (usually in http://www.espruino.com/modules/) to find the module (you can configure this from Settings). It then downloads the module and uploads it to Espruino just before your code.
+
+If dynamically loaded modules can't be found by the Web IDE, nothing is uploaded to the Espruino. When Espruino encounters a `require` statement that isn't built in or wasn't pre-loaded by the Web IDE it tries to look on the SD card for the module in the `node_modules` directory. If it can't find anything there (or there's no SD card!) then it will fail.
+
+
+Is there a Coding Style I should use?
+--------------------------------------
+
+When entering code in the left-hand side of the Web IDE (Espruino's terminal), Espruino uses a simple rule to work out whether to execute the line when you press `Enter`, or to just move the cursor to the line below: If you have as many open brackets as close brackets then the line is executed, otherwise a new line is added.
+
+This means that the coding style given in the examples is very intentional. The following code can just be copy+pasted straight into the left-hand side of Espruino:
+
+```
+function hello() {
+ // ...
+}
+```
+
+Whereas the following cannot, because for the newline after `function` all open braces are still closed:
+
+```
+function hello()
+{
+ // ...
+}
+```
+
+The Web IDE automatically replaces newline characters with `Alt-Enter` in code when it sends it to Espruino from the editor on the right-hand side (so you can write in whatever coding style you want in the right-hand editor window), however we'd still recommend that you use the same coding style as the examples in case you do want to copy+paste a single function into the left-hand side for debugging.
 
 What is efficient and what isn't? How can I write the fastest code?
 ---------------------------------------------------------------------------
@@ -239,6 +327,14 @@ a sensible time period, the input buffers might overflow and data will be lost.
 You can still delay your code quite easily using `var t=getTime()+1000;while(getTime()&lt;t);`,
 but you should seriously consider re-writing your code to use `setTimeout`
 and/or `digitalPulse` - the end result will be a much faster, more efficient piece of code.
+
+
+Can I save values to Espruino - does it have an EEPROM?
+--------------------------------------------------------
+
+While there aren't any EEPROMS on Espruino boards, there is [the Storage Module](/Reference#Storage)
+which provides a simple filesystem that you can use to save data. It uses flash memory,
+but provides simple wear-levelling to improve the lifetime of the flash memory.
 
 
 Why not just use an existing JavaScript implementation like V8 or Spidermonkey?
