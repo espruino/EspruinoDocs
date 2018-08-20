@@ -8,6 +8,7 @@ MFRC522 NFC/RFID module
 
 The MFRC522 is an RFID reader chip. It's common and very easy to interface to with the [[MFRC522.js]] module.
 
+![Common MFRC522 reader](MFRC522.jpg)
 
 Wiring Up
 --------
