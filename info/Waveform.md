@@ -4,7 +4,7 @@ Waveforms
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Waveform. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Analog,ADC,DAC,A2D,D2A,Built-In,Audio,Wave,Signal,Sound,Music
+* KEYWORDS: Peripheral,Peripherals,Analog,ADC,DAC,A2D,D2A,Built-In,Audio,Wave,Signal,Sound,Music
 
 Espruino contains both [[Analog]] Inputs ([[ADC]]) and [[Analog Outputs]] ([[DAC]]). Functions such as `analogRead` and `analogWrite` can be called at around 1kHz (although with PWM you can get higher frequency outputs). While that's fast enough for control it isn't fast enough to play and record audio.
 
