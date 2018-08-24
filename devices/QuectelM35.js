@@ -168,7 +168,8 @@ exports.connect = function(usart, options, callback) {
   atcmd("ATE0").then(function() { // echo off
     return atcmd("AT+CREG?"); // Check GSM registered
   }).then(function(d) {
-    if (d.split(",")[1]!=1) throw new Error("GSM not registered, "+d);
+    var n = d.split(",")[1]; // 1=connected, 5=connected, roaming
+    if (n!=1 && n!=5) throw new Error("GSM not registered, "+d);
     dbg("Forcing GPRS connect");
     return atcmd("AT+CGATT=1",10000); // attach to GPRS service
   }).then(function() {
