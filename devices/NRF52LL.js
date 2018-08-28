@@ -28,7 +28,7 @@ exports.gpiote = function(ch, opts) { // NRF_GPIOTE_Type
     eIn : addr+0x100
   };
   var v = (opts.type=="task"?3:1) |
-    (opts.pin<<8) |
+    (new Pin(opts.pin).getInfo().num<<8) |
     ((opts.lo2hi?1:0)<<16) |
     ((opts.hi2lo?1:0)<<17) |
     ((opts.initialState?1:0)<<20);
@@ -166,7 +166,7 @@ exports.lpcomp = function(opts) {
     if (r<1 || r>15) throw new Error("Invalid vref (1..15)");
     poke32(o.refsel, ((r-1)>>1) + (r&1)*8);
   }
-  var p = opts.pin.getInfo().channel;
+  var p = new Pin(opts.pin).getInfo().channel;
   if (p===undefined) throw new Error("Invalid pin (must be capable of analog)");
   poke32(o.psel, p);
   poke32(o.hyst, opts.hyst?1:0);
@@ -273,8 +273,8 @@ exports.saadc = function(opts) {
       ((ch.npin!==undefined)<<20) | // differential if npin is supplied
       ((!!opts.oversample)<<24);
     poke32(a+8, v); // options
-    poke32(a, 0|(ch.pin.getInfo().channel+1)); // pin pos -  undefined -> 0
-    poke32(a+4, 0|((ch.npin&&opts.npin.getInfo().channel)+1)); // pin neg - undefined -> 0
+    poke32(a, 0|(new Pin(ch.pin).getInfo().channel+1)); // pin pos -  undefined -> 0
+    poke32(a+4, 0|((ch.npin&&new Pin(opts.npin).getInfo().channel)+1)); // pin neg - undefined -> 0
   });
   poke32(addr+0x5F0, (opts.resolution-8)>>1);
   poke32(addr+0x5F4, 0|opts.oversample);
