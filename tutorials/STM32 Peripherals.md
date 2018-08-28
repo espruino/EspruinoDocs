@@ -1,10 +1,10 @@
-<!--- Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. --> 
+<!--- Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Low-level STM32 Peripheral access
 =============================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/STM32+Peripherals. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: STM32,peripherals,advanced,direct,peek,poke,timers,registers,counter,input capture,capture compare,capacitive touch
+* KEYWORDS: STM32,STM32F,STM32F4,peripherals,advanced,direct,peek,poke,timers,registers,counter,input capture,capture compare,capacitive touch
 * USES: STM32,Pico
 
 While Espruino provides an easy-to use way to access the peripherals on the microcontroller,
@@ -21,7 +21,7 @@ Documentation
 
 The best source of documentation on the chip's peripherals come from the manufacturer
 themselves - [ST](http://www.st.com). You'll need the Reference Manual and Datasheet for the particular
-chip. The easiest way to do this is to go to the page on espruino.com for your board ([Original](/Original) or 
+chip. The easiest way to do this is to go to the page on espruino.com for your board ([Original](/Original) or
 [Pico](/Pico) and to find the links there).
 
 We're going to cover the [Pico](/Pico), so [this is the STM32F401CD Reference Manual](/datasheets/STM32F401xD_ref.pdf)
@@ -43,9 +43,9 @@ You'll see a diagram of the timer a few pages in:
 Here, we've coloured what bits get used during `analogWrite(A8, 0.5, {freq:10})`.
 
 First, Espruino looks around to see what peripherals are available on the pin `A8`. That information
-is in the Datasheet, under `Pinouts and pin description` in a table called `Table 8. STM32F401xD/xE pin definitions` (look for `PA8` in it). 
-It's actually pretty painful to read, so we've documented it all properly on the [Pico](/Pico) page. 
-Under the `Pinout` heading hover your mouse over the `PWM` tag below the pin `A8`. It'll say `TIM1_CH1` - 
+is in the Datasheet, under `Pinouts and pin description` in a table called `Table 8. STM32F401xD/xE pin definitions` (look for `PA8` in it).
+It's actually pretty painful to read, so we've documented it all properly on the [Pico](/Pico) page.
+Under the `Pinout` heading hover your mouse over the `PWM` tag below the pin `A8`. It'll say `TIM1_CH1` -
 so Channel 1 of the `TIM1` peripheral.
 
 Now, Espruino will make sure the STM32 applies power to `TIM1` (it'll be off by default to save power).
@@ -65,8 +65,8 @@ register, so for instance if you wanted to put `TIM1_CH1N` onto pin `A7` on an S
 
 Now Espruino's done all that painful stuff, it'll configure the timer itself. It:
 
-* Sets up the prescaler to divide the Pico's 84Mhz clock down, such that the 16 bit 
-counter `CNT` counts up from 0 to 65535 just less than 10 times per second 
+* Sets up the prescaler to divide the Pico's 84Mhz clock down, such that the 16 bit
+counter `CNT` counts up from 0 to 65535 just less than 10 times per second
 (because we set the frequency to s0).
 * Sets the `AutoReload Register` (`ARR`) to fine-tune the frequency, by only letting the
 counter count up to a value a bit less than the full 16 bit value 65535
@@ -106,12 +106,12 @@ Try `peek16(CCR1)` again to get the value of `CCR1` - it's now saying `32307`.
 
 Try setting the LED to blink only very quickly with `analogWrite(A8, 0.05, {freq:10})` and then check `peek16(CCR1)`. You'll see that as you'd expect, the value is now one tenth of what is was. It's `3230`.
 
-By itself that's not useful, but we can actually change it ourself, using `poke`. 
+By itself that's not useful, but we can actually change it ourself, using `poke`.
 
 * Try `poke16(CCR1, 0)` - this should set the duty cycle to 0, turning it off.
 * Or try `poke16(CCR1, 40000)` to make it stay on most of the time.
 
-We can guess at how far the counter `CNT` is counting, because we knew that a duty 
+We can guess at how far the counter `CNT` is counting, because we knew that a duty
 cycle of 50% meant `32307` in `CCR1` (it'll be around `2 * 32307`). However, to check,
 we can look in `ARR` (`AutoReload Register`). The Reference Manual say's it's at offset `0x2C`,
 so let's try `var ARR = 0x4001002C;` and then `peek16(ARR)`. It returns `64615` which is again what we'd expect.
@@ -130,7 +130,7 @@ peek16(CNT);
 ```
 
 and now, keep hitting `up arrow` followed by `enter`, you should see something like:
- 
+
 ```
 >peek16(CNT);
 =31807
@@ -175,17 +175,17 @@ Ok, so let's jump in. First, connect pin `A8` to pin `A5` that's opposite on the
 Then, let's gets some registers defined - copied from the Reference manual again:
 
 ```
-// slave mode control register 
+// slave mode control register
 var SMCR = 0x40010008;
 // event generation register
 var EGR = 0x40010014;
 // Capture compare mode register
 var CCMR1 = 0x40010018;
-// Capture/compare enable register 
+// Capture/compare enable register
 var CCER = 0x40010020;
-// counter 
+// counter
 var CNT = 0x40010024;
-// prescaler 
+// prescaler
 var PSC = 0x40010028;
 // auto reload register
 var ARR = 0x4001002C;
@@ -263,7 +263,7 @@ It also says:
 
 But Espruino already did that for us with `analogWrite`.
 
-### Resetting registers 
+### Resetting registers
 
 We just do this with:
 
@@ -291,24 +291,24 @@ poke16(EGR, 1);
 And putting it all together we have:
 
 ```
-// slave mode control register 
+// slave mode control register
 var SMCR = 0x40010008;
 // event generation register
 var EGR = 0x40010014;
 // Capture compare mode register
 var CCMR1 = 0x40010018;
-// Capture/compare enable register 
+// Capture/compare enable register
 var CCER = 0x40010020;
-// counter 
+// counter
 var CNT = 0x40010024;
-// prescaler 
+// prescaler
 var PSC = 0x40010028;
 // auto reload register
 var ARR = 0x4001002C;
 
 
 // enable PWM on A8 (TIM1 CH1)
-analogWrite(A8,0.5,{freq:10}); 
+analogWrite(A8,0.5,{freq:10});
 // CC1E = 0 (Turn channel 1 off)
 poke16(CCER, peek16(CCER) & ~1);
 // CC1S[1:0]=01 (rising edge), IC1F[7:4]=0 (no filter)
@@ -366,17 +366,17 @@ Obviously the first step is easy, and for the second step we can actually steal 
 ```
 // Status Register
 var SR= 0x40010010;
-// Capture/compare enable register 
+// Capture/compare enable register
 var CCER = 0x40010020;
 // Capture compare mode register
 var CCMR1 = 0x40010018;
-// counter 
+// counter
 var CNT = 0x40010024;
 // Capture Compare 1
 var CCR1 = 0x40010034;
 
 // enable PWM on A8 (TIM1 CH1)
-analogWrite(A8,0.5,{freq:10}); 
+analogWrite(A8,0.5,{freq:10});
 // CC1E = 0 (Turn channel 1 off)
 poke16(CCER, peek16(CCER) & ~1);
 // CC1S[1:0]=01 (rising edge),  IC3PSC[3:2]=00 (no prescaler), IC1F[7:4]=0 (no filter),
@@ -420,20 +420,20 @@ Simply upload the following code:
 ```
 // Status Register
 var SR= 0x40010010;
-// Capture/compare enable register 
+// Capture/compare enable register
 var CCER = 0x40010020;
 // Capture compare mode register
 var CCMR1 = 0x40010018;
-// counter 
+// counter
 var CNT = 0x40010024;
 // Capture Compare 1
 var CCR1 = 0x40010034;
 var PSC = 0x40010028;
 
 // enable PWM on A8 (TIM1 CH1)
-analogWrite(A8,0.5,{freq:1000}); 
+analogWrite(A8,0.5,{freq:1000});
 // enable PWM on A10 (TIM1 CH3)
-analogWrite(A10,0.5,{freq:1000}); 
+analogWrite(A10,0.5,{freq:1000});
 // CC1E = 0 (Turn channel 1 off)
 poke16(CCER, peek16(CCER) & ~1);
 // CC1S[1:0]=01 (rising edge),  IC3PSC[3:2]=00 (no prescaler), IC1F[7:4]=0 (no filter),
@@ -456,7 +456,7 @@ But, if you keep calling `getCap()` while moving you hand near the wire, when yo
 
 ```
 // a value slightly above what you get from getCap() when you hand isn't close
-var thresh = 300; 
+var thresh = 300;
 
 setInterval(function () {
   digitalWrite(LED1, getCap() > thresh);
@@ -464,4 +464,3 @@ setInterval(function () {
 ```
 
 Then you'd have your own capacitive touch sensor!
-
