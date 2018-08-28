@@ -160,6 +160,35 @@ if (!addr) throw new Error("Not a Flat String");
 print(c.sum(data.length, addr));
 ```
 
+Adding code to a module
+-----------------------
+
+Adding inline C to a module is easy - just write the Inline C as you would
+normally do, then export it:
+
+```
+var c = E.compiledC(`
+// double lookup(int)
+
+double lut[8] = {
+ 41,42,43,44,45,46,47,48
+};
+double lookup(unsigned int x)
+{
+  return lut[x&7];
+}
+`);
+
+exports = c;
+```
+
+(You can of course just export specific functions if you want to,
+  for instance `exports.lookup = c.lookup;`)
+
+The module itself will contain the C source code, but the IDE will
+detect the code on upload and will automatically compile it for the
+board you're uploading to.
+
 What Happens?
 -----------
 
