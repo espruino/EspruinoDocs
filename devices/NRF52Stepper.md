@@ -7,7 +7,7 @@ nRF52 Accurate Stepper Motor Driver
 * KEYWORDS: Module,nRF52,nRF5x,nRF52832,Puck.js,Stepper,Motor,Steppermotor,Stepper motor,A4988,DRV8825,DRV8834
 * USES: Puck.js,Pixl.js,MDBT42Q,nRF52832,nRF52
 
-**Note:** For a more in-depth look at Stepper Motors, see the [Stepper Motor](/Stepper+Motors) page - this describes a stepper motor code library for NRF52-series devices.
+**Note:** For a more general look at Stepper Motors, see the [Stepper Motor](/Stepper+Motors) page.
 
 This module allows accurate control of Stepper motors drivers
 using nRF52's built-it hardware capabilities. Stepper motor

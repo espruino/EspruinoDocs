@@ -9,10 +9,10 @@ Stepper Motors
 [Stepper motors](http://en.wikipedia.org/wiki/Stepper_motor) generally come in two types, [Unipolar](http://en.wikipedia.org/wiki/Stepper_motor#Unipolar_motors) with 5 or 6 wires, and [Bipolar](http://en.wikipedia.org/wiki/Stepper_motor#Bipolar_motor) with 4 wires.
 
 **There are now code libraries available to automate the task of controlling
-a stepper motor (Below).** If you're interested in seeing how a stepper motor works and controlling it from first principles, read on!
+a stepper motor (below).** If you're interested in seeing how a stepper motor works and controlling it from first principles, read on!
 
 * The [Stepper Motor Module](/StepperMotor) allows direct connection to a stepper
-motor via a simple motor driver IC (eg. one wire per motor coil is connected from Espruino into the driver)
+motor via a simple motor driver IC (eg. one wire per motor coil is connected from Espruino into the driver). This works on any Espruino device.
 * The [NRF52 Stepper Motor Module](/NRF52Stepper) is designed for connecting
 nRF52-based Espruino devices to a specialist stepper motor driver IC. It uses
 the nRF52 peripherals to provide glitchless stepper motor control independent
