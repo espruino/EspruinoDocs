@@ -4,8 +4,10 @@ nRF52 Accurate Stepper Motor Driver
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/NRF52Stepper. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Module,nRF52,nRF5x,nRF52832,Puck.js,Stepper,Motor,Steppermotor,Stepper motor
+* KEYWORDS: Module,nRF52,nRF5x,nRF52832,Puck.js,Stepper,Motor,Steppermotor,Stepper motor,A4988,DRV8825,DRV8834
 * USES: Puck.js,Pixl.js,MDBT42Q,nRF52832,nRF52
+
+**Note:** For a more in-depth look at Stepper Motors, see the [Stepper Motor](/Stepper+Motors) page - this describes a stepper motor code library for NRF52-series devices.
 
 This module allows accurate control of Stepper motors drivers
 using nRF52's built-it hardware capabilities. Stepper motor
@@ -33,7 +35,7 @@ stepper.pause();
 // The motor will stop moving until you call stepper.resume()
 ```
 
-Resume the stepping: 
+Resume the stepping:
 ```
 stepper.resume();
 ```
@@ -63,4 +65,8 @@ Using
 Buying
 -----
 
-You can get Stepper Motor Drivers from [Pololu](https://www.pololu.com/category/120/stepper-motor-drivers), [SparkFun](https://www.sparkfun.com/categories/334), and also find plently of them on EBay.
+You can get Stepper Motor Drivers from:
+
+* [Pololu](https://www.pololu.com/category/120/stepper-motor-drivers)
+* [SparkFun](https://www.sparkfun.com/categories/334)
+* eBay - [A4988](http://www.ebay.com/sch/i.html?_nkw=A4988), [DRV8825](http://www.ebay.com/sch/i.html?_nkw=DRV8825) and [DRV8834](http://www.ebay.com/sch/i.html?_nkw=DRV8834)
