@@ -175,8 +175,9 @@ exports.connect = function(usart, options, callback) {
   }).then(function() {
     return atcmd("AT+CGREG?"); // Check GPRS registered
   }).then(function(d) {
-    if (d.split(",")[1]==2) throw new Error("GPRS still connecting, "+d);
-    if (d.split(",")[1]!=1) throw new Error("GPRS not registered, "+d);
+    var n = d.split(",")[1]; // 1=connected, 2=connecting, 5=connected, roaming
+    if (n==2) throw new Error("GPRS still connecting, "+d);
+    if (n!=1 && n!=5) throw new Error("GPRS not registered, "+d);
     return atcmd("AT+COPS?"); // Operator
   }).then(function(d) {
     var op = d.split(",")[2];
