@@ -38,11 +38,16 @@ class NRF52Stepper {
     ll.ppiEnable(0, this.stepTimer.eCompare[0], this.stepTask.tOut);
     ll.ppiEnable(1, this.stepTimer.eCompare[0], this.counter.tCount);
     ll.ppiEnable(2, this.counter.eCompare[0], this.stepTimer.tStop);
+
+    this.restart();
+  }
+
+  restart() {
     poke32(this.stepTimer.tClear, 1);
     poke32(this.counter.tClear, 1);
     this.resume();
   }
-
+  
   pause() {
     poke32(this.stepTimer.tStop, 1);
   }
