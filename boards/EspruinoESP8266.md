@@ -154,10 +154,6 @@ the esp8266. Remember that GPIO6 through GPIO11 are used for the external
 flash chip and are therefore not really available. Also, GPIO0 and GPIO2
 must be pulled-up at boot and GPIO15 must be pulled-down at boot.
 
-The esp8266 ADC function is available on any pin
-(D0-D15) but really uses a separate pin on the esp8266 (this should
-be changed to an A0 pin).
-
 GPIO16 is now supported in Espruino. **Do not use it if you use deep sleep**
 
 ### digitalPulse implementation
@@ -178,6 +174,26 @@ pulse length. Instead, you need to do `digitalPulse(D0,1,[10,10,10])`.
 
 The setWatch implementation uses interrupts to capture incoming pulse edges and queues them. The queue can hold 16 elements, so
 setWatch will lose transitions if javascript code does not run promptly.
+
+### analogRead implementation
+
+The esp8266 ADC function is available on pin A0 or without a pin.
+Using a digital pin will return NaN
+
+Possible ways to call ananlogRead() and the returns:
+
+```
+analogRead(A0);
+=0.0029296875
+
+analogRead();
+=0.0029296875
+
+analogRead(D0);
+=NaN
+
+```
+
 
 I2C Implementation
 ------------------
