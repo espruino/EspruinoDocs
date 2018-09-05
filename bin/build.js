@@ -73,6 +73,18 @@ if (OFFLINE) {
 }
 marked.setOptions(markedOptions);
 
+// Work out file ordering
+var fileOrdering = {};
+if (fs.existsSync(BASEDIR+"/ordering.txt")) {
+  fs.readFileSync(BASEDIR+"/ordering.txt").toString().split("\n").map(function(line, linenumber) {
+    line = line.substr(line.indexOf(" ")+1);
+    fileOrdering[line] = linenumber;
+  });
+} else {
+  console.log("WARNING: No 'ordering.txt' - not ordering tutorials");
+  console.log(' - Generate with: git ls-tree -r --name-only HEAD | xargs -I{} git log -1 --format="%at {}" -- {} | sort > ordering.txt');
+}
+
 if (OFFLINE) {
   // if offline, copy the offline.css file in
   fs.createReadStream(path.resolve(BASEDIR, "bin/offline.css")).pipe(
@@ -504,74 +516,77 @@ markdownFiles.forEach(function (file) {
    // TODO - 'Tutorial 2' -> 'Tutorial+2', recognize pages that are references in docs themselves
    var contentLines = contents.split("\n");
 
-   var appendMatching = function(regex, kwName, infoList, ifNone) {
-     for (i in contentLines) {
-       var match = contentLines[i].match(regex);
-       if (match!=null) {
-         var kws = match[1].toLowerCase().split(",").map(function(x){return x.trim();});
-         var kw = kws[0];
-         var links = [ ];
-         if (infoList[kw]!=undefined) {
-           // deep copy
-           var pages = {};
-           // add keywords
-           for (var k=0;k<kws.length;k++) {
-             if (kws[k][0]!="-" && infoList[kws[k]]!=undefined) {
-               for (var attr in infoList[kws[k]])
-                 pages[attr] = infoList[kws[k]][attr];
-             }
-           }
-           // remove any keywords
-           for (j in pages) {
-             var a = pages[j];
-             if (a["path"]!=file && htmlLinks[a.path]!=undefined) { // if we don't have links it is probably in the reference
-               var pageOk = true;
-               // if extra keywords specified, they may be to reject certain pages... check
-               for (var k=1;k<kws.length;k++) {
-                 if (kws[k][0]=="-") {
-                   var notkw = kws[k].substr(1);
-                   if (infoList[notkw]!=undefined)
-                     for (var notpg in infoList[notkw])
-                       if (infoList[notkw][notpg]["path"]==a.path) {
-                         console.log("REJECTED "+a.path+" from "+file+" because of '-"+notkw+"' keyword");
-                         pageOk = false;
-                       }
-                 }
-               }
-               // add page link if ok
-               if (pageOk) {
-                 console.log(a);
-                 links.push(a);
-               }
-             }
+   var appendMatching = function(kwName, infoList, ifNone) {
+     var regex = new RegExp("<ul>\n<li>"+kwName+": (.*)<\/li>\n<\/ul>");
+     var match = regex.exec(html,"g");
+     while (match!=null) {
+       var kws = match[1].toLowerCase().split(",").map(function(x){return x.trim();});
+       var kw = kws[0];
+       var links = [ ];
+       if (infoList[kw]!=undefined) {
+         // deep copy
+         var pages = {};
+         // add keywords
+         for (var k=0;k<kws.length;k++) {
+           if (kws[k][0]!="-" && infoList[kws[k]]!=undefined) {
+             for (var attr in infoList[kws[k]])
+               pages[attr] = infoList[kws[k]][attr];
            }
          }
-
-         if (links.length>0) {
-           var contentThumbs = [];
-           // Put ones with thumbnails first, otherwise alphabetical
-           links = links.sort(function(a,b) {
-             var d = ((b.path in markdownThumbs)?1:0) - ((a.path in markdownThumbs)?1:0);
-             if (d) return d;
-             if (a.title > b.title) return 1;
-             if (a.title < b.title) return -1;
-             return 0;
-           });
-           // Output images
-           links.forEach(function(a) {
-             contentThumbs.push(getThumbLinkHTML(a));
-           });
-           contentLines[i] = contentThumbs.join("");
-         } else {
-           WARNING(kwName+" for '"+kw+"' in "+file+" found nothing");
-           contentLines[i] = ifNone;
+         // remove any keywords
+         for (j in pages) {
+           var a = pages[j];
+           if (a["path"]!=file && htmlLinks[a.path]!=undefined) { // if we don't have links it is probably in the reference
+             var pageOk = true;
+             // if extra keywords specified, they may be to reject certain pages... check
+             for (var k=1;k<kws.length;k++) {
+               if (kws[k][0]=="-") {
+                 var notkw = kws[k].substr(1);
+                 if (infoList[notkw]!=undefined)
+                   for (var notpg in infoList[notkw])
+                     if (infoList[notkw][notpg]["path"]==a.path) {
+                       console.log("REJECTED "+a.path+" from "+file+" because of '-"+notkw+"' keyword");
+                       pageOk = false;
+                     }
+               }
+             }
+             // add page link if ok
+             if (pageOk) {
+               console.log(a);
+               links.push(a);
+             }
+           }
          }
        }
+
+       var content = "";
+       if (links.length>0) {
+         var contentThumbs = [];
+         // Put ones with thumbnails first, otherwise base on fileOrdering
+         links = links.sort(function(a,b) {
+           var d = ((b.path in markdownThumbs)?1:0) - ((a.path in markdownThumbs)?1:0);
+           if (d) return d;
+           var at = 0|fileOrdering[a.path];
+           var bt = 0|fileOrdering[b.path];
+           return bt-at;
+           /*if (a.title > b.title) return 1;
+           if (a.title < b.title) return -1;
+           return 0;*/
+         });
+         // Output images
+         links.forEach(function(a) {
+           contentThumbs.push(getThumbLinkHTML(a));
+         });
+         content = '<div class="thumblinklist thumblinklist-thumbnails">\n  '+contentThumbs.join("\n  ")+'\n</div>';
+       } else {
+         WARNING(kwName+" for '"+kw+"' in "+file+" found nothing");
+         content = ifNone;
+       }
+       html = html.substr(0,match.index)+content+html.substr(match.index+match[0].length);
+       match = regex.exec(html);
      }
    };
 
-   appendMatching(/^\* APPEND_KEYWORD: (.*)/ , "APPEND_KEYWORD", fileInfo.keywords, "");
-   appendMatching(/^\* APPEND_USES: (.*)/ , "APPEND_USES", fileInfo.parts, " * No tutorials are available yet");
    for (i in contentLines) {
      var match;
      // try and handle module documentation
@@ -610,6 +625,11 @@ markdownFiles.forEach(function (file) {
    // Get Markdown
    if (PROCESS_INFERENCE) inferMarkdownFile(file, contents);
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
+
+   // Append tutorial links
+   appendMatching("APPEND_KEYWORD", fileInfo.keywords, "");
+   appendMatching("APPEND_USES", fileInfo.parts, "<p>(No tutorials are available yet)</p>");
+
 
    // Check for Pinouts
    var regex = /<ul>\n<li>APPEND_PINOUT: (.*)<\/li>\n<\/ul>/;
