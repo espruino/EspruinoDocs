@@ -11,7 +11,7 @@ useful information, but it can sometimes be hard to find the posts you need.
 
 Here are some of the interesting posts that forum users have flagged up. If you
 find something and would like to add it, please [let us know](https://github.com/espruino/EspruinoDocs/issues/new?title=Tips+and+Tricks+addition:) or
-[add it to this page yourself](https://github.com/espruino/EspruinoDocs/blob/master/info/Tips+and+Ticks.md).
+[add it to this page yourself](https://github.com/espruino/EspruinoDocs/blob/master/info/Tips%20and%20Tricks.md).
 
 
 Useful Code
