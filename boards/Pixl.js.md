@@ -151,6 +151,8 @@ connector labelled `3.3 5V Vin`, and you can apply solder to:
 * **short 3.3 to 5v** - the 5v pin will be connected to regulated 3.3v power (note: max power draw is 150mA)
 * **short Vin to 5v** - the 5v pin will be connected to 5v (when connected via USB) or whatever the voltage provided on Vin is
 
+**Do not short all 3 pins of the solder jumper together!** This will connect `3.3v` to `Vin`, which will power your Pixl's processor (and the LCD) directly from `Vin`, which is likely to be a high enough voltage that it will permanently damage it.
+
 ### Shields
 
 Here are some of the [Arduino shields](Arduino) that we have tested and documented:
