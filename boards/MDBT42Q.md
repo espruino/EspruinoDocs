@@ -90,6 +90,22 @@ The breakout board also contains a green LED on pin `D2`. As of build 1v99 this
 isn't mapped to a built-in variable, but a simple `global.LED2=D2` command will add it.
 
 
+Hard Reset
+----------
+
+Occasionally you may manage to save code to your MDBT42Q that then
+runs at boot and stops you connecting to it, effectively 'bricking' it.
+
+Recovering it easy:
+
+* Follow [the step for a firmware update](#firmware-updates), but leave `BTN`/`D0` pressed/connected for 5 seconds (or until the LED goes out).
+* Espruino will now have booted *without loading any saved code*, however the
+code will still be there and the next time you reset it the code will be loaded
+as normal.
+* You can now connect normally with the IDE and continue.
+* To reset completely, type `reset(true)` into the REPL. This will remove any saved code that is present in the MDBT42Q so even after a reset, your code will not be loaded.
+
+
 Tutorials
 --------
 
@@ -169,10 +185,14 @@ Up to date firmwares are available from [the Download page](/Download#mdbt42q).
 
 Check out the [Puck.js firmware update instructions](/Puck.js#firmware-updates)
 for full details. All you need to do is apply power to your module with
-pin `D0` connected to VDD (or `BTN` held down on the breakout board), then
+pin `D0` connected to `VDD` (or `BTN` held down on the breakout board), then
 release it after a second to enter bootloader mode. The module will advertise
 itself as `DfuTarg`, and you can then connect with the `nRF Connect` app and
 write new firmware.
+
+**Note:** If you hold `BTN` (or leave `D0` connected to `VDD`) for too long (> 3 sec),
+the MDBT42 will leave bootloader mode and will instead start Espruino *without loading
+saved code*, allowing a [hard reset](#hard-reset) to be performed.
 
 
 Other Official Espruino Boards

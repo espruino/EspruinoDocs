@@ -69,6 +69,7 @@ This often happens if you've turned your Espriuno into a [HID device](/Puck.js+K
 * Click `Remove`
 * Open up the [Web IDE](/ide) in Chrome and try connecting again
 
+
 ### I can't connect to my device with Chrome on Linux
 
 First, make sure you have an up to date version of Bluez installed - see [the Web Bluetooth on Linux page](/Web+Bluetooth+On+Linux)
@@ -82,19 +83,25 @@ it can be a bit unstable.
 notification icon in Linux so that a window pops up showing devices within
 range. This is often enough to Web Bluetooth to find your devices.
 
-### Connections to Puck.js sometimes fail
 
-The firmware that the first Puck.js shipped with only advertises every 700ms, which means
-that some devices/applications find it difficult to connect to it,
+### I can see the device, but can't connect to it.
 
-We'd recommend that you [update Puck.js's firmware](/Puck.js#firmware-updates)
-to a more recent version which advertises every 350ms and is much more reliable
-to connect to.
+[Update your device's firmware](#how-do-i-update-the-firmware-)
+to the most recent version - the very first firmware versions
+for Puck.js especially could have issues with some computers.
 
-**Note:** Other devices ship with much later firmware (1v90 and later) so
+**Note:** Non-Puck.js devices ship with much later firmware (1v90 and later) so
 are less likely to have these problems. It's always an idea to use the
 latest firmware though.
 
+Also see below:
+
+### I used to be able to connect, but now I can't
+
+* Check out "[I can't see my device any more](#i-can-t-see-my-device-any-more)"
+* Is your device battery powered? Check the battery voltage! Often a flat battery can provide
+enough power to advertise a Bluetooth LE device, but not enough to sustain a connection.
+* Check out "[I saved some code and my device no longer works](#i-saved-some-code-and-my-device-no-longer-works)"
 
 Device-specific
 ---------------
@@ -189,12 +196,17 @@ may not clear out saved code:
 
 * [Puck.js Hard Reset](/Puck.js#hard-reset)
 * [Pixl.js Hard Reset](/Pixl.js#hard-reset)
+* [MDBT42Q Hard Reset](/MDBT42Q#hard-reset)
 
 On most boards booting with BTN1 held down will usually boot without loading
 the saved code. However it won't have deleted your saved code. To do that,
-you'll need to log in and type `save()`. It's also an idea to type
-`require("Storage").eraseAll()` as well, as this will
-clear any JS code that was saved if `Save on Send` was turned on in the IDE.
+you'll need to log in and:
+
+* On 1v99 and later firmware type `reset(true)` to clear out any saved code
+* On old firmwares type `save()` after a fresh boot to save a 'fresh' state
+* You can also type `require("Storage").eraseAll()`, as this will
+clear any saved code, but will also remove any data that your code
+may have saved using the [Storage Library](/Reference#Storage)
 
 ### How can I change my Device's name?
 
