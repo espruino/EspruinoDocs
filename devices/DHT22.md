@@ -6,6 +6,10 @@ DHT22/AM230x/RHT0x Temperature and RH Sensor
 
 * KEYWORDS: Module,DHT21,DHT22,DHT33,DHT44,RHT01,RHT02,RHT03,RHT04,RHT05,AM2301,AM2302,AM2303,HM2301,temperature,humidity
 
+![DHT22 pins](DHT22/pins.jpg)
+
+Check the [datasheet](/datasheets/DHT22.pdf) for further details.
+
 Overview
 -----------------
 
@@ -60,7 +64,9 @@ Returns `-1` for the temperature and humidity (and `err:true`) if no data is rec
 
 In all cases, a field called `raw` is present which contains the raw data received, as a string of `1` and `0` characters.
 
-**Note:** You can also supply a second argument which is the number of retries if there is an error. The default is 10.
+**Note:** 
+You can also supply a second argument which is the number of retries if there is an error. The default is 10. Collecting period should be : >2 seconds.
+
 
 Buying
 -----
