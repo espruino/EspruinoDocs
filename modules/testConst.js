@@ -13,9 +13,11 @@ var C = {
 function neopixelInitLED(pin) {
   this.p = pin[0];
 }
+exports = neopixelInitLED;
 
 neopixelInitLED.prototype.MY_CONST = MY_CONST_TEST;
-exports = neopixelInitLED;
+neopixelInitLED.prototype.C = C;
+
 
 exports.create = function() {
   return new neopixelInitLED([A5]);
