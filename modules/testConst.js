@@ -6,3 +6,6 @@ var C = {
   PRIVATE : 0x001,     // description
   CONSTANTS : 0x00423  // description
 };
+
+exports MY_CONST_TEST;
+exports C;
