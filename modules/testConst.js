@@ -7,5 +7,5 @@ var C = {
   CONSTANTS : 0x00423  // description
 };
 
-// exports MY_CONST_TEST;
-exports C;
+//exports MY_CONST_TEST;
+//exports C;
