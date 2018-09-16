@@ -7,8 +7,8 @@ var C = {
   CONSTANTS : 0x00423  // description
 };
 
-//exports MY_CONST_TEST;
-//exports C;
+exports MY_CONST_TEST;
+exports C;
 
 function neopixelInitLED(pin) {
   this.p = pin[0];
