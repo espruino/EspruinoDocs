@@ -270,7 +270,7 @@ function turnOn(mode, callback) {
     at.cmd("\r\nAT+RST\r\n", 10000, function cb(d) {
       if (d=="ready" || d=="Ready.") setTimeout(function() {
         at.cmd("ATE0\r\n",1000,function cb(d) { // turn off echo
-          if (d=="ATE0") return cb;
+          if (d && d.trim()=="ATE0") return cb;
           if (d=="OK") {
             at.cmd("AT+CIPDINFO=1\r\n",1000,function(d) { // enable IP Info in +IPD
               if (d!="OK") return callback("CIPDINFO failed: "+(d?d:"Timeout"));

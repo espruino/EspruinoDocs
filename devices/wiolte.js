@@ -672,7 +672,7 @@ var gprsFuncs = {
           /* Case processing with a response */
           if(r === 'IIIIATE0' ||
            r === 'IIII' + String.fromCharCode(255) + 'ATE0' ||
-           r === 'ATE0') {
+           (r && r.trim()=="ATE0")) {
 
             // wait for OK
             return cb;

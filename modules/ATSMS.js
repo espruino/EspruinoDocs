@@ -22,7 +22,7 @@ Calls `callback(null)` on success, or callback(err_msg) on failure */
 ATSMS.prototype.init = function(callback) {
   var at = this.at;
   this.at.cmd("ATE0\r\n",3000,function cb(d) {
-    if (d=="ATE0") return cb;    
+    if (d && d.trim()=="ATE0") return cb;    
     if (d!="OK") callback("ATE0 ERROR "+d);
     at.cmd("AT+CMGF=1\r\n",1000,function(d) {
       if (callback) callback(d=="OK"?null:("CMGF ERROR "+d));
