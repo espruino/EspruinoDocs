@@ -475,7 +475,7 @@ function inferMarkdownFile(filename, fileContents) {
 
 function getThumbLinkHTML(a) {
   var thumb = (a.path in markdownThumbs) ? markdownThumbs[a.path] : markdownThumbs[""];
-  return `<a class="thumblink" href="${htmlLinks[a.path]}" title="${convertHTML(a.title)})"><img src="${thumb}" alt="${convertHTML(a.title)}" title="${convertHTML(a.title)}"></img><span>${convertHTML(a.title)}</span></a>`
+  return `<a class="thumblink" href="${htmlLinks[a.path]}" title="${convertHTML(a.title)}"><img src="${thumb}" alt="${convertHTML(a.title)}" title="${convertHTML(a.title)}"></img><span>${convertHTML(a.title)}</span></a>`
 }
 
 // -------------------------------------------------------------
