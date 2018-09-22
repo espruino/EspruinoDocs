@@ -154,7 +154,8 @@ class NeopixelInit {
     options.pinAryLedTestIdx = options.pinAryLedTestIdx || 0;
 
 //    options.numPixels = options.numPixels || NUM_PIXELS;
-    options.numPixels = options.numPixels || TT.NUM_PIXELS;
+//    options.numPixels = options.numPixels || TT.NUM_PIXELS;
+    options.numPixels = options.numPixels || 8;
     options.rgbSeq = options.rgbSeq || RGB_SEQ_WS2812;
 
     options.brightness = options.brightness || DEF_BRIGHTNESS;
