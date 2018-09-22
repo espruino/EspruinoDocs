@@ -23,6 +23,7 @@ exports = neopixelInitLED;
 
 const NUM_PIXELS = 8;
 
+var TT = { NUM_PIXELS : 8 };
 
 
 const RGB_SEQ_GRB = "GRB";
@@ -152,7 +153,8 @@ class NeopixelInit {
     options.pinAryLedTest = options.pinAryLedTest || PIN_PICO_LED;
     options.pinAryLedTestIdx = options.pinAryLedTestIdx || 0;
 
-    options.numPixels = options.numPixels || NUM_PIXELS;
+//    options.numPixels = options.numPixels || NUM_PIXELS;
+    options.numPixels = options.numPixels || TT.NUM_PIXELS;
     options.rgbSeq = options.rgbSeq || RGB_SEQ_WS2812;
 
     options.brightness = options.brightness || DEF_BRIGHTNESS;
