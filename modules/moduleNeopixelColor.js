@@ -12,7 +12,7 @@ class Color {
     if (typeof obj == "string") {
       
       // See if is a name or a specified RGB or hex value
-      var cvrt = cvrtHexStToHexN(obj);
+      var cvrt = this.cvrtHexStToHexN(obj);
       if (typeof cvrt == "number") {
         
             this.colorName = "notassigned";
