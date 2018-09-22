@@ -836,3 +836,7 @@ class Color {
 
 }
 exports = Color;
+
+exports.newcolor = function (name) {
+  return new Color(name);
+};
