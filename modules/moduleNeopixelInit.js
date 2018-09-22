@@ -195,7 +195,7 @@ options.rgbSeq = options.rgbSeq || "GRB";
     this.aryPrep = new Uint8ClampedArray(nArySizeRGB);
     this.aryBrig = new Uint8ClampedArray(nArySizeRGB);
     this.aryGcor = new Uint8ClampedArray(nArySizeRGB);
-
+const MAX_GAMMA = 256;
     this.aryGamm = new Uint8ClampedArray(MAX_GAMMA);
 
 
