@@ -177,7 +177,7 @@ class Color {
       }
 
     }
-    return cvrtHexToDec(shex);
+    return this.cvrtHexToDec(shex);
   }
 
 
