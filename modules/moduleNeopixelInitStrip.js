@@ -134,7 +134,11 @@ const DEF_BRIGHTNESS = 70;
 
 
 
+
+
 var g = E.compiledC(`
+// void set(int, int)
+// int get(int)
 int gc[256] = {
  42,43,44,45,46,47,48,42
 };
