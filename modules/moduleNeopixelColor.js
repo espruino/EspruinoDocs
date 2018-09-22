@@ -13,7 +13,7 @@
 
 class Color {
 
-  constructor(obj) {
+  constructor(obj, name) {
 
 
     if (typeof obj == "string") {
@@ -23,6 +23,12 @@ class Color {
 if( isHex ) {
                   this.colorName = "notassigned";
             this.colorRGB = obj;
+  
+  
+  if( typeof name == 'string' ) {
+    this.colorName = name;
+  }
+  
   
            console.log( "Color: obj " + obj );
 
@@ -155,6 +161,9 @@ console.log( "Color: match key " + key );
   setColorARGBJson(colorValJson) {
     this.colorValJson = colorValJson;
   }
+  setColorName(name) {
+    this.colorName = name;
+  }
 
 
   getColorA() {
@@ -176,7 +185,21 @@ console.log( "Color: match key " + key );
   getColorARGBJson() {
     return (this.colorValJson);
   }
-
+  getColorName(name) {
+    return (this.colorName);
+  }
+  getColorJSON() {
+                var vals = {};
+            vals.r = this.decR;
+            vals.g = this.decG;
+            vals.b = this.decB;
+            vals.n = this.colorName;
+            this.colorObjJson = JSON.parse(JSON.stringify(vals));    
+    return (this.colorObjJson);
+  }
+  
+  
+  
 
   cvrtHexToDec(hex) {
 
