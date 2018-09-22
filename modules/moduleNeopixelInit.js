@@ -1,102 +1,10 @@
 /* Copyright (c) 2018 Robin G Cox  See the file LICENSE for copying permission */
-/* Neopixel library for Espruino tm using WS2811 WS2812
- * Enables rapid development of Neopixel projects providing underlying methods for color and palettes
- *
- *      File:  moduleNeopixelInit.js
- *   Project:  Neopixel library for Espruino tm
- *    Module:  neopixelSetup{}  neopixelSetupEffects{}  neopixelSetupDevel{}
- *    Author:  Robin G. Cox
- * Copyright:  Robin G. Cox © 2018 owner Sleuthware All rights reserved
- *   Version:  1.0.a.18330904
- *   Created:  Sat 2018.09.01
- *   Contact:  @Robin   http://forum.espruino.com/profiles/116219/
- *   Updates:
- *
- * Author grants derivative works as long as this header and comments remain intact
- * Permission is required for commercial use
- *
- * Special thanks to @allObjects, @MaBe and @Gordon for their feedback, suggestions and code snippets
- *
- * Hardware tested on:
- * Neopixel WS2812 SK6812
- * Strip CJMCU-2812-8
- * CJMCU 8 Bit WS2812 5050 RGB LED Driver Development Board
- * https://www.parallax.com/sites/default/files/downloads/28085-WS2812B-RGB-LED-Datasheet.pdf
- *
- * Adapted from C++ code file and article from:
- * Adafruit_NeoPixel.cpp
- * https://learn.adafruit.com/
- * hsv2rgb.cpp
- * http://fastled.io/
- *
- *
- * Usage:
- * require("neopixelInit").neopixelInit(options);
- * var options = { 'pinLedTest':'[A5]','pinNeopixel':pinAryNeopixel[1],'optionBase':OPTION_BASE_ZERO };
- * var neo = new neopixelInit( options );
- * Type: help()  or  h()  for accessor methods list
- */
-
-
-
-
 
 
 
 
 //process.memory();
 //process.env;
-
-
-
-//1003
-
-
-//Module modeled after:
-//http://www.espruino.com/modules/GroveRelay.js
-//http://www.espruino.com/modules/MySensors.js
-//http://www.espruino.com/modules/Ping.js
-
-
-//Reference
-//http://www.espruino.com/Writing+Modules
-//http://www.espruino.com/InlineC
-
-
-
-
-//Reference
-//http://www.espruino.com/WS2811
-//http://www.espruino.com/Individually+Addressable+LEDs
-//https://www.espruino.com/Pico+Buttons
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
-//https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes
-//https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
-
-
-
-
-//standard NPM naming convention
-//https://docs.npmjs.com/misc/coding-style
-//Node Package Manager
-//https://www.npmjs.com/package/standard
-
-
-
-//https://cdn-shop.adafruit.com/datasheets/WS2811.pdf
-//https://cdn-shop.adafruit.com/datasheets/WS2812.pdf
-
-
-//https://cdn-shop.adafruit.com/product-files/1138/SK6812+LED+datasheet+.pdf
-//GRB not RGB
-//G7 G6 G5 G4 G3 G2 G1 G0 R7 R6 R5 R4 R3 R2 R1 R0 B7 B6 B5 B4 B3 B2 B1 B0
-
-
-// https://developers.google.com/closure/compiler/docs/js-for-compiler
-// http://closure-compiler.appspot.com/home
-
 
 
 
