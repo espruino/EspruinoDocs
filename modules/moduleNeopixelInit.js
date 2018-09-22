@@ -454,7 +454,7 @@ const DEF_BRIGHTNESS = 70;
 
 
 /*
-var g = E.compiledC(`
+var g = E.compiledC("
 // void set(int, int)
 // int get(int)
 int gc[256] = {
@@ -466,7 +466,7 @@ void set(int idx, int val){
 int get(int idx){
   return( gc[idx] );
 }
-`);
+");
 */
 
 
