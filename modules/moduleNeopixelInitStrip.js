@@ -149,7 +149,8 @@ int get(int idx){
   return( gc[idx] );
 }
 `);
-
+//http://www.espruino.com/InlineC
+exports = g;
 
 
 
