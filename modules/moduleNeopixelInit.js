@@ -143,7 +143,8 @@ class NeopixelInit {
 
 
     if (typeof options != "object") options = {};
-    options.optionBase = options.optionBase || OPTION_BASE_ZERO;
+//    options.optionBase = options.optionBase || OPTION_BASE_ZERO;
+    options.optionBase = options.optionBase || 0;
     options.pinAryNeopixel = options.pinAryNeopixel || PIN_PICO_NEOPIXEL;
     options.pinAryNeoIdx = options.pinAryNeoIdx || 0;
     options.pinLedTest = options.pinLedTest || PIN_PICO_LED;
