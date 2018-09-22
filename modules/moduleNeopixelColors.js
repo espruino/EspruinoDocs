@@ -17,6 +17,14 @@ var RGB = {
   
   // The above are gamma adj rainbow colors
   
+  AliceBlue  : "F0F8FF",
+  AntiqueWhite : "FAEBD7",
+  Aqua       : "00FFFF",
+  Aquamarine : "7FFFD4",
+  Azure      : "F0FFFF",
+  
+  
+  
   BlueViolet : "8A2BE2",
   Brown      : "A52A2A",
   BurlyWood  : "DEB887",
@@ -24,8 +32,12 @@ var RGB = {
   Chartreuse : "7FFF00",
   Chocolate  : "D2691E",
   Coral      : "FF7F50",
-  CornflowerBlue : "6495ED"
+  CornflowerBlue : "6495ED",
   
+  
+  
+  
+  WhiteSmoke : "F5F5F5"
   
 };
 
@@ -37,11 +49,7 @@ exports = RGB;
 
 
 Color Name	HEX	Color	Shades	Mix
-AliceBlue 	#F0F8FF	 	Shades	Mix
-AntiqueWhite 	#FAEBD7	 	Shades	Mix
-Aqua 	#00FFFF	 	Shades	Mix
-Aquamarine 	#7FFFD4	 	Shades	Mix
-Azure 	#F0FFFF	 	Shades	Mix
+
 Beige 	#F5F5DC	 	Shades	Mix
 Bisque 	#FFE4C4	 	Shades	Mix
 Black 	#000000	 	Shades	Mix
