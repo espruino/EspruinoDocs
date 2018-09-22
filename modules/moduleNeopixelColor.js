@@ -1,12 +1,30 @@
 
 
 
+//https://www.w3schools.com/cssref/css_colors.asp
+
+
 class Color {
 
   constructor(obj) {
 
 
     if (typeof obj == "string") {
+      
+      // See if is a name or a specified RGB or hex value
+      var cvrt = cvrtHexStToHexN(obj);
+      if (typeof cvrt == "number") {
+        
+            this.colorName = "notassigned";
+            this.colorRGB = cvrt.substring(2, 8);
+      }
+
+
+
+    } else {
+        
+      
+      
       var objRGB = JSON.parse(JSON.stringify(RGB));
       var key;
 
@@ -22,7 +40,7 @@ class Color {
 
             this.colorName = key;
             this.colorRGB = objRGB[key];
-
+/*
             this.colorR = objRGB[key].substring(0, 2);
             this.colorG = objRGB[key].substring(2, 4);
             this.colorB = objRGB[key].substring(4, 6);
@@ -40,18 +58,42 @@ class Color {
             vals.b = this.decB;
             vals.n = this.colorName;
             this.colorObjJson = JSON.parse(JSON.stringify(vals));
-
+*/
 
 
           }
 
 
         }
+      //for (key in objRGB)  
       }
 
 
 
-    }
+   
+    } // else
+            this.colorR = objRGB[key].substring(0, 2);
+            this.colorG = objRGB[key].substring(2, 4);
+            this.colorB = objRGB[key].substring(4, 6);
+
+            this.decR = this.cvrtHexToDec(this.colorR);
+            this.decG = this.cvrtHexToDec(this.colorG);
+            this.decB = this.cvrtHexToDec(this.colorB);
+
+            this.hexR = this.cvrtHexStToHexN(this.colorR);
+            this.hexG = this.cvrtHexStToHexN(this.colorG);
+            this.hexB = this.cvrtHexStToHexN(this.colorB);
+            var vals = {};
+            vals.r = this.decR;
+            vals.g = this.decG;
+            vals.b = this.decB;
+            vals.n = this.colorName;
+            this.colorObjJson = JSON.parse(JSON.stringify(vals));    
+    
+    
+    
+    
+    
     this.colorA = "FF";
     this.colorARGB = "ffffffff";
 
@@ -135,7 +177,7 @@ class Color {
       }
 
     }
-    return (shex);
+    return cvrtHexToDec(shex);
   }
 
 
