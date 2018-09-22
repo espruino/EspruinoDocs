@@ -291,8 +291,8 @@ const MAX_GAMMA = 256;
       //      console.log( "L[619] g.get(i) " +  g.get(nRGBCur) );
 
 
-      this.ac[i] = this.ag[i];
-      console.log("L[619] g.get(i) " + this.ac[i]);
+      this.ac[i] = this.ag[nRGBCur];
+      console.log("L[619] this.ac[i] " + this.ac[i]);
 
 
 
@@ -309,7 +309,8 @@ const MAX_GAMMA = 256;
     for (var i = 0; i < this.ab.length; i++) {
 
       //       console.log( "L[632] g.get(i) " +  g.get(i) );
-      console.log("L[632] g.get(i) " + this.ag[i]);
+//      console.log("L[632] g.get(i) " + this.ag[i]);
+      console.log("L[632] this.ac[i] " + this.ac[i]);
     }
   }
 
