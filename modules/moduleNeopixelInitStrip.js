@@ -49,7 +49,24 @@ exports = colorRGBRainbowPnk;
 exports = aryRainbow;
 var MAX_GAMMA = 256;
 var DEF_BRIGHTNESS = 70;
-var g = E.compiledC("\n// void set(int, int)\n// int get(int)\nint gc[256] = {\n 42,43,44,45,46,47,48,42\n};\nvoid set(int idx, int val){\n  gc[idx] = val;\n}\nint get(int idx){\n  return( gc[idx] );\n}\n");
+//var g = E.compiledC("\n// void set(int, int)\n// int get(int)\nint gc[256] = {\n 42,43,44,45,46,47,48,42\n};\nvoid set(int idx, int val){\n  gc[idx] = val;\n}\nint get(int idx){\n  return( gc[idx] );\n}\n");
+
+
+
+var g = E.compiledC(`
+// void set(int, int)
+// int get(int)
+int gc[256] = {
+ 42,43,44,45,46,47,48,42
+};
+void set(int idx, int val){
+  gc[idx] = val;
+}
+int get(int idx){
+  return( gc[idx] );
+}
+`);
+
 var NeopixelInit = function(options) {
   if (typeof options != "object") {
     options = {};
