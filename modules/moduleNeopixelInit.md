@@ -11,7 +11,7 @@ Enables rapid development of Neopixel projects providing underlying methods for 
 Use the [NeopixelInit](/modules/NeopixelInit.js) ([About Modules](/Modules)) module for it.
 
 
-How to use the NeopixelInit module:
+NeopixelInit module usage:
 
 ```
   var options = { 'pinLedTest':[A5]
@@ -24,6 +24,16 @@ How to use the NeopixelInit module:
   n.update();
 ```
 
+Methods
+-------
+
+```
+cleardata();
+```
+Remove previously created color data values from the prep array
+
+
+
 Reference
   ---------
 
@@ -33,5 +43,5 @@ Reference
   Using
   -----
 
-  * APPEND_USES: NeopixelInit
+  * APPEND_USES: NeopixelColor, NeopixelColors
   

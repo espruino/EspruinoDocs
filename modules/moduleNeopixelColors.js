@@ -6,16 +6,16 @@
 var RGB = {
   Red    : "FF0000",
   Orange : "AB5500",
-  Yellow : "ABAB00",
+//  Yellow : "ABAB00",
   Green  : "00FF00",
   
-  Aqua   : "00AB55",
-  Blue   : "0000FF",
+//  Aqua   : "00AB55",
+//  Blue   : "0000FF",
   Purple : "550055",
   Pink   : "AB0055",
   
+  // The above are gamma adjusted rainbow colors
   
-  // The above are gamma adj rainbow colors
   
   AliceBlue  : "F0F8FF",
   AntiqueWhite : "FAEBD7",
@@ -23,22 +23,39 @@ var RGB = {
   Aquamarine : "7FFFD4",
   Azure      : "F0FFFF",
   
-  
-  
+  Beige      : "F5F5DC",
+  Bisque     : "FFE4C4",
+  Black      : "000000",
+  BlanchedAlmond : "FFEBCD",
+  Blue       : "0000FF",
   BlueViolet : "8A2BE2",
   Brown      : "A52A2A",
   BurlyWood  : "DEB887",
+
   CadetBlue  : "5F9EA0",
   Chartreuse : "7FFF00",
   Chocolate  : "D2691E",
   Coral      : "FF7F50",
   CornflowerBlue : "6495ED",
+  Cornsilk   : "FFF8DC",
+  Crimson 	 : "DC143C",
+  Cyan       : "00FFFF",
+  DarkBlue   : "00008B",
+  DarkCyan   : "008B8B",
+
+
   
   
   
   
-  WhiteSmoke : "F5F5F5"
   
+
+  
+  Wheat      : "F5DEB3",
+  White      : "FFFFFF",
+  WhiteSmoke : "F5F5F5",
+  Yellow     : "FFFF00",
+  YellowGreen: "9ACD32"
 };
 
 exports = RGB;
@@ -52,24 +69,6 @@ exports = RGB;
 
 Color Name	HEX	Color	Shades	Mix
 
-Beige 	#F5F5DC	 	Shades	Mix
-Bisque 	#FFE4C4	 	Shades	Mix
-Black 	#000000	 	Shades	Mix
-BlanchedAlmond 	#FFEBCD	 	Shades	Mix
-Blue 	#0000FF	 	Shades	Mix
-BlueViolet 	#8A2BE2	 	Shades	Mix
-Brown 	#A52A2A	 	Shades	Mix
-BurlyWood 	#DEB887	 	Shades	Mix
-CadetBlue 	#5F9EA0	 	Shades	Mix
-Chartreuse 	#7FFF00	 	Shades	Mix
-Chocolate 	#D2691E	 	Shades	Mix
-Coral 	#FF7F50	 	Shades	Mix
-CornflowerBlue 	#6495ED	 	Shades	Mix
-Cornsilk 	#FFF8DC	 	Shades	Mix
-Crimson 	#DC143C	 	Shades	Mix
-Cyan 	#00FFFF	 	Shades	Mix
-DarkBlue 	#00008B	 	Shades	Mix
-DarkCyan 	#008B8B	 	Shades	Mix
 DarkGoldenRod 	#B8860B	 	Shades	Mix
 DarkGray 	#A9A9A9	 	Shades	Mix
 DarkGrey 	#A9A9A9	 	Shades	Mix
@@ -190,11 +189,6 @@ Thistle 	#D8BFD8	 	Shades	Mix
 Tomato 	#FF6347	 	Shades	Mix
 Turquoise 	#40E0D0	 	Shades	Mix
 Violet 	#EE82EE	 	Shades	Mix
-Wheat 	#F5DEB3	 	Shades	Mix
-White 	#FFFFFF	 	Shades	Mix
-WhiteSmoke 	#F5F5F5	 	Shades	Mix
-Yellow 	#FFFF00	 	Shades	Mix
-YellowGreen 	#9ACD32	 	Shades	Mix
 
 
 */
