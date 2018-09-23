@@ -4,7 +4,28 @@
 
 //https://www.w3schools.com/cssref/css_colors.asp
 
+var PALETTES = {
+  Rainbow    : [
+      Red,
+      Orange,
+      Yellow,
+      Green,
+      Aqua,
+      Blue,
+      Purple,
+      Pink ],
 
+  RedWhiteBlue : [
+      Red,
+      White,
+      Blue ]
+
+  
+  };
+
+
+
+/*
 var PALETTES = {
   Rainbow    : [
       RGB.Red,
@@ -23,6 +44,6 @@ var PALETTES = {
 
   
   };
-
+*/
 exports = PALETTES;
 
