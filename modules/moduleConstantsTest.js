@@ -12,7 +12,7 @@ var C = {
   R : "right",
   N : "north",
   E : "east",
-  S : "south"
+  S : "south",
   W : "west",
   T : "top",
   M : "middle",
