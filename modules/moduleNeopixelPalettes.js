@@ -20,6 +20,12 @@ console.log(items);
 
 
 
+
+var RGB = require("https://github.com/sleuthware/EspruinoDocs/blob/master/modules/moduleNeopixelColors.js");
+
+
+
+
 var PALETTES = {
   Rainbow    : [
       RGB.Red,

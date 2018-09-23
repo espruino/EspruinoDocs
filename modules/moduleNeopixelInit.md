@@ -79,6 +79,14 @@ See mapone()
 
 
 
+```
+buildRainbow()
+```
+Internal method used to create an eight element color palette array of gamma adjusted rainbow colors in the ROYGBIV color order.
+Make sure option param useGamma is set to false
+
+
+
 
 
 Reference
