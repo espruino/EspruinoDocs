@@ -34,7 +34,7 @@ var GROUPS = {
   
 };
 
-exports = GROUPS;
+//exports = GROUPS;
 
 
 
