@@ -21,6 +21,23 @@ console.log(items);
 
 
 var PALETTES = {
+  Rainbow    : [
+      RGB.Red,
+      RGB.Pink ],
+
+  RedWhiteBlue : [
+      RGB.Red,
+      RGB.White,
+      RGB.Blue ]
+
+  
+  };
+exports = PALETTES;
+
+
+
+/* nope
+var PALETTES = {
   [ Rainbow    : [
       RGB.Red,
       RGB.Pink ] ],
@@ -33,7 +50,7 @@ var PALETTES = {
   
   };
 exports = PALETTES;
-
+*/
 
 
 
