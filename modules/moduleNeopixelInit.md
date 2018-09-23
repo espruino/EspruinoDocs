@@ -24,6 +24,23 @@ NeopixelInit module usage:
   n.update();
 ```
 
+
+Params
+------
+
+```
+pinAryNeopixel
+```
+An array of output pin values for the specific device. Allows for multiple Neopixel strips.
+Must be an MOSI pin capable of addressing the WS2812 device. See specific device. Ref Pico: http://www.espruino.com/Pico
+
+```
+pinAryNeopixelIdx
+```
+Index into array for the default start up value. Remember array starts at element [0]
+ 
+
+
 Methods
 -------
 
@@ -37,8 +54,7 @@ Remove previously created color data values from the prep array
 Reference
   ---------
 
-  * APPEND_JSDOC: NeopixelInit.js
-  * APPEND_JSDOC: moduleNeopixelInit.js
+  * APPEND_JSDOC: NeopixelInit.js, moduleNeopixelInit.js
   
   Using
   -----
