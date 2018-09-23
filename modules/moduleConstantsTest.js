@@ -37,8 +37,6 @@ var GROUPS = {
 exports = GROUPS;
 
 
-var exports={};
-
 
 
 
