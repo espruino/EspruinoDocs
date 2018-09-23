@@ -1,3 +1,28 @@
+
+
+
+
+
+//var exports={};
+
+
+// @param
+// https://developers.google.com/closure/compiler/docs/js-for-compiler#tag-param
+//  /**
+//  * Queries a Baz for items.
+//  * @param {number} groupNum Subgroup id to query.
+//  * @param {string|number|null} term An itemName,
+//  *     or itemId, or null to search everything.
+//  * @return {string} Formatted string representation
+//  */
+
+
+/**
+* Creates an accessor to turn on an LED indicator
+* @param {obj} pin array - use element 0
+
+*/
+
 function neopixelInitLED(pin) {
   this.p = pin[0];
 }
@@ -39,12 +64,38 @@ var RGB_SEQ = RGB_SEQ_WS2812;
 
 var RGBSEQ = "GRB";
 
-const OPTION_BASE_ZERO = 0;
-const OPTION_BASE_ONE = 1;
+//const OPTION_BASE_ZERO = 0;
+//const OPTION_BASE_ONE = 1;
 
-var OPTION_BASE = OPTION_BASE_ZERO;
+//var OPTION_BASE = OPTION_BASE_ZERO;
 
 
+/*
+MOD123.prototype.C = {
+  MY : 0x013,         // description
+  PUBLIC : 0x0541,    // description
+  CONSTANTS : 0x023   // description
+};
+*/
+/*
+NeopixelInit.prototype.C = {
+  OPTION_BASE_ZERO : "Zero",
+  OPTION_BASE_ONE  : "One",
+  CONSTANTS : 0x023   // description
+};
+*/
+
+
+var C = {
+  OPTION_BASE_ZERO : "Zero",
+  OPTION_BASE_ONE  : "One",
+  
+  DEF_BRIGHTNESS   : 70,
+  MAX_GAMMA        : 256,
+
+  
+  CONSTANTS : 0x023   // description
+};
 
 
 var objRGB = [255, 0, 0];
@@ -128,9 +179,9 @@ exports = aryRainbow;
 
 
 
-const MAX_GAMMA = 256;
+//const MAX_GAMMA = 256;
 
-const DEF_BRIGHTNESS = 70;
+//const DEF_BRIGHTNESS = 70;
 
 
 
@@ -144,7 +195,7 @@ class NeopixelInit {
 
 
     if (typeof options != "object") options = {};
-//    options.optionBase = options.optionBase || OPTION_BASE_ZERO;
+    options.optionBase = options.optionBase || C.OPTION_BASE_ZERO;
     options.optionBase = options.optionBase || 0;
     options.pinAryNeopixel = options.pinAryNeopixel || PIN_PICO_NEOPIXEL;
     options.pinAryNeoIdx = options.pinAryNeoIdx || 0;
@@ -159,7 +210,7 @@ class NeopixelInit {
 //    options.rgbSeq = options.rgbSeq || RGB_SEQ_WS2812;
 options.rgbSeq = options.rgbSeq || "GRB";
 
-    options.brightness = options.brightness || DEF_BRIGHTNESS;
+    options.brightness = options.brightness || C.DEF_BRIGHTNESS;
     options.useGamma = options.useGamma || false;
 
 
@@ -195,8 +246,8 @@ options.rgbSeq = options.rgbSeq || "GRB";
     this.aryPrep = new Uint8ClampedArray(nArySizeRGB);
     this.aryBrig = new Uint8ClampedArray(nArySizeRGB);
     this.aryGcor = new Uint8ClampedArray(nArySizeRGB);
-const MAX_GAMMA = 256;
-    this.aryGamm = new Uint8ClampedArray(MAX_GAMMA);
+//const MAX_GAMMA = 256;
+    this.aryGamm = new Uint8ClampedArray(C.MAX_GAMMA);
 
 
     this.ad = new Uint8ClampedArray(nArySizeRGB);
@@ -204,7 +255,7 @@ const MAX_GAMMA = 256;
     this.ab = new Uint8ClampedArray(nArySizeRGB);
     this.ac = new Uint8ClampedArray(nArySizeRGB);
 
-    this.ag = new Uint8ClampedArray(MAX_GAMMA);
+    this.ag = new Uint8ClampedArray(C.MAX_GAMMA);
 
 
 
@@ -695,20 +746,108 @@ n.dispG();
 
 
 
-
+//class NeopixelInit{}
 }
+
+
+
+
+/*
+function neopixelInit(options) {
+  this.p = pin[0];
+}
+*/
+
+
+/*
+NeopixelInit.prototype.C = {
+  OPTION_BASE_ZERO : "Zero",
+  OPTION_BASE_ONE  : "One",
+  CONSTANTS : 0x023   // description
+};
+
+var C = {
+  OPTION_BASE_ZERO : "Zero",
+  OPTION_BASE_ONE  : "One",
+  
+  DEF_BRIGHTNESS   : 70,
+  MAX_GAMMA        : 256,
+
+  
+  CONSTANTS : 0x023   // description
+};
+
+*/
+
+
+//>n.CONST.GAMMA
+//=256
+NeopixelInit.prototype.CONST = {
+  GAMMA : C.MAX_GAMMA
+  
+};
+
+
 exports = NeopixelInit;
+//exports = CONST;
 
 
 
 
 
 
+/*
+>a=new Constants();
+=exports: {  }
+>a.CONST.GAMMA
+=256
+*/
+/*
+class Constants {
+  
+  
+  constructor() {
+  //this.OPTION_BASE_ZERO = "Zero";
+ 
+  }
+}
+
+Constants.prototype.CONST = {
+  GAMMA : C.MAX_GAMMA
+  
+};
+
+exports = Constants;
+*/
+
+
+//var exports={};
 
 
 
 
 
+
+//exports.NeopixelInit();
+
+/*
+function drb() {
+  var options = { 'pinLedTest':[A5]
+    ,'pinAryNeopixel':[B5,B15],'pinAryNeoIdx':1
+    ,'pinAryLedTest':[A3,A4,A5],'pinAryLedTestIdx':2
+    ,'useGamma':true,'brightness':70
+//    ,'optionBase':OPTION_BASE_ZERO };
+};
+  var n = new NeopixelInit( options );
+  n.alloff();
+  var aryRB = n.buildRainbow();
+//n.setaryprep( aryRB );
+  n.setdata( aryRB );
+  // nb.disp();
+//  n.copy();
+  n.update();
+}
+*/
 
 
 
