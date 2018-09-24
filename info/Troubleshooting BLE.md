@@ -215,6 +215,15 @@ Check out the reference pages for [NRF.setAdvertising](https://www.espruino.com/
 You can simply call `NRF.setAdvertising({},{name:"My Name"});` to change your Puck's advertised name!
 
 
+<a name="console"></a>
+### My code works when I'm connected via Bluetooth but stops when I disconnect
+
+Are you using `Serial1`? Perhaps to connect to a GSM/LTE, WiFi, or GPS?  When disconnected from Bluetooth, Espruino's REPL/'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` *if it has been initialised*. If you've got a [Serial](/USART) device on those pins then it will then stop working.
+
+To fix this, right at the top of your code that runs on initialisation (eg. the `onInit` function or `E.on('init', ...)` event), add the line `Bluetooth.setConsole()`, which will force the console onto Bluetooth. After `Bluetooth.setConsole()`, the console can still automatically move back to `Serial1` if there is some event that forces it (Bluetooth connect and disconnect), so you can *force* the console to stay on Bluetooth regardless with `Bluetooth.setConsole(true)` instead.
+
+
+
 Something else is wrong!
 -------------------------
 

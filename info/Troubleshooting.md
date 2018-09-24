@@ -262,11 +262,12 @@ function onInit() {
 This will call `setConsole` 1 second after boot, by which time USB should have initialised. Assuming your Espruino is battery powered, unplugging and replugging USB will then move the console back to USB, where the board can be programmed.
 
 
-## <a name="console"></a>Espruino works when connected to a computer, but stops when powered from something else
+<a name="console"></a>
+## Espruino works when connected to a computer, but stops when powered from something else
 
-Do you have a Serial device connected to pins `B6`/`B7` on the [Pico](/Pico) or [WiFi](/WiFi), or `A9`/`A10` on the [Original Espruino](/Original)? When disconnected from USB, Espruino's 'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` - which is on those pins. If you've got a Serial device on those pins then it won't work.
+Do you have a Serial device connected to pins `B6`/`B7` on the [Pico](/Pico) or [WiFi](/WiFi), or `A9`/`A10` on the [Original Espruino](/Original)? When disconnected from USB, Espruino's REPL/'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` - which is on those pins. If you've got a [Serial](/USART) device on those pins then it will then stop working.
 
-To fix this, right at the top of your code that runs on initialisation (eg. the `onInit` function or `E.on('init', ...)` event), add the line `USB.setConsole()`, which will force the console onto USB.
+To fix this, right at the top of your code that runs on initialisation (eg. the `onInit` function or `E.on('init', ...)` event), add the line `USB.setConsole()`, which will force the console onto USB. After `USB.setConsole()`, the console can still automatically move back to `Serial1` if there is some event that forces it (USB connect and disconnect), so you can *force* the console to stay on USB regardless with `USB.setConsole(true)` instead.
 
 Other reasons could be that the power supply you're using isn't supplying enougn current or is too low a voltage.
 
