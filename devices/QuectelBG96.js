@@ -119,6 +119,7 @@ var gprsFuncs = {
 /** Connect to the module:
 
 options = {
+lte : bool, Are we using LTE? This changes how we check if we're registered
 apn : optional access point name.
 username : optional username
 password : optional password
@@ -153,7 +154,7 @@ exports.connect = function(usart, options, callback) {
   });
 
   atcmd("ATE0").then(function() { // echo off
-    return atcmd("AT+CREG?"); // Check GSM registered
+    return atcmd(options.lte?"AT+CEREG?":"AT+CREG?"); // Check if LTE or GSM registered
   }).then(function(d) {
     var n = d.split(",")[1]; // 1=connected, 5=connected, roaming
     if (n!=1 && n!=5) throw new Error("GSM not registered, "+d);
