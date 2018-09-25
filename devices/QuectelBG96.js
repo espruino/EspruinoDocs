@@ -33,7 +33,7 @@ var netCallbacks = {
   },
   /* Close the socket. returns nothing */
   close: function(sckt) {
-    if(socks[sckt]) {
+    if(socks[sckt]!==undefined) {
       at.cmd(`AT+QICLOSE=${sckt}\r\n`,1000,function(/*d*/) {
         socks[sckt] = undefined;
       });
@@ -138,7 +138,9 @@ exports.connect = function(usart, options, callback) {
   });
   // Close handler
   at.registerLine('+QIURC: "closed"', function(line) {
-    socks[0|line.substr(17)] = undefined;
+    socks[0|line.substr(17)] = null;
+    // setting this to null forces send/recv to return -1, which then
+    // causes Espruino to actually call close on the socket
     busy = false;
   });
   // Handle socket open (or handle errors)
