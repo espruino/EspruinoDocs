@@ -23,7 +23,9 @@ Useful Code
 * [Better Analog readings using multiple readings and taking a median](http://forum.espruino.com/conversations/297218/#14365428)
 * [Writing a Module containing a class](http://forum.espruino.com/conversations/317394/#comment14111852)
 * [Module for producing custom format Date/Time Strings](http://forum.espruino.com/comments/13109698/)
-
+* [Creating a Neural Net on Espruino with Synaptic.js](http://forum.espruino.com/conversations/311688/)
+* [Repeatedly call the same code from inside a Promise chain](http://forum.espruino.com/conversations/325552/#comment14431230)
+* [Using Inline C to create LED patterns quickly](http://forum.espruino.com/conversations/325997/#14431325)
 
 Common Issues and Questions
 ---------------------------
@@ -42,7 +44,22 @@ Useful Information
 ------------------
 
 * [Web Bluetooth for iOS](http://forum.espruino.com/conversations/298547/)
-* [Hacking Espruino onto a Wristwatch](http://forum.espruino.com/conversations/280747/)
 * [How do HTTP requests work?](http://forum.espruino.com/conversations/1364/)
 * [List of I2C devices known to work on Espruino ESP8266](http://forum.espruino.com/conversations/286554/)
 * [Espruino and LoRaWan with RN2483](https://github.com/yerpj/TTN_with_Espruino/blob/master/QuickStart.md) (external link)
+
+
+Interesting Projects
+--------------------
+
+* [Pixl.js powered rock tumbler](https://github.com/urish/diy-tumbler)
+* [Real-life T-Rex Game](https://github.com/urish/real-trex-runner)
+* [Hacking Espruino onto a Wristwatch](http://forum.espruino.com/conversations/280747/)
+* [Espruino Pico Mario Clock](https://github.com/paulcockrell/espruino-mario-clock)
+* [Plastic Player – an Espruino nfc based controller for Spotify](http://brendandawes.com/projects/plastic­player2/)
+* [Bespoke Espruino conference badge for NodeConf 2017](http://forum.espruino.com/conversations/313468/)
+* [Controlling Retro Bubble LED displays](http://forum.espruino.com/conversations/311847)
+
+
+Are there other good references for Espruino or projects that you think
+should be added to this list? [Let us know here](https://github.com/espruino/EspruinoDocs/issues)
