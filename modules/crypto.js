@@ -16,8 +16,7 @@ exports.SHA1=function(msg){
   var K,N,M,i,j,H0,H1,H2,H3,H4;
   var W,a,b,c,d,e,s,T;
   var flt = 0xffffffff;
-  // I'm not sure why this is needed?
-  msg += String.fromCharCode(0x80);
+  msg = E.toString(msg)+'\x80';
   K = new Int32Array([ 0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6 ]);
   N = Math.ceil((msg.length/4 + 2)/16);
   M = new Array(N);
