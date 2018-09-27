@@ -112,7 +112,7 @@ There is more information below about using the [LCD](#lcd) and [onboard periphe
 
 Tutorials using Pixl.js:
 
-* APPEND_USES: Pixl.js
+* APPEND_USES: Pixl.js,-Arduino Shield
 
 Tutorials using Bluetooth LE:
 
@@ -169,6 +169,8 @@ Information
 * [Eagle CAD files](https://github.com/espruino/EspruinoBoard/tree/master/Pixl.js/eagle)
 * [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
 * [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
+* [3D model of Pixl.js in STL](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.stl) or [OpenSCAD](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.scad)
+* [SVG Vector drawing of Pixl.js with laser-cut case](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.svg)
 
 <a name="onboard"></a>LCD Screen
 --------------------------------
