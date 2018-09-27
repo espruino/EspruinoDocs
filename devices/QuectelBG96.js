@@ -72,8 +72,9 @@ var netCallbacks = {
     at.write(`AT+QISEND=${sckt},${data.length}\r\n`);
     setTimeout(function() {
       at.cmd(data,2000,function(d) {
+        dbg("AT+QISEND response "+JSON.stringify(d));
         if (d=="SEND OK") busy = false;
-        if (d=="SEND FAIL") socks[sckt] = undefined; // force socket close
+        if (d=="SEND FAIL") socks[sckt] = null; // force socket close
       });
       // now wait for a SEND OK or SEND FAIL
     }, 500);
@@ -98,7 +99,8 @@ var gprsFuncs = {
     else dbg = function(){};
     return {
       socks:socks,
-      sockData:sockData
+      sockData:sockData,
+      busy:busy
     };
   },
   "getVersion": function(callback) {
