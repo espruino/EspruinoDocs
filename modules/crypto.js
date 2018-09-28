@@ -51,5 +51,5 @@ exports.SHA1=function(msg){
   }
   M = [];
   split(H0);split(H1);split(H2);split(H3);split(H4);
-  return M;
+  return E.toUint8Array(M).buffer;
 };
