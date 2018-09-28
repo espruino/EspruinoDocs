@@ -43,13 +43,7 @@ The URL comes from clicking ```<>``` by the commit you were interested in.
 
 #### Load Module from NPM
 
-If you activate this option in Web IDE, you can load modules from the NPM repository. Right now it:
-
-* only loads the latest version there.
-* only works if the module contains a single file.
-* can cause some confusion with Espruino's modules, for instance [clock](http://www.espruino.com/clock).
-
-For example using ```require("async");``` will make the Web IDE loading the tar.gz file (with automatic extraction) of the module from [http://registry.npmjs.org/async](http://registry.npmjs.org/async).
+Earlier there was a beta option in Web IDE to load modules from the NPM repository. After some testing it was removed.
 
 #### Load Module from local folder
 
