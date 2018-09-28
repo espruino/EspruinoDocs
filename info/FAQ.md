@@ -151,16 +151,14 @@ See the table below:
 Is Espruino 100% JavaScript compatible?
 ---------------------------------------------------------------------------
 
-Espruino is probably about 95% JavaScript compatible: it implements a (large) subset of the full JavaScript specification. We also aim to make all functionality we do implement as standards-compliant as possible.
-We've skipped out some of the functionality that we hope people will never use when writing 'good' JavaScript. For instance:
+Espruino implements a (large) subset of the full JavaScript specification, but it isn't 100% complete. We aim to make all functionality we do implement as standards-compliant as possible.
 
-* Automatic Semicolon Insertion on Newlines
-* Labels for break statements
+Please check out [the Espruino Features Table](/Features) for a comprehensive
+list of the language features supported in Espruino.
 
-There are other things that probably are good ideas, but that we just haven't implemented yet, for instance Unicode (as it can be tricky to do without wasting RAM)
-And while we implement [a lot of JavaScript's standard library](/Reference), some of the less-used parts are missing because there just isn't enough memory to include them.
+While we implement [a lot of JavaScript's standard library](/Reference), some of the less-used parts are missing because there just isn't enough memory to include them.
 
-**In reality, if you're writing normal JavaScript code then you're unlikely to notice any difference between Espruino and normal JavaScript.** If you do hit any problems,please post up in the [[Forum]] with a code example and we will try and fix it if it's a bug, or a feature that we think people will use.
+**In reality, if you're writing normal JavaScript code then you're unlikely to notice any difference between Espruino and normal JavaScript.** If you do hit any problems, please post up in the [[Forum]] with a code example and we will try and fix it if it's a bug, or a feature that we think people will use.
 
 
 Will Espruino work on my board?
