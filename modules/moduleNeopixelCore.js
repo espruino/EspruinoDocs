@@ -114,7 +114,7 @@ neopixelInitLED.prototype.set = function(obj) {
 };
 
 
-exports = neopixelInitLED;
+exports.neopixelInitLED = neopixelInitLED;
 
 
 
@@ -247,7 +247,7 @@ exports = colorRGBRainbowBlu;
 exports = colorRGBRainbowPur;
 exports = colorRGBRainbowPnk;
 */
-exports = aryRainbow;
+exports.aryRainbow = aryRainbow;
 
 
 
@@ -498,7 +498,7 @@ class Color {
   
 
 }
-exports = Color;
+exports.Color = Color;
 
 
 
@@ -1203,7 +1203,7 @@ NeopixelInit.prototype.CONST = {
 };
 
 
-exports = NeopixelInit;
+exports.NeopixelInit = NeopixelInit;
 //exports = CONST;
 
 
@@ -1320,7 +1320,7 @@ console.log("L[1290] catch()    ***********" + e.toString());
 }
 //interval
 
-exports = interval;
+exports.interval = interval;
 
 
 
