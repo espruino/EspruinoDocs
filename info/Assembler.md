@@ -370,7 +370,9 @@ In order to be properly useful you'll probably want to access the current time:
 Compiling C Code
 --------------
 
-While you can't directly inline C code (yet!), once you have [installed a toolchain that will compile Espruino](https://github.com/espruino/Espruino/blob/master/README.md#building), you can compile C code with:
+You can also inline compile C code by using the [Inline C Compiler](/InlineC).
+
+Another way to compile C code is to use the [toolchain that will compile Espruino](https://github.com/espruino/Espruino/blob/master/README.md#building):
 
 ```Bash
 arm-none-eabi-gcc -mlittle-endian -mthumb -mcpu=cortex-m3  -mfix-cortex-m3-ldrd  -mthumb-interwork -mfloat-abi=soft -nostdinc -nostdlib -c test.c -o test.o
