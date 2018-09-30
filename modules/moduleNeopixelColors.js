@@ -1,17 +1,25 @@
+// NeopixelColors.js
+// Sat 2018.09.22
 
 
+
+//Table of X11 colors [X11COLORS] supported by popular browsers
+//Extended color keywords by color name
+
+
+//https://www.w3.org/TR/css-color-3/
 //https://www.w3schools.com/cssref/css_colors.asp
 
 
 var RGB = {
-  Red    : "FF0000",
+//  Red    : "FF0000",
   Orange : "AB5500",
 //  Yellow : "ABAB00",
   Green  : "00FF00",
   
 //  Aqua   : "00AB55",
 //  Blue   : "0000FF",
-  Purple : "550055",
+//  Purple : "550055",
   Pink   : "AB0055",
   
   // The above are gamma adjusted rainbow colors
@@ -44,18 +52,60 @@ var RGB = {
   DarkCyan   : "008B8B",
 
 
-  
-  
-  
-  
-  
+  DarkGoldenRod : "B8860B",
+  DarkGray   : "A9A9A9",
+  DarkGrey   : "A9A9A9",
+  DarkGreen  : "006400",
+  DarkKhaki  : "BDB76B",
+  DarkMagenta : "8B008B",
+  DarkOliveGreen : "556B2F",
+  DarkOrange : "FF8C00",
+  DarkOrchid : "9932CC",
+  DarkRed    : "8B0000",
+
+
+
+
 
   
+  
+  
+  
+  
+  
+  PowderBlue : "B0E0E6",
+  Purple     : "800080",
+  RebeccaPurple : "663399",
+  Red        : "FF0000",
+  RosyBrown  : "BC8F8F",
+  RoyalBlue  : "4169E1",
+
+  SaddleBrown : "8B4513",
+  Salmon     : "FA8072",
+  SandyBrown : "F4A460",
+  SeaGreen   : "2E8B57",
+  SeaShell   : "FFF5EE",
+  Sienna     : "A0522D",
+  Silver     : "C0C0C0",
+  SkyBlue    : "87CEEB",
+  SlateBlue  : "6A5ACD",
+  SlateGray  : "708090",
+  SlateGrey  : "708090",
+  Snow       : "FFFAFA",
+  SpringGreen : "00FF7F",
+  SteelBlue  : "4682B4",
+  Tan        : "D2B48C",
+  Teal       : "008080",
+  Thistle    : "D8BFD8",
+  Tomato     : "FF6347",
+  Turquoise  : "40E0D0",
+
+  Violet     : "EE82EE",
   Wheat      : "F5DEB3",
   White      : "FFFFFF",
   WhiteSmoke : "F5F5F5",
   Yellow     : "FFFF00",
-  YellowGreen: "9ACD32"
+  YellowGreen : "9ACD32"
 };
 
 exports = RGB;
@@ -69,16 +119,7 @@ exports = RGB;
 
 Color Name	HEX	Color	Shades	Mix
 
-DarkGoldenRod 	#B8860B	 	Shades	Mix
-DarkGray 	#A9A9A9	 	Shades	Mix
-DarkGrey 	#A9A9A9	 	Shades	Mix
-DarkGreen 	#006400	 	Shades	Mix
-DarkKhaki 	#BDB76B	 	Shades	Mix
-DarkMagenta 	#8B008B	 	Shades	Mix
-DarkOliveGreen 	#556B2F	 	Shades	Mix
-DarkOrange 	#FF8C00	 	Shades	Mix
-DarkOrchid 	#9932CC	 	Shades	Mix
-DarkRed 	#8B0000	 	Shades	Mix
+
 DarkSalmon 	#E9967A	 	Shades	Mix
 DarkSeaGreen 	#8FBC8F	 	Shades	Mix
 DarkSlateBlue 	#483D8B	 	Shades	Mix
@@ -163,32 +204,7 @@ PeachPuff 	#FFDAB9	 	Shades	Mix
 Peru 	#CD853F	 	Shades	Mix
 Pink 	#FFC0CB	 	Shades	Mix
 Plum 	#DDA0DD	 	Shades	Mix
-PowderBlue 	#B0E0E6	 	Shades	Mix
-Purple 	#800080	 	Shades	Mix
-RebeccaPurple 	#663399	 	Shades	Mix
-Red 	#FF0000	 	Shades	Mix
-RosyBrown 	#BC8F8F	 	Shades	Mix
-RoyalBlue 	#4169E1	 	Shades	Mix
-SaddleBrown 	#8B4513	 	Shades	Mix
-Salmon 	#FA8072	 	Shades	Mix
-SandyBrown 	#F4A460	 	Shades	Mix
-SeaGreen 	#2E8B57	 	Shades	Mix
-SeaShell 	#FFF5EE	 	Shades	Mix
-Sienna 	#A0522D	 	Shades	Mix
-Silver 	#C0C0C0	 	Shades	Mix
-SkyBlue 	#87CEEB	 	Shades	Mix
-SlateBlue 	#6A5ACD	 	Shades	Mix
-SlateGray 	#708090	 	Shades	Mix
-SlateGrey 	#708090	 	Shades	Mix
-Snow 	#FFFAFA	 	Shades	Mix
-SpringGreen 	#00FF7F	 	Shades	Mix
-SteelBlue 	#4682B4	 	Shades	Mix
-Tan 	#D2B48C	 	Shades	Mix
-Teal 	#008080	 	Shades	Mix
-Thistle 	#D8BFD8	 	Shades	Mix
-Tomato 	#FF6347	 	Shades	Mix
-Turquoise 	#40E0D0	 	Shades	Mix
-Violet 	#EE82EE	 	Shades	Mix
+
 
 
 */
