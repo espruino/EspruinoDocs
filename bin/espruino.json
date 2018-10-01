@@ -1025,6 +1025,11 @@
       "!doc": "<p>Provide assembly to Espruino.</p>\n<p><strong>This function is not part of Espruino</strong>. Instead, it is detected\nby the Espruino IDE (or command-line tools) at upload time and is\nreplaced with machine code and an <code>E.nativeCall</code> call.</p>\n<p>See <a href=\"http://www.espruino.com/Assembler\">the documentation on the Assembler</a> for more information.</p>\n",
       "!url": "http://www.espruino.com/Reference#l_E_asm"
     },
+    "compiledC": {
+      "!type": "fn(callspec: ?)",
+      "!doc": "<p>Provide inline c code to Espruino.</p>\n<p><strong>This function is not part of Espruino</strong>. Instead, it is detected\nby the Espruino IDE (or command-line tools) at upload time and is\nreplaced with machine code and an <code>E.nativeCall</code> call.</p>\n<p>See <a href=\"http://www.espruino.com/InlineC\">the documentation on the inline c compiler</a> for more information.</p>\n",
+      "!url": "http://www.espruino.com/Reference#l_E_compiledC"
+    },
     "reboot": {
       "!type": "fn()",
       "!doc": "<p>Forces a hard reboot of the microcontroller - as close as possible\nto if the reset pin had been toggled.</p>\n<p><strong>Note:</strong> This is different to <code>reset()</code>, which performs a software\nreset of Espruino (resetting the interpreter and pin states, but not\nall the hardware)</p>\n",
