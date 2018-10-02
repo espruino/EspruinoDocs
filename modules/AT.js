@@ -36,9 +36,10 @@ exports.connect = function (ser) {
     if (dbg) console.log("] "+JSON.stringify(d));
     if (handlers) {
       for (var h in handlers) {
-        if (line.substr(0,h.length)==h) {
+        while (line.substr(0,h.length)==h) {
+          var pre = line;
           line = handlers[h](line);
-          //console.log("HANDLER] "+JSON.stringify(line));
+          //if (dbg) console.log("HANDLER] "+JSON.stringify(pre)+"=>"+JSON.stringify(line)+" ("+h+")");
         }
       }
     }
@@ -47,7 +48,7 @@ exports.connect = function (ser) {
       var l = line.substr(0,i);
       //if (dbg) console.log("]>"+JSON.stringify(l));
       var handled = false;
-      if (l.length>0) {        
+      if (l.length>0) {
         for (var h in lineHandlers)
           if (l.substr(0,h.length)==h) {
             lineHandlers[h](l);
@@ -118,6 +119,7 @@ exports.connect = function (ser) {
     },
     // Just write to the device - nothing else
     "write" : function(command) {
+      //if (dbg) console.log("[W"+JSON.stringify(command),lineCallback?"[BUSY]":"");
       ser.write(command);
     },
     // send a command, but also register for a certain type of response lines (key)
