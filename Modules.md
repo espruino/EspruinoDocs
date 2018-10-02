@@ -6,7 +6,7 @@ Modules
 
 * KEYWORDS: Modules,Libraries
 
-In Espruino, Modules are pieces of pre-written code (libraries) that perform common tasks, such as interfacing to different bits of hardware.
+In Espruino, Modules are pieces of pre-written code that perform common tasks, such as interfacing to different bits of hardware. On this site we generally mean the same thing when referring to "modules" or "libraries".
 
 They can either be JS modules that are loaded from the internet on demand, or they may come compiled in to the Espruino firmware itself.
 
@@ -14,6 +14,8 @@ They can either be JS modules that are loaded from the internet on demand, or th
 
 Working with Modules
 --------------------
+
+**Note:** Module names are case **sensitive**. For example `require("WiFi")` and `require("Wifi")` do not do the same thing.
 
 ### Espruino Web IDE
 
@@ -56,6 +58,25 @@ require("https://github.com/espruino/EspruinoDocs/blob/d4996cb3179abe260c030ed02
 The URL comes from clicking ```<>``` by the commit you were interested in.
 
 **Note:** You can use any URL, however because the Web IDE runs in a browser, the server that you access files from must have [Cross Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) headers enabled.
+
+#### Modules from Storage
+
+On Espruino `2v00` and above on devices with enough memory you can write a
+module to Espruino's flash memory using the built-in [`Storage`](http://www.espruino.com/Reference#Storage) module. It'll then be loaded automatically by Espruino:
+
+```
+require("Storage").write("answer",`
+exports.get = function() {
+  return 42;
+};`)
+print(require("answer").get());
+// prints 42
+```
+
+**Note:** Modules written to Espruino's flash memory can only have names that
+are a maximum of 8 characters long.
+
+**Note:** The Espruino Web IDE and Command-line tools will be unaware of extra modules inside Espruino. When uploading code they may attempt to find your module online and complain that the module is not found, but once uploaded your code will still work fine.
 
 #### Load Module from NPM
 
