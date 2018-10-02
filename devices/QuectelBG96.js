@@ -34,6 +34,7 @@ var netCallbacks = {
   /* Close the socket. returns nothing */
   close: function(sckt) {
     if(socks[sckt]!==undefined) {
+      sockData[sckt]=""; // clear socket data
       at.cmd(`AT+QICLOSE=${sckt}\r\n`,1000,function(/*d*/) {
         socks[sckt] = undefined;
       });
@@ -71,8 +72,9 @@ var netCallbacks = {
     busy = true;
     at.write(`AT+QISEND=${sckt},${data.length}\r\n`);
     setTimeout(function() {
-      at.cmd(data,2000,function(d) {
+      at.cmd(data,2000,function cb(d) {
         dbg("AT+QISEND response "+JSON.stringify(d));
+        if (d=="> ") return cb;
         if (d=="SEND OK") busy = false;
         if (d=="SEND FAIL") socks[sckt] = null; // force socket close
       });
@@ -95,7 +97,7 @@ function atcmd(cmd,timeout) {
 
 var gprsFuncs = {
   "debug" : function(on) {
-    if (on || on===undefined) dbg = function(t){print("[M35]",t);}
+    if (on || on===undefined) dbg = function(t){print("[BG96]",t);}
     else dbg = function(){};
     return {
       socks:socks,
