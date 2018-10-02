@@ -50,7 +50,7 @@ List of ES5 features from http://kangax.github.io/compat-table/es5/
 |---------|-----------------------|
 | Strict Mode | - |
 | Multiline String Literals | - |
-| Accessors (Getters and Setters)  | `1v100`  `Official` |
+| Accessors (Getters and Setters)  | `2v00`  `Official` |
 | Trailing commas in object/array | `Yes` |
 | Reserved word as property keys | `Yes` |
 | `Object.create/defineProperty/defineProperties` | `Yes` |
@@ -106,16 +106,16 @@ List of ES6 features from http://es6-features.org:
 | Class Inheritance, Base Class Access | `1v96` `Official` |
 | Class Inheritance from Expressions | - |
 | Class Static Members | `1v96` `Official` |
-| Class Getters/Setters | `1v100` `Official` |
+| Class Getters/Setters | `2v00` `Official` |
 | Symbol Type | - |
 | Iterators | - |
 | Generators | - |
 | Map/Set/WeakMap/WeakSet | - |
 | Typed Arrays | `Yes` |
 | `Object.assign` | `Yes` |
-| `[].findIndex` | `1v100` `Official` |
+| `[].findIndex` | `2v00` `Official` |
 | `"".repeat` | - |
-| `"".startsWith/endsWith/includes` | `1v100` `Official` |
+| `"".startsWith/endsWith/includes` | `2v00` `Official` |
 | `Number.isNaN/isFinite` | - (global `isNaN/isFinite` are implemented) |
 | `Number.isSafeInteger` | - |
 | `Number.EPSILON` | - |
