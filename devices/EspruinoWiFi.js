@@ -159,8 +159,11 @@ var netCallbacks = {
     at.cmd(cmd, 2000, function cb(d) {
       //console.log("SEND "+JSON.stringify(d));
       if (d=="OK") {
-      } else if (d=="> ") {
-        at.write(data);
+        at.register('> ', function(l) {
+          at.unregister('> ');
+          at.write(data);
+          return l.substr(2);
+        });
       } else if (d=="Recv "+data.length+" bytes" || d=="busy s...") {
         // all good, we expect this
         // Not sure why we get "busy s..." in this case (2 sends one after the other) but it all seems ok.
@@ -171,6 +174,7 @@ var netCallbacks = {
         return;
       } else {
         socks[sckt]=undefined; // uh-oh. Error. If undefined it was probably a timeout
+        at.unregister('> ');
         return;
       }
       return cb;

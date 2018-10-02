@@ -169,11 +169,14 @@ var netCallbacks = {
     }
 
     var cmd = 'AT+CIPSEND='+sckt+','+data.length+extra+'\r\n';
-    at.cmd(cmd, 2000, function cb(d) {
+    at.cmd(cmd, 10000, function cb(d) {
       //console.log("SEND "+JSON.stringify(d));
       if (d=="OK") {
-      } else if (d=="> ") {
-        at.write(data);
+        at.register('> ', function(l) {
+          at.unregister('> ');
+          at.write(data);
+          return l.substr(2);
+        });
       } else if (d=="Recv "+data.length+" bytes" || d=="busy s...") {
         // all good, we expect this
         // Not sure why we get "busy s..." in this case (2 sends one after the other) but it all seems ok.
@@ -184,9 +187,10 @@ var netCallbacks = {
         return;
       } else {
         socks[sckt]=undefined; // uh-oh. Error. If undefined it was probably a timeout
+        at.unregister('> ');
         return;
       }
-      return cb;
+      return cb
     });
     // if we obey the above, we shouldn't get the 'busy p...' prompt
     socks[sckt]="Wait"; // wait for data to be sent
