@@ -36,8 +36,9 @@ exports.connect = function (ser) {
     if (dbg) console.log("] "+JSON.stringify(d));
     if (handlers) {
       for (var h in handlers) {
-        while (line.substr(0,h.length)==h) {
-          var pre = line;
+        var pre;
+        while (pre!=line && line.substr(0,h.length)==h) {
+          pre = line;
           line = handlers[h](line);
           //if (dbg) console.log("HANDLER] "+JSON.stringify(pre)+"=>"+JSON.stringify(line)+" ("+h+")");
         }
