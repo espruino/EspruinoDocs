@@ -36,10 +36,10 @@ exports.connect = function (ser) {
     if (dbg) console.log("] "+JSON.stringify(d));
     if (handlers) {
       for (var h in handlers) {
-        var pre;
-        while (pre!=line && line.substr(0,h.length)==h) {
-          pre = line;
+        while (line.substr(0,h.length)==h) {
+          var pre = line;
           line = handlers[h](line);
+          if (pre==line) return; // handler needs more data
           //if (dbg) console.log("HANDLER] "+JSON.stringify(pre)+"=>"+JSON.stringify(line)+" ("+h+")");
         }
       }
