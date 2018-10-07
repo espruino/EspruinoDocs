@@ -1,3 +1,25 @@
+/* Copyright (c) 2018 Robin G Cox  See the file LICENSE for copying permission */
+
+/* Neopixel library for Espruino tm
+ *  Table of X11 colors [X11COLORS] supported by popular browsers
+ *   Extends color values by color name reference
+ *
+ *      File:  NeopixelColors.js
+ *   Project:  Neopixel library for Espruino tm
+ *    Module:  NeopixelColors{}  NeopixelCore{}  NeopixelEffects{}
+ *    Author:  Robin G. Cox
+ * Copyright:  Robin G. Cox © 2018 owner Sleuthware All rights reserved
+ *   Version:  1.0.a.18350922
+ *   Created:  Sat 2018.09.22
+ *   Contact:  @Robin   http://forum.espruino.com/microcosms/116/    Home >> Official Espruino Boards >> JavaScript
+ * Reference:  https://www.w3.org/TR/css-color-3/     https://www.w3schools.com/cssref/css_colors.asp     https://en.wikipedia.org/wiki/X11_color_names
+ *   Updates:
+
+
+ */
+
+
+
 // NeopixelColors.js
 // Sat 2018.09.22
 
@@ -11,16 +33,16 @@
 //https://www.w3schools.com/cssref/css_colors.asp
 
 
-var RGB = {
+const RGB = {
 //  Red    : "FF0000",
-  Orange : "AB5500",
+//  Orange : "AB5500",
 //  Yellow : "ABAB00",
-  Green  : "00FF00",
+//  Green  : "00FF00",
   
 //  Aqua   : "00AB55",
 //  Blue   : "0000FF",
 //  Purple : "550055",
-  Pink   : "AB0055",
+//  Pink   : "AB0055",
   
   // The above are gamma adjusted rainbow colors
   
@@ -48,10 +70,9 @@ var RGB = {
   Cornsilk   : "FFF8DC",
   Crimson 	 : "DC143C",
   Cyan       : "00FFFF",
+ 
   DarkBlue   : "00008B",
   DarkCyan   : "008B8B",
-
-
   DarkGoldenRod : "B8860B",
   DarkGray   : "A9A9A9",
   DarkGrey   : "A9A9A9",
@@ -61,20 +82,73 @@ var RGB = {
   DarkOliveGreen : "556B2F",
   DarkOrange : "FF8C00",
   DarkOrchid : "9932CC",
+
   DarkRed    : "8B0000",
+  DarkSalmon : "E9967A",
+  DarkSeaGreen : "8FBC8F",
+  DarkSlateBlue : "483D8B",
+  DarkSlateGray : "2F4F4F",
+  DarkSlateGrey : "2F4F4F",
+  DarkTurquoise : "00CED1",
+  DarkViolet  : "9400D3",
+  DeepPink    : "FF1493",
+  DeepSkyBlue : "00BFFF",
+  DimGray     : "696969",
+  DimGrey     : "696969",
+  DodgerBlue  : "1E90FF",
+ 
+  FireBrick   : "B22222",
+  FloralWhite : "FFFAF0",
+  ForestGreen : "228B22",
+  Fuchsia     : "FF00FF",
+
+  Gainsboro   : "DCDCDC",
+  GhostWhite  : "F8F8FF",
+  Gold        : "FFD700",
+  GoldenRod   : "DAA520",
+  Gray        : "808080",
+  Grey        : "808080",
+  Green       : "008000",
+  GreenYellow : "ADFF2F",
+
+  HoneyDew    : "F0FFF0",
+
+
+  
 
 
 
 
 
+
+
+
   
   
   
-  
-  
-  
+  Moccasin   : "FFE4B5",
+  NavajoWhite : "FFDEAD",
+  Navy       : "000080",
+
+  OldLace    : "FDF5E6",
+  Olive      : "808000",
+  OliveDrab  : "6B8E23",
+  Orange     : "FFA500",
+  OrangeRed  : "FF4500",
+  Orchid     : "DA70D6",
+
+  PaleGoldenRod : "EEE8AA",
+  PaleGreen  : "98FB98",
+  PaleTurquoise : "AFEEEE",
+  PaleVioletRed : "DB7093",
+  PapayaWhip : "FFEFD5",
+  PeachPuff  : "FFDAB9",
+  Peru       : "CD853F",
+  Pink       : "FFC0CB",
+  Plum       : "DDA0DD",
   PowderBlue : "B0E0E6",
   Purple     : "800080",
+
   RebeccaPurple : "663399",
   Red        : "FF0000",
   RosyBrown  : "BC8F8F",
@@ -94,6 +168,7 @@ var RGB = {
   Snow       : "FFFAFA",
   SpringGreen : "00FF7F",
   SteelBlue  : "4682B4",
+
   Tan        : "D2B48C",
   Teal       : "008080",
   Thistle    : "D8BFD8",
@@ -120,31 +195,7 @@ exports = RGB;
 Color Name	HEX	Color	Shades	Mix
 
 
-DarkSalmon 	#E9967A	 	Shades	Mix
-DarkSeaGreen 	#8FBC8F	 	Shades	Mix
-DarkSlateBlue 	#483D8B	 	Shades	Mix
-DarkSlateGray 	#2F4F4F	 	Shades	Mix
-DarkSlateGrey 	#2F4F4F	 	Shades	Mix
-DarkTurquoise 	#00CED1	 	Shades	Mix
-DarkViolet 	#9400D3	 	Shades	Mix
-DeepPink 	#FF1493	 	Shades	Mix
-DeepSkyBlue 	#00BFFF	 	Shades	Mix
-DimGray 	#696969	 	Shades	Mix
-DimGrey 	#696969	 	Shades	Mix
-DodgerBlue 	#1E90FF	 	Shades	Mix
-FireBrick 	#B22222	 	Shades	Mix
-FloralWhite 	#FFFAF0	 	Shades	Mix
-ForestGreen 	#228B22	 	Shades	Mix
-Fuchsia 	#FF00FF	 	Shades	Mix
-Gainsboro 	#DCDCDC	 	Shades	Mix
-GhostWhite 	#F8F8FF	 	Shades	Mix
-Gold 	#FFD700	 	Shades	Mix
-GoldenRod 	#DAA520	 	Shades	Mix
-Gray 	#808080	 	Shades	Mix
-Grey 	#808080	 	Shades	Mix
-Green 	#008000	 	Shades	Mix
-GreenYellow 	#ADFF2F	 	Shades	Mix
-HoneyDew 	#F0FFF0	 	Shades	Mix
+
 HotPink 	#FF69B4	 	Shades	Mix
 IndianRed  	#CD5C5C	 	Shades	Mix
 Indigo  	#4B0082	 	Shades	Mix
@@ -186,25 +237,6 @@ MediumVioletRed 	#C71585	 	Shades	Mix
 MidnightBlue 	#191970	 	Shades	Mix
 MintCream 	#F5FFFA	 	Shades	Mix
 MistyRose 	#FFE4E1	 	Shades	Mix
-Moccasin 	#FFE4B5	 	Shades	Mix
-NavajoWhite 	#FFDEAD	 	Shades	Mix
-Navy 	#000080	 	Shades	Mix
-OldLace 	#FDF5E6	 	Shades	Mix
-Olive 	#808000	 	Shades	Mix
-OliveDrab 	#6B8E23	 	Shades	Mix
-Orange 	#FFA500	 	Shades	Mix
-OrangeRed 	#FF4500	 	Shades	Mix
-Orchid 	#DA70D6	 	Shades	Mix
-PaleGoldenRod 	#EEE8AA	 	Shades	Mix
-PaleGreen 	#98FB98	 	Shades	Mix
-PaleTurquoise 	#AFEEEE	 	Shades	Mix
-PaleVioletRed 	#DB7093	 	Shades	Mix
-PapayaWhip 	#FFEFD5	 	Shades	Mix
-PeachPuff 	#FFDAB9	 	Shades	Mix
-Peru 	#CD853F	 	Shades	Mix
-Pink 	#FFC0CB	 	Shades	Mix
-Plum 	#DDA0DD	 	Shades	Mix
-
 
 
 */
