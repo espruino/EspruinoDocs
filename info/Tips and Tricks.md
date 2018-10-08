@@ -26,6 +26,7 @@ Useful Code
 * [Creating a Neural Net on Espruino with Synaptic.js](http://forum.espruino.com/conversations/311688/)
 * [Repeatedly call the same code from inside a Promise chain](http://forum.espruino.com/conversations/325552/#comment14431230)
 * [Using Inline C to create LED patterns quickly](http://forum.espruino.com/conversations/325997/#14431325)
+* [Counting up and down on a Web page with a Puck.js](http://forum.espruino.com/conversations/326269/)
 
 Common Issues and Questions
 ---------------------------
@@ -38,6 +39,7 @@ Common Issues and Questions
 * [Setting Espruino's time from HTTP Headers](http://forum.espruino.com/conversations/280894/#12755183)
 * [Custom arrangements of Neopixel/WS2812/etc RGB LED Matrices](http://forum.espruino.com/conversations/315564/)
 * [Detecting I2C peripherals on a I2C bus](http://forum.espruino.com/conversations/278556/#12663043)
+* [How do I measure battery voltage on devices that don't have `E.getBattery`?](http://forum.espruino.com/conversations/326231/#14441504)
 
 
 Useful Information
