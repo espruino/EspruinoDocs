@@ -48,6 +48,8 @@ function onInit() {
   },1000);
 }
 
+onInit(); // remove this line if you're planning on saving to flash
+
 // -------------------------------------------------------------------
 // Upload the following to a Pixl.js
 
@@ -74,3 +76,5 @@ function onInit() {
       updateDisplay(dev.manufacturerData);
   });
 }
+
+onInit(); // remove this line if you're planning on saving to flash
