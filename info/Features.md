@@ -39,7 +39,11 @@ General
 | `Object.propertyIsEnumerable` | - |
 | `with` keyword | - |
 | Semicolon insertion on newlines | - `return\n42;` returns `42` in Espruino. |
+| Function Hoisting | - |
 
+**Note:** [Espruino executes code](/Performance) by parsing as
+it executes. Function Hoisting wasn't implemented as it would require
+two passes, which would slow down execution.
 
 ES5
 ---
