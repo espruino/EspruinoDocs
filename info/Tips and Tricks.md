@@ -49,7 +49,7 @@ Useful Information
 * [How do HTTP requests work?](http://forum.espruino.com/conversations/1364/)
 * [List of I2C devices known to work on Espruino ESP8266](http://forum.espruino.com/conversations/286554/)
 * [Espruino and LoRaWan with RN2483](https://github.com/yerpj/TTN_with_Espruino/blob/master/QuickStart.md) (external link)
-
+* [Mac OSX/Linux hack to allow the Web IDE to connect to a Serial device over TCP/IP](http://forum.espruino.com/comments/14450988/)
 
 Interesting Projects
 --------------------
