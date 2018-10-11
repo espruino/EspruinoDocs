@@ -129,7 +129,7 @@ function onInit() {
 // Handle any messages coming in
 sms.on('message', function(msgIndex) {
   Terminal.println("New message #"+msgIndex);
-  sms.get(msg, function(err, msg) {
+  sms.get(msgIndex, function(err, msg) {
     if (err) throw err;
     // delete all messages to stop us overflowing
     sms.delete("ALL");

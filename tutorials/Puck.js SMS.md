@@ -87,9 +87,9 @@ sms.init(function(err) {
   //sms.send('+441234567890','Hello world!', callback)
 });
 
-sms.on('message', function(msg) {
-  console.log("Got message #",msg);
-  sms.get(msg, function(err, msg) {
+sms.on('message', function(msgIndex) {
+  console.log("Got message #",msgIndex);
+  sms.get(msgIndex, function(err, msg) {
     if (err) throw err;
     print("Read message", msg);
     var txt = msg.text.toLowerCase();
@@ -125,9 +125,9 @@ sms.init(function(err) {
   //sms.send('+441234567890','Hello world!', callback)
 });
 
-sms.on('message', function(msg) {
-  console.log("Got message #",msg);
-  sms.get(msg, function(err, msg) {
+sms.on('message', function(msgIndex) {
+  console.log("Got message #",msgIndex);
+  sms.get(msgIndex, function(err, msg) {
     if (err) throw err;
     print("Read message");
     var txt = msg.text.toLowerCase();
@@ -193,9 +193,9 @@ sms.init(function(err) {
   //sms.send('+441234567890','Hello world!', callback)
 });
 
-sms.on('message', function(msg) {
-  console.log("Got message #",msg);
-  sms.get(msg, function(err, msg) {
+sms.on('message', function(msgIndex) {
+  console.log("Got message #",msgIndex);
+  sms.get(msgIndex, function(err, msg) {
     if (err) throw err;
     print("Read message", msg);
     var txt = msg.text.toLowerCase();

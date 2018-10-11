@@ -69,7 +69,7 @@ In this case you could do something like this:
 ```
 sms.on('message', function(msgIndex) {
   console.log("Got message #", msgIndex);
-  sms.get(msg, function(err, msgIndex) {
+  sms.get(msgIndex, function(err, msg) {
     if (err) throw err;
     print("Read message", msg);
     var txt = msg.text.toLowerCase();
