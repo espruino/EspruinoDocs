@@ -51,7 +51,7 @@ exports.connect = function (ser) {
     var i = line.indexOf("\r");
     while (i>=0) {
       var l = line.substr(0,i);
-      //console.log("]>"+JSON.stringify(l));
+      //if (dbg) console.log("]>"+JSON.stringify(l));
       var handled = false;
       if (l.length>0) {
         for (var h in lineHandlers)
@@ -69,9 +69,6 @@ exports.connect = function (ser) {
       if (handled&&dataCount) return cb("");
       if (line[0]=="\n") line=line.substr(1);
       if (line.length && handlers) {
-        // hack - when bug #540 gets fixed we won't need this:
-        if (handlers[">"] && line[0]==">")
-          line = handlers[">"](line);
         for (var h in handlers)
           if (line.substr(0,h.length)==h) {
             line = handlers[h](line);
