@@ -236,7 +236,7 @@ var wifiFuncs = {
   // initialise the ESP8266
   "init" : function(callback) {
     at.cmd("ATE0\r\n",1000,function cb(d) { // turn off echo
-      if (d && d.trim()=="ATE0") return cb;
+      if (d=="ATE0") return cb;
       if (d=="OK") {
         at.cmd("AT+CIPMUX=1\r\n",1000,function(d) { // turn on multiple sockets
           if (d!="OK") callback("CIPMUX failed: "+(d?d:"Timeout"));

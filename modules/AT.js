@@ -2,6 +2,9 @@
 /* AT command interface library. This provides a callback-based way to send
  * AT commands with timeouts, and also to listen for their responses. It
  * greatly simplifies the task of writing drivers for ESP8266 or GSM */
+
+/* TODO: something odd about Espruino on linux seems to mean that
+ * extra '\n' get inserted */
 exports.connect = function (ser) {
   var dbg = false;
   var line = "";
@@ -34,6 +37,7 @@ exports.connect = function (ser) {
     // otherwise process line by line...
     line += d;
     if (dbg) console.log("] "+JSON.stringify(d));
+    if (line[0]=="\n") line=line.substr(1);
     if (handlers) {
       for (var h in handlers) {
         while (line.substr(0,h.length)==h) {
@@ -44,10 +48,10 @@ exports.connect = function (ser) {
         }
       }
     }
-    var i = line.indexOf("\r\n");
+    var i = line.indexOf("\r");
     while (i>=0) {
       var l = line.substr(0,i);
-      //if (dbg) console.log("]>"+JSON.stringify(l));
+      //console.log("]>"+JSON.stringify(l));
       var handled = false;
       if (l.length>0) {
         for (var h in lineHandlers)
@@ -61,16 +65,20 @@ exports.connect = function (ser) {
           }// else console.log(":"+JSON.stringify(l));
         }
       }
-      line = line.substr(i+2);
+      line = line.substr(i+1);
       if (handled&&dataCount) return cb("");
+      if (line[0]=="\n") line=line.substr(1);
       if (line.length && handlers) {
+        // hack - when bug #540 gets fixed we won't need this:
+        if (handlers[">"] && line[0]==">")
+          line = handlers[">"](line);
         for (var h in handlers)
           if (line.substr(0,h.length)==h) {
             line = handlers[h](line);
             //console.log("HANDLER] "+JSON.stringify(line));
           }
       }
-      i = line.indexOf("\r\n");
+      i = line.indexOf("\r");
     }
   });
 

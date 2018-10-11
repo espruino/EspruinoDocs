@@ -208,7 +208,7 @@ var gprsFuncs = {
         case 0:
           if(r === 'IIIIATE0' ||
             r === 'IIII' + String.fromCharCode(255) + 'ATE0' ||
-            (r && r.trim()=="ATE0")) {
+            r === 'ATE0') {
             return cb;
           } else if(r === 'OK') {
             s = 1;
