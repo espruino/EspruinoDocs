@@ -141,10 +141,15 @@ exports.connect = function(usart, options, callback) {
   // at.debug();
   require("NetworkJS").create(netCallbacks);
   // Handle +QIURC: “recv” input data
-  at.registerLine('+QIURC: "recv"', function(line) {
+  at.register('+QIURC: "recv"', function(line) {
+    var eol = line.indexOf("\r\n");
+    if (eol<0) return line; // wait until we have a full CR/LF
     var parms = line.split(",");
+    var data = line.substr(eol+2);
+    sockData[0|parms[1]] += data;
     dbg(parms);
-    at.getData(0|parms[2], function(data) { sockData[0|parms[1]] += data; });
+    at.getData((0|parms[2])-data.length, function(data) { sockData[0|parms[1]] += data; });
+    return "";
   });
   // Close handler
   at.registerLine('+QIURC: "closed"', function(line) {
