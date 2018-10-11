@@ -70,16 +70,22 @@ var netCallbacks = {
     if (busy || at.isBusy() || socks[sckt]=="Wait") return 0;
     if (!socks[sckt]) return -1; // error - close it
     busy = true;
-    at.write(`AT+QISEND=${sckt},${data.length}\r\n`);
-    setTimeout(function() {
-      at.cmd(data,2000,function cb(d) {
-        dbg("AT+QISEND response "+JSON.stringify(d));
-        if (d=="> ") return cb;
-        if (d=="SEND OK") busy = false;
-        if (d=="SEND FAIL") socks[sckt] = null; // force socket close
-      });
-      // now wait for a SEND OK or SEND FAIL
-    }, 500);
+    at.cmd(`AT+QISEND=${sckt},${data.length}\r\n`, 10000, function cb(d) {
+      dbg("AT+QISEND response "+JSON.stringify(d));
+      if (d=="OK") {
+        at.register('> ', function(l) {
+          at.unregister('> ');
+          at.write(data);
+          return l.substr(2);
+        });
+        return cb;
+      } else if (d=="SEND OK") busy = false;
+      else {
+        // probably d=="SEND FAIL"
+        at.unregister('> ');
+        socks[sckt] = null; // force socket close
+      }
+    });
     return data.length;
   }
 };
