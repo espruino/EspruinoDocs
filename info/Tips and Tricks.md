@@ -27,6 +27,7 @@ Useful Code
 * [Repeatedly call the same code from inside a Promise chain](http://forum.espruino.com/conversations/325552/#comment14431230)
 * [Using Inline C to create LED patterns quickly](http://forum.espruino.com/conversations/325997/#14431325)
 * [Counting up and down on a Web page with a Puck.js](http://forum.espruino.com/conversations/326269/)
+* [Using Tween.js in Espruino](http://forum.espruino.com/conversations/326659/#comment14458738)
 
 Common Issues and Questions
 ---------------------------
@@ -61,7 +62,7 @@ Interesting Projects
 * [Plastic Player – an Espruino nfc based controller for Spotify](http://brendandawes.com/projects/plastic­player2/)
 * [Bespoke Espruino conference badge for NodeConf 2017](http://forum.espruino.com/conversations/313468/)
 * [Controlling Retro Bubble LED displays](http://forum.espruino.com/conversations/311847)
-
+* [Building a Smart Air Pressure Sensor with Espruino and Angular](https://medium.com/@urish/building-a-smart-air-pressure-sensor-with-espruino-and-angular-942ef7373b92)
 
 Are there other good references for Espruino or projects that you think
 should be added to this list? [Let us know here](https://github.com/espruino/EspruinoDocs/issues)
