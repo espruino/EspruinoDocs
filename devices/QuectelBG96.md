@@ -1,24 +1,20 @@
 <!--- Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Quectel M35 Quad-band GSM/GPRS module Module
+Quectel LTE BG96 Cat.M1/NB1 & EGPRS Module
 =============================================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/QuectelM35. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/QuectelBG96. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Internet,Module,GSM,GPRS,2G,3G,Mobile,M35,QUECTEL,Wireless,Radio
+* KEYWORDS: Internet,Module,LTE,Cat.M1,CatM1,Cat M1,NB1,NB-IoT,NBIoT,Mobile,BG96,EGPRS,QUECTEL,Wireless,Radio
 * USES: AT
 
-![Quectel M35](QuectelM35.png)
+![Quectel BG96](QuectelBG96.png)
 
-The Quectel M35 is a GSM/GPRS module that can provide internet access via an AT command set.
+The Quectel BG96 is a LTE/Cat.M1/NB1/EGPRS module that can provide internet access via an AT command set.
 
-Support is provided in Espruino by the [[QuectelM35.js]] module.
+Support is provided in Espruino by the [[QuectelBG96.js]] module.
 
 Software
 ---------
-
-This module expects the modem to have started and to be connected to
-the network already. This means you may need to wait ~15 seconds after
-powering on for it to work.
 
 ```
 Serial1.setup(115200, { rx: .., tx : ... });
@@ -32,10 +28,25 @@ function connectionReady() {
   });
 }
 
-gprs = require('QuectelM35').connect(Serial1, {}, function(err) {
+gprs = require('QuectelBG96').connect(Serial1, {
+  apn : "",
+  username : "",
+  password : ""
+}, function(err) {
   if (err) throw err;
   connectionReady();
 });
+```
+
+The second argument to `connect` is an object that can contain:
+
+```
+{
+  lte : bool, // Are we using LTE? This changes how we check if we're registered
+  apn : "", // optional access point name.
+  username : "", // optional username
+  password : "", // optional password
+}
 ```
 
 Reference
@@ -60,4 +71,4 @@ Call the callback with the current IP address, as a String. The callback is call
 Using
 -----
 
-* APPEND_USES: QuectelM35
+* APPEND_USES: QuectelBG96

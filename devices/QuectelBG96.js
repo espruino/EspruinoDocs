@@ -171,12 +171,27 @@ exports.connect = function(usart, options, callback) {
   });
 
   atcmd("ATE0").then(function() { // echo off
-    return atcmd(options.lte?"AT+CEREG?":"AT+CREG?"); // Check if LTE or GSM registered
-  }).then(function(d) {
-    var n = d.split(",")[1]; // 1=connected, 5=connected, roaming
-    if (n!=1 && n!=5) throw new Error("GSM not registered, "+d);
-    dbg("Forcing GPRS connect");
-    return atcmd("AT+CGATT=1",10000); // attach to GPRS service
+    return atcmd("AT+CEREG=2"); //turn on extended cereg response for cell tower info
+  }).then(function() { // Wait 60s for registration
+    return new Promise(function(resolve, reject) {
+      var n = 60;
+      var done = false;
+      var i = setInterval(function() {
+        at.cmd(options.lte?"AT+CEREG?\r":"AT+CREG?\r",500,function(d) {
+          var n = d.split(",")[1]; //1 =connected,5=connected,roaming
+          if (n==1 || n==5) {
+            clearInterval(i);
+            resolve();
+          }
+        });
+        if (n-- <= 0) {
+          clearInterval(i);
+          reject("Timeout while registering.");
+        }
+      }, 1000);
+    });
+ }).then(function(d) {
+     return atcmd("AT+CGATT=1",10000); // attach to GPRS service
   }).then(function() {
     return atcmd("AT+CGREG?"); // Check GPRS registered
   }).then(function(d) {
