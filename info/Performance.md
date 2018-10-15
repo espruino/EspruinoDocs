@@ -4,7 +4,7 @@ Espruino Performance Notes
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Performance. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Built-In,Espruino,Performance,Speed,Memory Usage
+* KEYWORDS: Built-In,Espruino,Performance,Speed,Memory Usage,Native Strings,Flat Strings,Typed Array,ArrayBuffer,Efficient Code
 
 Please see [[Internals]] for a more technical description of the interpreter's implementation.
 
@@ -270,15 +270,44 @@ If the name (index) of an element is a string that is greater than 10 characters
 You can check how many storage units a data structure is using up with [`E.getSizeOf(...)`](http://www.espruino.com/Reference#l_E_getSizeOf)
 
 
+STRINGS VS. FLAT STRINGS
+-------------------------
 
-TYPED ARRAYS ARE THE MOST EFFICIENT WAY TO STORE DATA
+When Espruino allocates a big String that it knows the size of up-front, it
+can create a Flat String. This is one JsVar as a header, followed by a
+number of other JsVars that are used as one flat memory area.
+
+Allocating a Flat String takes more time than allocating a normal string
+as a contiguous area of memory has to be found (and isn't guaranteed to exist
+even if you have the available free memory, since memory can get fragmented).
+
+However, once allocated a Flat String is very efficient for large amounts of
+data and allows for very fast accesses.
+
+If you want to create a Flat String, use [E.toString](http://www.espruino.com/Reference#l_E_toString),
+but be aware that you'll probably need a Typed Array (see below) to write to it.
+
+Once allocated, you can use `E.getAddressOf(v, true)` to get the actual
+physical address in memory of the Flat String's data (which can be used for DMA/etc).
+
+
+ARRAY BUFFERS ARE THE MOST EFFICIENT WAY TO STORE DATA
 -----------------------------------------------------
 
-Whenever possible, Typed Arrays use one JsVar as a header, and then a contiguous set of JsVars for data. This means that for large arrays you have just 16 bytes of overhead.
+While Flat Strings are really *the* most efficient method of storing data,
+if you want to write to one then you'll need a Typed Array and [`ArrayBuffer`](http://www.espruino.com/Reference#ArrayBuffer).
 
-Because the data is in one flat block, it is also very fast to do random accesses on.
+A [`Uint8Array`](http://www.espruino.com/Reference#Uint8Array) will link to an [`ArrayBuffer`](http://www.espruino.com/Reference#ArrayBuffer)
+which represents the untyped data, and that [`ArrayBuffer`](http://www.espruino.com/Reference#ArrayBuffer) will then link to a String
+(usually a Flat String) which stores your data.
 
-However Espruino needs to search for a continuous block of memory, allocating Typed Arrays is slow. You should try to allocate them once and leave them allocated. In some cases there won't be a flat block of memory available, and then Espruino will fall back to Strings.
+Because the data in the Flat String is in one flat block, it is very fast to do random accesses on.
+
+However Espruino needs to search for a continuous block of memory for the Flat String,
+so allocating Typed Arrays is slow. You should try to allocate them once and leave them
+allocated. In some cases there won't be a flat block of memory available, and then
+Espruino will fall back to normal Strings. Everything will still work, but they
+will take up more memory and will be slower to access.
 
 You create a Typed Array with a simple command:
 
@@ -290,7 +319,7 @@ a = new Int32Array(50);
 a = new Float32Array(50);
 ```
 
-And then you can access it like a normal Array. The only thing you can't do is change the length dynamically (See below). There are other formats of typed array too - see the [[Reference]].
+And then you can access it like a normal Array. The only thing you can't do is change the length dynamically (See below). There are other formats of typed array too - see the [Reference](http://www.espruino.com/Reference#t_ArrayBufferView).
 
 While you can't change the length dynamically, you can create 'views' which change how you access the information in the array without actually copying it. For example:
 
@@ -311,11 +340,48 @@ b.set(c, 2); // set b with the contents of c starting from index 2
 b; // [0,0,3,4,5,6,7]
 ```
 
+You can also use [DataView](http://www.espruino.com/Reference#DataView) to access
+an `ArrayBuffer` using multiple different types at the same time:
+
+```
+var b = new ArrayBuffer(8)
+var v = new DataView(b)
+v.setUint16(0,"0x1234")
+v.setUint8(3,"0x56")
+console.log("0x"+v.getUint32(0).toString(16))
+// prints 0x12340056
+```
+
 
 STRINGS ARE THE SECOND MOST EFFICIENT WAY TO STORE DATA
 -------------------------------------------------------
 
-Strings use on average 12 bytes of data per 16 byte Storage unit. So for an array of bytes, it's 24 times more efficient to use a String or Typed Array than a normal (sparse) Array. It's also faster too!
+Strings use on average 12 bytes of data per 16 byte Storage unit. So for an array
+of bytes, it's 24 times more efficient to use a String or Typed Array than a normal
+(sparse) Array. It's also faster too!
+
+Although if they can be allocated Flat Strings are better (see above), normal
+Strings *are just as fast to iterate over* - it's just random access that is
+slower.
+
+
+NATIVE STRINGS ARE GREAT, IF YOU JUST NEED TO READ
+--------------------------------------------------
+
+A Native String (created with [`E.memoryArea`](http://www.espruino.com/Reference#l_E_memoryArea))
+is a String that is just a pointer to an area of memory. On most devices there
+isn't enough free RAM for a Native String to point to anything useful, however
+if you have data in Flash memory then it can be extremely useful as a way to
+access data without taking up any RAM.
+
+While you can use `E.memoryArea` directly, you can also use [the `Storage` library](http://www.espruino.com/Reference#Storage)
+to write data to Flash memory using a simple file system. When retrieving data
+with [`require('Storage').get(...)`](http://www.espruino.com/Reference#l_Storage_read)
+the returned data will be a Native String.
+
+If you [save your code with Save on Send](/Saving) then any functions that are
+defined will also have their contents stored in a Native String pointing directly
+to flash memory.
 
 
 SOME VARIABLE LOOKUPS ARE FASTER THAN OTHERS
