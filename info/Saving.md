@@ -10,6 +10,37 @@ When you upload code to Espruino normally, it is stored in Espruino's RAM.
 If you reset the board or power is lost, all your code will be lost.
 
 However it's easy to save your code to flash memory and make it permanent.
+
+Summary
+--------
+
+Just type `save()` on the left-hand side of the IDE and the current state of
+Espruino including all saved code will be written so that it is loaded at
+boot time.
+
+However there are other methods of saving code that can be more efficient,
+or can allow you to do things like saving constants. See below for more
+information.
+
+
+Boot Process
+------------
+
+To understand how best to save data, it's best to know how Espruino
+loads saved code.
+
+When Espruino starts up, it does a few things:
+
+* If `BTN1` is pressed or if it reset because of a call to `reset()`, it sets `hasBeenReset` to `true`.
+* If `hasBeenReset` wasn't set, it looks for a compressed image (`.varimg` [in Storage](https://www.espruino.com/Reference#Storage)) of the interpreter's state that was saved with `save()`. If it exists it unpacks it into RAM.
+* (v2.0 and later) It looks for files [in Storage](https://www.espruino.com/Reference#Storage) named `.boot0`, `.boot1`, `.boot2` and `.boot3` and executes them in sequence.
+* If `hasBeenReset` **wasn't** set, it looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootcde` and executes it (see [Save on Send](#save-on-send) below)
+* If `hasBeenReset` **was** set, it looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootrst` and executes it (see [Save on Send](#save-on-send) below)
+* Initialises any previously-initialised peripherals
+* Runs any handlers registered with `E.on('init', function() { ... });`
+* Runs a function called `onInit()` if it exists.
+
+
 There are two main ways to do it with Espruino.
 
 `save()`
@@ -91,11 +122,13 @@ the device is powered on (in contrast to what happens when you use `save()`.
 * `No` - code is uploaded to RAM, but can be saved with `save()` (as above)
 * `Yes` - JavaScript code is saved to flash and loaded even after boot.
 If `reset()` is called, Espruino will remove all code from RAM and will
-not execute the saved JS code.
+not execute the saved JS code. This saved your JS code
+to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootcde`.
 * `Yes, execute even after reset()` - JavaScript code is saved to flash and
 loaded even after boot. If `reset()` is called, Espruino will remove all
 `save()`d code from RAM, but will still execute the JS code that you saved. See
-the 'Both Options' section.
+the 'Both Options' section. This saved your JS code
+to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootrst`.
 
 To remove any code saved with `Save on Send`, simply call `E.setBootCode()` with
 no arguments.
@@ -120,18 +153,31 @@ is enabled in the IDE.
 with both bits of code in Espruino at the same time (see 'Both Options' below).
 
 
-Both options
-------------
+Combining options
+-----------------
 
-It is possible to combine `Save on Send` and `save()`. In this case, the contents
-of RAM will be loaded from Flash, then the code saved with `Save on Send` will
-be executed, and finally `onInit()` and `E.on('init', ...)` will be called.
+It is possible to combine `Save on Send` and `save()` - see [Boot Process](#boot-process)
+above for more information.
 
 This allows you to write separate code with `Save on Send` that can ensure
 certain things are always done, regardless of the code saved with `save()`.
 
+You can even add files called `.boot0`, `.boot1`, `.boot2` and `.boot3` to
+add extra code that doesn't interfere with code saved in other ways. You
+could for instance add the following code:
+
+```
+require("Storage").write(".boot0", `
+WIFI_NAME = "MyWiFi";
+WIFI_PASS = "HelloWorld123";
+`);
+```
+
+To ensure that you always had the variables `WIFI_NAME` and `WIFI_PASS`
+defined regardless of what other code you uploaded.
+
 For instance if you're making a device like [the Espruino Home Computer](/Espruino+Home+Computer)
-then you might want to use `Save on send` to save all the code that initialises
+then you might want to use `Save on send` or `.boot0` to save all the code that initialises
 the display and keyboard. The computer can then be programmed and its state
 saved with `save()`, but regardless of what is saved to the device you will
 always be able to rely on the display and keyboard being set up correctly.
