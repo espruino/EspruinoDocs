@@ -131,8 +131,7 @@ Wiring Up
 
 Example for wiring up Espruino Pico.
 
-| Touch  | Espriuno | Connect | Comment                                               |
-| Screen | Pico     | Arg     |                                                       |
+| Touchscreen | Espruino | Connect | Comment                                          |
 |--------|----------|---------|-------------------------------------------------------|
 | Y-     | A5       | yn      | matches 1st argument/pin in connect, MUST be ADC pin  |
 | X-     | A6       | xn      | matches 2nd argument/pin in connect, MUST be ADC pin  |
@@ -286,18 +285,10 @@ API and bits of the implementation
 Controller Constructor and Callback:
 
 - `TouchRD(yn,xn,yp,xp,callback,customConfig)` returns a controller instance. The arguments are:
-  - `yn, xn, yp, xp` pins connected to the leads of the resistive touch screen and become properties of the
-        controller (same name)
-  - `callback` a `function(x,y,touch)` invoked on a touch down, on configurable interval while touching and
-        moving, of which the last occurrence is *the* 'untouch'. Untouch is detectable by `x === undefined`.
-        callback becomes property of controller with abbreviated name `cb`. Callback arguments are:
-    - `x, y` coordinates of touch point with `x === undefined` for 'untouch' for compatibility reasons with
-            existing `Touchscreen` module.
-    - `t` touchRD controller instance (useful to access other and internal touch controller properties and
-            methods for manipulation and calibration in application on touch / drag / move / untouch events
-            AND to test if (t.t) touched or untouched (!t.t). Properties and methods are (same as the default
-            config properties, pins, and callback, plus some additional, very useful properties, such as last
-            `.xf`, `.yf` and time `.td` of last touch down.
+  - `yn, xn, yp, xp` pins connected to the leads of the resistive touch screen and become properties of the controller (same name)
+  - `callback` a `function(x,y,touch)` invoked on a touch down, on configurable interval while touching and moving, of which the last occurrence is *the* 'untouch'. Untouch is detectable by `x === undefined`. `callback` becomes property of controller with abbreviated name `cb`. Callback arguments are:
+    - `x, y` coordinates of touch point with `x === undefined` for 'untouch' for compatibility reasons with existing `Touchscreen` module.
+    - `t` touchRD controller instance (useful to access other and internal touch controller properties and methods for manipulation and calibration in application on touch / drag / move / untouch events AND to test if (t.t) touched or untouched (!t.t). Properties and methods are (same as the default config properties, pins, and callback, plus some additional, very useful properties, such as last `.xf`, `.yf` and time `.td` of last touch down.
 
 Controller value and function properties:     
 
@@ -326,14 +317,10 @@ Controller value and function properties:
 - `.ti` track interval in [ms] while touching
 - `.db` 5 debounce time in [ms] for touch down detection
 - `.moved()` : returns true when x or y difference between touch down (firtst touch0 and last touch x or y
-- `.enable()` or `.enable(truthy | falsy)` initiate listening to touch events when not listening (yet) on
-        invocation with *no* or *truthy* argument, and stop listening to touch events with *falsy* argument.
-- `.xy(callback)` can be directly used when controller is not listening to probe whether touching is going on
-        or not. Properties are updated and can be queried. Callback is optional and works the same way as
-        described above.
+- `.enable()` or `.enable(truthy | falsy)` initiate listening to touch events when not listening (yet) on invocation with *no* or *truthy* argument, and stop listening to touch events with *falsy* argument.
+- `.xy(callback)` can be directly used when controller is not listening to probe whether touching is going on or not. Properties are updated and can be queried. Callback is optional and works the same way as described above.
 
- *NOTE that some properties (`.w`, `.t`) should never be changed and pins (`yn`, `xn`, `yp`, `xp`) never be
-       written to in order to keep touch controller state and state machine valid and working.*
+ *NOTE that some properties (`.w`, `.t`) should never be changed and pins (`yn`, `xn`, `yp`, `xp`) never be written to in order to keep touch controller state and state machine valid and working.*
 
 
 Calibration of Touchscreen
