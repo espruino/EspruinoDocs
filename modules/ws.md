@@ -222,3 +222,8 @@ Or to join a room:
   var room = "Espruino";
   ws.join(room);
 ```
+
+Using
+-----
+
+* APPEND_USES: ws
