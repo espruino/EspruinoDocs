@@ -1,12 +1,10 @@
 <!--- Copyright (c) 2018 allObjects / Pur3 Ltd. See the file LICENSE for copying permission. -->
 Touch Key Pad based on Touchscreen
-=====================
+===================================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/TouchKeyPad. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS:
-UI,LCD,display,resistive,touch,screen,touchscreen,controller,Graphics,ILI9341,ADS7843,XPT2046
-
-
+* KEYWORDS: UI,LCD,display,resistive,touch,screen,touchscreen,controller,Graphics,ILI9341,ADS7843,XPT2046
 
 Overview
 ------------------
@@ -19,11 +17,11 @@ The module is useful with a touch screen on a display or sketched key pad as mul
 device. Example of application is a simple calculator with a 5 columns x 4 rows grid layout as
 below (48x48 pixel per grid element). Ultimate application is a keyboard on a touch screen.
 
-![Touch Screen Only as Key Pad Input Device for Calculator Application](TouchKeyPadForCalculator.jpg)
+![Touch Screen Only as Key Pad Input Device for Calculator Application](TouchKeyPad/TouchKeyPadForCalculator.jpg)
 
 
 Wiring Up
-------------------- 
+-------------------
 
 There is no wiring up. The touchscreen and module delivering the x and y for the key.
 
@@ -47,11 +45,11 @@ Usage - with values for grid elements passed as single string:
 `
 var touchKeyPad = new (require("TouchKeyPad))(
   5,4,0,240,128,192,"123CA456/*789-+00.==");
-  
+
 console.log(touchKeyPad.xy(48,296)); // --> "0"
 console.log("col",touchKeyPad.c); // --> col 1
 console.log("row",touchKeyPad.r); // --> row 3
-console.log("kdx",touchKeyPad.k); // --> kdx 16 // = 3*5 + 1 
+console.log("kdx",touchKeyPad.k); // --> kdx 16 // = 3*5 + 1
 ```
 
 Usage - with values for staggered grid elements passed array:
@@ -81,7 +79,7 @@ diagonally arranged, such as below:
      ^ ^                  ];
      | |
  x = | 70 when touch at &
- x = 50 when touch at % 
+ x = 50 when touch at %
 `
 var touchKeyPad = new (require("TouchKeyPad))(
   4,3,0,240,0,120,"123#456@7890",[0,+15,-15]):
@@ -96,6 +94,6 @@ console.log(touchKeyPad( 70,100)); // &--> "8"  // .c = 1
 
 Example for a key board implementation:
 
-![Touch Screen Only as Keyboard input device](touchKeyPadKbd.jpg)
+![Touch Screen Only as Keyboard input device](TouchKeyPad/touchKeyPadKbd.jpg)
 
-For the working calcuylator input example see forum conversation: [Poor man's flexible input device: keyboard sketched on paper and a touchscreen](http://forum.espruino.com/conversations/326332)
+For the working calculator input example see forum conversation: [Poor man's flexible input device: keyboard sketched on paper and a touchscreen](http://forum.espruino.com/conversations/326332)

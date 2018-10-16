@@ -1,35 +1,34 @@
 <!--- Copyright (c) 2018 allObjects / Pur3 Ltd. See the file LICENSE for copying permission. -->
 Resistive Touchscreen Controller with Espruino
-=====================
+=================================================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/TouchRD. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS:
-UI,LCD,display,resistive,touch,screen,touchscreen,controller,Graphics,ILI9341,ADS7843,XPT2046
-
+* KEYWORDS: UI,LCD,display,resistive,touch,screen,touchscreen,controller,Graphics,ILI9341,ADS7843,XPT2046
 
 Overview
 ------------------
 
 This [[TouchRD.js]] module makes Espruino the controller for resistive touchscreens that do *NOT* have
-a built-in controller, such as ADS7843 or XPT2046. The moudle supports standalone resistive touch screens
+a built-in controller, such as [ADS7843](/ADS7843) or XPT2046. The module supports standalone resistive touch screens
 as well as resistive touch screens mounted on displays.
 
 Resistive Touch Screen only application as key pad input device for a simple calculator:
 
-![Touch Screen Only as Key Pad Input Device for Calculator Application](TouchRDOonly.jpg)
+![Touch Screen Only as Key Pad Input Device for Calculator Application](TouchRD/resistiveTouchScreenOnly.jpg)
 
 Resistive Touch Screen as part of a TFT display:
 
-![Touch Screen on Display for Calculator Application](TFTdisplayWithResistiveTouchScreen.jpg)
+![Touch Screen on Display for Calculator Application](TouchRD/TFTdisplayWithResistiveTouchScreen.jpg)
 
-The implementation allows to have multiple, independent, simultaneously operating controllers (Every 
-`new TouchRD(...)' returns a new instance). Configuration / calibration can happen on creation and while
+The implementation allows to have multiple, independent, simultaneously operating controllers (Every
+`new TouchRD(...)` returns a new instance). Configuration / calibration can happen on creation and while
 running, including change of callback to allow the application to implement a runtime calibration function
 as well as different callbacks.
 
 A resistive touchscreen exposes four (4) leads which are usually labeled Y-, X-, Y+, X+. The leads can be
 wired up directly to four (4) pins. At least two (2) of the four (4) pins have to be ADC pins - pins that
-can read analog values. One ADC pin has to be connected to either Y- or Y+, and one to either X- or X+. 
+can read analog values. One ADC pin has to be connected to either Y- or Y+, and one to either X- or X+.
 
 While X- and X+ are powered with 0V (GND) and 3.3V with two pins in auto output mode, voltage on Y- or Y+
 is read with an ADC pin in input-pulldown mode. The fourth pin has to be in plain input mode in order to not
@@ -107,14 +106,14 @@ For touch screen only use, gathering the calibration values for (custom) configu
    - uploadi the touch-screen-only calibration application in non-calibration mode
    - validate touch coordinates by touch donws and moving into the cornersk, along and over all for edges
      of the screen
-   
+
 For display with touch screen display, gather calibration data from touching markers displayed at known display
 coordinates.
 
 Rough calibration values can be calculated from values obtained from touching two (2) markers of known position
 diagonally displayed (near) minimum and (near) maximum for both x and y axis. To balance out non-linearities,
 it is best to take averages from values per pixel and offsets obtained and calculated from combinations of two
-of markers in all corners and in the center of the display. 
+of markers in all corners and in the center of the display.
 
 When the touch screen area overlaps the display area - touch screen has porches - and the configuration for
 minimum (lowest) and maximum (highest) permits returning x and y coordinates outside of the display, then the
@@ -128,7 +127,7 @@ conversation at [Resistive Touchscreen directly (no touch controller)](http://fo
 
 
 Wiring Up
-------------------- 
+-------------------
 
 Example for wiring up Espruino Pico.
 
@@ -220,7 +219,7 @@ touchRD.enable(); // placed in onInit() function
 
 For *probing* use - when controller is in touching / tracking mode (t.t, !tourchRD.w - not watching for a touch
 down) or *NOT* enabled (!touchRD.en). Probing can be done with or without using callback. Example shows probing
-without callback. 
+without callback.
 
 ```
 if (touchRD.xy().t) {
@@ -238,7 +237,7 @@ Configuration
 -------------------
 
 Touch Controller has has a default configuration bilt in that can be full or partially overwritten with  custom
-configuration on construction. 
+configuration on construction.
 
 The default configuration can be overridden by passing a configuration object *C* as the 6th argument in the
 constructor. The configuration object can be built upfront and passed or provided inline. Latter is shown in code
@@ -264,11 +263,11 @@ var touchRD = new (require("TouchRD"))( // can be placed in level 0
     , yt: 0.0012  // y threshold analog value for touch detection
     , xc: 0.4960  // x center analog value on touch
     , yc: 0.4795  // y center analog value on touch
-    , xd: 0.00318 // x delta per pixel analog value 
+    , xd: 0.00318 // x delta per pixel analog value
     , yd: 0.00251 // y delta per pixel analog value
     , ti: 100     // track interval in [ms] while touching
     , db: 5       // debounce on touch begin
-    , en: false   // enabled (truthy) touch detection 
+    , en: false   // enabled (truthy) touch detection
     }
   );
 touchRD.endable(); // usually placed in onInit() { ... } function
@@ -277,7 +276,7 @@ touchRD.endable(); // usually placed in onInit() { ... } function
 Use this code example override the values that need to be adjusted for the particular touch screen and display
 at hand. Only the values that have to be overridden have to be provided as properties in the custom configuration
 object. Merging of the configuration's properties in the controller are accomplished with a simple mixin by
-looping through the configuration object's present properties controlled by the default configuration and 
+looping through the configuration object's present properties controlled by the default configuration and
 applying them to the controller.
 
 
@@ -290,10 +289,10 @@ Controller Constructor and Callback:
   - `yn, xn, yp, xp` pins connected to the leads of the resistive touch screen and become properties of the
         controller (same name)
   - `callback` a `function(x,y,touch)` invoked on a touch down, on configurable interval while touching and
-        moving, of which the last occurrence is *the* 'untouch'. Untouch is detectable by `x === undefined`. 
-        callback becomes property of controller with abbreviated name 'cb`. Callback arguments are:
+        moving, of which the last occurrence is *the* 'untouch'. Untouch is detectable by `x === undefined`.
+        callback becomes property of controller with abbreviated name `cb`. Callback arguments are:
     - `x, y` coordinates of touch point with `x === undefined` for 'untouch' for compatibility reasons with
-            existing `Touchscreen` module. 
+            existing `Touchscreen` module.
     - `t` touchRD controller instance (useful to access other and internal touch controller properties and
             methods for manipulation and calibration in application on touch / drag / move / untouch events
             AND to test if (t.t) touched or untouched (!t.t). Properties and methods are (same as the default
@@ -301,11 +300,11 @@ Controller Constructor and Callback:
             `.xf`, `.yf` and time `.td` of last touch down.
 
 Controller value and function properties:     
-       
+
 - `.X`  x-axis / horizontal pixel # or resolution
 - `.Y`  y-axis / vertical pixel # or resolution
 - `.x`  x last x scanned / detected touch
-- `.y`  y last y scanned / detected touch 
+- `.y`  y last y scanned / detected touch
 - `.t`  touch state - true for touching, false for untouch
 - `.td` touch down time (Espruino's getTime() at touch down detection with watch on xp pin
 - `.xf` x of touch down (x first)
@@ -322,12 +321,12 @@ Controller value and function properties:
 - `.yt` y threshold analog value for touch detection
 - `.xc` x center analog value on touch
 - `.yc` y center analog value on touch
-- `.xd` x delta per pixel analog value 
+- `.xd` x delta per pixel analog value
 - `.yd` y delta per pixel analog value
 - `.ti` track interval in [ms] while touching
 - `.db` 5 debounce time in [ms] for touch down detection
-- `.moved()` : returns true when x or y difference between touch down (firtst touch0 and last touch x or y 
-- `.enable()` or `.enable(truthy | falsy)` initiate listening to touch events when not listening (yet) on 
+- `.moved()` : returns true when x or y difference between touch down (firtst touch0 and last touch x or y
+- `.enable()` or `.enable(truthy | falsy)` initiate listening to touch events when not listening (yet) on
         invocation with *no* or *truthy* argument, and stop listening to touch events with *falsy* argument.
 - `.xy(callback)` can be directly used when controller is not listening to probe whether touching is going on
         or not. Properties are updated and can be queried. Callback is optional and works the same way as
@@ -359,7 +358,7 @@ following line in the callback in the touching branch:
 g.fillRect(x-1,y-1,x+1,y+1); // g being your graphics object / LCD display / ...
 ```
 
-The calibration process goes as follows: 
+The calibration process goes as follows:
 
 1. Copy-paste either calibration code into the IDE editor and upload it to the Espruino board.
 2. Set the pins ***of your wiring*** in line [11]
@@ -398,7 +397,7 @@ function onInit() {  // yn,xn,yp,xp
         // touch
         if (calibrate) {
           // calibration (calculates xd, yd config values)
-          if (t.xr < xMin) { 
+          if (t.xr < xMin) {
             xMin=t.xr; t.xc=xMin+(xMax-xMin)/2;
             t.xd = (xMax-xMin) / t.X; }
           if (t.xr > xMax) {
@@ -425,7 +424,7 @@ function onInit() {  // yn,xn,yp,xp
         }
       } else {
         if (calibrate) {
-          // 'untouch' (showing desired config values) 
+          // 'untouch' (showing desired config values)
           console.log(
 `--- untouch ( calibrate )--- ${t.x} ${t.y} ${getTime() - t.td} ${t.moved()}
 xr=${t.xr}<xt(${t.xt}) yr=${t.yr}<yt(${t.yt}) - untouch
@@ -434,7 +433,7 @@ xc=${t.xc} yc=${t.yc} - center
 xd=${t.xd} yd=${t.yd} - deltas per pixel
 `         );
         } else{
-          // 'untouch' 
+          // 'untouch'
           console.log(
 `--- untouch --- ${t.x} ${t.y} ${getTime() - t.td} ${t.moved()}
 `         );
@@ -442,7 +441,7 @@ xd=${t.xd} yd=${t.yd} - deltas per pixel
       }
     }
   // Custom configuration - all in portrait format)
-  // TSRD26_104x142_cfg.js
+  // TSRD26_104x142
   , { X: 104     // pixel / resolution width  (x: 0..239)
     , Y: 142     // pixel / resolution height (y: 0..319)
     , xm: 5      // x move detection threshold; ignore for now
@@ -465,7 +464,6 @@ Calibration output for Portrait use:
 
 
 ```
-`
          |_| espruino.com
  1v99 (c) 2018 G.Williams
 >
@@ -536,8 +534,7 @@ xr=0.00061036087<xt(0.01) yr=0.00073243305<yt(0.01) - untouch
 xt=0.09525291828 yt=0.07009384298
 xc=0.49903105210 yc=0.47327382314 - center
 xd=0.00756143223 yd=0.00556889824 - deltas per pixel
-> 
-`
+>
 ```
 
 Calibration code for Landscape use:
@@ -559,7 +556,7 @@ function onInit() {  // yn,xn,yp,xp
         // touch
         if (calibrate) {
           // calibration (calculates xd, yd config values)
-          if (t.xr < xMin) { 
+          if (t.xr < xMin) {
             xMin=t.xr; t.xc=xMin+(xMax-xMin)/2;
             t.xd = (xMax-xMin) / t.X; }
           if (t.xr > xMax) {
@@ -586,7 +583,7 @@ function onInit() {  // yn,xn,yp,xp
         }
       } else {
         if (calibrate) {
-          // 'untouch' (showing desired config values) 
+          // 'untouch' (showing desired config values)
           console.log(
 `--- untouch ( calibrate )--- ${t.x} ${t.y} ${getTime() - t.td} ${t.moved()}
 xr=${t.xr}<xt(${t.xt}) yr=${t.yr}<yt(${t.yt}) - untouch
@@ -595,7 +592,7 @@ xc=${t.xc} yc=${t.yc} - center
 xd=${t.xd} yd=${t.yd} - deltas per pixel
 `         );
         } else{
-          // 'untouch' 
+          // 'untouch'
           console.log(
 `--- untouch --- ${t.x} ${t.y} ${getTime() - t.td} ${t.moved()}
 `         );
@@ -603,7 +600,7 @@ xd=${t.xd} yd=${t.yd} - deltas per pixel
       }
     }
   // Custom configuration - all in landscape format)
-  // TSRD26_142x104_cfg.js
+  // TSRD26_142x104
   , { X: 142     // pixel / resolution width  (x: 0..319)
     , Y: 104     // pixel / resolution height (y: 0..239)
     , xm: 5      // x move detection threshold; ignore for now
@@ -625,7 +622,6 @@ setTimeout(onInit,1000);
 Calibration output for Landscape use:
 
 ```
-`
          |_| espruino.com
  1v99 (c) 2018 G.Williams
 >
@@ -684,6 +680,5 @@ xr=0.00048828870<xt(0.01) yr=0.00085450522<yt(0.01) - untouch
 xt=0.07306019684 yt=0.09173723964
 xc=0.47437247272 yc=0.50153353170 - center
 xd=0.00553795036 yd=0.00768467818 - deltas per pixel
-> 
-`
+>
 ```
