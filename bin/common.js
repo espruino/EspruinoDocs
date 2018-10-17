@@ -18,6 +18,7 @@ exports.getJSDocumentation = function(js) {
   // Parse it and store any '/**' comments we got
   var comments = [];
   var ast = require("acorn").parse(js, {
+    //ecmaVerison : 6,
     locations : true,
     onComment : function(block, text, start, end, startLoc, endLoc) {
       if (text[0]=="*" || text[0]=="/") text=text.substr(1);
@@ -40,7 +41,7 @@ exports.getJSDocumentation = function(js) {
    else
      return "// " + comment + "\n";
   }
-  
+
   var functions = {};
   var result = "";
   // Now try and find function definitions in the base of the module
@@ -50,9 +51,20 @@ exports.getJSDocumentation = function(js) {
     if (expr.type=="FunctionDeclaration") {
       functions[expr.id.name] = expr;
     }
+    if (expr.type=="ClassDeclaration") {
+      var className = expr.id.name;
+      expr.body.body.forEach(function(node) {
+        if (node.type=="MethodDefinition") {
+          var leftString = className+".prototype."+node.key.name;
+          if (node.loc.start.line in comments) result += tweakComment(comments[node.loc.start.line]);
+          result += leftString+" = "+fnToString(node.value)+"\n\n";
+
+        }
+      });
+    }
     // X.prototype.y = function() ...
     // exports.foo = function() ...
-    if (expr.type=="ExpressionStatement" && expr.expression.right && expr.expression.right.type=="FunctionExpression") {
+    if (expr.type=="ExpressionStatement" && expr.expression.right && ["FunctionExpression","ArrowFunctionExpression"].includes(expr.expression.right.type)) {
       var left = expr.expression.left;
       var leftString = undefined;
       if (left.object.property && left.object.property.name == 'prototype')
@@ -68,7 +80,7 @@ exports.getJSDocumentation = function(js) {
     if (expr.type=="ExpressionStatement" && expr.expression.right && expr.expression.right.type=="Identifier" &&
         (expr.expression.right.name in functions)) {
        var func = functions[expr.expression.right.name];
-       if (func.loc.start.line in comments) 
+       if (func.loc.start.line in comments)
          result += tweakComment(comments[func.loc.start.line]);
        result += fnToString(func)+"\n\n";
     }
@@ -99,10 +111,10 @@ exports.getFiles = function(dir) {
 
 exports.getMarkdown = function(dir) {
   var results = [];
-  exports.getFiles(dir).forEach(function(f) { 
+  exports.getFiles(dir).forEach(function(f) {
     if (f.substr(-3) == ".md" && f.substr(-9)!="README.md") {
       results.push(f);
     }
   });
   return results;
- }; 
+ };
