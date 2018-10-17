@@ -411,7 +411,7 @@ function inferFile(filename, fileContents, baseLineNumber) {
     var ast = infer.parse(fileContents, {}, {});
     infer.analyze(ast, "file:"+filename /* just an id */);
     // find all calls
-    require("acorn/dist/walk").simple(ast, { "CallExpression" : function(n) {
+    require("acorn-walk").simple(ast, { "CallExpression" : function(n) {
      var expr = infer.findExpressionAt(n.callee);
      var type = infer.expressionType(expr);
 
