@@ -63,6 +63,7 @@ Interesting Projects
 * [Bespoke Espruino conference badge for NodeConf 2017](http://forum.espruino.com/conversations/313468/)
 * [Controlling Retro Bubble LED displays](http://forum.espruino.com/conversations/311847)
 * [Building a Smart Air Pressure Sensor with Espruino and Angular](https://medium.com/@urish/building-a-smart-air-pressure-sensor-with-espruino-and-angular-942ef7373b92)
+* [Building a Rock Polisher using Espruino Pixl.js](https://medium.com/@urish/improvising-hardware-diy-rotary-rock-tumbler-d3a1a1915ea9)
 
 Are there other good references for Espruino or projects that you think
 should be added to this list? [Let us know here](https://github.com/espruino/EspruinoDocs/issues)
