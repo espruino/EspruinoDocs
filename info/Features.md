@@ -118,7 +118,7 @@ List of ES6 features from http://es6-features.org:
 | Typed Arrays | `Yes` |
 | `Object.assign` | `Yes` |
 | `[].findIndex` | `2v00` `Official` |
-| `"".repeat` | - |
+| `"".repeat` | `2v00` `Official` |
 | `"".startsWith/endsWith/includes` | `2v00` `Official` |
 | `Number.isNaN/isFinite` | - (global `isNaN/isFinite` are implemented) |
 | `Number.isSafeInteger` | - |
