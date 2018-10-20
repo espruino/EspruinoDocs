@@ -32,7 +32,7 @@ Params : Args
 pinAryNeopixel
 ```
 An array of output pin values for the specific device. Allows for multiple Neopixel strips. ex: [B5,B15]
-Must be an MOSI pin capable of addressing the WS2811/WS2812 device. See specific device. Ref Pico: http://www.espruino.com/Pico
+Must be an SPI MOSI pin capable of addressing the WS2811/WS2812 device. See specific device. Ref Pico: http://www.espruino.com/Pico
 
 ```
 pinAryNeopixelIdx
@@ -92,10 +92,10 @@ Make sure option param useGamma is set to false
 Reference
   ---------
 
-  * APPEND_JSDOC: mdNeopixelCore.js, NeopixelInit.js, moduleNeopixelInit.js
+  * APPEND_JSDOC:  NeopixelCore.js   https://github.com/espruino/EspruinoDocs/tree/master/tutorials/Neopixel/NeopixelCore.html
   
   Using
   -----
 
-  * APPEND_USES: NeopixelColor, NeopixelColors, NeopixelEffects
+  * APPEND_USES: Color, Colors, NeopixelEffects
   
