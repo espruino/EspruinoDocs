@@ -689,7 +689,7 @@
     "prototype": {
       "getTimezoneOffset": {
         "!type": "fn() -> number",
-        "!doc": "<p>The getTimezoneOffset() method returns the time-zone offset from UTC, in minutes, for the current locale.</p>\n",
+        "!doc": "<p>This returns Espruino&#39;s time-zone offset from UTC, in minutes.</p>\n<p>This is set with <code>E.setTimeZone</code> and is System-wide. The value returned\nhas nothing to do with the instance of <code>Date</code> that it is called on.</p>\n",
         "!url": "http://www.espruino.com/Reference#l_Date_getTimezoneOffset"
       },
       "getTime": {
@@ -1068,6 +1068,11 @@
       "!doc": "<p>Provide assembly to Espruino.</p>\n<p><strong>This function is not part of Espruino</strong>. Instead, it is detected\nby the Espruino IDE (or command-line tools) at upload time and is\nreplaced with machine code and an <code>E.nativeCall</code> call.</p>\n<p>See <a href=\"http://www.espruino.com/Assembler\">the documentation on the Assembler</a> for more information.</p>\n",
       "!url": "http://www.espruino.com/Reference#l_E_asm"
     },
+    "compiledC": {
+      "!type": "fn(code: ?)",
+      "!doc": "<p>Provides the ability to write C code inside your JavaScript file.</p>\n<p><strong>This function is not part of Espruino</strong>. Instead, it is detected\nby the Espruino IDE (or command-line tools) at upload time, is sent\nto our web service to be compiled, and is replaced with machine code\nand an <code>E.nativeCall</code> call.</p>\n<p>See <a href=\"http://www.espruino.com/InlineC\">the documentation on Inline C</a> for more information and examples.</p>\n",
+      "!url": "http://www.espruino.com/Reference#l_E_compiledC"
+    },
     "reboot": {
       "!type": "fn()",
       "!doc": "<p>Forces a hard reboot of the microcontroller - as close as possible\nto if the reset pin had been toggled.</p>\n<p><strong>Note:</strong> This is different to <code>reset()</code>, which performs a software\nreset of Espruino (resetting the interpreter and pin states, but not\nall the hardware)</p>\n",
@@ -1375,6 +1380,11 @@
         "!type": "fn(substring: ?, fromIndex: ?) -> bool",
         "!doc": "",
         "!url": "http://www.espruino.com/Reference#l_String_includes"
+      },
+      "repeat": {
+        "!type": "fn(count: number) -> +String",
+        "!doc": "<p>Repeat this string the given number of times.</p>\n",
+        "!url": "http://www.espruino.com/Reference#l_String_repeat"
       }
     },
     "fromCharCode": {
@@ -1489,8 +1499,8 @@
   },
   "DataView": {
     "!type": "fn(buffer: ?, byteOffset: number, byteLength: number) -> +DataView",
-    "!doc": "<p>Create a DataView object</p>\n",
-    "!url": "http://www.espruino.com/Reference#l_DataView_DataView",
+    "!doc": "<p>This class helps</p>\n",
+    "!url": "http://www.espruino.com/Reference#DataView",
     "prototype": {
       "getFloat32": {
         "!type": "fn(byteOffset: number, littleEndian: bool) -> ?",
@@ -1696,11 +1706,6 @@
       "!url": "http://www.espruino.com/Reference#l_SPI_find"
     },
     "prototype": {
-      "setup": {
-        "!type": "fn(options: ?)",
-        "!doc": "<p>Set up this SPI port as an SPI Master.</p>\n<p><strong>Note:</strong> When using Software SPI, the baud rate will be ignored - data is sent as fast as possible.</p>\n",
-        "!url": "http://www.espruino.com/Reference#l_SPI_setup"
-      },
       "send": {
         "!type": "fn(data: ?, nss_pin: +Pin) -> ?",
         "!doc": "<p>Send data down SPI, and return the result. Sending an integer will return an integer, a String will return a String, and anything else will return a Uint8Array.</p>\n<p>Sending multiple bytes in one call to send is preferable as they can then be transmitted end to end. Using multiple calls to send() will result in significantly slower transmission speeds.</p>\n<p>For maximum speeds, please pass either Strings or Typed Arrays as arguments. Note that you can even pass arrays of arrays, like <code>[1,[2,3,4],5]</code></p>\n",
@@ -3009,11 +3014,6 @@
     "!type": "fn(value: ?) -> bool",
     "!doc": "<p>Creates a boolean</p>\n",
     "!url": "http://www.espruino.com/Reference#l_Boolean_Boolean"
-  },
-  "require": {
-    "!type": "fn(moduleName: ?) -> ?",
-    "!doc": "<p>Load the given module, and return the exported functions</p>\n",
-    "!url": "http://www.espruino.com/Reference#l__global_require"
   },
   "NaN": {
     "!type": "number",
