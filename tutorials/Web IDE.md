@@ -26,20 +26,21 @@ Espruino device. If you're using Windows you'll need to use the Native Applicati
 
 ### Online
 
-If you're only using [Puck.js](/Puck.js) on a Web Bluetooth-capable computer, you
+If you're using a Bluetooth Espruino board like [Puck.js](/Puck.js) on a Web Bluetooth-capable computer, you
 can use the Web IDE straight from your Web Browser.
 
-Just follow [this link to the Online Web IDE](https://www.espruino.com/ide)
+Just follow [this link to the Online Web IDE](https://www.espruino.com/ide) using
+an up to date version of the [Google Chrome web browser](https://www.google.com/chrome/).
 
 **Note:**
 
-* Windows doesn't fully support Web Bluetooth yet, so this won't work. You'll
+*  Versions of Windows before Windows 10 don't support Web Bluetooth. You'll
 need to install the Native application (below).
 * Due to security restrictions, the online Web IDE can't access USB
 devices, so you'll be unable to use it with USB Espruino boards (you need the
-Native or Web Store versions).
+Native or Web Store versions for that).
 * Web Bluetooth may not be enabled in your Browser. Have a look
-at the [Puck.js Quick Start guide](/Puck.js Quick Start) for information
+at the [Bluetooth Quick Start guide](/Quick +Start+BLE) for information
 on how to enable it.
 
 ### As a Native application
@@ -53,7 +54,7 @@ Older versions of the IDE (not recommended) [are available here](http://www.espr
 
 #### For Windows 8.1 and later
 
-The IDE is able to use Windows' own BLE drivers. The only configuration needed
+The Native IDE is able to use Windows' own BLE drivers. The only configuration needed
 is for you to go to your system's Bluetooth settings and to click `Connect` (`Pair` on Windows 10)
 on your Puck.js device. This exposes it to the system and makes sure it
 shows up in the Web IDE.

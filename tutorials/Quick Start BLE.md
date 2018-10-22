@@ -83,7 +83,7 @@ Requirements
 For Bluetooth LE you need a Bluetooth 4.0-capable adaptor in your computer (Bluetooth versions before 4.0 won't work). Pretty much all new computers come with Bluetooth 4, but you *may* need to get an external Bluetooth LE dongle if your computer:
 
 * Is an Apple Mac made before 2012
-* Is a Windows PC (especially pre-windows 10)
+* Is a Windows PC with a Windows version before 10
 * Is a Desktop PC - it may not have any wireless support *at all*
 * Is running Linux - much of the built-in Bluetooth LE functionality in laptops is still buggy. External USB adaptors will be much more reliable.
 
@@ -151,19 +151,12 @@ If it doesn't:
 
 #### Windows
 
-Windows 10 support for Web Bluetooth is under development as of late 2017. However
-[there is currently a bug in Google's implementation](https://github.com/WebBluetoothCG/web-bluetooth/issues/387)
-which means the web-based Espruino IDE cannot receive data over Bluetooth.
+Windows 10 fully supports Web Bluetooth, as long as you have an up to date
+version of [Google Chrome](https://www.google.com/chrome/browser/desktop/) (v70 or above) and your PC has a Bluetooth LE
+radio (all new Laptops will).
 
-For now there are two options:
-
-* [Install the Espruino Native IDE application](#with-an-application) instead (recommended)
-* Use the [Web Bluetooth Polyfill Plugin](https://github.com/urish/web-bluetooth-polyfill) to add Web Bluetooth to Chrome on Windows 10 (this can be tricky to install).
-
-**Neither the Online IDE [`espruino.com/ide`](/ide) nor the
-[Chrome Web App](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo)
-will work to access Bluetooth Low Energy devices on Windows unless you install
-the polyfill above.** Please try the [Native IDE](#with-an-application) first - this is by far the easiest option.
+If you do not have Windows 10, you need to [install the Espruino Native IDE application](#with-an-application) instead,
+as this is able to access the Bluetooth adaptor directly.
 
 #### Linux
 
@@ -181,7 +174,7 @@ All Chromebooks with Bluetooth should support Web Bluetooth.
 
 #### Android
 
-Android 6 (Marshmallow) or later supported out of the box.
+Android 6 (Marshmallow) or later are supported out of the box.
 
 Android 5 (Lollipop) devices can use [Chromium installed over ADB to a developer mode device](https://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop).
 
@@ -190,7 +183,7 @@ Android 5 (Lollipop) devices can use [Chromium installed over ADB to a developer
 Apple's built-in web browser does not support Web Bluetooth. Instead you'll
 need to [install the WebBLE app](https://itunes.apple.com/us/app/webble/id1193531073)
 
-However once that is done you'll be able to access Web Bluetooth through any
+Once that is done you'll be able to access Web Bluetooth through any
 webpage viewed with [WebBLE](https://itunes.apple.com/us/app/webble/id1193531073)
 
 ### Once Web Bluetooth is set up:
@@ -230,7 +223,7 @@ used normal Espruino USB devices before.
 
 * Bluetooth LE Serial devices (Nordic UART Service) like Espruino are not treated as serial port devices by Windows. If the IDE's connection menu shows devices beginning with the word `COM` (eg. `COM5`), they are not your device and connecting to them won't work.
 * If using Windows 8.1/10 or later you'll need to pair your Espruino device using the Windows
-Bluetooth menu before it'll appear in the Web IDE.
+Bluetooth menu before it'll appear in the Web IDE. **This is not needed for Web Bluetooth devices**
 * If you're using a Bluetooth dongle with Windows 10 you should use Windows'
 built-in Bluetooth software, rather than installing the software that came with
 your Bluetooth Dongle. Often the Bluetooth dongle's software will not pair

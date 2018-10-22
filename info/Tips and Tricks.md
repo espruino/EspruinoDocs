@@ -28,6 +28,7 @@ Useful Code
 * [Using Inline C to create LED patterns quickly](http://forum.espruino.com/conversations/325997/#14431325)
 * [Counting up and down on a Web page with a Puck.js](http://forum.espruino.com/conversations/326269/)
 * [Using Tween.js in Espruino](http://forum.espruino.com/conversations/326659/#comment14458738)
+* [Mirroring Pixl.js's display over Web Bluetooth](https://medium.com/@urish/mirroring-lcd-display-over-web-bluetooth-bb9ff2cb5d30)
 
 Common Issues and Questions
 ---------------------------
@@ -64,6 +65,7 @@ Interesting Projects
 * [Controlling Retro Bubble LED displays](http://forum.espruino.com/conversations/311847)
 * [Building a Smart Air Pressure Sensor with Espruino and Angular](https://medium.com/@urish/building-a-smart-air-pressure-sensor-with-espruino-and-angular-942ef7373b92)
 * [Building a Rock Polisher using Espruino Pixl.js](https://medium.com/@urish/improvising-hardware-diy-rotary-rock-tumbler-d3a1a1915ea9)
+
 
 Are there other good references for Espruino or projects that you think
 should be added to this list? [Let us know here](https://github.com/espruino/EspruinoDocs/issues)
