@@ -15,9 +15,9 @@
  *   Created:  Sat 2018.09.22
  *   Contact:  @Robin   http://forum.espruino.com/microcosms/116/    Home >> Official Espruino Boards >> JavaScript
  * Reference:  https://www.w3.org/TR/css-color-3/     https://www.w3schools.com/cssref/css_colors.asp     https://en.wikipedia.org/wiki/X11_color_names
- *   Updates:
+ * Technical:  For a visual color swatch list for comparison see 4.3. Extended color keywords  https://www.w3.org/TR/css-color-3/
  *   Updates:  Sat 2018.10.20 rgc  Deployed to GitHub initial module testing 1.0.a.18350922
- *             Sun 2018.10.21 rgc  Completed header block and JSDoc comments 1.0.a.18431021
+ *             Sun 2018.10.21 rgc  Completed header block 1.0.a.18431021
  *
  * Usage:
  *
