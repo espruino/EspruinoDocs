@@ -1,5 +1,5 @@
 <!--- Copyright (c) 2018 Robin G. Cox  See the file LICENSE for copying permission -->
-Neopixel Init
+Neopixel Core
 =====================
 
 * KEYWORDS: Module,Neopixel,WS2812,WS2811,5050,RGB,LED
@@ -8,16 +8,18 @@ Neopixel library for Espruino tm using WS2811 and WS2812
 Enables rapid development of Neopixel projects providing underlying methods for color and palettes
 
 
-Use the [NeopixelInit](/modules/NeopixelInit.js) ([About Modules](/Modules)) module for it.
+Use the [NeopixelCore](/modules/NeopixelCore.js) ([About Modules](/Modules)) module for it.
 
 
-NeopixelInit module usage:
+NeopixelCore module usage:
 
 ```
+  var NeopixelCore = require("NeopixelCore");
   var options = { 'pinLedTest':[A5]
     ,'pinAryNeopixel':[B5,B15],'pinAryNeoIdx':1
-    ,'useGamma':true,'brightness':70 };
-  var n = new NeopixelInit( options );
+    ,'useGamma':true,'brightness':70
+    ,'numPixels':8  };
+  var n = new NeopixelCore( options );
   n.alloff();
   var aryRB = n.buildRainbow();
   n.setdata( aryRB );
@@ -27,6 +29,9 @@ NeopixelInit module usage:
 
 Params : Args
 -------------
+
+For complete up to date list:   [NeopixelCore.html](/tutorials/neopixel/NeopixelCore.html)
+
 
 ```
 pinAryNeopixel
@@ -93,7 +98,10 @@ Reference
   ---------
 
   * APPEND_JSDOC:  NeopixelCore.js   https://github.com/espruino/EspruinoDocs/tree/master/tutorials/Neopixel/NeopixelCore.html
-  
+
+  [NeopixelCore.html](/tutorials/neopixel/NeopixelCore.html)
+
+
   Using
   -----
 
