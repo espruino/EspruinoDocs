@@ -35,32 +35,36 @@ Features
 * 24mm x 16mm
 * 17 GPIO pins (11 usable): 1 serial, 1 SPI, 1 I2C
 * 1 Analog input (0..1V)
-* None of the GPIO are 5 volt tolerant!
 * Built-in Wifi
-* 1600 JS variables
+* Soft Serial 
+* Soft PWM
+* None of the GPIO are 5 volt tolerant!
+* 1600/1700 JS variables
 
 Build Content
 -------------
 
-content | espruino_1v98_esp8266 | espruino_1v98_esp8266_4mb
+content *)| espruino_2v00_esp8266 | espruino_2v00_esp8266_4mb
  :---  | :--- | :---
-Modules | NET<br>TELNET<br><br>CRYPTO, only SHA1<br>NEOPIXEL | NET<br>TELNET<br>GRAPHICS<br>CRYPTO only SHA1<br>NEOPIXEL
+Modules | NET<br>TELNET<br><br>CRYPTO, only SHA1<br>NEOPIXEL<br>Storage | NET<br>TELNET<br>GRAPHICS<br>CRYPTO only SHA1<br>NEOPIXEL<br>Storage
 JS variables| 1700| 1600
-save pages| 4 x 4096 byte | 16 x 4096 byte
-getState()| {"sdkVersion": "2.0.0(5a875ba)",<br>"cpuFrequency": 160, "freeHeap": 10560, "maxCon": 10,<br>"flashMap": "512KB:256/256",<br>"flashKB": 512,<br>"flashChip": "0xXX 0x4013"}|{"sdkVersion": "2.0.0(5a875ba)",<br>"cpuFrequency": 160, "freeHeap": 11888, "maxCon": 10,<br>"flashMap": "4MB:1024/1024",<br>"flashKB": 4096,<br>"flashChip": "0xXX 0x4016"}|
+save pages| 4 x 4096 byte | 48 x 4096 byte
+getState()| {"sdkVersion": "2.2.1(6ab97e9)",<br>"cpuFrequency": 160, "freeHeap": 10672, "maxCon": 10,<br>"flashMap": "512KB:256/256",<br>"flashKB": 512,<br>"flashChip": "0xXX 0x4013"}|{"sdkVersion": "2.2.1(6ab97e9)",<br>"cpuFrequency": 160, "freeHeap": 12416, "maxCon": 10,<br>"flashMap": "4MB:1024/1024",<br>"flashKB": 4096,<br>"flashChip": "0xXX 0x4016"}|
 getFreeFlash()| n/a <br> use 'Storage' module to save data|[{ "addr": 2097152, "length": 1048576 },<br>{ "addr": 3145728, "length": 262144 },<br>{ "addr": 3407872, "length": 262144},<br>{ "addr": 3670016, "length": 262144 },<br>{ "addr": 3932160, "length": 262144 }]
 chip_id and flash_size|4013-4015 use<br>--flash_size 512KB<br>|4016-4018 use<br>--flash_size 4MB-c1
 max image size| 468 KB|812 KB
+
+*) travis build after 2018-10-23 12:00
 
 Limitations
 -----------
 The following features are only partially or not supported by Espruino on the ESP8266:
 
 - No hardware [[I2C]], however, the software I2C works OK.
-- [[PWM]] does not work, low speed software [[PWM]] is usable
+- No hardware [[PWM]], software PWM works OK.
 - No [[DAC]]: the esp8266 does not have a DAC.
-- No independently usable serial port (needs Espruino work)
-- **GPIO16 is now supported in Espruino as a D16 without watch but with all software functiontions like PWM/I2C/SPI/etc**
+- Sofware Serial works OK.
+- GPIO16 is now supported in Espruino as a D16 without watch but with all software functiontions like PWM/I2C/SPI/etc
 
 The main limitations of Espruino on the esp8266 come from two factors:
 - The esp8266 does not have rich I/O peripheral interfaces, this means protocols need to be run in software, which not only may
@@ -158,17 +162,18 @@ GPIO16 is now supported in Espruino. **Do not use it if you use deep sleep**
 
 ### digitalPulse implementation
 
-The `digitalPulse` function is implemented by busy-waiting between pulse transitions (unlike on other Espruino
-boards where `digitalPulse` is asynchronous).
+The `digitalPulse` function is implemented by using the hardware time.
 
-This means that if you specify a series of 10 500us pulses the esp8266 will busy-wait for 5ms in order to toggle
-the output pin at the right moment. Other than the fact that your program will not do anything else during this
-time, this also prevents Wifi processing and empirically, somewhere after 10ms-50ms
-the watchdog timeout will kick in and reset the chip.
+So you can do fancy things like this and no watchdog timeout will kick in and reset the chip.
+
+`digitalPulse(D12,1,[1,2,3,4,5,6,7,8,9,10]);
+
+digitalPulse(D12,1,[10,20,30,40,50,60,70,80,90,100]);`
 
 **Note:** This also means that `digitalPulse(D0,1,10);digitalPulse(D0,0,10);digitalPulse(D0,1,10);` will *not*
 produce 10ms pulses, because the time taken to execute the JS code for the function calls will increase the
 pulse length. Instead, you need to do `digitalPulse(D0,1,[10,10,10])`.
+
 
 ### setWatch implementation
 
@@ -193,6 +198,16 @@ analogRead(D0);
 =NaN
 
 ```
+
+### analogWrite implementation 
+
+With the implementation of hardware timer it's possible to generate stable pwm signals by software
+
+`analogWrite(D12, 0.5, {freq:1000, soft:true});
+
+analogWrite(D13, 0.5, {freq:500, soft:true});
+
+analogWrite(D14, 0.5, {freq:2000, soft:true});`
 
 
 I2C Implementation
@@ -235,11 +250,24 @@ UART1 (`Serial2`) uses gpio2 for TX and RX is not totally usable due to being us
 flash chip. UART1 TX is used for debugging and can be used for application purposes, but RX is
 not available.
 
+
 Serial Numbers
 --------------
 
 The esp8266 does not have a serial number. It does have two mac addresses "burned-in", which one can use for identification purposes.
 `getSerial()` returns the MAC address of the STA interface.
+
+
+Software Serial
+---------------
+With the implementation of hardware timer it's now possible to use the Espruino software implementation
+
+`var s = new Serial();
+
+s.setup(9600,{tx:D12,rx:D13});
+
+s.write('Hello');`
+
 
 System time
 -----------
@@ -270,8 +298,10 @@ a time in seconds (float).
 Saving code to flash
 --------------------
 
-Currently 12KB of flash are reserved to save JS code to flash using the
-save() function. The total JS memory is larger (22400 bytes) so if you
+With the implementation of buildin module Storge it's simple to store any type of object you can think of.
+
+Currently 16KB for 512KB ESPs and 192KB for 4MB ESPs of flash are reserved to save JS code 
+to flash using the save() function. The total JS memory is larger (22400 bytes) so if you
 filled up the JSvars you will need compression to work well. Some simple
 tests show that "it should fit" but it's certainly possible that some
 combinations of stuff doesn't. In that case you're a bit out of luck.
@@ -279,6 +309,7 @@ combinations of stuff doesn't. In that case you're a bit out of luck.
 If the save() area contains something that crashes Espruino or otherwise
 doesn't let you reset the system you can disable whatever is saved by
 flashing blank.bin to the last 4KB block of the save area (0x7A000).
+
 
 Flash map and access
 --------------------
@@ -372,7 +403,7 @@ Performance
 -----------
 
 Espruino sets the esp8266 clock to 160Mhz by default, but this can be changed back to
-the default 80Mhz from JavaScript using `require("ESP8266").setCPUFreq(80)`.
+the default 80Mhz from JavaScript using `require("ESP8266").setCPUFreq(80) or `E.setClock(80)`.
 The benefits of the lower clock frequency are assumed to be lower power consumption
 by the CPU and operation at lower voltages, but this has not been confirmed!
 
@@ -440,7 +471,7 @@ The authoritative list of open issues is
 [on github](https://github.com/espruino/Espruino/issues?q=is%3Aopen+is%3Aissue+label%3AESP8266).
 Some of the top-level issues at the time of writing are:
 - Support sleep mode
-- Provide more memory (either more JSvars, or store code in flash)
+- Provide more memory, like more JSvars and heap)
 
 Further reading
 ---------------
