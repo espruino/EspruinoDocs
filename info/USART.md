@@ -6,13 +6,55 @@ USART / UART / Serial Port
 
 * KEYWORDS: Peripheral,Peripherals,Serial,USART,UART,RS232,Built-In
 
-[Serial Class](/Reference#Serial) in the Reference.
+See the [`Serial Class`](/Reference#Serial) and [`Serial.setup(...)`](/Reference#l_Serial_setup) in the Reference.
 
-Espruino can respond to information on serial ports or USB. If you're plugged in via USB, you can create a very simple command interpreter on the first serial port with the following code:
+
+Choosing Pins
+-------------
+
+You can find out which pins to use by looking at [your board's reference page](/Reference#boards)
+and searching for pins with the `UART`/`USART` markers. On some boards (for example
+the nRF52 based Bluetooth Espruino boards) the UART can be used on any pin so won't
+be explicitly marked, but others (such as the STM32 based Espruino boards) only
+allow the UART on certain pins.
+
+If not specified in `Serial.setup`, the default pins are used for `rx` and `tx`
+(usually the lowest numbered pins on the lowest port that supports
+this peripheral). `ck` and `cts` are not used unless specified.
+
+If you specify an `rx` pin but *not* a `tx` pin (or `tx` but not `rx`) then
+only that direction will be set up.
+
+
+Usage
+-----
+
+To do a quick 'loopback' test, connect the RX and TX pins together on one of the serial ports (for example `Serial1`), and then run the following code:
+
+```JavaScript
+Serial1.setup(9600, {rx:serial_pin, tx:serial_pin});
+Serial1.on('data', function (data) { print("<Serial> "+data); });
+Serial1.print("Hello World");
+```
+
+This should display: `<Serial> Hello World`
+
+Or more likely, something like:
+
+```
+<Serial> He
+<Serial> ll
+<Serial> o W
+<Serial> orld
+```
+
+As the callback function is called whenever serial data is available. You can also use [`Serial.available()`](/Reference#l_Serial_available) and [`Serial.read()`](/Reference#l_Serial_read) but the `data` event is preferable.
+
+Espruino can respond to any instance of the [`Serial Class`](/Reference#Serial) class - eg. serial ports, USB, Bluetooth, etc. If you're plugged in via USB, you can create a very simple command interpreter on the first serial port with the following code:
 
 ```JavaScript
 var cmd="";
-Serial1.setup(9600/*baud*/);
+Serial1.setup(9600/*baud*/); // you may need to specify {rx:serial_pin, tx:serial_pin} on some boards
 Serial1.on('data', function (data) {
   Serial1.print(data);
   cmd+=data;
@@ -28,21 +70,14 @@ Serial1.on('data', function (data) {
 });
 ```
 
-Or you can do a quick 'loopback' test. Connect the RX and TX pins together for one of the serial ports (for example Serial4 on some boards), and then do:
-
-```JavaScript
-Serial4.setup(9600);
-Serial4.on('data', function (data) { print("<Serial4> "+data); });
-Serial4.print("Hello World");
-```
-
-Most chips can also have the same Serial port on different pins, for example Serial1 TX is available on A9 or B6 on the Espruino Board (look at the datasheets for the board you have). Espruino will choose the first available pins by default - if you wish to use an alternate set of pins, you can specify them when you set up the Serial port:
+Most chips can also have the same Serial port on different pins, for example Serial1 TX is available on `A9` or `B`6 on the [Original Espruino Board](/Original) (look at the Espruino reference pages for the board you have). Espruino will choose the first available pins by default - if you wish to use an alternate set of pins, you can specify them when you set up the Serial port:
 
 ```JavaScript
 Serial1.setup(9600, { tx:B6, rx:B7 });
 ```
 
-For more information, please see the [reference](/Reference) for your board.
+For more information, please see the [reference](/Reference#boards) for your board.
+
 
 USARTs (CK pin)
 ---------------
@@ -52,6 +87,7 @@ Some of the UARTs have a `CK` pin - this is an optional clock that can be genera
 ```JavaScript
 Serial1.setup(9600, { tx:B6, rx:B7, ck:A8 });
 ```
+
 
 Parity/Framing errors
 ---------------------
@@ -75,10 +111,32 @@ with the following (`errors:true` is also required):
   });
 ```
 
-<a name="ConsoleSerial"></a>Console over serial
+
+Software serial
+---------------
+
+As of Espruino v2.00 you can set up 'software serial' using code like:
+
+```
+var s = new Serial();
+s.setup(9600,{rx:a_pin, tx:a_pin});
+// or just s.setup(9600,{tx:a_pin}); for transmit only
+```
+
+This can be used on any pin, and you can have multiple instances of Software serial ports. However software serial doesn't use `ck`, `cts`, `parity`, `flow` or `errors` parts of the initialisation object.
+
+
+<a name="ConsoleSerial"></a>
+Console/REPL over serial
 -------------------
 
-Espruino will by default connect its interactive console to the `Serial1` port, or to the USB serial port if you are connected to a computer. When the console is on a port, a listener added with `SerialX.on('data', ...)` will no longer get called. See [this troubleshooting post](/Troubleshooting#console) for more information.
+By default, Espruino may end up using one of the Serial ports (usually `Serial1`) for the console (eg. the left-hand side of the IDE) when not connected to something else like USB or Bluetooth. When the console is on a port, a listener added with `SerialX.on('data', ...)` will no longer get called.
+
+Check out the following for more information:
+
+* [Espruino works when connected to a computer, but stops when powered from something else](/Troubleshooting#console)
+* [My code works when I'm connected via Bluetooth but stops when I disconnect](/Troubleshooting+BLE#my-code-works-when-i-m-connected-via-bluetooth-but-stops-when-i-disconnect)
+
 
 To avoid this behaviour, for example if you wish to use `Serial1` to talk to a device while disconnected from USB, explicitly set the console serial port using  [Serial.setConsole](/Reference#l_Serial_setConsole) during the [init event](Reference#l_E_init) which Espruino runs on boot.
 
@@ -87,3 +145,7 @@ E.on('init', function() {
   USB.setConsole();
 });
 ```
+
+You can specify `USB.setConsole();` which will take effect until the next change in
+connectivity (eg. a disconnect of USB), or you can supply `true` (`USB.setConsole(true);`)
+to ensure the console stays on the given Serial device regardless of what happens.
