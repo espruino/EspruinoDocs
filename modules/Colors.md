@@ -60,10 +60,11 @@ none
   Using
   -----
 
-  * APPEND_USES: NeopixelColor, NeopixelColors, NeopixelCore, NeopixelEffects
+  * APPEND_USES: Colors, Color, NeopixelCore, NeopixelEffects
+  
   
   
   Last Updated
   ------------
   
-  Sat 2018.09.29  rgc Created deployed to GitHub
+  Sun 2018.10.28  rgc Created deployed to GitHub

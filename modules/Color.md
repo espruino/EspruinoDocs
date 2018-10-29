@@ -65,10 +65,10 @@ none
   Using
   -----
 
-  * APPEND_USES: Colors, NeopixelColor, NeopixelColors, NeopixelCore, NeopixelEffects
+  * APPEND_USES: Colors, Color, NeopixelCore, NeopixelEffects
   
   
   Last Updated
   ------------
   
-  Sun 2018.10.07  rgc Created deployed to GitHub
+  Sun 2018.10.28  rgc Created deployed to GitHub

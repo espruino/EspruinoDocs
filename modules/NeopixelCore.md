@@ -77,11 +77,6 @@ See constant OPTION_BASE_ONE to reference elements starting at [1]
 
 
 
-```
-turnon(pixel,color);
-```
-See mapone()
-
 
 
 ```
@@ -97,7 +92,9 @@ Make sure option param useGamma is set to false
 Reference
   ---------
 
-  * APPEND_JSDOC:  NeopixelCore.js   https://github.com/espruino/EspruinoDocs/tree/master/tutorials/Neopixel/NeopixelCore.html
+  * APPEND_JSDOC:  NeopixelCore.js  
+
+  https://github.com/espruino/EspruinoDocs/tree/master/tutorials/neopixel/NeopixelCore.html
 
   [NeopixelCore.html](/tutorials/neopixel/NeopixelCore.html)
 
@@ -105,5 +102,11 @@ Reference
   Using
   -----
 
-  * APPEND_USES: Color, Colors, NeopixelEffects
+  * APPEND_USES: Color, Colors, NeopixelCore, NeopixelEffects
+
   
+  
+  Last Updated
+  ------------
+  
+  Sun 2018.10.28  rgc Created deployed to GitHub  
