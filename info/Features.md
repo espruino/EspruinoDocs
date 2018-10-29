@@ -105,7 +105,7 @@ List of ES6 features from http://es6-features.org:
 | RegExp Sticky Matching | - |
 | Enhanced Object Properties | - |
 | Destructing Assignment | - |
-| Modules | - |
+| Modules (`import`/`export`) | - |
 | Class Definition | `1v96` `Official` |
 | Class Inheritance, Base Class Access | `1v96` `Official` |
 | Class Inheritance from Expressions | - |

@@ -43,6 +43,20 @@ pinMode(BUTTON,"input_pulldown");
 var g;
 
 var SPEED = 0.5;
+
+// Images can be added like this in Espruino v2.00
+var BIRDIMG = Graphics.createImage(`
+
+####
+#    #
+# ### #
+# #  #
+#    #
+####
+
+`);
+BIRDIMG.transparent=0;
+/* In earlier versions of Espruino you need to do this:
 var BIRDIMG = {
   width : 8, height : 8, bpp : 1,
   transparent : 0,
@@ -57,6 +71,7 @@ var BIRDIMG = {
     0b00000000,
   ]).buffer
 };
+*/
 
 
 

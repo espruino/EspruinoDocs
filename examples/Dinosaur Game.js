@@ -18,12 +18,136 @@ This can easily be ported to other devices by:
 * Making sure `g` is an instance of [[Graphics]]
 * Ensuring `BTNL/R/U` are set correctly
 
+
+
+
 */
 
 var BTNL = BTN4;
 var BTNR = BTN3;
 var BTNU = BTN1;
 
+// Images can be added like this in Espruino v2.00
+var IMG = {
+  rex: [Graphics.createImage(`
+           ########
+          ##########
+          ## #######
+          ##########
+          ##########
+          ##########
+          #####
+          ########
+#        #####
+#      #######
+##    ##########
+###  ######### #
+##############
+##############
+ ############
+  ###########
+   #########
+    #######
+     ### ##
+     ##   #
+          #
+          ##
+`),Graphics.createImage(`
+           ########
+          ##########
+          ## #######
+          ##########
+          ##########
+          ##########
+          #####
+          ########
+#        #####
+#      #######
+##    ##########
+###  ######### #
+##############
+##############
+ ############
+  ###########
+   #########
+    #######
+     ### ##
+     ##   ##
+     #
+     ##
+`),Graphics.createImage(`
+           ########
+          #   ######
+          # # ######
+          #   ######
+          ##########
+          ##########
+          #####
+          ########
+#        #####
+#      #######
+##    ##########
+###  ######### #
+##############
+##############
+ ############
+  ###########
+   #########
+    #######
+     ### ##
+     ##   #
+     #    #
+     ##   ##
+`)],
+  cacti: [Graphics.createImage(`
+     ##
+    ####
+    ####
+    ####
+    ####
+    ####  #
+ #  #### ###
+### #### ###
+### #### ###
+### #### ###
+### #### ###
+### #### ###
+### #### ###
+### #### ###
+###########
+ #########
+    ####
+    ####
+    ####
+    ####
+    ####
+    ####
+    ####
+    ####
+`),Graphics.createImage(`
+   ##
+   ##
+ # ##
+## ##  #
+## ##  #
+## ##  #
+## ##  #
+#####  #
+ ####  #
+   #####
+   ####
+   ##
+   ##
+   ##
+   ##
+   ##
+   ##
+   ##
+`)],
+};
+IMG.rex.forEach(i=>i.transparent=0);
+IMG.cacti.forEach(i=>i.transparent=0);
+/* In earlier versions of Espruino you need to do this:
 var IMG = {
   rex : [
     // running
@@ -36,7 +160,7 @@ var IMG = {
     { width : 12, height : 24, bpp : 1, transparent:0, buffer : E.toArrayBuffer(atob("BgDwDwDwDwDyT373737373737373/+f8DwDwDwDwDwDwDwDw")) },
     { width : 8, height : 18, bpp : 1,  transparent:0, buffer : E.toArrayBuffer(atob("GBhY2dnZ2fl5Hx4YGBgYGBgY")) }
   ],
-};
+};*/
 var cacti, rex, frame;
 
 function gameStart() {

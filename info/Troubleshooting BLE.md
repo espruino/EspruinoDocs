@@ -208,6 +208,16 @@ you'll need to log in and:
 clear any saved code, but will also remove any data that your code
 may have saved using the [Storage Library](/Reference#Storage)
 
+### How do I find my Device's 4 character ID
+
+Most Espruino devices advertise themselves with names like `Puck.js abcd`. The
+4 character ID at the end is just the last 4 digits of the device's MAC Address.
+
+You can get this with the command `NRF.getAddress().substr(-5).replace(":","")` -
+which takes the address in the form `aa:bb:cc:dd:ee:ff`, strips off the last
+5 characters, and removes the colon.
+
+
 ### How can I change my Device's name?
 
 Check out the reference pages for [NRF.setAdvertising](https://www.espruino.com/Reference#l_NRF_setAdvertising)...

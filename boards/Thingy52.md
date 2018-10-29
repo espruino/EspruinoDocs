@@ -36,6 +36,9 @@ It contains the following sensors:
 * [[CCS811]]
 * [[BH1745]]
 
+For full technical docs, see [Nordic's Thingy:52 reference pages](https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.rds%2Fdita%2Frds%2Fdesigns%2Fthingy%2Fintro%2Ffrontpage.html) - particularly
+the [Hardware description](https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.rds%2Fdita%2Frds%2Fdesigns%2Fthingy%2Fhw_description%2Fhw_descr.html)
+
 <a name="buy"></a>Buying
 ------
 
@@ -132,7 +135,13 @@ BTN
 // R/G/B leds
 LED1/2/3  
 
-// MOSFET outputs
+// Pins P0.02/P0.03/P0.04 on the Thingy PCB
+// correspond to D2/D3/D4 and are analog capable
+// GPIO.
+D2/D3/D4
+
+// MOSFET outputs. To use these, connect all the Mx.S  pins to GND
+// And then Mx.D pins will be pulled low when MOSx is high.
 MOS1/2/3/4
 
 // External IO outputs
