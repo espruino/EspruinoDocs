@@ -118,3 +118,35 @@ function central(text, y) {
 }
 central("Hello", 0);
 ```
+
+Doubling Font Size
+------------------
+
+There might be a case where you need to take a small font and double the size of it (to save memory, or because it can look interesting).
+
+There's nothing built in to Espruino, but this bit of code will render a font at double size and is reasonably fast:
+
+```
+// txt=text string, px=>x position, py=>y position, h=height of font
+Graphics.prototype.drawStringDbl = (txt,px,py,h)=>{
+  var g2 = Graphics.createArrayBuffer(128,h,2,{msb:true});
+  // set your custom font here if you need to
+  var w = g2.stringWidth(txt);
+  var c = (w+3)>>2;
+  g2.drawString(txt);
+  var img = {width:w*2,height:1,transparent:0,buffer:new ArrayBuffer(c)};
+  var a = new Uint8Array(img.buffer);
+  for (var y=0;y<h;y++) {    
+    a.set(new Uint8Array(g2.buffer,32*y,c));
+    this.drawImage(img,px,py+y*2);
+    this.drawImage(img,px,py+1+y*2);
+  }
+};
+
+
+g.clear()
+g.drawStringDbl("Hello",0,0,5)
+g.flip()
+```
+
+The code works with a maximum text width of 128px, which means 256px in double-size font.

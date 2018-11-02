@@ -20,7 +20,7 @@ we're not going to cover that here. Instead, we'll use [GitHub Pages](https://pa
 * Click on the `Repositories` tab, and click `New`
 * Enter `PuckTest` as the name, make sure you check `Initialize this repository with a README`,
 and click `Create` (if you don't, you'll have to use command-line tools to create a new file)
-* Click on `Settings` in the top right
+* Click on the `Settings` tab in the top right
 * Scroll down to `GitHub Pages`, under `Source` choose `master branch` and click `Save`
 * Now go back to the `Code` tab, and click `Create new file` in the top right
 * Enter `test.html` as the name
