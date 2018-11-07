@@ -27,7 +27,8 @@ var BTNR = BTN3;
 var BTNU = BTN1;
 var BTNA = BTN2;
 
-g.drawPoly = function(p) {
+// for before Espruino 2.00
+if (!g.drawPoly) g.drawPoly = function(p) {
   g.moveTo(p[p.length-2],p[p.length-1]);
   for (var i=0;i<p.length;i+=2)
     g.lineTo(p[i],p[i+1]);
@@ -122,7 +123,7 @@ function onFrame() {
     ship.x+Math.cos(ship.r)*4, ship.y+Math.sin(ship.r)*4,
     ship.x+Math.cos(ship.r+rs)*3, ship.y+Math.sin(ship.r+rs)*3,
     ship.x+Math.cos(ship.r-rs)*3, ship.y+Math.sin(ship.r-rs)*3,
-  ]);
+  ],true);
   var na = [];
   ammo.forEach(function(a) {
     a.x += a.vx;
