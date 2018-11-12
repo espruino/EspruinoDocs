@@ -8,10 +8,10 @@ Simple Linux-like Cron system
 
 ## APPLICATION
 
-This module defines a simple Linux-like Cron system for Espruino. It supports
-'*' wildcard and list formats, but in the interest of minimal footprint, it
+This module defines a simple Linux-like Cron system for Espruino. It supports `*`
+wildcard and list formats, but in the interest of minimal footprint, it
 does not support modulo (/) and range (-) shortcut formats, nor does it
-support Cron keywords such as @year, @month, etc.
+support Cron keywords such as `@year`, `@month`, etc.
 
 Intended to be a single instance to limit resources and timer overhead.
 Multiple instances will all reference same job queue and timer, thus multiple
