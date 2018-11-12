@@ -27,26 +27,21 @@
  *   ="FF7F50"
  *
  * Create a color object given it's X11Color name
- * 
+ *
  *   var Color = require("Color");
  *   var colorDkCyan = new Color("DarkCyan");
  *
  *   ={ "r": 0, "g": 139, "b": 139, "n": "DarkCyan"
  */
- 
- 
- 
- 
- 
- 
+
 const RGB = {
-  
+
   AliceBlue  : "F0F8FF",
   AntiqueWhite : "FAEBD7",
   Aqua       : "00FFFF",
   Aquamarine : "7FFFD4",
   Azure      : "F0FFFF",
-  
+
   Beige      : "F5F5DC",
   Bisque     : "FFE4C4",
   Black      : "000000",
@@ -64,7 +59,7 @@ const RGB = {
   Cornsilk   : "FFF8DC",
   Crimson 	 : "DC143C",
   Cyan       : "00FFFF",
- 
+
   DarkBlue   : "00008B",
   DarkCyan   : "008B8B",
   DarkGoldenRod : "B8860B",
@@ -90,7 +85,7 @@ const RGB = {
   DimGray     : "696969",
   DimGrey     : "696969",
   DodgerBlue  : "1E90FF",
- 
+
   FireBrick   : "B22222",
   FloralWhite : "FFFAF0",
   ForestGreen : "228B22",
@@ -123,7 +118,7 @@ const RGB = {
   LightGray   : "D3D3D3",
   LightGrey   : "D3D3D3",
   LightGreen  : "90EE90",
-  
+
   LightPink   : "FFB6C1",
   LightSalmon : "FFA07A",
   LightSeaGreen : "20B2AA",
@@ -209,8 +204,3 @@ const RGB = {
 };
 
 exports = RGB;
-
-
-
-
-//[eof]

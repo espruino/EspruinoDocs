@@ -32,11 +32,6 @@
  */
 
 
- 
-
-
-
-
 
 /**
  * Class Color creates a color object given it's X11Color name. Returns in Javascript object notation the
@@ -52,7 +47,7 @@
  * @property  hexR  the hex representation for the individual red color value
  * @property  hexG  the hex representation for the individual green color value
  * @property  hexB  the hex representation for the individual blue color value
- * 
+ *
  * Reference
  * For a visual color swatch list for comparison see 4.3. Extended color keywords
  * {@link https://www.w3.org/TR/css-color-3/}
@@ -62,24 +57,24 @@ class Color {
   constructor( obj, name ) {
 
     if( typeof obj == "string" ) {
-      
+
       var isValid = this.isValidRGB(obj);
 
       if( isValid ) {
         this.colorName = "notassigned";
         this.colorRGB = obj;
-        
+
         if( typeof name == 'string' ) {
           this.colorName = name;
         }
-  
+
         this.colorR = obj.substring(0, 2);
         this.colorG = obj.substring(2, 4);
         this.colorB = obj.substring(4, 6);
 
       } else {
-      
-        var objRGB = JSON.parse( JSON.stringify(RGB) );
+
+        var objRGB = require("Colors");
         var key;
 
         for (key in objRGB) {
@@ -116,8 +111,8 @@ class Color {
     vals.g = this.decG;
     vals.b = this.decB;
     vals.n = this.colorName;
-    this.colorObjJson = JSON.parse(JSON.stringify(vals));    
-    // Future development along with HSL to RGB  
+    this.colorObjJson = JSON.parse(JSON.stringify(vals));
+    // Future development along with HSL to RGB
     this.colorA = "FF";
     this.colorARGB = "ffffffff";
 
@@ -161,7 +156,7 @@ class Color {
     return (this.colorB);
   }
 
-  
+
   getColorARGB() {
     return (this.colorARGB);
   }
@@ -180,7 +175,7 @@ class Color {
     vals.g = this.decG;
     vals.b = this.decB;
     vals.n = this.colorName;
-    this.colorObjJson = JSON.parse(JSON.stringify(vals));    
+    this.colorObjJson = JSON.parse(JSON.stringify(vals));
     return (this.colorObjJson);
   }
 
@@ -190,7 +185,7 @@ class Color {
     vals.g = this.hexG;
     vals.b = this.hexB;
     vals.n = this.colorName;
-    this.colorObjJson = JSON.parse(JSON.stringify(vals));    
+    this.colorObjJson = JSON.parse(JSON.stringify(vals));
     return (this.colorObjJson);
   }
 
@@ -200,7 +195,7 @@ class Color {
  * @param   {number}   hex  The desired hex number to convert either as a number or hex string equivalent
  *
  * @returns {number}   decimal  The converted value as a base 10 decimal
- */  
+ */
   static cvrtHexToDec( hex ) {
     if( typeof(hex) == "number" ) hex = hex.toString(16);
     if( (typeof(hex) != "string") && (typeof(hex) != "number") ) return ("NaN");
@@ -220,7 +215,7 @@ class Color {
  * @param   {number}   padding   The number of left place holders of value zero
  *
  * @returns {number}   hex       The converted value in hex
- */  
+ */
   static cvrtDecToHex( decimal, padding ) {
     var hex = Number(decimal).toString(16);
     padding = typeof(padding) === "undefined" || padding === null ? padding = 2 : padding;
@@ -248,7 +243,7 @@ class Color {
     }
     return this.cvrtHexToDec(shex);
   }
-  
+
   isValidRGB( val ) {
     return( (typeof val == "string") && (val.length == 6)
          && !isNaN( parseInt(val, 16) ) );
@@ -256,15 +251,3 @@ class Color {
 
 }
 exports = Color;
-
-
-// https://stackoverflow.com/questions/8027423/how-to-check-if-a-string-is-a-valid-hex-color-representation
-// isValidRGB( val )
-
-
-// static
-// http://forum.espruino.com/conversations/327037/
-
-
-
-//[eof]
