@@ -8,7 +8,7 @@ Seeed Wio LTE
 
 ![Seeed Wio LTE](WioLTE/board.jpg)
 
-The [Seeed Wio LTE](http://wiki.seeed.cc/Wio_Tracker_LTE_CAT1/) board is an open source gateway which enable faster IoT GPS solutions.
+The [Seeed Wio LTE](http://wiki.seeedstudio.com/Wio_LTE_Cat.1/) board is an open source gateway which enable faster IoT GPS solutions.
 
 It contains:
 
@@ -16,6 +16,11 @@ It contains:
 * GPS/BeiDou/GLONASS/Galileo and QZSS
 * 6 [Grove](/Grove) Connectors
 * Nano SIM and TF card 2 in 1 socket
+
+**NOTE: THE [Wio LTE Cat M1 / NB-IoT tracker](http://wiki.seeedstudio.com/Wio_LTE_Cat_M1_NB-IoT_Tracker)
+IS NOT CURRENTLY DIRECTLY SUPPORTED BY ESPRUINO.** The firmware for the Cat 1 board on this page may run
+on it, but you'll have to interface to the CAT M1/NB-IoT modem directly with AT commands. Please contact
+Seeedstudio directly with any queries.
 
 Full details on flashing can be found on <a name="firmware-updates"></a>[Seeed's website](https://github.com/SeeedDocument/Wio_LTE#software-updates)
 
