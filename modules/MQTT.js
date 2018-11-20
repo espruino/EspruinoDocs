@@ -320,7 +320,7 @@ MQTT.prototype._scktClosed = function () {
     this.connected = false;
     this.client = false;
     if (this.pintr) clearInterval(this.pintr);
-    if (this.ctimo) clearInterval(this.ctimo);
+    if (this.ctimo) clearTimeout(this.ctimo);
     this.pintr = this.ctimo = undefined;
     this.emit('disconnected');
     this.emit('close');
