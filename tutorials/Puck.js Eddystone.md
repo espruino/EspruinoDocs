@@ -16,6 +16,9 @@ a user's phone.
 Android phones > 4.4 will have support - but it may need enabling.
 [See here](https://developers.google.com/beacons/) for more information.
 
+**Note:** It looks like [Google may be disabling Eddystone notifications](https://android-developers.googleblog.com/2018/10/discontinuing-support-for-android.html)
+because of abuse, so in the future it may be more difficult to enable notifications from Eddystone devices.
+
 All you need to do to use it is use the [[ble_eddystone.js]] module:
 
 ```
@@ -54,10 +57,11 @@ An Example
 
 * Go to the [Meme Generator website](https://imgflip.com/memegenerator)
 * Generate a suitable image and copy the (https) URL
-* Go to the [Goo.gl](https://goo.gl/) URL shortener
-* Create a shortened URL and then copy it into a `require("ble_eddystone").advertise("goo.gl/abcdef");` command
+* Go to the Bitly](https://bitly.com/) URL shortener
+* Create a shortened URL and then copy it into a `require("ble_eddystone").advertise("https://bit.ly/abcdef");` command
 * Once executed (and you have disconnected), Puck.js will start advertising Eddystone
 * You can also call  `NRF.setAdvertising({});` to stop advertising
+
 
 Advanced
 --------
