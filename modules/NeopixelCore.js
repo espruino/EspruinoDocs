@@ -61,7 +61,7 @@
  *   Note: A Pico has three SPI MOSI pins defined as B5,B15,A7
  *
  *  var NeopixelCore = require("NeopixelCore");
- *  var options = {
+ *  var options = {  'pinLed':[A5]
  *       ,'pinAryNeopixel':[B5,B15,A7], 'pinAryNeoIdx':1
  *       ,'useGamma':false, 'nBrightness':70
  *       ,'numPixels':8  };
@@ -137,6 +137,10 @@ const aryRainbow = [
  * @param   {object}   options   A Javasciprt Object consisting of configuration parameters and their arguments
  *
  *
+ * @property   {number}   pinLed        A specific output pin for LED status indication - ex [A5] - If specified, blocks array specification during init
+ * @property   {number}   pinAryLed     (opt) An array of pins that may be used for LED status indication
+ * @property   {number}   pinAryLedIdx  (opt) The index into the array of pins specifying the current seleted LED output pin
+ *
  * @property   {number}   pinNeopixel   A specific Neopixel output pin - ex [B15] - If specified, blocks array specification during init - For hdwr specific devices an SPI MOSI pin
  * @property   {number}   pinAryNeopixel   (opt) An array of pins that may be used for Neopixel output
  * @property   {number}   pinAryNeoIdx  (opt) The index into the array of pins specifying the current seleted Neopixel output pin
@@ -157,6 +161,13 @@ class NeopixelCore {
     if( typeof options != "object" ) options = {};
     // Future option base one
     options.optionBase = options.optionBase || C.OPTION_BASE_ZERO;
+    options.pinLed = options.pinLed || C.PIN_PICO_LED;
+    options.pinAryLed = options.pinAryLed || C.PIN_PICO_LED;
+    options.pinAryLedIdx = options.pinAryLedIdx || 0;
+    var nPinLed = options.pinAryLed[options.pinAryLedIdx];
+    this.pinLed = nPinLed;
+    this.pinAryLed = options.pinAryLed;
+    this.pinAryLedIdx = options.pinAryLedIdx;
 
     options.pinNeopixel = options.pinNeopixel || C.PIN_PICO_NEOPIXEL;
     options.pinAryNeopixel = options.pinAryNeopixel || C.PIN_PICO_NEOPIXEL;
@@ -202,6 +213,56 @@ class NeopixelCore {
   }
 
 
+
+
+/**
+ * ledon() illuminates the current specified LED -
+ *   To drive the LED not Neopixel we need to make the output Lo - LED Anode 3V - e.g. on::reset()
+ *
+ * @param   {null}   null  There are no parameters
+ *
+ * @returns {null}
+ */
+  ledon() {
+    this.pinLed.reset();
+  }
+/**
+ * ledoff() darkens the specified LED
+ *   To darken the LED not Neopixel we need to make the output Hi - LED Anode 3V - e.g. off::set()
+ *
+ * @param   {null}   null  There are no parameters
+ *
+ * @returns {null}
+ */
+  ledoff() {
+    this.pinLed.set();
+  }
+
+
+  getnumpixels() {
+    return this.NUM_PIXELS;
+  }
+  getaryprep() {
+    return this.aryPrep;
+  }
+  getlenaryprep() {
+    return this.aryPrep.length;
+  }
+  getarydisp() {
+    return this.aryDisp;
+  }
+  getlenarydisp() {
+    return this.aryDisp.length;
+  }
+  getrgbseq() {
+    return this.RGB_SEQ;
+  }
+
+  getBrightness() {
+    return this.bightness;
+  }
+
+
   getColorPixel( offset ) {
     var idx = offset*3;
     var vals = {};
@@ -238,6 +299,33 @@ class NeopixelCore {
 
   setUseGamma( obj ) {
     this.useGamma = obj;
+  }
+
+  getUseGamma() {
+    return this.useGamma;
+  }
+
+
+/**
+ * setPinLed() reassigns the current LED output pin to the one specified at the array index
+ *
+ * @param   {number}   idx    Index into the array of LED pins previously set
+ *   May only be set when an array of output pins is supplied during initialization, or
+ *   an error is thrown
+ *
+ * @returns {null}
+ */
+  setPinLed( idx ) {
+    try {
+      if( ( idx < this.pinAryLed.length ) && ( this.pinAryLed.length >=0 ) ) {
+        this.pinAryLedIdx = idx;
+        var nPin = this.pinAryLed[this.pinAryLedIdx];
+        this.pinLed = nPin;
+      }
+    } catch(e) {
+      console.log( "L[387] setPinLed() catch() idx " + idx + " " + e.toString() );
+      throw e.toString();
+    }
   }
 
 /**
