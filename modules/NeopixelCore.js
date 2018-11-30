@@ -3,7 +3,7 @@
 /* Work in progress - to avoid change duplication - contact author first */
 
 /* Neopixel library for Espruino tm using WS2811 WS2812
- * Enables rapid development of Neopixel projects providing underlying methods for color, 
+ * Enables rapid development of Neopixel projects providing underlying methods for color,
  *   palettes and effects, and including fade in/out, brightness and Gamma correction
  *
  *      File:  NeopixelCore.js
@@ -43,11 +43,11 @@
  * While every attempt was made to conform to npm's conventions author reserves the right
  *  to maintain other accepted best practices in order to resolve ambiguity
  * https://www.w3.org/wiki/JavaScript_best_practices
- * Author adopts Hungarian notation naming scheme having the advantage being that you know 
+ * Author adopts Hungarian notation naming scheme having the advantage being that you know
  *  what something is supposed to be and not just what it is. This means that any individual
- *  that peeks under the covers will quickly grasp what that code block is doing. Pascal case 
- *  is used for class names and Camel case for function names. I personally detest a single block 
- *  delimiter per line as locating the closing delimiter can be daunting with nested statements. 
+ *  that peeks under the covers will quickly grasp what that code block is doing. Pascal case
+ *  is used for class names and Camel case for function names. I personally detest a single block
+ *  delimiter per line as locating the closing delimiter can be daunting with nested statements.
  *  They are used here, as the WebIDE requires them to enter code lines in the console left-hand pane.
  *
  * Future: HSL to RGB, smaller footprint for Pixl, pin array selection, simultaneous pin output,
@@ -56,10 +56,10 @@
  *
  *
  * Usage:
- *  Create an instance specifically for a Pico with default output on pin B15 for an eight 
+ *  Create an instance specifically for a Pico with default output on pin B15 for an eight
  *   Neopixel display without Gamma correction and an initial brightness at seventy percent
  *   Note: A Pico has three SPI MOSI pins defined as B5,B15,A7
- * 
+ *
  *  var NeopixelCore = require("NeopixelCore");
  *  var options = {  'pinLed':[A5]
  *       ,'pinAryNeopixel':[B5,B15,A7], 'pinAryNeoIdx':1
@@ -78,50 +78,18 @@
  */
 
 
-
-
-
-// To drive a status LED not Neopixel we need to make the output Lo - LED Anode 3V - e.g. on::reset()
-
-class NeopixelCoreLED {
-
-  constructor(pin) {
-    this.p = pin[0];
-  }
-  on(obj) {
-    this.p.reset();
-  }
-  off(obj) {
-    this.p.set();
-  }
-  getp() {
-    return this.p;
-  }
-  setp(obj) {
-    this.p = obj;
-  }
-}
-
-//Usage:
-//var led = new NeopixelCoreLED([A5]);
-//led.on();
-
-
-
-
-
 // Constants global
 
 var C = {
   OPTION_BASE_ZERO : "Zero",
   OPTION_BASE_ONE  : "One",
-  
+
   BRIGHTNESS_DEF : 70,
   NUM_PIXELS_DEF : 8,
-  
+
   PIN_PICO_LED : [A5],
   PIN_PICO_NEOPIXEL : [B15],
-  
+
   RGB_SEQ_GRB : "GRB",
   RGB_SEQ_RGB : "RGB",
   RGB_SEQ_WS2812 : "GRB",
@@ -131,7 +99,7 @@ var C = {
   GAMMA_MAX_IN  : 255,
   GAMMA_MAX_OUT : 255,
   GAMMA_FACTOR  : 2.4,
- 
+
   UQ : 42  // Ultimate question the answer to life
 };
 
@@ -198,7 +166,7 @@ for( int i=0; i<size; i++ ) {
  * @param   {object}   options   A Javasciprt Object consisting of configuration parameters and their arguments
  *
  *
- * @property   {number}   pinLed        A specific output pin for LED status indication - ex [A5] - If specified, blocks array specification during init 
+ * @property   {number}   pinLed        A specific output pin for LED status indication - ex [A5] - If specified, blocks array specification during init
  * @property   {number}   pinAryLed     (opt) An array of pins that may be used for LED status indication
  * @property   {number}   pinAryLedIdx  (opt) The index into the array of pins specifying the current seleted LED output pin
  *
@@ -213,7 +181,7 @@ for( int i=0; i<size; i++ ) {
  *
  * @property   {boolean}  useGamma      Display the output using Gamma corrected values
  * @property   {number}   gfactor       Factor used to calculate Gamma corrected values - range 1.0-3.6  typ 2.4-2.6
- */ 
+ */
 class NeopixelCore {
 
 
@@ -237,7 +205,7 @@ class NeopixelCore {
     this.pinNeopixel = nPinNeo;
     this.pinAryNeopixel = options.pinAryNeopixel;
     this.pinAryNeoIdx = options.pinAryNeoIdx;
-    
+
     options.numPixels = options.numPixels || C.NUM_PIXELS_DEF;
     options.rgbSeq = options.rgbSeq || C.RGB_SEQ_WS2812;
     options.nBrightness = options.nBrightness || C.BRIGHTNESS_DEF;
@@ -246,7 +214,7 @@ class NeopixelCore {
 
 
     var nArySizeRGB = options.numPixels * 3;
-  
+
     var strg = E.toString({data : 0, count : C.GAMMA_MAX});
     var strd = E.toString({data : 0, count : nArySizeRGB});
     var strr = E.toString({data : 0, count : nArySizeRGB});
@@ -272,9 +240,9 @@ class NeopixelCore {
     this.useGamma = options.useGamma;
     this._setGamma( C.GAMMA_MAX_IN, C.GAMMA_MAX_OUT, options.gfactor );
   }
-  
 
-  
+
+
 
 /**
  * ledon() illuminates the current specified LED -
@@ -283,7 +251,7 @@ class NeopixelCore {
  * @param   {null}   null  There are no parameters
  *
  * @returns {null}
- */  
+ */
   ledon() {
     this.pinLed.reset();
   }
@@ -294,7 +262,7 @@ class NeopixelCore {
  * @param   {null}   null  There are no parameters
  *
  * @returns {null}
- */  
+ */
   ledoff() {
     this.pinLed.set();
   }
@@ -322,8 +290,8 @@ class NeopixelCore {
   getBrightness() {
     return this.bightness;
   }
-  
-  
+
+
   getColorPixel( offset ) {
     var idx = offset*3;
     var vals = {};
@@ -331,7 +299,7 @@ class NeopixelCore {
     vals.g = this.ar[idx+1];
     vals.b = this.ar[idx+2];
     // vals.n = this.colorName;
-    var colorObjJson = JSON.parse(JSON.stringify(vals));    
+    var colorObjJson = JSON.parse(JSON.stringify(vals));
     return( colorObjJson );
   }
 
@@ -342,18 +310,18 @@ class NeopixelCore {
     vals.g = this.ab[idx+1];
     vals.b = this.ab[idx+2];
     // vals.n = this.colorName;
-    var colorObjJson = JSON.parse(JSON.stringify(vals));    
+    var colorObjJson = JSON.parse(JSON.stringify(vals));
     return( colorObjJson );
   }
-  
-  
+
+
 /**
  * setBrightness() sets the output brightness as a percentage of full range. Function update() may follow to output immediately
  *
  * @param   {number}   obj   A perentage in the range 0-100
  *
  * @returns {null}
- */  
+ */
   setBrightness( obj ) {
     this.nBrightness = obj;
   }
@@ -366,7 +334,7 @@ class NeopixelCore {
     return this.useGamma;
   }
 
-  
+
 /**
  * setPinLed() reassigns the current LED output pin to the one specified at the array index
  *
@@ -375,9 +343,9 @@ class NeopixelCore {
  *   an error is thrown
  *
  * @returns {null}
- */  
+ */
   setPinLed( idx ) {
-    try { 
+    try {
       if( ( idx < this.pinAryLed.length ) && ( this.pinAryLed.length >=0 ) ) {
         this.pinAryLedIdx = idx;
         var nPin = this.pinAryLed[this.pinAryLedIdx];
@@ -397,9 +365,9 @@ class NeopixelCore {
  *   an error is thrown
  *
  * @returns {null}
- */  
+ */
   setPinNeo( idx ) {
-    try { 
+    try {
       if( ( idx < this.pinAryNeopixel.length ) && ( this.pinAryNeopixel.length >=0 ) ) {
         this.pinAryNeoIdx = idx;
         var nPin = this.pinAryNeopixel[this.pinAryNeoIdx];
@@ -422,7 +390,7 @@ class NeopixelCore {
     }
   }
 
-  
+
   _applyGamma() {
     for( var i=0; i<this.ac.length; i++ ) {
       var nRGBCur = this.af[i];
@@ -430,8 +398,8 @@ class NeopixelCore {
     }
   }
 
- 
- 
+
+
   _aryinit() {
     for( var i=0; i<this.NUM_ELEMENTS; i++ ) {
       this.ad[i] = 0;
@@ -439,10 +407,10 @@ class NeopixelCore {
       this.ab[i] = 0;
       this.ac[i] = 0;
       this.af[i] = 0;
-    }  
-  }  
-  
-  
+    }
+  }
+
+
 // **
 // * Gamma Correction
 // * _setGamma() creates the gamma correction values required for a more pleasing visual output
@@ -461,7 +429,7 @@ class NeopixelCore {
     var gamma = ( (gin < 1.0) || (gin > 5.0) ) ? C.GAMMA_FACTOR : gfactor;
     var max_in = ( (gin < 0) || (gin > C.GAMMA_MAX_IN) ) ? C.GAMMA_MAX_IN : gin;
     var max_out = ( (gout < 0) || (gout > C.GAMMA_MAX_OUT) ) ? C.GAMMA_MAX_OUT : gout;
-    
+
     for( var i=0; i<=max_in; i++ ) {
       //if ((i & 15) === 0) console.log("\n ");
       var resultpow = ( Math.pow(i / max_in, gamma) * max_out + 0.5 );
@@ -476,7 +444,7 @@ class NeopixelCore {
 
 //Evil setInterval - November 03, 2013 - Blog by Ayman Farhat. Built with Pelican
 //https://www.thecodeship.com/web-development/alternative-to-javascript-evil-setinterval/
-  
+
 /**
  * interval() is a more robust replacement for setInterval() allowing for a specified number of repetitions
  *
@@ -489,19 +457,19 @@ class NeopixelCore {
  * Reference
  * Evil setInterval - November 03, 2013 - Blog by Ayman Farhat. Built with Pelican
  * {@link https://www.thecodeship.com/web-development/alternative-to-javascript-evil-setinterval/}
- */  
+ */
   interval( func, wait, times ) {
 
     var interv = function( w, t ) {
-      
+
     if( t <= 0 ) return 'done';
-      
+
     return function() {
 
       if( typeof t === "undefined" || t-- > 0 ) {
 
         setTimeout( interv, w );
-            
+
         try {
           func.call(null);
           // wait3sec();  step();
@@ -511,7 +479,7 @@ class NeopixelCore {
         }
 
       } else {
-        interv = "done"; 
+        interv = "done";
       }
     };
     }( wait, times );
@@ -524,10 +492,10 @@ class NeopixelCore {
     }
 
   }
- 
- 
- 
-  
+
+
+
+
 /**
  * Function fade() will fade 'in'-'out' a specific Neopixels at the given step
  *
@@ -564,12 +532,12 @@ class NeopixelCore {
         maxs.r = this.ac[idx+0];
         maxs.g = this.ac[idx+1];
         maxs.b = this.ac[idx+2];
-      } else {  
+      } else {
         maxs.r = this.ab[idx+0];
         maxs.g = this.ab[idx+1];
         maxs.b = this.ab[idx+2];
       }
-      
+
       if( vals.r < maxs.r )
         vals.r+= stepabs;
       if( vals.r > maxs.r ) vals.r = maxs.r;
@@ -579,7 +547,7 @@ class NeopixelCore {
         vals.g+= stepabs;
       if( vals.g > maxs.g ) vals.g = maxs.g;
       if( vals.g > 255 ) vals.g = 255;
-      
+
       if( vals.b < maxs.b )
         vals.b+= stepabs;
       if( vals.b > maxs.b ) vals.b = maxs.b;
@@ -590,10 +558,10 @@ class NeopixelCore {
     this.af[idx+1] = vals.g;
     this.af[idx+2] = vals.b;
 
-    return( { 'r':vals.r, 'g':vals.g, 'b':vals.b } ); 
+    return( { 'r':vals.r, 'g':vals.g, 'b':vals.b } );
   }
- 
- 
+
+
 
 
   // Must loop at least one time
@@ -613,26 +581,26 @@ class NeopixelCore {
     }
 
     return { 'rangeUpper' : nRangeUpper, 'stepsCalc' : nStepsCalc };
-  }  
+  }
 
-  
-  
-  
+
+
+
   _fadeall( nStep, inout ) {
   "compiled";
-      
+
     for( var idx=0; idx<this.NUM_PIXELS; idx++ ) {
       var objRet = this.fade( idx, nStep, inout );
     }
 
     this.update("fade");
   }
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
   //raw -> bright -> fade -> corr -> disp   ar->ab->af->ac->ad
 
@@ -707,13 +675,13 @@ class NeopixelCore {
 
 
 
-  
-  
-  
+
+
+
 /**
  * mapone() will set the desired Neopixel to the specified color
- * @func    
- * 
+ * @func
+ *
  * @param   {number}   offset  A value representing the position of the desired Neopixel to set color for
  * @param   {object}   color   A color representation in Javascript Object notation - see Color class
  *
@@ -722,7 +690,7 @@ class NeopixelCore {
  * Reference
  * More information on class Color used to create color objects in JSON notation
  * {@link https://github.com/espruino/EspruinoDocs/tree/master/modules/color.md}
- */  
+ */
   mapone( offset, color ) {
   "compiled";
     var idx = offset * 3;
@@ -733,7 +701,7 @@ class NeopixelCore {
         this.ar[idx++] = color.r;
         this.ar[idx++] = color.b;
         break;
-      
+
       case C.RGB_SEQ_RGB:
         this.ar[idx++] = color.r;
         this.ar[idx++] = color.g;
@@ -752,39 +720,39 @@ class NeopixelCore {
 
       var addrsrc = E.getAddressOf(src,false);
       if(!addrsrc) throw new Error("Not a Flat String - _setdata src " + id + " " + src);
-   
+
       var addrdest = E.getAddressOf(dest,false);
       if(!addrdest) throw new Error("Not a Flat String - _setdata dest " + id + " " + dest);
 
       compc.slice( addrdest, addrsrc, size );
 
     } catch( e ) {
-      console.log( "[L790] _setdata() " + id + " " + e.toString() );  
+      console.log( "[L790] _setdata() " + id + " " + e.toString() );
     }
   }
 
 
-  
-  
-  
-  
+
+
+
+
 
 
 
 
 /**
  * Function load() assigns a RGB formatted string sequence to our Neopixel internal preparation array for output
- * @func    
- * 
+ * @func
+ *
  * @param   {number}   arydata  A sequence of RGB formatted values
  *
  * @returns {null}
- */  
+ */
   load( arydata ) {
     this.ar.set( arydata );
   }
-  
-  
+
+
   FStr_load( arydata ) {
     this._setdata( this.fsr, arydata, arydata.length, "darsuk  load()" );
   }
@@ -808,19 +776,19 @@ class NeopixelCore {
   update(fade) {
 
     if( typeof fade == "undefined" ) {
-      
+
       this._mapBrightness();
-      
+
       if( this.useGamma ) this._applyGamma();
 
       //FStr_ (this.useGamma) ? this._setdata( this.fsd, this.fsc, this.NUM_ELEMENTS, "dadsac" ) : this._setdata( this.fsd, this.fsb, this.NUM_ELEMENTS, "dadsab" );
       ( this.useGamma ) ? this.ad.set( this.ac ) : this.ad.set( this.ab );
       ( this.useGamma ) ? this.af.set( this.ac ) : this.af.set( this.ab );
-    
+
     } else {
-  
+
       if( fade == "fade" ) {
-    
+
         this.ad.set( this.af )
         // this._setdata( this.fsd, this.fsf, this.NUM_ELEMENTS, "dadsaf  update()" );
       }
@@ -839,7 +807,7 @@ class NeopixelCore {
  * @param   {null}   null  There are no parameters
  *
  * @returns {null}
- */  
+ */
   alloff() {
     for( var i=0; i<this.NUM_ELEMENTS; i++ ) {
       this.ad[i] = 0;
@@ -847,7 +815,7 @@ class NeopixelCore {
     require("neopixel").write(this.pinNeopixel, this.ad);
   }
 
-  
+
 
 /**
  * allon() illuminates all previously color assigned Neopixels
@@ -855,28 +823,28 @@ class NeopixelCore {
  * @param   {null}   null  There are no parameters
  *
  * @returns {null}
- */  
+ */
   allon() {
     this.update();
   }
-  
-  
+
+
 /**
  * setall() assigns the specified color to all Neopixels
  *
  * @param   {object}   Color   An instance of the Color class
  *
  * @returns {null}
- */  
+ */
   setall( color ) {
     "compiled";
-    for( var i=0; i<this.NUM_PIXELS; i++ ) { 
+    for( var i=0; i<this.NUM_PIXELS; i++ ) {
       this.mapone( i, color );
     }
   }
-  
 
-  
+
+
   help() {
 
     console.log( "    " );
@@ -887,7 +855,7 @@ class NeopixelCore {
     console.log( "  var Color = require(\"Color\");" );
     console.log( "  var color = new Color(\"BlueViolet\");" );
     console.log( "  X11Color names swatches   https://www.w3.org/TR/css-color-3/" );
-   
+
     console.log( "    " );
     console.log( "    " );
 
@@ -902,13 +870,13 @@ class NeopixelCore {
     console.log( "  var n = new NeopixelCore( options ); " );
     console.log( "  n.setdata( rainbow );" );
     console.log( "  n.update( \"fade\" );" );
-   
+
     console.log( "    " );
     console.log( "    " );
 
     console.log( "  https://github.com/espruino/EspruinoDocs/tree/master/tutorials/neopixel/NeopixelCore.html");
     console.log( "    " );
-   
+
     console.log( "  fade( idx, nStep, inout )" );
     console.log( "  fadeall( nDelay, nStep, inout )" );
     console.log( "  interval( func, wait, times )" );
@@ -917,14 +885,13 @@ class NeopixelCore {
     console.log( "  update( 'fade' )" );
     console.log( "    " );
 
-  } 
+  }
 
 
 }
 //class NeopixelCore{}
 
 exports = NeopixelCore;
-exports.NeopixelCoreLED = NeopixelCoreLED;
 exports.C = C;
 
 
@@ -932,4 +899,3 @@ exports.C = C;
 
 
 //[eof]
-
