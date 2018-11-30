@@ -27,8 +27,8 @@ To turn on your Puck.js, simply:
 pressed the button down while inserting the battery. Remove the battery and try
 again, making sure the button next to the battery connector isn't pressed.
 * Re-assemble Puck.js. **To make sure the button works correctly you need to put
-the battery side facing down, with the silver shield facing towards the 'shelf' in the
-case.**
+the battery side facing towards the plastic case, with the `Puck.js ...` text against
+the shelf in the case itself**
 
 While Puck.js ships with firmware that's fine for simple tasks, we're constantly
 improving the software and adding new features.
