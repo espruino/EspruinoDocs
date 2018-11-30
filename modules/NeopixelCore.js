@@ -79,7 +79,6 @@
 
 
 // Constants global
-
 var C = {
   OPTION_BASE_ZERO : "Zero",
   OPTION_BASE_ONE  : "One",
@@ -104,27 +103,16 @@ var C = {
 };
 
 
-
 // Constants local
-
-const colorRGBRainbowRed = { r: 255, g: 0, b: 0 };
-const colorRGBRainbowOrn = { r: 171, g: 85, b: 0 };
-const colorRGBRainbowYel = { r: 171, g: 171, b: 0 };
-const colorRGBRainbowGrn = { r: 0, g: 255, b: 0 };
-const colorRGBRainbowAqu = { r: 0, g: 171, b: 85 };
-const colorRGBRainbowBlu = { r: 0, g: 0, b: 255 };
-const colorRGBRainbowPur = { r: 85, g: 0, b: 171 };
-const colorRGBRainbowPnk = { r: 171, g: 0, b: 85 };
-
 const aryRainbow = [
-  colorRGBRainbowRed,
-  colorRGBRainbowOrn,
-  colorRGBRainbowYel,
-  colorRGBRainbowGrn,
-  colorRGBRainbowAqu,
-  colorRGBRainbowBlu,
-  colorRGBRainbowPur,
-  colorRGBRainbowPnk
+  { r: 255, g: 0, b: 0 },
+  { r: 171, g: 85, b: 0 },
+  { r: 171, g: 171, b: 0 },
+  { r: 0, g: 255, b: 0 },
+  { r: 0, g: 171, b: 85 },
+  { r: 0, g: 0, b: 255 },
+  { r: 85, g: 0, b: 171 },
+  { r: 171, g: 0, b: 85 }
 ];
 
 /**
@@ -149,7 +137,6 @@ const aryRainbow = [
  * @property   {boolean}  useGamma      Display the output using Gamma corrected values
  * @property   {number}   gfactor       Factor used to calculate Gamma corrected values - range 1.0-3.6  typ 2.4-2.6
  */
-
 class NeopixelCore {
 
 
@@ -184,13 +171,13 @@ class NeopixelCore {
 
     this.fsd = strd;
     this.fsf = strf;
-
+   // What are these?
     this.ad = new Uint8ClampedArray(E.toArrayBuffer(strd));
     this.ar = new Uint8ClampedArray(E.toArrayBuffer(strr));
     this.ab = new Uint8ClampedArray(E.toArrayBuffer(strb));
     this.ac = new Uint8ClampedArray(E.toArrayBuffer(strc));
-    this.af = new Uint8ClampedArray(E.toArrayBuffer(strf));
-    this.ag = new Uint8ClampedArray(E.toArrayBuffer(strg));
+    this.af = new Uint8ClampedArray(E.toArrayBuffer(strf)); // fader??
+    this.ag = new Uint8ClampedArray(E.toArrayBuffer(strg)); // gamma??
 
 
     this.NUM_PIXELS = options.numPixels;
@@ -587,20 +574,9 @@ class NeopixelCore {
   }
 
 
-
-
-// FStr_
   _setdata( dest, src, size, id ) {
     dest.set(new Uint8Array(src.buffer,0,size));
   }
-
-
-
-
-
-
-
-
 
 
 /**
@@ -614,18 +590,6 @@ class NeopixelCore {
   load( arydata ) {
     this.ar.set( arydata );
   }
-
-
-  FStr_load( arydata ) {
-    this._setdata( this.fsr, arydata, arydata.length, "darsuk  load()" );
-  }
-
-
-
-
-
-
-
 
 //raw -> bright -> fade -> corr -> disp   ar->ab->af->ac->ad
 
@@ -706,10 +670,12 @@ class NeopixelCore {
   }
 
 }
-//class NeopixelCore{}
+
+
+
+
 
 exports = NeopixelCore;
-//exports.C = C;
 
 
 // http://forum.espruino.com/conversations/327037/
