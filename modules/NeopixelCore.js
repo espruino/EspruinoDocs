@@ -51,7 +51,7 @@
  *  They are used here, as the WebIDE requires them to enter code lines in the console left-hand pane.
  *
  * Future: HSL to RGB, smaller footprint for Pixl, pin array selection, simultaneous pin output,
- *  hopeful resolution to flat string-compiledC speed improvement, "compiled"; keyword anomaly,
+ *  hopeful resolution to flat string-compiledC speed improvement,
  *  multi-step fade smoothing, transitions one color to another color
  *
  *
@@ -127,35 +127,6 @@ const aryRainbow = [
   colorRGBRainbowPnk
 ];
 
-
-
-
-var compc = E.compiledC(`
-//void slice(int,int,int);
-//void applyg(int,int,int,int);
-void slice(unsigned char *datadest, unsigned char *datasrc, int size) {
-
-for( int i=0; i<size; i++ ) {
-  *(datadest++) = *(datasrc++);
-}
-
-}
-void applyg(unsigned char *datadest, unsigned char *datasrc, unsigned char *datag, int size) {
-
-for( int i=0; i<size; i++ ) {
-  int nRGBCur = *(datasrc+i);
-  *(datadest++) = *(datag+nRGBCur);
-}
-
-}
-`);
-
-
-
-
-
-
-
 /**
  * Class NeopixelCore contains underlying methods for color, palettes and effects,
  *  and including fade in/out, brightness and Gamma correction.
@@ -182,11 +153,11 @@ for( int i=0; i<size; i++ ) {
  * @property   {boolean}  useGamma      Display the output using Gamma corrected values
  * @property   {number}   gfactor       Factor used to calculate Gamma corrected values - range 1.0-3.6  typ 2.4-2.6
  */
+
 class NeopixelCore {
 
 
   constructor( options ) {
-
     if( typeof options != "object" ) options = {};
     // Future option base one
     options.optionBase = options.optionBase || C.OPTION_BASE_ZERO;
@@ -425,7 +396,6 @@ class NeopixelCore {
 // * {@link https://cdn-learn.adafruit.com/downloads/pdf/led-tricks-gamma-correction.pdf}
 // *
   _setGamma( gin, gout, gfactor ) {
-    "compiled";
     var gamma = ( (gin < 1.0) || (gin > 5.0) ) ? C.GAMMA_FACTOR : gfactor;
     var max_in = ( (gin < 0) || (gin > C.GAMMA_MAX_IN) ) ? C.GAMMA_MAX_IN : gin;
     var max_out = ( (gout < 0) || (gout > C.GAMMA_MAX_OUT) ) ? C.GAMMA_MAX_OUT : gout;
@@ -507,7 +477,6 @@ class NeopixelCore {
  * @returns {null}
  */
   fade( idx, nStep, inout ) {
-  "compiled";
     var offset = idx;
     var stepabs = ( inout == "out" ) ? nStep*(-1) : nStep;
     var idx = offset*3;
@@ -567,7 +536,6 @@ class NeopixelCore {
   // Must loop at least one time
 
   _getMaxRGB( nStep ) {
-  "compiled";
     var nRangeUpper = 1;
     var nStepsCalc  = 1;
 
@@ -587,8 +555,6 @@ class NeopixelCore {
 
 
   _fadeall( nStep, inout ) {
-  "compiled";
-
     for( var idx=0; idx<this.NUM_PIXELS; idx++ ) {
       var objRet = this.fade( idx, nStep, inout );
     }
@@ -614,7 +580,6 @@ class NeopixelCore {
  * @returns {null}
  */
   fadeall( nDelay, nStep, inout ) {
-  "compiled";
     var x = 0;
     var nWatchdog = 256;
     var nTimes = 256;
@@ -692,7 +657,6 @@ class NeopixelCore {
  * {@link https://github.com/espruino/EspruinoDocs/tree/master/modules/color.md}
  */
   mapone( offset, color ) {
-  "compiled";
     var idx = offset * 3;
     switch( this.getrgbseq() )
     {
@@ -715,20 +679,7 @@ class NeopixelCore {
 
 // FStr_
   _setdata( dest, src, size, id ) {
-  "compiled";
-    try {
-
-      var addrsrc = E.getAddressOf(src,false);
-      if(!addrsrc) throw new Error("Not a Flat String - _setdata src " + id + " " + src);
-
-      var addrdest = E.getAddressOf(dest,false);
-      if(!addrdest) throw new Error("Not a Flat String - _setdata dest " + id + " " + dest);
-
-      compc.slice( addrdest, addrsrc, size );
-
-    } catch( e ) {
-      console.log( "[L790] _setdata() " + id + " " + e.toString() );
-    }
+    dest.set(new Uint8Array(src.buffer,0,size));
   }
 
 
@@ -837,62 +788,16 @@ class NeopixelCore {
  * @returns {null}
  */
   setall( color ) {
-    "compiled";
     for( var i=0; i<this.NUM_PIXELS; i++ ) {
       this.mapone( i, color );
     }
   }
 
-
-
-  help() {
-
-    console.log( "    " );
-
-    console.log( "  https://github.com/espruino/EspruinoDocs/tree/master/modules/Colors.md");
-
-    console.log( "  const RGB = require(\"Colors\");" );
-    console.log( "  var Color = require(\"Color\");" );
-    console.log( "  var color = new Color(\"BlueViolet\");" );
-    console.log( "  X11Color names swatches   https://www.w3.org/TR/css-color-3/" );
-
-    console.log( "    " );
-    console.log( "    " );
-
-    console.log( "  https://github.com/espruino/EspruinoDocs/tree/master/modules/NeopixelCore.md");
-
-    console.log( "  var NeopixelCore = require(\"NeopixelCore\");" );
-    console.log( "  var options = {  'pinLed':[A5]" );
-    console.log( "       ,'pinAryNeopixel':[B5,B15,A7], 'pinAryNeoIdx':1" );
-    console.log( "       ,'useGamma':false, 'nBrightness':70" );
-
-    console.log( "       ,'numPixels':8  };" );
-    console.log( "  var n = new NeopixelCore( options ); " );
-    console.log( "  n.setdata( rainbow );" );
-    console.log( "  n.update( \"fade\" );" );
-
-    console.log( "    " );
-    console.log( "    " );
-
-    console.log( "  https://github.com/espruino/EspruinoDocs/tree/master/tutorials/neopixel/NeopixelCore.html");
-    console.log( "    " );
-
-    console.log( "  fade( idx, nStep, inout )" );
-    console.log( "  fadeall( nDelay, nStep, inout )" );
-    console.log( "  interval( func, wait, times )" );
-    console.log( "  load( array )" );
-    console.log( "  mapone( offset, color )" );
-    console.log( "  update( 'fade' )" );
-    console.log( "    " );
-
-  }
-
-
 }
 //class NeopixelCore{}
 
 exports = NeopixelCore;
-exports.C = C;
+//exports.C = C;
 
 
 // http://forum.espruino.com/conversations/327037/
