@@ -147,11 +147,11 @@ while (true) {
 }
 ```
 
-
 Images / Bitmaps
 ----------------
 
-With Espruino, you can define an image as a special kind of object. For instance this is a 8x8 pixel, 1 bit smiley face:
+With Espruino, you can define an image as a special kind of object. For instance this is a `8x8` pixel, 1 bit smiley face
+where any pixel that is `0` is treated as transparent:
 
 ```
 var img = {
@@ -168,6 +168,21 @@ var img = {
     0b00000000,
   ]).buffer
 };
+```
+
+There's also a utility function in Espruino 2.0 called [`Graphics.createImage`](http://www.espruino.com/Reference#l_Graphics_createImage)
+that allows you to specify the image in a more compact, readable way:
+
+```
+var img = Graphics.createImage(`
+
+ X   X
+
+   X
+
+X      X
+ XXXXXX
+`);
 ```
 
 See the reference for [`Graphics.drawImage`](/Reference#l_Graphics_drawImage) for more information...

@@ -55,7 +55,7 @@ Pixl.js can be powered in multiple ways:
 
 ### `Vin` pins
 
-As mentioned above you can solder a JS connector (part number `B2B-PH-K-S` to Pixl.js):
+As mentioned above you can solder a JST connector (part number `B2B-PH-K-S` to Pixl.js):
 
 ![JST pins on Pixl.js](Pixl.js/jst.jpg)
 

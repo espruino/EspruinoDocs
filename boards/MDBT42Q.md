@@ -32,14 +32,14 @@ Features
 * Espruino JavaScript interpreter pre-installed
 * nRF52832 SoC - 64MHz ARM Cortex M4, 64kB RAM, 512kB Flash
 * 32 x GPIO (capable of PWM, SPI, I2C, UART) on 0.7mm Pitch, including 8 analog inputs
-* 1.7v - 3.6v voltage range
+* 1.7v - 3.6v voltage range (on bare module)
 * Built in thermometer
 * NFC tag programmable from JavaScript (when an antenna is connected)
 * Dimensions: 16mm x 10mm x 2.2mm thick
 
 ### Breakout board features
 
-* 2.5 - 16v voltage input, 20uA power draw when advertising
+* 2.5 - 16v voltage input (on breakout board), 20uA power draw when advertising
 * 0.1" pin header (With 22 GPIO, 7 analog inputs)
 * Red and Green LEDs
 * Button
