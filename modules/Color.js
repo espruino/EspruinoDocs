@@ -119,6 +119,55 @@ class Color {
     return this.colorObjJson;
   }
 
+  setColorA(colorValDec) {
+    this.colorA = colorValDec;
+  }
+  setColorR(colorValDec) {
+    this.colorR = colorValDec;
+  }
+  setColorG(colorValDec) {
+    this.colorG = colorValDec;
+  }
+  setColorB(colorValDec) {
+    this.colorB = colorValDec;
+  }
+
+  setColorARGB(colorValHex) {
+    this.colorARGB = colorValHex;
+  }
+  setColorARGBJson(colorValJson) {
+    this.colorValJson = colorValJson;
+  }
+  setColorName(name) {
+    this.colorName = name;
+  }
+
+
+  getColorA() {
+    return (this.colorA);
+  }
+  getColorR() {
+    return (this.colorR);
+  }
+  getColorG() {
+    return (this.colorG);
+  }
+  getColorB() {
+    return (this.colorB);
+  }
+
+
+  getColorARGB() {
+    return (this.colorARGB);
+  }
+
+  getColorARGBJson() {
+    return (this.colorValJson);
+  }
+
+  getColorName(name) {
+    return (this.colorName);
+  }
 
   getColorDecJSON() {
     var vals = {};
