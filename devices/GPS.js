@@ -12,6 +12,9 @@ var gps = connect(Serial4, function(data) {
 function handleGPSLine(line, callback) {
   var tag = line.substr(3,3);
   if (tag=="GGA") {
+    if (!valid(line)) {
+      return;
+    }
     var d = line.split(",");
     var dlat = d[2].indexOf(".");
     var dlon = d[4].indexOf(".");
@@ -26,6 +29,14 @@ function handleGPSLine(line, callback) {
   }
 }
 
+function valid(line) {
+  var len = line.length;
+  var s = 0;
+  for (let i = 1; i < len - 3; i++) {
+    s ^= line.charCodeAt(i);
+  }
+  return parseInt(line.substr(len - 2), 16) === s;
+}
 
 exports.connect = function(serial, callback) {
   var gps = {line:""};
@@ -33,7 +44,7 @@ exports.connect = function(serial, callback) {
     gps.line += data;
     var idx = gps.line.indexOf("\n");
     while (idx>=0) {
-      var line = gps.line.substr(0, idx);
+      var line = gps.line.substr(0, idx-1);
       gps.line = gps.line.substr(idx+1);
       handleGPSLine(line, callback); 
       idx = gps.line.indexOf("\n");     
