@@ -10,16 +10,19 @@ const dgram = require('dgram');
 const internals = {};
 const ignore = function() {};
 
+exports.errors = {
+    'ISR': 'Invalid server response',
+    'WOT': 'Wrong originate timestamp != sent timestamp',
+    'CNS': 'Could not send entire message',
+    'Timeout': 'Timeout receiving response'
+};
+
 exports.time = function (options, callback) {
 
-    if (arguments.length !== 2) {
-        callback = arguments[0];
-        options = {};
-    }
-
-    const settings = Object.assign({}, options);
-    settings.host = settings.host || 'pool.ntp.org';
-    settings.port = settings.port || 123;
+    const settings_host = options.host || 'pool.ntp.org';
+    const settings_port = options.port || 123;
+    const settings_timeout = options.timeout || 1000;
+    const parser = options.parser || parseNtpMessage;
 
     // Declare variables used by callback
 
@@ -30,8 +33,10 @@ exports.time = function (options, callback) {
 
     let finished = false;
     const finish = function(err, result) {
-        //if (finished) return;
+        if (finished) return;
         finished = true;
+
+        console.log(err, result);
 
         if (timeoutId) {
             clearTimeout(timeoutId);
@@ -41,14 +46,15 @@ exports.time = function (options, callback) {
         socket.removeAllListeners();
         socket.on('error', ignore);
         socket.close();
-        return callback(err, result);
+
+        callback(err ? new Error(err) : null, result);
     };
 
     // Create UDP socket
 
     const socket = dgram.createSocket('udp4');
 
-    socket.on('error', function(err) { return finish(err) });
+    socket.on('error', finish);
 
     // Listen to incoming messages
 
@@ -57,14 +63,13 @@ exports.time = function (options, callback) {
 
         const received = Date.now();
 
-        const message = new internals.NtpMessage(buffer);
-        if (!message.isValid) {
-            return finish(new Error('Invalid server response'), message);
+        const message = parser(buffer);
+        if (!message) {
+            return finish('ISR', { buffer: buffer });
         }
 
-        if (message.originateTimestamp !== sent) {
-            console.log(new Error('Wrong originate timestamp ' + message.originateTimestamp +"!="+ sent), message);
-            return; // finish(new Error('Wrong originate timestamp ' + message.originateTimestamp +"!="+ sent), message);
+        if (message.T1 !== sent) {
+            return finish('WOT', message);
         }
 
         // Timestamp Name          ID   When Generated
@@ -78,48 +83,85 @@ exports.time = function (options, callback) {
         //
         // d = (T4 - T1) - (T3 - T2)     t = ((T2 - T1) + (T3 - T4)) / 2
 
-        const T1 = message.originateTimestamp;
-        const T2 = message.receiveTimestamp;
-        const T3 = message.transmitTimestamp;
-        const T4 = received;
+        const T1 = message.T1;
+        const T2 = message.T2;
+        const T3 = message.T3;
+        const T4 = message.T4 = received;
 
         message.d = (T4 - T1) - (T3 - T2);
         message.t = ((T2 - T1) + (T3 - T4)) / 2;
-        message.receivedLocally = received;
 
-        return finish(null, message);
+        finish(null, message);
     });
 
     // Set timeout
 
-    if (settings.timeout) {
+    if (settings_timeout) {
         timeoutId = setTimeout(function() {
 
             timeoutId = 0;
-            return finish(new Error('Timeout'));
-        }, settings.timeout);
+            finish('Timeout');
+        }, settings_timeout);
     }
 
     // Construct NTP message
 
     const message = new Uint8Array(48);
     const dv = new DataView(message.buffer);
-    message[0] = (0 << 6) + (4 << 3) + (3 << 0);        // Set version number to 4 and Mode to 3 (client)
+    message[0] = (0 << 6) + (4 << 3) + (3 << 0);   // Set version number to 4 and Mode to 3 (client)
     sent = Date.now();
     internals.fromMsecs(sent, dv, 40);             // Set transmit timestamp (returns as originate)
     sent = internals.toMsecs(dv, 40);              // Remember the rounded value
 
     // Send NTP request
-    socket.send(E.toString(message), settings.port, settings.host, function(err, bytes) {
-
-        if (err ||
-            bytes !== 48) {
-
-            return finish(err || new Error('Could not send entire message'));
+    socket.send(E.toString(message), settings_port, settings_host, function(err, bytes) {
+        if (err || bytes !== message.length) {
+            finish(err || 'CNS');
         }
     });
 };
 
+
+function parseNtpMessage(buffer) {
+    if (buffer.length !== 48) {
+        return;
+    }
+
+    const version = ((buffer[0] & 0x38) >> 3);
+    const mode = (buffer[0] & 0x7);
+    const stratum = buffer[1];
+
+    const dv = new DataView(buffer);
+    const originateTimestamp = internals.toMsecs(dv, 24);
+    const receiveTimestamp = internals.toMsecs(dv, 32);
+    const transmitTimestamp = internals.toMsecs(dv, 40);
+
+    // Validate
+    if (version === 4 &&
+        stratum <= 15 /* this.stratum != 'reserved' */ &&
+        mode === 4 /* this.mode === 'server' */ &&
+        originateTimestamp &&
+        receiveTimestamp &&
+        transmitTimestamp) {
+
+        return {
+            T1: originateTimestamp,
+            T2: receiveTimestamp,
+            T3: transmitTimestamp
+        }
+    }
+};
+
+
+exports.parseVerbose = function(buffer) {
+    const message = new internals.NtpMessage(buffer);
+    if (message.isValid) {
+        message.T1 = message.originateTimestamp;
+        message.T2 = message.receiveTimestamp;
+        message.T3 = message.transmitTimestamp;
+        return message;
+    }
+}
 
 internals.NtpMessage = function (buffer) {
     var dv = new DataView(buffer);
