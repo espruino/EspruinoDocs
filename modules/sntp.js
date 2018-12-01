@@ -110,8 +110,8 @@ exports.time = function (options, callback) {
     const dv = new DataView(message.buffer);
     message[0] = (0 << 6) + (4 << 3) + (3 << 0);   // Set version number to 4 and Mode to 3 (client)
     sent = Date.now();
-    internals.fromMsecs(sent, dv, 40);             // Set transmit timestamp (returns as originate)
-    sent = internals.toMsecs(dv, 40);              // Remember the rounded value
+    fromMsecs(sent, dv, 40);             // Set transmit timestamp (returns as originate)
+    sent = toMsecs(dv, 40);              // Remember the rounded value
 
     // Send NTP request
     socket.send(E.toString(message), settings_port, settings_host, function(err, bytes) {
@@ -132,9 +132,9 @@ function parseNtpMessage(buffer) {
     const stratum = buffer[1];
 
     const dv = new DataView(buffer);
-    const originateTimestamp = internals.toMsecs(dv, 24);
-    const receiveTimestamp = internals.toMsecs(dv, 32);
-    const transmitTimestamp = internals.toMsecs(dv, 40);
+    const originateTimestamp = toMsecs(dv, 24);
+    const receiveTimestamp = toMsecs(dv, 32);
+    const transmitTimestamp = toMsecs(dv, 40);
 
     // Validate
     if (version === 4 &&
@@ -250,19 +250,19 @@ internals.NtpMessage = function (buffer) {
 
     // Reference timestamp
 
-    this.referenceTimestamp = internals.toMsecs(dv, 16);
+    this.referenceTimestamp = toMsecs(dv, 16);
 
     // Originate timestamp
 
-    this.originateTimestamp = internals.toMsecs(dv, 24);
+    this.originateTimestamp = toMsecs(dv, 24);
 
     // Receive timestamp
 
-    this.receiveTimestamp = internals.toMsecs(dv, 32);
+    this.receiveTimestamp = toMsecs(dv, 32);
 
     // Transmit timestamp
 
-    this.transmitTimestamp = internals.toMsecs(dv, 40);
+    this.transmitTimestamp = toMsecs(dv, 40);
 
     // Validate
 
@@ -280,7 +280,7 @@ internals.NtpMessage = function (buffer) {
 };
 
 
-internals.toMsecs = function (dv, offset) {
+function toMsecs(dv, offset) {
 
     let seconds = dv.getUint32(offset);
     let fraction = dv.getUint32(offset + 4);
@@ -288,7 +288,7 @@ internals.toMsecs = function (dv, offset) {
 };
 
 
-internals.fromMsecs = function (ts, dv, offset) {
+function fromMsecs(ts, dv, offset) {
 
     const seconds = Math.floor(ts / 1000) + 2208988800;
     const fraction = Math.round((ts % 1000) / 1000 * Math.pow(2, 32));
