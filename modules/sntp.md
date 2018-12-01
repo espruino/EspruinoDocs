@@ -34,11 +34,10 @@ Sntp.time(options, function (err, time) {
 
     if (err) {
         console.log('Failed: ' + err.message);
-        process.exit(1);
+        return;
     }
 
     console.log('Local clock is off by: ' + time.t + ' milliseconds');
-    process.exit(0);
 });
 ```
 
@@ -71,5 +70,28 @@ Sntp.start(function () {
 
     var now = Sntp.now();                   // With offset
     Sntp.stop();
+});
+```
+
+# Advanced Usage
+
+To get more information (the full NtpMessage) parsed on needs to pass the `parser` option.
+
+```javascript
+var options = {
+    parser: Sntp.parseVerbose
+};
+
+// Request server time
+
+Sntp.time(options, function (err, time) {
+
+    if (err) {
+        console.log('Failed: ' + err.message);
+        return;
+    }
+
+    console.log('Local clock is off by: ' + time.t + ' milliseconds');
+    console.log('Full NtpMessage:', time);
 });
 ```

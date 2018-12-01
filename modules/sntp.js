@@ -10,14 +10,14 @@ const dgram = require('dgram');
 const internals = {};
 const ignore = function() {};
 
-exports.errors = {
+const errors = {
     'ISR': 'Invalid server response',
     'WOT': 'Wrong originate timestamp != sent timestamp',
     'CNS': 'Could not send entire message',
     'Timeout': 'Timeout receiving response'
 };
 
-exports.time = function (options, callback) {
+function sntpTime(options, callback) {
 
     const settings_host = options.host || 'pool.ntp.org';
     const settings_port = options.port || 123;
@@ -35,8 +35,6 @@ exports.time = function (options, callback) {
     const finish = function(err, result) {
         if (finished) return;
         finished = true;
-
-        console.log(err, result);
 
         if (timeoutId) {
             clearTimeout(timeoutId);
@@ -115,11 +113,12 @@ exports.time = function (options, callback) {
 
     // Send NTP request
     socket.send(E.toString(message), settings_port, settings_host, function(err, bytes) {
-        if (err || bytes !== message.length) {
+        if (err || bytes !== 48) {
             finish(err || 'CNS');
         }
     });
 };
+
 
 
 function parseNtpMessage(buffer) {
@@ -153,8 +152,8 @@ function parseNtpMessage(buffer) {
 };
 
 
-exports.parseVerbose = function(buffer) {
-    const message = new internals.NtpMessage(buffer);
+function parseVerbose(buffer) {
+    const message = new NtpMessage(buffer);
     if (message.isValid) {
         message.T1 = message.originateTimestamp;
         message.T2 = message.receiveTimestamp;
@@ -163,7 +162,7 @@ exports.parseVerbose = function(buffer) {
     }
 }
 
-internals.NtpMessage = function (buffer) {
+const NtpMessage = function (buffer) {
     var dv = new DataView(buffer);
 
     this.isValid = false;
@@ -307,26 +306,21 @@ internals.last = {
 };
 
 
-exports.offset = function (options, callback) {
-
-    if (arguments.length !== 2) {
-        callback = arguments[0];
-        options = {};
-    }
+function sntpOffset(options, callback) {
 
     const now = Date.now();
-    const clockSyncRefresh = options.clockSyncRefresh || 24 * 60 * 60 * 1000;                    // Daily
+    const clockSyncRefresh = options.clockSyncRefresh || 24 * 60 * 60 * 1000;  // Daily
 
     if (internals.last.offset &&
         internals.last.host === options.host &&
         internals.last.port === options.port &&
         now < internals.last.expires) {
 
-        process.nextTick(function() { return callback(null, internals.last.offset); });
+        setTimeout(function() { return callback(null, internals.last.offset); });
         return;
     }
 
-    exports.time(options, function(err, time) {
+    sntpTime(options, function(err, time) {
 
         if (err) {
             return callback(err, 0);
@@ -351,31 +345,26 @@ internals.now = {
 };
 
 
-exports.start = function (options, callback) {
-
-    if (arguments.length !== 2) {
-        callback = arguments[0];
-        options = {};
-    }
+function start(options, callback) {
 
     if (internals.now.intervalId) {
-        process.nextTick(callback);
+        setTimeout(callback);
         return;
     }
 
-    exports.offset(options, function(ignoreErr, offset) {
+    sntpOffset(options, function(ignoreErr, offset) {
 
         internals.now.intervalId = setInterval(function() {
 
-            exports.offset(options, ignore);
-        }, options.clockSyncRefresh || 24 * 60 * 60 * 1000);                                // Daily
+            sntpOffset(options, ignore);
+        }, options.clockSyncRefresh || 24 * 60 * 60 * 1000); // Daily
 
         return callback();
     });
 };
 
 
-exports.stop = function () {
+function stop() {
 
     if (!internals.now.intervalId) {
         return;
@@ -386,16 +375,16 @@ exports.stop = function () {
 };
 
 
-exports.isLive = function () {
+function isLive() {
 
     return !!internals.now.intervalId;
 };
 
 
-exports.now = function () {
+function now() {
 
     const now = Date.now();
-    if (!exports.isLive() ||
+    if (!isLive() ||
         now >= internals.last.expires) {
 
         return now;
@@ -404,3 +393,13 @@ exports.now = function () {
     return now + internals.last.offset;
 };
 
+exports.errors = errors;
+exports.parseVerbose = parseVerbose;
+
+exports.time = sntpTime;
+exports.offset = sntpOffset;
+
+exports.start = start;
+exports.stop = stop;
+exports.isLive = isLive;
+exports.now = now;
