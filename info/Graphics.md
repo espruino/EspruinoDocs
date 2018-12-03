@@ -94,7 +94,7 @@ vector font support built-in.
 You can then switch back to the bitmap font using:
 
 ```
-LCD.setFontBitmap();
+g.setFontBitmap();
 ```
 
 **You can also use custom Bitmap Fonts**. For more information, see [[Fonts]]
@@ -130,20 +130,20 @@ g.fillCircle = function(x,y,rad) {
   }
   g.fillPoly(a);
 }
-
+```
 
 Random Lines
 ------------
 
-Randomly draw lines on the screen!
+Randomly draw lines on the screen:
 
 ```JavaScript
 g.clear();
 while (true) {
   g.setColor(Math.random(),Math.random(),Math.random());
   g.drawLine(
-    Math.random()*LCD.getWidth(), Math.random()*LCD.getHeight(),
-    Math.random()*LCD.getWidth(),Math.random()*LCD.getHeight())
+    Math.random()*g.getWidth(), Math.random()*g.getHeight(),
+    Math.random()*g.getWidth(),Math.random()*g.getHeight())
 }
 ```
 
