@@ -34,14 +34,32 @@ This will return data every second that looks a lot like:
 
 ```
 ...
-{ "time":"16:35:29", "lat":53.068403,"lon":-4.076282,"fix":1,"satellites":7,"altitude":1085.0 }
+{ "time":"16:35:29", "lat":53.068403, "lon":-4.076282,
+  "fix":1, "satellites":7, "altitude":1085.0 }
 ...
 ```
 
 The latitude and longitude are in degrees North and East respectively, and altitude is in meters.
 
+**Not getting anything?** GPS devices often take several minutes to get a
+GPS lock and some may not output data until they have it. Mobile phones get
+a lock much faster because they have rough time and location information from
+the mobile phone mast to help with the fix.
 
-There's a [lot more](http://www.gpsinformation.org/dale/nmea.htm) data available from the GPS (such as velocity), and hopefully the amount of data returned to the callback will increase as the library gets more full-featured.
+There's a [lot more](http://www.gpsinformation.org/dale/nmea.htm) data available from the GPS (such as velocity).
+To hook onto this you can use the `line` event which is called every time a
+line of data is received from the GPS:
+
+```
+Serial4.setup(9600,{tx:C10,rx:C11});
+var gps = require("GPS").connect(Serial4);
+gps.on('line', function(line) {
+  console.log(line);
+});
+```
+
+You can also use the method above to help to debug if you're *not* receiving
+a callback from the GPS module.
 
 
 Using

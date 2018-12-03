@@ -40,14 +40,14 @@ function valid(line) {
 
 exports.connect = function(serial, callback) {
   var gps = {line:""};
+  if (callback) gps.on('line', line=>handleGPSLine(line, callback));
   serial.on('data', function(data) {
     gps.line += data;
     var idx = gps.line.indexOf("\n");
     while (idx>=0) {
-      var line = gps.line.substr(0, idx-1);
-      gps.line = gps.line.substr(idx+1);
-      handleGPSLine(line, callback); 
-      idx = gps.line.indexOf("\n");     
+      gps.emit('line', gps.line.substr(0, idx-1));
+      gps.line = gps.line.substr(idx+1);      
+      idx = gps.line.indexOf("\n");
     }
     if (gps.line.length > 80)
       gps.line = gps.line.substr(-80);
