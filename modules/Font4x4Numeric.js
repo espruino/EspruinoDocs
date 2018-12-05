@@ -1,5 +1,5 @@
 /* Copyright (c) 2014 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
-/* 
+/*
 
 Basic 4x4 font - only digits 0-9
 
@@ -25,10 +25,8 @@ var font = E.toString([
   0x3F,0xBF, // 8
   0xEA,0xAF, // 9
 ]);*/
-var font = atob("/b+f8bvdmd/m/9279VeI/z+/6q8=");
-
 exports.add = function(graphics) {
   graphics.prototype.setFont4x4Numeric = function() {
-    this.setFontCustom(font, "0".charCodeAt(0), 4, 4);
+    this.setFontCustom(atob("/b+f8bvdmd/m/9279VeI/z+/6q8="), 48, 4, 4);
   }
 }

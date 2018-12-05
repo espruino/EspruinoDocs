@@ -505,6 +505,10 @@ markdownFiles.forEach(function (file) {
            '<iframe allowfullscreen="" frameborder="0" height="450" src="https://www.youtube.com/embed/$1" width="800"></iframe>'); // youtube
    contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+).js\]\]/g,"[$1](/modules/$1.js) ([About Modules](/Modules))");
    contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+)\]\]/g,"[$1](/$1)");
+   contents = contents.replace(/!\[\]\((Font[a-zA-Z0-9_]+\.js)\)/g, function(match, filename) {
+     console.log("Font Preview: "+JSON.stringify(filename));
+     return "!["+filename+"]("+require("./fontpreview.js").getFontPreview("../modules/"+filename)+")";
+   });
    for (var i=0;i<3;i++) // cope with multiple spaces in links (nasty!)
      contents = contents.replace(/(\[.+\]\([^) ]+) ([^)]+\))/g,"$1+$2"); // spaces in links
    // Hacks for 'broken' markdown parsing
