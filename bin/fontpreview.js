@@ -33,6 +33,7 @@ function getFontPreview(path) {
   Graphics.prototype[fontFnName]();
   function getCharWidth(ch) {
     ch -= fontOffset;
+    if (ch<0) return fontWidth[0];
     return 0|fontWidth[ch];
   }
   function drawChar(ch,px,py) {
@@ -50,11 +51,10 @@ function getFontPreview(path) {
   }
 
   var SPACING = Math.max(fontMaxWidth, fontHeight)+1;
-  var WIDTH = 16*SPACING;
-  WIDTH=(WIDTH+31)&~31;
-  var HEIGHT = 18*SPACING;
+  var WIDTH = 16*SPACING+4;
+  var HEIGHT = 16*SPACING+4;
   // Create Image Header
-  var rowstride = WIDTH>>3;
+  var rowstride = ((WIDTH+31) >> 5) << 2;
   var headerLen = 14+ 12 + 6/*palette*/;
   var l = headerLen + HEIGHT*rowstride;
   var imgData = new Uint8Array(l);
@@ -74,16 +74,25 @@ function getFontPreview(path) {
   imgData[26]=255; // palette white
   imgData[27]=255;
   imgData[28]=255;
-  function setPixel(x,y) { imgData[headerLen + (x>>3) + ((HEIGHT-(y+1))*rowstride)] |= 128>>(x&7); }
+  function setPixel(x,y) { if (x<WIDTH) imgData[headerLen + (x>>3) + ((HEIGHT-(y+1))*rowstride)] |= 128>>(x&7); }
   function getPixel(x,y) { return imgData[headerLen + (x>>3) + ((HEIGHT-(y+1))*rowstride)] & (128>>(x&7)); }
 
   // Draw
   //for (var i=0;i<HEIGHT;i++) setPixel(i,i);
-  for (var y=0;y<15;y++)
-    for (var x=0;x<15;x++)
-       drawChar(x+(y*16), x*SPACING, (2+y)*SPACING);
-  ["0.123456789 ABCD",
-  "This is a Font Test"].forEach((s,y)=>{
+
+  for (var i=2*SPACING;i<16*SPACING+2;i++) {
+    setPixel(0,i);
+    setPixel(16*SPACING+1,i);
+  }
+  for (var i=0;i<16*SPACING+2;i++) {
+    setPixel(i,16*SPACING+2);
+    setPixel(i,2*SPACING);
+  }
+  for (var y=2;y<16;y++)
+    for (var x=0;x<16;x++)
+       drawChar(x+(y*16), 2+(x*SPACING), 2+ (y*SPACING));
+  ["0.123456789abcdefABCDEF",
+  "This is a Test of the Font"].forEach((s,y)=>{
     var x=0;
     for (var ch of s) {
        var ch = ch.charCodeAt();
@@ -101,5 +110,5 @@ function getFontPreview(path) {
   return "data:image/bmp;base64,"+new Buffer(imgData).toString('base64');
 }
 
-//console.log(getFontPreview("../modules/FontDennis8.js"));
+console.log(getFontPreview("../modules/FontDennis8.js"));
 exports.getFontPreview = getFontPreview;
