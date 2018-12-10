@@ -62,6 +62,7 @@ Current modules are:
 | ![](FontCherry6x10.js) | [[FontCherry6x10.js]] | Variable width font with most characters for non-english languages, ISO8859 codepage  (originally from https://github.com/turquoise-hexagon/cherry) |
 | ![](FontDylex7x13.js) | [[FontDylex7x13.js]] | Variable width font with most characters for non-english languages, ISO10646-1 codepage (originally from https://github.com/dylex/fonts) |
 | ![](FontHaxorNarrow7x17.js) | [[FontHaxorNarrow7x17.js]] | Variable width font with most characters for non-english languages, ISO8859 codepage  (originally from https://github.com/metan-ucw/fonts) |
+| ![](FontSinclair.js) | [[FontSinclair.js]] | Fixed width 8x8 Retro Sinclair font by [Steve Anderson](https://github.com/IrregularShed), Copyright Sinclair Research, non-commercial use approved. |
 
 
 Use these as follows:
