@@ -16,8 +16,8 @@ a user's phone.
 Android phones > 4.4 will have support - but it may need enabling.
 [See here](https://developers.google.com/beacons/) for more information.
 
-**Note:** It looks like [Google may be disabling Eddystone notifications](https://android-developers.googleblog.com/2018/10/discontinuing-support-for-android.html)
-because of abuse, so in the future it may be more difficult to enable notifications from Eddystone devices.
+**Note:** [Google has now disabled Eddystone notifications](https://android-developers.googleblog.com/2018/10/discontinuing-support-for-android.html)
+because of abuse by advertisers, so Eddystone devices will no longer appear as Android Notifications.
 
 All you need to do to use it is use the [[ble_eddystone.js]] module:
 
