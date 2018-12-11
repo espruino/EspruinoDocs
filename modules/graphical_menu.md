@@ -18,6 +18,9 @@ var g = /* my graphics object */;
 var menu = require("graphical_menu");
 var m;
 
+var boolean = false;
+var number = 50;
+
 // First menu
 var mainmenu = {
   "" : {
@@ -26,6 +29,16 @@ var mainmenu = {
   "Light On" : function() { LED1.set(); },
   "Light Off" : function() { LED1.reset(); },
   "Submenu" : function() { m=menu.list(g, submenu); },
+  "A Boolean" : {
+    value : boolean,
+    format : v => v?"On":"Off",
+    onchange : v => { boolean=v; }
+  },
+  "A Number" : {
+    value : number,
+    min:0,max:100,step:10,
+    onchange : v => { number=v; }
+  }
 };
 
 // Submenu
@@ -37,7 +50,6 @@ var submenu = {
   "Two" : undefined,
   "< Back" : function() { m=menu.list(g, mainmenu); },
 };
-
 
 function onInit() {
   // Create and display the first menu
@@ -77,7 +89,14 @@ var menuinfo = {
     "preflip": functiongfx() {} // optional, function called after menu is drawn,
                                 // before it's sent to the screen
   },
-  "menu text" : function() { called when menu item selected };
+  "menu text" : function() { called when menu item selected };,
+  "another menu" : {
+    value : 42,       // A number or boolean to be changed
+    step : 1,         // optional (default 1) - the amount to inc/dec the number
+    min / max : ...,  // minimum/maximum values to clamp to
+    onchange : function(value) // optional - called when the value changes
+    format : function(value) // optional - converts the value to a string to be displayed
+  }
 };
 ```
 

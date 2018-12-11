@@ -21,9 +21,10 @@ exports.list = function(g, items) {
     draw : function() {
       g.clear();
       g.setColor(-1);
+      g.setFontAlign(0,-1);
       if (options.predraw) options.predraw(g);
       if (options.title) {
-        g.drawString(options.title,x+(x2-x-g.stringWidth(options.title))/2,y-options.fontHeight-2);
+        g.drawString(options.title,(x+x2)/2,y-options.fontHeight-2);
         g.drawLine(x,y-2,x2,y-2);
       }
 
@@ -32,24 +33,55 @@ exports.list = function(g, items) {
       var iy = y;
 
       while (rows--) {
+        var xo = x;
         if (idx==options.selected) {
           g.fillRect(x,iy,x2,iy+options.fontHeight-1);
           g.setColor(0);
+          // if we're editing, inset the line we're editing and display up/down arrows
+          if (l.selectEdit) {
+            g.drawImage({width:12,height:5,buffer:" \x07\x00\xF9\xF0\x0E\x00@",transparent:0},x,iy);
+            xo += 15;
+          }
         }
-        g.drawString(menuItems[idx++],x,iy);
+        g.setFontAlign(-1,-1);
+        var name = menuItems[idx++];
+        g.drawString(name,xo,iy);
+        var item = items[name];
+        if ("object" == typeof item) {
+          g.setFontAlign(1,-1);
+          var v = item.value;
+          g.drawString(item.format ? item.format(v) : v,x2,iy);
+        }
         g.setColor(-1);
         iy += options.fontHeight;
       }
+      g.setFontAlign(-1,-1);
       if (options.preflip) options.preflip(g);
       if (g.flip) g.flip();
     },
-    select : function() {
+    select : function(dir) {
       var item = items[menuItems[options.selected]];
-      if ("function" == typeof item)
-        item();
+      if ("function" == typeof item) item(l);
+      else if ("object" == typeof item) {
+        // if a number, go into 'edit mode'
+        if ("number" == typeof item.value)
+          l.selectEdit = l.selectEdit?undefined:item;
+        else { // else just toggle bools
+          if ("boolean" == typeof item.value) item.value=!item.value;
+          if (item.onchange) item.onchange(item.value);
+        }
+        l.draw();
+      }
     },
     move : function(dir) {
-      options.selected = 0|Math.clip(options.selected+dir,0,menuItems.length-1);
+      if (l.selectEdit) {
+        var item = l.selectEdit;
+        item.value += (dir||1)*(item.step||1);
+        if (item.min!==undefined && item.value<item.min) item.value = item.min;
+        if (item.max!==undefined && item.value>item.max) item.value = item.max;
+        if (item.onchange) item.onchange(item.value);
+      } else
+        options.selected = 0|Math.clip(options.selected+dir,0,menuItems.length-1);
       l.draw();
     }
   };
