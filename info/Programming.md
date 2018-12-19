@@ -128,7 +128,7 @@ used by tutorials and example code on the Espruino website, and may refuse
 to upload code that isn't formatted in a K&R style.
 
 * [DroidScript](http://droidscript.org/) lets you control/program an Espruino from an Android phone
-* [espruino-cli](https://www.npmjs.com/package/node-espruino) is a node.js command-line tool for Espruino
+* [node-espruino](https://www.npmjs.com/package/node-espruino) is a node.js command-line tool for Espruino
 * [espruino-cli](https://www.npmjs.com/package/espruino-cli) is another node.js command-line tool for Espruino. It may not work on newer versions of Node.js
 
 ### Serial Terminals
