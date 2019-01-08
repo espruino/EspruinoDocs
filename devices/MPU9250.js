@@ -1,12 +1,5 @@
 /* Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 // Based heavily on https://github.com/sparkfun/SparkFun_MPU-9250_Breakout_Arduino_Library
-/*
-
-NOTE: Accelerometer/Gyro readings seem wrong
-
-mpu.r(0x3B,6) => new Uint8Array([128, 0, 128, 0, 254, 86])
-X and Y axes both always report 128,0 as if not enabled, but Z seems to work
-*/
 var C = {
   WHO_AM_I_MPU9250 : 0x75,
   PWR_MGMT_1 : 0x6B,

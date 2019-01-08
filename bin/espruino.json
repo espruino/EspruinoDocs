@@ -973,11 +973,6 @@
       "!doc": "<p>Returns a &#39;flat&#39; string representing the data in the arguments, or return <code>undefined</code>\nif a flat string cannot be created.</p>\n<p>This creates a string from the given arguments. If an argument is a String or an Array,\neach element is traversed and added as an 8 bit character. If it is anything else, it is\nconverted to a character directly.</p>\n<p>In the case where there&#39;s one argument which is an 8 bit typed array backed by a\nflat string of the same length, the backing string will be returned without doing\na copy or other allocation. The same applies if there&#39;s a single argument which\nis itself a flat string.</p>\n",
       "!url": "http://www.espruino.com/Reference#l_E_toString"
     },
-    "toUint8Array": {
-      "!type": "fn(args: ?) -> +Uint8Array",
-      "!doc": "<p>This creates a Uint8Array from the given arguments. If an argument is a String or an Array,\neach element is traversed and added as if it were an 8 bit value. If it is anything else, it is\nconverted to an 8 bit value directly.</p>\n",
-      "!url": "http://www.espruino.com/Reference#l_E_toUint8Array"
-    },
     "toJS": {
       "!type": "fn(arg: ?) -> +String",
       "!doc": "<p>This performs the same basic function as <code>JSON.stringify</code>,\nhowever <code>JSON.stringify</code> adds extra characters to conform\nto the JSON spec which aren&#39;t required if outputting JS.</p>\n<p><code>E.toJS</code> will also stringify JS functions, whereas\n<code>JSON.stringify</code> ignores them.</p>\n<p>For example:</p>\n<ul>\n<li><code>JSON.stringify({a:1,b:2}) == &#39;{&quot;a&quot;:1,&quot;b&quot;:2}&#39;</code></li>\n<li><code>E.toJS({a:1,b:2}) == &#39;{a:1,b:2}&#39;</code></li>\n</ul>\n<p><strong>Note:</strong> Strings generated with <code>E.toJS</code> can&#39;t be\nreliably parsed by <code>JSON.parse</code> - however they are\nvalid JS so will work with <code>eval</code> (but this has security\nimplications if you don&#39;t trust the source of the string).</p>\n<p>On the desktop <a href=\"https://github.com/json5/json5\">JSON5 parsers</a>\nwill parse the strings produced by <code>E.toJS</code> without trouble.</p>\n",
@@ -1017,6 +1012,11 @@
       "!type": "fn()",
       "!doc": "<p>Dump any locked variables that aren&#39;t referenced from <code>global</code> - for debugging memory leaks only.</p>\n",
       "!url": "http://www.espruino.com/Reference#l_E_dumpFreeList"
+    },
+    "dumpFragmentation": {
+      "!type": "fn()",
+      "!doc": "<p>Show fragmentation</p>\n",
+      "!url": "http://www.espruino.com/Reference#l_E_dumpFragmentation"
     },
     "getAddressOf": {
       "!type": "fn(v: ?, flatAddress: bool) -> number",
@@ -1931,17 +1931,17 @@
     "!url": "http://www.espruino.com/Reference#BluetoothRemoteGATTServer",
     "prototype": {
       "disconnect": {
-        "!type": "fn()",
-        "!doc": "<p>Disconnect from a previously connected BLE device connected with\n<code>NRF.connect</code> - this does not disconnect from something that has\nconnected to the Espruino.</p>\n",
+        "!type": "fn() -> +Promise",
+        "!doc": "<p>Disconnect from a previously connected BLE device connected with\n<code>BluetoothRemoteGATTServer.connect</code> - this does not disconnect from something that has\nconnected to the Espruino.</p>\n<p><strong>Note:</strong> While <code>.disconnect</code> is standard Web Bluetooth, in the spec it\nreturns undefined not a <code>Promise</code> for implementation reasons. In Espruino\nwe return a <code>Promise</code> to make it easier to detect when Espruino is free\nto connect to something else.</p>\n",
         "!url": "http://www.espruino.com/Reference#l_BluetoothRemoteGATTServer_disconnect"
       },
       "getPrimaryService": {
-        "!type": "fn(service: ?) -> ?",
+        "!type": "fn(service: ?) -> +Promise",
         "!doc": "<p>See <code>NRF.connect</code> for usage examples.</p>\n",
         "!url": "http://www.espruino.com/Reference#l_BluetoothRemoteGATTServer_getPrimaryService"
       },
       "getPrimaryServices": {
-        "!type": "fn() -> ?",
+        "!type": "fn() -> +Promise",
         "!doc": "",
         "!url": "http://www.espruino.com/Reference#l_BluetoothRemoteGATTServer_getPrimaryServices"
       }
@@ -1953,12 +1953,12 @@
     "!url": "http://www.espruino.com/Reference#BluetoothRemoteGATTService",
     "prototype": {
       "getCharacteristic": {
-        "!type": "fn(characteristic: ?) -> ?",
+        "!type": "fn(characteristic: ?) -> +Promise",
         "!doc": "<p>See <code>NRF.connect</code> for usage examples.</p>\n",
         "!url": "http://www.espruino.com/Reference#l_BluetoothRemoteGATTService_getCharacteristic"
       },
       "getCharacteristics": {
-        "!type": "fn() -> ?",
+        "!type": "fn() -> +Promise",
         "!doc": "",
         "!url": "http://www.espruino.com/Reference#l_BluetoothRemoteGATTService_getCharacteristics"
       }
@@ -1970,7 +1970,7 @@
     "!url": "http://www.espruino.com/Reference#BluetoothRemoteGATTCharacteristic",
     "prototype": {
       "stopNotifications": {
-        "!type": "fn() -> ?",
+        "!type": "fn() -> +Promise",
         "!doc": "<p>Stop notifications (that were requested with <code>BluetoothRemoteGATTCharacteristic.startNotifications</code>)</p>\n",
         "!url": "http://www.espruino.com/Reference#l_BluetoothRemoteGATTCharacteristic_stopNotifications"
       }

@@ -43,12 +43,17 @@ Check out the [Puck.js troubleshooting page](/Puck.js#troubleshooting)
 If you've bought a different board, it won't come pre-installed with Espruino. You'll have to go to the [[Download]] page and follow the instructions there in order to flash the correct software onto it.
 
 
-## My board doesn't appear as a USB Serial port in Windows XP / Windows 8.1
+## My board doesn't appear as a USB Serial port in Windows
 
-These versions of Windows don't come with the correct drivers preinstalled. You'll need to install [ST's VCP drivers](http://www.st.com/web/en/catalog/tools/PF257938) first.
+Windows versions before 10 don't come with the correct drivers preinstalled. You'll need to install [ST's VCP drivers](/Quick+Start+USB#plugging-in) first.
 
 **NOTE:** It's not enough to just open the ZIP file and run the installer, you have to then go to the installation directory and run the correct installer as well. See the readme file in the ZIP above for more information.
 
+## My board shows with an error in Windows Device Manager
+
+* If it's a 'no driver' message, please try installing the drivers referenced above.
+* Try another USB cable - it could be an electrical problem
+* If this happens for you with an older Espruino Pico in Windows 10 [see this thread](http://forum.espruino.com/conversations/328895) - this doesn't apply to any other Espruino boards.
 
 ## My board doesn't appear in Windows Control Panel's 'Devices and Printers' page.
 
@@ -59,12 +64,11 @@ If not, see the first troubleshooting item above.
 
 ## In Windows, the COM port appears in the Web IDE, but I can't connect to it
 
-This is probably because you've reset or unplugged the Espruino board while the Web IDE was connected to it. Chrome hangs on to the serial port and stops Espruino from reconnecting to it.
+This can sometimes occur if you've reset or unplugged the Espruino board while the Web IDE was connected to it. Chrome can hang onto the serial port and stops Espruino from reconnecting to it.
 
 Try unplugging Espruino and then completely close Chrome (close all windows, not just the Web IDE). However if that doesn't work, try restarting Windows.
 
-In order to stop this happening in the future, click 'Disconnect' before resetting or unplugging the board. We're hoping that a new version of Chrome due out soon will help to fix this problem.
-
+If you have never been able to connect, check whether there is an error in 'Device Manager' and see the FAQ item above.
 
 ## In Windows, Espruino was working and now it won't connect
 

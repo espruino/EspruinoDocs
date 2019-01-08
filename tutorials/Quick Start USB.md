@@ -20,11 +20,13 @@ Plugging in
 * **[Pixl.js](/Pixl.js)** - the USB plug is only for power [see the Bluetooth LE Quick Start Guide](http://www.espruino.com/Quick+Start+BLE) instead as the setup is slightly different.
 * **Other Boards** - please [see this page](/Other Boards) for more information.
 
-**Windows Users:** Most versions of Windows won't automatically load the built-in driver for USB com ports. You'll have to download ST's USB driver:
+**Windows Users:** Older versions of Windows won't automatically load the built-in driver for USB COM ports. You'll have to download ST's USB driver:
 
-  * Non-Windows XP Users [download version 1.4.0 drivers](/files/stm32_vcp_1.4.0.zip). Unzip the file, run the executable, **and then go to** `C:\Program Files (x86)\STMicroelectronics\Software\Virtual comport driver` in Windows Explorer and double-click either `dpinst_amd64.exe` for 64 bit systems, or `dpinst_x86.exe` for 32 bit.
+  * Windows 10 users should need no drivers. The board will plug in and be recognised immediately.
 
-  * Windows XP Users [download version 1.3.1 drivers](/files/stm32_vcp_1.3.1.zip). Unzip the file, run `VCP_V1.3.1_Setup.exe`, **and then go to** `C:\Program Files\STMicroelectronics\Software\Virtual comport driver` in Windows Explorer and double-click the executable.
+  * Non-Windows XP users [download version 1.4.0 drivers](/files/stm32_vcp_1.4.0.zip). Unzip the file, run the executable, **and then go to** `C:\Program Files (x86)\STMicroelectronics\Software\Virtual comport driver` in Windows Explorer and double-click either `dpinst_amd64.exe` for 64 bit systems, or `dpinst_x86.exe` for 32 bit.
+
+  * Windows XP users [download version 1.3.1 drivers](/files/stm32_vcp_1.3.1.zip). Unzip the file, run `VCP_V1.3.1_Setup.exe`, **and then go to** `C:\Program Files\STMicroelectronics\Software\Virtual comport driver` in Windows Explorer and double-click the executable.
 
 **Linux users** to ensure that you have the correct permissions to connect as a normal user you'll need to copy [the file 45-espruino.rules](https://github.com/espruino/Espruino/blob/master/misc/45-espruino.rules) to `/etc/udev/rules.d`, reload rules with `udevadm control --reload-rules`, and ensure your user is in the `plugdev` group (you can check by typing `groups`). You add it by typing `sudo adduser $USER plugdev` and then logging out and back in. Arch Linux users need to add their user to `uucp` and `lock` groups instead.
 
