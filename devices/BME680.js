@@ -317,7 +317,7 @@ BME680.prototype.set_sensor_mode = function(mode) {
 
     if (pow_mode != C.SLEEP_MODE) {
       tmp_pow_mode = tmp_pow_mode & (~C.MODE_MSK); /* Set to sleep */
-      rslt = this.w(C.CONF_T_P_MODE_ADDR, tmp_pow_mode);
+      this.w(C.CONF_T_P_MODE_ADDR, tmp_pow_mode);
       // delay POLL_PERIOD_MS
     }
   } while (pow_mode != C.SLEEP_MODE);
@@ -341,7 +341,7 @@ BME680.prototype.set_sensor_settings = function(options) {
 
   /* Selecting the filter */
   if (options.filter!==undefined) {
-    boundary_check(options.filter, C.FILTER_SIZE_0, C.FILTER_SIZE_127);;
+    boundary_check(options.filter, C.FILTER_SIZE_0, C.FILTER_SIZE_127);
     data = this.r(C.CONF_ODR_FILT_ADDR,1)[0]; 
     data = (data&~C.FILTER_MSK) | (options.filter<<C.FILTER_POS);
     this.w(C.CONF_ODR_FILT_ADDR, data);
@@ -400,6 +400,7 @@ BME680.prototype.set_heating_settings = function(tmp, dur, cnv) {
   tmp = (typeof tmp==='undefined')?320:tmp;
   dur = (typeof dur==='undefined')?150:dur;
   cnv = (typeof cnv==='undefined')?0:cnv;
+  var data
 
   //console.log(tmp,dur,cnv);
 
@@ -608,7 +609,7 @@ BME680.prototype.calc_heater_resistance = function(temperature) {
   var3 = var1 + (var2 / 2);
   var4 = (var3 / (this.cal.res_heat_range + 4));
   var5 = (131 * this.cal.res_heat_val) + 65536;
-  heatr_res_x100 = (((var4 / var5) - 250) * 34);
+  var heatr_res_x100 = (((var4 / var5) - 250) * 34);
   heatr_res = ((heatr_res_x100 + 50) / 100);
 
   return heatr_res;
@@ -616,7 +617,7 @@ BME680.prototype.calc_heater_resistance = function(temperature) {
 
 BME680.prototype.calc_heater_duration = function(duration) {
   if (duration < 0xfc0) {
-    factor = 0;
+    var factor = 0;
 
     while (duration > 0x3f) {
       duration /= 4;
@@ -642,7 +643,6 @@ exports.connectI2C = function(i2c, options) {
 
 exports.connectSPI = function(spi, cs, options) {
   return (new BME680(options, function(reg, len) { // read
-    var d = new Uint8Array(len+1);
     return spi.send([reg|0x80,new Uint8Array(len)], cs).slice(1);
   }, function(reg, data) { // write
     spi.write(reg&0x7f, data, cs);
