@@ -33,5 +33,5 @@ MCP4xxx0.prototype.setVal  = function (pot,value) {
 };
 
 MCP4xxx0.prototype.shutdown  = function (pot) {
-  this.spi.send([0x20+pot+1,value],this.cs);
+  this.spi.send(0x20+pot+1,this.cs);
 };
