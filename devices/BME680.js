@@ -130,28 +130,6 @@ var C = {
   NBCONV_MIN   : 0,
   NBCONV_MAX : 9, // Was 10, but there are only 10 settings: 0 1 2 ... 8 9 
 
-  /** Mask definitions */
-  GAS_MEAS_MSK : 0x30,
-  NBCONV_MSK : 0X0F,
-  FILTER_MSK : 0X1C,
-  OST_MSK    : 0XE0,
-  OSP_MSK    : 0X1C,
-  OSH_MSK    : 0X07,
-  HCTRL_MSK  : 0x08,
-  RUN_GAS_MSK  : 0x10,
-  MODE_MSK   : 0x03,
-  RHRANGE_MSK  : 0x30,
-  RSERROR_MSK  : 0xf0,
-  NEW_DATA_MSK : 0x80,
-  GAS_INDEX_MSK  : 0x0f,
-  GAS_RANGE_MSK  : 0x0f,
-  GASM_VALID_MSK : 0x20,
-  HEAT_STAB_MSK  : 0x10,
-  MEM_PAGE_MSK : 0x10,
-  SPI_RD_MSK : 0x80,
-  SPI_WR_MSK : 0x7f,
-  BIT_H1_DATA_MSK  : 0x0F,
-
   /** Bit position definitions for sensor settings */
   GAS_MEAS_POS : 4,
   FILTER_POS : 2,
@@ -160,61 +138,74 @@ var C = {
   HCTRL_POS  : 3,
   RUN_GAS_POS  : 4,
 
-  /** Array Index to Field data mapping for Calibration Data*/
-  T2_LSB_REG : 1,
-  T2_MSB_REG : 2,
-  T3_REG   : 3,
-  P1_LSB_REG : 5,
-  P1_MSB_REG : 6,
-  P2_LSB_REG : 7,
-  P2_MSB_REG : 8,
-  P3_REG   : 9,
-  P4_LSB_REG : 11,
-  P4_MSB_REG : 12,
-  P5_LSB_REG : 13,
-  P5_MSB_REG : 14,
-  P7_REG   : 15,
-  P6_REG   : 16,
-  P8_LSB_REG : 19,
-  P8_MSB_REG : 20,
-  P9_LSB_REG : 21,
-  P9_MSB_REG : 22,
-  P10_REG    : 23,
-  H2_MSB_REG : 25,
-  H2_LSB_REG : 26,
-  H1_LSB_REG : 26,
-  H1_MSB_REG : 27,
-  H3_REG   : 28,
-  H4_REG   : 29,
-  H5_REG   : 30,
-  H6_REG   : 31,
-  H7_REG   : 32,
-  T1_LSB_REG : 33,
-  T1_MSB_REG : 34,
-  GH2_LSB_REG  : 35,
-  GH2_MSB_REG  : 36,
-  GH1_REG    : 37,
-  GH3_REG    : 38,
-
   /** BME680 register buffer index settings*/
-  REG_FILTER_INDEX   : 5,
+  /*REG_FILTER_INDEX   : 5,
   REG_TEMP_INDEX   : 4,
   REG_PRES_INDEX   : 4,
   REG_HUM_INDEX    : 2,
   REG_NBCONV_INDEX   : 1,
   REG_RUN_GAS_INDEX  : 1,
-  REG_HCTRL_INDEX    : 0,
-
-  /**Look up table for the possible gas range values */
-  lookupTable1 : [ 2147483647, 2147483647, 2147483647, 2147483647,
-                  2147483647, 2126008810, 2147483647, 2130303777, 2147483647,
-                  2147483647, 2143188679, 2136746228, 2147483647, 2126008810,
-                  2147483647, 2147483647 ],
-
-  /**Look up table for the possible gas range values */
-  lookupTable2 : [ 4096000000, 2048000000, 1024000000, 512000000,
-                  255744255, 127110228, 64000000, 32258064, 16016016, 8000000, 4000000, 2000000, 1000000, 500000, 250000,
-                  125000 ],
+  REG_HCTRL_INDEX    : 0,*/
+};
+var MSK = {
+  /** Mask definitions */
+  GAS_MEAS : 0x30,
+  NBCONV : 0X0F,
+  FILTER : 0X1C,
+  OST    : 0XE0,
+  OSP    : 0X1C,
+  OSH    : 0X07,
+  HCTRL  : 0x08,
+  RUN_GAS  : 0x10,
+  MODE   : 0x03,
+  RHRANGE  : 0x30,
+  RSERROR  : 0xf0,
+  NEW_DATA : 0x80,
+  GAS_INDEX  : 0x0f,
+  GAS_RANGE  : 0x0f,
+  GASM_VALID : 0x20,
+  HEAT_STAB  : 0x10,
+  MEM_PAGE : 0x10,
+  SPI_RD : 0x80,
+  SPI_WR : 0x7f,
+  BIT_H1_DATA  : 0x0F,
+};
+var R = {
+  /** Array Index to Field data mapping for Calibration Data*/
+  T2_LSB : 1,
+  T2_MSB : 2,
+  T3   : 3,
+  P1_LSB : 5,
+  P1_MSB : 6,
+  P2_LSB : 7,
+  P2_MSB : 8,
+  P3   : 9,
+  P4_LSB : 11,
+  P4_MSB : 12,
+  P5_LSB : 13,
+  P5_MSB : 14,
+  P7   : 15,
+  P6   : 16,
+  P8_LSB : 19,
+  P8_MSB : 20,
+  P9_LSB : 21,
+  P9_MSB : 22,
+  P10    : 23,
+  H2_MSB : 25,
+  H2_LSB : 26,
+  H1_LSB : 26,
+  H1_MSB : 27,
+  H3   : 28,
+  H4   : 29,
+  H5   : 30,
+  H6   : 31,
+  H7   : 32,
+  T1_LSB : 33,
+  T1_MSB : 34,
+  GH2_LSB  : 35,
+  GH2_MSB  : 36,
+  GH1    : 37,
+  GH3    : 38
 };
 
 function boundary_check(v,min,max) {
@@ -267,41 +258,41 @@ BME680.prototype.get_calib_data = function() {
   // everything is little endian
   this.cal={};
   /* Temperature related coefficients */
-  this.cal.par_t = [,vc.getUint16(C.T1_LSB_REG, true)
-                    ,vc.getInt16(C.T2_LSB_REG, true)
-                    ,vc.getInt8(C.T3_REG)];
+  this.cal.par_t = [,vc.getUint16(R.T1_LSB, true)
+                    ,vc.getInt16(R.T2_LSB, true)
+                    ,vc.getInt8(R.T3)];
 
   /* Pressure related coefficients */
-  this.cal.par_p = [,vc.getUint16(C.P1_LSB_REG, true)
-                    ,vc.getInt16(C.P2_LSB_REG, true)
-                    ,vc.getInt8(C.P3_REG)
-                    ,vc.getInt16(C.P4_LSB_REG, true)
-                    ,vc.getInt16(C.P5_LSB_REG, true)
-                    ,vc.getInt8(C.P6_REG)
-                    ,vc.getInt8(C.P7_REG)
-                    ,vc.getInt16(C.P8_LSB_REG, true)
-                    ,vc.getInt16(C.P9_LSB_REG, true)
-                    ,vc.getUint8(C.P10_REG)];
+  this.cal.par_p = [,vc.getUint16(R.P1_LSB, true)
+                    ,vc.getInt16(R.P2_LSB, true)
+                    ,vc.getInt8(R.P3)
+                    ,vc.getInt16(R.P4_LSB, true)
+                    ,vc.getInt16(R.P5_LSB, true)
+                    ,vc.getInt8(R.P6)
+                    ,vc.getInt8(R.P7)
+                    ,vc.getInt16(R.P8_LSB, true)
+                    ,vc.getInt16(R.P9_LSB, true)
+                    ,vc.getUint8(R.P10)];
 
   /* Humidity related coefficients */
-  this.cal.par_h = [,(vc.getUint8(C.H1_MSB_REG) << C.HUM_REG_SHIFT_VAL) |
-                    (vc.getUint8(C.H1_LSB_REG) & C.BIT_H1_DATA_MSK)
-                    ,(vc.getUint8(C.H2_MSB_REG) << C.HUM_REG_SHIFT_VAL) |
-                    (vc.getUint8(C.H2_LSB_REG) >> C.HUM_REG_SHIFT_VAL)
-                    ,vc.getInt8(C.H3_REG)
-                    ,vc.getInt8(C.H4_REG)
-                    ,vc.getInt8(C.H5_REG)
-                    ,vc.getUint8(C.H6_REG)
-                    ,vc.getInt8(C.H7_REG)];
+  this.cal.par_h = [,(vc.getUint8(R.H1_MSB) << C.HUM_REG_SHIFT_VAL) |
+                    (vc.getUint8(R.H1_LSB) & MSK.BIT_H1_DATA)
+                    ,(vc.getUint8(R.H2_MSB) << C.HUM_REG_SHIFT_VAL) |
+                    (vc.getUint8(R.H2_LSB) >> C.HUM_REG_SHIFT_VAL)
+                    ,vc.getInt8(R.H3)
+                    ,vc.getInt8(R.H4)
+                    ,vc.getInt8(R.H5)
+                    ,vc.getUint8(R.H6)
+                    ,vc.getInt8(R.H7)];
 
   /* Gas heater related coefficients */
-  this.cal.par_gh = [,vc.getInt8(C.GH1_REG)
-                     ,vc.getInt16(C.GH2_LSB_REG, true)
-                     ,vc.getInt8(C.GH3_REG)];
+  this.cal.par_gh = [,vc.getInt8(R.GH1)
+                     ,vc.getInt16(R.GH2_LSB, true)
+                     ,vc.getInt8(R.GH3)];
   /* Other coefficients */  
-  this.cal.res_heat_range = (this.r(C.ADDR_RES_HEAT_RANGE_ADDR,1)[0]&C.RHRANGE_MSK)/16;
+  this.cal.res_heat_range = (this.r(C.ADDR_RES_HEAT_RANGE_ADDR,1)[0]&MSK.RHRANGE)/16;
   this.cal.res_heat_val = this.r(C.ADDR_RES_HEAT_VAL_ADDR,1)[0];
-  this.cal.range_sw_err = (this.r(C.ADDR_RANGE_SW_ERR_ADDR,1)[0]&C.RSERROR_MSK)/16;
+  this.cal.range_sw_err = (this.r(C.ADDR_RANGE_SW_ERR_ADDR,1)[0]&MSK.RSERROR)/16;
 };
 
 BME680.prototype.set_sensor_mode = function(mode) {
@@ -313,10 +304,10 @@ BME680.prototype.set_sensor_mode = function(mode) {
   do {
     tmp_pow_mode = this.r(C.CONF_T_P_MODE_ADDR, 1);
     /* Put to sleep before changing mode */
-    pow_mode = (tmp_pow_mode & C.MODE_MSK);
+    pow_mode = (tmp_pow_mode & MSK.MODE);
 
     if (pow_mode != C.SLEEP_MODE) {
-      tmp_pow_mode = tmp_pow_mode & (~C.MODE_MSK); /* Set to sleep */
+      tmp_pow_mode = tmp_pow_mode & (~MSK.MODE); /* Set to sleep */
       this.w(C.CONF_T_P_MODE_ADDR, tmp_pow_mode);
       // delay POLL_PERIOD_MS
     }
@@ -324,7 +315,7 @@ BME680.prototype.set_sensor_mode = function(mode) {
 
   /* Already in sleep */
   if (mode != C.SLEEP_MODE) {
-    tmp_pow_mode = (tmp_pow_mode & ~C.MODE_MSK) | (mode & C.MODE_MSK);
+    tmp_pow_mode = (tmp_pow_mode & ~MSK.MODE) | (mode & MSK.MODE);
     this.w(C.CONF_T_P_MODE_ADDR, tmp_pow_mode); // 0x74 
   }
 };
@@ -343,7 +334,7 @@ BME680.prototype.set_sensor_settings = function(options) {
   if (options.filter!==undefined) {
     boundary_check(options.filter, C.FILTER_SIZE_0, C.FILTER_SIZE_127);
     data = this.r(C.CONF_ODR_FILT_ADDR,1)[0]; 
-    data = (data&~C.FILTER_MSK) | (options.filter<<C.FILTER_POS);
+    data = (data&~MSK.FILTER) | (options.filter<<C.FILTER_POS);
     this.w(C.CONF_ODR_FILT_ADDR, data);
   }
 
@@ -351,8 +342,8 @@ BME680.prototype.set_sensor_settings = function(options) {
   if (options.heatr_ctrl!==undefined) {
     boundary_check(options.heatr_ctrl, C.ENABLE_HEATER, C.DISABLE_HEATER);
     data = this.r(C.CONF_HEAT_CTRL_ADDR,1)[0];
-    //    data = (data&~C.HCTRL_MSK) | (options.heatr_ctrl|C.HCTRL_MSK);
-    data = (data&~C.HCTRL_MSK) | (options.heatr_ctrl<<C.HCTRL_POS);
+    //    data = (data&~MSK.HCTRL) | (options.heatr_ctrl|MSK.HCTRL);
+    data = (data&~MSK.HCTRL) | (options.heatr_ctrl<<C.HCTRL_POS);
     this.w(C.CONF_HEAT_CTRL_ADDR, data);
   }
 
@@ -361,10 +352,10 @@ BME680.prototype.set_sensor_settings = function(options) {
     data = this.r(C.CONF_T_P_MODE_ADDR,1)[0];
     if (options.os_temp!==undefined) {
       boundary_check(options.os_temp, C.OS_NONE, C.OS_16X);
-      data = (data&~C.OST_MSK) | (options.os_temp << C.OST_POS);
+      data = (data&~MSK.OST) | (options.os_temp << C.OST_POS);
     }
     if (options.os_pres!==undefined)
-      data = (data&~C.OSP_MSK) | (options.os_pres << C.OSP_POS);
+      data = (data&~MSK.OSP) | (options.os_pres << C.OSP_POS);
     this.w(C.CONF_T_P_MODE_ADDR, data); // 0x74 
   }
 
@@ -372,7 +363,7 @@ BME680.prototype.set_sensor_settings = function(options) {
   if (options.os_hum!==undefined) {
     boundary_check(options.os_hum, C.OS_NONE, C.OS_16X);
     data = this.r(C.CONF_OS_H_ADDR,1)[0];
-    data = (data&~C.OSH_MSK) | (options.os_hum&C.OSH_MSK);
+    data = (data&~MSK.OSH) | (options.os_hum&MSK.OSH);
     this.w(C.CONF_OS_H_ADDR, data);
   }
 
@@ -381,11 +372,11 @@ BME680.prototype.set_sensor_settings = function(options) {
     data = this.r(C.CONF_ODR_RUN_GAS_NBC_ADDR,1)[0];
     if (options.run_gas!==undefined) {
       boundary_check(options.run_gas, C.RUN_GAS_DISABLE, C.RUN_GAS_ENABLE);
-      data = (data&~C.RUN_GAS_MSK) | (options.run_gas<<C.RUN_GAS_POS);
+      data = (data&~MSK.RUN_GAS) | (options.run_gas<<C.RUN_GAS_POS);
     }
     if (options.nb_conv!==undefined) {
       boundary_check(options.nb_conv, C.NBCONV_MIN, C.NBCONV_MAX);
-      data = (data&~C.NBCONV_MSK) | (options.nb_conv&C.NBCONV_MSK);
+      data = (data&~MSK.NBCONV) | (options.nb_conv&MSK.NBCONV);
     }
     this.w(C.CONF_ODR_RUN_GAS_NBC_ADDR, data);
   }
@@ -407,7 +398,7 @@ BME680.prototype.set_heating_settings = function(tmp, dur, cnv) {
   if (cnv!==undefined) {
     boundary_check(cnv, C.NBCONV_MIN, C.NBCONV_MAX);
     data = this.r(C.CONF_ODR_RUN_GAS_NBC_ADDR,1)[0];
-    data = (data&~C.NBCONV_MSK) | (cnv&C.NBCONV_MSK);
+    data = (data&~MSK.NBCONV) | (cnv&MSK.NBCONV);
     this.w(C.CONF_ODR_RUN_GAS_NBC_ADDR, data);
   }
 
@@ -460,8 +451,8 @@ BME680.prototype.get_profile_dur = function(options) {
 BME680.prototype.get_sensor_data = function() {
   var buff = this.r(C.FIELD0_ADDR, C.FIELD_LENGTH);
 
-  this.status = buff[0] & C.NEW_DATA_MSK;
-  this.gas_index = buff[0] & C.GAS_INDEX_MSK;
+  this.status = buff[0] & MSK.NEW_DATA;
+  this.gas_index = buff[0] & MSK.GAS_INDEX;
   this.meas_index = buff[1];
   //console.log('gas_index ', this.gas_index);
 
@@ -470,15 +461,15 @@ BME680.prototype.get_sensor_data = function() {
   var adc_temp = ((buff[5] << 12) | (buff[6] << 4) | (buff[7] >> 4));
   var adc_hum = (buff[8] << 8) | buff[9];
   var adc_gas_res = (buff[13] <<2 ) | (buff[14] >> 6);
-  var gas_range = buff[14] & C.GAS_RANGE_MSK;
+  var gas_range = buff[14] & MSK.GAS_RANGE;
 
-  this.status |= buff[14] & C.GASM_VALID_MSK;
-  this.status |= buff[14] & C.HEAT_STAB_MSK;
+  this.status |= buff[14] & MSK.GASM_VALID;
+  this.status |= buff[14] & MSK.HEAT_STAB;
 
   this.ambient_temperature = this.calc_temperature(adc_temp) / 100;
   
   return {
-    new : !!(this.status & C.NEW_DATA_MSK),
+    new : !!(this.status & MSK.NEW_DATA),
     //    temperature : this.calc_temperature(adc_temp) / 100,
     temperature : this.ambient_temperature,
     pressure : this.calc_pressure(adc_pres) / 100,
@@ -585,9 +576,20 @@ BME680.prototype.calc_gas_resistance = function(gas_res_adc, gas_range) {
   var var3;
   var calc_gas_res;
 
-  var1 = ((1340 + (5 * this.cal.range_sw_err)) * (C.lookupTable1[gas_range])) / 65536;
+  /**Look up table for the possible gas range values */
+  var lookupTable1 = [ 2147483647, 2147483647, 2147483647, 2147483647,
+                  2147483647, 2126008810, 2147483647, 2130303777, 2147483647,
+                  2147483647, 2143188679, 2136746228, 2147483647, 2126008810,
+                  2147483647, 2147483647 ];
+
+  /**Look up table for the possible gas range values */
+  var lookupTable2 = [ 4096000000, 2048000000, 1024000000, 512000000,
+                  255744255, 127110228, 64000000, 32258064, 16016016, 8000000, 4000000, 2000000, 1000000, 500000, 250000,
+                  125000 ];
+
+  var1 = ((1340 + (5 * this.cal.range_sw_err)) * (lookupTable1[gas_range])) / 65536;
   var2 = (((gas_res_adc * 32768) - (16777216)) + var1);
-  var3 = ((C.lookupTable2[gas_range] * var1) / 512);
+  var3 = ((lookupTable2[gas_range] * var1) / 512);
   calc_gas_res =  ((var3 + (var2/2)) / var2);
 
   return calc_gas_res;
