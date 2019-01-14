@@ -69,7 +69,7 @@ function MCP4xxx(pots,taps,spi,cs,i2c,addr) {
 
 MCP4xxx.prototype.setVal= function(pot,value,nv) {
 	nv = (nv===undefined) ? 0 : nv;
-	if (value >= this.taps || val < 0) {
+	if (value >= this.taps || value < 0) {
 		throw "Out of range";
 	} else {
 		this.CMD((pot<2?0:4)+pot+nv*2,0,value);
@@ -86,7 +86,7 @@ MCP4xxx.prototype.decr = function(pot) {
 
 MCP4xxx.prototype.getVal= function(pot,nv) {
 	nv = (nv===undefined) ? 0 : nv;
-	if (val > this.taps || val < 0) {
+	if (nv > this.taps || nv < 0) {
 		throw "Invalid value provided";
 	} else {
 		var temp= this.CMD((pot<2?0:4)+pot+nv*2,3);
