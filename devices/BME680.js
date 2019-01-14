@@ -22,10 +22,6 @@ var C = {
   /** Soft reset command */
   SOFT_RESET_CMD   : 0xb6,
 
-  /* Warnings */
-  W_DEFINE_PWR_MODE  : 1,
-  W_NO_NEW_DATA        : 2,
-
   /* Info's */
   I_MIN_CORRECTION   : 1,
   I_MAX_CORRECTION   : 2,
@@ -107,13 +103,6 @@ var C = {
   /** Run gas enable and disable settings */
   RUN_GAS_DISABLE  : 0,
   RUN_GAS_ENABLE : 1,
-
-  /** Buffer length macro declaration */
-  TMP_BUFFER_LENGTH  : 40,
-  REG_BUFFER_LENGTH  : 6,
-  FIELD_DATA_LENGTH  : 3,
-  GAS_REG_BUF_LENGTH : 20,
-  GAS_HEATER_PROF_LEN_MAX  : 10,
 
   /** Settings selector */
   OST_SEL      : 1,
