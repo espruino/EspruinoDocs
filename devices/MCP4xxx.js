@@ -86,7 +86,7 @@ MCP4xxx.prototype.decr = function(pot) {
 
 MCP4xxx.prototype.getVal= function(pot,nv) {
 	nv = (nv===undefined) ? 0 : nv;
-	if (nv > this.taps || nv < 0) {
+	if (pot > this.pots || nv < 0) {
 		throw "Invalid value provided";
 	} else {
 		var temp= this.CMD((pot<2?0:4)+pot+nv*2,3);
