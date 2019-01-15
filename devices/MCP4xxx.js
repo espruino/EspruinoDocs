@@ -116,7 +116,7 @@ MCP4xxx.prototype.getStatus = function() {
 }
 
 MCP4xxx.prototype.CMD= function(pad,cmd,data) {
-	if (pad+cmd==NaN || (cmd>2 && data==undefined) ) {
+	if (isNaN(pad+cmd) || (cmd>2 && data===undefined) ) {
 		throw "Invalid parameter";
 	} else {
 		var b1=(pad << 4)|(cmd << 2);
