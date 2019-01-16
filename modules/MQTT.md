@@ -133,6 +133,12 @@ var message = "hello, world";
 mqtt.publish(topic, message);
 ```
 
+Publish can also be given a third argument:  `mqtt.publish(topic, message, { qos : int, retain : bool, dup : bool });`
+
+* `qos` : Quality of service level (Default 0)
+* `retain` : Server should retain this packet and publish it automatically to anyone that subscribes
+* `dup` : This is a duplicate packet
+
 Subscribe/Unsubscribe
 -----------
 
@@ -148,6 +154,8 @@ mqtt.on('publish', function (pub) {
 
 mqtt.unsubscribe("test/espruino");
 ```
+
+Subscribe can also be given an options argument:  `mqtt.subscribe(topic, { qos : int });`
 
 Events
 ------

@@ -154,8 +154,8 @@ function getPid(data) {
 }
 
 /** PUBLISH control packet */
-function mqttPublish(topic, message, qos) {
-    var cmd = TYPE.PUBLISH << 4 | (qos << 1);
+function mqttPublish(topic, message, qos, flags) {
+    var cmd = TYPE.PUBLISH << 4 | (qos << 1) | flags;
     var variable = mqttStr(topic);
     // Packet id must be included for QOS > 0
     if (qos > 0) {
@@ -345,19 +345,21 @@ MQTT.prototype.disconnect = function () {
 };
 
 /** Publish message using specified topic */
-MQTT.prototype.publish = function (topic, message, qos) {
+MQTT.prototype.publish = function (topic, message, opts) {
     if (!this.client) return;
+    opts = opts || {};
+
     try {
-      this.client.write(mqttPublish(topic, message.toString(), (qos || this.C.DEF_QOS)));
+      this.client.write(mqttPublish(topic, message.toString(), opts.qos || this.C.DEF_QOS, (opts.retain?1:0) | (opts.dup?8:0)));
     } catch (e) {
       this._scktClosed();
     }
 };
 
 /** Subscribe to topic (filter) */
-MQTT.prototype.subscribe = function (topics, opts, callback) {
+MQTT.prototype.subscribe = function (topics, opts) {
     if (!this.client) return;
-    opts = ('number' === typeof opts ? {qos: opts} : opts) || {qos: this.C.DEF_QOS};
+    opts = opts || {};
 
     var subs = [];
     if ('string' === typeof topics) {
@@ -367,7 +369,7 @@ MQTT.prototype.subscribe = function (topics, opts, callback) {
         topics.forEach(function (topic) {
             subs.push({
                 topic: topic,
-                qos  : opts.qos
+                qos  : opts.qos || this.C.DEF_QOS
             });
         });
     } else {
@@ -384,10 +386,6 @@ MQTT.prototype.subscribe = function (topics, opts, callback) {
     subs.forEach(function (sub) {
         this.client.write(mqttSubscribe(sub.topic, sub.qos));
     }.bind(this));
-
-    if ('function' === typeof callback) {
-        callback();
-    }
 };
 
 /** Unsubscribe to topic (filter) */
