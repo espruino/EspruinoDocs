@@ -86,7 +86,7 @@ MCP4xxx.prototype.decr = function(pot) {
 
 MCP4xxx.prototype.getVal= function(pot,nv) {
 	nv = (nv===undefined) ? 0 : nv;
-	if (nv > this.taps || nv < 0) {
+	if (pot > this.pots || nv < 0) {
 		throw "Invalid value provided";
 	} else {
 		var temp= this.CMD((pot<2?0:4)+pot+nv*2,3);
@@ -116,7 +116,7 @@ MCP4xxx.prototype.getStatus = function() {
 }
 
 MCP4xxx.prototype.CMD= function(pad,cmd,data) {
-	if (pad+cmd==NaN || (cmd>2 && data==undefined) ) {
+	if (isNaN(pad+cmd) || (cmd>2 && data===undefined) ) {
 		throw "Invalid parameter";
 	} else {
 		var b1=(pad << 4)|(cmd << 2);
