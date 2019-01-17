@@ -53,6 +53,7 @@ Useful Information
 * [Espruino and LoRaWan with RN2483](https://github.com/yerpj/TTN_with_Espruino/blob/master/QuickStart.md) (external link)
 * [Mac OSX/Linux hack to allow the Web IDE to connect to a Serial device over TCP/IP](http://forum.espruino.com/comments/14450988/)
 * [How to use Software/Hardware I2C/SPI/Serial](http://forum.espruino.com/conversations/327459/#comment14488718)
+* [How does Espruino differ from Duktape/JerryScript/mjs/V7?](http://forum.espruino.com/conversations/329430/#14565912)
 
 Interesting Projects
 --------------------
