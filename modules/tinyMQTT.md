@@ -6,7 +6,7 @@ Tiny MQTT Client (tinyMQTT)
 
 * KEYWORDS: Module,MQTT,protocol,client,Internet,small,mini,tiny
 
-Stripped out JavaScript [MQTT](http://mqtt.org/) module that does basic PUB/SUB. Espruino also contains [a more complete MQTT module](/MQTT) , but it uses substantially (3x) more memory.
+Stripped out JavaScript [MQTT](http://mqtt.org/) module that does basic PUB/SUB, by [@olliephillips](https://github.com/olliephillips). Espruino also contains [a more complete MQTT module](/MQTT) , but it uses substantially (3x) more memory.
 
 - Supports QoS 0 only.
 - Supports authentication on username and password.
