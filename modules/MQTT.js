@@ -371,7 +371,7 @@ MQTT.prototype.subscribe = function (topics, opts) {
                 topic: topic,
                 qos  : opts.qos || this.C.DEF_QOS
             });
-        });
+        }.bind(this));
     } else {
         Object
             .keys(topics)
