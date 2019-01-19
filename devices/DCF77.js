@@ -38,7 +38,6 @@ function decode(d, callback) {
     return callback("Bad date");
   
   var day = decode4(d.substr(36,4)) + decode4(d.substr(40,2))*10;
-  var doy = decode4(d.substr(42,3));
   var month = decode4(d.substr(45,4)) + decode4(d.substr(49,1))*10;
   var year = decode4(d.substr(50,4)) + decode4(d.substr(54,4))*10;
   //console.log(hour+":"+minute+", "+day+"/"+month+"/"+year);

@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "build": "nodejs ./bin/build.js",
+    "eslint": "./node_modules/.bin/eslint devices/*.js modules/*.js",
     "start": "nodejs app.js"
   },
   "repository": {
@@ -28,6 +29,7 @@
   "dependencies": {
     "acorn": "^6.0.2",
     "acorn-walk": "^6.1.0",
+    "eslint": "^5.12.0",
     "express": "^4.13.3",
     "highlight.js": "^8.9.1",
     "marked": "^0.3.6",

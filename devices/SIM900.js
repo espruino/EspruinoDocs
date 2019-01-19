@@ -42,8 +42,9 @@ var netCallbacks = {
   create: function(host, port) {
     /* Create a socket and return its index, host is a string, port is an integer.
     If host isn't defined, create a server socket */
+    var sckt;
     if (host===undefined) {
-      var sckt = MAXSOCKETS;
+      sckt = MAXSOCKETS;
       socks[sckt] = "Wait";
       sockData[sckt] = "";
       at.cmd("AT+CIPSERVER=1,"+port+"\r\n", 10000, function(d) {
@@ -56,7 +57,7 @@ var netCallbacks = {
       });
       return MAXSOCKETS;
     } else {
-      var sckt = 0;
+      sckt = 0;
       while (socks[sckt]!==undefined) sckt++; // find free socket
       if (sckt>=MAXSOCKETS) throw new Error('No free sockets.');
       socks[sckt] = "Wait";
@@ -102,7 +103,7 @@ var netCallbacks = {
     }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
-  accept: function(sckt) {
+  accept: function() {
     // console.log("Accept",sckt);
     for (var i=0;i<MAXSOCKETS;i++)
       if (sockData[i] && socks[i]===undefined) {

@@ -156,9 +156,10 @@ exports.lpcomp = function(opts) {
   };
   poke32(o.tStop, 1);
   poke32(o.enable, 0);
+  var p;
   if (opts.vref instanceof Pin) {
     poke32(o.refsel, 7); // use external ref
-    var p = opts.vref.getInfo().channel;
+    p = opts.vref.getInfo().channel;
     if (p!==0 && p!==1) throw new Error("Invalid vref pin (must be analog0 or 1)");
     poke32(o.extrefsel, p);
   } else {
@@ -166,7 +167,7 @@ exports.lpcomp = function(opts) {
     if (r<1 || r>15) throw new Error("Invalid vref (1..15)");
     poke32(o.refsel, ((r-1)>>1) + (r&1)*8);
   }
-  var p = new Pin(opts.pin).getInfo().channel;
+  p = new Pin(opts.pin).getInfo().channel;
   if (p===undefined) throw new Error("Invalid pin (must be capable of analog)");
   poke32(o.psel, p);
   poke32(o.hyst, opts.hyst?1:0);
@@ -233,7 +234,7 @@ exports.saadc = function(opts) {
     },
     sample : function(cnt) {
       cnt = cnt||1;
-      if (cnt>1 && !opt.samplerate)
+      if (cnt>1 && !opts.samplerate)
         throw "Can't do >1 sample with no samplerate specified";
       var buf = new Uint16Array(Math.max(cnt*opts.channels.length,32)); // make big enough to ensure a flat string
       var p = E.getAddressOf(buf,true);

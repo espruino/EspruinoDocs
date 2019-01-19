@@ -38,7 +38,7 @@ TGAM Protocol: http://developer.neurosky.com/docs/doku.php?id=thinkgear_communic
 */
 
 function Brain(serial, rxPin, baud) {
-  uartOptions = {bytesize: 8, parity:'none', stopbits:1, rx: rxPin};
+  var uartOptions = {bytesize: 8, parity:'none', stopbits:1, rx: rxPin};
   this.buf = '';
   //this.dataHandlers = [];
   this.serial = serial;

@@ -25,7 +25,7 @@ exports.connect = function() {
     }
   };
   // when a device first connects, move the REPL out the way
-  NRF.on('connect', function(addr) {
+  NRF.on('connect', function() {
     LoopbackA.setConsole();
   });
   // Handle data from Bluetooth

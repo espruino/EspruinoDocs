@@ -70,9 +70,9 @@ LIS3MDL.prototype.enable = function ( options ) {
 	creg[4]=0x0C; // OMZ = 11 (ultra-high-performance mode for Z)
 	creg[0]=0x00; // Interrupt
 	
-    if (options.Interrupt) { if (options.Interrupt=true) { creg[0]=0xff; } }
-	if (options.TempSense) { if (options.TempSense=true) { creg[1]|=0x80; } }
-	if (options.LowPower) { if (options.TempSense=true) { creg[3]|=0x20; } }
+    if (options.Interrupt) { if (options.Interrupt==true) { creg[0]=0xff; } }
+	if (options.TempSense) { if (options.TempSense==true) { creg[1]|=0x80; } }
+	if (options.LowPower) { if (options.TempSense==true) { creg[3]|=0x20; } }
 
 	if (options.Threshold) {
 		if ((options.Threshold>32767)||(options.Threshold<0)) { 
@@ -84,9 +84,9 @@ LIS3MDL.prototype.enable = function ( options ) {
 
 	if (options.FullScale) {
 		// Default is 4 Gauss == unchanged
-		if (options.FullScale=8) { creg[2]|=0x20; }
-		if (options.FullScale=12) { creg[2]|=0x40; }
-		if (options.FullScale=16) { creg[2]|=0x60; }
+		if (options.FullScale==8) { creg[2]|=0x20; }
+		if (options.FullScale==12) { creg[2]|=0x40; }
+		if (options.FullScale==16) { creg[2]|=0x60; }
     }
 	
 	this.w(C.CTRL_REG1, creg[1]);
@@ -117,17 +117,17 @@ LIS3MDL.prototype.GetTemperature = function () {
 }
 
 /** Bits in Command register (0x80) */
-var DEF = {
-	DEF0 : (0x00),
-	XIEN : (0x20),
-	YIEN:  (0x10),
-	ZIEN:  (0x08),
-	IEA:   (0x04),
-	LIR:   (0x02),
-	IEN:   (0x01)
-};
+// var DEF = {
+// 	DEF0 : (0x00),
+// 	XIEN : (0x20),
+// 	YIEN:  (0x10),
+// 	ZIEN:  (0x08),
+// 	IEA:   (0x04),
+// 	LIR:   (0x02),
+// 	IEN:   (0x01)
+// };
 
-L
+
 /** logReg
 * Dump all Control and status registers 
 */

@@ -4,7 +4,7 @@
 });*/
 
 exports.httpRequest = function(device, url, callback) {
-  var device, service;
+  var service;
   return device.gatt.connect().then(function(d) {
     console.log("Connected");
     device = d;

@@ -39,7 +39,7 @@ exports.connect = function(i2c, callback, options) {
     },
 
     setThresholds: function(touch, release) {
-      for (i=0; i<24; i+=2) {
+      for (var i=0; i<24; i+=2) {
         i2c.writeTo(addr, 0x41+i, touch);
         i2c.writeTo(addr, 0x42+i, release);
       }

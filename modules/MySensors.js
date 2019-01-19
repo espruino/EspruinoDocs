@@ -53,7 +53,7 @@ MySensors.prototype.newMessage = function(sensor,type) {
 };
 
 
-MySensors.prototype.send = function(msg) {
+MySensors.prototype.send = function() {
   console.log("No Gateway");
 };
 
@@ -76,7 +76,7 @@ MySensors.prototype.handler = function(y) {
             break;
           case "4":
             var newId = JSON.parse(y[5]);
-            if (!isNAN(newId)) {
+            if (!isNaN(newId)) {
               this.nodeId = newId;
               this.emit('presentation');
             }

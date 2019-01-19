@@ -72,13 +72,13 @@ var netCallbacks = {
     else {
       lastSocket = sckt;
       // we need to a different command if we're closing a server
-      at.cmd(((sckt==MAXSOCKETS) ? 'AT+CIPSERVER=0' : ('AT+CIPCLOSE='+sckt))+'\r\n',1000, function(d) {
+      at.cmd(((sckt==MAXSOCKETS) ? 'AT+CIPSERVER=0' : ('AT+CIPCLOSE='+sckt))+'\r\n',1000, function() {
         socks[sckt] = undefined;
       });
     }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
-  accept : function(sckt) {
+  accept : function() {
     // console.log("Accept",sckt);
     for (var i=0;i<MAXSOCKETS;i++)
       if (sockData[i] && socks[i]===undefined) {
@@ -205,13 +205,13 @@ var wifiFuncs = {
                            signal: parseInt(ap[2]),
                            mac : JSON.parse(ap[3]) });
               },
-              function(d) { callback(null, aps); });
+              function() { callback(null, aps); });
   },
   "getConnectedAP" : function(callback) {
     var con;
     at.cmdReg("AT+CWJAP?\r\n", 1000, "+CWJAP:",
               function(d) { con=JSON.parse(d.slice(7)); },
-              function(d) { callback(null, con); });
+              function() { callback(null, con); });
   },
   "createAP" : function(ssid, key, channel, enc, callback) {
     at.cmd("AT+CWMODE=2\r\n", 1000, function(cwm) {
@@ -230,7 +230,7 @@ var wifiFuncs = {
       if (d=="OK") callback(null, devs);
       else if (d===undefined || d=="ERROR") callback("Error");
       else {
-        e = d.split(",");
+        var e = d.split(",");
         devs.push({ip:e[0], mac:e[1]});
         return r;
       }

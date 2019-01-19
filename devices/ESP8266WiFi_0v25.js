@@ -106,13 +106,13 @@ var netCallbacks = {
         socks[sckt] = undefined;
       else
       // we need to a different command if we're closing a server
-        at.cmd(((sckt==MAXSOCKETS) ? 'AT+CIPSERVER=0' : ('AT+CIPCLOSE='+sckt))+'\r\n',1000, function(d) {
+        at.cmd(((sckt==MAXSOCKETS) ? 'AT+CIPSERVER=0' : ('AT+CIPCLOSE='+sckt))+'\r\n',1000, function() {
           socks[sckt] = undefined;
         });
     }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
-  accept : function(sckt) {
+  accept : function() {
     // console.log("Accept",sckt);
     for (var i=0;i<MAXSOCKETS;i++)
       if (socks[i]=="Accept") {
@@ -124,7 +124,7 @@ var netCallbacks = {
   },
   /* Receive data. Returns a string (even if empty).
   If non-string returned, socket is then closed */
-  recv : function(sckt, maxLen, type) {
+  recv : function(sckt, maxLen) {
     if (sockData[sckt]) {
       var r;
       if (sockData[sckt].length > maxLen) {
@@ -150,8 +150,9 @@ var netCallbacks = {
     if (socks[sckt]<0) return socks[sckt]; // report an error
     if (!socks[sckt]) return -1; // close it
     //console.log("SEND ",arguments);
+    var d;
     if (socks[sckt]=="UDP") {
-      var d = udpToIPAndPort(data);
+      d = udpToIPAndPort(data);
       socks[sckt]="Wait";
       at.cmd('AT+CIPSTART='+sckt+',"UDP","'+d.ip+'",'+d.port+','+d.port+',2\r\n',10000,function(d) {
         if (d!="OK") socks[sckt] = -6; // SOCKET_ERR_NOT_FOUND
@@ -162,7 +163,7 @@ var netCallbacks = {
     var returnVal = data.length;
     var extra = "";
     if (type==2) { // UDP
-      var d = udpToIPAndPort(data);
+      d = udpToIPAndPort(data);
       extra = ',"'+d.ip+'",'+d.port;
       data = data.substr(8,d.len);
       returnVal = 8+d.len;
@@ -283,13 +284,13 @@ var wifiFuncs = {
                            signal: parseInt(ap[2]),
                            mac : JSON.parse(ap[3]) });
               },
-              function(d) { callback(null, aps); });
+              function() { callback(null, aps); });
   },
   "getConnectedAP" : function(callback) {
     var con;
     at.cmdReg("AT+CWJAP?\r\n", 1000, "+CWJAP:",
               function(d) { con=JSON.parse(d.slice(7)); },
-              function(d) { callback(null, con); });
+              function() { callback(null, con); });
   },
   "createAP" : function(ssid, key, channel, enc, callback) {
     at.cmd("AT+CWMODE=2\r\n", 1000, function(cwm) {
@@ -308,7 +309,7 @@ var wifiFuncs = {
       if (d=="OK") callback(null, devs);
       else if (d===undefined || d=="ERROR") callback("Error");
       else {
-        e = d.split(",");
+        var e = d.split(",");
         devs.push({ip:e[0], mac:e[1]});
         return r;
       }

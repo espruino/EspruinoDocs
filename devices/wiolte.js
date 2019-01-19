@@ -464,7 +464,7 @@ function closehandler(line) {
   if (colon<0) {
     if (dbg) console.log("not enough data " + line);
 
-    var colon = line.indexOf("\r");
+    colon = line.indexOf("\r");
     if (colon<0) {
       if (dbg) console.log("definitively not enough data " + line);
       return line;
@@ -889,7 +889,7 @@ var gprsFuncs = {
           gprsFuncs.init(callback);
         }, 6000);
       }, 200);
-    };
+    }
 
     function pwrkey_pulse(callback) {
       digitalWrite(pwrkey, pwrkey_active_level);
@@ -903,7 +903,7 @@ var gprsFuncs = {
             }
         }, 5000);
       }, 200);
-    };
+    }
 
     // reset state
     for (var i=0;i<MAXSOCKETS;i++) {
@@ -1035,7 +1035,7 @@ var gprsFuncs = {
                 "date": items[9],
                 "nsat": items[10],
               };
-            } catch (e){}
+            } catch (e){ }
           }
         } else if (r&&r.substr(0,10)=="+QGPSLOC: ") {
           var pos_last = r.length;
@@ -1234,7 +1234,7 @@ var gprsFuncs = {
   },
 };
 
-resetOptions = {
+var resetOptions = {
  rst: 'C3',
  pwrkey: 'C4',
  rst_active_level: 0,

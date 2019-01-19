@@ -56,7 +56,7 @@ FlashEEPROM.prototype.read = function(addr) {
   // if not found, return undefined
   if (lastAddr<0) return undefined;
   // else get the key again, and return that many characters
-  key = this.flash.read(4, lastAddr);
+  var key = this.flash.read(4, lastAddr);
   var l = key[1] | (key[2]<<8);
   return this.flash.read(l, lastAddr+4);
 };
@@ -71,7 +71,7 @@ FlashEEPROM.prototype.readMem = function(addr) {
   // if not found, return undefined
   if (lastAddr<0) return undefined;
   // else get the key again, and return that many characters
-  key = this.flash.read(4, lastAddr);
+  var key = this.flash.read(4, lastAddr);
   var l = key[1] | (key[2]<<8);
   return E.memoryArea(lastAddr+4, l);
 };
@@ -81,7 +81,6 @@ FlashEEPROM.prototype.readAll = function() {
   var data = [];
   var n = this.addr;
   var key = this.flash.read(4, n);
-  var lastAddr = -1;
   while (key[3]!=255 && n<this.endAddr) {
     var l = key[1] | (key[2]<<8);
     if (l) data[key[0]] = this.flash.read(l, n+4);
@@ -113,7 +112,7 @@ FlashEEPROM.prototype.write = function(addr, data) {
   var a = this.getAddr(addr);
   // If we had the key already, check if it is the same
   if (a.addr>=0) {
-    key = this.flash.read(4, a.addr);
+    var key = this.flash.read(4, a.addr);
     var l = key[1] | (key[2]<<8);
     var oldData = this.flash.read(l, a.addr+4);
     if (oldData == data) return;

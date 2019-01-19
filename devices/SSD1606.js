@@ -308,7 +308,7 @@ SSD1606.prototype.csb = function(callback, clearScreenColor) {
   this.scd(0x45, 0x00);
   this.sc(0x24);
   this.psd();
-  for (i = 0; i < this.display.maxScreenBytes; i++) {
+  for (var i = 0; i < this.display.maxScreenBytes; i++) {
     this.sd(clearScreenColor);
   }
   this.sc(0xFF);

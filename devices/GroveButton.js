@@ -15,6 +15,6 @@ function GroveButton(pins, callback) {
 exports = GroveButton;
 
 /** Call this to stop callbacks */
-GroveButton.prototype.disconnect = function() { clearWatch(w); };
+GroveButton.prototype.disconnect = function() { clearWatch(this.w); };
 
 

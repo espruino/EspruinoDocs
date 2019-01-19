@@ -13,7 +13,7 @@ function ADXL335(_pin_x, _pin_y, _pin_z) {
 All set up for default Espruino use */
 ADXL335.prototype.C = {
   MVG : 0.33,   // Sensitivity at 3.3V ~ 330 mV/G
-  ZEROG : 1.65, // Zero G bias ~ 3.3V/2
+  ZEROG : 1.65, // Zero G bias ~ 3.3V/2
   AREF : 3.3    // Ref. voltage
 };
 

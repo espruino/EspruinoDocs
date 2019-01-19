@@ -11,7 +11,6 @@ g.flip();
 
 exports.connect = function(pins) {
   var g = Graphics.createArrayBuffer(pins.length,pins.length-1, 1);
-  var n = 0;
   g.interval = undefined;
   g.flip = function() {
     // precalculate a list of read/write commands which we'll then execute

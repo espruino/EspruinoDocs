@@ -59,10 +59,10 @@ exports.connect = function(i2c,width,height) {
     if (col != this.col){
       this.s("SC"+String.fromCharCode(this.col));
     }
-  ;}
+  }
   LCD.drawImage = function(image,x,y,dm) {
     var d = new Uint8Array(image.buffer.length+7);
-    d.set(E.toArrayBuffer("DIM"+string.fromCharCode(x,y,image.width,image.height)),0);
+    d.set(E.toArrayBuffer("DIM"+String.fromCharCode(x,y,image.width,image.height)),0);
     d.set(new Uint8Array(this.buffer).map(E.reverseByte), 7);
     this.dr(d,dm);
   };
@@ -73,7 +73,7 @@ exports.connect = function(i2c,width,height) {
   LCD.drawCircle=function(x,y,r,f,dm){this.dr("CC"+String.fromCharCode(x,y,r,f),dm);};
   LCD.setColor = function(col) {this.s("SC"+String.fromCharCode(col));this.col=col;};
   LCD.moveArea=function(x,y,w,h,xo,yo) {this.s("MA"+String.fromCharCode(x,y,w,h,xo,yo));}
-  LCD.setRotation=function(ro,re) {this.s("SD"+String.fromCharCode(ro));};
+  LCD.setRotation=function(ro) {this.s("SD"+String.fromCharCode(ro));};
   LCD.setLinePattern = function (p) {this.s("SLP"+String.fromCharCode(p));};
   LCD.getWidth = function() {return this.w;};
   LCD.getHeight=function() {return this.h;};

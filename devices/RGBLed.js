@@ -17,7 +17,7 @@ RGBLed.prototype._write = function (stop) {
   });
 };
 RGBLed.prototype._stop = function () {
-  try {clearInterval(this.intervalId);} catch (e) {}
+try {clearInterval(this.intervalId);} catch (e) { }
 };
 RGBLed.prototype.setColor = function (color) {
   for (var i = 0, s = -6; i < 3; i += 1, s += 2) {

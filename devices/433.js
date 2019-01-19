@@ -36,7 +36,6 @@ function sig(w,e) {
 /* Set up to receive, and call the callback with a Uint8Array when something
 is received. */
 exports.rx = function(pin, callback) {
-  rcallback = callback;
   var w = {
     data : "",
     callback : callback,

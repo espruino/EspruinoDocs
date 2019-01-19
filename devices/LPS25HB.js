@@ -40,8 +40,8 @@ var LPS25HB_CTRL_REG1_ADDR = 0x20; // Pressure sensor control register 1
 // composed of PRESS_OUT_H (2Ah), PRESS_OUT_L (29h) and PRESS_OUT_XL (28h).
 // The value is expressed as 2^ complement.
 var LPS25HB_PRESS_OUT_XL_ADDR = 0x28; // Pressure Data (LSB)
-var LPS25HB_PRESS_OUT_L_ADDR = 0x29;  // Pressure Data (mid part)
-var LPS25HB_PRESS_OUT_H_ADDR = 0x2A;  // Pressure Data (MSB)
+// var LPS25HB_PRESS_OUT_L_ADDR = 0x29;  // Pressure Data (mid part)
+// var LPS25HB_PRESS_OUT_H_ADDR = 0x2A;  // Pressure Data (MSB)
 
 
 

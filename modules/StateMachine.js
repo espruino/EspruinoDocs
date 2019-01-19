@@ -117,9 +117,9 @@ function chgTo(to,wait) {
     if ('enter' in sm.states[to]) {
       var auto = sm.states[to].enter.call(sm);
       if (auto) chgTo.call(sm,auto.state,auto.wait||0);   
-      };
-    };
-  };
+      }
+    }
+  }
 
 // add/remove states to machine and return the complete created state definition
 // returns undefined if fails
@@ -128,19 +128,20 @@ function define(stObj) {
   if ('name' in stObj) { 
     this.states[stObj.name] = stObj;
     return stObj;
-    };
+    }
   return;
-  };
+  }
 
 // signal the current state passing it the given event (evt)
 function signal(evt) {
+  var sm = this;
   var s = this.states[this.state];
   if (s && 'signal' in s) {
     sm.last.event=evt;
     var action = s.signal.call(this,evt);
     if (action) chgTo.call(this,action.state,action.wait||0);
     }
-  };
+  }
 
 // state machine constructor...
 exports.FSM = function FSM() {

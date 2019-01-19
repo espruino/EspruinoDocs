@@ -36,18 +36,19 @@ function BME280(options, read, write) {
   this.readCoefficients();
 }
 
-BME280.prototype.setPower = function(on) {
-  var r = this.read(0xF4,1)[0]; // ctrl_meas_reg
-  if (on) r |= 3; // normal mode
-  else r &= ~3; // sleep mode
-};
+// TODO: this does nothing? (same in BME280 and BMP280)
+// BME280.prototype.setPower = function(on) {
+//   var r = this.read(0xF4,1)[0]; // ctrl_meas_reg
+//   if (on) r |= 3; // normal mode
+//   else r &= ~3; // sleep mode
+// };
 
 /* Convert two UInt8 value into one "signed" number */
 function convS16(data, offs) {
   var value = (data[offs+1] << 8) + data[offs];
   if (value & 0x8000) value -= 65536;
   return value;
-};
+}
 
 /* Read and store all coefficients stored in the sensor */
 BME280.prototype.readCoefficients = function() {
@@ -130,7 +131,7 @@ BME280.prototype.calibration_H = function(adc_H) {
 };
 
 /* Get all Data in a nice, readable object */
-BME280.prototype.getData = function(adc_H) {
+BME280.prototype.getData = function() {
   this.readRawData();
   return {
      temp : this.calibration_T(this.temp_raw) / 100.0,
@@ -150,7 +151,6 @@ exports.connect = function(i2c, options) {
 
 exports.connectSPI = function(spi, cs, options) {
   return (new BME280(options, function(reg, len) { // read
-    var d = new Uint8Array(len+1);
     return spi.send([reg|0x80,new Uint8Array(len)], cs).slice(1);
   }, function(reg, data) { // write
     spi.write(reg&0x7f, data, cs);

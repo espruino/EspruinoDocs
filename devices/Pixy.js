@@ -32,12 +32,12 @@ Pixy.prototype.getWord = function() {
   // instead of 2 bytes in a 16-bit word as with I2C
   var w, cout = 0;
 
-  if (outBuf)
+  if (this.outBuf)
   {
     w = this.spi.send(C.PIXY_SYNC_BYTE_DATA);
-    cout = outBuf[outIndex++];
-    if (outIndex==outLen)
-      outBuf = undefined; 
+    cout = this.outBuf[this.outIndex++];
+    if (this.outIndex==this.outLen)
+    this.outBuf = undefined; 
   }
   else
     w = this.spi.send(C.PIXY_SYNC_BYTE);
@@ -51,15 +51,16 @@ Pixy.prototype.getByte = function() {
 
 /** For internal use - queue the given data to be sent */
 Pixy.prototype.send = function(data) {
-  if (outBuf) return -1;
-  outBuf = data;
-  outIndex = 0;
+  if (this.outBuf) return -1;
+  this.outBuf = data;
+  this.outIndex = 0;
   return len;
 };
 
 /** For internal use - get the start of a frame */
 Pixy.prototype.getStart = function() {
   var lastw = 0xffff;
+  // eslint-disable-next-line no-constant-condition
   while(true) {
     var w = this.getWord();
 

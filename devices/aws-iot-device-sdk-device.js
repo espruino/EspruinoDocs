@@ -24,7 +24,7 @@ var exceptions = {
   INVALID_CLIENT_ID_OPTION: 'Invalid "clientId" (mqtt client id) option supplied.'
 };
 var isUndefined = function(value) {
-  if ((typeof(value) === 'undefined') || (typeof(value) === null)) {
+  if ((typeof(value) === 'undefined') || (value === null)) {
       return true;
   }
   return false;

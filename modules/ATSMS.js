@@ -2,12 +2,11 @@
 /* Simple SMS send/receive library */
 
 /** This initialises the modem on the specified serial port. 
-'options' is not currently used.
 
 Once initialised, new messages will fire a `message`
 event. You must then call `.list` to get unread messages.
 */
-function ATSMS(serial, options) {
+function ATSMS(serial) {
   var sms = this;
   this.serial = serial;
   this.at = require("AT").connect(serial);  

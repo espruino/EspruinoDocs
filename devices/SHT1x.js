@@ -30,6 +30,8 @@ function SHT11(scl,sda) {
 /** Contraband code for creating Javascript delays */
 SHT11.prototype.Delay = function(ms) {
 	var timenow = Date().getTime();
+  // TODO: blocking delay is not so nice...
+  // eslint-disable-next-line no-constant-condition
 	while(1){
 		if ((Date().getTime() - timenow) > ms){  
 			break; 
@@ -117,7 +119,7 @@ SHT11.prototype.readTemperature = function(){
   }
   this.Delay(10);
  }
- rawtemp = this.getData();
+ var rawtemp = this.getData();
  this.skipCrc();
  this.lastTemperature = rawtemp * C.d2 + C.d1;
  return this.lastTemperature;
@@ -160,6 +162,7 @@ SHT11.prototype.readHumidity = function(){
 }
 
 SHT11.prototype.calculateDewPoint = function(temperature,humidity){
+ var tn, m; 
  if (temperature > 0){
   tn = 243.12
   m = 17.62

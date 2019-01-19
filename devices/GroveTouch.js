@@ -16,6 +16,6 @@ function GroveTouch(pins, callback) {
 }
 exports = GroveTouch;
 /** Call this to stop callbacks */
-GroveTouch.prototype.disconnect = function() { clearWatch(w); };
+GroveTouch.prototype.disconnect = function() { clearWatch(this.w); };
 
 

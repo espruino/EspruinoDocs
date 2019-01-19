@@ -75,7 +75,7 @@ LPS22HB.prototype.read = function(callback) {
     var intr = setInterval(function() {
       if (this.r(C.STATUS)&3) {
         clearInterval(intr);
-        callback(get());
+        callback(this.get());
       }        
     }.bind(this), 100);
     return this.get();

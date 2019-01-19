@@ -31,7 +31,7 @@ function NIXIE(ser,digits) {
   this.ser = ser;
   this.digits=digits;
   this.data=new Uint8Array(5*digits);
-  for (j=0;j<digits;j++) {
+  for (var j=0;j<digits;j++) {
   	this.data[j*5+1]=127;
   }
 }
@@ -41,7 +41,7 @@ NIXIE.prototype.setTube = function (digit,number,ldot,rdot,brightness,red,green,
 	this.setLED(digit,red,green,blue)
 }
 NIXIE.prototype.setAllBright=function(brightness) {
-	for (k=0;k<this.digits;k++){
+	for (var k=0;k<this.digits;k++){
 		this.data[k*5+1]=brightness;
 	}
 }
@@ -54,7 +54,7 @@ NIXIE.prototype.setLED=function(digit,red,green,blue) {
 	this.data[digit*5+4]=blue;
 }
 NIXIE.prototype.setAllLED=function(red,green,blue) {
-	for (k=0;k<this.digits;k++){
+	for (var k=0;k<this.digits;k++){
 		this.data[k*5+2]=red;
 		this.data[k*5+3]=green;
 		this.data[k*5+4]=blue;
@@ -63,7 +63,7 @@ NIXIE.prototype.setAllLED=function(red,green,blue) {
 NIXIE.prototype.setString = function(data) {
 	var y=0;
 	var dig=0;
-	for (k=0;k<this.digits;k++){
+	for (var k=0;k<this.digits;k++){
 		this.data[k*5]=15;
 	}
 	while (dig < this.digits && y < data.length) {
@@ -82,7 +82,7 @@ NIXIE.prototype.setString = function(data) {
 }
 NIXIE.prototype.send = function() {
 	var outstr="";
-	for (i=0;i<this.digits;i++) {
+	for (var i=0;i<this.digits;i++) {
 		outstr=this.getString(i)+outstr;
 	}
 	this.ser.write(outstr+"!");
@@ -105,9 +105,9 @@ NIXIE.prototype.getString = function(digit) {
 	} else {
 		str+=",N"
 	}
-	for (x=1;x<5;x++) {
+	for (var x=1;x<5;x++) {
 		var t=d[digit*5+x];
-		var t=t.toFixed(0);
+		t=t.toFixed(0);
 		switch (t.length) {
 			case 1 : {t="00"+t; break;}
 			case 2 : {t="0"+t;break;}

@@ -124,15 +124,15 @@ RN2483.prototype.LoRaWAN = function(devAddr,nwkSKey,appSKey, callback)
   var at = this.at;
   (new Promise(function(resolve) {
     at.cmd("mac set devaddr "+devAddr+"\r\n",500,resolve);
-  })).then(function(d) {
+  })).then(function() {
     return new Promise(function(resolve) {
       at.cmd("mac set nwkskey "+nwkSKey+"\r\n",500,resolve);
     });
-  }).then(function(d) {
+  }).then(function() {
     return new Promise(function(resolve) {
       at.cmd("mac set appskey "+appSKey+"\r\n",500,resolve);
     });
-  }).then(function(d) {
+  }).then(function() {
     return new Promise(function(resolve) {
       at.cmd("mac join ABP\r\n",2000,resolve);
     });

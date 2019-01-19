@@ -52,7 +52,7 @@ function Midi(uart, speed) {
         }
       }
     });
-};
+}
 
 exports.setup = function(uart, speed) {
   return new Midi(uart, speed);
