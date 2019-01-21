@@ -5,7 +5,7 @@ var C = {
 
   /** BME680 I2C addresses */
   I2C_ADDR_PRIMARY   : 0x76,
-  I2C_ADDR_SECONDARY : 0x77,
+  // I2C_ADDR_SECONDARY : 0x77,
 
   /** BME680 unique chip identifier */
   CHIP_ID  : 0x61,
@@ -17,22 +17,22 @@ var C = {
 
   /** BME680 field_x related defines */
   FIELD_LENGTH   : 15,
-  FIELD_ADDR_OFFSET  : 17,
+  // FIELD_ADDR_OFFSET  : 17,
 
   /** Soft reset command */
   SOFT_RESET_CMD   : 0xb6,
 
   /* Info's */
-  I_MIN_CORRECTION   : 1,
-  I_MAX_CORRECTION   : 2,
+  // I_MIN_CORRECTION   : 1,
+  // I_MAX_CORRECTION   : 2,
 
   /** Register map */
   /** Other coefficient's address */
   ADDR_RES_HEAT_VAL_ADDR : 0x00,
   ADDR_RES_HEAT_RANGE_ADDR : 0x02,
   ADDR_RANGE_SW_ERR_ADDR : 0x04,
-  ADDR_SENS_CONF_START : 0x5A,
-  ADDR_GAS_CONF_START  : 0x64,
+  // ADDR_SENS_CONF_START : 0x5A,
+  // ADDR_GAS_CONF_START  : 0x64,
 
   /** Field settings */
   FIELD0_ADDR    : 0x1d,
@@ -45,7 +45,7 @@ var C = {
   CONF_HEAT_CTRL_ADDR    : 0x70,
   CONF_ODR_RUN_GAS_NBC_ADDR  : 0x71,
   CONF_OS_H_ADDR     : 0x72,
-  MEM_PAGE_ADDR      : 0xf3,
+  // MEM_PAGE_ADDR      : 0xf3,
   CONF_T_P_MODE_ADDR   : 0x74,
   CONF_ODR_FILT_ADDR   : 0x75,
 
@@ -65,12 +65,12 @@ var C = {
   DISABLE_HEATER   : 0x01,
 
   /** Gas measurement settings */
-  DISABLE_GAS_MEAS   : 0x00,
+  // DISABLE_GAS_MEAS   : 0x00,
   ENABLE_GAS_MEAS    : 0x01,
 
   /** Over-sampling settings */
   OS_NONE    : 0,
-  OS_1X    : 1,
+  // OS_1X    : 1,
   OS_2X    : 2,
   OS_4X    : 3,
   OS_8X    : 4,
@@ -78,12 +78,12 @@ var C = {
 
   /** IIR filter settings */
   FILTER_SIZE_0  : 0,
-  FILTER_SIZE_1  : 1,
+  // FILTER_SIZE_1  : 1,
   FILTER_SIZE_3  : 2,
-  FILTER_SIZE_7  : 3,
-  FILTER_SIZE_15 : 4,
-  FILTER_SIZE_31 : 5,
-  FILTER_SIZE_63 : 6,
+  // FILTER_SIZE_7  : 3,
+  // FILTER_SIZE_15 : 4,
+  // FILTER_SIZE_31 : 5,
+  // FILTER_SIZE_63 : 6,
   FILTER_SIZE_127  : 7,
 
   /** Power mode settings */
@@ -94,8 +94,8 @@ var C = {
   RESET_PERIOD : 10,
 
   /** SPI memory page settings */
-  MEM_PAGE0  : 0x10,
-  MEM_PAGE1  : 0x00,
+  // MEM_PAGE0  : 0x10,
+  // MEM_PAGE1  : 0x00,
 
   /** Ambient humidity shift value for compensation */
   HUM_REG_SHIFT_VAL  : 4,
@@ -105,14 +105,14 @@ var C = {
   RUN_GAS_ENABLE : 1,
 
   /** Settings selector */
-  OST_SEL      : 1,
-  OSP_SEL      : 2,
-  OSH_SEL      : 4,
-  GAS_MEAS_SEL : 8,
-  FILTER_SEL   : 16,
-  HCNTRL_SEL   : 32,
-  RUN_GAS_SEL  :  64,
-  NBCONV_SEL   : 128,
+  // OST_SEL      : 1,
+  // OSP_SEL      : 2,
+  // OSH_SEL      : 4,
+  // GAS_MEAS_SEL : 8,
+  // FILTER_SEL   : 16,
+  // HCNTRL_SEL   : 32,
+  // RUN_GAS_SEL  :  64,
+  // NBCONV_SEL   : 128,
   //GAS_SENSOR_SEL : (C.GAS_MEAS_SEL | C.RUN_GAS_SEL | C.NBCONV_SEL)
 
   /** Number of conversion settings*/
@@ -120,7 +120,7 @@ var C = {
   NBCONV_MAX : 9, // Was 10, but there are only 10 settings: 0 1 2 ... 8 9 
 
   /** Bit position definitions for sensor settings */
-  GAS_MEAS_POS : 4,
+  // GAS_MEAS_POS : 4,
   FILTER_POS : 2,
   OST_POS    : 5,
   OSP_POS    : 2,
@@ -154,9 +154,9 @@ var MSK = {
   GAS_RANGE  : 0x0f,
   GASM_VALID : 0x20,
   HEAT_STAB  : 0x10,
-  MEM_PAGE : 0x10,
-  SPI_RD : 0x80,
-  SPI_WR : 0x7f,
+  // MEM_PAGE : 0x10,
+  // SPI_RD : 0x80,
+  // SPI_WR : 0x7f,
   BIT_H1_DATA  : 0x0F,
 };
 var R = {
@@ -203,7 +203,7 @@ function boundary_check(v,min,max) {
 
 function BME680(options,read,write) {
   options = options||{};
-  options.addr = options.addr||0x76;
+  options.addr = options.addr||C.I2C_ADDR_PRIMARY;
   this.w = write;
   this.r = read;
 
@@ -247,12 +247,12 @@ BME680.prototype.get_calib_data = function() {
   // everything is little endian
   this.cal={};
   /* Temperature related coefficients */
-  this.cal.par_t = [,vc.getUint16(R.T1_LSB, true)
+  this.cal.par_t = [vc.getUint16(R.T1_LSB, true)
                     ,vc.getInt16(R.T2_LSB, true)
                     ,vc.getInt8(R.T3)];
-
+  
   /* Pressure related coefficients */
-  this.cal.par_p = [,vc.getUint16(R.P1_LSB, true)
+  this.cal.par_p = [vc.getUint16(R.P1_LSB, true)
                     ,vc.getInt16(R.P2_LSB, true)
                     ,vc.getInt8(R.P3)
                     ,vc.getInt16(R.P4_LSB, true)
@@ -264,7 +264,7 @@ BME680.prototype.get_calib_data = function() {
                     ,vc.getUint8(R.P10)];
 
   /* Humidity related coefficients */
-  this.cal.par_h = [,(vc.getUint8(R.H1_MSB) << C.HUM_REG_SHIFT_VAL) |
+  this.cal.par_h = [(vc.getUint8(R.H1_MSB) << C.HUM_REG_SHIFT_VAL) |
                     (vc.getUint8(R.H1_LSB) & MSK.BIT_H1_DATA)
                     ,(vc.getUint8(R.H2_MSB) << C.HUM_REG_SHIFT_VAL) |
                     (vc.getUint8(R.H2_LSB) >> C.HUM_REG_SHIFT_VAL)
@@ -275,14 +275,14 @@ BME680.prototype.get_calib_data = function() {
                     ,vc.getInt8(R.H7)];
 
   /* Gas heater related coefficients */
-  this.cal.par_gh = [,vc.getInt8(R.GH1)
+  this.cal.par_gh = [vc.getInt8(R.GH1)
                      ,vc.getInt16(R.GH2_LSB, true)
                      ,vc.getInt8(R.GH3)];
   /* Other coefficients */  
   this.cal.res_heat_range = (this.r(C.ADDR_RES_HEAT_RANGE_ADDR,1)[0]&MSK.RHRANGE)/16;
   this.cal.res_heat_val = this.r(C.ADDR_RES_HEAT_VAL_ADDR,1)[0];
   this.cal.range_sw_err = (this.r(C.ADDR_RANGE_SW_ERR_ADDR,1)[0]&MSK.RSERROR)/16;
-};
+  };
 
 BME680.prototype.set_sensor_mode = function(mode) {
   this.power_mode = mode;
@@ -380,7 +380,7 @@ BME680.prototype.set_heating_settings = function(tmp, dur, cnv) {
   tmp = (typeof tmp==='undefined')?320:tmp;
   dur = (typeof dur==='undefined')?150:dur;
   cnv = (typeof cnv==='undefined')?0:cnv;
-  var data
+  var data;
 
   //console.log(tmp,dur,cnv);
 
@@ -459,7 +459,6 @@ BME680.prototype.get_sensor_data = function() {
   
   return {
     new : !!(this.status & MSK.NEW_DATA),
-    //    temperature : this.calc_temperature(adc_temp) / 100,
     temperature : this.ambient_temperature,
     pressure : this.calc_pressure(adc_pres) / 100,
     humidity : this.calc_humidity(adc_hum) / 1000,
@@ -478,10 +477,10 @@ BME680.prototype.calc_temperature = function(temp_adc) {
   var var3;
   var calc_temp;
 
-  var1 = (temp_adc/8) - (this.cal.par_t[1]*2);
-  var2 = (var1 *  this.cal.par_t[2])/2048;
+  var1 = (temp_adc/8) - (this.cal.par_t[0]*2);
+  var2 = (var1 *  this.cal.par_t[1])/2048;
   var3 = (var1 * var1)/16384;
-  var3 = ((var3) * ( this.cal.par_t[3]*16))/16384;
+  var3 = ((var3) * ( this.cal.par_t[2]*16))/16384;
   this.cal.t_fine =  (var2 + var3);
   calc_temp = (((this.cal.t_fine * 5) + 128)/256);
 
@@ -497,14 +496,14 @@ BME680.prototype.calc_pressure = function(pres_adc) {
 
   var1 = ((this.cal.t_fine) >> 1) - 64000;
   var2 = ((((var1 >> 2) * (var1 >> 2)) >> 11) *
-          this.cal.par_p[6]) >> 2;
-  var2 = var2 + ((var1 * this.cal.par_p[5]) << 1);
-  var2 = (var2 >> 2) + (this.cal.par_p[4] << 16);
+          this.cal.par_p[5]) >> 2;
+  var2 = var2 + ((var1 * this.cal.par_p[4]) << 1);
+  var2 = (var2 >> 2) + (this.cal.par_p[3] << 16);
   var1 = (((((var1 >> 2) * (var1 >> 2)) >> 13) *
-           (this.cal.par_p[3] << 5)) >> 3) +
-    ((this.cal.par_p[2] * var1) >> 1);
+           (this.cal.par_p[2] << 5)) >> 3) +
+    ((this.cal.par_p[1] * var1) >> 1);
   var1 = var1 >> 18;
-  var1 = ((32768 + var1) * this.cal.par_p[1]) >> 15;
+  var1 = ((32768 + var1) * this.cal.par_p[0]) >> 15;
   pressure_comp = 1048576 - pres_adc;
   pressure_comp = ((pressure_comp - (var2 >> 12)) * (3125));
   var4 = (1 << 31);
@@ -512,16 +511,16 @@ BME680.prototype.calc_pressure = function(pres_adc) {
     pressure_comp = ((pressure_comp / var1) << 1);
   else
     pressure_comp = ((pressure_comp << 1) / var1);
-  var1 = (this.cal.par_p[9] * (((pressure_comp >> 3) *
+  var1 = (this.cal.par_p[8] * (((pressure_comp >> 3) *
                                 (pressure_comp >> 3)) >> 13)) >> 12;
   var2 = ((pressure_comp >> 2) *
-          this.cal.par_p[8]) >> 13;
+          this.cal.par_p[7]) >> 13;
   var3 = ((pressure_comp >> 8) * (pressure_comp >> 8) *
           (pressure_comp >> 8) *
-          this.cal.par_p[10]) >> 17;
+          this.cal.par_p[9]) >> 17;
 
   pressure_comp = (pressure_comp) + ((var1 + var2 + var3 +
-                                      (this.cal.par_p[7] << 7)) >> 4);
+                                      (this.cal.par_p[6] << 7)) >> 4);
 
   return pressure_comp;
 
@@ -538,15 +537,15 @@ BME680.prototype.calc_humidity = function(hum_adc) {
   var calc_hum;
 
   temp_scaled = (( this.cal.t_fine * 5) + 128) >> 8;
-  var1 =  (hum_adc - ( ( this.cal.par_h[1] * 16)))
-    - (((temp_scaled *  this.cal.par_h[3]) / ( 100)) >> 1);
-  var2 = ( this.cal.par_h[2]
-          * (((temp_scaled *  this.cal.par_h[4]) / ( 100))
-             + (((temp_scaled * ((temp_scaled *  this.cal.par_h[5]) / ( 100))) >> 6)
+  var1 =  (hum_adc - ( ( this.cal.par_h[0] * 16)))
+    - (((temp_scaled *  this.cal.par_h[2]) / ( 100)) >> 1);
+  var2 = ( this.cal.par_h[1]
+          * (((temp_scaled *  this.cal.par_h[3]) / ( 100))
+             + (((temp_scaled * ((temp_scaled *  this.cal.par_h[4]) / ( 100))) >> 6)
                 / ( 100)) +  (1 << 14))) >> 10;
   var3 = var1 * var2;
-  var4 =  this.cal.par_h[6] << 7;
-  var4 = ((var4) + ((temp_scaled *  this.cal.par_h[7]) / ( 100))) >> 4;
+  var4 =  this.cal.par_h[5] << 7;
+  var4 = ((var4) + ((temp_scaled *  this.cal.par_h[6]) / ( 100))) >> 4;
   var5 = ((var3 >> 14) * (var3 >> 14)) >> 10;
   var6 = (var4 * var5) >> 1;
   calc_hum = (((var3 + var6) >> 10) * ( 1000)) >> 12;
@@ -595,8 +594,8 @@ BME680.prototype.calc_heater_resistance = function(temperature) {
   temperature = Math.min(Math.max(temperature,200),400);
   if (this.ambient_temperature===undefined) {this.ambient_temperature = 22;}
 
-  var1 = ((this.ambient_temperature * this.cal.par_gh[3]) / 1000) * 256;
-  var2 = (this.cal.par_gh[1] + 784) * (((((this.cal.par_gh[2] + 154009) * temperature * 5) / 100) + 3276800) / 10);
+  var1 = ((this.ambient_temperature * this.cal.par_gh[2]) / 1000) * 256;
+  var2 = (this.cal.par_gh[0] + 784) * (((((this.cal.par_gh[1] + 154009) * temperature * 5) / 100) + 3276800) / 10);
   var3 = var1 + (var2 / 2);
   var4 = (var3 / (this.cal.res_heat_range + 4));
   var5 = (131 * this.cal.res_heat_val) + 65536;
@@ -623,7 +622,7 @@ BME680.prototype.calc_heater_duration = function(duration) {
 exports.BME680 = BME680;
 
 exports.connectI2C = function(i2c, options) {
-  var a = (options&&options.addr)||0x76;
+  var a = (options&&options.addr)||C.I2C_ADDR_PRIMARY;
   return (new BME680(options, function(reg, len) { // read
     i2c.writeTo(a, reg);
     return i2c.readFrom(a, len);
