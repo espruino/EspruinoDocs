@@ -17,7 +17,7 @@ exports.ping = function(options, callback) {
   options.attempts = options.attempts || 5;
   options.timeout = options.timeout || 5000;
   var curAttempts = 0;
-  data = [];
+  var data = [];
 
   function ping(options, callback){
     var startTime = getTime();

@@ -177,7 +177,7 @@ LSM6DSL.prototype.logReg = function () {
 	var cl = console.log;
 	cl("Status Register: " + this.r(C.STATUS_REG).toString(16));
 	
-	for ( i= 1; i< 0x7f; i++)
+	for (var i= 1; i< 0x7f; i++)
 	{
 		if (i===0x02) { i=0x04; }
 		if (i===0x0c) { i=0x0d; }

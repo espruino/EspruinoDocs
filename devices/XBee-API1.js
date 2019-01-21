@@ -28,7 +28,6 @@ var xbee=function(ser) {
     var pstate='S';
     var f_len=0;
     var f_type=-1;
-    var f_id=0;
     var f_data=undefined;
     var f_data_idx=0;
     var f_cs=0;
@@ -46,11 +45,11 @@ var xbee=function(ser) {
     //
     // process incoming data
     //
-    ser.on('data', function (data) {
-      for (var i in data) {
+    ser.on('data', function (dataIn) {
+      for (var i in dataIn) {
         //console.log('S:'+pstate);
         // console.log(data.charCodeAt(i).toString(16));
-        var data=data.charCodeAt(i);
+        var data=dataIn.charCodeAt(i);
         
         switch(pstate)
         {

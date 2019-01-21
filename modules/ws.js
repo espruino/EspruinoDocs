@@ -247,7 +247,7 @@ exports = function (host, options) {
 };
 
 /** Create a WebSocket server */
-exports.createServer = function(callback, wscallback) {
+exports.createServer = function(callback) {
   var server = require('http').createServer(function (req, res) {
     if (req.headers.Connection && req.headers.Connection.indexOf("Upgrade")>=0) {
       var key = req.headers["Sec-WebSocket-Key"];

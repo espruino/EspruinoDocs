@@ -37,14 +37,15 @@ BMP280.prototype.setPower = function(on) {
   var r = this.read(0xF4,1)[0]; // ctrl_meas_reg
   if (on) r |= 3; // normal mode
   else r &= ~3; // sleep mode
-};
+  this.write(0xF4,r)
+}
 
 /* Convert two UInt8 value into one "signed" number */
 function convS16(data, offs) {
   var value = (data[offs+1] << 8) + data[offs];
   if (value & 0x8000) value -= 65536;
   return value;
-};
+}
 
 /* Read and store all coefficients stored in the sensor */
 BMP280.prototype.readCoefficients = function() {
@@ -107,7 +108,7 @@ BMP280.prototype.calibration_P = function(adc_P) {
 };
 
 /* Get all Data in a nice, readable object */
-BMP280.prototype.getData = function(adc_H) {
+BMP280.prototype.getData = function() {
   this.readRawData();
   return {
      temp : this.calibration_T(this.temp_raw) / 100.0,
@@ -126,7 +127,6 @@ exports.connect = function(i2c, options) {
 
 exports.connectSPI = function(spi, cs, options) {
   return (new BMP280(options, function(reg, len) { // read
-    var d = new Uint8Array(len+1);
     return spi.send([reg|0x80,new Uint8Array(len)], cs).slice(1);
   }, function(reg, data) { // write
     spi.write(reg&0x7f, data, cs);

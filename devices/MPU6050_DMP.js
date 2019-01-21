@@ -142,7 +142,7 @@ DMP.prototype.getData = function() {
   return undefined;
 }
 
-signedInt = function(uint8Value1, uint8Value2) {
+var signedInt = function(uint8Value1, uint8Value2) {
   var res = (uint8Value1 << 8) | uint8Value2;
   if(res > 32768) res = res - 65536;
   return res;
@@ -533,7 +533,7 @@ DMP.prototype.initialize = function() {
   setTimeout(initialize1, 30, this);
 }
 
-initialize1 = function(dmp) {
+var initialize1 = function(dmp) {
   dmp.mpu.setSleepEnabled(false);
 
   dmp.mpu.setMemoryBank(0, false, false);
@@ -556,7 +556,7 @@ initialize1 = function(dmp) {
 }
 
 
-initialize2 = function(dmp, xgOffsetTC, ygOffsetTC, zgOffsetTC) {
+var initialize2 = function(dmp, xgOffsetTC, ygOffsetTC, zgOffsetTC) {
   // load DMP code into memory banks
   if (dmp.mpu.writeMemoryBlock(DMP_MEMORY, 0, 0)) {
     console.log("Success! DMP code written and verified.");

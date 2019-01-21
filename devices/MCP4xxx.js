@@ -108,7 +108,7 @@ MCP4xxx.prototype.getStatus = function() {
 		retobj.pot2=(tcon1[1]&0xF0)>>4;
 		retobj.pot3=(tcon1[1]&0x0F);
 	}
-	status=this.CMD(5,3,0)
+	var status=this.CMD(5,3,0)
 	retobj.status=status[1]+((status[0]&3)<<8);
 	retobj.pot0=(tcon0[1]&0xF0)>>4;
 	retobj.pot1=(tcon0[1]&0x0F);

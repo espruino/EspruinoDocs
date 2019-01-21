@@ -79,7 +79,7 @@ exports.connect = function(i2c, callback, options) {
   
   setTimeout(function() {
     // configure the OLED
-    initCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});;
+    initCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});
   }, 50);
 
   // if there is a callback, call it now(ish)
@@ -88,7 +88,7 @@ exports.connect = function(i2c, callback, options) {
   // write to the screen
   oled.flip = function() { 
     // set how the data is to be sent (whole screen)
-    flipCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});;
+    flipCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});
     var chunk = new Uint8Array(C.OLED_CHUNK+1);
 
     chunk[0] = C.OLED_CHAR;

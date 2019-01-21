@@ -65,7 +65,7 @@ var C =         // default C(onfig) for 240x320 TFT w/ touch screen
   _.t  = false;     // true on touch
   _.w  = null;      // watch id for touch down
   _.enable(_.en);   // enable/disable as config after constructed
-}, _p = TRD.prototype;
+}, _p = TouchRD.prototype;
 /** read xy returning this - callback, watch event of touch dowh */
 _p.xy = function(cb, e, _) { _ = _ || this;
   pinMode(_.yn,"input_pulldown"); // prep reading raw y

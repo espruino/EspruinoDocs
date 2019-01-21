@@ -106,7 +106,7 @@ function HTS221(i2c, options) {
   this.T0_OUT = this.r16(0x3C, true);
   this.T1_OUT = this.r16(0x3E, true);
   // Humidity
-  var coefficients = this.r(0x30,2);        
+  coefficients = this.r(0x30,2);        
   this.H0_RH = coefficients[0]/2;
   this.H1_RH = coefficients[1]/2;
   this.H0_T0_OUT = this.r16(0x36, true);
@@ -170,7 +170,7 @@ HTS221.prototype.read = function(callback) {
     var intr = setInterval(function() {
       if (this.r(C.CTRL_STATUS_ADDRESS)&3) {
         clearInterval(intr);
-        callback(get());
+        callback(this.get());
       }        
     }.bind(this), 100);
     return this.get();

@@ -57,18 +57,18 @@ function convert(data) {
   ];
 }
 
-CD4021.prototype.read = function() {
+CD4021BE.prototype.read = function() {
   return convert(this.SPI.send(0x00, this.CS));
 };
 
-CD4021.prototype.readAll = function(cb) {
+CD4021BE.prototype.readAll = function(cb) {
   var self = this;
   setTimeout(function(){
 	self.CS.set();
 	setTimeout(function(){
 	  self.CS.reset();
 	  var all = [];
-	  for(i=0;i<self.CASCATING;i++) {
+	  for(var i=0;i<self.CASCATING;i++) {
 		all.push(convert(self.SPI.send(0x00)));
 	  }
 	  cb(all);

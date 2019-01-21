@@ -190,13 +190,13 @@ NRF.prototype.getAddr = function(reg) {
   return data;
 };
 /** Get the contents of the status register */
-NRF.prototype.getStatus = function(reg) {
+NRF.prototype.getStatus = function() {
   return this.getReg(C.STATUS);
 };
 /** Set the data rate, Either 250000, 1000000 or 2000000 */
 NRF.prototype.setDataRate = function(rate) {
   var rates = { 250000:C.RF_DR_LOW, 1000000:0,2000000:C.RF_DR_HIGH };
-  if (!rate in rates) console.log("Unknown rate");
+  if (!(rate in rates)) console.log("Unknown rate");
   this.setReg(C.RF_SETUP, (this.getReg(C.RF_SETUP)&~(C.RF_DR_LOW|C.RF_DR_HIGH))|rates[rate]);
 };
 /** Set the transmit power - takes a value from 0 (lowest) to 3 (highest) */
@@ -230,7 +230,7 @@ NRF.prototype.send = function(data/* array of length PAYLOAD */) {
   this.spi.send(data, this.CSN);
   digitalWrite(this.CE,1); // enable
   var n = 1000;
-  while ((n--) && !(this.getReg(C.STATUS)&(C.MAX_RT|C.TX_DS))) {}; // waiting
+  while ((n--) && !(this.getReg(C.STATUS)&(C.MAX_RT|C.TX_DS))) { /* waiting */ } 
   if (n<=0) print("TX timeout");
   var success = true;
   if (this.getReg(C.STATUS) & C.MAX_RT) {

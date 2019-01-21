@@ -54,7 +54,7 @@ Espruino is listening.
 
 Close the settings and hit the connect button (yellow disconnected plug icon) and choose
 your TCP entry. You should now be connected to your ESP8266's interpreter. You can type
-`wifi.getStatus()` to confirm. To get a clea interpreter environment, type `reset()`.
+`wifi.getStatus()` to confirm. To get a clear interpreter environment, type `reset()`.
 
 If you do not want to use the IDE, you can also connect using a simple terminal program.
 Just use the ESP8266's hostname or IP address and port 23.

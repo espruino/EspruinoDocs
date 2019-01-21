@@ -347,7 +347,7 @@ MPU6050.prototype.readMemoryBlock = function(dataSize, bank, address) {
     var chunkSize = C.DMP_MEMORY_CHUNK_SIZE;
     var result = new Uint8Array(dataSize);
 
-    for (i = 0; i < dataSize;) {
+    for (var i = 0; i < dataSize;) {
       // determine correct chunk size according to bank position and data size
       chunkSize = C.DMP_MEMORY_CHUNK_SIZE;
       // make sure we don't go past the data size

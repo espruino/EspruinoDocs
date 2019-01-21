@@ -10,8 +10,8 @@ function thermistor(pin,characteristic) {
 
 // Read input and calculate temperature i.e. getTemp(C0,"B")
 thermistor.prototype.getTemp = function() {
-  pin = this.pin;
-  characteristic = this.characteristic;
+  var pin = this.pin;
+  var characteristic = this.characteristic;
 
   var scale = [];
     

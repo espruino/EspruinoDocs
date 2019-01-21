@@ -38,7 +38,7 @@ var C = {
   MAG_CNTL1 : 0x0A
 };
 
-function MPU9250(r,w,rmag,wmag,options) {
+function MPU9250(r,w,rmag,wmag) {
   this.r = r; // read from a register on main MPU
   this.w = w; // write to a register on main MPU
   this.rmag = rmag; // read from a register on magnetometer

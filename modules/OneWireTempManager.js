@@ -151,7 +151,7 @@ OneWireTempManager.prototype.scan = function () {
  * Hook to make custom configuration of the sensor
  * @param {DS18B20} sensor
  */
-OneWireTempManager.prototype.configureSensor = function(sensor){
+OneWireTempManager.prototype.configureSensor = function(_sensor){
 };
 
 /**

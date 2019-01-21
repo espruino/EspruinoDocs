@@ -56,7 +56,7 @@ function sntpTime(options, callback) {
 
     // Listen to incoming messages
 
-    socket.on('message', function(buffer, rinfo) {
+    socket.on('message', function(buffer) {
         buffer = E.toArrayBuffer(buffer);
 
         const received = Date.now();
@@ -117,7 +117,7 @@ function sntpTime(options, callback) {
             finish(err || 'CNS');
         }
     });
-};
+}
 
 
 
@@ -149,7 +149,7 @@ function parseNtpMessage(buffer) {
             T3: transmitTimestamp
         }
     }
-};
+}
 
 
 function parseVerbose(buffer) {
@@ -284,7 +284,7 @@ function toMsecs(dv, offset) {
     let seconds = dv.getUint32(offset);
     let fraction = dv.getUint32(offset + 4);
     return (seconds - 2208988800 + (fraction / Math.pow(2, 32))) * 1000;
-};
+}
 
 
 function fromMsecs(ts, dv, offset) {
@@ -293,7 +293,7 @@ function fromMsecs(ts, dv, offset) {
     const fraction = Math.round((ts % 1000) / 1000 * Math.pow(2, 32));
     dv.setUint32(offset, seconds);
     dv.setUint32(offset + 4, fraction);
-};
+}
 
 
 // Offset singleton
@@ -335,7 +335,7 @@ function sntpOffset(options, callback) {
 
         return callback(null, internals.last.offset);
     });
-};
+}
 
 
 // Now singleton
@@ -352,7 +352,7 @@ function start(options, callback) {
         return;
     }
 
-    sntpOffset(options, function(ignoreErr, offset) {
+    sntpOffset(options, function() {
 
         internals.now.intervalId = setInterval(function() {
 
@@ -361,7 +361,7 @@ function start(options, callback) {
 
         return callback();
     });
-};
+}
 
 
 function stop() {
@@ -372,13 +372,13 @@ function stop() {
 
     clearInterval(internals.now.intervalId);
     internals.now.intervalId = 0;
-};
+}
 
 
 function isLive() {
 
     return !!internals.now.intervalId;
-};
+}
 
 
 function now() {
@@ -391,7 +391,7 @@ function now() {
     }
 
     return now + internals.last.offset;
-};
+}
 
 exports.errors = errors;
 exports.parseVerbose = parseVerbose;

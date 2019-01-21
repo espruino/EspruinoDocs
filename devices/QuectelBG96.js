@@ -2,10 +2,9 @@ var at;
 var socks = [];
 var sockData = ["","","","","",""];
 var MAXSOCKETS = 6; // this could be 12
-var rst;
 var busy = false;
 
-function dbg() {} // don't print anything by default. gprs.debug() enables it
+var dbg = () => {} // don't print anything by default. gprs.debug() enables it
 
 var netCallbacks = {
   create: function(host, port) {
@@ -41,7 +40,7 @@ var netCallbacks = {
     }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
-  accept: function(sckt) {
+  accept: function() {
     // No server
     return -1;
   },
@@ -175,7 +174,6 @@ exports.connect = function(usart, options, callback) {
   }).then(function() { // Wait 60s for registration
     return new Promise(function(resolve, reject) {
       var n = 60;
-      var done = false;
       var i = setInterval(function() {
         at.cmd(options.lte?"AT+CEREG?\r":"AT+CREG?\r",500,function(d) {
           var n = d.split(",")[1]; //1 =connected,5=connected,roaming
@@ -190,7 +188,7 @@ exports.connect = function(usart, options, callback) {
         }
       }, 1000);
     });
- }).then(function(d) {
+ }).then(function() {
      return atcmd("AT+CGATT=1",10000); // attach to GPRS service
   }).then(function() {
     return atcmd("AT+CGREG?"); // Check GPRS registered

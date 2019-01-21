@@ -544,7 +544,7 @@ function closehandler(line) {
   if (colon<0) {
     dbglog("not enough data " + line);
 
-    var colon = line.indexOf("\r");
+    colon = line.indexOf("\r");
     if (colon<0) {
       dbglog("definitively not enough data " + line);
       return line;
@@ -968,7 +968,7 @@ var gprsFuncs = {
           gprsFuncs.init(callback);
         }, 6000);
       }, 200);
-    };
+    }
 
     function pwrkey_pulse(callback) {
       digitalWrite(pwrkey, pwrkey_active_level);
@@ -982,7 +982,7 @@ var gprsFuncs = {
             }
         }, 5000);
       }, 200);
-    };
+    }
 
     // reset state
     for (var i=0;i<MAXSOCKETS;i++) {
@@ -1132,12 +1132,6 @@ var gprsFuncs = {
   },
 };
 
-resetOptions = {
- rst: undefined,
- pwrkey: undefined,
- rst_active_level: 1,
- pwrkey_active_level: 1,
-};
 
 /*
 This is the 'exported' (named function)

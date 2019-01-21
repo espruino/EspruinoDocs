@@ -2,10 +2,9 @@ var at;
 var socks = [];
 var sockData = ["","","","","",""];
 var MAXSOCKETS = 6;
-var rst;
 var busy = false;
 
-function dbg() {} // don't print anything by default. gprs.debug() enables it
+var dbg = () => {} // don't print anything by default. gprs.debug() enables it
 
 var netCallbacks = {
   create: function(host, port) {
@@ -56,7 +55,7 @@ var netCallbacks = {
     }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
-  accept: function(sckt) {
+  accept: function() {
     // No server
     return -1;
   },
