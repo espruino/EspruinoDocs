@@ -326,10 +326,7 @@ var wifiFuncs = {
   },
   /* Set the host name - so it can be accessed via DNS. */
   "setHostname" : function(hostname, callback) {
-    turnOn(MODE.CLIENT, function(err) {
-      if (err) return callback(err);
       at.cmd("AT+CWHOSTNAME="+JSON.stringify(hostname)+"\r\n",500,callback);
-    });
   },
   /* Ping the given address. Callback is called with the ping time
   in milliseconds, or undefined if there is an error */

@@ -36,12 +36,12 @@ function BME280(options, read, write) {
   this.readCoefficients();
 }
 
-// TODO: this does nothing? (same in BME280 and BMP280)
-// BME280.prototype.setPower = function(on) {
-//   var r = this.read(0xF4,1)[0]; // ctrl_meas_reg
-//   if (on) r |= 3; // normal mode
-//   else r &= ~3; // sleep mode
-// };
+BME280.prototype.setPower = function(on) {
+  var r = this.read(0xF4,1)[0]; // ctrl_meas_reg
+  if (on) r |= 3; // normal mode
+  else r &= ~3; // sleep mode
+  this.write(0xF4,r)
+}
 
 /* Convert two UInt8 value into one "signed" number */
 function convS16(data, offs) {

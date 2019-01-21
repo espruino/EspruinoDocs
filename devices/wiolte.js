@@ -1001,8 +1001,8 @@ var gprsFuncs = {
       "lng": ""
     };
     try{
-      latlng.lat = gpsItems.lat.substr(0,2)+"\'"+gpsItems.lat.substr(2,gpsItems.lat.length-3)+"\'\'"+gpsItems.lat.substr(gpsItems.lat.length-1);
-      latlng.lng = gpsItems.lng.substr(0,3)+"\'"+gpsItems.lng.substr(3,gpsItems.lng.length-4)+"\'\'"+gpsItems.lng.substr(gpsItems.lng.length-1);  
+      latlng.lat = gpsItems.lat.substr(0,2)+"'"+gpsItems.lat.substr(2,gpsItems.lat.length-3)+"''"+gpsItems.lat.substr(gpsItems.lat.length-1);
+      latlng.lng = gpsItems.lng.substr(0,3)+"'"+gpsItems.lng.substr(3,gpsItems.lng.length-4)+"''"+gpsItems.lng.substr(gpsItems.lng.length-1);  
     } catch (e) {
       callback("Cannot convert geolocalization data");
     } 

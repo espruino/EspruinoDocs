@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "build": "nodejs ./bin/build.js",
-    "eslint": "./node_modules/.bin/eslint devices/*.js modules/*.js",
+    "eslintdevices": "./node_modules/.bin/eslint devices/*.js",
+    "eslintmodules": "./node_modules/.bin/eslint modules/*.js",
     "start": "nodejs app.js"
   },
   "repository": {

@@ -54,7 +54,6 @@ Pixy.prototype.send = function(data) {
   if (this.outBuf) return -1;
   this.outBuf = data;
   this.outIndex = 0;
-  return len;
 };
 
 /** For internal use - get the start of a frame */
