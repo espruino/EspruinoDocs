@@ -61,6 +61,11 @@ NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device
   return require("ble_uart").connect(device);
 }).then(function(u) {
   uart = u;
+  // Optional - wait 0.5 second for any data in the BLE buffer
+  // to be sent - otherwise it may interfere with the result from
+  // eval
+  return new Promise(function(r) { setTimeout(r, 500); });
+}).then(function() {  
   return uart.eval('E.getTemperature()');
 }).then(function(data) {
   print("Got temperature "+data);
