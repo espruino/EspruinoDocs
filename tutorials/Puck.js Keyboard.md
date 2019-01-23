@@ -114,8 +114,7 @@ NRF.sendHIDReport([2,0,4], function() {
 })
 ```
 
-You can find key codes at http://www.usb.org/developers/hidpage/Hut1_12v2.pdf
-under the `Keyboard/Keypad page`, but for quick reference:
+You can find key codes at https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf under the `Keyboard/Keypad page`, but for quick reference:
 
 * `a`...`z` are 4..26
 * `1`..`9` are 30..38
