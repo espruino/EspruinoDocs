@@ -1,7 +1,7 @@
 /* Copyright (c) 2015 bartmichu. See the file LICENSE for copying permission. */
 function RGBLed(pins, state, color) {
   this.pins = pins;
-  this.inverted=false;
+  this.isAnode=false;
   this.pins.forEach(function (e) {pinMode(e, "output");});
   this.state = typeof state === "undefined" ? true : !!state;
   this.rgbAnalog = [];
@@ -21,7 +21,7 @@ try {clearInterval(this.intervalId);} catch (e) { }
 };
 RGBLed.prototype.setColor = function (color) {
   for (var i = 0, s = -6; i < 3; i += 1, s += 2) {
-    if(!this.inverted){  
+    if(!this.isAnode){  
       this.rgbAnalog[i] = E.clip(parseInt(color.substr(s, 2), 16), 0, 255) / 255;
     }
     else {
@@ -43,7 +43,7 @@ RGBLed.prototype.toggle = function () {
   this._write();
 };
 RGBLed.prototype.invert = function (x) {
-  this.inverted=x;
+  this.isAnode=x;
 };
 RGBLed.prototype.getState = function () {
   return this.state;
