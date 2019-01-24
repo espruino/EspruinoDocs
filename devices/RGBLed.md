@@ -33,6 +33,12 @@ If you want, you can also specify initial color:
 var led = require("RGBLed").connect([C7, C8, C9], true, "#00ff00")
 ```
 
+The same as above but for common anode LED:
+
+```
+var led = require("RGBLed").connect([C7, C8, C9], true, "#00ff00", true)
+```
+
 Start blinking every second:
 
 ```
@@ -54,11 +60,12 @@ led.on()
 Module reference
 ---------------
 
-`require("RGBLed").connect(pins, initialState, initialColor)` - The initialisation function has three parameters, but only the first one is required.
+`require("RGBLed").connect(pins, initialState, initialColor, isAnode)` - The initialisation function has four parameters, but only the first one is required for a common cathode LED.
 
 * pins (Array) - Three pins, for Red, Green, and Blue
 * initialState (Boolean) - Optional. LED is on by default but you can change it with this parameter.
 * initialColor (String) - Optional. Initial color is set to "#FFFFFF" but you can change it with this parameter.
+* isAnode (Boolean) - Set this to true to indicate the LED is a common anode LED. Defaults to false, indicating a common cathode LED.
 
 `function on()` - Turn the Led on using previous color value. Stops the interval operation, if any.
 
