@@ -56,6 +56,7 @@ Current modules are:
 | ![](Font4x5Numeric.js) | [[Font4x5Numeric.js]] | 4x5 variable width font (only `./0123456789`) |
 | ![](Font4x8Numeric.js) | [[Font4x8Numeric.js]] | 4x8 fixed width font (only digits 0-9) |
 | ![](Font5x7Numeric7Seg.js) | [[Font5x7Numeric7Seg.js]] | 5x7 7 segment-style font (only `.0123456789ABCDEF`) |
+| ![](Font7x11Numeric7Seg.js) | [[Font7x11Numeric7Seg.js]] | 7x11 7 segment-style font (only `.0123456789ABCDEF`) |
 | ![](Font6x8.js) | [[Font6x8.js]] | Variable width 8px high font |
 | ![](Font6x12.js) | [[Font6x12.js]] | Variable width 12px high font |
 | ![](Font8x12.js) | [[Font8x12.js]] | Wider variable width 12px high font |
