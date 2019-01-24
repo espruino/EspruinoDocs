@@ -1,7 +1,7 @@
 /* Copyright (c) 2015 bartmichu. See the file LICENSE for copying permission. */
-function RGBLed(pins, state, color) {
+function RGBLed(pins, state, color, isAnode) {
   this.pins = pins;
-  this.isAnode = false;
+  this.isAnode = isAnode;
   this.pins.forEach(function (e) {pinMode(e, "output");});
   this.state = typeof state === "undefined" ? true : !!state;
   this.rgbAnalog = [];
@@ -56,4 +56,4 @@ RGBLed.prototype.strobe = function (ms) {
   }, typeof ms === "undefined" ? 100 : ms);
 };
 
-exports.connect = function (pins, state, color) {return new RGBLed(pins, state, color);};
+exports.connect = function (pins, state, color, isAnode) {return new RGBLed(pins, state, color, isAnode);};
