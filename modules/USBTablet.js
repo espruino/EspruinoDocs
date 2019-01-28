@@ -61,7 +61,7 @@ exports.BUTTONS = {
 
 // Move to absolute location, x and y both between 0 and 1, B for buttons
 exports.send = function(x,y,b) {
-  var rx = Math.clip(x*32767,0,32767)|0;
-  var ry = Math.clip(y*32767,0,32767)|0;
+  var rx = E.clip(x*32767,0,32767)|0;
+  var ry = E.clip(y*32767,0,32767)|0;
   E.sendUSBHID([b&7,rx,rx>>8,ry,ry>>8]);
 };
