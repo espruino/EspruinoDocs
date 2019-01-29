@@ -278,7 +278,7 @@ MPU9250.prototype.initMPU9250 = function() {
     mpu.w(C.CONFIG, 0x03);
 
     // Set sample rate = gyroscope output rate/(1 + SMPLRT_DIV)
-    mpu.w(C.SMPLRT_DIV, Math.clip(Math.round(1000/mpu.samplerate)-1,0,255));
+    mpu.w(C.SMPLRT_DIV, E.clip(Math.round(1000/mpu.samplerate)-1,0,255));
 
     // Set gyroscope full scale range
     // Range selects FS_SEL and AFS_SEL are 0 - 3, so 2-bit values are

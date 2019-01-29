@@ -81,7 +81,7 @@ exports.list = function(g, items) {
         if (item.max!==undefined && item.value>item.max) item.value = item.max;
         if (item.onchange) item.onchange(item.value);
       } else
-        options.selected = 0|Math.clip(options.selected+dir,0,menuItems.length-1);
+        options.selected = 0|E.clip(options.selected+dir,0,menuItems.length-1);
       l.draw();
     }
   };
