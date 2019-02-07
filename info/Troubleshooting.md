@@ -348,6 +348,13 @@ If you're writing code in the right-hand side of the Web IDE, the Web IDE should
 **Note:** If you use `require(...)` on the left-hand side and the module is not already part of Espruino, you may find that you get a 'Module not found' error. In this case, you should add the `require(...)` command to the right-hand pane of the Web IDE and click `Send to Espruino`. This will automatically load the module into Espruino, allowing you to use it from the left hand side.
 
 
+## I get `Uncaught Error: Module XYZ not found`
+
+This could be because the module doesn't exist in [Espruino's list of modules](http://www.espruino.com/Modules) - Espruino doesn't directly support inclusion of modules from NPM, because the vast majority have too many dependencies to be used on an embedded target.
+
+However, if you're trying to use example code for Espruino, chances are it's because you typed the command on the left-hand side of the IDE (see the last FAQ item). The majority of modules are loaded on-demand by the IDE (some are built-in) when code is uploaded, but the left-hand side of the IDE is a REPL - a direct connection to the Espruino device. In that case the IDE doesn't have a chance to intercept the command and automatically upload the module for you.
+
+
 ## I'm using an unofficial board and some of the examples don't work
 
 This could be for several reasons:
