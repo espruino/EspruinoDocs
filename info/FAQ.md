@@ -10,8 +10,8 @@ What is Espruino?
 ---------------------------------------------------------------------------
 
 Espruino is a JavaScript Interpreter for Microcontrollers that makes embedded
-software development quick and easy. The Espruino interpreter is firmware that
-runs on a variety of different microcontrollers, but we also make
+software development quick and easy. The Espruino interpreter is Open Source
+firmware that runs on a variety of different microcontrollers, but we also make
 [Espruino Boards](/Order) that come with the interpreter pre-installed and
 are the easiest devices to get started with.
 
@@ -38,12 +38,34 @@ Is there a forum where I can get help?
 Yes! It's [right here](/Forum)
 
 
+Is Espruino related to ESP8266/ESP32/Espressif?
+-----------------------------------------------
+
+The sharing of `ESP` is just a coincidence - The ESP8266 was released in 2014,
+but [espruino.com](http://www.espruino.com) was created in 2012.
+
+There are builds of the Espruino firmware that run on ESP8266 and ESP32 chips, however
+they are a community effort: Espressif does not support Espruino in any way,
+and no official Espruino boards use ESP8266/ESP32 as a platform.
+
+
 Is Espruino Open Source?
 ---------------------------------------------------------------------------
 
 Yes! It's [all available on GitHub](https://github.com/espruino). The main
 firmware is an MPLv2 License. If you're thinking of using Espruino for
 your business then please get in touch. [There may be mutually beneficial ways to work together](/Business).
+
+
+Why JavaScript?
+---------------
+
+We wanted to use a language that:
+
+* Has the same basic form as C, so simple code appears similar to Arduino code
+* Encourages event-based programming (for lower power consumption)
+* Is widely used, with lots of learning material online
+* Is interpreted, and allows functions to be modified while the interpreter is running (unlike some other languages, JavaScript treats functions as variables)
 
 
 I've created something cool with Espruino, would you like to see it?
@@ -60,7 +82,7 @@ How is Espruino different to Arduino / Raspberry Pi / Embedded Linux?
 * Raspberry Pis are very powerful and flexible, but have a relatively high power consumption in idle, making it difficult to run them off a battery. Raspberry Pi is ~50mA minimum when idling, Puck.js is 0.003mA.
 * You can't reliably schedule actions in real-time on a Raspberry Pi which makes accurate timing difficult
 * Raspberry Pis are good at Video, which Espruino isn't powerful enough to support.
-* Espruino runs JavaScript: this makes it very approachable and easy for beginners. Raspberry Pi on the other hand gives you a choice of programming languages, which is powerful - but daunting.
+* Espruino runs JavaScript: this makes it very approachable and easy for beginners. Raspberry Pi on the other hand gives you a choice of programming languages, which is powerful - but can be daunting.
 * Raspberry Pi lacks Analog IO, which is supported by Espruino.
 * Raspberry Pi requires an SD card containing the operating system (which Espruino doesn't).
 
@@ -122,7 +144,7 @@ To give you a rough idea of speed, the following code will create a 1.5kHz squar
 setInterval("digitalWrite(LED1,l=!l)",1000/3000);
 ```
 
-So it is executing 3000 times a second while allowing you to run other tasks in the background. You can create much faster square waves using the [[PWM]] peripherals.
+So it is executing 3000 times a second while allowing you to run other tasks in the background. You can however create much faster square waves using the [[PWM]] peripherals. For more information, check out the [page on Performance](/Performance).
 
 What isn't Espruino suitable for? Video rendering/processing or analysing large amounts of data. However you can always add [Inline Assembly](/Assembler), [Inline C](/InlineC) or [precompiled JS code](/Compilation) if you need some part of your project to execute very quickly.
 
@@ -133,7 +155,8 @@ How power efficient is Espruino?
 Very. Because it is event based, the Espruino interpreter can put itself to sleep when it knows no action is required.
 
 This means that code written for Espruino will be substantially more power efficient than the same code written in C, unless the C programmer has explicitly added code to enter low power sleep modes.
-Currently, when sleeping, Espruino uses roughly 1/3 of the power that it does when it is busy, however when 'deep sleeping' it can use as little as 20 microamps - see the [[Power Consumption]] page for more information.
+
+[[Power Consumption]] depends on the board you're using, but for a device like [Puck.js](/Puck.js) power consumption when idle can be as little as 3uA (0.000003 Amps).
 
 
 How much power can I supply from Espruino's Pins?
@@ -301,6 +324,7 @@ function hello()
 
 The Web IDE automatically replaces newline characters with `Alt-Enter` in code when it sends it to Espruino from the editor on the right-hand side (so you can write in whatever coding style you want in the right-hand editor window), however we'd still recommend that you use the same coding style as the examples in case you do want to copy+paste a single function into the left-hand side for debugging.
 
+
 What is efficient and what isn't? How can I write the fastest code?
 ---------------------------------------------------------------------------
 
@@ -355,10 +379,11 @@ Yes. Espruino boards use relatively standard ST Microelectronics or Nordic Semic
 Instead of replacing the Espruino JavaScript interpreter you can also transcompile other languages to JavaScript, or can write your own extensions to it using C and C++. There's some more information on that [here](https://github.com/espruino/Espruino/blob/master/libs/README.md).
 
 
-Got a question about Espruino?
+Will you be showing Espruino off an any events?
 ---------------------------------------------------------------------------
 
-Check out our [[Forum]].
+Yes! Check out out [Events Page](/Events) to get an idea of events we'll be at,
+and those we have attended in the past.
 
 
 I want to write an article on Espruino. Can I get high resolution Pictures?
