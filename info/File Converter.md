@@ -4,7 +4,7 @@ Converting files to Strings
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/File+Converter. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: File,String,Conversion,Internet,CC3000
+* KEYWORDS: File,String,Conversion,Internet,Tools
 * USES: Internet,CC3000
 
 This page helps you to convert a file into a quoted JavaScript string of bytes.
@@ -36,12 +36,12 @@ Base64 encoded
       var reader = new FileReader();
       reader.onload = function(event) {
         var bytes = new Uint8Array(event.target.result);
-        
+
         if (bytes.length>(20*1024)) {
           $("#resultQuoted").val("File too long - must be less than 20kB");
         } else {        
           var str = "";
-          for (var i=0;i<bytes.length;i++) { 
+          for (var i=0;i<bytes.length;i++) {
             var ch = bytes[i];
             if (ch==34) str += "\\\"";
             else if (ch==9) str += "\\t";
@@ -51,7 +51,7 @@ Base64 encoded
             else if (ch>=32 && ch<127)
               str += String.fromCharCode(ch);
             else { // hex code
-              if (ch<64 && (i+1>=bytes.length || (bytes[i+1]<48/*0*/ || bytes[i+1]>55/*7*/))) 
+              if (ch<64 && (i+1>=bytes.length || (bytes[i+1]<48/*0*/ || bytes[i+1]>55/*7*/)))
                 str += "\\"+ch.toString(8/*octal*/); // quick compactness hack
               else
                 str += "\\x"+(ch+256).toString(16).substr(-2); // hex
@@ -59,7 +59,7 @@ Base64 encoded
           }
           var qStr = '"'+str+'"';
           var b64Str = 'atob("'+btoa(String.fromCharCode.apply(null, bytes))+'")';
-          
+
           $("#sizeQuoted").html(qStr.length+" Characters");
           $("#sizeBase64").html(b64Str.length+" Characters");
           $("#resultQuoted").val(qStr);
@@ -69,4 +69,3 @@ Base64 encoded
       reader.readAsArrayBuffer(event.target.files[0]);
     });
 </script>
-

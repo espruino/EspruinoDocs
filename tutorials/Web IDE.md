@@ -4,7 +4,7 @@ Espruino Web IDE
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Web+IDE. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Web IDE,Editor,IDE,Install
+* KEYWORDS: Web IDE,Editor,IDE,Install,Tools
 * USES: Espruino Board,Puck.js,Espruino Pico,Pico,Espruino WiFi
 
 The Web IDE is the preferred way to program Espruino. It's got a syntax-highlighted editor as well as support for dynamically loading modules and for upgrading Espruino's Firmware. You might want to check out [other ways of programming Espruino devices](/Programming).
