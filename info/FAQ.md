@@ -242,6 +242,14 @@ The left-hand side is a simple terminal. When Espruino is plugged in, you are co
 The right-hand side is a JavaScript editor. It's syntax highlighted and has code completion, but what you write is only uploaded to Espruino when you click the `Send to Espruino` button. See below:
 
 
+How do I copy code out of the Web IDE's REPL?
+---------------------------------------------
+
+Click and drag over any text you want to copy as if you're highlighting and then release the mouse button. It will be automatically copied to the clipboard.
+
+This has to be different to the editor on the right-hand side (highlight, then `Ctrl-C`/`Cmd-C`) because in the REPL `Ctrl-C` is used to break out of any currently running code.
+
+
 When is code executed?
 ---------------------------
 
