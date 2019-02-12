@@ -156,6 +156,11 @@ momentarily.
 An interrupt-based display scanning library may be built into Espruino to
 fix this in the future, but it isn't available yet.
 
+Uses
+----
+
+* APPEND_USES: LEDMatrix
+
 
 Buying
 ------
