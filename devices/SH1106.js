@@ -84,6 +84,12 @@ exports.connect = function(i2c, callback, options) {
 	// set contrast, 0..255
 	oled.setContrast = function(c) { i2c.writeTo(addr, 0, 0x81, c); };
 
+    // set off
+    oled.off = function() { i2c.writeTo(addr, 0, 0xAE); }
+
+    // set on
+    oled.on = function() { i2c.writeTo(addr, 0, 0xAF); }
+
     // return graphics
     return oled;
 };
@@ -128,6 +134,20 @@ exports.connectSPI = function(spi, dc,  rst, callback, options) {
 		if (cs) cs.set();
 	};
 
+    // set off
+    oled.off = function() { 
+      if (cs) cs.reset();
+      spi.write(0xAE,dc);
+      if (cs) cs.set();
+    };
+
+    // set on
+    oled.on = function() { 
+      if (cs) cs.reset();
+      spi.write(0xAF,dc);
+      if (cs) cs.set();
+    };
+    
     // return graphics
     return oled;
 };
