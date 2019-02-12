@@ -7,7 +7,7 @@ Tiny Word Clock
 * KEYWORDS: Tutorials,Clock,Time,Word Clock
 * USES: MDBT42Q,LEDMatrix
 
-[!Tiny Word Clock](Tiny Word Clock/wordclock.jpg)
+![Tiny Word Clock](Tiny Word Clock/wordclock.jpg)
 
 This video shows you how to make a Tiny Word clock using a simple 8x8 LED Matrix:
 
@@ -16,6 +16,8 @@ This video shows you how to make a Tiny Word clock using a simple 8x8 LED Matrix
 
 You'll need
 -----------
+
+![word clock parts](Tiny Word Clock/parts.jpg)
 
 * An 8x8 [LED Matrix](/LED+Matrix)
 * A [MDBT42Q Breakout](/MDBT42Q) board
@@ -26,7 +28,15 @@ You'll need
 Wiring Up
 ---------
 
-Just connect the LED matrix to **any** available IO pins.
+Just connect the LED matrix to **any** available IO pins. For the MDBT42Q
+it's best to position the board over the very top pins on one side, and then
+push inwards. After a few attempts on each side you should have bent the pins
+enough that both sides will fit onto the MDBT42Q.
+
+![word clock assembly](Tiny Word Clock/assembly.jpg)
+
+On the board in the pictures, we've also pushed the PCB downwards so that
+it doesn't stick out of the side of the LED matrix.
 
 As in the video, if your LED Matrix is different, you used different pins,
 or wired it in a different orientation, check out the [LED Matrix wiring guide](/LED+Matrix#wiring)
@@ -36,7 +46,7 @@ for some code that'll work out which wire goes where.
 Labelling the display
 ---------------------
 
-[!label](Tiny Word Clock/label.png)
+![printed word clock label](Tiny Word Clock/label.png)
 
 The PDF file that was printed for the word clock [is available here](/files/wordclock_8x8_label.pdf).
 
