@@ -75,6 +75,25 @@ NRF.on('connect',function(addr) {
 Other Puck.js devices will tend to have an address of the form `"aa:bb:cc:dd:ee:ff random"`,
 but PCs and phones will generally have the form `"aa:bb:cc:dd:ee:ff public"`
 
+To find out which MAC address to use, you can upload this code:
+
+```
+devices = [];
+NRF.on('connect',function(addr) {
+  devices.push(addr);
+});
+// now connect a few times and see what's in 'devices' using the left-hand side
+```
+
+**NOTE:** New versions of Android can perform 'MAC randomisation' where they
+use a random MAC address each time they connect - meaning this is impossible
+to use in those cases.
+
+**NOTE:** MAC addresses can be modified so this is not 100% secure. However
+the chances of someone *guessing* the correct MAC address without being in the
+area to snoop on a connection while it is active are extemely low.
+
+
 ## Disable the BLE UART
 
 If you don't need the user to be able to access the BLE UART, we'd suggest
@@ -145,6 +164,25 @@ devices. Once connected, you can initiate the bonding procedure with the
 [`startBonding`](http://www.espruino.com/Reference#l_BluetoothRemoteGATTServer_startBonding)
 method, and can check the status of the connection with
 [`getSecurityStatus`](http://www.espruino.com/Reference#l_BluetoothRemoteGATTServer_getSecurityStatus).
+
+
+## Passkey/Pin pairing
+
+As of Espruino 2v02 (or 'cutting edge' builds), you can set a static
+Passkey for Espruino:
+
+```
+NRF.setSecurity({passkey:"123456", mitm:1, display:1});
+```
+
+When connecting, the central device will then request a passkey, and
+the connection will fail if it isn't correct.
+
+When Espruino is acting as central connecting to another device you can
+enter a passkey using the `BluetoothDevice.passkeyRequest` event and
+`BluetoothDevice.sendPasskey` method (as long as `NRF.setSecurity`
+contains `keyboard:1`).
+
 
 ## Disable the `dump()` and `E.dumpStr()` commands
 
