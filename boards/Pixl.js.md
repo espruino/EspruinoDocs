@@ -68,6 +68,7 @@ Power Consumption
 
 All power figures below are with the LCD on:
 
+* No advertising, `Pixl.setLCDPower(0)` - 20uA
 * Advertising - 320uA
 * Connected via BLE - 500uA
 * Backlight on - 5mA
@@ -75,7 +76,7 @@ All power figures below are with the LCD on:
 * Backlight on, 100% CPU usage running JavaScript - 10mA
 * Using NRF.findDevices to scan for devices - 12mA
 
-This means that when running off a CR2032 battery you could expect around 20 days of battery life with light JavaScript usage and no backlight.
+This means that when running off a CR2032 battery you could expect around 20 days of battery life with light JavaScript usage, LCD on, and no backlight. Life can be significantly improved by turning the LCD off when it is not needed.
 
 Pixl.js sends advertising data without ever executing JavaScript. To get the best power consumption, make sure your code executes as rarely as possible.
 
@@ -173,7 +174,11 @@ Information
 * [SVG Vector drawing of Pixl.js with laser-cut case](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.svg)
 
 <a name="onboard"></a>LCD Screen
---------------------------------
+---------------------------------
+
+**NOTE:** When you get it, your Pixl has a protective film over the front of
+the LCD. It may appear scuffed of scratched, but can easily be peeled off
+from one corner.
 
 Pixl.js's displays the REPL (JavaScript console) by
 default, so any calls like `print("Hello")` or `console.log("World")` will output
@@ -222,6 +227,13 @@ the following commands:
 Bluetooth.on("data",d=>Terminal.inject(d));
 Terminal.setConsole();
 ```
+
+### Power Usage
+
+When on, the LCD draws around 200uA (0.2mA). You can turn the LCD off
+to save power with [Pixl.setLCDPower(true/false)](/Reference#l_Pixl_setLCDPower)
+if you need to. When resuming, the LCD will be refreshed to display what was
+previously on the screen.
 
 
 <a name="onboard"></a>On-board LED, Buttons and GPIO
@@ -321,7 +333,13 @@ Firmware Updates
 Troubleshooting
 ---------------
 
-Please check out the [Bluetooth Troubleshooting](Troubleshooting+BLE) or [General Troubleshooting](/Troubleshooting) pages.
+For more answers please check out the [Bluetooth Troubleshooting](Troubleshooting+BLE) or [General Troubleshooting](/Troubleshooting) pages.
+
+### My Pixl's screen was scratched when I got it!
+
+The Pixl comes with a protective film over the LCD.  The film itself is very
+soft which means it picks up scratches during manufacture and packing, however
+it is easy to peel off from one corner and will reveal a shiny new LCD.
 
 
 Other Official Espruino Boards
