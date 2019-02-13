@@ -11,34 +11,35 @@ Introduction
 
 Often you might want to keep the current time - either for a clock, or maybe for Data Logging.
 
-Espruino contains its own Real-Time Clock which allows it to keep time even when it is saving power by being in Deep Sleep. **Revision 1v4 and later contain their own accurate 32kHz Oscillator** but revision 1v3 (the KickStarter board) uses an internal 40kHz oscillator. Unfortunately the 40kHz oscillator isn't very accurate (+/- 1%) so over the course of a day the time may drift off.
+All Espruino boards contain their own Real-Time Clock which allows them to keep time even when it is saving power by being in Deep Sleep. However, depending on the board you have, the accuracy of the clock can vary wildly:
 
-If you're serious about keeping accurate time **and you have a revision 1v3 board**, you'll want to solder on a 32kHz watch crystal which will be significantly more accurate. If you have a revision 1v4 everything works already, and you can skip right to the **Software** section below.
+| Board | Oscillator | Accuracy |
+|-------|------------|----------|
+| Espruino [Original](/Original) 1v4+ | External Crystal | Good |
+| Espruino [Original](/Original) 1v3 | Internal RC | 1% |
+| Espruino [Pico](/Pico) | Internal RC | 10% |
+| Espruino [WiFi](/WiFi) | External Crystal | Good |
+| [Puck.js](/Puck.js) | Internal RC w. calibration | Good |
+| [Pixl.js](/Pixl.js) | Internal RC w. calibration | Good |
+| [MDBT42Q](/MDBT42Q) | Internal RC w. calibration | Good |
 
-When you use the 32kHz internal oscillator, please note that pin C15 on the pin header will not be usable for normal IO.
+If you have an Espruino Original or Pico without a crystal it is possible to add one - see below.
 
 **Note:** You could also use an external module like the [[DS3231]].
 
-You'll Need
-----------
+Adding Crystals
+-------------------
 
-* One [Espruino Board](/Original)
-* A 32Khz Watch Crystal
-
-Buying a Crystal
-----------------
+### Espruino Original
 
 ![32.768kHz crystal](Clocks/crystal.jpg)
 
-You can get these from pretty much any electronic component supplier, for instance:
+You can get crystals from pretty much any electronic component supplier, for instance:
 
 * [Farnell](http://uk.farnell.com/multicomp/mcrj332768f1220how/crystal-32-768khz-12-5pf-thru-hole/dp/1701100)
 * [eBay](http://www.ebay.com/sch/i.html?_nkw=Crystal+32.768)
 
 You need something that looks like the above - roughly 8mm long and 2mm wide, with 2 very thin wires. They're not very expensive - less than £1 each usually, however you may also be able to scavenge them from old Quartz watches.
-
-Wiring Up
---------
 
 ![32.768kHz crystal position](Clocks/crystalpos.jpg)
 
@@ -49,41 +50,29 @@ Wiring Up
 
 ![Finished crystal](Clocks/final.jpg)
 
-**Note:** The other four empty pads nearby are for two capacitors for the crystal. These crystals require around 12pF for each capacitor - however in reality there is enough capacitance in the PCB, and the crystal will work perfectly well without them.
+The other four empty pads nearby are for two capacitors for the crystal. These crystals require around 12pF for each capacitor - however in reality there is enough capacitance in the PCB, and the crystal will work perfectly well without them.
+
+### Espruino Pico
+
+There are 6 empty pads on the end of the board opposite the USB connector. You'll need:
+
+* An Abracon ABS06-107 Crystal
+* 2x 4pF 0603 Capacitors
+
+The crystal goes on the 2 big pads, and the two capacitors go on the small ones.
+
+If you have access to a hot air rework station and some tweezers then that's
+definitely the easiest way to install the crystal. It is possible to use a
+soldering iron with a thin tip, but it will take a lot of time and care.
+
 
 Software
 -------
 
 Nothing is needed! Just plug your Espruino in, and the Crystal will automatically be detected and used!
 
-You can either use `getTime()` to get the time since the system started, or you can use setInterval to accurately schedule a callback. If the system is under load the callback may not be called at exactly the correct time, however over an hour a 1000ms callback will be called exactly 3600 times.
+It's recommended that you turn on `Set Current Time` in the Web IDE's communications settings. Then, when you upload code the correct time (and timezone) will be set, and `new Date()` will return a [Date object](http://www.espruino.com/Reference#Date) which can be queried for the current time.
 
-This allows you to keep track of time as follows:
+To set the time manually you can just use the `setTime(...)` function with the number of seconds since 1970.
 
-```
-var time = {
-  hours : 1,
-  mins : 0,
-  secs : 0
-};
-
-
-function onSecond() {
-  time.secs++;
-  if (time.secs>=60) {
-    time.secs = 0;
-    time.mins++;
-    if (time.mins>=60) {
-      time.mins = 0;
-      time.hours++;
-      if (time.hours>=24) {
-        time.hours = 0;
-      }
-    }
-  }
-}
-
-setInterval(onSecond,1000);
-```
-
-However you can also use the [[clock]] and [[date]] modules, which will properly keep track of the time and date for you.
+However you can also use the [[clock]] module which will keep track of time independent of the system time.
