@@ -9,7 +9,9 @@ Tiny Word Clock
 
 ![Tiny Word Clock](Tiny Word Clock/wordclock.jpg)
 
-This video shows you how to make a Tiny Word clock using a simple 8x8 LED Matrix:
+Word clocks display the current time by lighting up letters that spell out
+the time in words. This tutorial shows you how to make a Tiny Word clock using
+a cheap 8x8 LED Matrix and an Espruino microcontroller board:
 
 [[http://youtu.be/NL0ehzrf1qQ]]
 
@@ -35,12 +37,17 @@ enough that both sides will fit onto the MDBT42Q.
 
 ![word clock assembly](Tiny Word Clock/assembly.jpg)
 
-On the board in the pictures, we've also pushed the PCB downwards so that
+On the board in the pictures, I've also pushed the PCB downwards so that
 it doesn't stick out of the side of the LED matrix.
 
 As in the video, if your LED Matrix is different, you used different pins,
 or wired it in a different orientation, check out the [LED Matrix wiring guide](/LED+Matrix#wiring)
 for some code that'll work out which wire goes where.
+
+**NOTE:** It's not good practice to connect LEDs directly to microcontroller
+pins like we have here, **however** because the display is multiplexed we're
+only turning LEDs on for a tiny amount of time, which is extremely unlikely
+to cause damage to your LEDs or microcontroller.
 
 
 Labelling the display
