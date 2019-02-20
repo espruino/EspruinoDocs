@@ -5,6 +5,7 @@ Tips and Tricks
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Tips+and+Tricks. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tips,Tricks,Forum,Useful,Hints
+* LIST_LINKS_AS_KEYWORDS
 
 [Espruino's Forums](http://forum.espruino.com) have thousands of post with
 useful information, but it can sometimes be hard to find the posts you need.

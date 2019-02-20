@@ -23,7 +23,8 @@ Documentation files are written [GitHub Markdown](https://help.github.com/articl
     * APPEND_JSDOC: filename         ; Append JavaScript documentation based on the JS in the given file
     * APPEND_PINOUT: boardname       ; Append Pinout for the given board
     * BUYFROM: normalprice,bulkprice,link1,link2  ; Append a floating 'buy from' window
-    * APPEND_TOC                     ; Append a table of contents made from H1/H2/H3
+    * APPEND_TOC                     ; Append a table of contents made from H1/H2/H3 (and add them as keywords)
+    * LIST_LINKS_AS_KEYWORDS         ; Add lists of links `* [...](...)` as keywords
 
 It also looks for a title (second line, after copyright notices) which it uses to create the title of the HTML page (and of links to it).
 

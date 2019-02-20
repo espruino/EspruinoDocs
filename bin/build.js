@@ -278,10 +278,15 @@ function createKeywordsJS(keywords) {
       var path = data["path"].split("#")[0];
       var hash = data["path"].split("#")[1];
       hash = hash?"#"+hash:"";
-      var f = (path.substr(0,1)=="/") ? path : htmlLinks[path];
-      if (f==undefined) {
-        WARNING("No file info for "+data["path"]);
-        process.exit(1);
+      var f;
+      if (path.startsWith("http:") || path.startsWith("https:")) {
+        f = path;
+      } else {
+        f = (path.substr(0,1)=="/") ? path : htmlLinks[path];
+        if (f==undefined) {
+          WARNING("No file info for "+data["path"]);
+          process.exit(1);
+        }
       }
       kwd.push({ title : data["title"],
                  file : f+hash });
@@ -622,13 +627,35 @@ markdownFiles.forEach(function (file) {
      }
    }
 
+   // Check for LIST_LINKS_AS_KEYWORDS and add any links in lists `* [...](...)
+   var listLinksAsKeywordsIdx = contentLines.indexOf("* LIST_LINKS_AS_KEYWORDS");
+   if (listLinksAsKeywordsIdx>=0) {
+     contentLines.splice(listLinksAsKeywordsIdx,1); // remove first line (copyright)
+     for (i in contentLines) {
+       var match;
+       match = contentLines[i].match(/^\* \[(.*)\]\((.*)\)$/);
+       if (match!=null) {
+         var description = match[1];
+         var link = match[2];
+         var pageInfo = {
+           path : link,
+           title : description,
+         };
+         fileTitles[pageInfo.path] = pageInfo.title;
+         htmlLinks[link] = link;
+         addToList(fileInfo.keywords, description, pageInfo);
+       }
+     }
+   }
+
    contentLines.splice(0,1); // remove first line (copyright)
    var title = contentLines[0];
    contents = contentLines.join("\n");
 
-   // Get Markdown
+   // ========================================================================== Get Markdown
    if (PROCESS_INFERENCE) inferMarkdownFile(file, contents);
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
+   // ==========================================================================
 
    // Append tutorial links
    appendMatching("APPEND_KEYWORD", fileInfo.keywords, "");

@@ -28,7 +28,7 @@ done
 
 cd $DIR
 
-echo "Geting file modification times..."
+echo "Getting file modification times..."
 git ls-tree -r --name-only HEAD | xargs -I{} git log -1 --format="%at {}" -- {} | sort > ordering.txt
 # Built reference docs and references.json
 nodejs bin/build.js $BUILDARGS || exit 1
