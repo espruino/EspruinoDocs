@@ -28,6 +28,8 @@ to a [Servo Motor](/Servo Motors). There are two main ways you might want to
 communicate - sending commands, and streaming data. See the two headings below:
 
 
+[[https://youtu.be/lWjuMEIrmY8]]
+
 Sending Commands (as JavaScript)
 -----------------------------------
 
@@ -192,6 +194,8 @@ Streaming Data
 
 In this case, we don't want to send a command, but instead to send
 a stream of data to Espruino.
+
+[[https://youtu.be/9y-kHxamDec]]
 
 ### Receiver (Bluetooth Peripheral Device)
 
