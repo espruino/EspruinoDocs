@@ -24,9 +24,15 @@ extremely inefficient. If the receiver needs to run off a battery you
 might want to consider using a connection as well.
 
 In this example we're going to use an [MDBT42Q breakout board](/MDBT42Q) attached
-to a [Servo Motor](/Servo Motors). There are two main ways you might want to
-communicate - sending commands, and streaming data. See the two headings below:
+to a [Servo Motor](/Servo Motors). There are a few main ways you might want to
+communicate:
 
+* Sending commands as JavaScript code
+* Sending commands to a custom Bluetooth LE Characteristic
+* Streaming data to a custom Bluetooth LE Characteristic
+
+Check out the headings for more information. The video below covers
+sending commands, and the one further down the page covers streaming.
 
 [[https://youtu.be/lWjuMEIrmY8]]
 

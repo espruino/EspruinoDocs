@@ -47,7 +47,8 @@ In Puck.js 1v92 You can also supply an array of advertising data:
 ```
 NRF.setAdvertising([
   require("ble_ibeacon").get(...),
-  require("ble_eddystone").get(...)
+  require("ble_eddystone").get(...),
+  {} // this will add a 'normal' advertising packet showing name/etc  
   ], {interval:100});
 ```
 

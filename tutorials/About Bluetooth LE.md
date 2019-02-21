@@ -70,6 +70,41 @@ As a result it's recommended that you don't leave a connection to Puck.js open,
 but only connect when you need to send or receive commands.
 
 
+UUIDs
+-----
+
+Because Bluetooth LE tries to reduce the amount of data used as much as possible
+to save power, UUIDs (Universally Unique IDs) are used instead of actual names.
+UUIDs are actually just numbers.
+
+ These can be:
+
+* 16 bit - Use only those defined by [the Bluetooth SIG](https://www.bluetooth.com/specifications/gatt/services). You can get your own if you pay.
+* 32 bit - SIG-approved only, don't appear to be used much and aren't covered here.
+* 128 bit - Free to use, no need to register, as long as you're using a truly
+random UUID - no 'vanity' UUIDs! The chances of it being the same as someone else's are tiny so they are treated as Unique.
+
+### 16 bit UUIDs
+
+You can define these in Espruino either as numbers like `0x180D` or as Strings like `"180D"`.
+
+### 128 bit UUIDs
+
+These are always defined as Strings in Espruino, eg `"6e400001-b5a3-f393-e0a9-e50e24dcca9e"`. The dashes are optional but recommended for ease of reading.
+
+In Bluetooth, 128 bit UUIDs can be re-used. For instance if you're defining something custom you should:
+
+* Create a random 128 bit UUID, either using an online tool or by running something like `date | md5sum` on a Linux PC. For example `98dcea57f6874f75c1f8290ebf29da57`.
+* Add dashes for readability: `98dcea57-f687-4f75-c1f8-290ebf29da57`
+* Replace the second group of 4 digits with `0001`, so `98dc0001-f687-4f75-c1f8-290ebf29da57`
+* For each new UUID you need, just increment the number in that group, eg. `98dc0002-f687-4f75-c1f8-290ebf29da57`
+
+When you do this, only a single UUID has to be transferred over Bluetooth and any subsequent UUIDs use only as much space as a 16 bit UUID would have.
+
+**NOTE:** 16 bit UUIDs are actually 128 bit UUIDs of the form `0000xxxx-0000-1000-8000-00805F9B34FB`
+where `xxxx` is the 16 bit UUID.
+
+
 Services and Characteristics
 ----------------------------
 
@@ -77,12 +112,8 @@ Once a Central device is connected, it gets access to the [Services](https://www
 [characteristics](https://www.bluetooth.com/specifications/gatt/characteristics) that a Peripheral (eg. Puck.js) has. This is called [GATT - the
 Generic Attribute Profile](https://www.bluetooth.com/specifications/generic-attributes-overview).
 
-We give services and characteristics names, but they are defined by a
-Universally Unique ID (UUID). You get 16 bit ones which are unique because
-[the Bluetooth SIG defines them](https://www.bluetooth.com/specifications/gatt/services),
-and you get 128 bit ones which are free to use and unique because as long as
-you come up with a random one, the chances of it being the same as someone
-else's are minute.
+We give services and characteristics names, but they are defined in the
+microcontroller by a UUID.
 
 Services are really just groups of Characteristics, and each characteristic
 represents one type of data. There are 3 main operations that can be performed
@@ -107,6 +138,8 @@ an idea what they're like.
 
 **Note:** See [`NRF.setServices(...)`](/Reference#setServices) for examples
 of how to set up services and characteristics on Puck.js.
+
+
 
 
 The Puck's Services

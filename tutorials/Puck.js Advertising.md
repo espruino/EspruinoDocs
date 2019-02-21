@@ -17,6 +17,12 @@ UART service (or a custom one!) - most devices (PC, Mac, Linux, Android) can onl
 There's [more information on what this all means here](/About+Bluetooth+LE) but we're going
 to focus on Advertising here.
 
+For tips on using a Bluetooth connection see:
+
+* [Connecting from another Espruino Device](/BLE+Communications)
+* [Connecting from a Web Page with Web Bluetooth](/Puck.js+Web+Bluetooth)
+* [Connecting via Node.js or Python](/Interfacing#bluetooth-le)
+
 You could use [our Hub software](https://github.com/espruino/EspruinoHub) to
 convert advertising data to MQTT where [you can use Node-RED](/Puck.js+Node-RED) to
 work with it as well, but this tutorial will focus on writing your own host application.

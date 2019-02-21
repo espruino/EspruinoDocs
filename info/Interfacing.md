@@ -20,8 +20,10 @@ If you're sending a lot of commands you can either turn off echo permanently
 by sending the command `"echo(0)\n"`, or you can turn it off just for a line
 by sending character code 16 `"\x10"` as the first character on the line - eg. `"\x10LED.toggle()\n"`.
 
-USB
-----
+* APPEND_TOC
+
+USB / Serial
+------------
 
 ### Windows
 
@@ -131,6 +133,20 @@ tar xfvz pyserial-2.7.tar.gz
 cd pyserial-2.7
 sudo python setup.py install
 ```
+
+Bluetooth
+---------
+
+**For Bluetooth LE as used on Puck.js/Pixl.js/MDBT42Q, see the next heading**
+
+You can add an HC-05 or HC-06 [[Bluetooth]] module to the back of an Espruino [[Original]],
+or can wire one up to the default UART pins of any Espruino board in order to
+communicate with the board wirelessly.
+
+In this case, the Bluetooth Module behaves as a wireless serial port. Once
+you pair with your Operating System, a new Serial Port device will appear
+and you can connect exactly as you would have done for Serial/USB above.
+
 
 Bluetooth LE
 -------------
