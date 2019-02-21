@@ -44,6 +44,13 @@ var ESPRUINO_DIR = path.resolve(BASEDIR, "../Espruino");
 var FUNCTION_KEYWORD_FILE = path.resolve(BASEDIR, "../Espruino/function_keywords.js");
 var KEYWORD_JS_FILE = path.resolve(HTML_DIR, "keywords.js");
 
+var warnings = [];
+function WARNING(s) {
+  console.log("WARNING: "+s);
+  warnings.push(s);
+}
+
+
 var marked = require('marked');
 // Set default options except highlight which has no default
 var markedOptions = {
@@ -81,9 +88,26 @@ if (fs.existsSync(BASEDIR+"/ordering.txt")) {
     fileOrdering[line] = linenumber;
   });
 } else {
-  console.log("WARNING: No 'ordering.txt' - not ordering tutorials");
+  WARNING("No 'ordering.txt' - not ordering tutorials");
   console.log(' - Generate with: git ls-tree -r --name-only HEAD | xargs -I{} git log -1 --format="%at {}" -- {} | sort > ordering.txt');
 }
+
+// Get list of files that have been renamed
+var renamedFiles = {};
+if (fs.existsSync(BASEDIR+"/RENAMED.csv")) {
+  fs.readFileSync(BASEDIR+"/RENAMED.csv").toString().split("\n").map(function(line) {
+    if (line[0]=="#") return;
+    var csv = line.trim().split(",");
+    if (csv=="") return;
+    if (csv.length==2) {
+      renamedFiles[csv[0]] = csv[1];
+    } else WARNING("RENAMED.csv: Badly formatted line "+JSON.stringify(line));
+  });
+} else {
+  console.log("ERROR: No 'RENAMED.csv'");
+  process.exit(1);
+}
+
 
 if (OFFLINE) {
   // if offline, copy the offline.css file in
@@ -91,9 +115,6 @@ if (OFFLINE) {
     fs.createWriteStream(path.resolve(HTML_DIR, "offline.css")));
 }
 
-function WARNING(s) {
-  console.log("WARNING: "+s);
-}
 
 function createSafeFilename(filename) {
   filename = filename.replace(/\//g,"_");
@@ -207,8 +228,8 @@ function grabInfo(markdownFiles, preloadedFiles) {
    var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(BASEDIR+"/"+file).toString();
 //   console.log(file,contents.length);
    var contentLines = contents.split("\n");
-   if (contentLines[0].substr(0,15)!="<!--- Copyright") WARNING(file+" doesn't have a copyright line");
-   if (contentLines[1].trim()=="" || contentLines[2].substr(0,3)!="===") WARNING(file+" doesn't have a title on the first line");
+   if (!contentLines[0].match(/<!--+ Copyright/)) WARNING(file+": No copyright line");
+   if (contentLines[1].trim()=="" || contentLines[2].substr(0,3)!="===") WARNING(file+": No title on the first line");
    var fileInfo = {
      path : file,
      title : contentLines[1], // second line
@@ -324,7 +345,7 @@ function handleImages(file, contents) {
           // now rename the image in the tag
           contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
         } else {
-          WARNING(file+": Image '"+imagePath+"' does not exist");
+          WARNING(file+": Image '"+imagePath+"' does not exist ("+tagStart+","+tagMid+","+tagEnd+")");
         }
       }
     }
@@ -358,9 +379,8 @@ exampleFiles.forEach(function(exampleFile) {
     markdownFiles.push(exampleFile);
     preloadedFiles[exampleFile] = newFile;
 
-  } else WARNING(exampleFile+" has no comment block at the start");
+  } else WARNING(exampleFile+": no comment block at the start");
 });
-
 
 
 //console.log(markdownFiles);
@@ -368,17 +388,42 @@ var fileInfo = grabInfo(markdownFiles, preloadedFiles);
 //console.log(fileInfo.keywords);
 grabWebsiteKeywords(fileInfo.keywords);
 
-htmlFiles = {};
-htmlLinks = {};
+htmlFiles = {}; // filename -> file on disk with full path (for copy/etc)
+htmlLinks = {}; // filename -> actual URL link
+knownPageLinks = []; // pages that we know exist on this site
+// Go through all referenced files on the main Espruino site
+// TODO: in offline mode we should detect these links and go direct
+"Order Search Reference Download binaries".split(" ").forEach(function(file) {
+  var htmlLink = file + (OFFLINE?".html":"");
+  knownPageLinks.push((OFFLINE?"":"/")+htmlLink);
+});
+// Add JS files to our known files list
+["devices","modules","boards"].forEach(function(moduledir) {
+  fs.readdirSync(path.resolve(BASEDIR,moduledir)).filter(function(file) {
+    return file.substr(-3) == ".js";
+  }).forEach(function(file) {
+    knownPageLinks.push("/modules/"+file);
+  });
+});
+// Go through all Markdown files
 markdownFiles.forEach(function (file) {
   var htmlFile = file.substring(file.lastIndexOf("/")+1);
   htmlFile = htmlFile.replace(/ /g,"+");
   htmlFile = htmlFile.substring(0,htmlFile.lastIndexOf("."));
   htmlFiles[file] = HTML_DIR+htmlFile+".html";
-  if (OFFLINE)
-    htmlLinks[file] = htmlFile+".html";
-  else
-    htmlLinks[file] = htmlFile;
+  var htmlLink = htmlFile + (OFFLINE?".html":"");
+  htmlLinks[file] = htmlLink;
+  knownPageLinks.push((OFFLINE?"":"/")+htmlLink);
+});
+//console.log(JSON.stringify(knownPageLinks,null,2));process.exit(1);
+
+// For files that have been renamed, create placeholder files that redirect
+Object.keys(renamedFiles).forEach(function(originalFile) {
+  var newFile = renamedFiles[originalFile];
+  var htmlFile = HTML_DIR+originalFile.replace(/ /g,"+")+".html";
+  var html = `<p>This page has moved to <a href="${newFile}">${newFile}</a></p>
+<script>window.location = "${newFile}";</script>`;
+  fs.writeFileSync(htmlFile, html);
 });
 
 // ---------------------------------------------- Inference code
@@ -588,7 +633,7 @@ markdownFiles.forEach(function (file) {
          });
          content = '<div class="thumblinklist thumblinklist-thumbnails">\n  '+contentThumbs.join("\n  ")+'\n</div>';
        } else {
-         WARNING(kwName+" for '"+kw+"' in "+file+" found nothing");
+         WARNING(file+": "+kwName+" for '"+kw+"' found nothing");
          content = ifNone;
        }
        html = html.substr(0,match.index)+content+html.substr(match.index+match[0].length);
@@ -705,8 +750,31 @@ markdownFiles.forEach(function (file) {
    }
 
    // If compiling for offline, quick hack to modify most links to go direct
-   if (OFFLINE)
+   if (OFFLINE) // FIXME - move this into the code below, do it properly with knownPageLinks
      html = html.replace(/(<[aA] .*href=")\/([^"#]*)/g, '$1$2.html');
+
+   // Scan all links in HTML to find possible replaced files
+   {
+     regex = /href="([^"]+)"/g;
+     var m = regex.exec(html);
+     while (m) {
+       var url = m[1];
+       var baseURL = url.replace(/#.*$/,"");
+       if (baseURL!="") {
+         if (baseURL in renamedFiles) {
+           WARNING(`${file}: ${JSON.stringify(baseURL)} was renamed to ${JSON.stringify(renamedFiles[baseURL])}`);
+         } else {
+           if (baseURL.startsWith("http:") || baseURL.startsWith("https:")) {
+             // we're ok...
+           } else { // TODO: check if we know the page link
+             /*if (knownPageLinks.indexOf(baseURL)<0)
+               WARNING(`${file}: ${JSON.stringify(baseURL)} is not found`);*/
+          }
+         }
+       }
+       m = regex.exec(html);
+     }
+   }
 
    // work out of we have any images that might be at the top of the page
    var hasImageContent = html.indexOf("<iframe ")>=0; // do we have a video?
@@ -749,6 +817,14 @@ console.log("Writing references to "+refPath);
 fs.writeFileSync(refPath, JSON.stringify(urls,null,1));
 // Write out keywords
 fs.writeFileSync(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,1)+";");
+
+console.log("====================================================== WARNINGS");
+console.log("====================================================== WARNINGS");
+console.log("====================================================== WARNINGS");
+warnings.forEach(w=>console.log(w));
+console.log("====================================================== WARNINGS");
+console.log("====================================================== WARNINGS");
+console.log("====================================================== WARNINGS");
 
 // -----------------------------------------------------------
 // Newest tutorials

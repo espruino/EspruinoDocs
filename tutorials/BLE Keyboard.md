@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Puck.js and HID Keyboards
-=========================
+Bluetooth LE HID Keyboards
+==========================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Keyboard. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
@@ -121,3 +121,9 @@ You can find key codes at https://www.usb.org/sites/default/files/documents/hut1
 * `0` is 39
 * Return is 40
 * Space is 44
+
+
+Uses
+----
+
+* APPEND_USES: ble_hid

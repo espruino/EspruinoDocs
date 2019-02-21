@@ -1,0 +1,21 @@
+# Old File to New file mappings
+# build.sh scans these and makes stubs for the website that redirect
+EspruinoBoard,/Original
+PuckJS,/Puck.js
+Code Examples,/Tutorials
+Notes,/FAQ
+Puck.js Quick Start,/Quick+Start+BLE#puckjs
+Puck.js BLE UART,/BLE UART
+Puck.js Advertising,/BLE Advertising
+Puck.js and Bluetooth Lightbulbs,/BLE Lightbulbs
+Puck.js Eddystone,/Eddystone
+Puck.js iBeacon,/iBeacon
+Puck.js IFTTT,/BLE IFTTT
+Puck.js MIDI,/BLE MIDI
+Puck.js Node-RED,/BLE Node-RED
+Puck.js Printer,/BLE Printers
+Puck.js Security,/BLE Security
+Puck.js Web Bluetooth,/Web Bluetooth
+Puck.js Keyboard,/BLE Keyboard
+Puck.js HTTP Proxy,/BLE HTTP Proxy
+Puck.js Music Control,/BLE Music Control

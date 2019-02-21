@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Puck.js Security and Access Control
-===================================
+BLuetooth LE Security and Access Control
+=========================================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Security. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 

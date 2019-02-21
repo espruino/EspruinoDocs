@@ -15,10 +15,10 @@ Tutorials
 
 * APPEND_KEYWORD: Tutorials
 
-Tasks
------
+Information
+-----------
 
-* APPEND_KEYWORD: tasks
+* APPEND_KEYWORD: info
 
 Peripherals
 ----------
@@ -26,7 +26,7 @@ Peripherals
 * APPEND_KEYWORD: peripherals
 
 Devices
-------
+--------
 
 * APPEND_KEYWORD: devices,-Module
 
@@ -36,4 +36,3 @@ Examples
 --------
 
 * APPEND_KEYWORD: examples,-Tutorials
-

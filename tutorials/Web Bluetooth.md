@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Using Puck.js from a Web Bluetooth Website
-==========================================
+Using Web Bluetooth with Espruino
+==================================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Web+Bluetooth. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 

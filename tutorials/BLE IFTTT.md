@@ -1,5 +1,5 @@
 <!--- Copyright (c) 2016 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Puck.js and If This Then That
+Bluetooth LE and If This Then That
 ==============================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+IFTTT. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
