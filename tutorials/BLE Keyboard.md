@@ -2,7 +2,7 @@
 Bluetooth LE HID Keyboards
 ==========================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Keyboard. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/BLE+Keyboard. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,Modules,BLE,Bluetooth,Keyboard,Control,Mouse,HID,Human Interface Device
 * USES: Puck.js,BLE,Only BLE

@@ -2,7 +2,7 @@
 Bluetooth LE and Node-RED with MQTT
 ===================================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Node-RED. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/BLE+Node-RED. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,BLE,Bluetooth,Node,Node-red,nodered,MQTT,Pi,Raspberry Pi,EspruinoHub
 * USES: Puck.js,BLE,Only BLE

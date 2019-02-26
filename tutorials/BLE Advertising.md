@@ -2,7 +2,7 @@
 BLE Advertising with Node.js/Python/C#/Android
 ===============================================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+Advertising. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/BLE+Advertising. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,BLE,Bluetooth,Node,Nodejs,node.js,python,c#,android,advert,advertising,Pi,Raspberry Pi,Noble
 * USES: Puck.js,BLE,Only BLE
@@ -99,8 +99,13 @@ Node.js
 [Node.js](https://nodejs.org) has a great module called [Noble](https://www.npmjs.com/package/noble)
 available that works on Windows, Mac OS and Linux.
 
-**Note:** currently Windows support requires a [USB Bluetooth LE dongle](http://www.espruino.com/Puck.js+Quick+Start#requirements)
-that Windows itself hasn't taken control of. This means you don't have to be using
+* **Mac OS Mojave currently has [broken BLE support in noble](https://github.com/noble/noble/issues/834)**
+so you may want to use the [noble-mac](https://github.com/Timeular/noble-mac)
+library instead.
+* **Windows 10 users may want to use** [noble-uwp](https://github.com/jasongin/noble-uwp)
+instead of noble to get out-of-the-box Bluetooth support.
+* **Windows support requires a [USB Bluetooth LE dongle](http://www.espruino.com/Puck.js+Quick+Start#requirements)**
+that Windows doesn't have a Bluetooth driver installed for. This means you don't have to be using
 Windows 10, but if you do have Windows 10 and Bluetooth LE is working, you'll
 want to plug in *an additional USB BLE dongle!*.
 
