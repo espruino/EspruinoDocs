@@ -421,7 +421,8 @@ markdownFiles.forEach(function (file) {
 Object.keys(renamedFiles).forEach(function(originalFile) {
   var newFile = renamedFiles[originalFile];
   var htmlFile = HTML_DIR+originalFile.replace(/ /g,"+")+".html";
-  var html = `<p>This page has moved to <a href="${newFile}">${newFile}</a></p>
+  var html = `<!---REDIRECT ${newFile}--->
+<p>This page has moved to <a href="${newFile}">${newFile}</a></p>
 <script>window.location = "${newFile}";</script>`;
   fs.writeFileSync(htmlFile, html);
 });
