@@ -90,8 +90,9 @@ are run into their endstops.
 ### Display board
 
 Plug the display into `E1`. Calling `g = require("Smartibot-display").connect(smarti.E1)`
-will return an instance of [[Graphics]] which you can then use. When
-you need to display something, call `g.flip()` to send it to the screen:
+will return an instance of [[Graphics]] which you can then use. It is 16 pixels wide, 9 pixels high, and 8 bits per pixel.
+
+When you need to display something, call `g.flip()` to send it to the screen:
 
 ```
 var smarti = require("Smartibot");
@@ -106,6 +107,9 @@ g.drawString("Hi",2,2);
 // Send what we drew to the screen
 g.flip();
 ```
+
+Check out [[Graphics]] for full details on how to use Graphics and add your
+own images.
 
 ### Distance board
 
