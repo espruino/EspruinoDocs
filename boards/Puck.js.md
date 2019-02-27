@@ -6,7 +6,7 @@ Puck.js
 
 * KEYWORDS: Espruino,Official Board,Puck,Puckjs,Puck.js,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE
 
-![Puck.js](Puck.js/board.jpg)
+![Puck.js](Puckjs/board.jpg)
 
 * BUYFROM: £30,£21.60,https://shop.espruino.com/puckjs,/Order#puckjs
 
@@ -43,8 +43,8 @@ Accessories
 You can also buy kits of different color cases for Puck.js from the
 [Espruino Shop](https://shop.espruino.com/puckjs-accessories) or [our Tindie store](https://www.tindie.com/stores/gfwilliams/)
 
-[![Black cases](Puck.js/col1.jpg)](https://shop.espruino.com/puckjs-cover-black)
-[![Color case kit](Puck.js/col5.jpg)](https://shop.espruino.com/puckjs-cover-selection)
+[![Black cases](Puckjs/col1.jpg)](https://shop.espruino.com/puckjs-cover-black)
+[![Color case kit](Puckjs/col5.jpg)](https://shop.espruino.com/puckjs-cover-selection)
 
 
 Turning Puck.js on

@@ -6,7 +6,7 @@ Pixl.js
 
 * KEYWORDS: Espruino,Official Board,Pixl,Pixljs,Pixl.js,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Graphics
 
-![Pixl.js](Pixl.js/board.jpg)
+![Pixl.js](Pixljs/board.jpg)
 
 * BUYFROM: £36,£25.92,https://shop.espruino.com/pixljs,/Order#pixljs
 
@@ -57,7 +57,7 @@ Pixl.js can be powered in multiple ways:
 
 As mentioned above you can solder a JST connector (part number `B2B-PH-K-S` to Pixl.js):
 
-![JST pins on Pixl.js](Pixl.js/jst.jpg)
+![JST pins on Pixl.js](Pixljs/jst.jpg)
 
 **Note:** This connects stright to the `Vin` pins, so you should use USB
 *or* CR2032 *or* the JST connector, but not more than one at the same time!
@@ -163,7 +163,7 @@ Here are some of the [Arduino shields](Arduino) that we have tested and document
 Information
 -----------
 
-![Pixl.js](Pixl.js/back.jpg)
+![Pixl.js](Pixljs/back.jpg)
 
 * [Circuit Diagram](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_sch.pdf)
 * [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_brd.pdf)
