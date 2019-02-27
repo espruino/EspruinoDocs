@@ -2,6 +2,5 @@
 /* Smartibot display board */
 exports.connect = function(port) {
   if (!port) throw "No port supplied - use smarti.E1";
-  var smarti = require("Smartibot");
   return require("IS31FL3731").connect(port.i2c);
 }

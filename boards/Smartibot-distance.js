@@ -12,14 +12,14 @@ exports.connect = function(port) {
   // Do a shuffle with enable pins to reassign addresses of laser 1
   port.int.write(0);
   port.ad.write(1);
-  l1 = require("VL53L0X").connect(port.i2c,{address:42});
+  var l1 = require("VL53L0X").connect(port.i2c,{address:42});
   port.int.write(1);
-  l2 = require("VL53L0X").connect(port.i2c,{});
+  var l2 = require("VL53L0X").connect(port.i2c,{});
 
   return {
-    getLeft : _=>l1.performSingleMeasurement().distance,
-    getRight : _=>l2.performSingleMeasurement().distance,
-    getGesture : _=>({left:"up",right:"down",down:"left",up:"right"}[gesture.getGesture()]),
+    getLeft : _ => l1.performSingleMeasurement().distance,
+    getRight : _ => l2.performSingleMeasurement().distance,
+    getGesture : _ => ({left:"up",right:"down",down:"left",up:"right"}[gesture.getGesture()]),
     gesture : gesture,
     left : l1,
     right : l2

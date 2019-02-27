@@ -12,8 +12,8 @@ function init() {
   exports.env = require("BME280").connectSPI(spi, D3); // BME280
   exports.env.setPower(0); // turn environment sensor off for now
 }
-E.on('init', function() { 
-  inited = false; 
+E.on('init', function() {
+  inited = false;
   exports.accel = undefined;
   exports.env = undefined;
 });
@@ -31,11 +31,11 @@ exports.setAccelOn = function(on, callback) {
   exports.accel.callback = callback;
 };
 /** Get the last received environment data { temp: degrees_c, pressure: kPa, humidity: % }*/
-exports.getEnvData = function(on) {
+exports.getEnvData = function() {
   return exports.env.getData();
 };
 /** Get the last received accelerometer data, or undefined */
-exports.getAccelData = function(on) {
+exports.getAccelData = function() {
   return exports.accel.getXYZ();
 };
 /*

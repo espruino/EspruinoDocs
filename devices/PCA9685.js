@@ -14,7 +14,7 @@ function PCA9685(i2c,options) {
   this.i2c = i2c;
   this.addr = options.addr||0x40;
   if (this.r(5)!=224) throw "ALLCALLADR!=0xE0 - PCA9685 connected?";
-  this.reset(()=>{
+  this.reset(() => {
     this.setPWMFreq(60);
     if (options.callback) options.callback();
   });

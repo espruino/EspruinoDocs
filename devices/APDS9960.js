@@ -132,26 +132,17 @@ APDS9960.prototype.hasGesture = function() {
 };
 /// Return the current gesture (left/right/up/down) or 'undefined' is none
 APDS9960.prototype.getGesture = function() {
-    var fifo_level = 0;
-    var bytes_read = 0;
-    var fifo_data;
-    var gstatus;
-    var motion;
-    var i;
-
-    /* Make sure that power and gesture is on and data is valid */
-    if( !this.hasGesture() || !(this.r(R.ENABLE) & 0b01000001) ) {
-        return undefined;
-    }
+  /* Make sure that power and gesture is on and data is valid */
+  if( !this.hasGesture() || !(this.r(R.ENABLE) & 0b01000001) )
+    return undefined;
 
   /* Read the current FIFO level */
-  fifo_level = this.r(R.GFLVL, fifo_level);
+  var fifo_level = this.r(R.GFLVL, fifo_level);
   /* If there's stuff in the FIFO, read it into our data block */
   if( fifo_level === 0) return undefined;
 
   this.i2c.writeTo(this.addr,R.GFIFO_U);
-  fifo_data = this.i2c.readFrom(this.addr,fifo_level*4);
-  bytes_read = fifo_data.length;
+  var fifo_data = this.i2c.readFrom(this.addr,fifo_level*4);
   return this.decodeGesture(fifo_data);
 };
 
@@ -166,7 +157,6 @@ APDS9960.prototype.decodeGesture = function(data) {
   while (b>=0 &&
          !(data[b]>THRESH&&data[b+1]>THRESH&&data[b+2]>THRESH&&data[b+3]>THRESH)) b-=4;
   if (a>b) return undefined; // no data found
-  var gesture = {};
   var ud_ratio_first = ((data[a] - data[a+1]) * 100) / (data[a] + data[a+1]);
   var lr_ratio_first = ((data[a+2] - data[a+3]) * 100) / (data[a+2] + data[a+3]);
   var ud_ratio_last = ((data[b] - data[b+1]) * 100) / (data[b] + data[b+1]);

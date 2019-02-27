@@ -34,7 +34,7 @@ exports.connect = function(i2c) {
   // Turn all LEDs on
   for (var f=0; f<8; f++) {
     w(BANK_COMMAND, f);
-    for (i=0;i<18;i++) w(i, 255);
+    for (var i=0;i<18;i++) w(i, 255);
   }
 
   return g;
