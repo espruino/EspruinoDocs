@@ -14,6 +14,8 @@ exports.E2 = { i2c : i2c, ad : D30, int : D26 };
 
 /// Set LEDs - expects two 3-element arrays with each elemnt between 0 and 255 : [R,G,B], [R,G,B]
 exports.setLEDs = function(l,r) {
+  if (!l)l=[0,0,0]; // if no left, turn off
+  if (!r)r=l; // if no right eye, re-use left
   var a = new Uint8Array(16);
   a[4]=255;a[8]=255;a.fill(255,12);
   a.set(l,5);a.set(r,9);
@@ -58,10 +60,10 @@ setPWMFreq();
 // Ensure we do it at startup as well
 E.on('init',setPWMFreq);
 
-/// Set servos 1..10 with a value between -1 and 1
+/// Set servos 1..10 with a value 0..100
 exports.setServo = function(num, val) {
   if (num<1||num>10) throw "num Out of range";
-  val = 130+val*4;
+  val = 180+val*3;
   if (val<1||val>4095) throw "val Out of range";
   i2c.writeTo(PCA_ADDR,[PCA_LED0_ON_L+4*(num-1),0,0,val,val>>8]);
 };
