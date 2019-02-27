@@ -38,22 +38,20 @@ exports.setMotor = function(M, S) {
  }
 };
 
-var PCA = {
-  ADDR : (0xB0>>1),
-  MODE1 : 0x0,
-  PRESCALE : 0xFE,
-  LED0_ON_L : 0x6
-};
+const PCA_ADDR = (0xB0>>1);
+const PCA_MODE1 = 0x0;
+const PCA_PRESCALE = 0xFE;
+const LED0_ON_L = 0x6;
 
 // set PWM frequency to 60Hz
 function setPWMFreq() {
-  i2c.writeTo(PCA.ADDR, [PCA.MODE1, 0x00]);
+  i2c.writeTo(PCA_ADDR, [PCA_MODE1, 0x00]);
   //var freq = 60*0.9;
   var prescaleval = 112;//((25000000.0 / 4096.0) / freq) - 1;
-  i2c.writeTo(PCA.ADDR, [PCA.MODE1, (0x00 & 0x7F) | 0x10]);
-  i2c.writeTo(PCA.ADDR, [PCA.PRESCALE, Math.round(prescaleval)]);
-  i2c.writeTo(PCA.ADDR, [PCA.MODE1, 0x00]);
-  i2c.writeTo(PCA.ADDR, [PCA.MODE1, 0x00 | 0xA1]);
+  i2c.writeTo(PCA_ADDR, [PCA_MODE1, (0x00 & 0x7F) | 0x10]);
+  i2c.writeTo(PCA_ADDR, [PCA_PRESCALE, Math.round(prescaleval)]);
+  i2c.writeTo(PCA_ADDR, [PCA_MODE1, 0x00]);
+  i2c.writeTo(PCA_ADDR, [PCA_MODE1, 0x00 | 0xA1]);
 }
 // Do it now
 setPWMFreq();
@@ -65,5 +63,5 @@ exports.setServo = function(num, val) {
   if (num<1||num>10) throw "num Out of range";
   val = 130+val*4;
   if (val<1||val>4095) throw "val Out of range";
-  i2c.writeTo(PCA.ADDR,[PCA.LED0_ON_L+4*(num-1),0,0,val,val>>8]);
+  i2c.writeTo(PCA_ADDR,[PCA_LED0_ON_L+4*(num-1),0,0,val,val>>8]);
 };
