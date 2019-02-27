@@ -41,7 +41,7 @@ exports.setMotor = function(M, S) {
 const PCA_ADDR = (0xB0>>1);
 const PCA_MODE1 = 0x0;
 const PCA_PRESCALE = 0xFE;
-const LED0_ON_L = 0x6;
+const PCA_LED0_ON_L = 0x6;
 
 // set PWM frequency to 60Hz
 function setPWMFreq() {
