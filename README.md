@@ -179,3 +179,21 @@ Increase the limit:
 ```
 $ ulimit -n 1024  # increase to 1024
 ```
+
+# Linting
+
+You can lint modules using:
+
+```
+# Install required tools
+npm install eslint
+
+# Lint all js files in devices folder
+npm run eslintdevices
+
+# Lint all js files in modules folder
+npm run eslintmodules
+
+# Lint all js files in boards folder
+npm run eslintboards
+```

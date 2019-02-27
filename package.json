@@ -7,6 +7,7 @@
     "build": "nodejs ./bin/build.js",
     "eslintdevices": "./node_modules/.bin/eslint devices/*.js",
     "eslintmodules": "./node_modules/.bin/eslint modules/*.js",
+    "eslintboards": "./node_modules/.bin/eslint boards/*.js",
     "start": "nodejs app.js"
   },
   "repository": {
@@ -30,7 +31,7 @@
   "dependencies": {
     "acorn": "^6.0.2",
     "acorn-walk": "^6.1.0",
-    "eslint": "^5.12.0",
+    "eslint": "^5.14.1",
     "express": "^4.13.3",
     "highlight.js": "^8.9.1",
     "marked": "^0.3.6",
