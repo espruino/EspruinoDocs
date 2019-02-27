@@ -37,7 +37,7 @@ Check out the [Getting Started Guide](/Quick+Start+BLE#smartibot).
 There are two built-in variables for buttons, `BTN1` (Button A) and `BTN2` (Button B).
 
 These can be read using `BTN1.read()` or `digitalRead(BTN1)` (the two commands
-  are identical), or you can be notified when a button changes state:
+are identical), or you can be notified when a button changes state:
 
 ```
 setWatch(function(e) {
@@ -45,6 +45,9 @@ setWatch(function(e) {
   else print("Button released");
 }, BTN, {repeat:true});
 ```
+
+**NOTE:** On the Smartibot build that ships with KickStarter devices,
+the value from `BTN1.read()` is inverted (`true` when released, `false` when pressed).
 
 ### Motors
 
@@ -71,21 +74,20 @@ var smarti = require("Smartibot");
 smarti.setLEDs([255,0,0], [0,255,0]);
 ```
 
+**NOTE:** On the Smartibot build that ships with KickStarter devices,
+the single blue LED is inverted (`true` for off, `false` for on).
+
 ### Servo outputs
 
 To control servos, use the `require("Smartibot").setServo(servo, value)`.
 
-`value` is a number between `-1` (fully back) and `1` (fully forward):
+`value` is a number between `0` and `100`.
 
 ```
 var smarti = require("Smartibot");
 
-smarti.setServo(1, 0); // Set servo 1 to midpoint
+smarti.setServo(1, 50); // Set servo 1 to midpoint
 ```
-
-Some servo motors are able to go slightly past the `-1..1` range, however
-you should be careful when doing this as servo motors can be damaged if they
-are run into their endstops.
 
 ### Display board
 

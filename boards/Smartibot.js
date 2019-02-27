@@ -6,7 +6,6 @@ exports.M2=[D10,D11];
 
 var i2c = new I2C();
 i2c.setup({sda:D27,scl:D28});
-var pwm = require("PCA9685").connect(i2c,{addr:0b1011000});
 
 /// E1 port, contains { i2c, ad, int };
 exports.E1 = { i2c : i2c, ad : D0, int : D1 };
@@ -39,7 +38,32 @@ exports.setMotor = function(M, S) {
  }
 };
 
+var PCA = {
+  ADDR : (0xB0>>1),
+  MODE1 : 0x0,
+  PRESCALE : 0xFE,
+  LED0_ON_L : 0x6
+};
+
+// set PWM frequency to 60Hz
+function setPWMFreq() {
+  i2c.writeTo(PCA.ADDR, [PCA.MODE1, 0x00]);
+  //var freq = 60*0.9;
+  var prescaleval = 112;//((25000000.0 / 4096.0) / freq) - 1;
+  i2c.writeTo(PCA.ADDR, [PCA.MODE1, (0x00 & 0x7F) | 0x10]);
+  i2c.writeTo(PCA.ADDR, [PCA.PRESCALE, Math.round(prescaleval)]);
+  i2c.writeTo(PCA.ADDR, [PCA.MODE1, 0x00]);
+  i2c.writeTo(PCA.ADDR, [PCA.MODE1, 0x00 | 0xA1]);
+}
+// Do it now
+setPWMFreq();
+// Ensure we do it at startup as well
+E.on('init',setPWMFreq);
+
 /// Set servos 1..10 with a value between -1 and 1
-exports.setServo = function(num, value) {
-  pwm.writeMs(num-1, 1.5+0.5*value);
+exports.setServo = function(num, val) {
+  if (num<1||num>10) throw "num Out of range";
+  val = 130+val*4;
+  if (val<1||val>4095) throw "val Out of range";
+  i2c.writeTo(PCA.ADDR,[PCA.LED0_ON_L+4*(num-1),0,0,val,val>>8]);
 };
