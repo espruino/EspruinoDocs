@@ -63,7 +63,7 @@ E.on('init',setPWMFreq);
 /// Set servos 1..10 with a value 0..100
 exports.setServo = function(num, val) {
   if (num<1||num>10) throw "num Out of range";
-  val = 180+val*3;
+  val = 130+val*4;
   if (val<1||val>4095) throw "val Out of range";
   i2c.writeTo(PCA_ADDR,[PCA_LED0_ON_L+4*(num-1),0,0,val,val>>8]);
 };
