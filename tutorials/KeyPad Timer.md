@@ -95,7 +95,7 @@ function timerFinished() {
 
 function startTimer(time) {
   // clear the current timer (if there was one)
-  if (timerInterval!==undefined) 
+  if (timerInterval!==undefined)
     clearInterval(timerInterval);
   timerInterval = undefined;
   // if there was a time (it wasn't just blank), start the timer
