@@ -270,6 +270,15 @@ You can use the same `digitalWrite`/`digitalRead` commands with these that you
 did with the LEDs and buttons, but you can also use [[PWM]], [[I2C]], [[SPI]] and [[Analog]].
 
 
+Known Problems
+---------------
+
+On the 2v01 firmware release (which many Pixls ship with), NFC doesn't work.
+
+The 2v02 firmware will have this fixed, however 'cutting edge' builds from
+http://www.espruino.com/Download#pixljs can be used and will work as well.
+
+
 Serial Console
 ---------------
 

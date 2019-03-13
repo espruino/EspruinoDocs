@@ -48,15 +48,27 @@ Features
 Getting Started
 ----------------
 
-### Breakout board
-
-Apply power between the `V+`/`Vin` and `GND` pins. Any voltage between 2.5 and 16 volts
-will work - just be careful not to get the polarity wrong! Check [the pinout](#pinout) below
-for more information on the location of pins.
+Check out [the section below on Powering](#powering) - the bare MDBT42Q module
+and the breakout have slightly different requirements.
 
 Once powered up follow the [Getting Started Guide](/Quick+Start+BLE#mdbt42q) for details
 on getting the IDE connected wirelessly. You can also [use a wired connection](#serial-console)
 if you prefer.
+
+
+<a name="powering"></a>Powering MDBT42Q
+--------------------------------------
+
+### Breakout board
+
+Apply power between any `V+`/`Vin` and `GND` pins. Any voltage between 2.5 and 16 volts
+will work - just be careful not to get the polarity wrong! Check [the pinout](#pinout) below
+for more information on the location of pins.
+
+Just between `Vin/GND` and `D9/D10` on the bottom edge of the board in [the pinout](#pinout)
+there are two 2mm-spaced pins. These can be used to fit a JST PHR-2 battery connector
+as mentioned on [the Battery page](/Battery) - these are very common for LiPo batteries,
+which are a good fit for the module.
 
 ### Bare Module
 
@@ -70,9 +82,6 @@ It is recommended to connect all the `GND` pins together (especially when
 designing a PCB) but it is not absolutely required - you can boot the
 MDBT42Q module with just two wires.
 
-Once powered up follow the [Getting Started Guide](/Quick+Start+BLE#mdbt42q) for details
-on getting the IDE connected wirelessly. You can also [use a wired connection](#serial-console)
-if you prefer.
 
 
 On-board peripherals
