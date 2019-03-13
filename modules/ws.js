@@ -252,12 +252,14 @@ exports.createServer = function(callback) {
     if (req.headers.Connection && req.headers.Connection.indexOf("Upgrade")>=0) {
       var key = req.headers["Sec-WebSocket-Key"];
       var accept = btoa(E.toString(require('crypto').SHA1(key+"258EAFA5-E914-47DA-95CA-C5AB0DC85B11")));
-      res.writeHead(101, {
+      var headers = {
           'Upgrade': 'websocket',
           'Connection': 'Upgrade',
-          'Sec-WebSocket-Accept': accept,
-          'Sec-WebSocket-Protocol': req.headers["Sec-WebSocket-Protocol"]
-      });
+          'Sec-WebSocket-Accept': accept
+      };
+      if (req.headers["Sec-WebSocket-Protocol"])
+        headers['Sec-WebSocket-Protocol'] = req.headers["Sec-WebSocket-Protocol"];
+      res.writeHead(101, headers);
 
       var ws = new WebSocket(undefined, { masking : false, connected : true });
       ws.socket = res;
