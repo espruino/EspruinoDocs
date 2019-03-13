@@ -4,7 +4,17 @@ var sockData = ["","","","","",""];
 var MAXSOCKETS = 6; // this could be 12
 var busy = false;
 
-var dbg = () => {} // don't print anything by default. gprs.debug() enables it
+/*
+`socks` can have the following states:
+
+undefined         : unused
+true              : connected and ready
+"DataClose"       : closed on modem, but with data still in sockData
+"Wait"            : waiting for connection (client), or for data to be sent
+"closing"         : modem's connection in 'closing' state - we need to ask the modem to close the connection
+*/
+
+function dbg() {} // don't print anything by default. gprs.debug() enables it
 
 var netCallbacks = {
   create: function(host, port) {
@@ -55,35 +65,34 @@ var netCallbacks = {
       } else {
         r = sockData[sckt];
         sockData[sckt] = "";
+        if (socks[sckt]=="DataClose") {
+          dbg("Got DataClose - forcing close");
+          socks[sckt] = "closing";
+        }
       }
       return r;
     }
-    if (!socks[sckt]) return -1; // close it
+    if (socks[sckt]=="closing" || !socks[sckt]) return -1; // close it
     return "";
   },
   /* Send data. Returns the number of bytes sent - 0 is ok.
   Less than 0  */
-  /* Send data. Returns the number of bytes sent - 0 is ok.
-  Less than 0  */
   send: function(sckt, data) {
     if (busy || at.isBusy() || socks[sckt]=="Wait") return 0;
-    if (!socks[sckt]) return -1; // error - close it
+    if (socks[sckt]=="closing" || !socks[sckt]) return -1; // error - close it
     busy = true;
+    at.register('> ', function(l) {
+      dbg("AT+QISEND got prompt")
+      at.unregister('> ');
+      at.write(data);
+      return l.substr(2);
+    });
     at.cmd(`AT+QISEND=${sckt},${data.length}\r\n`, 10000, function cb(d) {
       dbg("AT+QISEND response "+JSON.stringify(d));
-      if (d=="OK") {
-        at.register('> ', function(l) {
-          at.unregister('> ');
-          at.write(data);
-          return l.substr(2);
-        });
-        return cb;
-      } else if (d=="SEND OK") busy = false;
-      else {
-        // probably d=="SEND FAIL"
-        at.unregister('> ');
-        socks[sckt] = null; // force socket close
-      }
+      if (d=="") return cb; // handle \r\n before >
+      at.unregister('> ');
+      busy = false;
+      if (d!="SEND OK") socks[sckt] = null; // probably d=="SEND FAIL" - force socket close
     });
     return data.length;
   }
@@ -143,16 +152,21 @@ exports.connect = function(usart, options, callback) {
   at.register('+QIURC: "recv"', function(line) {
     var eol = line.indexOf("\r\n");
     if (eol<0) return line; // wait until we have a full CR/LF
-    var parms = line.split(",");
+    var parms = line.substr(0,eol).split(",");
+    var sckt = 0|parms[1];
+    var len = 0|parms[2];
     var data = line.substr(eol+2);
-    sockData[0|parms[1]] += data;
+    sockData[sckt] += data;
     dbg(parms);
-    at.getData((0|parms[2])-data.length, function(data) { sockData[0|parms[1]] += data; });
+    at.getData(len-data.length, function(data) {
+      sockData[sckt] += data;
+    });
     return "";
   });
   // Close handler
   at.registerLine('+QIURC: "closed"', function(line) {
-    socks[0|line.substr(17)] = null;
+    var s = 0|line.substr(17);
+    socks[s] = sockData[s] ? "DataClose" : "closing";
     // setting this to null forces send/recv to return -1, which then
     // causes Espruino to actually call close on the socket
     busy = false;
@@ -160,7 +174,8 @@ exports.connect = function(usart, options, callback) {
   // Handle socket open (or handle errors)
   at.registerLine('+QIOPEN: ', function(l) {
     var a = l.substr(9).split(",");
-    socks[0|a[0]] = (a[1]==0)?true:undefined;
+    if (a[1]!=0) console.log("QIOPEN ERROR "+a[1]);
+    else socks[0|a[0]] = true;
     busy = false;
   });
 
