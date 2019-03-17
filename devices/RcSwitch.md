@@ -29,10 +29,9 @@ How to use my module:
 
 ```javascript
   // 1 = Protocol
-  // D13 = Pin
+  // A0 = Pin
   // 10 = Repeat
   var sw = require("RcSwitch").connect(1, A0, 10);
-  var sw = exports.connect(1, D13, 10);
   var on = false;
   function toggle() {
     on = !on;
