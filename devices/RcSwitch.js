@@ -90,8 +90,6 @@ RcSwitch.prototype.send = function (value, length) {
   signal.push(_protocol.pulseLength * _protocol.syncFactor.high);
   signal.push(_protocol.pulseLength * _protocol.syncFactor.low);
 
-  console.log(signal);
-
   for (nRepeat = 0; nRepeat < _repeat; nRepeat++) {
     digitalPulse(_pin, _protocol.invertedSignal ? 0 : 1, signal);
   }
@@ -115,21 +113,16 @@ RcSwitch.prototype.sendTriState = function (sCodeWord) {
     length = length + 2;
   }
 
-  console.log("tristate code:" + code);
-  console.log("tristate code length:" + length);
-
   this.send(code, length);
 };
 
 RcSwitch.prototype.switchOn = function (sGroup, sDevice) {
   var triState = getCodeWordA(sGroup, sDevice, true);
-  console.log("tristate:" + triState);
   this.sendTriState(triState);
 };
 
 RcSwitch.prototype.switchOff = function (sGroup, sDevice) {
   var triState = getCodeWordA(sGroup, sDevice, false);
-  console.log("tristate:" + triState);
   this.sendTriState(triState);
 };
 
