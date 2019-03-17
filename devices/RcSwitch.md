@@ -10,7 +10,11 @@ Module for operate 433/315Mhz devices like power outlet sockets, relays, etc.. U
 - [x] Write support
 - [ ] Read support
 
-You can wire this up as follows:
+Picture of a 433Mhz transmitter (left) and receiver (right):
+
+![433Mhz Transmitter and Receiver](/devices/RcSwitch/module.jpg)
+
+Wire the 433Mhz transmitter up as follows:
 
 | Device Pin | Espruino |
 | ---------- | -------- |
