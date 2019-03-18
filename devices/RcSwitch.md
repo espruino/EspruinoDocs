@@ -2,17 +2,17 @@
 RcSwitch
 =====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/RcSwitch. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: 433Mhz,315Mhz,433,SC5262,SC5272,HX2262,HX2272,PT2262,PT2272,EV1527,RT1527,FP1527,HS1527
 
-Module for operate 433/315Mhz devices like power outlet sockets, relays, etc.. Use the [MOD123](/modules/RcSwitch.js) module for it.
+Module for operate 433/315Mhz devices like power outlet sockets, relays, etc. Use the [RcSwitch](/modules/RcSwitch.js) module for it.
 
-### Todo:
-- [x] Write support
-- [ ] Read support
+Support for sending is implemented, but receiving isn't.
 
 Picture of a 433Mhz transmitter (left) and receiver (right):
 
-![433Mhz Transmitter and Receiver](/devices/RcSwitch/module.jpg)
+![433Mhz Transmitter and Receiver](RcSwitch/module.jpg)
 
 Wire the 433Mhz transmitter up as follows:
 
@@ -25,7 +25,7 @@ Wire the 433Mhz transmitter up as follows:
 
 How to use my module:
 
-![Brennstuhl rc settings](/devices/RcSwitch/switch_settings.jpg)
+![Brennstuhl rc settings](RcSwitch/switch_settings.jpg)
 
 ```javascript
   // 1 = Protocol
