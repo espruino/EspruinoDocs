@@ -23,14 +23,14 @@ Wire the 433Mhz transmitter up as follows:
 | 3 (DATA)   | A0       |
 
 
-How to use my module:
+How to use the module:
 
 ![Brennstuhl rc settings](RcSwitch/switch_settings.jpg)
 
 ```javascript
-  // 1 = Protocol
+  // 1 = Protocol number (1..6)
   // A0 = Pin
-  // 10 = Repeat
+  // 10 = Amount of times to repeat the code 
   var sw = require("RcSwitch").connect(1, A0, 10);
   var on = false;
   function toggle() {
