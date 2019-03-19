@@ -10,9 +10,8 @@ Stripped out JavaScript [MQTT](http://mqtt.org/) module that does basic PUB/SUB,
 
 - Supports QoS 0 only.
 - Supports authentication on username and password.
-- 127 byte publishing length limit.
-
-Some considerable effort has gone into ensuring safe reconnection in event of MQTT broker disconnecting us and or loss of network, minimising leaked memory and ensuring no duplicated event listeners, and subsequent processes.
+- 127 byte publishing length limit (the sum of the length of the topic + the length of the data must not be more than 127 characters).
+- Retain flag is set on published messages.
 
 ## How to use
 
@@ -79,6 +78,25 @@ mqtt.on("disconnected", function(){
 
 ```
 
+## Too long message
+
+tinyMQTT only supports short messages. The length of the topic plus the length of the payload must be less than 128 characters. If it's longer, the library throws a `tMQTT-TL` exception.
+
+## Save & load from Storage
+
+Espruino supports saving and loading modules directly to/from storage. tinyMQTT can be used in this way, which provides for further memory optimisation should it be needed.
+
+```
+// Save to Storage 
+
+var s = require('Storage');
+s.write('tinyMQTS' , '......put tinyMQTT.min.js code here.........');
+
+// Load directly from Storage
+
+var mqtt = require('tinyMQTS');    
+```
+
 ## Credits
 
-@gfwilliams, @tve, @HyGy, @MaBecker, @gulfaraz, @The-Futur1st and @wanglingsong. Thanks for the advice, tips, testing and pull requests!
+@gfwilliams, @tve, @HyGy, @MaBecker, @gulfaraz, @The-Futur1st, @wanglingsong and @AkosLukacs. Thanks for the advice, tips, testing and pull requests!
