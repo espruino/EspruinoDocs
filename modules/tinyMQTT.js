@@ -3,7 +3,7 @@
    Originally from https://github.com/olliephillips/tinyMQTT */
 
 var _q;
-function TMQ(server, optns){
+var TMQ = function(server, optns){
 	var opts = optns || {};
 	this.svr = server;
 	this.prt = opts.port || 1883;
@@ -25,17 +25,17 @@ function onDat(data) {
 			topic: data.substr(4, var_len),
 			message: data.substr(4+var_len, (data.charCodeAt(1))-var_len)
 		};
-		_q.emit('message', msg);
+		_q.emit("message", msg);
 	}
-};
+}
 
 function mqStr(str) {
 	return sFCC(str.length >> 8, str.length&255) + str;
-};
+}
 
 function mqPkt(cmd, variable, payload) {
 	return sFCC(cmd, variable.length + payload.length) + variable + payload;
-};
+}
 
 function mqCon(id){
 	// Authentication?
@@ -52,34 +52,43 @@ function mqCon(id){
 		"\x04"/*protocol level*/+
 		flags/*flags*/+
 		"\xFF\xFF"/*Keepalive*/, payload);
-};
+}
+
+TMQ.prototype._scktClosed = function(){
+	if (_q.con) {clearInterval(_q.con); _q.con = null;}
+	if (_q.x1) {clearInterval(_q.x1); _q.x1 = null;}
+	_q.cn = false;
+	delete _q.cl;
+	_q.emit("disconnected");
+}
 
 TMQ.prototype.connect = function(){
 	var onConnected = function() {
-		clearInterval(con);
-		_q.cl.write(mqCon(getSerial()));
-		_q.emit("connected");
-		_q.cn = true;
-		setInterval(function(){
-			if(_q.cn)
-				_q.cl.write(sFCC(12<<4)+"\x00");
-		}, _q.ka<<10);
-		_q.cl.on('data', onDat.bind(_q));
-		_q.cl.on('end', function() {
-			if(_q.cn)
-				_q.emit("disconnected");
-			_q.cn = false;
-			delete _q.cl;
-		});
-		_q.removeAllListeners("connected");
+		if(_q.con){clearInterval(_q.con); _q.con = null;}
+		try{
+			_q.cl.write(mqCon(getSerial()));
+			_q.emit("connected");
+			_q.cn = true;
+			_q.x1 = setInterval(function(){
+				if(_q.cn)
+					_q.cl.write(sFCC(12<<4)+sFCC(0));
+			}, _q.ka<<10);
+			_q.cl.on("data", onDat.bind(_q));
+			_q.cl.on("end", _q._scktClosed);
+		}catch(e){_q._scktClosed();}
 	};
-	if(!_q.cn) {
-		var con = setInterval(function(){
+	// Only try to connect, if there is no connection, or no pending connection
+	if(!(_q.cn || _q.con)){
+		_q.con = setInterval(function(){
 			if(_q.cl) {
 				_q.cl.end();
 				delete _q.cl;
 			}
-			_q.cl = require("net").connect({host : _q.svr, port: _q.prt}, onConnected);
+			try{
+				_q.cl = require("net").connect({host: _q.svr, port: _q.prt}, onConnected);
+			}catch(e){
+				_q._scktClosed();
+			}
 		}, _q.ri);
 	}
 };
@@ -89,6 +98,7 @@ TMQ.prototype.subscribe = function(topic) {
 };
 
 TMQ.prototype.publish = function(topic, data) {
+	if((topic.length + data.length) > 127) {throw "tMQTT-TL";}
 	if(_q.cn) {
 		_q.cl.write(mqPkt(0b00110001, mqStr(topic), data));
 		_q.emit("published");
@@ -96,7 +106,13 @@ TMQ.prototype.publish = function(topic, data) {
 };
 
 TMQ.prototype.disconnect = function() {
-	_q.cl.write(sFCC(14<<4)+"\x00");
+	if(_q.cn){
+		try{
+			_q.cl.write(sFCC(14<<4)+sFCC(0));
+		}catch(e){
+			_q._scktClosed();
+		}
+	}
 };
 
 // Exports
