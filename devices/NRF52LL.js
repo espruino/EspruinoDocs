@@ -42,7 +42,7 @@ exports.gpiote = function(ch, opts) { // NRF_GPIOTE_Type
     mode : "counter"/"timer", // default = timer
     bits : 8/16/24/32, // default = 32
     prescaler : 0..9, // default = 0
-    cc : [5,6,7,8,9,10], // 6 (or less) cpature/compare regs
+    cc : [5,6,7,8,9,10], // 6 (or less) capture/compare regs
     cc0clear : true, // if cc[0] matches, clear the timer
     cc3stop : true, // if cc[0] matches, stop the timer
     // for cc0..cc5

@@ -27,7 +27,9 @@ Basic Usage
 
 The following are some examples:
 
-Count the number of times the BTN pin changes state (GPIO + counter timer):
+### Count the number of times the BTN pin changes state
+
+Uses GPIO and counter timer:
 
 ```
 var ll = require("NRF52LL");
@@ -45,7 +47,9 @@ function getCtr() {
 }
 ```
 
-Or the following will create a square wave on pin `D0`, with the inverse of the square wave on `D1` (GPIO):
+### Create a square wave on pin `D0`, with the inverse of the square wave on `D1`
+
+Uses GPIO and counter timer:
 
 ```
 var ll = require("NRF52LL");
@@ -64,7 +68,9 @@ ll.ppiEnable(1, tmr.eCompare[0], t1.tOut);
 poke32(tmr.tStart,1);
 ```
 
-Toggle the state of `LED` every time `D31`'s analog value goes above `VCC/2` (low power comparator + GPIO).
+### Toggle `LED` every time `D31`'s analog value goes above `VCC/2`
+
+Uses low power comparator + GPIO:
 
 ```
 var ll = require("NRF52LL");
@@ -78,7 +84,9 @@ var comp = ll.lpcomp({pin:D31,vref:8});
 ll.ppiEnable(0, comp.eCross, tog.tOut);
 ```
 
-Count how many times `D31` crosses `VCC/2` in 10 seconds  (low power comparator + counter timer).
+### Count how many times `D31` crosses `VCC/2` in 10 seconds 
+
+Uses low power comparator + counter timer:
 
 ```
 var ll = require("NRF52LL");
@@ -100,7 +108,7 @@ setInterval(function() {
 }, 10000);
 ```
 
-Make one reading from the ADC:
+### Make one reading from the ADC:
 
 ```
 var saadc = ll.saadc({
@@ -114,7 +122,10 @@ var saadc = ll.saadc({
 print(saadc.sample()[0]);
 ```
 
-Read a buffer of data from the ADC, alternating between 2 pins (ADC).
+### Read a buffer of data from the ADC, alternating between 2 pins 
+
+Uses ADC.
+
 It's also possible to use `.sample(...)` for this, but this example
 shows you how to use it in more detail.
 
@@ -146,7 +157,9 @@ poke32(saadc.tStop,1);
 print("Done!", buf);
 ```
 
-Use the RTC to toggle the state of an LED:
+### Use the RTC to toggle the state of a LED
+
+Uses RTC, GPIO:
 
 ```
 var ll = require("NRF52LL");
@@ -165,7 +178,9 @@ poke32(rtc.tStart,1); // start RTC
 ll.ppiEnable(0, rtc.eTick, tog.tOut);
 ```
 
-Use the RTC to measure how long a button has been held down for:
+### Use the RTC to measure how long a button has been held down for:
+
+Uses RTC, GPIO:
 
 ```
 var ll = require("NRF52LL");
@@ -183,8 +198,51 @@ ll.ppiEnable(1, btnu.eIn, rtc.tStop);
 // Every so often, check the RTC and report the result
 setInterval(function() {
   print(peek32(rtc.counter));
-  poke32(rtc.tClear, 1);  
+  poke32(rtc.tClear, 1);
 }, 5000);
+```
+
+### Hardware capacitive sense on two pins
+
+Uses GPIO, counter timer:
+
+**Note:** the counter timer has 6 capture/compare registers. We use 1 to produce the PWM
+and 2 for the two capacitive sense pins - the remaining 3 could be used for 3 more
+capacitive sense lines.
+
+```
+// connect one 100k resistor between PINDRV and PIN1
+// and one 100k resistor between PINDRV and PIN2
+function capSense2(PINDRV, PIN1, PIN2) {
+  var ll = require("NRF52LL");
+  digitalWrite(PINDRV,0);
+  digitalRead([PIN1,PIN2]);
+  // create a 'toggle' task for output
+  var t0 = ll.gpiote(0, {type:"task",pin:PINDRV,lo2hi:1,hi2lo:1,initialState:0});
+  // two input tasks, one for each cap sense input
+  var e1 = ll.gpiote(1, {type:"event",pin:PIN1,lo2hi:1,hi2lo:0});
+  var e2 = ll.gpiote(2, {type:"event",pin:PIN2,lo2hi:1,hi2lo:0});
+  // create a timer that counts up to 1000 and back at full speed
+  var tmr = ll.timer(3,{cc:[1000],cc0clear:1});
+  // use a PPI to trigger toggle events
+  ll.ppiEnable(0, tmr.eCompare[0], t0.tOut);
+  // use 2 more to 'capture' the current timer value when a pin changes from low to high
+  ll.ppiEnable(1, e1.eIn, tmr.tCapture[1]);
+  ll.ppiEnable(2, e2.eIn, tmr.tCapture[2]);
+  // Manually trigger a task to clear and start the timer
+  poke32(tmr.cc[0],0); // compare with 0 for PWM
+  poke32(tmr.tClear,1);
+  poke32(tmr.tStart,1);
+  return { read : function() {
+    return [ peek32(tmr.cc[1]), peek32(tmr.cc[2]) ];
+  } };
+}
+
+var cap = capSense2(D25, D31, D5);
+
+setInterval(function() {
+  console.log(cap.read());
+},500);
 ```
 
 Reference
