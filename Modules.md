@@ -73,10 +73,12 @@ print(require("answer").get());
 // prints 42
 ```
 
-**Note:** Modules written to Espruino's flash memory can only have names that
-are a maximum of 8 characters long.
+**Note:** 
 
-**Note:** The Espruino Web IDE and Command-line tools will be unaware of extra modules inside Espruino. When uploading code they may attempt to find your module online and complain that the module is not found, but once uploaded your code will still work fine.
+* Modules written to Espruino's flash memory can only have names that are a maximum of 8 characters long.
+* If you are adding a module using a Templated String (as in the example above) be aware that **escape characters inside strings need double-escaping** - eg. `"\n"` must become `"\\n"`. To avoid doing this manually you can use the [Espruino File Converter](https://www.espruino.com/File+Converter) page.
+* The Espruino Web IDE and Command-line tools will be unaware of extra modules in Storage. When uploading code they may attempt to find the module online and re-upload it, or complain that the module is not found. Make sure there isn't a module of the same name in http://www.espruino.com/modules/
+
 
 #### Load Module from NPM
 

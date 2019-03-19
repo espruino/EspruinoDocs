@@ -82,21 +82,6 @@ mqtt.on("disconnected", function(){
 
 tinyMQTT only supports short messages. The length of the topic plus the length of the payload must be less than 128 characters. If it's longer, the library throws a `tMQTT-TL` exception.
 
-## Save & load from Storage
-
-Espruino supports saving and loading modules directly to/from storage. tinyMQTT can be used in this way, which provides for further memory optimisation should it be needed.
-
-```
-// Save to Storage 
-
-var s = require('Storage');
-s.write('tinyMQTS' , '......put tinyMQTT.min.js code here.........');
-
-// Load directly from Storage
-
-var mqtt = require('tinyMQTS');    
-```
-
 ## Credits
 
 @gfwilliams, @tve, @HyGy, @MaBecker, @gulfaraz, @The-Futur1st, @wanglingsong and @AkosLukacs. Thanks for the advice, tips, testing and pull requests!
