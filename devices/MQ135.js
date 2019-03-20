@@ -48,7 +48,7 @@ function MQ135(pin) {
  * Get the resistance of the sensor (in KOhm)
  */
 MQ135.prototype.getResistance = function() {
-  return ((1023/analogRead(this.PIN)) * 5 - 1)*this.RLOAD;
+  return ((1/analogRead(this.PIN)) * 5 - 1)*this.RLOAD;
 }
 
 /**
