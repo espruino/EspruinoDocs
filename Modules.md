@@ -17,31 +17,31 @@ Working with Modules
 
 **Note:** Module names are case **sensitive**. For example `require("WiFi")` and `require("Wifi")` do not do the same thing.
 
-### Espruino Web IDE
-
-If you're using the Espruino Web IDE or Espruino command-line tools, simply write `require("modulename")` on the right-hand side. When you click the `Send to Espruino` button, the Web IDE will automatically look online for minified versions of the modules you need, download them, and load them onto the board. You don't need an SD card or an internet connection to the Espruino board itself.
+If you're using the Espruino Web IDE or Espruino command-line tools, simply write `require("modulename")` on the right-hand side. When you click the `Send to Espruino` button, the Web IDE (or command line tools) will automatically look online for minified versions of the modules you need, download them, and load them onto the board. You don't need an SD card or an internet connection to the Espruino board itself.
 
 **Note:** The left-hand side of the IDE is a direct connection to the board itself, which the IDE does not interfere with. As such, if you type `require("modulename")` in the left-hand side then the IDE will not have a chance to dynamically load the module for you, so if it's not in Espruino you won't be able to use it. To fix that, just add `require("modulename")` to the right-hand side of the IDE (nothing else is required) and click `Send to Espruino` - the IDE will then upload that module and you'll be able to use it from the left-hand side.
 
-#### Built-in modules
+### Built-in modules
 
 Some modules come built-in to the Espruino firmware on certain boards. If this is the case then the Web IDE won't attempt to load the module and the built-in one will be used.
 
-You can check which modules your board has just connecting to it with the Web IDE, then clicking the `Settings` icon in the Web IDE, going to `Board Information` and looking at `MODULES` (the same info is available via `process.env` too).
+You can check which modules your board has just connecting to it with the Web IDE, then clicking the `Settings` icon in the Web IDE, going to `Board Information` and looking at `MODULES` (the same info is available by typing `process.env.MODULES` too).
 
 You can find more information on most of them via [Espruino's Software Reference](/Reference)
 
 If the Web IDE says `Module not found` when trying to upload a module that you know exists on your board, try reconnecting the IDE. If the IDE fails to communicate with the board when it first connects, it will be unable to get a list of the preinstalled modules and so will assume the module has to be downloaded (many pre-installed modules do not have downloadable equivalents).
 
-#### Load Module - the default mechanism
+### Espruino Modules
 
-If you are using the Web IDE as is, the modules will be loaded from [http://www.espruino.com/modules/](http://www.espruino.com/modules/). This URL can be changed in Web IDE settings.
+If you are using the Web IDE or command-line tools as is, the modules will be loaded from [http://www.espruino.com/modules/](http://www.espruino.com/modules/) (which is a curated set of modules in https://github.com/espruino/EspruinoDocs). This URL can be changed in Web IDE settings.
 
 To save space, most modules are provided as a minified version and the Web IDE tries to load minified versions first with default configuration (this can be changed in `Settings -> Communications -> Module Extensions`).
 
 For example, using ```require("ADNS5050");``` will make the Web IDE load the minified module from [http://www.espruino.com/modules/ADNS5050.min.js](http://www.espruino.com/modules/ADNS5050.min.js).
 
-#### Load Module from Github (or anywhere on the internet)
+If you need to use modules while not connected to the internet, `Settings -> Offline Mode` allows you to download all available modules for offline use.
+
+### from Github (or anywhere on the internet)
 
 You can type a URL into require, so you can actually just pull a module right off GitHub:
 
@@ -55,11 +55,11 @@ You can even look at the history of something on GitHub, and can then require a 
 require("https://github.com/espruino/EspruinoDocs/blob/d4996cb3179abe260c030ed02bcb0d2384db6bbd/devices/PCD8544.js");
 ```
 
-The URL comes from clicking ```<>``` by the commit you were interested in.
+The URL comes from clicking ```<>``` by the commit you were interested in in GitHub.
 
 **Note:** You can use any URL, however because the Web IDE runs in a browser, the server that you access files from must have [Cross Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) headers enabled.
 
-#### Modules from Storage
+### from Storage
 
 On Espruino `2v00` and above on devices with enough memory you can write a
 module to Espruino's flash memory using the built-in [`Storage`](http://www.espruino.com/Reference#Storage) module. It'll then be loaded automatically by Espruino:
@@ -73,20 +73,25 @@ print(require("answer").get());
 // prints 42
 ```
 
-**Note:** 
+**Note:**
 
 * Modules written to Espruino's flash memory can only have names that are a maximum of 8 characters long.
 * If you are adding a module using a Templated String (as in the example above) be aware that **escape characters inside strings need double-escaping** - eg. `"\n"` must become `"\\n"`. To avoid doing this manually you can use the [Espruino File Converter](https://www.espruino.com/File+Converter) page.
 * The Espruino Web IDE and Command-line tools will be unaware of extra modules in Storage. When uploading code they may attempt to find the module online and re-upload it, or complain that the module is not found. Make sure there isn't a module of the same name in http://www.espruino.com/modules/
 
 
-#### Load Module from NPM
+### from NPM
 
-Earlier there was a beta option in Web IDE to load modules from the NPM repository. After some testing it was removed (The vast majority of NPM modules are just too large to fit in a microcontroller with their dependencies).
+There was a beta option in Web IDE to load modules from the NPM repository. After some testing it was removed (The vast majority of NPM modules are just too large to fit in a microcontroller with their dependencies).
 
-#### Load Module from local folder
+If you require NPM modules we'd recommend that you use a tree-shaking/bundling
+system like [`rollup`](https://rollupjs.org) to bundle your NPM modules into one
+file, and then use the [Espruino command-line tools](https://www.npmjs.com/package/espruino)
+to upload it.
 
-If you are using a local project folder, the Web IDE will automatically create an empty modules folder inside. Put a module there and you can load it with ```require("myCustomModule");```.
+### from a local folder
+
+If you set a project folder with `Web IDE -> Settings -> Project`, the Web IDE will automatically create an empty `modules` folder inside it. Put a module there and you can load it with ```require("myCustomModule");```.
 
 With default Web IDE configuration, it will look for modules following this order:
 
@@ -99,19 +104,26 @@ If your own module has the same name as one of the existing ones, the Web IDE wi
 
 If you need it anyway, you can provide a local minified version or you can change the Web IDE configuration from ```.min.js|.js``` to ```.js|.min.js``` or even ```myCustomModule.js|.min.js|.js``` to get it working.
 
-### Stand-alone Espruino
+**Note:** When the Web IDE is running in the browser it cannot access any
+folders on your local computer, so the `Projects` functionality is disabled.
+
+### from SD card
 
 If you have an Espruino with an SD card (but you're not using the Web IDE), you can copy the modules you need into a directory called 'node_modules' on the SD card. Now, whenever you write ``` require("modulename") ``` the module will be used.
 
-### Internet-enabled Espruino
+If you don't have an SD card, see `Modules from Storage` above.
 
-Right now there isn't a way to make Espruino automatically load a module from the internet when required without the Web IDE. This may be added in the future, but the fact that `require` is synchronous while network connections are asynchronous makes this difficult to do reliably until `yield` is added into the interpreter.
+### from the Internet
 
-Until then, the following asyncronous code will dynamically load a module from the internet on demand.
+The Web IDE or command-line tools will load modules from the internet automatically when you upload - see `Espruino modules` above.
+
+However an Internet-connected Espruino device can't automatically load a modules from the internet by itself because `require` is synchronous while network connections are asynchronous.
+
+However you can use the following asyncronous code to load a module from the internet on demand.
 
 ```
 function loadModule(moduleName, callback) {
-  require("http").get("http://www.espruino.com/modules/"+moduleName+".js", function(res) {
+  require("http").get("http://www.espruino.com/modules/"+moduleName+".min.js", function(res) {
     var contents = "";
     res.on('data', function(data) { contents += data; });
     res.on('close', function() {
@@ -122,6 +134,14 @@ function loadModule(moduleName, callback) {
     console.log("ERROR", e);
   });
 }
+
+// for example:
+loadModule("PCD8544", function() { // loads PCD8544.min.js
+  SPI1.setup({ sck:B3, mosi:B5 });
+  var g = require("PCD8544").connect(SPI1, B6 /*DC*/, B7 /*CE*/, B8 /*RST*/, function() {
+    ...
+  });
+});
 ```
 
 
