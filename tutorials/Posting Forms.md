@@ -86,7 +86,7 @@ function onPageRequest(req, res) {
     // handle the '/' (root) page...
     // If we had a POST, handle the data we're being given
     if (req.method=="POST" &&
-        req.headers["Content-Type"] == "application/x-www-form-urlencoded" )
+        req.headers["Content-Type"]=="application/x-www-form-urlencoded")
       handlePOST(req, function() { sendPage(res); });
     else
       sendPage(res);
