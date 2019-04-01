@@ -10,6 +10,8 @@ Graphical Menu
 This is a very simple, lightweight menu library ([[graphical_menu.js]]) for displays that use
 Espruino's [[Graphics]] library.
 
+**NOTE:** This is the menu library used by the [`Pixl.menu()`](/Reference#l_Pixl_menu) command on [Pixl.js](/Pixl.js)
+
 Simply use it as follows:
 
 ```

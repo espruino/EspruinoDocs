@@ -185,7 +185,9 @@ default, so any calls like `print("Hello")` or `console.log("World")` will outpu
 to the LCD when there is no computer connected via Bluetooth or [Serial](#serial-console).
 Any errors generated when there is no connection will also be displayed on the LCD.
 
-You can also output graphics on Pixl.js's display via the global variable `g`
+### Graphics
+
+You can output graphics on Pixl.js's display via the global variable `g`
 that is an instance of the [Graphics class](/Reference#Graphics). The display
 is double-buffered, so when you want the changes you made to be displayed
 you need to call `g.flip()`:
@@ -204,6 +206,49 @@ g.flip();
 `g.flip()` only updates the area of the screen that has been
 modified by `Graphics` commands. If you're modifying the underlying buffer
 (`g.buffer`) then use `g.flip(true)` to update the entire screen contents.
+
+### Menus
+
+Pixl.js comes with a built-in menu library that can be accessed with the [`Pixl.menu()`](/Reference#l_Pixl_menu) command.
+
+```
+// Two variables to update
+var boolean = false;
+var number = 50;
+// First menu
+var mainmenu = {
+  "" : {
+    "title" : "-- Main Menu --"
+  },
+  "Backlight On" : function() { LED1.set(); },
+  "Backlight Off" : function() { LED1.reset(); },
+  "Submenu" : function() { Pixl.menu(submenu); },
+  "A Boolean" : {
+    value : boolean,
+    format : v => v?"On":"Off",
+    onchange : v => { boolean=v; }
+  },
+  "A Number" : {
+    value : number,
+    min:0,max:100,step:10,
+    onchange : v => { number=v; }
+  },
+  "Exit" : function() { Pixl.menu(); },
+};
+// Submenu
+var submenu = {
+  "" : {
+    "title" : "-- SubMenu --"
+  },
+  "One" : undefined, // do nothing
+  "Two" : undefined, // do nothing
+  "< Back" : function() { Pixl.menu(mainmenu); },
+};
+// Actually display the menu
+Pixl.menu(mainmenu);
+```
+
+See http://www.espruino.com/graphical_menu for more detailed information.
 
 ### Contrast
 
