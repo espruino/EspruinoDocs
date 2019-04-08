@@ -9,12 +9,27 @@ Nordic Thingy:52
 
 ![Nordic Thingy:52](Thingy52/board.jpg)
 
-The Nordic Thingy:52® is a compact, power-optimized, multi-sensor development kit. It is an easy-to-use development platform, designed to help you build IoT prototypes and demos, without the need to build hardware or write firmware.
+The Nordic Thingy:52 is a compact, power-optimized, multi-sensor development kit. It is an easy-to-use development platform, designed to help you build IoT prototypes and demos, without the need to build hardware or write firmware.
+
+
+AS OF APRIL 2019, THERE ARE NO MORE ESPRUINO BUILDS FOR THIS BOARD
+------------------------------------------------------------------
+
+Nordic has decided they no longer want to support Espruino on these boards,
+and so cutting edge and distribution firmware builds stopped at version 2.01.
+You *may* still be able to build yourself from the source on
+[GitHub](http://github.com/espruino/Espruino) but this is not guaranteed.
+
+If you'd like this board supported again, please ask [Nordic on Twitter](https://twitter.com/NordicTweets).
+With enough persuasion from the community they may decide that it is
+worth continuing.
+
 
 Contents
 --------
 
 * APPEND_TOC
+
 
 Features
 --------
