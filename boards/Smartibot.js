@@ -18,7 +18,7 @@ exports.setLEDs = function(l,r) {
   if (!r)r=l; // if no right eye, re-use left
   var a = new Uint8Array(16);
   a[4]=255;a[8]=255;a.fill(255,12);
-  a.set(l,5);a.set(r,9);
+  a.set([l[2],l[1],l[0]],5);a.set([r[2],r[1],r[0]],9);
   var s = new SPI();
   s.setup({mosi:D8,sck:D7});
   s.write(a);
