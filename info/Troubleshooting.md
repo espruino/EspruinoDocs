@@ -252,7 +252,7 @@ This is because you're printing information to the console.
 
 When you are not connected to a computer via USB, Espruino automatically moves the console (left-hand side of the IDE) to the Serial port. However when you are connected to a computer, Espruino writes down USB. **If no terminal application is running on your computer** then your computer won't accept any incoming data down USB, and Espruino can't tell whether that is because the IDE is connected but busy, or because no app is running at all. Espruino won't throw away any of the data that you send down USB, so when Espruino fills up its output buffer, it stops and waits for the computer to accept the data, and this is what causes your program not to work.
 
-To fix this, either remove your `console.log` and `print` statements, or explicitly set the console to be on the Serial port at startup with `function onInit() { Serial1.setConsole(true); }`. However the second option will mean that you will no longer be able to program Espruino from USB unless you reset it or you code calls `USB.setConsole();` to move the console back.
+To fix this, either remove your `console.log` and `print` statements, or explicitly set the console to be on another device at startup with `function onInit() { Serial1.setConsole(true); }`. The second option will mean that you will no longer be able to program Espruino from USB unless you reset it or you code calls `USB.setConsole();` to move the console back.
 
 A second option is to use simply call `Serial1.setConsole();` (without `true` as an argument). This will move the console to Serial1 *until USB is connected again*. Running this from `onInit` may not work, since `onInit` will likely be called at startup *before the USB connection is made with your PC*. In that case, the console will move to `Serial1`, but just a fraction of a second later, USB will connect and the console will move to USB. Instead, you could do:
 
@@ -264,6 +264,10 @@ function onInit() {
 ```
 
 This will call `setConsole` 1 second after boot, by which time USB should have initialised. Assuming your Espruino is battery powered, unplugging and replugging USB will then move the console back to USB, where the board can be programmed.
+
+**Note:** Serial ports are not generally as fast as USB - 9600 baud is only around 1000 characters/second. If your code writes a lot of data to the console then you may find it fills up the output buffer and ends up stalled waiting for characters to send. 
+
+**Note:** We're using `Serial1` and `USB` in the examples here, but depending on the board you have, you may also have access to other devices like `Serial2/3/4` or `Bluetooth`. Check out [the `Serial` class reference](/Reference#Serial) for a full list of options.
 
 
 <a name="console"></a>

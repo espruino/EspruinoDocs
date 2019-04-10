@@ -10,7 +10,7 @@ Light Dependent Resistor
 
 ![Light Sensor](LDR/GL5537.jpg)
 
-An LDR is a resistor that varies resistance with the amount of light shining on it. The GL5537 changes resistance from 25k in darkness to around 200 Ohms when lots of light shines on it.
+An LDR is a resistor that varies resistance with the amount of light shining on it. The GL5537 changes resistance from 2000 kOhms in darkness to around 20 Ohms when lots of light shines on it.
 
 Connect as follows:
 
@@ -29,7 +29,7 @@ var light = analogRead(A1);
 console.log(light);
 ```
 
-Using 
+Using
 -----
 
 * APPEND_USES: LDR
