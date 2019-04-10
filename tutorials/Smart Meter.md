@@ -86,8 +86,6 @@ To use this:
 
 ```JavaScript
 /** Create a new counter. Contains the following:
-
-```
 {
   totals : {
     count // Overall count
@@ -98,7 +96,6 @@ To use this:
   },
   history // last 96 hours, newest last (0..95)
 }
-```
 */
 function Counter() {
   this.clear();
