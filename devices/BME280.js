@@ -141,11 +141,12 @@ BME280.prototype.getData = function() {
 };
 
 exports.connect = function(i2c, options) {
-  return (new BME280(options, function(reg, len) { // read
-    i2c.writeTo(C.BME280_ADDRESS, reg);
-    return i2c.readFrom(C.BME280_ADDRESS, len);
+    var addr = (options&&options.addr)||C.BME280_ADDRESS;
+      return (new BME280(options, function(reg, len) { // read
+    i2c.writeTo(addr, reg);
+    return i2c.readFrom(addr, len);
   }, function(reg, data) { // write
-    i2c.writeTo(C.BME280_ADDRESS, [reg, data]);
+    i2c.writeTo(addr, [reg, data]);
   }));
 };
 
