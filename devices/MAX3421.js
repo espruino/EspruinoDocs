@@ -201,36 +201,18 @@ function MAX3421(spi, ss, irq) {
 
 /** 'public' constants here */
 MAX3421.prototype.C = {
-  MY : 0x013,         // description
-  PUBLIC : 0x0541,    // description
   CONSTANTS : 0x023   // description
 };
 
-/** select MAX3421 */
-MAX3421.prototype.selectMax3421 = function () {
-  digitalWrite(this.ss, LOW);
-}
-
-/** deselect MAX3421 */
-MAX3421.prototype.deselectMax3421 = function () {
-  digitalWrite(this.ss, HIGH);
-}
-
 /** Single host register write */
 MAX3421.prototype.writeRegister = function (reg, val) {
-  this.selectMax3421();
-  this.spi.send(reg + 2, this.SS)
-  this.spi.send(val, this.SS)
-  this.deselectMax3421();
+  this.spi.write([reg + 2, val], this.SS);
 }
 
 /** Single host register read */
 MAX3421.prototype.readRegister = function (reg) {
-  this.selectMax3421();
-  this.spi.send(reg + 2, this.SS)
-  var temp = this.spi.send(0, this.SS)
-  this.deselectMax3421();
-  return temp;
+  var temp = this.spi.send([reg + 2, val], this.SS);
+  return temp[1];
 }
 
 /** Single host register read */
@@ -238,7 +220,7 @@ MAX3421.prototype.reset = function () {
   var cycles = 0;
   this.writeRegister(rUSBCTL, bmCHIPRES);   //Chip reset. This stops the oscillator
   this.writeRegister(rUSBCTL, 0);           //Remove the reset
-  while () {  
+  while (readRegister(rUSBIRQ) && bmOSCOKIRQ) {  
     cycles--;
     if (cycles < 256) then
       return false;
@@ -268,6 +250,30 @@ MAX3421.prototype.vbusPower = function(action) {
   }                      
 
   return true; // power on/off successful                       
+}
+
+MAX3421.prototype.powerOn = function() {
+  /* Configure full-duplex SPI, interrupt pulse   */
+  this.writeRegister(rPINCTL, (bmFDUPSPI + bmINTLEVEL + bmGPXB));  // Full-duplex SPI, level interrupt, GPX
+  if (reset() == false) {                                          // stop/start the oscillator
+        console.error("Error: OSCOKIRQ failed to assert");
+  }
+
+  /* configure power switch   */
+  this.vbusPwr(false);                                             //turn Vbus power off
+  this.writeRegister(rGPINIEN, bmGPINIEN7);                        //enable interrupt on GPIN7 (power switch overload flag)
+  
+  if (vbusPwr(ON) == false) {
+    console.error("Error: Vbus overload");
+  }
+
+  /* configure host operation */
+  this.writeRegister(rMODE, bmDPPULLDN || bmDMPULLDN || bmHOST || bmSEPIRQ );   // set pull-downs, Host, Separate GPIN IRQ on GPX
+  this.writeRegister(rHIEN, bmCONDETIE || bmFRAMEIE );                          //connection detection
+  this.writeRegister(rHCTL,bmSAMPLEBUS);                                        // update the JSTATUS and KSTATUS bits
+  this.busprobe();                                                              //check if anything is connected
+  this.writeRegister(rHIRQ, bmCONDETIRQ);                                       //clear connection detect interrupt                 
+  this.writeRegister(rCPUCTL, 0x01);                                            //enable interrupt pin
 }
 
 /** This is 'exported' so it can be used with `require('MAX3421.js').connect(pin1,pin2)` */
