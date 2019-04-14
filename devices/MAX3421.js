@@ -1,4 +1,7 @@
-/* Copyright (c) 2019 Christian-W. Budde. See the file LICENSE for copying permission. */
+/* Copyright (c) 2019 Christian-W. Budde. See the file LICENSE for copying permission. 
+   The original source files Max3421e.* are copyright by Oleg Mazurov  (https://github.com/felis/
+*/
+
 /*
 This module interfaces to MAX3421 based USB Peripheral and Host Controller
 */
@@ -193,10 +196,11 @@ var C = {
   hrBABBLE      : 0x0F
 };
 
-function MAX3421(spi, ss, irq) {
+function MAX3421(spi, ss, reset, irq) {
   this.spi = spi;
   this.ss = ss;
   this.irq = irq;
+  this.init();
 }
 
 /** 'public' constants here */
@@ -206,64 +210,70 @@ MAX3421.prototype.C = {
 
 /** Single host register write */
 MAX3421.prototype.writeRegister = function (reg, val) {
-  this.spi.write([reg + 2, val], this.SS);
-}
+  this.spi.write([reg + 2, val], this.ss);
+};
 
 /** Single host register read */
 MAX3421.prototype.readRegister = function (reg) {
-  var temp = this.spi.send([reg + 2, val], this.SS);
+  var temp = this.spi.send([reg, 0x00], this.ss);
   return temp[1];
-}
+};
+
+/** Single host register read */
+MAX3421.prototype.init = function () {
+  digitalWrite(A0, HIGH); // deselect MAX3421
+  digitalWrite(A1, HIGH); // reset MAX3421
+};
 
 /** Single host register read */
 MAX3421.prototype.reset = function () {
   var cycles = 0;
-  this.writeRegister(rUSBCTL, bmCHIPRES);   //Chip reset. This stops the oscillator
-  this.writeRegister(rUSBCTL, 0);           //Remove the reset
-  while (readRegister(rUSBIRQ) && bmOSCOKIRQ) {  
+  this.writeRegister(C.rUSBCTL, C.bmCHIPRES);   // Chip reset. This stops the oscillator
+  this.writeRegister(C.rUSBCTL, 0);             // Remove the reset
+  while (this.readRegister(C.rUSBIRQ) && C.bmOSCOKIRQ) {
     cycles--;
-    if (cycles < 256) then
+    if (cycles < 256)
       return false;
-  };
+  }
   return true;
-}
+};
 
 MAX3421.prototype.vbusPower = function(action) {
   var tmp;
-  tmp = this.readRegister(rIOPINS2); //copy of IOPINS2
-  if (action) {                      //turn on by setting GPOUT7
-    tmp |= bmGPOUT7;
+  tmp = this.readRegister(C.rIOPINS2);  // copy of IOPINS2
+  if (action) {                         // turn on by setting GPOUT7
+    tmp |= C.bmGPOUT7;
   }
   else 
-  {                                  //turn off by clearing GPOUT7
-    tmp &= ~bmGPOUT7;
+  {                                     // turn off by clearing GPOUT7
+    tmp &= ~C.mGPOUT7;
   }
-  
-  this.writeRegister(rIOPINS2, tmp); //send GPOUT7
+
+  this.writeRegister(C.rIOPINS2, tmp); //send GPOUT7
   if (action) {
     //delay(60);
   }
-  
-  // check if overload is present. MAX4793 /FLAG ( pin 4 ) goes low if overload
-  if (this.readRegister(rIOPINS2 && bmGPIN7) == 0) {
-    return false;
-  }                      
 
-  return true; // power on/off successful                       
-}
+  // check if overload is present. MAX4793 /FLAG ( pin 4 ) goes low if overload
+  if (this.readRegister(C.rIOPINS2 && C.bmGPIN7) === 0) {
+    return false;
+  }
+
+  return true; // power on/off successful
+};
 
 MAX3421.prototype.powerOn = function() {
   /* Configure full-duplex SPI, interrupt pulse   */
-  this.writeRegister(rPINCTL, (bmFDUPSPI + bmINTLEVEL + bmGPXB));  // Full-duplex SPI, level interrupt, GPX
-  if (reset() == false) {                                          // stop/start the oscillator
+  this.writeRegister(C.rPINCTL, (C.bmFDUPSPI + C.bmINTLEVEL + C.bmGPXB));  // Full-duplex SPI, level interrupt, GPX
+  if (reset() === false) {                                                 // stop/start the oscillator
         console.error("Error: OSCOKIRQ failed to assert");
   }
 
   /* configure power switch   */
-  this.vbusPwr(false);                                             //turn Vbus power off
-  this.writeRegister(rGPINIEN, bmGPINIEN7);                        //enable interrupt on GPIN7 (power switch overload flag)
-  
-  if (vbusPwr(ON) == false) {
+  this.vbusPwr(false);                                                     //turn Vbus power off
+  this.writeRegister(C.rGPINIEN, C.bmGPINIEN7);                            //enable interrupt on GPIN7 (power switch overload flag)
+
+  if (vbusPwr(ON) === false) {
     console.error("Error: Vbus overload");
   }
 
@@ -274,9 +284,13 @@ MAX3421.prototype.powerOn = function() {
   this.busprobe();                                                              //check if anything is connected
   this.writeRegister(rHIRQ, bmCONDETIRQ);                                       //clear connection detect interrupt                 
   this.writeRegister(rCPUCTL, 0x01);                                            //enable interrupt pin
-}
+};
+
+MAX3421.prototype.queryRevision = function() {
+  return this.readRegister(C.rREVISION);
+};
 
 /** This is 'exported' so it can be used with `require('MAX3421.js').connect(pin1,pin2)` */
-exports.connect = function (spi, cs, irq) {
-  return new MAX3421(spi, ss, irq);
+exports.connect = function (spi, ss, reset, irq) {
+  return new MAX3421(spi, ss, reset, irq);
 };
