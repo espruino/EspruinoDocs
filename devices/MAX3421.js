@@ -81,7 +81,7 @@ var C = {
   bmGPIN5       : 0x20,
   bmGPIN6       : 0x40,
   bmGPIN7       : 0x80,
-              
+
   rGPINIRQ      : 0xb0,    //22<<3
 /* GPINIRQ Bits */
   bmGPINIRQ0    : 0x01,
@@ -117,7 +117,7 @@ var C = {
 
   rHIRQ         : 0xc8,   //25<<3
 /* HIRQ Bits */
-  bmBUSEVENTIRQ : 0x01,   // indicates BUS Reset Done or BUS Resume     
+  bmBUSEVENTIRQ : 0x01,   // indicates BUS Reset Done or BUS Resume
   bmRWUIRQ      : 0x02,
   bmRCVDAVIRQ   : 0x04,
   bmSNDBAVIRQ   : 0x08,
@@ -138,7 +138,6 @@ var C = {
   bmHXFRDNIE    : 0x80,
 
   rMODE         : 0xd8,    //27<<3
-
 /* MODE Bits */
   bmHOST        : 0x01,
   bmLOWSPEED    : 0x02,
@@ -163,9 +162,8 @@ var C = {
   bmSNDTOG1     : 0x80,
 
   rHXFR         : 0xf0,    //30<<3
-
 /* Host transfer token values for writing the HXFR register (R30)   */
-/* OR this bit field with the endpoint number in bits 3:0               */
+/* OR this bit field with the endpoint number in bits 3:0           */
   tokSETUP      : 0x10,  // HS=0, ISO=0, OUTNIN=0, SETUP=1
   tokIN         : 0x00,  // HS=0, ISO=0, OUTNIN=0, SETUP=0
   tokOUT        : 0x20,  // HS=0, ISO=0, OUTNIN=1, SETUP=0
@@ -181,7 +179,8 @@ var C = {
   bmKSTATUS     : 0x40,
   bmJSTATUS     : 0x80,
   bmSE0         : 0x00,    //SE0 - disconnect state
-  bmSE1         : 0xc0,    //SE1 - illegal state       
+  bmSE1         : 0xc0,    //SE1 - illegal state
+
 /* Host error result codes, the 4 LSB's in the HRSL register */
   hrSUCCESS     : 0x00,
   hrBUSY        : 0x01,
@@ -244,6 +243,7 @@ MAX3421.prototype.reset = function () {
   return true;
 };
 
+/** Turn USB power on/off */
 MAX3421.prototype.vbusPower = function(action) {
   var tmp;
   tmp = this.readRegister(C.rIOPINS2);  // copy of IOPINS2
@@ -256,22 +256,28 @@ MAX3421.prototype.vbusPower = function(action) {
   }
 
   this.writeRegister(C.rIOPINS2, tmp); //send GPOUT7
-  if (action) {
 
-    // wait for 60ms
-    var t = getTime() + 0.06;
-    while (getTime() < t);
-  }
-
-  // check if overload is present. MAX4793 /FLAG ( pin 4 ) goes low if overload
-  if (this.readRegister(C.rIOPINS2 && C.bmGPIN7) === 0) {
-    return false;
-  }
-
-  return true; // power on/off successful
+  var _this = this;
+  return new Promise(function(resolve, reject) {
+    function CheckResult() {
+      // check if overload is present. MAX4793 /FLAG ( pin 4 ) goes low if overload
+      if (_this.readRegister(C.rIOPINS2) && C.bmGPIN7 === 0) {
+        resolve(false);
+      }
+      else
+      {
+      resolve(true);
+      }
+    }
+    if (action) {
+      setTimeout(CheckResult, 60);
+    }
+    else
+      CheckResult();
+  });
 };
 
-/* probe bus to determine device presense and speed */
+/** Probe bus to determine device presense and speed and switch host to this speed */
 MAX3421.prototype.busprobe = function() {
   var bus_sample;
   bus_sample = this.readRegister(C.rHRSL);            // Get J,K status
@@ -279,106 +285,77 @@ MAX3421.prototype.busprobe = function() {
   switch (bus_sample) {                               // start full-speed or low-speed host 
         case C.bmJSTATUS:
             if ((this.readRegister(C.rMODE ) && C.bmLOWSPEED) === 0) {
-                this.writeRegister(C.rMODE, C.MODE_FS_HOST );       //start full-speed host
+                this.writeRegister(C.rMODE, C.MODE_FS_HOST );         // start full-speed host
                 this.vbusState = C.FSHOST;
             }
             else {
-                this.writeRegister(C.rMODE, C.MODE_LS_HOST);        //start low-speed host
+                this.writeRegister(C.rMODE, C.MODE_LS_HOST);          // start low-speed host
                 this.vbusState = C.LSHOST;
             }
             break;
         case C.bmKSTATUS:
-            if ((this.readRegister(C.rMODE) & bmLOWSPEED) === 0) {
-                this.writeRegister(C.rMODE, MODE_LS_HOST);       //start low-speed host
+            if ((this.readRegister(C.rMODE) && C.bmLOWSPEED) === 0) {
+                this.writeRegister(C.rMODE, C.MODE_LS_HOST);          // start low-speed host
                 this.vbusState = C.LSHOST;
             }
             else {
-                this.writeRegister(C.rMODE, MODE_FS_HOST);       //start full-speed host
+                this.writeRegister(C.rMODE, C.MODE_FS_HOST);          // start full-speed host
                 this.vbusState = C.FSHOST;
             }
             break;
-        case C.bmSE1:              //illegal state
+        case C.bmSE1:                                                 // illegal state
             this.vbusState = C.SE1;
             break;
-        case C.bmSE0:              //disconnected state
+        case C.bmSE0:                                                 // disconnected state
             this.vbusState = C.SE0;
             break;
         }//end switch( bus_sample )
 };
 
+/** MAX3421E initialization after power-on   */
 MAX3421.prototype.powerOn = function() {
   /* Configure full-duplex SPI, interrupt pulse   */
   this.writeRegister(C.rPINCTL, (C.bmFDUPSPI + C.bmINTLEVEL + C.bmGPXB));  // Full-duplex SPI, level interrupt, GPX
-  if (reset() === false) {                                                 // stop/start the oscillator
+  if (this.reset() === false) {                                            // stop/start the oscillator
         console.log("Error: OSCOKIRQ failed to assert");
-  }
-
-  /* configure power switch   */
-  this.vbusPower(false);                                                   // turn Vbus power off
-  this.writeRegister(C.rGPINIEN, C.bmGPINIEN7);                            // enable interrupt on GPIN7 (power switch overload flag)
-
-  if (this.vbusPower(true) === false) {
-    console.log("Error: Vbus overload");
   }
 
   /* configure host operation */
   this.writeRegister(C.rMODE, C.bmDPPULLDN || C.bmDMPULLDN || C.bmHOST || C.bmSEPIRQ ); // set pull-downs, Host, Separate GPIN IRQ on GPX
   this.writeRegister(C.rHIEN, C.bmCONDETIE || C.bmFRAMEIE );                            // connection detection
-  this.writeRegister(C.rHCTL, C.bmSAMPLEBUS);                                           // update the JSTATUS and KSTATUS bits
-  this.busprobe();                                                                      // check if anything is connected
-  this.writeRegister(C.rHIRQ, C.bmCONDETIRQ);                                           // clear connection detect interrupt
-  this.writeRegister(C.rCPUCTL, 0x01);                                                  // enable interrupt pin
+
+  /* check if device is connected */
+  this.writeRegister(C.rHCTL, C.bmSAMPLEBUS);              // update the JSTATUS and KSTATUS bits
+  while (!(this.readRegister(C.rHCTL) && C.bmSAMPLEBUS));  // wait for sample operation to finish
+  this.busprobe();                                         // check if anything is connected
+  this.writeRegister(C.rHIRQ, C.bmCONDETIRQ);              // clear connection detect interrupt
+  this.writeRegister(C.rCPUCTL, 0x01);                     // enable interrupt pin
 };
 
-/* MAX3421 state change task and interrupt handler */
-MAX3421.prototype.Task = function() {
-  var rcode = 0;
-  var pinvalue;
-
-  pinvalue = digitalRead(this.irq);
-  if (pinvalue  === LOW) {
-    rcode =this.IntHandler();
-  }
-
-  pinvalue = digitalRead(this.gpx);
-  if( pinvalue == LOW ) {
-        GpxHandler();
+MAX3421.prototype.registerInteruptHandler = function(callback) {
+  setWatch(function() {
+    var HIRQ_sendback = 0x00;
+    var HIRQ = this.readRegisters(C.rHIRQ);    // determine interrupt source
+    if (HIRQ && C.bmFRAMEIRQ) {                // -> 1ms SOF interrupt handler
+      HIRQ_sendback |= C.bmFRAMEIRQ;
     }
-  return rcode;
+
+    if (HIRQ && C.bmCONDETIRQ) {
+      this.busprobe();
+      HIRQ_sendback |= C.bmCONDETIRQ;
+    }
+
+    /* End HIRQ interrupts handling, clear serviced IRQs    */
+    this.writeRegister(C.rHIRQ, HIRQ_sendback);
+    callback(HIRQ_sendback);
+   }, this.irq, { repeat:true, edge:"falling" });
 };
 
-
-MAX3421.prototype.IntHandler = function() {
-  var HIRQ;
-  var HIRQ_sendback = 0x00;
-  HIRQ = regRd( rHIRQ );                  // determine interrupt source
-  if (HIRQ & bmFRAMEIRQ) {                // ->1ms SOF interrupt handler
-    HIRQ_sendback |= bmFRAMEIRQ;
-  }
-
-  if( HIRQ & bmCONDETIRQ ) {
-    this.busprobe();
-    HIRQ_sendback |= bmCONDETIRQ;
-  }
-
-  /* End HIRQ interrupts handling, clear serviced IRQs    */
-  this.writeRegister(C.rHIRQ, HIRQ_sendback);
-  return HIRQ_sendback;
-};
-
-MAX3421.prototype.GpxHandler = function() {
-  var GPINIRQ = this.readRegisters(C.rGPINIRQ); // read GPIN IRQ register
-  if( GPINIRQ & C.bmGPINIRQ7 ) {                // vbus overload
-    this.vbusPower(false);                      // attempt powercycle
-
-    // wait for 1s
-    var t = getTime() + 1;
-    while (getTime() < t);
-
-    this.vbusPower(true);
-    this.writeRegister(C.rGPINIRQ, C.bmGPINIRQ7);
-  }
-  return GPINIRQ;
+MAX3421.prototype.registerStateChangeHandler = function(callback) {
+  setWatch(function() {
+    // read GPIN IRQ register
+    callback(this.readRegisters(C.rGPINIRQ));
+  }, this.gpx, { repeat:true, edge:"falling" });
 };
 
 MAX3421.prototype.queryRevision = function() {
