@@ -197,7 +197,10 @@ var C = {
   hrKERR        : 0x0C,
   hrJERR        : 0x0D,
   hrTIMEOUT     : 0x0E,
-  hrBABBLE      : 0x0F
+  hrBABBLE      : 0x0F,
+
+  MODE_FS_HOST  : 0xC3,
+  MODE_LS_HOST  : 0xCB
 };
 
 function MAX3421(spi, ss, reset, irq, gpx) {
@@ -215,7 +218,7 @@ MAX3421.prototype.getVbusState = function() {
 
 /** Single host register write */
 MAX3421.prototype.writeRegister = function (reg, val) {
-  this.spi.write([reg + 2, val], this.ss);
+  this.spi.write([reg | 2, val], this.ss);
 };
 
 /** Single host register read */
@@ -235,7 +238,7 @@ MAX3421.prototype.reset = function () {
   var cycles = 0;
   this.writeRegister(C.rUSBCTL, C.bmCHIPRES);   // Chip reset. This stops the oscillator
   this.writeRegister(C.rUSBCTL, 0);             // Remove the reset
-  while (this.readRegister(C.rUSBIRQ) && C.bmOSCOKIRQ) {
+  while (this.readRegister(C.rUSBIRQ) & C.bmOSCOKIRQ) {
     cycles--;
     if (cycles < 256)
       return false;
@@ -261,7 +264,7 @@ MAX3421.prototype.vbusPower = function(action) {
   return new Promise(function(resolve, reject) {
     function CheckResult() {
       // check if overload is present. MAX4793 /FLAG ( pin 4 ) goes low if overload
-      if (_this.readRegister(C.rIOPINS2) && C.bmGPIN7 === 0) {
+      if (_this.readRegister(C.rIOPINS2) & C.bmGPIN7 === 0) {
         resolve(false);
       }
       else
@@ -280,12 +283,14 @@ MAX3421.prototype.vbusPower = function(action) {
 /** Probe bus to determine device presense and speed and switch host to this speed */
 MAX3421.prototype.busprobe = function() {
   var bus_sample;
-  bus_sample = this.readRegister(C.rHRSL);            // Get J,K status
-  bus_sample &= (C.bmJSTATUS || C.bmKSTATUS);         // zero the rest of the byte
-  switch (bus_sample) {                               // start full-speed or low-speed host 
+
+  bus_sample = this.readRegister(C.rHRSL);   // Get J,K status
+  bus_sample &= (C.bmJSTATUS | C.bmKSTATUS); // zero the rest of the byte
+
+  switch (bus_sample) {                      // start full-speed or low-speed host
         case C.bmJSTATUS:
-            if ((this.readRegister(C.rMODE ) && C.bmLOWSPEED) === 0) {
-                this.writeRegister(C.rMODE, C.MODE_FS_HOST );         // start full-speed host
+            if ((this.readRegister(C.rMODE) & C.bmLOWSPEED) === 0) {
+                this.writeRegister(C.rMODE, C.MODE_FS_HOST);         // start full-speed host
                 this.vbusState = C.FSHOST;
             }
             else {
@@ -294,7 +299,7 @@ MAX3421.prototype.busprobe = function() {
             }
             break;
         case C.bmKSTATUS:
-            if ((this.readRegister(C.rMODE) && C.bmLOWSPEED) === 0) {
+            if ((this.readRegister(C.rMODE) & C.bmLOWSPEED) === 0) {
                 this.writeRegister(C.rMODE, C.MODE_LS_HOST);          // start low-speed host
                 this.vbusState = C.LSHOST;
             }
@@ -315,32 +320,33 @@ MAX3421.prototype.busprobe = function() {
 /** MAX3421E initialization after power-on   */
 MAX3421.prototype.powerOn = function() {
   /* Configure full-duplex SPI, interrupt pulse   */
-  this.writeRegister(C.rPINCTL, (C.bmFDUPSPI + C.bmINTLEVEL + C.bmGPXB));  // Full-duplex SPI, level interrupt, GPX
-  if (this.reset() === false) {                                            // stop/start the oscillator
+  this.writeRegister(C.rPINCTL, C.bmFDUPSPI | C.bmGPXB);  // Full-duplex SPI, GPX
+  if (this.reset() === false) {                           // stop/start the oscillator
         console.log("Error: OSCOKIRQ failed to assert");
   }
 
   /* configure host operation */
-  this.writeRegister(C.rMODE, C.bmDPPULLDN || C.bmDMPULLDN || C.bmHOST || C.bmSEPIRQ ); // set pull-downs, Host, Separate GPIN IRQ on GPX
-  this.writeRegister(C.rHIEN, C.bmCONDETIE || C.bmFRAMEIE );                            // connection detection
+  this.writeRegister(C.rMODE, C.bmHOST); // set host mode
+  this.writeRegister(C.rMODE, C.bmDPPULLDN | C.bmDMPULLDN | C.bmHOST | C.bmSEPIRQ); // set pull-downs, host and separate GPIN IRQ on GPX
+  this.writeRegister(C.rHIEN, C.bmCONDETIE | C.bmFRAMEIE);                            // connection detection
 
   /* check if device is connected */
-  this.writeRegister(C.rHCTL, C.bmSAMPLEBUS);              // update the JSTATUS and KSTATUS bits
-  while (!(this.readRegister(C.rHCTL) && C.bmSAMPLEBUS));  // wait for sample operation to finish
-  this.busprobe();                                         // check if anything is connected
-  this.writeRegister(C.rHIRQ, C.bmCONDETIRQ);              // clear connection detect interrupt
-  this.writeRegister(C.rCPUCTL, 0x01);                     // enable interrupt pin
+  this.writeRegister(C.rHCTL, C.bmSAMPLEBUS);                  // update the JSTATUS and KSTATUS bits
+  while ((this.readRegister(C.rHCTL) & C.bmSAMPLEBUS) === 0);  // wait for sample operation to finish
+  this.busprobe();                                             // check if anything is connected
+  this.writeRegister(C.rHIRQ, C.bmCONDETIRQ);                  // clear connection detect interrupt
+  this.writeRegister(C.rCPUCTL, C.bmIE);                       // enable interrupt pin
 };
 
 MAX3421.prototype.registerInteruptHandler = function(callback) {
   setWatch(function() {
     var HIRQ_sendback = 0x00;
     var HIRQ = this.readRegisters(C.rHIRQ);    // determine interrupt source
-    if (HIRQ && C.bmFRAMEIRQ) {                // -> 1ms SOF interrupt handler
+    if (HIRQ & C.bmFRAMEIRQ) {                // -> 1ms SOF interrupt handler
       HIRQ_sendback |= C.bmFRAMEIRQ;
     }
 
-    if (HIRQ && C.bmCONDETIRQ) {
+    if (HIRQ & C.bmCONDETIRQ) {
       this.busprobe();
       HIRQ_sendback |= C.bmCONDETIRQ;
     }
@@ -348,14 +354,14 @@ MAX3421.prototype.registerInteruptHandler = function(callback) {
     /* End HIRQ interrupts handling, clear serviced IRQs    */
     this.writeRegister(C.rHIRQ, HIRQ_sendback);
     callback(HIRQ_sendback);
-   }, this.irq, { repeat:true, edge:"falling" });
+   }, this.irq, { repeat:true, edge:"rising" });
 };
 
 MAX3421.prototype.registerStateChangeHandler = function(callback) {
   setWatch(function() {
     // read GPIN IRQ register
     callback(this.readRegisters(C.rGPINIRQ));
-  }, this.gpx, { repeat:true, edge:"falling" });
+  }, this.gpx, { repeat:true, edge:"rising" });
 };
 
 MAX3421.prototype.queryRevision = function() {
