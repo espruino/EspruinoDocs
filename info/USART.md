@@ -125,6 +125,12 @@ s.setup(9600,{rx:a_pin, tx:a_pin});
 
 This can be used on any pin, and you can have multiple instances of Software serial ports. However software serial doesn't use `ck`, `cts`, `parity`, `flow` or `errors` parts of the initialisation object.
 
+**NOTE:** As software serial doesn't use dedicated hardware there are some compromises:
+
+* Baud rates significantly above 9600 baud are unlikely to be reliable
+* Sending more than one or two characters will block execution of other JavaScript code until completion (hardware serial ports have a ~100 byte transmit buffer)
+* Software serial reception will become increasingly unreliable the higher the CPU load.
+
 
 <a name="ConsoleSerial"></a>
 Console/REPL over serial
