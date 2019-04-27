@@ -149,5 +149,10 @@ In my tests neither pulling the "Set" or "Reset" pin is low-power enough, so it'
 # UART control
 Theoretically you can control the module via UART, but couldn't find an english datasheet describing it.
 
+Reference
+---------
+
+* APPEND_JSDOC: PmsDriver.js
+
 # Buying
 You can buy it from china, for example from Aliexpress: [only the sensor](https://www.aliexpress.com/store/product/PLANTOWER-Laser-PM2-5-DUST-SENSOR-PMS7003-G7-High-precision-laser-dust-concentration-sensor-digital-dust/1725971_32639894148.html) 12-13$, or [with adapter cable](https://www.aliexpress.com/store/product/PLANTOWER-Laser-PM2-5-DUST-SENSOR-PMS7003-G7-Thin-shape-Laser-digital-PM2-5-sensor-Inculd/1725971_32784279004.html) 17-18$.
