@@ -2,9 +2,11 @@
 PMS7003 Particulate matter sensor
 =================================
 
-* KEYWORDS: Module, Plantower, PMS7003, Particulate matter sensor, Air quality
+* KEYWORDS: Module, Plantower, PMS7003, PMS5003, Particulate matter sensor, Air quality, IAQ
 
-A minimal driver for the Plantower PMS 7003 particulate matter sensor with UART output. Might work with other Plantower sensors that use the same protocol. Use the [PmsDriver](/modules/PmsDriver.js) ([About Modules](/Modules)) module for it.
+A minimal driver for the Plantower PMS 7003 particulate matter sensor with [[Serial]] output. Might work with Plantower PMS5003 that uses the same protocol, but not tested. Use the [PmsDriver](/modules/PmsDriver.js) ([About Modules](/Modules)) module for it.
+
+Here is an english translation of the [Datasheet](/datasheets/PMS7003.pdf).
 
 
 For minimal configuration, you only need to provide power (5V) to the PMS sensor, and it automatically sends measurements. Hook up it's TX pin to an Espruino's serial RX pin and you are good to go!
@@ -13,8 +15,11 @@ For minimal configuration, you only need to provide power (5V) to the PMS sensor
 
 The connector on the sensor itself is tiny, 2x5 pin, 1.27mm pitch. Soldering does take some time. `Pin1` is the one closest to the corner.
 The seller may offer an adapter cable, that's probably easier to use.
+The fan in the sensor uses 5 volt, but all of it's communication lines are 3.3v.
 
 ## Connect via 10pin connector on the sensor
+
+![PMS7003 pins](PMS7003/PMS7003_pins.gif)
 
 | Device Pin  | Espruino       |
 | ----------- | -------------- |
@@ -31,6 +36,7 @@ The seller may offer an adapter cable, that's probably easier to use.
 
 You can leave all other pins unconnected, they have internal pull-ups.
 The sensor automaticallly starts sending data, I measured a varying power consumption between 25-50mA.
+
 
 ## Connect via seller supplied cable
 Check the seller's description for pinout!
@@ -65,6 +71,8 @@ And the sensor sends a new set of data every 800-900ms.
     dAtm: PmData         // Under atmospheric environment
 }
 ```
+
+According to the information on [AQICN](http://aqicn.org/sensor/pms5003-7003/), the "Atmospheric environment" data should be used.
 
 PmData is an object with the following properties:
 ```
@@ -147,7 +155,7 @@ The "On" current varies in each 800-900ms cycle, but don't have the equipment to
 In my tests neither pulling the "Set" or "Reset" pin is low-power enough, so it's probably better to just cut power to the sensor, if you want to save power. The sensor just start sending data again after 2-3 seconds. Probably you should discard the first couple of measurements after power-on.
 
 # UART control
-Theoretically you can control the module via UART, but couldn't find an english datasheet describing it.
+Theoretically you can control the module via UART, but couldn't find enough info.
 
 Reference
 ---------

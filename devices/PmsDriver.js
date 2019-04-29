@@ -71,7 +71,14 @@ PmsDriver.prototype.onSerial = function(sd) {
     });
 }
 
-
+/** Returns a new PmsDriver object that handles the data coming from the PMS7003.
+ ```
+ serialPort: Serial - a serial port, can be hw or sw serial. Required.
+ rxPin: Pin - The rx pin for the serial port. Required.
+ callback: function - callback to be called with the data.
+ details: boolean - should the callback include the raw data from the sensor? Optional.
+ ```
+ */
 exports.connect = function(serialPort, rxPin, callback, details) {
     return new PmsDriver(serialPort, rxPin, callback, details);
 }
