@@ -30,6 +30,7 @@ Useful Code
 * [Counting up and down on a Web page with a Puck.js](http://forum.espruino.com/conversations/326269/)
 * [Using Tween.js in Espruino](http://forum.espruino.com/conversations/326659/#comment14458738)
 * [Mirroring Pixl.js's display over Web Bluetooth](https://medium.com/@urish/mirroring-lcd-display-over-web-bluetooth-bb9ff2cb5d30)
+* [Xiaomi sensors/appliances, eg. Plant Moisture Sensor](http://forum.espruino.com/conversations/333218)
 
 Common Issues and Questions
 ---------------------------
