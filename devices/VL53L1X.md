@@ -1,8 +1,10 @@
 <!--- Copyright (c) 2019 Jose A. Hurtado. See the file LICENSE for copying permission. -->
+VL53L1X
+=========
 
-# VL53L1X
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/VL53L1X. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
--   KEYWORDS: Module,Laser,Range,Distance,VL53L1X,VL53L0X,53L0A1,VL53L0A1,I2C,Sensor
+* KEYWORDS: Module,Laser,Range,Distance,VL53L1X,VL53L0X,53L0A1,VL53L0A1,I2C,Sensor
 
 ![](VL53L1X/chip.jpg)
 
@@ -11,7 +13,8 @@ laser-ranging sensor, enhancing the ST FlightSense™ product family. It is the
 fastest miniature ToF sensor on the market with accurate ranging up to 4 m and
 fast ranging frequency up to 50 Hz."
 
-## Wiring
+Wiring
+-------
 
 The wiring is the same than any other I2C module. Most of the already available
 modules also have pins for shutdown (`SHUT`) and an interrupt (`GPIO1`).
@@ -29,7 +32,8 @@ You need to wire up as follows:
 | 5   | VDD   | 3.3v         |
 | 6   | GND   | GND          |
 
-## Software
+Software
+---------
 
 You can use the [[VL53L1X.js]] module with the VL53L1X as follows:
 
@@ -56,7 +60,7 @@ delay between powering the VL53L1X on and using it).
 
 ### VL53L0X Compatibility
 
-The API of the module is partially compatible with VL53L0X. Just
+The API of the module is partially compatible with the [VL53L0X module](/VL53L0X). Just
 replace `require("VL53L0X")` by `require("VL53L1X")` in your code
 and it should work. The function `performSingleMeasurement` is
 provided as an alias of `readMeasurement` in order to keep the
@@ -64,7 +68,7 @@ backward compatibility.
 
 ## Reference
 
--   APPEND_JSDOC: VL53L1X.js
+* APPEND_JSDOC: VL53L1X.js
 
 ## Buying
 
