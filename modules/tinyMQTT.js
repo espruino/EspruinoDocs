@@ -46,12 +46,10 @@ function mqCon(id){
 		flags |= ( _q.usr && _q.pwd )? 0x40 : 0;
 		payload += mqStr(_q.usr) + mqStr(_q.pwd);
 	}
-	flags = sFCC(parseInt(flags.toString(16), 16));
 	return mqPkt(0b00010000,
 		mqStr("MQTT")/*protocol name*/+
-		"\x04"/*protocol level*/+
-		flags/*flags*/+
-		"\xFF\xFF"/*Keepalive*/, payload);
+		sFCC(4/*protocol level*/,flags,255,255/*Keepalive*/),
+		payload);
 }
 
 TMQ.prototype._scktClosed = function(){
@@ -71,7 +69,7 @@ TMQ.prototype.connect = function(){
 			_q.cn = true;
 			_q.x1 = setInterval(function(){
 				if(_q.cn)
-					_q.cl.write(sFCC(12<<4)+sFCC(0));
+					_q.cl.write(sFCC(12<<4, 0));
 			}, _q.ka<<10);
 			_q.cl.on("data", onDat.bind(_q));
 			_q.cl.on("end", _q._scktClosed);
@@ -108,7 +106,7 @@ TMQ.prototype.publish = function(topic, data) {
 TMQ.prototype.disconnect = function() {
 	if(_q.cn){
 		try{
-			_q.cl.write(sFCC(14<<4)+sFCC(0));
+			_q.cl.write(sFCC(14<<4, 0));
 		}catch(e){
 			_q._scktClosed();
 		}
