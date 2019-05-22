@@ -4,13 +4,54 @@ Espruino Debugger
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Debugger. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Debug,Debugger,Finding Problems
+* KEYWORDS: Debug,Debugger,Debugging,Finding Problems
 
 [[http://youtu.be/2ODoIpnTDA4]]
 
 As of Espruino 1v81, there is now a built-in text mode debugger, which allows you to step through your code line by line. The commands used are almost identical to those in GDB.
 
 **Note:** If you have a board with very little flash memory (128kB or less) the debugger may not be included in your build. However it *is* available for all official Espruino boards.
+
+
+Debugging when not connected
+----------------------------
+
+Often you may encounter an issue where you device stops working after hours or days of use, where it's not practical to keep it connected to a computer.
+
+In these cases you can log any data that gets printed (including exceptions) to a variable:
+
+```
+var log="";
+LoopbackB.on('data',d=>log+=d);
+// On Bluetooth devices, use:
+NRF.on('disconnect', function() { LoopbackA.setConsole(); }); 
+```
+
+On Bluetooth devices you can hook onto the 'disconnected' event and can call `LoopbackA.setConsole();` but on other devices you will need to do it manually (for instance in `onInit()`).
+
+You can then connect, and call `print(log)` to see what was output while you were disconnected - will will include any exceptions with stack traces.
+
+**Note:** Since we're just adding to a variable, repeated console output will increase the size of the variable until you run out of memory - so for anything more than simple debugging you may want to modify `LoopbackB.on('data', ...)` to limit the size of `log`.
+
+You can also just log exceptions, for example:
+
+```
+var lastError;
+process.on('uncaughtException', function(e) { 
+  lastError=e; 
+  print(e,e.stack?"\n"+e.stack:"")
+});
+
+function checkError() {
+  if (!lastError) return print("No Error");
+  print(lastError,lastError.stack?"\n"+lastError.stack:"")
+}
+```
+
+You can now connect and call `checkError()` to see if there was an error, including the stack trace.
+
+**Note:** Adding an `uncaughtException` handler will stop Espruino reporting exceptions to the console, which is why we've added the `print` in the handler.
+
 
 Entering the debugger
 -------------------
