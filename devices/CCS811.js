@@ -1,57 +1,68 @@
 /* Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 
 const C = {
-  WHO_AM_I_VALUE: 0x81,
+  /** The value of the WHO_AM_I register: 0x81 */
+  WHIV: 0x81,
 
   // STATUS_ERROR: 0x01,
-  STATUS_DATA_READY: 0x08,
+  /** STATUS_DATA_READY */
+  SDRD: 0x08,
   // STATUS_APP_VALID: 0x10,
-  STATUS_FW_MODE: 0x80,
+  /** STATUS_FW_MODE */
+  SFM: 0x80,
 
   // MEAS_MODE_INT_THRESH: 0x04,
-  MEAS_MODE_INT_DATARDY: 0x08,
-  /** Mode 0 – Idle (Measurements are disabled in this mode) */
-  MEAS_MODE_DRIVE_MODE_IDLE: 0x00,
-  /** Mode 1 – Constant power mode, IAQ measurement every second */
-  MEAS_MODE_DRIVE_MODE_1SEC: 0x10,
-  /** Mode 2 – Pulse heating mode IAQ measurement every 10 seconds */
-  MEAS_MODE_DRIVE_MODE_10SEC: 0x20,
-  /** Mode 3 – Low power pulse heating mode IAQ measurement every 60 seconds */
-  MEAS_MODE_DRIVE_MODE_60SEC: 0x30,
-  /** Mode 4 – Constant power mode, sensor measurement every 250ms */
-  MEAS_MODE_DRIVE_MODE_250MS: 0x40,
+  /** MEAS_MODE_INT_DATARDY */
+  MMID: 0x08,
 
-  BOOTLOADER_APP_START: 0xF4,
+  /** BOOTLOADER_APP_START */
+  BLAS: 0xF4,
 };
+
+const MEAS_MODE = {
+  /** Mode 0 – Idle (Measurements are disabled in this mode) */
+  IDLE: 0x00,
+  /** Mode 1 – Constant power mode, IAQ measurement every second */
+  S1: 0x10,
+  /** Mode 2 – Pulse heating mode IAQ measurement every 10 seconds */
+  S10: 0x20,
+  /** Mode 3 – Low power pulse heating mode IAQ measurement every 60 seconds */
+  S60: 0x30,
+  /** Mode 4 – Constant power mode, sensor measurement every 250ms */
+  S025: 0x40
+}
 
 const REGS = {
   /** Status register */
-  STATUS: 0x00,
+  STAT: 0x00,
 
-  /** Measurement mode and conditions register */
-  MEAS_MODE: 0x01,
+  /** MEAS_MODE Measurement mode and conditions register */
+  MEMO: 0x01,
 
-  /** Algorithm result. The most significant 2 bytes contain a ppm estimate of the equivalent CO2 (eCO2) level, and the next two bytes contain a ppb estimate of the total VOC level. */
-  ALG_RESULT_DATA: 0x02,
+  /** ALG_RESULT_DATA Algorithm result. The most significant 2 bytes contain a ppm estimate of the equivalent CO2 (eCO2) level, and the next two bytes contain a ppb estimate of the total VOC level. */
+  ARD: 0x02,
 
   /** Environment Data register */
-  ENV_DATA: 0x05,
+  ENVD: 0x05,
+
+  /** Baseline register. The encoded current baseline value can be read. A previously saved encoded baseline can be written. */
+  BASE: 0x11,
 
   /** Hardware ID. The value is 0x81 */
-  WHO_AM_I: 0x20,
+  WHOI: 0x20,
 
-  /** If the correct 4 bytes (0x11 0xE5 0x72 0x8A) are written to this register in a single sequence the device will reset and return to BOOT mode. */
-  SW_RESET: 0xFF,
+  /** SW_RESET If the correct 4 bytes (0x11 0xE5 0x72 0x8A) are written to this register in a single sequence the device will reset and return to BOOT mode. */
+  SW_R: 0xFF,
 };
 
 /** Get the value for the drive mode register. */
 function getDriveMode(mode) {
   switch (mode) {
-    case 0: return C.MEAS_MODE_DRIVE_MODE_IDLE;
-    case 1: return C.MEAS_MODE_DRIVE_MODE_1SEC;
-    case 2: return C.MEAS_MODE_DRIVE_MODE_10SEC;
-    case 3: return C.MEAS_MODE_DRIVE_MODE_60SEC;
-    case 4: return C.MEAS_MODE_DRIVE_MODE_250MS;
+    case 0: return MEAS_MODE.IDLE;
+    case 1: return MEAS_MODE.S1;
+    case 2: return MEAS_MODE.S10;
+    case 3: return MEAS_MODE.S60;
+    case 4: return MEAS_MODE.S025;
     default: throw "Invalid mode!" + mode;
   }
 }
@@ -78,18 +89,18 @@ function CCS811(r, w, options) {
   this.options = options || {};
   this.options.mode = this.options.mode || 1;
 
-  this.w(REGS.SW_RESET, [0x11, 0xE5, 0x72, 0x8A]); // software reset
+  this.w(REGS.SW_R, [0x11, 0xE5, 0x72, 0x8A]); // software reset
   var ccs = this;
   setTimeout(function() {
-    if (ccs.r(REGS.WHO_AM_I, 1)[0] != C.WHO_AM_I_VALUE)
+    if (ccs.r(REGS.WHOI, 1)[0] != C.WHIV)
       throw "CCS811 WHO_AM_I check failed";
     // start bootloader
-    ccs.w(C.BOOTLOADER_APP_START, []);
+    ccs.w(C.BLAS, []);
     setTimeout(function() {
-      if (!ccs.r(REGS.STATUS, 1)[0] & C.STATUS_FW_MODE)
+      if (!ccs.r(REGS.STAT, 1)[0] & C.SFM)
         throw "CCS811 not in FW mode";
 
-        ccs.setMode(ccs.options.mode);
+      ccs.setMode(ccs.options.mode);
     }, 100);
   }, 100);
 }
@@ -108,12 +119,12 @@ CCS811.prototype._setupWatch = function() {
 CCS811.prototype.stop = function() {
   this.options.mode = 0;
   if (this.watch) {this.watch = clearWatch(this.watch);}
-  this.w(REGS.MEAS_MODE, C.MEAS_MODE_DRIVE_MODE_IDLE);
+  this.w(REGS.MEMO, MEAS_MODE.IDLE);
 };
 
 // Returns true if data is available
 CCS811.prototype.available = function() {
-  return (this.r(REGS.STATUS, 1)[0] & C.STATUS_DATA_READY) != 0;
+  return (this.r(REGS.STAT, 1)[0] & C.SDRD) != 0;
 };
 
 /** Sets the mode (0 -> idle / 1 -> 1s / 2 -> 10s / 3 -> 60s)
@@ -128,12 +139,22 @@ CCS811.prototype.setMode = function(mode) {
     if (this.options.int) {
       // DRDY IRQ
       this._setupWatch();
-      this.w(REGS.MEAS_MODE, driveMode | C.MEAS_MODE_INT_DATARDY);
+      this.w(REGS.MEMO, driveMode | C.MMID);
     } else {
-      this.w(REGS.MEAS_MODE, driveMode);
+      this.w(REGS.MEMO, driveMode);
       // no interrupt
     }
-  };
+  }
+}
+
+/** Reads the BASELINE register. See AMS AN000370 for details about baseline save and restore. */
+CCS811.prototype.readBaseline = function() {
+  return this.r(REGS.BASE, 2);
+}
+
+/** Writes to the BASELINE register. See AMS AN000370 for details about baseline save and restore. */
+CCS811.prototype.writeBaseline = function(baseline) {
+  this.w(REGS.BASE, baseline);
 }
 
 /**
@@ -172,7 +193,7 @@ function convertEnvData(humidity, temperature) {
  */
 CCS811.prototype.setEnvData = function(humidity, temperature) {
   var regData = convertEnvData(humidity, temperature);
-  this.w(REGS.ENV_DATA, regData);
+  this.w(REGS.ENVD, regData);
 }
 
 /* read the current environment settings, assuming available()==true.
@@ -186,9 +207,9 @@ CCS811.prototype.setEnvData = function(humidity, temperature) {
 ec02 and TVOC values are clipped to the given ranges - so for instance you'll never see a CO2 value below 400.
 */
 CCS811.prototype.get = function() {
-  var d = this.r(REGS.ALG_RESULT_DATA, 5); // could read 8, but don't need last 3
+  var d = this.r(REGS.ARD, 5); // could read 8, but don't need last 3
   /* NOTE: STATUS is 5th data element, and can be read in a single transaction to check if there is new data */
-  var isNew = (d[4] & C.STATUS_DATA_READY) != 0;
+  var isNew = (d[4] & C.SDRD) != 0;
   return {
     eCO2: (d[0] << 8) | d[1],
     TVOC: (d[2] << 8) | d[3],
