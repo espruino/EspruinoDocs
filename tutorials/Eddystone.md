@@ -78,7 +78,7 @@ NRF.setAdvertising([
   require("ble_ibeacon").get(...),
   require("ble_eddystone").get("your_url"),
   {} // this will add a 'normal' advertising packet showing name/etc
-  ], {interval:100});
+], {interval:100});
 ```
 
 In which case Puck.js will send each advertising packet in turn.
@@ -90,4 +90,23 @@ advertising inside the Advertising Scan Response:
 
 ```
 NRF.setScanResponse(require("ble_eddystone").get("goo.gl/B3J0Oc"));
+```
+
+EddyStone UUID
+--------------
+
+Eddystone URLs are just one type of Eddystone advertising - you can also use UUIDs using `ble_eddystone_uid` - you just need to supply `namespace` and `instance` arrays as shown on https://github.com/google/eddystone/tree/master/eddystone-uid :
+
+```
+NRF.setAdvertising([
+  require("ble_eddystone_uid").get([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00], // namespace
+                                   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]), // instance
+  {} // this will add a 'normal' advertising packet showing name/etc
+], {interval:100});
+
+// or 
+
+require("ble_eddystone_uid").advertise(
+        [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],  // namespace
+        [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]); // instance
 ```
