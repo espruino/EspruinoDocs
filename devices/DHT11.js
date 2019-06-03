@@ -26,8 +26,7 @@ DHT11.prototype.read = function (cb, n) {
   setTimeout(function() {pinMode(ht.pin,'input_pullup');pinMode(ht.pin);},20);
   // stop looking after 50ms
   setTimeout(function() {
-    clearWatch(ht.watch);
-    delete ht.watch;
+    if(ht.watch){ ht.watch = clearWatch(ht.watch); }
     var cks =
         parseInt(d.substr(2,8),2)+
         parseInt(d.substr(10,8),2)+
