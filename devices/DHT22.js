@@ -16,7 +16,7 @@ function DHT22(pin) {
 
 DHT22.prototype.read = function (cb, n) {
   if (!n) n=10;
-  var d = ""; 
+  var d = "";
   var ht = this;
   digitalWrite(ht.pin, 0);
   pinMode(ht.pin,"output"); // force pin state to output
@@ -28,15 +28,14 @@ DHT22.prototype.read = function (cb, n) {
   setTimeout(function() {pinMode(ht.pin,'input_pullup');pinMode(ht.pin);},1);
   // stop looking after 50ms
   setTimeout(function() {
-    clearWatch(ht.watch);
-    delete ht.watch;
-    var cks = 
+    if(ht.watch){ ht.watch = clearWatch(ht.watch); }
+    var cks =
         parseInt(d.substr(2,8),2)+
         parseInt(d.substr(10,8),2)+
         parseInt(d.substr(18,8),2)+
         parseInt(d.substr(26,8),2);
     if (cks&&((cks&0xFF)==parseInt(d.substr(34,8),2))) {
-      cb({ 
+      cb({
         raw : d,
         rh : parseInt(d.substr(2,16),2)*0.1,
         temp : parseInt(d.substr(19,15),2)*0.2*(0.5-d[18])
