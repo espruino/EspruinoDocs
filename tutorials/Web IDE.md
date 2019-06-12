@@ -40,7 +40,7 @@ need to install the Native application (below).
 devices, so you'll be unable to use it with USB Espruino boards (you need the
 Native or Web Store versions for that).
 * Web Bluetooth may not be enabled in your Browser. Have a look
-at the [Bluetooth Quick Start guide](/Quick +Start+BLE) for information
+at the [Bluetooth Quick Start guide](/Quick+Start+BLE) for information
 on how to enable it.
 
 ### As a Native application
