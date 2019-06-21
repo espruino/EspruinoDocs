@@ -60,6 +60,12 @@ See the [NRF24L01P](/NRF24L01P) page for more information on software.
 | A3   | MISO      |
 | A4   | IRQ       |
 
+```
+var spi = new SPI();
+spi.setup({sck:A1, miso:A3, mosi:A2});
+var nrf = require("NRF24L01P").connect( spi, A0, A10 );
+```
+
 
 ### ESP8266 ESP12 0.1" Adaptor
 
