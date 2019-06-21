@@ -464,7 +464,13 @@ function inferFile(filename, fileContents, baseLineNumber) {
     // find all calls
     require("acorn-walk").simple(ast, { "CallExpression" : function(n) {
      var expr = infer.findExpressionAt(n.callee);
-     var type = infer.expressionType(expr);
+     var type;
+     try {
+       type = infer.expressionType(expr);
+     } catch (e) {
+       WARNING(filename+": TERN ERRORED ON FILE, "+e.toString());
+       return;
+     }
 
      // Try and handle 'require(...).foo) - this doesn't work for
      // var fs = require("fs") though.
@@ -663,7 +669,8 @@ markdownFiles.forEach(function (file) {
        var html = `<div style="float:right;z-index:-1" class="panel panel-info" >
     <div class="panel-heading"><h4 style="text-align:center;margin:0px;">Buy Now</h4></div>
     <div class="panel-body center-block">
-      <h1 style="margin-top:0px"><a name="buy"></a><small>From</small>  ${info[0]}</h1>`
+      <h1 style="margin-top:0px"><a name="buy"></a><small>From</small>  ${info[0]}</h1>
+      `;
       if (info[1]) html += `<p><small>Or ${info[1]} in volume</small></p>`;
       html += `      <a role="button" class="btn btn-primary" style="width:100%" href="${info[2]}">Espruino Shop</a><br/>`;
       if (info[3]) html += `      <a role="button" class="btn btn-default" style="width:100%" href="${info[3]}">&#x1F30E; Distributors</a>`;
