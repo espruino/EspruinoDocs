@@ -6,9 +6,9 @@ Pixl.js Multicolour
 
 * KEYWORDS: Espruino,Official Board,Pixl,Pixljs,Pixl.js,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Graphics
 
-![Pixl.jsMulticolour](Pixljs Multicolour/board.jpg)
+![Pixl.js Multicolour](PixljsMulticolour/board.jpg)
 
-* BUYFROM: 54,,https://shop.espruino.com/pixljs-multicolour
+* BUYFROM: £54,,https://shop.espruino.com/pixljs-multicolour
 
 A special version of the [[Pixl.js]] Smart LCD with multicolour LEDs,
 sensors and a rechargeable battery.
