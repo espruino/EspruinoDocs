@@ -4,7 +4,7 @@ Internet (HTTP)
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Internet. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Internet,HTTP,Web,TCPIP,TCP/IP,TCP-IP,IP,TCP,Server,Client,Webserver,Built-In,Sockets,HTTPS,TLS
+* KEYWORDS: Internet,HTTP,Web,TCPIP,TCP/IP,TCP-IP,IP,TCP,Server,Client,Webserver,Built-In,Sockets,HTTPS,TLS,POST
 
 To use the internet in Espruino you need an internet connection. If you're using Espruino under Linux (for example Raspberry Pi or OpenWRT) then you're sorted and can use the examples below directly, otherwise you'll need a module to connect to the internet. Currently your choices are:
 
@@ -42,6 +42,36 @@ require("http").get("http://www.espruino.com", function(res) {
   var contents = "";
   res.on('data', function(data) { contents += data; });
   res.on('close', function() { console.log(contents); });
+});
+```
+
+### HTTP POST
+
+You can perform HTTP POST using `http.request` with `method`
+set to `POST`.
+
+```JavaScript
+function postJSON(postURL, data, callback) {
+  content = JSON.stringify(data);
+  var options = url.parse(postURL);
+  options.method = 'POST';
+  options.headers = {
+    "Content-Type":"application/json",
+    "Content-Length":content.length
+  };
+  var req = require("http").request(options, function(res)  {
+    var d = "";
+    res.on('data', function(data) { d+= data; });
+    res.on('close', function(data) { callback(d); });
+  });
+  req.on('error', function(e) {
+    callback();
+  });
+  req.end(content);
+}
+
+postJSON("http://www.example.com", {test:42}, function(d) {
+  console.log("Response: "+d);
 });
 ```
 
@@ -139,7 +169,7 @@ function onPageRequest(req, res) {
 require("http").createServer(onPageRequest).listen(8080);
 ```
 
-However for real use cases you'll probably want to use Forms and HTTP POST 
+However for real use cases you'll probably want to use Forms and HTTP POST
 requests, and [there's an example of doing that here](/Posting+Forms)
 
 ### Transferring files

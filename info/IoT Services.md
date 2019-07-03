@@ -4,7 +4,7 @@ IoT Services
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/IoT+Services. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Tutorials,IoT,Server,Service,Broker,Cloud Services,Hosted Services,Data Services,Cubitic,Xively,IFTTT,Dweet,Internet
+* KEYWORDS: Tutorials,IoT,Server,Service,Broker,Cloud Services,Hosted Services,Data Services,Cubitic,Xively,IFTTT,Dweet,Internet,POST,HTTP
 * USES: Internet,ESP8266,CC3000,WIZnet,GSM
 
 There are [quite a lot](http://postscapes.com/companies/iot-cloud-services) of IoT cloud service providers around at the moment. We've collected some sample code for a selection of them below. If you've got some code you'd like to share, please contribute it (you can submit changes via [this page on GitHub](https://github.com/espruino/EspruinoDocs/blob/master/info/IoT%20Services.md)).
