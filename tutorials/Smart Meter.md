@@ -180,29 +180,34 @@ To try it, just click the `Try Me!` button in the bottom right of the code sampl
   <script src="https://espruino.github.io/TinyDash/tinydash.js"></script>
   <script src="https://www.puck-js.com/puck.js"></script>  
   <script>
-  function connectDevice() {
-    // connect, and ask for the battery percentage
-    Puck.eval("{bat:E.getBattery()}", function(d,err) {
-      if (!d) {
-        alert("Web Bluetooth connection failed!\n"+(err||""));
-        return;
-      }
-      // remove the 'connect' window
-      elements.modal.remove();
-      // update battery meter
-      elements.bat.setValue(d.bat);
-      // Get all our data - it can take a while
-      // so we do it in stages
-      Puck.eval("c.totals", function(d,err) {
-        elements.total.setValue(d.count);
-        elements.year.setData(d.year);
-        elements.week.setData(d.week);
-        elements.month.setData(d.month);
-        elements.day.setData(d.day);
-        // Get the 96 hour history last
-        Puck.eval("c.history", function(d) {
-          elements.history.setData(d);
-        });
+  function connectDevice() {    
+    // connect, issue Ctrl-C to clear out any data that might have been left in REPL
+    Puck.write("\x03", function() {
+      setTimeout(function() {
+        // After a short delay ask for the battery percentage
+        Puck.eval("{bat:E.getBattery()}", function(d,err) {
+          if (!d) {
+            alert("Web Bluetooth connection failed!\n"+(err||""));
+            return;
+          }
+          // remove the 'connect' window
+          elements.modal.remove();
+          // update battery meter
+          elements.bat.setValue(d.bat);
+          // Get all our data - it can take a while
+          // so we do it in stages
+          Puck.eval("c.totals", function(d,err) {
+            elements.total.setValue(d.count);
+            elements.year.setData(d.year);
+            elements.week.setData(d.week);
+            elements.month.setData(d.month);
+            elements.day.setData(d.day);
+            // Get the 96 hour history last
+            Puck.eval("c.history", function(d) {
+              elements.history.setData(d);
+            });
+          });
+        }, 500);
       });
     });
   }
