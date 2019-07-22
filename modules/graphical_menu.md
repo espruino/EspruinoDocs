@@ -60,15 +60,15 @@ function onInit() {
 
 setWatch(function() {
   m.move(-1); // up
-}, BTNU, {repeat:true,debounce:50,edge:"rising"});
+}, BTN1, {repeat:true,debounce:50,edge:"rising"});
 
 setWatch(function() {
   m.move(1); // down
-}, BTND, {repeat:true,debounce:50,edge:"rising"});
+}, BTN4, {repeat:true,debounce:50,edge:"rising"});
 
 setWatch(function() {
   m.select(); // select
-}, BTNA, {repeat:true,debounce:50,edge:"rising"});
+}, BTN3, {repeat:true,debounce:50,edge:"rising"});
 ```
 
 Call `menu.list` with the [[Graphics]] object and
