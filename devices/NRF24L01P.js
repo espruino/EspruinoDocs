@@ -203,6 +203,21 @@ NRF.prototype.setDataRate = function(rate) {
 NRF.prototype.setTXPower = function(pwr) {
   this.setReg(C.RF_SETUP, (this.getReg(C.RF_SETUP)&~(3*C.RF_PWR))|((pwr&3)*C.RF_PWR));
 };
+/** Set RF channel, from 0 to 125 */
+NRF.prototype.setChannel = function(channel) {
+  this.setReg(C.RF_CH, channel);
+}
+NRF.prototype.disableCRC = function() {
+  this.setReg(C.CONFIG, this.getReg(C.CONFIG) & (~C.EN_CRC));
+  BASE_CONFIG &= ~C.EN_CRC;
+}
+NRF.prototype.setAutoAck = function(enable) {
+  if (enable) {
+    this.setReg(C.EN_AA, 0x3f);
+  } else {
+    this.setReg(C.EN_AA, 0);
+  }
+}
 /** return undefined (if no data) or the pipe number of the data we're expecting */
 NRF.prototype.getDataPipe = function() {
   var r = this.getReg(C.STATUS)&C.RX_P_NO_FIFO_EMPTY;
