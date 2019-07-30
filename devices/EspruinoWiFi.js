@@ -480,7 +480,7 @@ exports.setAPIP = function(settings, callback) {
   });
 };
 
-/* Set the host name of the Espruino WiFi - so it can be accessed via DNS. */
+/* Set the name of the Espruino WiFi's access point */
 exports.setHostname = function(hostname, callback) {
   turnOn(MODE.CLIENT, function(err) {
     if (err) return callback(err);
