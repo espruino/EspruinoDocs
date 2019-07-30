@@ -99,11 +99,11 @@ HTTP servers are pretty easy. Just use ```http.createServer```, and then use the
 `your_device` will probably be an IP address. Consult the instructions for the module you're using, but you can usually use either `eth.getIP()` or `wlan.getIP()` to find out what your IP address is.
 
 ```JavaScript
-var http = require("http");
-http.createServer(function (req, res) {
+function pageRequest(req, res) {
   res.writeHead(200);
   res.end("Hello World");
-}).listen(8080);
+}
+require("http").createServer(pageRequest).listen(8080); // port 8080
 ```
 
 Note that we're using port `8080` in these examples, because it works when running Espruino on Linux/Raspberry Pi (without superuser priviledges). If you're using a microcontroller you could just use port 80, which means that you can just connect to `http://your_device`.
