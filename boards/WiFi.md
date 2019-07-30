@@ -57,7 +57,8 @@ Using WiFi
 
 ### Connecting to an AP
 
-To use wifi, simply require the `Wifi` module and call `connect`:
+To use wifi, simply require the `Wifi` module and call `connect`. The following code
+will connect and then request the page `http://www.pur3.co.uk/hello.txt`:
 
 ```
 var WIFI_NAME = "";
@@ -82,6 +83,9 @@ function getPage() {
   });
 }
 ```
+
+For more information on HTTP requests/etc once connected, check
+out [this Page on HTTP](http://www.espruino.com/Internet).
 
 **Note:** If you want Espruino to connect at power on after you have
 saved, make sure that you call the WiFi initialisation code inside an
@@ -139,7 +143,7 @@ built in via the [`Wifi` module](http://www.espruino.com/Reference#Wifi)
 accessed with `require("Wifi")`.
 
 On earlier (pre-1v96) versions of the Espruino WiFi firmware, WiFi functionality
-was implemented with the `EspruinoWiFi` JS module which is accessed with
+was implemented with the [`EspruinoWiFi` JS module](http://www.espruino.com/modules/EspruinoWiFi.js) which is accessed with
 `require("EspruinoWiFi")`.
 
 * APPEND_JSDOC: ../devices/EspruinoWiFi.js
