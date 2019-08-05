@@ -324,7 +324,7 @@ var wifiFuncs = {
       else callback(null, ip);
     });
   },
-  /* Set the host name - so it can be accessed via DNS. */
+  /*  Set the name of the access point */
   "setHostname" : function(hostname, callback) {
       at.cmd("AT+CWHOSTNAME="+JSON.stringify(hostname)+"\r\n",500,callback);
   },
