@@ -208,8 +208,7 @@ exports.lpcomp = function(opts) {
     tSample,  // Start sampling
     tStop,   // Stop ADC
     tCalib,  // Start calibration
-    eDone    // event when GPIO changes
-    eEnd     // ADC has filled DMA buffer
+    eEnd     // event when ADC has filled DMA buffer
     setDMA : function({ptr,cnt}) // set new DMA buffer
                // double-buffered so can be set again right after tStart
     sample : function(cnt) // Make `cnt*channels.length` readings and return the result. resets DMA

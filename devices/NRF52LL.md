@@ -111,6 +111,7 @@ setInterval(function() {
 ### Make one reading from the ADC:
 
 ```
+var ll = require("NRF52LL");
 var saadc = ll.saadc({
   channels : [ { // channel 0
     pin:D31,
@@ -130,6 +131,7 @@ It's also possible to use `.sample(...)` for this, but this example
 shows you how to use it in more detail.
 
 ```
+var ll = require("NRF52LL");
 // Buffer to fill with data
 var buf = new Uint16Array(128);
 // source of events - compare D31 against vref/2
@@ -266,6 +268,7 @@ LPCOMP
 LPCOMP is a low-power comparator. You can use it as follows:
 
 ```
+var ll = require("NRF52LL");
 // Compare D31 with 8/16 of vref (half voltage)
 o = ll.lpcomp({pin:D31,vref:8});
 // or {pin:D31,vref:D2} to compare with pin D2
