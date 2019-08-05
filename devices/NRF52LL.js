@@ -274,7 +274,7 @@ exports.saadc = function(opts) {
       ((!!opts.oversample)<<24);
     poke32(a+8, v); // options
     poke32(a, 0|(new Pin(ch.pin).getInfo().channel+1)); // pin pos -  undefined -> 0
-    poke32(a+4, 0|((ch.npin&&new Pin(opts.npin).getInfo().channel)+1)); // pin neg - undefined -> 0
+    poke32(a+4, 0|((ch.npin&&new Pin(ch.npin).getInfo().channel)+1)); // pin neg - undefined -> 0
   });
   poke32(addr+0x5F0, (opts.resolution-8)>>1);
   poke32(addr+0x5F4, 0|opts.oversample);
