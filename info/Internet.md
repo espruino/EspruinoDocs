@@ -267,8 +267,9 @@ Or for a client:
 ```
 var client = require("net").connect({host: "my.url.com", port: 1234}, function() {
   console.log('client connected');
+  client.write("Hello");
   client.on('data', function(data) {
-    console.log(">"+JSON.stringify(data));
+    console.log(">"+JSON.stringify(data));    
   });
   client.on('end', function() {
     console.log('client disconnected');
