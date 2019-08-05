@@ -173,9 +173,13 @@ var buf = new Int16Array(128);
 // ADC
 var saadc = ll.saadc({
   channels : [ {
-    pin:D31 // channel 0
+    pin:D31, // channel 0    
+    gain:1/4,
+    refvdd:true
   }, {
-    pin:D30 // channel 1
+    pin:D30, // channel 1
+    gain:1/4,
+    refvdd:true
   } ],
   dma:{ptr:E.getAddressOf(buf,true), cnt:buf.length},
 });
