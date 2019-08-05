@@ -252,6 +252,7 @@ exports.saadc = function(opts) {
   var tacqs = [3,5,10,15,20,40];
   if (!opts.resolution) opts.resolution = 14;
   if (!opts.channels || opts.channels.length>8) throw "Invalid channels";
+  if (opts.oversample && opts.channels.length>1)throw "Can't oversample with >1 channel";
   poke32(o.enable, 0);
   // disable all ADC channels
   for (var i=0;i<8;i++)
