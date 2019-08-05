@@ -255,10 +255,10 @@ exports.saadc = function(opts) {
   poke32(o.enable, 0);
   // disable all ADC channels
   for (var i=0;i<8;i++)
-    poke32(addr+0x510 + i*12, 0);
+    poke32(addr+0x510 + i*16, 0);
   // config those specified
   opts.channels.forEach(function(ch, idx) {
-    var a = addr+0x510 + idx*12;
+    var a = addr+0x510 + idx*16;
     if (!ch.gain) ch.gain=1;
     if (!ch.tacq) ch.tacq=3;
     if (pulls.indexOf(ch.pinpull)<0) throw "Invalid pinpull";
