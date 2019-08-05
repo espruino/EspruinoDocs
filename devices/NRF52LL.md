@@ -84,7 +84,7 @@ var comp = ll.lpcomp({pin:D31,vref:8});
 ll.ppiEnable(0, comp.eCross, tog.tOut);
 ```
 
-### Count how many times `D31` crosses `VCC/2` in 10 seconds 
+### Count how many times `D31` crosses `VCC/2` in 10 seconds
 
 Uses low power comparator + counter timer:
 
@@ -110,6 +110,8 @@ setInterval(function() {
 
 ### Make one reading from the ADC:
 
+Uses ADC.
+
 ```
 var ll = require("NRF52LL");
 var saadc = ll.saadc({
@@ -123,26 +125,23 @@ var saadc = ll.saadc({
 print(saadc.sample()[0]);
 ```
 
-### Read a buffer of data from the ADC, alternating between 2 pins 
+### Read a buffer of data from the ADC
 
 Uses ADC.
 
 It's also possible to use `.sample(...)` for this, but this example
 shows you how to use it in more detail.
 
+The ADC will automatically sample at the given sample rate.
+
 ```
 var ll = require("NRF52LL");
 // Buffer to fill with data
-var buf = new Uint16Array(128);
+var buf = new Int16Array(128);
 // source of events - compare D31 against vref/2
 var saadc = ll.saadc({
   channels : [ { // channel 0
     pin:D31,
-    gain:1/4,
-    tacq:40,
-    refvdd:true,
-  }, { // channel 1
-    pin:D30,
     gain:1/4,
     tacq:40,
     refvdd:true,
@@ -155,6 +154,42 @@ poke32(saadc.eEnd,0); // clear flag so we can test
 poke32(saadc.tStart,1);
 poke32(saadc.tSample,1); // start!
 while (!peek32(saadc.eEnd)); // wait until it ends
+poke32(saadc.tStop,1);
+print("Done!", buf);
+```
+
+### Read a buffer of data from the ADC, alternating between 2 pins
+
+Uses ADC and counter timer.
+
+The NRF52 doesn't support using `samplerate` (as in the last example)
+with more than one channel, so you have to use another timer to
+trigger the `tSample` task.
+
+```
+var ll = require("NRF52LL");
+// Buffer to fill with data
+var buf = new Int16Array(128);
+// ADC
+var saadc = ll.saadc({
+  channels : [ {
+    pin:D31 // channel 0
+  }, {
+    pin:D30 // channel 1
+  } ],
+  dma:{ptr:E.getAddressOf(buf,true), cnt:buf.length},
+});
+// create a timer that counts up to 1000 and back at full speed
+var tmr = ll.timer(3,{cc:[1000],cc0clear:1});
+// use two PPI to trigger toggle events
+ll.ppiEnable(0, tmr.eCompare[0], saadc.tSample);
+// Start sampling until the buffer is full
+poke32(saadc.eEnd,0); // clear flag so we can test
+poke32(saadc.tStart,1);
+// start the timer
+poke32(tmr.tStart,1);
+while (!peek32(saadc.eEnd)); // wait until sampling ends
+poke32(tmr.tStop,1);
 poke32(saadc.tStop,1);
 print("Done!", buf);
 ```

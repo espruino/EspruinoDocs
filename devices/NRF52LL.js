@@ -194,8 +194,8 @@ exports.lpcomp = function(opts) {
       tacq : 3(default),5,10,15,20,40 // acquisition time in us
     }, { ... } ] // up to 8 channels
     resolution : 8,10,12,14 // bits (14 default)
-    oversample : 0..8, // take 2<<X samples, 0(default) is just 1 sample
-    samplerate : 0(default), 80..2047 // Sample from sample task, or at 16MHz/X
+    oversample : 0..8, // take 2<<X samples, 0(default) is just 1 sample. Can't be used with >1 channel
+    samplerate : 0(default), 80..2047 // Sample from sample task, or at 16MHz/X. Can't be used with >1 channel
     dma : { ptr, cnt } // enable DMA. cnt is in 16 bit words
       // DMA IS REQUIRED UNLESS YOU'RE JUST USING THE 'sample' function
   }
@@ -235,6 +235,8 @@ exports.saadc = function(opts) {
       cnt = cnt||1;
       if (cnt>1 && !opts.samplerate)
         throw "Can't do >1 sample with no samplerate specified";
+      if (cnt>1 && opts.channels.length>1)
+        throw "Can't do >1 channel with a samplerate specified";        
       var buf = new Uint16Array(Math.max(cnt*opts.channels.length,32)); // make big enough to ensure a flat string
       var p = E.getAddressOf(buf,true);
       o.setDMA({ptr:p,cnt:cnt*opts.channels.length});
@@ -253,6 +255,7 @@ exports.saadc = function(opts) {
   if (!opts.resolution) opts.resolution = 14;
   if (!opts.channels || opts.channels.length>8) throw "Invalid channels";
   if (opts.oversample && opts.channels.length>1)throw "Can't oversample with >1 channel";
+  if (opts.samplerate && opts.channels.length>1)throw "Can't use samplerate with >1 channel";
   poke32(o.enable, 0);
   // disable all ADC channels
   for (var i=0;i<8;i++)
