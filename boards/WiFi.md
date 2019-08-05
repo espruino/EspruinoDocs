@@ -201,6 +201,78 @@ Just:
 * Use the DFU tool to flash the firmware. Using the GUI on windows, or with the command `sudo dfu-util -a 0 -s 0x08000000 -D espruino_binary_file.bin` for `dfu-util` on Mac/Linux.
 * Un-short the `BOOT0/BTN` jumper to re-use the original Espruino Bootloader. If you used a Pencil mark then you may need to use cleaning fluid and a small brush to totally clear out the graphite.
 
+Updating ESP8266 firmware
+---------------------------
+
+Espruino WiFi contains and ESP8266 module to handle WiFi communications. It
+ships with firmware 0v40, but it can be updated reasonably easily if needed.
+
+* First connect to your Espruino WiFi with the Web IDE - make a note of the Espruino
+Path (usually `/dev/ttySomething` or `COMxx`) that is displayed in the connection screen.
+* Ensure `Save on Send` mode in `Communication` settings is set to the default of `To RAM`.
+* Upload the following code:
+
+```
+// Setup serial
+Serial2.setup(74880, { rx: A3, tx : A2 });
+// Bridge Serial and USB
+Serial2.on('data',d=>USB.write(d));
+USB.on('data',d=>Serial2.write(d));
+// boot module in bootloader mode
+digitalWrite(A14, 0); // make sure WiFi starts off
+digitalWrite(A13, 0); // into of boot mode
+digitalWrite(A14, 1); // turn on wifi
+console.log("Now disconnect the IDE");
+LoopbackA.setConsole();
+```
+
+* Now Disconnect the Web IDE
+
+* Download `esptool` from https://github.com/espressif/esptool
+
+* Download the [ESP8266 1.5.4 firmware](/files/ESP8266_AT_1_5_4.zip)
+(originally from [here](https://www.electrodragon.com/w/ESP8266_AT-Command_firmware))
+
+* Run the following command. You'll need to replace `/dev/ttyACM0` with
+the device path (see the first step)
+
+```
+esptool.py --port /dev/ttyACM0 --baud 115200 write_flash --flash_mode dio 0 AiThinker_ESP8266_DIO_32M_32M_20160615_V1.5.4.bin
+```
+
+* When complete, unplug the Espruno WiFi and re-plug it
+* Now check firmware works with:
+
+```
+// Setup serial
+Serial2.setup(74880, { rx: A3, tx : A2 });
+// Bridge Serial and USB
+Serial2.on('data',d=>USB.write(d));
+USB.on('data',d=>Serial2.write(d));
+// boot module in bootloader mode
+digitalWrite(A14, 0); // make sure WiFi starts off
+digitalWrite(A13, 1); // out of boot mode
+digitalWrite(A14, 1); // turn on wifi
+// Ask for version
+setTimeout(_=>{
+  Serial2.setup(115200, { rx: A3, tx : A2 });
+  Serial2.print("AT+GMR\r\n");
+}, 1000);  
+```
+
+After a few seconds it should report something like:
+
+```
+>AT+GMR
+AT version:1.1.0.0(May 11 2016 18:09:56)
+SDK version:1.5.4(baaeaebb)
+Ai-Thinker Technology Co. Ltd.
+Jun 13 2016 11:29:20
+OK
+```
+
+And the firmware is updated!
+
 
 Other Official Espruino Boards
 ------------------------------
