@@ -163,7 +163,7 @@ As a result you have to access the Nordic UART service via Bluetooth LE directly
 
 Check out the page on [using Espruino with Web Bluetooth](http://www.espruino.com/Puck.js+Web+Bluetooth).
 
-### Node.js
+### Node.js / JavaScript
 
 Run `npm install noble`, then:
 
@@ -323,4 +323,176 @@ while len(command)>0:
 while p.waitForNotifications(1.0): pass
 # No more data for 1 second, disconnect
 p.disconnect()
+```
+
+### gatttool on Linux / Raspberry Pi shell
+
+It's also possible to use the pre-installed Linux bluetooth tools to write
+directly from the shell. You can either send raw JavaScript code to an otherwise
+unprogrammed Bluetooth LE Espruino device.
+
+#### Finding the device
+
+Just run `sudo hcitool lescan` and wait until you see the device with the name
+you want (here we're interested in `MDBT42Q c774`), then use Ctrl-C to break out.
+
+```sh
+$ sudo hcitool lescan
+DA:34:7C:4C:5A:47 Puck.js 5a47
+DA:34:7C:4C:5A:47 (unknown)
+C4:7C:8D:6A:AC:79 (unknown)
+C4:7C:8D:6A:AC:79 Flower care
+F5:3E:A0:62:C7:74 MDBT42Q c774
+F5:3E:A0:62:C7:74 (unknown)
+```
+
+Copy the device's address from the terminal, and use it in subsequent commands.
+
+### JavaScript
+
+Next we want to convert our JavaScript command into a form (hexadecimal bytes)
+that can be used by `gatttool`. We'll send `"LED.toggle()\n"`, so use the following
+JavaScript code to convert that to hex bytes:
+
+```JS
+"LED.toggle()\n".split("").map(x=>(256+x.charCodeAt()).toString(16).substr(-2)).join("")
+// ="4c45442e746f67676c6528290a"
+```
+
+(or the following in the shell)
+
+```sh
+echo "LED.toggle()\n" | od -A n -t x1 | tr -d " "
+```
+
+Now we'll run `gatttool`:
+
+```sh
+$ gatttool --addr-type=random -I --device=F5:3E:A0:62:C7:74
+# Now connect to the device
+[F5:3E:A0:62:C7:74][LE]> connect
+Attempting to connect to F5:3E:A0:62:C7:74
+Connection successful
+# List characteristics - we want
+# 6e400002-b5a3-f393-e0a9-e50e24dcca9e which is
+# the Nordic TX characteristic
+[F5:3E:A0:62:C7:74][LE]> char-desc
+handle: 0x0001, uuid: 00002800-0000-1000-8000-00805f9b34fb
+handle: 0x0002, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0003, uuid: 00002a00-0000-1000-8000-00805f9b34fb
+handle: 0x0004, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0005, uuid: 00002a01-0000-1000-8000-00805f9b34fb
+handle: 0x0006, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0007, uuid: 00002a04-0000-1000-8000-00805f9b34fb
+handle: 0x0008, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0009, uuid: 00002aa6-0000-1000-8000-00805f9b34fb
+handle: 0x000a, uuid: 00002800-0000-1000-8000-00805f9b34fb
+handle: 0x000b, uuid: 00002800-0000-1000-8000-00805f9b34fb
+handle: 0x000c, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x000d, uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+handle: 0x000e, uuid: 00002902-0000-1000-8000-00805f9b34fb
+handle: 0x000f, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0010, uuid: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+# Now we write our command to the handle of that characteristic (0x0010)
+# LED1 will turn on
+[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0010 4c45442e746f67676c6528290a
+Characteristic value was written successfully
+# Writing again turns LED1 off
+[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0010 4c45442e746f67676c6528290a
+Characteristic value was written successfully
+[F5:3E:A0:62:C7:74][LE]> quit
+```
+
+You can wrap this up into one shell command:
+
+```sh
+gatttool --addr-type=random --device=F5:3E:A0:62:C7:74 --char-write-req --handle=0x0010 \
+  --value=4c45442e746f67676c6528290a
+# or to convert the whole command:
+gatttool --addr-type=random --device=F5:3E:A0:62:C7:74 --char-write-req --handle=0x0010 \
+ --value=`echo "LED.toggle()\n" | od -A n -t x1 | tr -d " "`
+```
+
+This assumes the handle of the UART TX characteristic is always 0x0010, which should
+be the case on up to date Espruino firmwares unless you have enabled other services
+such as HID.
+
+
+Custom characteristic
+----------------------
+
+It can be a bit messy [and also insecure](/BLE+Security) to leave your
+Espruino device entirely open to execute JavaScript, so instead you
+can create a characteristic to do what you want, and then write to that:
+
+* Connect with the Web IDE
+* Upload this code:
+
+```JS
+NRF.setServices({
+  "35ac0001-18b0-e8b7-3feb-62cec301da00" : {
+    "35ac0002-18b0-e8b7-3feb-62cec301da00" : {
+      value : [0],
+      maxLen : 1,
+      writable : true,
+      onWrite : function(evt) {
+        digitalWrite([LED2,LED1], evt.data[0]);
+        // This could be extended for more data bytes...
+      }
+    }
+  }
+});
+```
+
+This will create a characteristic with uuid `35ac0002-18b0-e8b7-3feb-62cec301da00`
+ (which was randomly generated - we'd recommend you generate your own with `date|md5sum`).
+ When written to it'll update the state of the two LEDs based on the bottom 2 bits
+ of the data sent to it.
+
+* disconnect the IDE and use gatttool:
+
+```sh
+$ gatttool --device=F5:3E:A0:62:C7:74 --addr-type=random -I
+[F5:3E:A0:62:C7:74][LE]> connect
+Attempting to connect to F5:3E:A0:62:C7:74
+Connection successful
+[F5:3E:A0:62:C7:74][LE]> char-desc
+handle: 0x0001, uuid: 00002800-0000-1000-8000-00805f9b34fb
+handle: 0x0002, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0003, uuid: 00002a00-0000-1000-8000-00805f9b34fb
+handle: 0x0004, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0005, uuid: 00002a01-0000-1000-8000-00805f9b34fb
+handle: 0x0006, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0007, uuid: 00002a04-0000-1000-8000-00805f9b34fb
+handle: 0x0008, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0009, uuid: 00002aa6-0000-1000-8000-00805f9b34fb
+handle: 0x000a, uuid: 00002800-0000-1000-8000-00805f9b34fb
+handle: 0x000b, uuid: 00002800-0000-1000-8000-00805f9b34fb
+handle: 0x000c, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x000d, uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+handle: 0x000e, uuid: 00002902-0000-1000-8000-00805f9b34fb
+handle: 0x000f, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0010, uuid: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+handle: 0x0011, uuid: 00002800-0000-1000-8000-00805f9b34fb
+handle: 0x0012, uuid: 00002803-0000-1000-8000-00805f9b34fb
+handle: 0x0013, uuid: 35ac0002-18b0-e8b7-3feb-62cec301da00
+[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 01  
+# <----------- LED1 turns on
+Characteristic value was written successfully
+[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 02  
+# <----------- LED2 turns on
+Characteristic value was written successfully
+[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 02  
+# <----------- both LEDS turns on
+Characteristic value was written successfully
+[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 00
+# <----------- both LEDS turns off
+Characteristic value was written successfully
+[F5:3E:A0:62:C7:74][LE]> quit
+```
+
+And again this can be rolled up into one command (assuming your handle is the same).
+
+```sh
+gatttool --addr-type=random --device=F5:3E:A0:62:C7:74 --char-write-req --handle=0x0013 --value=01
 ```
