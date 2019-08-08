@@ -144,6 +144,37 @@ function storeMyData(data) {
 This is still slower than the `logIndex` method above, but it does make
 outputting and graphing the data much easier.
 
+### RAM - DataView
+
+[`DataView`](http://www.espruino.com/Reference#DataView) is very similar to
+the typed array method above, however it allows you to access the raw
+data in many different forms.
+
+For example below we store a date as 4 bytes and a temperature in
+one signed byte, packing everything in as tightly as possible:
+
+```JS
+const EVENT_SIZE = 5;
+/* Each event will be:
+ byte 0-3 : # of seconds since 1970 (good up to 2106)
+ byte 4   : temperature in C
+*/
+var log = new DataView(new ArrayBuffer(EVENT_SIZE*1000));
+...
+
+// To write
+var o = indexToWrite*EVENT_SIZE;
+log.setUint32(o+0,Date.now()/1000);
+log.setInt8(o+4,E.getTemperature());
+
+// To read
+var o = indexToRead*EVENT_SIZE;
+var event = {
+  time : new Date(log.getUint32(o+0)*1000),
+  temp : log.getInt8(o+4)
+};     
+```
+
 ### Flash memory
 
 So far we've only written to RAM, however some Espruino boards have big
