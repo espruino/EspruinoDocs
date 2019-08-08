@@ -191,6 +191,10 @@ Puck.on('mag', function(xyz) {
 // Turn events off with Puck.magOff();
 ```
 
+If you have issues using the magnetometer, please check your battery percentage
+with `E.getBatteryPercentage()` to ensure that it has over 30% charge remaining.
+When the battery is almost empty the magnetometer can stop working correctly.
+
 ### IR / Infrared
 
 To transmit an IR signal, you just need to call [`Puck.IR([...])`](/Reference#l_Puck_IR)

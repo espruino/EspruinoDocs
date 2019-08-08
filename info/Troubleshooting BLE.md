@@ -152,6 +152,18 @@ Take it apart again, and place the area on the back with the text `Puck.js`
 against the ledge on the plastic case (the dimples in the case should
 align with the holes in the PCB).
 
+### My magnetometer isn't working!
+
+Please check your battery percentage with `E.getBatteryPercentage()` to ensure
+that it has over 30% charge remaining. Due to the discharge of CR2032 batteries
+by the time you get to this point, 90% of the power in the battery has been
+used.
+
+The microcontroller is able to function on lower voltages than the magnetometer
+so you will still be able to run JS even when the battery is too flat to
+use the magnetometer.
+
+
 [Pixl.js](/Pixl.js)
 -------
 
