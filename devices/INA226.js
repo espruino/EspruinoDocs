@@ -16,11 +16,9 @@ function INA226(i2c, options) {
   // config reg
   var config = 0x4127; // power on defaults
   options.average = options.average||256;
-  if (options.average) {
-    var i = [1,4,16,64,128,256,512,1024].indexOf(options.average);
-    if (i<0) throw new Error("average must be 1,4,16,64,128,256,512 or 1024");
-    config |= i<<9;
-  }
+  var i = [1,4,16,64,128,256,512,1024].indexOf(options.average);
+  if (i<0) throw new Error("average must be 1,4,16,64,128,256,512 or 1024");
+  config |= i<<9;
   this.wr(0x00, config);
   // calibration reg
   var cal = Math.round(0.00512 / (this.currentLSB * this.shunt));
@@ -38,7 +36,8 @@ INA226.prototype.rd = function(a) {
 };
 // write reg
 INA226.prototype.wr = function(a,d) {
-  this.i2c.writeTo(this.addr,[a,d>>8,d&0xff]);
+  // `d` is implicitly truncated to 8 bit, no masking is required for the lower half of the 16bit value
+  this.i2c.writeTo(this.addr,[a,d>>8,d]);
 };
 // read reg signed
 INA226.prototype.rds = function(a) {
@@ -53,11 +52,11 @@ INA226.prototype.rds = function(a) {
 * current - calculated current in amps
 * overflow - was there an arithmetic overflow during the averaging?
 */
-INA226.prototype.read = function() {  
+INA226.prototype.read = function() {
   // reading the mask register clears the conversion ready
-  var flags = this.rd(0x06); 
+  var flags = this.rd(0x06);
   return {
-    vshunt : this.rds(0x01)*0.000025, // volts
+    vshunt : this.rds(0x01)*2.5e-6, // volts, 2.5uV / LSB
     vbus : this.rd(0x02)*0.00125, // volts
     power : this.rd(0x03)*25*this.currentLSB, // watts
     current : this.rds(0x04)*this.currentLSB, // amps
