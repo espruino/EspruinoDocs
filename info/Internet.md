@@ -1,10 +1,10 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Internet (HTTP)
+Internet (HTTP/TCP/UDP/etc)
 ===============
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Internet. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Internet,HTTP,Web,TCPIP,TCP/IP,TCP-IP,IP,TCP,Server,Client,Webserver,Built-In,Sockets,HTTPS,TLS,POST
+* KEYWORDS: Internet,HTTP,Web,TCPIP,TCP/IP,TCP-IP,IP,TCP,UDP,datagram,dgram,Server,Client,Webserver,Built-In,Sockets,HTTPS,TLS,POST
 
 To use the internet in Espruino you need an internet connection. If you're using Espruino under Linux (for example Raspberry Pi or OpenWRT) then you're sorted and can use the examples below directly, otherwise you'll need a module to connect to the internet. Currently your choices are:
 
@@ -16,6 +16,12 @@ To use the internet in Espruino you need an internet connection. If you're using
 You'll need to follow the instructions on those pages first in order to get connected to the net.
 
 Basic internet functionality is handled using the [`http`](/Reference#http), [`net`](/Reference#net) and [`tls`](/Reference#net) libraries.
+
+Contents
+--------
+
+* APPEND_TOC
+
 
 Client
 ------
@@ -308,6 +314,49 @@ require("tls").connect("my.url.com:1234", function(c) {
 
 See [`require('tls').connect(...)`](/Reference#l_tls_connect) for more information.
 
+
+UDP / Datagram
+--------------
+
+Most Espruino devices also include UDP support which is modelled around the
+[Node.js `dgram` API](https://nodejs.org/api/dgram.html).
+
+See [Espruino's `dram` reference pages](http://www.espruino.com/Reference#dgram)
+
+### Server (Listener)
+
+```
+var port = 41234;
+let dgram = require('dgram');
+let srv = dgram.createSocket('udp4');
+
+srv = srv.bind(port, function() {
+  // server now listening
+  srv.on('message', function(msg, info) {
+    // message received
+    console.log("<"+JSON.stringify(msg));
+    console.log("<"+JSON.stringify(info));
+    // you can then 'reply' if needed
+    srv.send('a reply', info.port, info.address);
+  });
+});
+
+// srv.close(); to force close
+```
+
+### Client
+
+```
+let client = dgram.createSocket('udp4');
+client.on('message', function(msg, info) {
+  // message received (only called after first '.send' is used)
+  console.log(">"+JSON.stringify(msg));
+  console.log(">"+JSON.stringify(info));
+});
+
+client.send('a message', port, 'servername');
+// client.close(); to force close
+```
 
 Related Pages
 -----------
