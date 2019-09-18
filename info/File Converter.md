@@ -17,74 +17,94 @@ It's useful if:
 
 To use it just click 'Choose File'. Once the file is chosen, various string representations of it will be output in the text area below. You can then copy and paste them into your JS code.
 
+<script src="/js/heatshrink.js"></script>
 <input type="file" id="fileLoader"/>
+As : <select id="fileType" onchange="fileLoaded()">
+<option value="b64" selected="selected">Base 64</option>
+<option value="b64c">Base 64 Compressed</option>
+<option value="quoted">Quoted String</option>
+<option value="templated">Templated String</option>
+</select><br/>
 
-Quoted String
+Result
 ------------
 
-<p id="sizeQuoted">...</p>
-<textarea id="resultQuoted" style="width:650px;height:300px;"></textarea>
+<p id="size">...</p>
+<textarea id="result" style="width:650px;height:300px;display:none;"></textarea>
 
-Base64 encoded
--------------
-
-<p id="sizeBase64">...</p>
-<textarea id="resultBase64" style="width:650px;height:300px;"></textarea>
-
-Templated String
-------------
-
-<p id="sizeTemplated">...</p>
-<textarea id="resultTemplated" style="width:650px;height:300px;"></textarea>
 
 <script>
-  $("#fileLoader").change(function(event) {
+  var bytes;
+  function fileLoaded() {
+    document.getElementById("result").innerText = "";
+    document.getElementById("result").style.display = "none";
+    document.getElementById("size").innerText = "Please Choose a file first";
+    if (!bytes) return;
+
+    var fileTypeSelect = document.getElementById("fileType");
+    var fileType = fileTypeSelect.options[fileTypeSelect.selectedIndex].value;
+
+    if (bytes.length>(20*1024)) {
+      document.getElementById("size").innerText = "File too long - must be less than 20kB";
+      return;
+    }
+
+    var dqStr = "";
+    var tmpStr = "";
+    var lastCh = 0;
+    for (var i=0;i<bytes.length;i++) {
+      var ch = bytes[i];
+      // templated string
+      if (ch==92) tmpStr += "\\\\"; // escaping slash
+      else if (ch==96) tmpStr += "\\\`"; // template quote
+      else if (lastCh==36 && ch==126) tmpStr += "\\{" // ${
+      else tmpStr += String.fromCharCode(ch);
+      // double-quoted string
+      if (ch==34) dqStr += "\\\"";
+      else if (ch==9) dqStr += "\\t";
+      else if (ch==10) dqStr += "\\n";
+      else if (ch==13) dqStr += "\\r";
+      else if (ch==92) dqStr += "\\\\";
+      else if (ch>=32 && ch<127)
+        dqStr += String.fromCharCode(ch);
+      else { // hex code
+        if (ch<64 && (i+1>=bytes.length || (bytes[i+1]<48/*0*/ || bytes[i+1]>55/*7*/)))
+          dqStr += "\\"+ch.toString(8/*octal*/); // quick compactness hack
+        else
+          dqStr += "\\x"+(ch+256).toString(16).substr(-2); // hex
+      }
+      lastCh = ch;
+    }
+
+    var finalStr = "";
+    switch (fileType) {
+      case "b64" :
+        finalStr = 'atob("'+btoa(String.fromCharCode.apply(null, bytes))+'")';
+        break;
+      case "b64c" :
+        finalStr = 'E.toString(require("heatshrink").decompress(atob("'+btoa(String.fromCharCode.apply(null, heatshrink_compress(bytes)))+'")))';
+        break;
+      case "quoted" :
+        finalStr = '"'+dqStr+'"';
+        break;
+      case "templated" :
+        finalStr = '"'+tmpStr+'"';
+        break;
+      default: throw new Error("Unknown type!");
+    }
+    document.getElementById("size").innerText = finalStr.length+" Characters";
+    document.getElementById("result").style.display = "";
+    document.getElementById("result").innerText = finalStr;
+  }
+  function handleFileSelect(event) {
       if (event.target.files.length != 1) return;
       var reader = new FileReader();
       reader.onload = function(event) {
-        var bytes = new Uint8Array(event.target.result);
-
-        if (bytes.length>(20*1024)) {
-          $("#resultQuoted").val("File too long - must be less than 20kB");
-        } else {        
-
-          var dqStr = "";
-          var tmpStr = "";
-          var lastCh = 0;
-          for (var i=0;i<bytes.length;i++) {
-            var ch = bytes[i];
-            // templated string
-            if (ch==92) tmpStr += "\\\\"; // escaping slash
-            else if (ch==96) tmpStr += "\\\`"; // template quote
-            else if (lastCh==36 && ch==126) tmpStr += "\\{" // ${
-            else tmpStr += String.fromCharCode(ch);
-            // double-quoted string
-            if (ch==34) dqStr += "\\\"";
-            else if (ch==9) dqStr += "\\t";
-            else if (ch==10) dqStr += "\\n";
-            else if (ch==13) dqStr += "\\r";
-            else if (ch==92) dqStr += "\\\\";
-            else if (ch>=32 && ch<127)
-              dqStr += String.fromCharCode(ch);
-            else { // hex code
-              if (ch<64 && (i+1>=bytes.length || (bytes[i+1]<48/*0*/ || bytes[i+1]>55/*7*/)))
-                dqStr += "\\"+ch.toString(8/*octal*/); // quick compactness hack
-              else
-                dqStr += "\\x"+(ch+256).toString(16).substr(-2); // hex
-            }
-            lastCh = ch;
-          }
-          var dqStr = '"'+dqStr+'"';
-          var b64Str = 'atob("'+btoa(String.fromCharCode.apply(null, bytes))+'")';
-
-          $("#sizeQuoted").html(dqStr.length+" Characters");
-          $("#sizeBase64").html(b64Str.length+" Characters");
-          $("#sizeTemplated").html(tmpStr.length+" Characters");
-          $("#resultQuoted").val(dqStr);
-          $("#resultBase64").val(b64Str);
-          $("#resultTemplated").val(tmpStr);
-        }
+        bytes = new Uint8Array(event.target.result);
+        fileLoaded();
       };
       reader.readAsArrayBuffer(event.target.files[0]);
-    });
+    };
+    document.getElementById('fileLoader').addEventListener('change', handleFileSelect, false);
+    fileLoaded(); // set up elements
 </script>
