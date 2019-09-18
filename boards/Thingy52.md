@@ -233,7 +233,7 @@ Serial Console
 
 When power is first applied, the Thingy checks if pin `D3` is at 3.3v (which will be the
 case if it is connected to a Serial port's transmit line). If it is, it initialises
-the on-chip UART on `D3` (Thingy RX) and `D2` (Thingy TX) and puts the Espruino
+the on-chip UART on `D3 / P0.03` (Thingy RX) and `D2 / P0.02` (Thingy TX) and puts the Espruino
 console (REPL) on it at 9600 baud.
 
 To use it, connect to a 3.3v output USB to TTL converter as follows:
@@ -241,8 +241,8 @@ To use it, connect to a 3.3v output USB to TTL converter as follows:
 | Thingy   | USB->TTL converter |
 |----------|--------------------|
 | GND      | GND                |
-| D2       | RX ( -> PC )       |
-| D3       | TX ( <- PC )       |
+| D2 / P0.02 | RX ( -> PC )       |
+| D3 / P0.03 | TX ( <- PC )       |
 | 3V       | 3.3v (Optional - to run without a battery) |
 
 You can now use the normal Espruino Web IDE, or a serial terminal application at 9600 baud.
