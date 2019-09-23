@@ -67,8 +67,8 @@ var C = {
      }
      if (options.width) {
        C.OLED_WIDTH = options.width;
-       flipCmds[1] = options.width < 128 ? options.width/2 : options.width; // 0x20 for 64;
-       flipCmds[2] =options.width < 128 ? flipCmds[1]+options.width-1 : options.width-1; // 0x5f;
+       flipCmds[1] = (128-options.width)/2; // 0x20 for 64, 0 for 128;
+       flipCmds[2] = flipCmds[1]+options.width-1; // 0x5f;
      }
      if (options.contrast!==undefined) initCmds[17] = options.contrast;
    }
