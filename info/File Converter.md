@@ -26,8 +26,7 @@ As : <select id="fileType" onchange="fileLoaded()">
 <option value="templated">Templated String</option>
 </select><br/>
 
-Result
-------------
+<h2>Result</h2>
 
 <p id="size">...</p>
 <textarea id="result" style="width:650px;height:300px;display:none;"></textarea>
