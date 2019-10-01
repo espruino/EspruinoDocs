@@ -22,17 +22,21 @@ Diffusion:
 <option value="random2">Random large</option>
 <option value="error">Error Diffusion</option>
 <option value="errorrandom">Randomised Error Diffusion</option>
-</select>
+</select><br/>
 
-<input type="range" id="brightness" min="-255" max="255" value="0" onchange="imageLoaded()">Brightness</input><br/>
-<select id="colorStyle" onchange="imageLoaded()">
+Brightness:<input type="range" id="brightness" min="-255" max="255" value="0" onchange="imageLoaded()"></input><br/>
+Colours: <select id="colorStyle" onchange="imageLoaded()">
 <option value="1bit" selected="selected">1 bit black/white</option>
 <option value="1bitinverted">1 bit white/black</option>
 <option value="4bit">4 bit RGBA</option>
 <option value="4bitmac">4 bit Mac palette</option>
 <option value="web">8 bit Web palette</option>
 <option value="vga">8 bit VGA palette</option>
-</select>
+</select><br/>
+Output As: <select id="outputStyle" onchange="imageLoaded()">
+<option value="object" selected="selected">Image Object</option>
+<option value="string">Image String</option>
+</select><br/>
 
 <canvas id="canvas" style="display:none;"></canvas>
 
@@ -141,8 +145,10 @@ function findColour(palette,r,g,b,a, no_transparent) {
     var brightness = 0|document.getElementById("brightness").value;
     var colorSelect = document.getElementById("colorStyle");
     var colorStyle = colorSelect.options[colorSelect.selectedIndex].value;
+    var outputSelect = document.getElementById("outputStyle");
+    var outputStyle = outputSelect.options[outputSelect.selectedIndex].value;
     var inverted = false;
-    var transparentCol = 0;
+    var transparentCol = undefined;
     if (colorStyle=="1bitinverted") {
       colorStyle="1bit";
       inverted=true;
@@ -219,6 +225,17 @@ function findColour(palette,r,g,b,a, no_transparent) {
     //console.log(bitData);
 
     var strCmd;
+    if (outputStyle=="string") {
+      var transparent = transparentCol!==undefined;
+      var headerSize = transparent?4:3;
+      var imgData = new Uint8Array(bitData.length + headerSize);
+      imgData[0] = img.width;
+      imgData[1] = img.height;
+      imgData[2] = bpp + (transparent?128:0);
+      if (transparent) imgData[3] = transparentCol;
+      imgData.set(bitData, headerSize);
+      bitData = imgData;
+    }
     if (compression) {
       bitData = heatshrink_compress(bitData);
       strCmd = 'require("heatshrink").decompress';
@@ -228,11 +245,18 @@ function findColour(palette,r,g,b,a, no_transparent) {
     var str = "";
     for (n=0; n<bitData.length; n++)
       str += String.fromCharCode(bitData[n]);
-    var imgstr = "var img = {\n";
-    imgstr += "  width : "+img.width+", height : "+img.height+", bpp : "+bpp+",\n";
-    imgstr += "  transparent : "+transparentCol+",\n";
-    imgstr += '  buffer : '+strCmd+'(atob("'+btoa(str)+'"))\n';
-    imgstr += "};\n";
+    var imgstr;
+    if (outputStyle=="object") {
+      imgstr = "var img = {\n";
+      imgstr += "  width : "+img.width+", height : "+img.height+", bpp : "+bpp+",\n";
+      if (transparentCol!==undefined) imgstr += "  transparent : "+transparentCol+",\n";
+      imgstr += '  buffer : '+strCmd+'(atob("'+btoa(str)+'"))\n';
+      imgstr += "};\n";
+    } else if (outputStyle=="string") {
+      imgstr = strCmd+'(atob("'+btoa(str)+'"))\n';
+    } else {
+      throw new Error("Unknown output style");
+    }
     ctx.putImageData(imageData,img.width,0);
     document.getElementById("ressize").innerHTML = str.length+" Characters";
     document.getElementById("resdata").innerHTML = imgstr;
