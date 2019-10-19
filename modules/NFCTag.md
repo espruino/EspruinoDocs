@@ -7,7 +7,7 @@ NFCTag
 * KEYWORDS: NFC, Tag, NDEF
 
 The [NFC Tag module](/modules/NFCTag.js) emulates a basic NFC Forum *Type 2 Tag*
-with up to 1k of storage. The storage may be read and written by a NFC Reader as
+with up to 1k of storage. The storage may be read and written by an NFC Reader as
 well as JS code.
 
 Background
@@ -29,7 +29,7 @@ prior passing `data` into the module.
 Example
 -------
 
-This example creates an empty 768-byte Tag. The table below describes the six
+This example creates an empty 768-byte Tag. The table below describes the 9
 initializer bytes used on the second line:
 
 | Index | Value | Explanation                                               |
@@ -37,15 +37,21 @@ initializer bytes used on the second line:
 |     0 |  0x00 | Dynamic Lock Bits 0-7 (0x00 denotes no restriction)       |
 |     1 |  0x00 | Dynamic Lock Bits 8-15 (0x00 denotes no restriction)      |
 |     2 |  0xE1 | Magic number (Tag contains NFC Forum defined data)        |
-|     3 |  0x11 | Version (Major and Minor of nfc spec supported, v1.1)     |
+|     3 |  0x10 | Version (Major and Minor of nfc spec supported, v1.0)     |
 |     4 |  0x60 | Memory size (value multiplied by 8: 0x60 * 8 = 768 bytes) |
 |     5 |  0x00 | Read and Write access (0x00 denotes no restriction)       |
+|     6 |  0x03 | Block contains an NDEF message                            |
+|     7 |  0x00 | Empty NDEF Record                                         |
+|     8 |  0xFE | Last TLV block in the data area                           |
 
-It is writtable using almost any NFC Reader e.g. an Android phone (using [NFC TagWriter by NXP](https://play.google.com/store/apps/details?id=com.nxp.nfc.tagwriter)).
+It is writtable using almost any NFC Reader e.g. an Android phone 
+(using [NFC TagWriter by NXP](https://play.google.com/store/apps/details?id=com.nxp.nfc.tagwriter))
+or an iPhone with iOS 13+ 
+(using [NFC Tools by wakdev](https://apps.apple.com/ch/app/nfc-tools/id1252962749))
 
 ```
 var data = new Uint8Array(16+768);
-data.set("\x00\x00\xE1\x11\x60\x00", 0x0A);
+data.set("\x00\x00\xE1\x10\x60\x00\x03\x00\xFE", 0x0A);
 var tag = require("NFCTag").create(data);
 ```
 
