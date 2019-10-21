@@ -22,6 +22,8 @@ To use it just click 'Choose File'. Once the file is chosen, various string repr
 As : <select id="fileType" onchange="fileLoaded()">
 <option value="b64" selected="selected">Base 64</option>
 <option value="b64c">Base 64 Compressed</option>
+<option value="b64b">Base 64 Array in chunks</option>
+<option value="b64f">Base 64 Flash Write (advanced)</option>
 <option value="quoted">Quoted String</option>
 <option value="templated">Templated String</option>
 </select><br/>
@@ -35,7 +37,7 @@ As : <select id="fileType" onchange="fileLoaded()">
 <script>
   var bytes;
   function fileLoaded() {
-    document.getElementById("result").innerText = "";
+    document.getElementById("result").value = "";
     document.getElementById("result").style.display = "none";
     document.getElementById("size").innerText = "Please Choose a file first";
     if (!bytes) return;
@@ -83,6 +85,22 @@ As : <select id="fileType" onchange="fileLoaded()">
       case "b64c" :
         finalStr = 'E.toString(require("heatshrink").decompress(atob("'+btoa(String.fromCharCode.apply(null, heatshrink_compress(bytes)))+'")))';
         break;
+      case "b64b" :
+        finalStr = 'var data = new Uint8Array('+bytes.length+');\r\n';
+        var BSIZE = 128;
+        for (var i=0;i<bytes.length;i+=BSIZE) {
+          let d = btoa(String.fromCharCode.apply(null, bytes.slice(i,i+BSIZE)));
+          finalStr += 'data.set(atob("'+d+'"),'+i+');\r\n';
+        }
+        break;
+        case "b64f" :
+          finalStr = 'var addr=....; // '+bytes.length+' bytes\n';
+          var BSIZE = 256;
+          for (var i=0;i<bytes.length;i+=BSIZE) {
+            let d = btoa(String.fromCharCode.apply(null, bytes.slice(i,i+BSIZE)));
+            finalStr += 'require("Flash").write(atob("'+d+'"), addr+'+i+');\r\n';
+          }
+          break;
       case "quoted" :
         finalStr = '"'+dqStr+'"';
         break;
@@ -93,7 +111,7 @@ As : <select id="fileType" onchange="fileLoaded()">
     }
     document.getElementById("size").innerText = finalStr.length+" Characters";
     document.getElementById("result").style.display = "";
-    document.getElementById("result").innerText = finalStr;
+    document.getElementById("result").value = finalStr;
   }
   function handleFileSelect(event) {
       if (event.target.files.length != 1) return;
