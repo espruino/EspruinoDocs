@@ -21,7 +21,7 @@ Contents
 ## Quick Links
 
 - [Original Nodeconf badge pages](https://nodeconfeubadge.org)
-- [GitHub Repo](https://github.com/nearform/nceubadge2018)
+- [GitHub Repo (code, schematics, board layout)](https://github.com/nearform/nceubadge2018)
 - [Espruino Bluetooth Getting Started](http://www.espruino.com/Quick+Start+BLE#pixljs)
 - [Espruino Pixl.js info](http://www.espruino.com/Pixl.js)
 - [Returning your badge to normal](#returning-to-standard)
