@@ -98,6 +98,7 @@ Common USB Bluetooth adaptors that have been tested and work are:
 
 * [iAmotus UD-400M](https://www.amazon.com/gp/product/B01J3AMITS) - Broadcom BCM20702A1
 * [Plugable USB-BT4LE](https://www.amazon.com/gp/product/B009ZIILLI) - Broadcom BCM20702A1
+* [Feasycom FSC-BP119](https://shop.espruino.com/ble/usb-bluetooth) - CSR chipset **with external antenna**
 * [Whitelabel 06Q Nano](https://www.amazon.com/gp/product/B01AXGYS30) - CSR chipset
 * [Whitelabel BM35](https://www.amazon.com/gp/product/B01J35AUS4) - CSR chipset
 * [Unbranded 'CSR 4.0'](https://www.amazon.com/dp/product/B0775YF36R) - CSR Chipset
