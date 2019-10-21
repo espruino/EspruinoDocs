@@ -197,7 +197,7 @@ function findColour(palette,r,g,b,a, no_transparent) {
         b = clip(b + brightness + eb);
 
         var c = COL_FROM_RGB[colorStyle](r,g,b,a);
-        if (bpp==1) bitData[n>>3] |= 128>>(n&7);
+        if (bpp==1) { if (c) bitData[n>>3] |= 128>>(n&7); }
         else if (bpp==4) bitData[n>>1] |= c<<((n&1)?0:4);
         else if (bpp==8) bitData[n] = c;
         else throw new Error("Unhandled BPP");
