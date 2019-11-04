@@ -28,10 +28,7 @@ Badge.reset = () => {
 // Should the badge be connectable?
 Badge.connectable = false;
 // --------------------------------------------
-Badge.getName = () =>
-  NRF.getAddress()
-    .substr(-5)
-    .replace(":", "");
+Badge.getName = () => "Pixl.js " + NRF.getAddress().substr(-5).replace(":", "");
 Badge.updateBLE = () => {
   var adv = {
     showName: Badge.connectable,
