@@ -33,7 +33,7 @@ This is an example of using Espruino JS to control a REYAX LoRa module.
 It listens for "on" and "off" messages to change and LED and
 sends "on" and "off" messages by pressing the button.
 */
-var RYLR = require('RYLR.js');
+var RYLR = require('RYLR');
 
 Serial1.setup(115200, {rx: B7, tx: B6});
 var lora = RYLR.connect(Serial1);
