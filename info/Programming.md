@@ -4,7 +4,7 @@ Ways of Programming Espruino
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Programming. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Programming,Communication,Communicating,USB,Serial,UART,BLE,Bluetooth
+* KEYWORDS: Programming,Communication,Communicating,USB,Serial,UART,BLE,Bluetooth,CLI,Command,Command line,Command-line,NWJS,NW.js,Electron,App,Native,IDE,WebIDE,Web IDE
 
 When you've got your Espruino board, there are several different ways you can
 program it - they're detailed below:
