@@ -4,7 +4,7 @@ Bangle.js
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Bangle.js,Bangle,Banglejs,Smartwatch,Watch
+* KEYWORDS: Espruino,Official Board,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Graphics,Bangle.js,Bangle,Banglejs,Smartwatch,Watch
 
 [![](Banglejs/bangle-leaf.jpg)](https://www.kickstarter.com/projects/gfw/banglejs-the-hackable-smart-watch)
 
