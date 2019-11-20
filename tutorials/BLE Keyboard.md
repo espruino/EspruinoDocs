@@ -12,7 +12,7 @@ and buttons. Puck.js can emulate these, so can simulate keys being pressed.
 
 **Note:** You'll need at least firmware version 1v92 to pair on Windows (it needs the bonding functionality). Earlier firmwares can work as keyboards on Android, Mac OS and Chromebook, but we'd always recommend you're using the latest firmware.
 
-**Note:** Bluetooth HID can't be enabled on an active connection. To make it work (if you're connected wirelessly) you need to upload the code, disconnect, and then reconnect with your Operating System's `Pair` functionality.
+**Note:** Bluetooth HID can't be enabled on an active connection. To make it work (if you're connected wirelessly) you need to upload the code, disconnect, and then reconnect with your Operating System's `Pair` functionality. Sending HID keypresses without HID enabled will throw an exception.
 
 BLE HID can be enabled by providing a HID Report to [NRF.setServices](/Reference#l_NRF_setServices),
 however we've provided common types of HID report in modules to make it easier:
@@ -21,7 +21,10 @@ however we've provided common types of HID report in modules to make it easier:
 Keyboards
 ---------
 
-Keyboard support is from the [[ble_hid_keyboard.js]] module.
+Keyboard support is from the [[ble_hid_keyboard.js]] module. Using it
+is as simple as calling `NRF.setServices` with the HID report
+provided by the module. You can then use the `.tap` method to
+send a key tap, or can use `NRF.sendHIDReport` directly.
 
 ```
 var kb = require("ble_hid_keyboard");
@@ -38,6 +41,30 @@ function btnPressed() {
 // trigger btnPressed whenever the button is pressed
 setWatch(btnPressed, BTN, {edge:"rising",repeat:true,debounce:50});
 ```
+
+### LEDs
+
+When a Keyboard LED (Caps Lock, Num Lock, etc) should be lit, a message
+is sent to Espruino and is provided via the [`NRF.on('HID', ...)` event](http://www.espruino.com/Reference#l_NRF_HID).
+
+* Bit 0: NUM lock
+* Bit 1: CAPS lock
+* Bit 2: SCROLL lock
+* Bit 3: Compose
+* Bit 4: Kana
+
+For instance the following will light LED1 and LED2 depending on Num Lock and Caps Lock:
+
+```
+NRF.on('HID', function(v) {
+  LED1.write(v&1);  
+  LED2.write(v&2);
+});
+```
+
+This way you can send messages/data back to an Espruino device without any
+drivers or platform specific code, just by toggling the status of Caps Lock, Num Lock, and others.
+
 
 
 Multimedia Keys
