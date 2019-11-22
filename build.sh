@@ -14,7 +14,7 @@ rm -f html/*.js
 rm -f html/refimages/*
 rm -f html/boards/*
 
-nodejs bin/commenter.js
+node bin/commenter.js
 
 cd ../Espruino
 
@@ -31,7 +31,7 @@ cd $DIR
 echo "Getting file modification times..."
 git ls-tree -r --name-only HEAD | xargs -I{} git log -1 --format="%at {}" -- {} | sort > ordering.txt
 # Built reference docs and references.json
-nodejs bin/build.js $BUILDARGS || exit 1
+node bin/build.js $BUILDARGS || exit 1
 
 #rm $WEBSITE/reference/*
 cp html/*.html $WEBSITE/reference/

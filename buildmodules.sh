@@ -37,7 +37,7 @@ for module in $MODULES; do
   cp $module $MODULEDIR/$BNAME.js
 
   echo min $MODULEDIR/$module to $MINJS
-  nodejs bin/minify.js "$MODULEDIR/$BNAME.js" "$MODULEDIR/$MINJS" "$externsFile"
+  node bin/minify.js "$MODULEDIR/$BNAME.js" "$MODULEDIR/$MINJS" "$externsFile"
 
   if [[ -s $MODULEDIR/$MINJS ]] ; then
     echo "$MODULEDIR/$MINJS compile successful"

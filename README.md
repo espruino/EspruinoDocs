@@ -104,7 +104,7 @@ If you haven't got Node.js JavaScript runtime installed or the JavaScript Packag
 * [Mac Installation Guide](http://treehouse.github.io/installation-guides/mac/node-mac.html)
 * [Linux Installation Guide](http://treehouse.github.io/installation-guides/linux/node-linux.html)
 
-
+On Linux, you may have `nodejs` and not `node` in your path. This will lead to issues later on in the build process. This problem is easily solved by running `sudo ln -s /usr/bin/nodejs /usr/bin/node` which will create a symbolic link, so you can use both `node` and `nodejs` at the terminal.
 
 ### Step 3: Install Required Node Modules
 
@@ -114,7 +114,7 @@ In order to generate the documentation and view it you require several JavaScrip
 $ npm install
 ```
 
-This will install all JavaScript dependancies.
+This will install all JavaScript dependencies.
 
 ## Build Process
 

@@ -1,4 +1,4 @@
-#!/bin/nodejs
+#!/bin/node
 /* Creates a URL-encoded preview image of an Espruino bitmap font */
 
 global.atob = function(a) {
