@@ -1,14 +1,14 @@
 {
   "name": "espruino-docs",
   "version": "1.0.0",
-  "description": "Espruino Site, Documenation Tutorials and Modules",
+  "description": "Espruino Site, Documentation Tutorials and Modules",
   "main": "app.js",
   "scripts": {
-    "build": "nodejs ./bin/build.js",
+    "build": "node ./bin/build.js",
     "eslintdevices": "./node_modules/.bin/eslint devices/*.js",
     "eslintmodules": "./node_modules/.bin/eslint modules/*.js",
     "eslintboards": "./node_modules/.bin/eslint boards/*.js",
-    "start": "nodejs app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

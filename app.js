@@ -4,7 +4,12 @@ var express = require('express');
 var app = express();
 
 app.all('/*', function(req, res, next) {
-  if (!req.url.match(/.*\/?\./)) {
+  // The root page is part of the large site and so is not available
+  // locally. Instead we default to a given page to kick off.
+  if (req.url === '/') {
+    res.redirect('/Original.html');
+    return next();
+  } else if (!req.url.match(/.*\/?\./)) {
     req.url += '.html';
   }
   console.log('returning: ' + req.url);
