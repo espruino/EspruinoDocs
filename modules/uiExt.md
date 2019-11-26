@@ -20,6 +20,7 @@ var ui = require("ui")       // load ui base module
 ```
 
 ### Create and add to ui an active(2), visible(1) =(3) input field at x/y
+
 (left/top: 45/7) of size width/height (195/28), turkis border color (3),
 white. Callback clears content when tap lasted longer than 550ms and there
 is content. Not checking for content runs into stack overflow, because `.u(e,"")`
