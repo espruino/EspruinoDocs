@@ -6,11 +6,9 @@ Bangle.js
 
 * KEYWORDS: Espruino,Official Board,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Graphics,Bangle.js,Bangle,Banglejs,Smartwatch,Watch
 
-[![](Banglejs/bangle-leaf.jpg)](https://www.kickstarter.com/projects/gfw/banglejs-the-hackable-smart-watch)
+[![](Banglejs/bangle-leaf.jpg)](https://shop.espruino.com/banglejs)
 
-[![NOW FUNDING ON KICKSTARTER!](Banglejs/ks.png)](https://www.kickstarter.com/projects/gfw/banglejs-the-hackable-smart-watch)
-
-* BUYFROM: £47,,https://www.kickstarter.com/projects/gfw/banglejs-the-hackable-smart-watch
+* BUYFROM: £47,,https://shop.espruino.com/banglejs
 
 **Bangle.js is an open, hackable smartwatch**
 
