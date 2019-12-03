@@ -159,12 +159,19 @@ Bangle'js's screen is 240 x 240 x 16 bits - which uses substantially more
 memory than the microcontroller has RAM. As such, draw commands go straight
 to the screen (and `g.getPixel` will not work).
 
-Drawing straight to the screen can cause flicker, so for games we'd recommend
-that you use `Bangle.setLCDMode("doublebuffered")`. When in this mode the
-LCD resolution is lowered to 240 x 160 pixels and draw commands will not
+Drawing straight to the screen can cause flicker, so for applications that
+need to update the screen constantly we'd suggest using [`Bangle.setLCDMode(...)`](https://banglejs.com/reference#l_Bangle_setLCDMode)
+to set the screen to a buffered mode. In a buffered mode, draw commands will not
 be visible until you call `g.flip()`.
 
-You can call `Bangle.setLCDMode()` to return to normal, unbuffered mode.
+
+Available options for `Bangle.setLCDMode` are:
+
+* `Bangle.setLCDMode("doublebuffered")` - The drawable area is 240x160 16 bit, terminal and vertical scrolling will not work.
+* `Bangle.setLCDMode("120x120")` - The drawable area is 120x120 8 bit, `g.getPixel` and full scrolling work.
+* `Bangle.setLCDMode("80x80")` - The drawable area is 80x80 8 bit, `g.getPixel` and full scrolling work.
+
+You can also call `Bangle.setLCDMode()` to return to normal, unbuffered mode.
 
 ### Menus
 
@@ -318,8 +325,27 @@ more information.
 
 ### Heart rate
 
-A proper API will be added for this before release with heart rate detection,
-but for now:
+You can turn on the heart rate monitor with `Bangle.setHRMPower(1)`, which
+will cause `HRM` events to be generated roughly every second:
+
+```
+Bangle.setHRMPower(1);
+Bangle.on('HRM',function(hrm) {
+  /*hrm is an object containing:
+    { "bpm": number,             // Beats per minute
+      "confidence": number,      // 0-100 percentage confidence in the heart rate
+      "raw": Uint8Array,         // raw samples from heart rate monitor
+   */
+}
+});
+```
+
+Beats per minute is calculated using [autocorrelation](https://en.wikipedia.org/wiki/Autocorrelation).
+
+See [the reference](https://banglejs.com/reference#l_Bangle_setHRMPower) for
+more information.
+
+You can also access the heart rate detection hardware manually with:
 
 ```
 Bangle.ioWr(0x80,0); // turn HRM on
