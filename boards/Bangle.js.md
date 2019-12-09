@@ -164,7 +164,6 @@ need to update the screen constantly we'd suggest using [`Bangle.setLCDMode(...)
 to set the screen to a buffered mode. In a buffered mode, draw commands will not
 be visible until you call `g.flip()`.
 
-
 Available options for `Bangle.setLCDMode` are:
 
 * `Bangle.setLCDMode("doublebuffered")` - The drawable area is 240x160 16 bit, terminal and vertical scrolling will not work.
@@ -186,8 +185,8 @@ var mainmenu = {
   "" : {
     "title" : "-- Main Menu --"
   },
-  "Backlight On" : function() { LED1.set(); },
-  "Backlight Off" : function() { LED1.reset(); },
+  "Beep" : function() { Bangle.beep(); },
+  "Buzz" : function() { Bangle.buzz(); },
   "Submenu" : function() { E.showMenu(submenu); },
   "A Boolean" : {
     value : boolean,
