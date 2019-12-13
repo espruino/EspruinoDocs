@@ -5,7 +5,7 @@ Gadgetbridge for Android
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Gadgetbridge. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Gadgetbridge,Gadget bridge,Android,Notifications
-
+* USES: Bangle.js
 
 [Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health monitoring without the need for a proprietary application or web service.
 
