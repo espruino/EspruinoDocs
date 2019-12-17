@@ -4,7 +4,7 @@ Bangle.js Technical Information
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+Technical. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Espruino,Official Board,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Graphics,Bangle.js,Bangle,Banglejs,Smartwatch,Watch
+* KEYWORDS: Bangle.js,Bangle,Banglejs,Smartwatch,Watch,pinout,pins,io,specs,spec
 * USES: Bangle.js
 
 **For general Bangle.js information, [try this page](/Bangle.js)**
@@ -68,14 +68,15 @@ There's IO connected to the nRF52, plus an IO expander to provide power to some 
 ### nRF52
 
 | Pin | Name | Notes |
-| D0 | LCD_D0 | Bits 0-7 all set together via P0_OUT |
-| D1 | LCD_D... | Bits 0-7 all set together via P0_OUT |
-| D2 | LCD_D... | Bits 0-7 all set together via P0_OUT |
-| D3 | LCD_D... | Bits 0-7 all set together via P0_OUT |
-| D4 | LCD_D... | Bits 0-7 all set together via P0_OUT |
-| D5 | LCD_D... | Bits 0-7 all set together via P0_OUT |
-| D6 | LCD_D... | Bits 0-7 all set together via P0_OUT |
-| D7 | LCD_D... | Bits 0-7 all set together via P0_OUT |
+|-----|------|-------|
+| D0 | LCD_D0 | Bits 0-7 all set together via `(char*)P0_OUT` |
+| D1 | LCD_D1 | Bits 0-7 all set together via `(char*)P0_OUT` |
+| D2 | LCD_D2 | Bits 0-7 all set together via `(char*)P0_OUT` |
+| D3 | LCD_D3 | Bits 0-7 all set together via `(char*)P0_OUT` |
+| D4 | LCD_D4 | Bits 0-7 all set together via `(char*)P0_OUT` |
+| D5 | LCD_D5 | Bits 0-7 all set together via `(char*)P0_OUT` |
+| D6 | LCD_D6 | Bits 0-7 all set together via `(char*)P0_OUT` |
+| D7 | LCD_D7 | Bits 0-7 all set together via `(char*)P0_OUT` |
 | D8 | LCD_DC |  |
 | D9 | LCD_CLK |  |
 | D10 | LCD_CS |  |
@@ -98,20 +99,21 @@ There's IO connected to the nRF52, plus an IO expander to provide power to some 
 | D27 | Flash D0 (MOSI) | |
 | D28 | IO expander reset | |
 | D29 | HRM Analog | |
-| D30 | Battery Level | 0.51098632812=low, 0.62=good |
+| D30 | Battery Level | 0.51=low, 0.62=good |
 | D31 | Flash D2 (WP - connect to GND) | |
 
 ### IO Expander
 
-| Mask | Description | Default value
-| 0x01 | GPS Default 0
-| 0x02 |  |
-| 0x04 |  |
-| 0x08 |  |
-| 0x10 |  |
-| 0x20 | LCD backlight  |  1
-| 0x40 | LCD reset |  1
-| 0x80 | HRM  | 1
+| Mask | Description | Default value |
+|------|-------------|---------------|
+| 0x01 | GPS | 0 |
+| 0x02 |  | |
+| 0x04 |  | |
+| 0x08 |  | |
+| 0x10 |  | |
+| 0x20 | LCD backlight  |  1 |
+| 0x40 | LCD reset |  1 |
+| 0x80 | HRM  | 1 |
 
 
 I2C
