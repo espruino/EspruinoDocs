@@ -4,7 +4,7 @@
 /** GPIO Tasks and Events
   ch can be between 0 and 7 for low power GPIO
   opts is {
-    type : "event"/"task", // default is event
+    type : "event"/"task"/"disabled", // default is disabled
     pin : D0, // pin number to use,
     lo2hi : 0/1, // default 0, trigger on low-high transition
     hi2lo : 0/1, // default 0, trigger on high-low transition
@@ -27,7 +27,8 @@ exports.gpiote = function(ch, opts) { // NRF_GPIOTE_Type
     tClr : addr+0x60,
     eIn : addr+0x100
   };
-  var v = (opts.type=="task"?3:1) |
+  var T = { "task":3, "event":1, "disabled":0 };
+  var v =(0|T[opts.type]) |
     (new Pin(opts.pin).getInfo().num<<8) |
     ((opts.lo2hi?1:0)<<16) |
     ((opts.hi2lo?1:0)<<17) |
@@ -236,7 +237,7 @@ exports.saadc = function(opts) {
       if (cnt>1 && !opts.samplerate)
         throw "Can't do >1 sample with no samplerate specified";
       if (cnt>1 && opts.channels.length>1)
-        throw "Can't do >1 channel with a samplerate specified";        
+        throw "Can't do >1 channel with a samplerate specified";
       var buf = new Uint16Array(Math.max(cnt*opts.channels.length,32)); // make big enough to ensure a flat string
       var p = E.getAddressOf(buf,true);
       o.setDMA({ptr:p,cnt:cnt*opts.channels.length});
