@@ -7,7 +7,8 @@ Bangle.js Getting Started
 * KEYWORDS: Tutorials,Bangle.js,Getting Started
 * USES: Bangle.js
 
-You may also be interested in the [Bangle.js](Bangle.js Hardware reference)
+You may also be interested in the [Bangle.js Hardware reference](Bangle.js) and
+[Bangle.js Technical reference](Bangle.js+Technical)
 
 Contents
 --------
@@ -21,7 +22,7 @@ Bangle.js has 3 physical buttons, and two touch areas.
 
 On the right-hand side, top to bottom, the buttons are BTN1, BTN2, BTN3.
 
-* **BTN1** : ‘Up/Previous’ in menus
+* **BTN1** : ‘Up/Previous’ in menus, and turn on if watch is off
 * **BTN2** : ‘Select’ in menus, or bring up menu when in Clock
 * **BTN3** : Down/Next in menus
 * **BTN4** : left-hand side of touchscreen. Used for some games, but not in menus
@@ -48,7 +49,7 @@ Charging
 --------
 
 The supplied charge cable connects to a USB port to charge Bangle.js (there is
-  no data connection, it is power only).
+no data connection, it is power only).
 
 You must connect the cable the right way around: With Bangle.js facing away from
 you (so you're looking at the shiny back) and the `CE Rohs` text the right way
@@ -58,6 +59,7 @@ up, the USB cable should exit from the **left** side of the watch.
 not leave your cable plugged in or it might attract itself to the nearest
 magnetic (probably conductive) object and short out.
 
+
 Powering off
 ------------
 
@@ -65,6 +67,7 @@ Powering off
 * Choose `Settings`
 * Scroll down to ‘Turn Off’
 * Select it
+
 
 Powering off if completely broken
 ---------------------------------
@@ -74,6 +77,7 @@ Powering off if completely broken
 * Watch will start vibrating
 * Release the 2 buttons
 * Your watch may restart if it hasn’t been turned off since the last firmware update. If so, repeat the process again.
+
 
 Resetting
 ---------

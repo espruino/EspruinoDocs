@@ -4,7 +4,7 @@ Bangle.js
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Espruino,Official Board,nRF52832,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Graphics,Bangle.js,Bangle,Banglejs,Smartwatch,Watch
+* KEYWORDS: Espruino,Official Board,nRF52832,nRF52,Nordic,Board,Bluetooth,BLE,Bluetooth LE,Graphics,Bangle.js,Bangle,Banglejs,Smartwatch,Watch
 
 [![](Banglejs/bangle-leaf.jpg)](https://shop.espruino.com/banglejs)
 
@@ -131,7 +131,8 @@ to find what you want.
 Information
 -----------
 
-... to be added soon ...
+* For detailed technical information about Bangle.js, check out [the Bangle.js Technical Information page](/Bangle.js+Technical)
+* There's a [Bangle.js API reference here](https://banglejs.com/reference)
 
 
 <a name="lcd"></a>LCD Screen
@@ -377,6 +378,17 @@ Firmware Updates
 
 Troubleshooting
 ---------------
+
+### Why can't I see/program Bangle.js?
+
+Go to 'Settings' in Bangle.js and ensure that `BLE` and `Programmable` are set to on. Failing that, see [Resetting without loading any code](/Bangle.js#resetting-without-loading-any-code) above.
+
+### My Bangle.js isn't charging
+
+Is the charge lead the wrong way around? With Bangle.js facing away from
+you (so you're looking at the shiny back) and the `CE Rohs` text the right way
+up, the USB cable should exit from the **left** side of the watch.
+
 
 For more answers please check out the [Bluetooth Troubleshooting](Troubleshooting+BLE) or [General Troubleshooting](/Troubleshooting) pages.
 
