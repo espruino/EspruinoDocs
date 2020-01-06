@@ -63,7 +63,7 @@ Available message types are:
 For example:
 
 ```
-Bluetooth.println(JSON.stringify({t:"info", msg:"Hello World"))
+Bluetooth.println(JSON.stringify({t:"info", msg:"Hello World"}))
 ```
 
 will display a message on your phone's screen.
