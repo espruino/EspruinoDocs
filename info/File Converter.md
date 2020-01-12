@@ -83,7 +83,7 @@ As : <select id="fileType" onchange="fileLoaded()">
         finalStr = 'atob("'+btoa(String.fromCharCode.apply(null, bytes))+'")';
         break;
       case "b64c" :
-        finalStr = 'E.toString(require("heatshrink").decompress(atob("'+btoa(String.fromCharCode.apply(null, heatshrink_compress(bytes)))+'")))';
+        finalStr = 'E.toString(require("heatshrink").decompress(atob("'+btoa(String.fromCharCode.apply(null, heatshrink.compress(bytes)))+'")))';
         break;
       case "b64b" :
         finalStr = 'var data = new Uint8Array('+bytes.length+');\r\n';
