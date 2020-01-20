@@ -240,6 +240,7 @@ MQTT.prototype.connect = function (client) {
                 }
             }
             else if (type === TYPE.PUBACK) {
+                mqo.emit('puback', data.charCodeAt(2) << 8 | data.charCodeAt(3));
             }
             else if (type === TYPE.PUBREC) {
                 client.write(fromCharCode(TYPE.PUBREL << 4 | 2) + "\x02" + getPid(pData));
@@ -248,6 +249,7 @@ MQTT.prototype.connect = function (client) {
                 client.write(fromCharCode(TYPE.PUBCOMP << 4) + "\x02" + getPid(pData));
             }
             else if (type === TYPE.PUBCOMP) {
+              mqo.emit('pubcomp', data.charCodeAt(2) << 8 | data.charCodeAt(3));
             }
             else if (type === TYPE.SUBACK) {
                 if(pData.length > 0)
@@ -345,7 +347,12 @@ MQTT.prototype.disconnect = function () {
     this.client = false;
 };
 
-/** Publish message using specified topic */
+/** Publish message using specified topic.
+  opts = {
+    retain: bool // the server should retain this message and send it out again to new subscribers
+    dup : bool   // indicate the message is a duplicate because original wasn't ACKed (QoS > 0 only)
+  }
+*/
 MQTT.prototype.publish = function (topic, message, opts) {
     if (!this.client) return;
     opts = opts || {};

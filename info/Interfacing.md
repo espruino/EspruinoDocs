@@ -400,8 +400,6 @@ F5:3E:A0:62:C7:74 (unknown)
 
 Copy the device's address from the terminal, and use it in subsequent commands.
 
-### JavaScript
-
 Next we want to convert our JavaScript command into a form (hexadecimal bytes)
 that can be used by `gatttool`. We'll send `"LED.toggle()\n"`, so use the following
 JavaScript code to convert that to hex bytes:

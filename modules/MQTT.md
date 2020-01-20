@@ -172,3 +172,5 @@ Events
 * `subscribed_fail` - `mqtt.subscribe` failed
 * `unsubscribed`- mqtt.unsubscribe succeeded
 * `ping_reply` - A reply to the ping was received
+* `puback` - An packet to acknowledge for a `publish` was received (QoS > 0 only)
+* `pubcomp` - An packet to acknowledge that a `pubrel` was received (QoS 2 only)
