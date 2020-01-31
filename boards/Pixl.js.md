@@ -173,14 +173,14 @@ Information
 * [3D model of Pixl.js in STL](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.stl) or [OpenSCAD](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.scad)
 * [SVG Vector drawing of Pixl.js with laser-cut case](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.svg)
 
-<a name="onboard"></a>LCD Screen
+<a name="lcd"></a>LCD Screen
 ---------------------------------
 
 **NOTE:** When you get it, your Pixl has a protective film over the front of
 the LCD. It may appear scuffed of scratched, but can easily be peeled off
 from one corner.
 
-Pixl.js's displays the REPL (JavaScript console) by
+Pixl.js displays the REPL (JavaScript console) by
 default, so any calls like `print("Hello")` or `console.log("World")` will output
 to the LCD when there is no computer connected via Bluetooth or [Serial](#serial-console).
 Any errors generated when there is no connection will also be displayed on the LCD.

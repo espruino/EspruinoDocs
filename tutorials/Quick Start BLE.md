@@ -48,6 +48,21 @@ improving the software and adding new features.
 
 To get the best out of it, we'd recommend that you [update Pixl.js's firmware](/Pixl.js#firmware-updates) first.
 
+### <a class="specific banglejs"></a>Bangle.js
+
+Simply press **BTN1** (the top right button) to power Bangle.js on.
+
+If bluetooth connectivity is disabled (by default Bangle.js will
+  be connectable):
+
+* In your watch, press the middle button (**BTN2**)
+* Use the bottom button to scroll down until you get to Settings
+* Press the middle button to select
+* **Either:** ensure `BLE` and `Programmable` are `On` to enable programming permanently
+* **Or:** Scroll down to `Make Connectable`, select it, and leave Bangle.js displaying on the 'Connectable' screen
+
+Check out [The Bangle.js 'Getting Started' page](/Bangle.js Getting Started) for more information.
+
 ### <a class="specific mdbt42q"></a>MDBT42Q
 
 Check out [the MDBT42Q](/MDBT42Q#getting-started) page for more information about powering the MDBT42Q.

@@ -16,3 +16,5 @@ references.json
 /.project
 npm-debug.log
 orig
+ordering.txt
+package-lock.json

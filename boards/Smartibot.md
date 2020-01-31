@@ -43,8 +43,13 @@ are identical), or you can be notified when a button changes state:
 setWatch(function(e) {
   if (e.state) print("Button pressed");
   else print("Button released");
-}, BTN, {repeat:true});
+}, BTN1, {repeat:true, edge:"both"});
 ```
+
+The code above will call the function when the button is pressed and
+when it is released. You can remove `edge:"both"` completely or use `edge:"rising"`
+to be notified only when the button is pressed, or cal use `edge:"falling"` to
+be notified only when it is released.
 
 **NOTE:** On the Smartibot build that ships with KickStarter devices,
 the value from `BTN1.read()` is inverted (`true` when released, `false` when pressed).
