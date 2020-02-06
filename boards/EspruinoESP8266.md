@@ -185,7 +185,7 @@ setWatch will lose transitions if javascript code does not run promptly.
 The esp8266 ADC function is available on pin A0 or without a pin.
 Using a digital pin will return NaN
 
-Possible ways to call ananlogRead() and the returns:
+Possible ways to call analogRead() and the returns:
 
 ```
 analogRead(A0);
