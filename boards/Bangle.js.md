@@ -48,12 +48,27 @@ Power Consumption
 * 100% CPU usage running JavaScript - 7mA
 * GPS on - 30mA
 * LCD on - 40mA
+* Turned off - 0.08mA (0.6mA if turned off via Bootloader)
 
 This means that when idle (in the normal power-on state) you can expect around 20 days of battery life.
 
+Powering off
+------------
 
-Powering off if completely broken
+* Press the middle button `BTN2` when at the watch face
+* Scroll down with `BTN3` until you get to `Settings`
+* Press `BTN2` to select
+* Scroll down with `BTN3` to `Turn Off`
+* Press `BTN2` to select it
+
+
+Powering off if firmware is broken
 -----------------------------------
+
+This method uses Bangle.js's bootloader to turn off as a last
+resort. However, the bootloader is not as good at entering a
+low power state as the Espruino firmware, and so the battery
+may drain faster than if you could use the main Bangle.js 'off' functionality.
 
 * Long-press `BTN1` + `BTN2` for about 6 seconds until the screen goes blank
 * Keep pressing them while `====` goes across the screen
