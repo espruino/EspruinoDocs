@@ -26,7 +26,7 @@ with the device and executes commands immediately.
 
 The right-hand side is a text editor. You can click the `</>` icon to swap
 to a graphical code editor, and can click ![the Upload Icon](Quick Start Code/upload_icon.png)
-to send the code you wrote one the right-hand side to Espruino.
+to send the code you wrote on the right-hand side to Espruino.
 
 If you're using any version of the Espruino IDE, you can click on  ![the Book icon](Quick Start Code/book_icon.png) in
 the top right, then:
