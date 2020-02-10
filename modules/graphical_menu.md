@@ -86,10 +86,16 @@ var menuinfo = {
     "x": 0, // optional, x offset of menu
     "x2": g.getWidth()-1, // optional, x coordinate of right of menu
     "y2": g.getHeight()-1, // optional, y coordinate of bottom of menu
+    "cB" : 0,  // optional, background colour
+    "cF" : -1, // optional, foreground colour
+    "cHB" : 0,  // optional, background colour of highlighted item
+    "cHF" : -1, // optional, foreground colour of highlighted item
     "predraw": function(gfx) {} // optional, function called before menu is drawn
                                 // (you could for instance set the font in here)
-    "preflip": functiongfx() {} // optional, function called after menu is drawn,
-                                // before it's sent to the screen
+    "preflip": function(gfx,less,more) {} // optional, function called after menu is drawn,
+                                // before it's sent to the screen.
+                                // less is true if there are menu items off the top of the screen
+                                // more is true if there are menu items off the bottom of the screen
   },
   "menu text" : function() { called when menu item selected };,
   "another menu" : {
