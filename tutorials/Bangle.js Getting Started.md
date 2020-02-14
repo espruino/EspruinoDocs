@@ -24,7 +24,7 @@ On the right-hand side, top to bottom, the buttons are BTN1, BTN2, BTN3.
 
 * **BTN1** : ‘Up/Previous’ in menus, and turn on if watch is off
 * **BTN2** : ‘Select’ in menus, or bring up menu when in Clock
-* **BTN3** : Down/Next in menus
+* **BTN3** : Down/Next in menus, long-press to return to Clock
 * **BTN4** : left-hand side of touchscreen. Used for some games, but not in menus
 * **BTN5** : right-hand side of touchscreen. Used for some games, but not in menus
 
