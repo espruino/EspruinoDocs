@@ -254,7 +254,7 @@ device, such as the ESP32.  Below is the command to get you connected to the
 ESP32.
 
 ```
-minicom --baudrade 115200 --device /dev/ttyUSB0
+minicom --baudrate 115200 --device /dev/ttyUSB0
 ```
 
 *CuteCom* is also a basic GUI tool that allows you to connect to a serial device.
