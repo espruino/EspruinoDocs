@@ -2,6 +2,7 @@ var WIFI_BOOT = A13;
 var WIFI_CHPD = A14;
 var WIFI_CTS = A15;
 var WIFI_SERIAL = Serial2;
+digitalRead(WIFI_BOOT); // setting BOOT to an input saves power when wifi off
 digitalWrite(WIFI_CHPD, 0); // make sure WiFi starts off
 
 var MODE = { CLIENT : 1, AP : 2 };
@@ -215,7 +216,7 @@ function ipdHandler(line) {
 
 function changeMode(callback, err) {
   if (err) return callback(err);
-  at.cmd("AT+CWMODE="+wifiMode+"\r\n", 1000, function(cwm) {
+  at.cmd("AT+CWMODE="+wifiMode+"\r\n", 2000, function(cwm) {
     if (cwm!="no change" && cwm!="OK" && cwm!="WIFI DISCONNECT")
       callback("CWMODE failed: "+(cwm?cwm:"Timeout"));
     else
@@ -270,7 +271,7 @@ function turnOn(mode, callback) {
     exports.at = at;
     require("NetworkJS").create(netCallbacks);
     at.cmd("\r\nAT+RST\r\n", 10000, function cb(d) {
-      if (d=="ready" || d=="Ready.") setTimeout(function() {
+      if (d=="ready" || d=="Ready.") setTimeout(function() { // wait a little
         at.cmd("ATE0\r\n",1000,function cb(d) { // turn off echo
           if (d=="ATE0") return cb;
           if (d=="OK") {
@@ -280,7 +281,9 @@ function turnOn(mode, callback) {
                 if (d!="OK") return callback("CIPMUX failed: "+(d?d:"Timeout"));
                 at.cmd('AT+UART_CUR=115200,8,1,0,2\r\n',500,function(d) { // enable flow control
                   if (d!="OK") return callback("UART_CUR failed: "+(d?d:"Timeout"));
-                  else changeMode(callback);
+                  else setTimeout(function() {
+                    changeMode(callback);
+                  }, 500);
                 });
               });
             });
@@ -306,6 +309,7 @@ function turnOff(mode, callback) {
     at = undefined;
     exports.at = undefined;
     digitalWrite(WIFI_CHPD, 0); // turn off Wifi
+    digitalRead(WIFI_BOOT); // setting BOOT to an input saves power when wifi off
     socks = []; // force close of all sockets
     setTimeout(callback,1);
   } else {
