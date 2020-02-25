@@ -577,31 +577,36 @@ SX.prototype.setRxConfig = function( options ) {
 
 SX.prototype.setTxConfig = function( options ) {
   options = this.commonSetConfig(options);
-  var paConfig = this.r( REG.PACONFIG );
-  var paDac = this.r( REG.PADAC );    
-
-  paConfig = ( paConfig & RF.PACONFIG_PASELECT_MASK ) | RF.PACONFIG_PASELECT_RFO;
-  // TODO: if 525000000 and  SX1276MB1LAS , use PABOOST, not RFO
-  paConfig = ( paConfig & RF.PACONFIG_MAX_POWER_MASK ) | 0x70;
-
-  if (paConfig & RF.PACONFIG_PASELECT_PABOOST) {
-    if (options.power > 17) 
-      paDac = ( paDac & RF.PADAC_20DBM_MASK ) | RF.PADAC_20DBM_ON;
-    else
-      paDac = ( paDac & RF.PADAC_20DBM_MASK ) | RF.PADAC_20DBM_OFF;
-    if (paDac & RF.PADAC_20DBM_ON) {
-      options.power = E.clip(options.power,5,20);
-      paConfig = ( paConfig & RF.PACONFIG_OUTPUTPOWER_MASK ) | ( options.power - 5 ) & 0x0F;
-    } else {
-      options.power = E.clip(options.power,2,17);
-      paConfig = ( paConfig & RF.PACONFIG_OUTPUTPOWER_MASK ) | ( options.power - 2 ) & 0x0F;
-    }
+  let pwr = options.power;
+  let usePaBoost = (pwr > 15) || options.forcePaBoost;
+  // high power is 20dB, some special settings required
+  let highPower = pwr == 20;
+  let paDac = highPower ? 0x87 : 0x84;
+  // default over current value is 100mA, should be good up to +17dBm output power as that requires 90mA.
+  // +20dBm requires 120mA, set the over current limit a bit higher to 140mA
+  let ocpVal = highPower ? RF.OCP_TRIM_140_MA: RF.OCP_TRIM_100_MA;
+  
+  var paConfig = 0;
+  if(usePaBoost){
+    if(!((pwr >= 2 && pwr <= 17) || pwr ==20)){ throw "SX127x-PA_BOOST_PWR_ERR"; }
+    paConfig = RF.PACONFIG_PASELECT_PABOOST | (highPower ? pwr - 5 : pwr - 2);
   } else {
-    options.power = E.clip(options.power,-1,14);
-    paConfig = ( paConfig & RF.PACONFIG_OUTPUTPOWER_MASK ) | ( options.power + 1 ) & 0x0F;
+    if(pwr < -4) { throw "SX127x-PWR_TOO_LOW"}
+    // Setting output power is a bit contrived if we want go below 0dBm:
+    // The effective output power is Pout=Pmax-(15-OutputPower), 
+    // but Pmax can be set in 0.6dBm steps: Pmax=10.8+0.6*MaxPower
+    
+    // If the desired output power is lower than 0dBm, set MaxPower to 0b000 -> 10.8dBm
+    // to get the desired power, add 4 to the desired value
+    // If output power is over 0dBm, set MaxPower to 0b111 -> 15dBm, 
+    // to get the desired power, just binary or the 
+    paConfig = (pwr < 0) ? 0b00000000 | (pwr+4) : 0b01110000 | (pwr);
   }
+
+
   this.w( REG.PACONFIG, paConfig );
   this.w( REG.PADAC, paDac );
+  this.w(REG.OCP, ocpVal);
 
   this.mask(REG.MODEMCONFIG2, RF.MODEMCONFIG2_SF_MASK & RF.MODEMCONFIG2_RXPAYLOADCRC_MASK,
             ( options.datarate << 4 ) | ( options.crcOn << 2 ) );
