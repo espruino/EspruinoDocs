@@ -56,10 +56,10 @@ If bluetooth connectivity is disabled (by default Bangle.js will
   be connectable):
 
 * In your watch, press the middle button (**BTN2**)
-* Use the bottom button to scroll down until you get to Settings
-* Press the middle button to select
-* **Either:** ensure `BLE` and `Programmable` are `On` to enable programming permanently
-* **Or:** Scroll down to `Make Connectable`, select it, and leave Bangle.js displaying on the 'Connectable' screen
+* Use the bottom button (**BTN3**) to scroll down until you get to Settings
+* Press **BTN2** to select
+* **Either:** Ensure `BLE` and `Programmable` are `On` to enable programming permanently, and then choose `Back` to exit settings
+* **Or:** Scroll down to `Make Connectable`, select it, and leave Bangle.js displaying on the `Connectable` screen
 
 Check out [The Bangle.js 'Getting Started' page](/Bangle.js Getting Started) for more information.
 
@@ -365,6 +365,7 @@ your first code for Espruino**
 There's lots of detailed information on specific boards, as well
 as a list of tutorials for them:
 
+* [Bangle.js](/Bangle.js)
 * [Puck.js](/Puck.js)
 * [Pixl.js](/Pixl.js) and [Pixl.js Getting Started video](https://www.youtube.com/watch?v=pawHDr4i3jI)
 * [MDBT42Q](/MDBT42Q)
@@ -419,8 +420,8 @@ background that might flatten the battery.
 
 <script>
 var device;
-if (window.location.hash=="#pixljs") device="pixljs";
-if (window.location.hash=="#puckjs") device="puckjs";
+if (window.location.hash.length>1)
+  device=window.location.hash.substr(1);
 // Remove any sections that aren't relevant
 if (device) {
   var divs = document.getElementsByClassName("specific");

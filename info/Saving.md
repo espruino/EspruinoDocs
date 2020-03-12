@@ -19,7 +19,10 @@ Espruino including all saved code will be written so that it is loaded at
 boot time.
 
 However there are other methods of saving code that can be more efficient,
-or can allow you to do things like saving constants. See below for more
+or can allow you to do things like saving constants.
+
+You can change methods using the down-arrow below the Upload icon in the IDE,
+or under `Communications` in the `Settings` window. See below for more
 information.
 
 
@@ -40,8 +43,12 @@ When Espruino starts up, it does a few things:
 * Runs any handlers registered with `E.on('init', function() { ... });`
 * Runs a function called `onInit()` if it exists.
 
+If Espruino is reset with `load()` it follows the same steps as above, with `hasBeenReset` to `false`.
+However in Espruino 2v05 and later, `load(filename)` will follow the same steps but will load the
+specified file instead of `.bootcde`/`.bootrst`.
 
 There are two main ways to do it with Espruino.
+
 
 `save()`
 --------
@@ -61,7 +68,8 @@ When power is next applied, Espruino will load the information back out of
 flash and will resume where it left off. You can think of this a bit like
 'hibernate' on a PC.
 
-This is the standard way of saving code in Espruino, and it means that
+This is the standard way of saving code in normal Espruino devices (**it is
+  not suitable for [Bangle.js](/Bangle.js)**), and it means that
 you can interact with your code on the left-hand side of the IDE, changing
 variables and functions, and can then save everything - including your changes.
 
@@ -104,8 +112,8 @@ run `save()` to save the clean state back into flash memory.
 * When uploading code with an `onInit()` or `E.on('init', ...)` function the function won't be called at upload time and to test you'll have to either `save()` or call `onInit()` manually.
 
 
-Save on Send
-------------
+Save on Send (to Flash)
+------------------------
 
 `Save on Send` is an option in the Espruino IDE. Behind the scenes it uses
 the `E.setBootCode` command to save JS code directly into Espruino's
@@ -151,6 +159,14 @@ is enabled in the IDE.
 
 * If you turn on `Save on Send`, upload code, and then turn it off, you can be left
 with both bits of code in Espruino at the same time (see 'Both Options' below).
+
+
+To Storage
+-----------
+
+This is just like `Save on Send (to Flash)`, but on Espruino 2v05 and later
+you may call `load(filename)` to reset and load JavaScript code from a named
+file stored on Espruino.
 
 
 Combining options

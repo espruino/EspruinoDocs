@@ -123,9 +123,9 @@ Deleting apps
 Tutorials
 --------
 
-First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#banglejs)
-
-There is more information below about using the [LCD](#lcd) and [onboard peripherals](#onboard) as well.
+* To get your computer connected, check out the [Getting Started Guide](/Quick+Start+BLE#banglejs)
+* To get started see the [Bangle.js Development page](/Bangle.js+Development)
+* There is more technical information below about using the [LCD](#lcd) and [onboard peripherals](#onboard)
 
 Tutorials using Bangle.js:
 

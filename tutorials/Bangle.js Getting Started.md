@@ -24,7 +24,7 @@ On the right-hand side, top to bottom, the buttons are BTN1, BTN2, BTN3.
 
 * **BTN1** : ‘Up/Previous’ in menus, and turn on if watch is off
 * **BTN2** : ‘Select’ in menus, or bring up menu when in Clock
-* **BTN3** : Down/Next in menus, long-press to return to Clock
+* **BTN3** : Down/Next in menus, **long-press in any app to return to the Clock**
 * **BTN4** : left-hand side of touchscreen. Used for some games, but not in menus
 * **BTN5** : right-hand side of touchscreen. Used for some games, but not in menus
 
@@ -72,9 +72,9 @@ Powering off
 Powering off if completely broken
 ---------------------------------
 
-* Long-press BTN1 + BTN2 for about 6 seconds until the screen goes blank
-* Keep pressing them while ‘====’ goes across the screen
-* Watch will start vibrating
+* Long-press **BTN1** + **BTN2** for about 6 seconds until the screen goes blank
+* Keep pressing them while a progress bar of `====` goes across the screen
+* The watch will start vibrating
 * Release the 2 buttons
 * Your watch may restart if it hasn’t been turned off since the last firmware update. If so, repeat the process again.
 
@@ -82,7 +82,7 @@ Powering off if completely broken
 Resetting
 ---------
 
-* Long-press BTN1 + BTN2 for about 6 seconds until the screen goes blank
+* Long-press **BTN1** + **BTN2** for about 6 seconds until the screen goes blank
 * Release them
 * Bangle.js will boot as if it just turned on normally
 
@@ -100,7 +100,7 @@ If you uploaded something that runs at startup and breaks Bangle.js you may need
 * Keep holding **BTN1** while Bangle.js boots
 * Release it - you should have the Bangle.js logo, version, and MAC address
 
-You can now go to  http://banglejs.com/apps , connect, then go to ‘About -> Remove All Apps’, re-install ‘Bootloader’ and a ‘Clock’ and you’re good to go.
+You can now go to  http://banglejs.com/apps , connect, then go to `About`-> `Install default apps` and you’re good to go.
 
 
 Tutorials

@@ -28,6 +28,10 @@ The right-hand side is a text editor. You can click the `</>` icon to swap
 to a graphical code editor, and can click ![the Upload Icon](Quick Start Code/upload_icon.png)
 to send the code you wrote on the right-hand side to Espruino.
 
+On new versions of the IDE you'll see some text and a down-arrow below the upload
+icon ([the Upload Icon](Quick Start Code/upload_icon.png)) - this allows you to
+quickly choose where you save your code - see [the page on Saving](/Saving) for more information.
+
 If you're using any version of the Espruino IDE, you can click on  ![the Book icon](Quick Start Code/book_icon.png) in
 the top right, then:
 
