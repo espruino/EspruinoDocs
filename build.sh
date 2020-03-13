@@ -30,6 +30,9 @@ cd $DIR
 
 echo "Getting file modification times..."
 git ls-tree -r --name-only HEAD | xargs -I{} git log -1 --format="%at {}" -- {} | sort > ordering.txt
+# Push these items to the front
+echo "2000000000 tutorials/Bangle.js Getting Started.md" >> ordering.txt
+echo "2000000000 tutorials/Bangle.js Development.md" >> ordering.txt
 # Built reference docs and references.json
 node bin/build.js $BUILDARGS || exit 1
 

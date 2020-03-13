@@ -186,6 +186,7 @@ You might want to check out:
 * [Bangle.js: First Application](Bangle.js+First+App)
 * https://github.com/gfwilliams/workshop-nodeconfeu2019 (Step 2 and later)
 * https://github.com/espruino/BangleApps/blob/master/README.md for making custom apps
+* https://github.com/espruino/BangleApps/tree/master/apps for all the source code for existing apps
 
 Tutorials
 ----------
