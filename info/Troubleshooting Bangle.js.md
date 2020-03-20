@@ -6,7 +6,7 @@ Bangle.js Troubleshooting
 
 What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Bangle.js Forum](http://forum.espruino.com/microcosms/1424/).
 
-Please also check out the [Bluetooth specific troubleshooting page](/Troubleshooting+BLE)
+Please also check out the [Bluetooth specific troubleshooting page](http://www.espruino.com/Troubleshooting+BLE)
 
 * APPEND_TOC
 
