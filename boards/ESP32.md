@@ -501,7 +501,7 @@ There are 8 channel available. Each one with is connected to a pin. Timimg goes 
 Implemented with the esp-idf RMT driver.
 
 ### setWatch implementation
-[Some pins can't be watched](https://github.com/espruino/Espruino/blob/8d193bab16a08d013dbb5689c9666b81039990a4/targets/esp32/jshardware.c#L473-L477):
+[These pins can be watched](https://github.com/espruino/Espruino/blob/8d193bab16a08d013dbb5689c9666b81039990a4/targets/esp32/jshardware.c#L473-L477):
  * D0 
  * D12 .. D19 
  * D21, D22 
