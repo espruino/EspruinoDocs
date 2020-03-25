@@ -86,7 +86,14 @@ Will make Bangle.js vibrate, and:
 Bangle.beep();
 ```
 
-Will make it beep. You'll notice they return promises, so you can chain them:
+Will make it beep.
+
+**Note:** The majority of Bangle.js devices do not contain a piezo speaker,
+but instead use the vibration motor for sound. If you received your device
+and it doesn't make a noise when using `Bangle.beep();`, please update
+the `Bootloader` app via the App Loader.
+
+You'll notice they return promises, so you can chain them:
 
 ```
 Bangle.buzz().then(() => {

@@ -32,7 +32,7 @@ Features
 * Heart rate monitor
 * 3 Axis Accelerometer (with Pedometer and Tap detect)
 * 3 Axis Magnetometer
-* Piezo speaker and Vibration motor
+* Vibration motor
 * 350mAh battery, 1 week standby time
 * 5 x 5 x 1.7 cm case, plastic with stainless steel ring
 * Can be disassembled with just 4 screws
@@ -107,9 +107,18 @@ Deleting all code
 You can do this either while your watch is connectable, or
 if you have reset it without loading any code (above).
 
+### Either:
+
+* Go to https://banglejs.com/apps
+* Click `About -> Install default apps`
+
+This will erase everything and install just the default apps.
+
+### Or:
+
 * Go to https://banglejs.com/apps
 * Go to `About -> Remove All Apps`
-* Re-install `Bootloader`, a `Clock`, and `Settings` if you want it
+* Re-install `Bootloader` and a `Clock` from `Library`
 
 
 Deleting apps
@@ -256,7 +265,52 @@ and events on the [Bangle](https://banglejs.com/reference#t_Bangle) object.
 
 ### LED
 
-There are no LEDs on Bangle.js - so there are no built-in `LED` variables.
+There are no LEDs on Bangle.js. There are two 'fake' LED variables called
+`LED1` and `LED2` that create red and green fake LEDs at the top of the watch
+screen - these serve no purpose other than to allow tutorials for existing
+Espruino boards to be used.
+
+### Vibrate
+
+`Bangle.buzz()` will make Bangle.js's vibration motor turn on. It takes optional
+time and strength arguments, and returns a promise. [See the reference](http://www.espruino.com/Reference#l_Bangle_buzz).
+
+For example:
+
+```
+Bangle.buzz().then(()=>{
+  return new Promise(resolve=>setTimeout(resolve,500)); // wait 500ms
+}).then(()=>{
+  return Bangle.buzz(1000);
+}).then(()=>{
+  console.log("Done");
+});
+```
+
+Will do a short buzz followed by a long buzz and will print `Done` when finished.
+
+### Sound
+
+You can use `Bangle.beep()` in much the same way as `.buzz` above to make sounds. [See the reference](http://www.espruino.com/Reference#l_Bangle_beep).
+
+To output an entire scale of notes, you could do:
+
+```
+Bangle.beep(200,207.65*8).then(
+()=>Bangle.beep(200,220.00*8)).then(
+()=>Bangle.beep(200,246.94*8)).then(
+()=>Bangle.beep(200,261.63*8)).then(
+()=>Bangle.beep(200,293.66*8)).then(
+()=>Bangle.beep(200,329.63*8)).then(
+()=>Bangle.beep(200,369.99*8)).then(
+()=>Bangle.beep(200,392.00*8)).then(
+()=>Bangle.beep(200,440.00*8));
+```
+
+**Note:** The majority of Bangle.js devices do not contain a piezo speaker,
+but instead use the vibration motor for sound. If you received your device
+and it doesn't make a noise when using `Bangle.beep();`, please update
+the `Bootloader` app via the App Loader.
 
 ### Buttons
 

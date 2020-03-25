@@ -29,7 +29,7 @@ Features
 * Heart rate monitor
 * 3 Axis Accelerometer (with Pedometer and Tap detect)
 * 3 Axis Magnetometer
-* Piezo speaker and Vibration motor
+* Vibration motor
 * 350mAh battery, 1 week standby time
 * 5 x 5 x 1.7 cm case, plastic with stainless steel ring
 * Can be disassembled with just 4 screws
@@ -87,7 +87,7 @@ There's IO connected to the nRF52, plus an IO expander to provide power to some 
 | D15 | I2C_SDA | |
 | D16 | TOUCH LEFT | inverted |
 | D17 | Flash D3 (RST - connect to VCC) |
-| D18 | Speaker | |
+| D18 | Speaker (if included), otherwise powered output on HRM PCB | |
 | D19 | Flash SCLK | |
 | D20 | Flash D1 (MISO) | |
 | D21 | Flash CS | |
