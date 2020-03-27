@@ -16,6 +16,11 @@ Please also check out the [Bluetooth specific troubleshooting page](http://www.e
 
 On Firmwares shipped on KickStarter Bangle.js there was a bug. Please leave `Debug Info` set to `Hide` (the default) in Bangle.js's `Settings`, then update to the latest Bootloader version using https://banglejs.com/apps (which will allow everything to work even with `Debug Info` set to `Show`).
 
+### I can't connect properly on Windows
+
+Ensure `HID` is disabled in the `Settings` screen.
+
+Try disabling this and holding `BTN1`+`BTN2` for 5 seconds to force a full software reset of Bangle.js: https://www.espruino.com/Bangle.js#resetting
 
 ### My Bangle.js no longer boots to the clock
 
