@@ -91,7 +91,8 @@ Will make it beep.
 **Note:** The majority of Bangle.js devices do not contain a piezo speaker,
 but instead use the vibration motor for sound. If you received your device
 and it doesn't make a noise when using `Bangle.beep();`, please update
-the `Bootloader` app via the App Loader.
+the `Bootloader` and `Settings` app via the App Loader. Afterwards you 
+can change the Beep mode in the `Settings` to Vibrate.
 
 You'll notice they return promises, so you can chain them:
 
