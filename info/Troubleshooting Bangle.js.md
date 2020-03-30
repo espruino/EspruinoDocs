@@ -12,15 +12,27 @@ Please also check out the [Bluetooth specific troubleshooting page](http://www.e
 
 * APPEND_TOC
 
+
+### I can't connect to my Bangle.js
+
+* If you paired Bangle.js in the Bluetooth settings of any of your devices, make sure to unpair it.
+* Ensure `HID` is `Off` and `BLE` and `Programmable` are set to `On` in the `Settings` screen.
+* Hold `BTN1` and `BTN2` for 5 seconds to force a full software reset of Bangle.js: https://www.espruino.com/Bangle.js#resetting
+
+Then go to https://banglejs.com/apps and connect using the window provided by the Web Browser.
+
+
+### My Bangle.js isn't charging
+
+Is the charge lead the wrong way around? With Bangle.js facing away from
+you (so you're looking at the shiny back) and the `CE Rohs` text the right way
+up, the USB cable should exit from the **left** side of the watch.
+
+
 ### I can't upload apps, and the IDE just says `-> Terminal` when connected
 
 On Firmwares shipped on KickStarter Bangle.js there was a bug. Please leave `Debug Info` set to `Hide` (the default) in Bangle.js's `Settings`, then update to the latest Bootloader version using https://banglejs.com/apps (which will allow everything to work even with `Debug Info` set to `Show`).
 
-### I can't connect properly on Windows
-
-Ensure `HID` is disabled in the `Settings` screen.
-
-Try disabling this and holding `BTN1`+`BTN2` for 5 seconds to force a full software reset of Bangle.js: https://www.espruino.com/Bangle.js#resetting
 
 ### My Bangle.js no longer boots to the clock
 

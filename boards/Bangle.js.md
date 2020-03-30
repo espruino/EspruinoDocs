@@ -448,19 +448,11 @@ Firmware Updates
 Troubleshooting
 ---------------
 
-### Why can't I see/program Bangle.js?
+Check out:
 
-Go to 'Settings' in Bangle.js and ensure that `BLE` and `Programmable` are set to on. Failing that, see [Resetting without loading any code](/Bangle.js#resetting-without-loading-any-code) above.
-
-### My Bangle.js isn't charging
-
-Is the charge lead the wrong way around? With Bangle.js facing away from
-you (so you're looking at the shiny back) and the `CE Rohs` text the right way
-up, the USB cable should exit from the **left** side of the watch.
-
-
-For more answers please check out the [Bluetooth Troubleshooting](Troubleshooting+BLE) or [General Troubleshooting](/Troubleshooting) pages.
-
+* [Bangle.js Troubleshooting](Troubleshooting+Bangle.js)
+* [Bluetooth Espruino Troubleshooting](Troubleshooting+BLE)
+* [General Espruino Troubleshooting](/Troubleshooting)
 
 
 Other Official Espruino Boards
