@@ -7,7 +7,9 @@ Troubleshooting (Bluetooth LE)
 * KEYWORDS: Troubleshooting,Trouble,Problems,Help,Broken,Not Working,BLE,Bluetooth LE,Web Bluetooth
 
 What follows is a quick list of potential problems and solutions for Bluetooth connection
-issues. **For more general problems, please look at [the main Troubleshooting page](/Troubleshooting+BLE)**
+issues. **For more general problems, please look at [the main Troubleshooting page](/Troubleshooting)**
+
+Have you got a [Bangle.js](/Bangle.js)? There's also a specific [Bangle.js Troubleshooting page](/Troubleshooting+Bangle.js)
 
 If your problem isn't covered, please post in the [Forum](http://forum.espruino.com).
 
