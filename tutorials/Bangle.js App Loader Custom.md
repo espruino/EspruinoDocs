@@ -4,7 +4,7 @@ Bangle.js App Loader Customisation
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+App+Loader+Custom. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Tutorials,Bangle.js,Development,App Loader,App Store
+* KEYWORDS: Tutorials,Bangle.js,Development,App Loader,App Store,App
 * USES: Bangle.js
 
 It's easy to make copies of the [Bangle.js App Loader](http://banglejs.com/apps)

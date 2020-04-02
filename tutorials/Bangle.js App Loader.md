@@ -4,7 +4,7 @@ Adding an app to the Bangle.js App Loader
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+App+Loader. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Tutorials,Bangle.js,Development,App Loader,App Store,Submit
+* KEYWORDS: Tutorials,Bangle.js,Development,App Loader,App Store,Submit,App
 * USES: Bangle.js
 
 If you have an app (eg by following the [Bangle.js First App](/Bangle.js+First+App)
