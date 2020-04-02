@@ -22,13 +22,15 @@ To use it, just use `Graphics.setFontVector(size)`. Assuming you've set up [[Gra
 
 ```
 g.clear();
-g.setFontVector(40);
+g.setFont("Vector",40);
 g.drawString("Hello",0,0); // 40px high
-g.setFontVector(60);
+g.setFont("Vector", 60);
 g.drawString("World",40,40); // 60px high
 ```
 
 While the vector font is meant to look great at larger sizes, it doesn't scale down in size very well below about 20 pixels high, so there's the Bitmap Font.
+
+**Note:** `g.setFontVector(height)` can be used, but is deprecated and `g.setFont("Vector", 60);` is preferred.
 
 Bitmap Font
 ----------
@@ -36,9 +38,13 @@ Bitmap Font
 The bitmap font is designed to be extremely small while still legible. This is the default font, but if you've already switched away from a Vector font, you can switch back to it with:
 
 ```
-g.setFontBitmap();
+g.setFont("4x6");
 g.drawString("Hello",0,0);
 ```
+
+On some devices there are two bitmap fonts. `4x6` and `6x8`
+
+**Note:** `g.setFontBitmap()` can be used, but is deprecated and `g.setFont("Bitmap", scale);` is preferred.
 
 Font Modules
 -----------
@@ -103,10 +109,10 @@ For example you may want to draw some small text right after some big text:
 
 ```
 function bigThenSmall(big, small, x, y) {
-  g.setFontVector(20);
+  g.setFont("Vector",20);
   g.drawString(big, x, y);
   x += g.stringWidth(big);
-  g.setFontBitmap();
+  g.setFont("4x6");
   g.drawString(small, x, y);
 }
 bigThenSmall("Hello", " World", 0,0);
