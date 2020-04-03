@@ -7,9 +7,17 @@ Fonts
 * KEYWORDS: Graphics,Font,Fonts,Text,Typeface,Module
 * USES: Graphics
 
-Espruino has two main fonts built-in. A vector font, and a bitmap font.
+Espruino usually has multiple fonts built-in.
 
-These are part of Espruino's built-in [[Graphics]] library.
+* A vector font (scalable to any height, usually works best above 20px high)
+* Bitmap fonts (scalable 1x, 2x, 3x, etc)
+  * `4x6` is built into all devices, it is 4px wide and 6px high
+  * `6x8` is built into devices like [Bangle.js](/Bangle.js). It is a much more readable 6px wide, 8px high font that contains characters 0-255 of the ISO10646-1 character set.
+
+These fonts are part of Espruino's built-in [[Graphics]] library.
+
+You can use `g.getFonts()` to list the available fonts.
+
 
 Vector Font
 ----------
@@ -18,7 +26,7 @@ The Vector font is made out of polygons, and it can be resized to any size. This
 
 **Note:** Some non-official Espruino boards don't have vector font support built-in, so all you'll have available is the bitmap font (see below).
 
-To use it, just use `Graphics.setFontVector(size)`. Assuming you've set up [[Graphics]] as a variable called `g` you can do:
+To use it, just use `Graphics.setFont("Vector",height)` where `height` is the height in pixels. Assuming you've set up [[Graphics]] as a variable called `g` you can do:
 
 ```
 g.clear();
@@ -28,23 +36,37 @@ g.setFont("Vector", 60);
 g.drawString("World",40,40); // 60px high
 ```
 
-While the vector font is meant to look great at larger sizes, it doesn't scale down in size very well below about 20 pixels high, so there's the Bitmap Font.
-
 **Note:** `g.setFontVector(height)` can be used, but is deprecated and `g.setFont("Vector", 60);` is preferred.
+
+The built-in vector font contains contains the [ASCII characters](http://www.asciitable.com/) 0-127 (eg. English text).
+
+While the vector font is meant to look good at larger sizes, it doesn't scale down in size very well below about 20 pixels high, so there's the Bitmap Font.
+
 
 Bitmap Font
 ----------
 
-The bitmap font is designed to be extremely small while still legible. This is the default font, but if you've already switched away from a Vector font, you can switch back to it with:
+Bitmap fonts are designed to be small while still legible. These are the default font, but if you've already switched away from a Vector font, you can switch back to it with:
 
 ```
 g.setFont("4x6");
 g.drawString("Hello",0,0);
+// double the size of the font to 8x12 with:
+g.setFont("4x6",2);
+g.drawString("2x Hello",0,10);
 ```
 
-On some devices there are two bitmap fonts. `4x6` and `6x8`
+If your device has the `6x8` font built in you can use `g.setFont("6x8");`
+
+
+* The `4x6` font contains the [ASCII characters](http://www.asciitable.com/) 0-127 (eg. English text).
+* The `6x8` font contains characters 0-255 from the ISO10646-1 Character set (UTF-16)
+
+Since Espruino only uses 8 bit Strings, `drawString` cannot be used to render Strings containing the full UTF-16 character set (or UTF-8).
+
 
 **Note:** `g.setFontBitmap()` can be used, but is deprecated and `g.setFont("Bitmap", scale);` is preferred.
+
 
 Font Modules
 -----------
@@ -83,10 +105,15 @@ require("Font8x12").add(Graphics);
 
 // When drawing...
 g.setFont8x12();
+// or use: g.setFont("8x12")
 g.drawString("Hello World!",0,0);
+
+// Or double-size!
+g.setFont("8x12",2);
+g.drawString("Hello World!",0,20);
 ```
 
-For instance if using [[FontDennis8.js]], use `require("FontDennis8")` and `g.setFontDennis8();`.
+For instance if using [[FontDennis8.js]], use `require("FontDennis8")` and `g.setFontDennis8();` or `g.setFont("Dennis8")`.
 
 Custom Fonts
 -----------
@@ -132,7 +159,9 @@ Doubling Font Size
 
 There might be a case where you need to take a small font and double the size of it (to save memory, or because it can look interesting).
 
-There's nothing built in to Espruino, but this bit of code will render a font at double size and is reasonably fast:
+As of Espruino 2v05 can now just use `g.setFont(fontName, scaleFactor)`.
+
+However in older Espruino versions you could use this (slower) code:
 
 ```
 // txt=text string, px=>x position, py=>y position, h=height of font
