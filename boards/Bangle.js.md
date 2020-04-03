@@ -52,6 +52,22 @@ Power Consumption
 
 This means that when idle (in the normal power-on state) you can expect around 20 days of battery life.
 
+
+Charging
+--------
+
+The supplied charge cable connects to a USB port to charge Bangle.js (there is
+no data connection, it is power only).
+
+You must connect the cable the right way around or it won't work: With Bangle.js
+facing away from you (so you're looking at the shiny back) and the `CE Rohs` text
+the right way up, the USB cable should exit from the **left** side of the watch.
+
+**The cable is magnetic and the wires are connected directly to USB power.** Do
+not leave your cable plugged in or it might attract itself to the nearest
+magnetic (probably conductive) object and short out.
+
+
 Powering off
 ------------
 
@@ -132,8 +148,9 @@ Deleting apps
 Tutorials
 --------
 
-* To get your computer connected, check out the [Getting Started Guide](/Quick+Start+BLE#banglejs)
-* To get started see the [Bangle.js Development page](/Bangle.js+Development)
+* For general help with Bangle.js, see the [Bangle.js Getting Started Guide](/Bangle.js+Getting+Started)
+* To get your computer connected, check out the [Espruino Getting Started Guide](/Quick+Start+BLE#banglejs)
+* To get started with development see the [Bangle.js Development page](/Bangle.js+Development)
 * There is more technical information below about using the [LCD](#lcd) and [onboard peripherals](#onboard)
 
 Tutorials using Bangle.js:

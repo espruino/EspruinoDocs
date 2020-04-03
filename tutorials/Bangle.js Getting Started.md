@@ -51,11 +51,11 @@ Charging
 The supplied charge cable connects to a USB port to charge Bangle.js (there is
 no data connection, it is power only).
 
-You must connect the cable the right way around: With Bangle.js facing away from
-you (so you're looking at the shiny back) and the `CE Rohs` text the right way
-up, the USB cable should exit from the **left** side of the watch.
+You must connect the cable the right way around or it won't work: With Bangle.js
+facing away from you (so you're looking at the shiny back) and the `CE Rohs` text
+the right way up, the USB cable should exit from the **left** side of the watch.
 
-**Note:** the cable is magnetic and the wires are connected to USB power. Do
+**The cable is magnetic and the wires are connected directly to USB power.** Do
 not leave your cable plugged in or it might attract itself to the nearest
 magnetic (probably conductive) object and short out.
 

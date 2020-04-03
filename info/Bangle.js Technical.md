@@ -34,7 +34,6 @@ Features
 * 5 x 5 x 1.7 cm case, plastic with stainless steel ring
 * Can be disassembled with just 4 screws
 
-
 Software
 ---------
 
@@ -50,6 +49,8 @@ all `Bangle.*` functions and pretty much all Bangle.js functionality.
 
 Hardware
 --------
+
+Want to get inside? Check out the [Bangle.js Disassembly page](/Bangle.js+Disassembly)
 
 * [KX023 accelerometer](http://kionixfs.kionix.com/en/datasheet/KX023-1025%20Specifications%20Rev%2012.0.pdf)
 * 3 axis compass - not known which one

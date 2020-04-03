@@ -17,7 +17,10 @@ const MY_CONSTANT = "Hello";
 function myFunction() {
   if (1==1)
     print("Ok");
-  else {
+
+  if (1==1) {
+    print("Ok");
+  } else {
     print(1);
     print(2);
   }
