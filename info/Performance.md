@@ -12,6 +12,8 @@ Espruino is designed to run on devices with very small amounts of RAM available 
 
 **Is it too slow for you?**
 
+Check out [some easy Code Style changes](/Code+Style) to make your code run better.
+
 JavaScript on Embedded devices will never be as efficient as compiled code, so we've made it easy for you to add extremely fast code *where it is needed*:
 
 * Use the Web IDE to [compile JavaScript into optimised Thumb Code](/Compilation)
@@ -289,6 +291,77 @@ but be aware that you'll probably need a Typed Array (see below) to write to it.
 
 Once allocated, you can use `E.getAddressOf(v, true)` to get the actual
 physical address in memory of the Flat String's data (which can be used for DMA/etc).
+
+
+Functions and pretokenisation
+------------------------------
+
+Normally if you upload code to RAM, function code is uploaded there as-is.
+
+If you use the `E.setFlags({pretokenise:1})` command, Espruino will automatically minify your function code on upload. For example:
+
+```
+function foobar() {
+  if (this.x==undefined) throw new Error("Hello");
+  return null;
+}
+```
+
+Turns into something like  `#foobar(){#(#.x==#)##Error("Hello");##;}` where
+`#` is a special token representing that reserved word. This saves a lot of
+memory and also speeds up execution by 10-20%. However it does remove line
+numbers from stack traces and so makes debugging harder.
+
+
+Functions in Flash
+------------------
+
+If you write your code to flash memory (see [the page on Saving](/Saving))
+then any function that is defined will have its function code executed
+directly from flash.
+
+If your device (like [Bangle.js](/Bangle.js) uses external flash) then
+this will likely make functions execute more slowly than they would
+otherwise.
+
+This is great for RAM usage, and can be used to improve usage even further.
+For instance if you are trying to store a big blob of data, maybe an image:
+
+```
+const mydata = atob("GBgCAAAAAAAAAAQA....AAAAAAAAAAAAA");
+
+function useData() {
+  print(mydata);
+}
+```
+
+The code above will parse `mydata` and store the array in RAM.
+
+However, if you define the array in a function:
+
+```
+function useData() {
+  const mydata = atob("GBgCAAAAAAAAAAQA....AAAAAAAAAAAAA");
+  print(mydata);
+}
+
+// or
+
+function getMyData() {
+  return atob("GBgCAAAAAAAAAAQA....AAAAAAAAAAAAA");
+}
+
+function useData() {
+  print(getMyData());
+}
+```
+
+Then the data won't be in RAM - it'll be in Flash memory until the
+function is executed, when it'll be loaded into memory.
+
+**Note:** This only works if you're [uploading to Flash](/Saving). If
+you upload to RAM then the function's code will be in RAM, and will
+use *more* memory than just having parsed and decoded the base64 data.
 
 
 ARRAY BUFFERS ARE THE MOST EFFICIENT WAY TO STORE DATA

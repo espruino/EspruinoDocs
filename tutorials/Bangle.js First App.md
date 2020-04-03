@@ -19,7 +19,7 @@ Counting down
 
 Copy the following code to the right of the IDE and click Upload (![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gULCQYBpjW0xwAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAB9SURBVDjL1ZTBDsAgCEOp4f9/mR1cCFOjneMwe1KCAi9VmJkEARCRGmTWriJJQnPxttI60h4QrziNDsm9owOkjvYddr0hr6Mlo2jCfUZeYEngYcimbH94klAYj8yDd40hiPkgTVrdKpPK+P5EHx371v73Q5aenPuFWed3dAH/IFc2Q6hbuwAAAABJRU5ErkJggg==)):
 
-```
+```JS
 var counter = 30;
 
 function countDown() {
@@ -40,6 +40,10 @@ from 29.
 
 ![](Bangle.js First App/countdown_sml.png)
 
+**Why is the code formatted like this?** Check out the [Code Style](/Code+Style)
+page for some tips and the reasoning behind it.
+
+
 Changing font
 -------------
 
@@ -50,7 +54,7 @@ Because we're not resetting the state of the Graphics library with
 `reset()` every frame, you can now just copy/paste the following
 code onto the left-hand side of the IDE.
 
-```
+```JS
 g.setFontAlign(0,0); // center font
 g.setFont("6x8",8); // bitmap font, 8x magnified
 ```
@@ -71,13 +75,14 @@ by replacing `g.setFont("6x8",8)` with `g.setFont("Vector",80)`.
 
 ![](Bangle.js First App/countdown_big.png)
 
+
 Messages, beep, and buzz
 -------------------------
 
 Finally, maybe we want to detect when the counter hits zero,
 display a message, and beep:
 
-```
+```JS
 var counter = 30;
 var counterInterval;
 
@@ -122,7 +127,7 @@ watch with a long-press of **BTN3**. Let's just make the press of
 * Add `if (counterInterval) return;` as the first line in `function outOfTime() {`
 * Replace `counterInterval = setInterval(countDown, 1000);` with:
 
-```
+```JS
 function startTimer() {
   counter = 30;
   countDown();
@@ -138,7 +143,7 @@ just before the call to `outOfTime();` in `countDown`.
 
 Your code should now look like:
 
-```
+```JS
 var counter = 30;
 var counterInterval;
 
@@ -183,6 +188,7 @@ function startTimer() {
 startTimer();
 ```
 
+
 Making an App
 -------------
 
@@ -216,7 +222,7 @@ following into the **left-hand side** of the IDE.
 
 It'll write the relevant info to the file `timer.info`
 
-```
+```JS
 require("Storage").write("timer.info",{
   "name":"My Timer",
   "src":"timer.app.js"
@@ -261,7 +267,7 @@ the tools are now built into the IDE.
 Now all you have to do is change the App Info file to reference the icon. Copy
 and paste this into the left-hand side of the IDE:
 
-```
+```JS
 require("Storage").write("timer.info",{
   "name":"My Timer",
   "src":"timer.app.js",
@@ -273,6 +279,7 @@ If you open the Launcher now, you'll see the icon!
 
 **Note:** You can use these images in your app as well. If you want to
 draw the timer image, just use `g.drawImage(require("Storage").read("timer.img"),x,y)`
+
 
 Next Steps
 -----------

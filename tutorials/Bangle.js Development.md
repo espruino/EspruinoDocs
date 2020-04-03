@@ -46,7 +46,7 @@ The Web IDE is made up out of two parts - there's the black REPL on the left, an
 
 The REPL on the left is a direct connection to the watch and executes anything you type immediately - but be careful, it uses bracket counting to detect when to execute, so:
 
-```
+```JS
 if (true) {
   Bangle.buzz();
 }
@@ -54,7 +54,7 @@ if (true) {
 
 will make your watch vibrate, but:
 
-```
+```JS
 if (true)
   Bangle.
     buzz();
@@ -70,19 +70,19 @@ You can now try some commands:
 
 Type:
 
-```
+```JS
 reset();
 ```
 
 on the left-hand side of the IDE. The `Bangle.js` logo will be displayed.
 
-```
+```JS
 Bangle.buzz();
 ```
 
 Will make Bangle.js vibrate, and:
 
-```
+```JS
 Bangle.beep();
 ```
 
@@ -91,12 +91,12 @@ Will make it beep.
 **Note:** The majority of Bangle.js devices do not contain a piezo speaker,
 but instead use the vibration motor for sound. If you received your device
 and it doesn't make a noise when using `Bangle.beep();`, please update
-the `Bootloader` and `Settings` app via the App Loader. Afterwards you 
+the `Bootloader` and `Settings` app via the App Loader. Afterwards you
 can change the Beep mode in the `Settings` to Vibrate.
 
 You'll notice they return promises, so you can chain them:
 
-```
+```JS
 Bangle.buzz().then(() => {
   Bangle.beep();
 });
@@ -107,7 +107,7 @@ full list of Graphics commands is at: https://espruino.com/Reference#Graphics
 
 If you want to write a message on the screen, you can use `E.showMessage`:
 
-```
+```JS
 E.showMessage("Hello","A Title")
 ```
 
@@ -116,7 +116,7 @@ and Espruino-specific functions are in the `E` object**
 
 But the screen itself contains a VT100 terminal, so you can use `Terminal.print` and `Terminal.println` if you just want to log data:
 
-```
+```JS
 Terminal.println("Hello World")
 ```
 
@@ -131,7 +131,7 @@ seeing if your app is failing in unexpected ways when in every day use.
 Want to react to user input on the buttons? You can query the button state.
 **BTN1** is the top button, **BTN2** is the middle, **BTN3** is the bottom:
 
-```
+```JS
 BTN2.read();
 ```
 
@@ -140,7 +140,7 @@ code all the time would use battery.
 
 Instead, you can use [`setWatch`](http://www.espruino.com/Reference#l__global_setWatch). This sets up the hardware to watch for a button press:
 
-```
+```JS
 setWatch(() => {
   E.showMessage("You\npressed\nthe middle\nbutton!");
   setTimeout(()=>g.clear(), 1000);
@@ -153,7 +153,7 @@ Upload button**
 
 By default, this will only happpen once, but you can add `{repeat:true}` to the end:
 
-```
+```JS
 setWatch(() => {
   Bangle.buzz();
   E.showMessage("You\npressed\nthe middle\nbutton!");
