@@ -265,7 +265,7 @@ function onInit() {
 
 This will call `setConsole` 1 second after boot, by which time USB should have initialised. Assuming your Espruino is battery powered, unplugging and replugging USB will then move the console back to USB, where the board can be programmed.
 
-**Note:** Serial ports are not generally as fast as USB - 9600 baud is only around 1000 characters/second. If your code writes a lot of data to the console then you may find it fills up the output buffer and ends up stalled waiting for characters to send. 
+**Note:** Serial ports are not generally as fast as USB - 9600 baud is only around 1000 characters/second. If your code writes a lot of data to the console then you may find it fills up the output buffer and ends up stalled waiting for characters to send.
 
 **Note:** We're using `Serial1` and `USB` in the examples here, but depending on the board you have, you may also have access to other devices like `Serial2/3/4` or `Bluetooth`. Check out [the `Serial` class reference](/Reference#Serial) for a full list of options.
 
@@ -324,7 +324,7 @@ if (true) {
 }
 ```
 
-That is a complete statement, so when you hit enter at the end it'll be executed immediately. However if you type:
+is a complete statement, so when you hit enter at the end it'll be executed immediately. However if you type:
 
 ```
 if (true) {
@@ -335,9 +335,9 @@ else {
 }
 ```
 
-Then now we have a problem. Halfway through, Espruino sees that the first statement is complete and executes, and it's now given a line that starts `else {` that isn't a valid statement.
+Then now we have a problem. Halfway through, Espruino sees that the first `if` statement is complete and executes, and it's now given a line that starts `else {` that isn't a valid statement.
 
-The easiest way to fix this is to write code in the [K&R style](http://en.wikipedia.org/wiki/Indent_style#K.26R_style):
+The easiest way to fix this is to write code in something similar to the [K&R style](http://en.wikipedia.org/wiki/Indent_style#K.26R_style). See the [Coding Style](/Coding+Style) page for more information.
 
 ```
 if (true) {
