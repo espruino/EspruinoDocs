@@ -11,6 +11,12 @@ If you have an app (eg by following the [Bangle.js First App](/Bangle.js+First+A
 tutorial), you might want to add it to the [Bangle.js App Loader](http://banglejs.com/apps) so you or others can
 easily install it.
 
+**Note:** To keep things simple for everyone, the [BangleApps](https://github.com/espruino/BangleApps)
+Git repository and all code in it are [MIT Licensed](https://en.wikipedia.org/wiki/MIT_License). By
+contributing an app you're agreeing that the code in it will be MIT Licensed too,
+and you need to be sure you don't include any copyrighted code data or images that you
+don't have the right to distribute freely.
+
 
 Forking
 -------
