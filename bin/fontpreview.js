@@ -50,9 +50,28 @@ function getFontPreview(path) {
       }
   }
 
-  var SPACING = Math.max(fontMaxWidth, fontHeight)+1;
-  var WIDTH = 16*SPACING+4;
-  var HEIGHT = 16*SPACING+4;
+  var TESTLINES =   [
+    "0.123456789abcdefABCDEF",
+    "This is a Test of the Font"];
+  var testWidths = [];
+  TESTLINES.forEach((s,y)=>{
+    testWidths[y] = 0;
+    for (var ch of s) {
+     var ch = ch.charCodeAt();
+     testWidths[y] += getCharWidth(ch);
+   }
+ });
+
+  var SPACINGX = fontMaxWidth;
+  var SPACINGY = fontHeight;
+  var WIDTH = Math.max(16*SPACINGX+4,testWidths[0],testWidths[1]);
+  var HEIGHT = 16*SPACINGY+4;
+  var MINIMAL = false;
+  if (WIDTH > 300) {
+    MINIMAL = true;
+    WIDTH = testWidths[0];
+    HEIGHT = 1*SPACINGY+4;
+  }
   // Create Image Header
   var rowstride = ((WIDTH+31) >> 5) << 2;
   var headerLen = 14+ 12 + 6/*palette*/;
@@ -79,24 +98,28 @@ function getFontPreview(path) {
 
   // Draw
   //for (var i=0;i<HEIGHT;i++) setPixel(i,i);
-
-  for (var i=2*SPACING;i<16*SPACING+2;i++) {
-    setPixel(0,i);
-    setPixel(16*SPACING+1,i);
+  // borders
+  if (!MINIMAL) {
+    for (var i=2*SPACINGY;i<=16*SPACINGY+2;i++) {
+      setPixel(0,i);
+      setPixel(16*SPACINGX+3,i);
+    }
+    for (var i=0;i<16*SPACINGX+3;i++) {
+      setPixel(i,16*SPACINGY+3);
+      setPixel(i,2*SPACINGY);
+    }
   }
-  for (var i=0;i<16*SPACING+2;i++) {
-    setPixel(i,16*SPACING+2);
-    setPixel(i,2*SPACING);
-  }
-  for (var y=2;y<16;y++)
-    for (var x=0;x<16;x++)
-       drawChar(x+(y*16), 2+(x*SPACING), 2+ (y*SPACING));
-  ["0.123456789abcdefABCDEF",
-  "This is a Test of the Font"].forEach((s,y)=>{
+  // draw all chars in grid
+  if (!MINIMAL)
+    for (var y=2;y<16;y++)
+      for (var x=0;x<16;x++)
+         drawChar(x+(y*16), 2+(x*SPACINGX), 2+ (y*SPACINGY));
+  // draw test text
+    TESTLINES.forEach((s,y)=>{
     var x=0;
     for (var ch of s) {
        var ch = ch.charCodeAt();
-       drawChar(ch, x, y*SPACING);
+       drawChar(ch, x, y*SPACINGY);
        x += getCharWidth(ch);
      }
   });
@@ -110,5 +133,7 @@ function getFontPreview(path) {
   return "data:image/bmp;base64,"+new Buffer(imgData).toString('base64');
 }
 
-console.log(getFontPreview("../modules/FontDennis8.js"));
+//console.log(getFontPreview("../modules/FontDennis8.js"));
+//console.log(getFontPreview("../modules/FontCopasetic40x58Numeric.js"));
+console.log(getFontPreview("../modules/FontHaxorNarrow7x17.js"));
 exports.getFontPreview = getFontPreview;
