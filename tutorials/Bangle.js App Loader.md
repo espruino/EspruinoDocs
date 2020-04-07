@@ -142,6 +142,27 @@ Using your new App
 in the `apps.json` file that was changed earlier.
 
 
+Documenting your App
+--------------------
+
+While there's short field for a description, many apps may need
+slightly more documentation about how to use them.
+
+To add this documentation in a way that can be found easily
+from the app loader, create a file called `README.md` (a [markdown file](https://en.wikipedia.org/wiki/Markdown))
+in your app's folder.
+
+Then, in your app's section of the `apps.json` file, add:
+
+```
+  "readme":"README.md",
+```
+
+Now, when anyone sees your app in the App Loader, there'll be a link
+saying `Read more...`. When clicked, it'll bring up a window
+showing your documentation.
+
+
 Making Changes
 --------------
 
