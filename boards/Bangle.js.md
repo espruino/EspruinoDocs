@@ -174,6 +174,7 @@ Information
 
 * For detailed technical information about Bangle.js, check out [the Bangle.js Technical Information page](/Bangle.js+Technical)
 * There's a [Bangle.js API reference here](https://banglejs.com/reference)
+* Links to [CE](/files/Bangle.js-CE.pdf), [FCC ID 2AILG-F18](/files/Bangle.js-FCC.pdf) and [RoHS](/files/Bangle.js-RoHS.pdf) Certifications
 
 
 <a name="lcd"></a>LCD Screen
