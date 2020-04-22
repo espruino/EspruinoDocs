@@ -27,38 +27,42 @@ require("ble_ibeacon").advertise({
 
 **Note:** you'll need to get an iBeacon UUID from Apple to use this.
 
-From then on, Puck.js will broadcast to anything that will listen.
+From then on, Espruino will broadcast to anything that will listen.
 
 **Note:** Since you can't advertise while you're connected via Bluetooth LE,
-you will have to disconnect from your Puck for it to start transmitting.
+you will have to disconnect from your Espruino for it to start transmitting.
 
 **To turn iBeacon advertising off** simply call `NRF.setAdvertising({});`
 
 Advanced
 --------
 
-You can also use `require("ble_ibeacon").get` with the same options as
-`advertise` to get the array of advertising data to use. You can
-feed this directy into `NRF.setAdvertising()`'s first argument and
-can set other options such as advertising rate.
+**`require("ble_ibeacon").advertise` will overwrite
+Espruino's advertising (name, services, etc) with the iBeacon packet.**
 
-In Puck.js 1v92 You can also supply an array of advertising data:
+You can use `require("ble_ibeacon").get` with the same options as
+`advertise` to get the array of advertising data to use, which you can
+feed directly into `NRF.setAdvertising()`, allowing you to set other options
+such as advertising rate.
+
+In Espruino 1v92 and later you can also supply an array of advertising data
+to make Espruino send each advertising packet in turn.
+
+For iBeacon and normal Espruino connection info:
+
+```
+NRF.setAdvertising([
+  require("ble_ibeacon").get(...),
+  {} // this will add a 'normal' advertising packet showing name/etc  
+  ], {interval:100});
+```
+
+Or for iBeacon, Eddystone, and to report battery level:
 
 ```
 NRF.setAdvertising([
   require("ble_ibeacon").get(...),
   require("ble_eddystone").get(...),
-  {} // this will add a 'normal' advertising packet showing name/etc  
+  { 0x180F : [95] }
   ], {interval:100});
-```
-
-In which case Puck.js will send each advertising packet in turn.
-
-**This library's default behaviour is to overwrite Puck.js's advertising
-(name, services, etc) with iBeacon.** However you can easily add the advertising
-in addition to Espruino's existing advertising by setting the Eddystone
-advertising inside the Advertising Scan Response:
-
-```
-NRF.setScanResponse(require("ble_ibeacon").get(...));
 ```

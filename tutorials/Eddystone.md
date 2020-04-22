@@ -25,14 +25,14 @@ All you need to do to use it is use the [[ble_eddystone.js]] module:
 require("ble_eddystone").advertise("goo.gl/B3J0Oc");
 ```
 
-From then on, Puck.js will broadcast the URL to anything that will listen. It
+From then on, Espruino will broadcast the URL to anything that will listen. It
 is helpful if you use a descriptive title on the web page you're using, as this
 will appear in the notification area.
 
 **Note:** Since you can't advertise while you're connected via Bluetooth LE,
 you will have to disconnect from your Puck for it to start transmitting.
 
-While Puck.js can transmit pretty much anything, your phone will
+While Espruino can transmit pretty much anything, your phone will
 only notify you for certain URLs.
 
 The URLs:
@@ -49,7 +49,7 @@ still fine, even if it would appear to be far too long.
 
 **To turn Eddystone advertising off** simply call `NRF.setAdvertising({});`
 
-**Note:** While advertising Eddystone, Puck.js will not advertise its own name, so will not be connectable.
+**Note:** While advertising Eddystone, Espruino will not advertise its own name, so will not be connectable.
 
 
 An Example
@@ -59,34 +59,46 @@ An Example
 * Generate a suitable image and copy the (https) URL
 * Go to the Bitly](https://bitly.com/) URL shortener
 * Create a shortened URL and then copy it into a `require("ble_eddystone").advertise("https://bit.ly/abcdef");` command
-* Once executed (and you have disconnected), Puck.js will start advertising Eddystone
+* Once executed (and you have disconnected), Espruino will start advertising Eddystone
 * You can also call  `NRF.setAdvertising({});` to stop advertising
 
 
 Advanced
 --------
 
-You can also use `require("ble_eddystone").get` with the same options as
-`advertise` to get the raw array of advertising data to use. You can
-then feed this directy into `NRF.setAdvertising()`'s first argument and
-can set other options such as advertising rate.
 
-In Puck.js 1v92 and later you can also supply an array of advertising data:
+**`require("ble_eddystone").advertise` will overwrite
+Espruino's advertising (name, services, etc) with the Eddystone packet.**
+
+You can use `require("ble_eddystone").get` with the same options as
+`advertise` to get the array of advertising data to use, which you can
+feed directly into `NRF.setAdvertising()`, allowing you to set other options
+such as advertising rate.
+
+In Espruino 1v92 and later you can also supply an array of advertising data
+to make Espruino send each advertising packet in turn.
+
+For Eddystone and normal Espruino connection info:
+
+```
+NRF.setAdvertising([
+  require("ble_eddystone").get(...),
+  {} // this will add a 'normal' advertising packet showing name/etc  
+  ], {interval:100});
+```
+
+Or for Eddystone, iBeacon, and to report battery level:
 
 ```
 NRF.setAdvertising([
   require("ble_ibeacon").get(...),
-  require("ble_eddystone").get("your_url"),
-  {} // this will add a 'normal' advertising packet showing name/etc
-], {interval:100});
+  require("ble_eddystone").get(...),
+  { 0x180F : [95] }
+  ], {interval:100});
 ```
 
-In which case Puck.js will send each advertising packet in turn.
-
-**This library's default behaviour is to overwrite Puck.js's advertising
-(name, services, etc) with Eddystone.** However you can easily add the advertising
-in addition to Espruino's existing advertising by setting the Eddystone
-advertising inside the Advertising Scan Response:
+It is also possible to add Eddystone in addition to Espruino's existing advertising
+by setting the Eddystone advertising inside the Advertising Scan Response:
 
 ```
 NRF.setScanResponse(require("ble_eddystone").get("goo.gl/B3J0Oc"));
@@ -104,7 +116,7 @@ NRF.setAdvertising([
   {} // this will add a 'normal' advertising packet showing name/etc
 ], {interval:100});
 
-// or 
+// or
 
 require("ble_eddystone_uid").advertise(
         [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],  // namespace
