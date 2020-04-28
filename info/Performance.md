@@ -16,6 +16,7 @@ Check out [some easy Code Style changes](/Code+Style) to make your code run bett
 
 JavaScript on Embedded devices will never be as efficient as compiled code, so we've made it easy for you to add extremely fast code *where it is needed*:
 
+* Add `"ram"` to the top of your function to tell Espruino to keep it in RAM and pretokenise it.
 * Use the Web IDE to [compile JavaScript into optimised Thumb Code](/Compilation)
 * Create functions with [Inline C](/InlineC) or [Inline Assembler](/Assembler)
 * Recompile the Espruino firmware [with your own C code](/Extending+Espruino+1)
@@ -298,10 +299,13 @@ Functions and pretokenisation
 
 Normally if you upload code to RAM, function code is uploaded there as-is.
 
-If you use the `E.setFlags({pretokenise:1})` command, Espruino will automatically minify your function code on upload. For example:
+If you use the `E.setFlags({pretokenise:1})` command (for all functions) or add
+ `"ram"` at the top of a single function, Espruino will automatically minify your
+ function code on upload. For example:
 
 ```
 function foobar() {
+  "ram"
   if (this.x==undefined) throw new Error("Hello");
   return null;
 }
