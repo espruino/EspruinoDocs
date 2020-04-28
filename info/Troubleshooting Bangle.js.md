@@ -43,6 +43,24 @@ be done if you use `Save to Flash` to write code in the IDE.
 * Click `About -> Install default apps` which will erase everything and return Bangle.js to default (or try installing just `Bootloader` from library)
 
 
+### My Bangle is stuck showing `Searching for GPS Time`
+
+This may seem like a GPS issue, but the culprit is usually that an app/widget on the Bangle either has an error or that the Bangle runs out of memory.
+
+* Force a [reset of Bangle.js without loading code](https://www.espruino.com/Bangle.js#resetting-without-loading-any-code)
+* Go to https://banglejs.com/apps
+* Click `About -> Install default apps` which will erase everything and return Bangle.js to default
+
+
+### Settings won't change / Welcome screen keeps appearing#
+
+This is a known issue with the 2v05 firmware that Bangle.js initially shipped with. The filesystem could occasionally get corrupted and the contents of files can not be changed.
+
+* `About -> Install default` from https://banglejs.com/apps will temporarily fix the problem
+* However installing [the latest firmware](https://www.espruino.com/Bangle.js#firmware-updates) will stop it from happening again
+* You'll still have to 'Install default apps' after installing new firmware
+
+
 ### I can't get a GPS fix / GPS doesn't seem to be working
 
 When you get the Bangle (or after it has run out of battery and been recharged) the GPS is in a 'fresh' state. It has no idea of the time or where it is in the world. It can take 5-10 minutes with a GPS app running **outside** or on a windowsill in order to get a fix. After having got an initial fix the GPS will be significantly faster at getting a fix next time.

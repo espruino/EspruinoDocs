@@ -116,6 +116,10 @@ It won’t delete anything, so unless you fix/remove the broken code (see "Delet
 * Keep holding `BTN1` while Bangle.js boots
 * Release it - you should have the Bangle.js logo, version, and MAC address
 
+**Note:** In the 2v05 version shipped with Bangle.js KickStarter devices, Bangle.js would still load
+some parts of the bootloader. If you had turned off Bluetooth in Settings and then broke your Bangle's
+firmware you would be unable to connect in order to correct the problem. If this happens, [install the latest firmware](https://www.espruino.com/Bangle.js#firmware-updates) and follow these steps again, and you will then be able to connect.
+
 
 Deleting all code
 -----------------
