@@ -9,6 +9,11 @@ function getFontPreview(path) {
   var file = require("fs").readFileSync(__dirname+"/"+path).toString();
   // Hacks to cope with usage of heatshrink decompress
   // when it's not a legit node.js module
+  var E = {
+    toString : function(a) {
+      return new Uint8Array(a).reduce((p,c)=>p+String.fromCharCode(c),"");
+    }
+  };
   file = file.replace("require('heatshrink').decompress","hsdecompress");
   function hsdecompress(data) {
     if ("string" == typeof data) {
