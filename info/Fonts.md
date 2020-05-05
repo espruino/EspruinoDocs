@@ -112,6 +112,10 @@ Current modules are:
 | ![](FontDylex7x13.js) | [[FontDylex7x13.js]] | Variable width font with most characters for non-english languages, see [Character Sets](#character-sets) (originally from https://github.com/dylex/fonts) |
 | ![](FontHaxorNarrow7x17.js) | [[FontHaxorNarrow7x17.js]] | Variable width font with most characters for non-english languages, see [Character Sets](#character-sets) (originally from https://github.com/metan-ucw/fonts) |
 | ![](FontSinclair.js) | [[FontSinclair.js]] | Fixed width 8x8 Retro Sinclair font by [Steve Anderson](https://github.com/IrregularShed), Copyright Sinclair Research, non-commercial use approved. |
+| ![](FontTeletext10x18Ascii.js) | [[FontTeletext10x18Ascii.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, 7-bit ASCII, with interpolated pixels as intended |
+| ![](FontTeletext10x18Mode7.js) | [[FontTeletext10x18Mode7.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, UK character set, with interpolated pixels as intended |
+| ![](FontTeletext5x9Ascii.js) | [[FontTeletext5x9Ascii.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, 7-bit ASCII, with original structural pixels only |
+| ![](FontTeletext5x9Mode7.js) | [[FontTeletext5x9Mode7.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, UK character set, with original structural pixels only |
 
 
 Use these as follows:

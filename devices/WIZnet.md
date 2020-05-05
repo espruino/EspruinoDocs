@@ -16,7 +16,17 @@ Support is provided in Espruino, but **you will have to use a special build of E
 
 To get the latest WIZnet binary:
 
-* Go to http://www.espruino.com/binaries and look for a file titled `espruino_XXX_espruino_1r3_wiznet.bin`, where `XXX` is the latest version
+### Easy way
+
+* Open the Web IDE, and click on Settings in the top-right
+* Click on `Flasher`
+* Click `Flash Firmware`
+* If prompted, select your device
+* If your device has multiple pre-built firmwares you'll be prompted and can choose the WIZnet one
+
+### Hard way
+
+* Go to http://www.espruino.com/binaries and look for a file titled `espruino_XXX_espruino_1r3_wiznet.bin`, where `XXX` is the latest version and `espruino_1r3` is the board you're interested in.
 * Right-click on it, and click `Copy Link Address`
 * Open the Web IDE, and click on Settings in the top-right
 * Click on `Flasher`
@@ -25,7 +35,7 @@ To get the latest WIZnet binary:
 
 You can also [get a recent Espruino Git build](http://www.espruino.com/binaries/git) or can build it yourself.
 
-To build yourself, follow [the instructions here](http://www.github.com/espruino/Espruino) and build with `WIZNET=1 RELEASE=1 ESPRUINO_1V3=1 make`.
+To build yourself, follow [the instructions here](http://www.github.com/espruino/Espruino) and build with `WIZNET=1 RELEASE=1 BOARD=ESPRUINOBOARD make`.
 
 Espruino Pico Shim
 ----------------
