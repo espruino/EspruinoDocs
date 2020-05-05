@@ -21,11 +21,8 @@ Features
 * Bluetooth Low Energy
 * Espruino JavaScript interpreter pre-installed
 * nRF52832 SoC - 64MHz ARM Cortex M4, 64kB RAM, 512kB Flash
-* 8 x 0.1" GPIO (capable of PWM, SPI, I2C, UART, Analog Input)
-* 9 x SMD GPIO (capable of PWM, SPI, I2C, UART)
 * ABS plastic rear case with lanyard mount
 * Silicone cover with tactile button
-* MAG3110 Magnetometer
 * IR Transmitter
 * Built in thermometer, light and battery level sensors
 * Red, Green and Blue LEDs
@@ -35,6 +32,18 @@ Features
 * Dimensions of cardboard box: 64mm x 62mm x 16mm
 * Dimensions of plastic case: 36mm dia, 12.5mm thick
 * Dimensions of bare PCB: 29mm dia, 9mm thick
+
+| Features  | Puck.js v1 | Puck.js v2 |
+|-----------|------------|------------|
+| 0.1" GPIO |  8         | 7          |
+| SMD  GPIO |  9         | 2          |
+| Magnetometer | MAG3110 | LIS3MDLTR  |
+| Accelerometer | No     | LSM6DS3TR-C |
+| Gyro          | No     | LSM6DS3TR-C |
+| Temperature Sensor | nRF52 (uncalibrated) | PCT2075TP (calibrated)  |
+| MOSFET Output | No     | 1x         |
+
+
 
 
 Accessories
@@ -94,6 +103,8 @@ Release the button at least 1 second after the blinking has stopped - this will 
 
 **Note:** If you release the button when all 3 LEDs are on then a self-test will be performed. The green LED will blink on success, or red on failure.
 Saved code will not be loaded from flash, *but will not be erased from flash either* - a subsequent reset will start Espruino up loading the saved code as normal.
+
+**Note:** The initial Puck.js v2 ships with 2v05 firmware, and the self-test may report that IR LEDs are disconnected or the Blue LED voltage is wrong. This is not the case, and later firmwares have updated self test code.
 
 
 Tutorials
