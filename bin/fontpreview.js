@@ -6,7 +6,23 @@ global.atob = function(a) {
 };
 
 function getFontPreview(path) {
-  var fontLib = require(path);
+  var file = require("fs").readFileSync(__dirname+"/"+path).toString();
+  // Hacks to cope with usage of heatshrink decompress
+  // when it's not a legit node.js module
+  file = file.replace("require('heatshrink').decompress","hsdecompress");
+  function hsdecompress(data) {
+    if ("string" == typeof data) {
+      var d = new Uint8Array(data.length);
+      for (var i=0;i<d.length;i++)
+        d[i] = data.charCodeAt(i);
+      data = d;
+    }
+    return require("../../EspruinoWebTools/heatshrink.js").decompress(data);
+  }
+  // load font module
+  var exports = {};
+  eval(file);
+  var fontLib = exports;
   function Graphics() {
   }
   fontLib.add(Graphics);
@@ -70,7 +86,7 @@ function getFontPreview(path) {
   if (WIDTH > 300) {
     MINIMAL = true;
     WIDTH = testWidths[0];
-    HEIGHT = 1*SPACINGY+4;
+    HEIGHT = 1*SPACINGY;
   }
   // Create Image Header
   var rowstride = ((WIDTH+31) >> 5) << 2;
@@ -93,7 +109,7 @@ function getFontPreview(path) {
   imgData[26]=255; // palette white
   imgData[27]=255;
   imgData[28]=255;
-  function setPixel(x,y) { if (x<WIDTH) imgData[headerLen + (x>>3) + ((HEIGHT-(y+1))*rowstride)] |= 128>>(x&7); }
+  function setPixel(x,y) { if (y<0 || x<0 || x>=WIDTH || y>=HEIGHT) return; imgData[headerLen + (x>>3) + ((HEIGHT-(y+1))*rowstride)] |= 128>>(x&7); }
   function getPixel(x,y) { return imgData[headerLen + (x>>3) + ((HEIGHT-(y+1))*rowstride)] & (128>>(x&7)); }
 
   // Draw
@@ -116,6 +132,7 @@ function getFontPreview(path) {
          drawChar(x+(y*16), 2+(x*SPACINGX), 2+ (y*SPACINGY));
   // draw test text
     TESTLINES.forEach((s,y)=>{
+    if (MINIMAL && y>0) return;
     var x=0;
     for (var ch of s) {
        var ch = ch.charCodeAt();
@@ -135,5 +152,5 @@ function getFontPreview(path) {
 
 //console.log(getFontPreview("../modules/FontDennis8.js"));
 //console.log(getFontPreview("../modules/FontCopasetic40x58Numeric.js"));
-console.log(getFontPreview("../modules/FontHaxorNarrow7x17.js"));
+console.log(getFontPreview("../modules/FontTeletext10x18Ascii.js"));
 exports.getFontPreview = getFontPreview;
