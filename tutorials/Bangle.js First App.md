@@ -288,3 +288,5 @@ Ok, so now we've got an app, and we can run it from the launcher.
 
 How about adding it to the [Bangle.js App Loader](http://banglejs.com/apps)?
 Check out [Adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader)
+
+Or maybe you want to [make a clock face](/Bangle.js+Clock)
