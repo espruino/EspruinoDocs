@@ -2,7 +2,7 @@
 Bangle.js Clock Faces
 ======================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+First+App. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+Clock. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Bangle.js,Development,Clock,Watch,Face,App,Apps,Application
 * USES: Bangle.js
@@ -68,7 +68,7 @@ function draw() {
   // work out how to display the current time
   var d = new Date();
   var h = d.getHours(), m = d.getMinutes();
-  var time = h + ":" + ("0"+m).substr(-2);
+  var time = (" "+h).substr(-2) + ":" + ("0"+m).substr(-2);
   // Reset the state of the graphics library
   g.reset();
   // draw the current time (4x size 7 segment)
@@ -176,7 +176,7 @@ function draw() {
   // work out how to display the current time
   var d = new Date();
   var h = d.getHours(), m = d.getMinutes();
-  var time = h + ":" + ("0"+m).substr(-2);
+  var time = (" "+h).substr(-2) + ":" + ("0"+m).substr(-2);
   // Reset the state of the graphics library
   g.reset();
   // draw the current time (4x size 7 segment)

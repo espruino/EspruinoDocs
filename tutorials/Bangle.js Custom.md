@@ -2,7 +2,7 @@
 Bangle.js App Customiser
 ========================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+First+App. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+Custom. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Bangle.js,Development,Custom,Customizer,customiser,App,Apps,Application
 * USES: Bangle.js
