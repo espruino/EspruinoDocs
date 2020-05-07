@@ -116,6 +116,7 @@ There's IO connected to the nRF52, plus an IO expander to provide power to some 
 | 0x40 | LCD reset |  1 |
 | 0x80 | HRM  | 1 |
 
+[https://github.com/espruino/EspruinoDocs/raw/master/info/Bangle.js Technical/PCB.jpg](![PCB](Bangle.js Technical/PCB.jpg))
 
 Heart Rate monitor PCB
 ----------------------
@@ -125,10 +126,12 @@ pads for the speaker. The one labelled `+` goes directly to `3.3v`,
 and the one next to it goes to pin `D18` via a transistor.
 
 As such, `D18` is inverted, and can only be used as an output - however
-it is powered so is able to drive reasonably high loads (up to 50mA or so).
+it is powered (pulldown via MMDT3904) so is able to drive reasonably high loads (up to ~100mA).
 
 The heart rate monitor itself is powered from the IO expander, and
 has just a single analog output, which is `D29`.
+
+![HRM PCB](Bangle.js Technical/HRM.jpg)
 
 The two circular gold pads interface with the charging circuit. The right-hand
 one (with them at the top of the watch) is connected to `GND`, and the left-hand
