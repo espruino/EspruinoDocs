@@ -88,7 +88,7 @@ There's IO connected to the nRF52, plus an IO expander to provide power to some 
 | D15 | I2C_SDA | |
 | D16 | TOUCH LEFT | inverted |
 | D17 | Flash D3 (RST - connect to VCC) |
-| D18 | Speaker (if included), otherwise powered output on HRM PCB | |
+| D18 | Speaker (if included), otherwise inverted output on HRM PCB | |
 | D19 | Flash SCLK | |
 | D20 | Flash D1 (MISO) | |
 | D21 | Flash CS | |
@@ -115,6 +115,24 @@ There's IO connected to the nRF52, plus an IO expander to provide power to some 
 | 0x20 | LCD backlight  |  1 |
 | 0x40 | LCD reset |  1 |
 | 0x80 | HRM  | 1 |
+
+
+Heart Rate monitor PCB
+----------------------
+
+On the bottom right of the PCB (by the label `R6`) are the two
+pads for the speaker. The one labelled `+` goes directly to `3.3v`,
+and the one next to it goes to pin `D18` via a transistor.
+
+As such, `D18` is inverted, and can only be used as an output - however
+it is powered so is able to drive reasonably high loads (up to 50mA or so).
+
+The heart rate monitor itself is powered from the IO expander, and
+has just a single analog output, which is `D29`.
+
+The two circular gold pads interface with the charging circuit. The right-hand
+one (with them at the top of the watch) is connected to `GND`, and the left-hand
+one goes to the charging circuitry.
 
 
 I2C
