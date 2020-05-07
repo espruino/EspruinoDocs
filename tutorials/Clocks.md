@@ -4,7 +4,7 @@ Espruino's Real Time Clock
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Clocks. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Clock,Time,Accuracy,RTC,Real Time Clock,Espruino Board
+* KEYWORDS: Clock,Time,Accuracy,RTC,Real Time Clock,Espruino Board,crystal,oscillator
 
 Introduction
 -----------
@@ -22,6 +22,7 @@ All Espruino boards contain their own Real-Time Clock which allows them to keep 
 | [Puck.js](/Puck.js) | Internal RC w. calibration | Good |
 | [Pixl.js](/Pixl.js) | Internal RC w. calibration | Good |
 | [MDBT42Q](/MDBT42Q) | Internal RC w. calibration | Good |
+| [Bangle.js](/Bangle.js) | Internal RC w. calibration | Good |
 
 If you have an Espruino Original or Pico without a crystal it is possible to add one - see below.
 
@@ -31,6 +32,8 @@ Adding Crystals
 -------------------
 
 ### Espruino Original
+
+**Note:** Espruino [revision 1.4](/Original#layout) boards already have a low speed oscillator on board. It's only 1.3 where you might want to add one.
 
 ![32.768kHz crystal](Clocks/crystal.jpg)
 
