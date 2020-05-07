@@ -150,7 +150,27 @@ while (true) {
 Images / Bitmaps
 ----------------
 
-With Espruino, you can define an image as a special kind of object. For instance this is a `8x8` pixel, 1 bit smiley face
+Espruino has a function called [`Graphics.drawImage`](/Reference#l_Graphics_drawImage)
+which can be used to draw images.
+
+Images are either a special kind of object or a String.
+
+### Objects
+
+Objects are of the form:
+
+```
+{
+  width : int,
+  height : int,
+  bpp : int (bits per pixel, optional - default 1),
+  transparent : int (transparent colour index, optional),
+  palette : Uint16Array/string (colour palette),
+  buffer : string/arraybuffer (image data)
+}
+```
+
+For instance this is a `8x8` pixel, 1 bit smiley face
 where any pixel that is `0` is treated as transparent:
 
 ```
@@ -170,8 +190,21 @@ var img = {
 };
 ```
 
-There's also a utility function in Espruino 2.0 called [`Graphics.createImage`](http://www.espruino.com/Reference#l_Graphics_createImage)
-that allows you to specify the image in a more compact, readable way:
+### Strings
+
+You can also specify the image as a string or arraybuffer, in the following form:
+
+* For nontransparent: `[width, height, bpp, pixel data...]`
+* For transparent: `[width, height, bpp|128, transparent col, pixel data...]`
+
+
+### Creating images
+
+You can:
+
+* Specify images manually (as above)
+* Use [`Graphics.createImage`](http://www.espruino.com/Reference#l_Graphics_createImage)
+ to specify a 1 bit image in a more compact, readable way:
 
 ```
 var img = Graphics.createImage(`
@@ -185,36 +218,47 @@ X      X
 `);
 ```
 
-See the reference for [`Graphics.drawImage`](/Reference#l_Graphics_drawImage) for more information...
+* Use [`Graphics.asImage`](http://www.espruino.com/Reference#l_Graphics_asImage) to
+create these images from an existing Graphics instance.
 
-You can then simply draw it to the screen wherever you want:
+* Upload images to your board's storage (and convert at the same time) with the
+Web IDE's `Storage` button.
 
-```
-g.drawImage(img, 10, 10);
-```
+* Use [our online Image Converter](/Image+Converter) to convert an image
+into Base64-encoded JavaScript that can be pasted into your code.
 
-If you use a single-bit image, the foreground and background colours will be used instead of the image's colours. Otherwise the colour data will be copied directly so it's an idea to use a bitmap of the same bit depth as your display.
-
-**Beware:** Microcontrollers don't have much memory - even a small 128x128 pixel image will be too big to fit in Espruino's memory!
-
-### Loading images from SD card
-
-There are a few ways to load images from SD card, but the easiest is to use the [[BMPLoader]] module:
+* Load bitmaps directly (eg. from an SD card) with the [[BMPLoader]] module:
 
 ```
 var img = require("BMPLoader").load(require('fs').readFileSync("foo.bmp"));
 g.drawImage(img, 10, 10);
 ```
 
-### Loading images as code
+**Beware:** Microcontrollers don't have much memory - even a small 128x128 pixel 8 bit image may be too big to fit in Espruino's memory!
 
-If you don't want to load images off an SD card, the easiest way is to convert them to raw pixel data on your PC, and to then convert that to base64 encoding.
+### Rendering
 
-#### Creating a raw image
+You can then simply draw images to the screen wherever you want:
+
+```
+g.drawImage(img, 10, 10);
+// or draw an image directly from Storage
+g.drawImage(require("Storage").read("myimage.img"), 10, 10);
+// draw an image twice the size
+g.drawImage(img, 10, 10, {scale:2});
+// draw a large, rotated image
+g.drawImage(img, 10, 10, {scale:1.5, rotate:Math.PI/4});
+```
+
+If you use a single-bit image, the foreground and background colors will be used instead of the image's colours. Otherwise the color data will be copied directly so it's an idea to use a bitmap of the same bit depth as your display.
+
+See the reference for [`Graphics.drawImage`](/Reference#l_Graphics_drawImage) for more information...
+
+#### Creating an image via command-line
 
 The easiest solution is to use [our online Image Converter](/Image+Converter).
 
-Or you can use command-line tools locally. It's best to install [ImageMagick](http://www.imagemagick.org/). Then you can type commands like:
+Or you can use command-line tools locally to create a raw image that can be uploaded separately. It's best to install [ImageMagick](http://www.imagemagick.org/). Then you can type commands like:
 
 ```Bash
 # Create a 24 bit RGB image called output.raw
@@ -230,11 +274,7 @@ convert myimage.png -resize 16x16\! -depth 8  gray:output.raw
 convert myimage.png -resize 16x16\! -depth 1  gray:output.raw
 ```
 
-#### Base64 Encoding
-
-On Linux, simply type `base64 --wrap=0 myfilename.raw` - or on other platforms you can use the [[File Converter]] webpage.
-
-#### Loading into Espruino
+On Linux, you can type `base64 --wrap=0 myfilename.raw` to convert the raw file to base64 - or on other platforms you can use the [[File Converter]] webpage.
 
 Once you've got the base64 encoded image, simply decode it with `atob` and create an ArrayBuffer from it. For instance this is the Espruino logo:
 
