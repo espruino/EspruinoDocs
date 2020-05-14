@@ -7,7 +7,7 @@ Arduino Ethernet and SD card shield (WIZnet W5100)
 * KEYWORDS: Arduino,Shield,Arduino Shield,Ethernet,Internet,W5100,WIZnet,microsd,microsd card
 * USES: Pixl.js,W5100,WIZnet
 
-![WIZnet W5100 Ethernet shield](arduino-w5100.jpg)
+![WIZnet W5100 Ethernet shield](arduino-w5100/arduino-w5100.jpg)
 
 Standard Arduino Ethernet shields use the WIZnet W5100 chip, which provides
 hardware support for TCP/IP. The W5100 is supported out of the box by [Pixl.js](/Pixl.js)
@@ -49,8 +49,18 @@ To connect it up, you will need to add 3 wires to the shield (mirroring the
  ----------------------------------
 ```
 
-The easiest method is to remove the `ICSP` header completely and add wires on
-the underside of the board.
+The easiest method is to remove the `ICSP` header completely 
+
+![WIZnet W5100 Ethernet shield remove header](arduino-w5100/remove-header.jpg)
+
+and add wires on the underside of the board.
+
+![WIZnet W5100 Ethernet shield add wires](arduino-w5100/add-wires.jpg)
+
+Now attach Pixl to shield
+
+![Pixl attacched to WIZnet W5100 Ethernet shield](arduino-w5100/Pixl-adruion-w5100.jpg)
+
 
 ## Pinout
 
