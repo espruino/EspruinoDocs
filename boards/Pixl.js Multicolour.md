@@ -160,9 +160,9 @@ You can turn the LEDs on and off with `digitalWrite(LED1,1)` or `LED1.write(1)`.
 
 The badge has fancy RGB lighting. There's:
 
-- **LEDs facing up** - Change these with `NC.ledTop([R,G,B])` or `NC.ledTop([])` to turn them off
-- **LEDs facing down** - Change these with `NC.ledBottom([R,G,B])` or `NC.ledBottom([])` to turn them off
-- **LCD backlight with 4 zones** - Change this with `NC.backlight([B,G,R,B,G,R,B,G,R,B,G,R])` or `NC.backlight([])` to turn them off
+- **LEDs facing up** - Change these with `NC.ledTop([R,G,B])` or `NC.ledTop()`/`NC.ledTop([0,0,0])` to turn them off
+- **LEDs facing down** - Change these with `NC.ledBottom([R,G,B])` or `NC.ledBottom()`/`NC.ledBottom([0,0,0])` to turn them off
+- **LCD backlight with 4 zones** - Change this with `NC.backlight([B,G,R,B,G,R,B,G,R,B,G,R])` or `NC.backlight()`/`NC.backlight([0,0,0])` to turn them off
 
 In the above code, `B/G/R` are numbers between 0 and 255 and represent Blue, Green and Red.
 
