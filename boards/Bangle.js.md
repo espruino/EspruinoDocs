@@ -416,6 +416,10 @@ detailed information from the GPS.
 See [the reference](https://banglejs.com/reference#l_Bangle_GPS) for
 more information.
 
+It's also possible to write data to the GPS to configure it. Check
+out the [Bangle.js technical specs page](/Bangle.js+Technical#GPS)
+for more info.
+
 ### Heart rate
 
 You can turn on the heart rate monitor with `Bangle.setHRMPower(1)`, which
