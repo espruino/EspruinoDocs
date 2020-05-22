@@ -260,7 +260,7 @@ the tools are now built into the IDE.
 * Select the image file you downloaded
 * The IDE will detect it is an image and offer you some options for conversion
 * Name the icon `timer.img`
-* Ensure `Convert for Espruino` and `Transparency` are checker
+* Ensure `Convert for Espruino` and `Transparency` are checked
 * Choose `4 bit Mac Palette` and check the Preview. If the colours aren't good enough, try `8 bit Web Palette` instead.
 * Now click `Ok` to upload
 
