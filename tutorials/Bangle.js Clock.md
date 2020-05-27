@@ -156,7 +156,7 @@ Bangle.on('lcdPower',on=>{
   if (secondInterval) clearInterval(secondInterval);
   secondInterval = undefined;
   if (on) {
-    setInterval(draw, 1000);
+    secondInterval = setInterval(draw, 1000);
     draw(); // draw immediately
   }
 });
@@ -204,7 +204,7 @@ Bangle.on('lcdPower',on=>{
   if (secondInterval) clearInterval(secondInterval);
   secondInterval = undefined;
   if (on) {
-    setInterval(draw, 1000);
+    secondInterval = setInterval(draw, 1000);
     draw(); // draw immediately
   }
 });
