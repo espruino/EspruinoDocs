@@ -7,6 +7,8 @@ Bluetooth LE MIDI
 * KEYWORDS: Module,Modules,BLE,Bluetooth,MIDI,Web MIDI
 * USES: Puck.js,BLE,Only BLE
 
+This is for MIDI over Bluetooth. There's also a module for [Wired MIDI](/Midi).
+
 Puck.js can be programmed to appear as any type of Bluetooth LE device, and this
 includes a Bluetooth LE MIDI controller.
 
