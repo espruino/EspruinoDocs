@@ -173,6 +173,8 @@ If you power off or reset Espruino using the reset button, it will lose all the 
 
 The `save()` command saves the current state of the pins and on-chip peripherals, as well as all your functions, variables, watches and timers. The commands that you typed in previously *won't be executed again though*. If you want to execute some code when Espruino starts (for example you may need to initialise some external bit of hardware like an LCD), you can use the `init` event on `E`. For example this bit of code lights the red, then green LEDs each time Espruino starts up:
 
+**Note:** This code won't work on Bangle.js. Since it has no LEDs it uses a special 'virtual' pin for LEDs, which is not compatible with being passed to `digitalWrite` in an array. Instead, you can just do: `digitalWrite(LED1,...);digitalWrite(LED2,...);`
+
 ```
 E.on('init', function() {
   digitalWrite([LED1,LED2], 2);

@@ -37,9 +37,9 @@ Features
 |-----------|------------|------------|
 | 0.1" GPIO |  8         | 7          |
 | SMD  GPIO |  9         | 2          |
-| Magnetometer | MAG3110 | LIS3MDLTR  |
-| Accelerometer | No     | LSM6DS3TR-C |
-| Gyro          | No     | LSM6DS3TR-C |
+| Magnetometer | MAG3110 | [LIS3MDLTR](/files/LIS3MDL.pdf)  |
+| Accelerometer | No     | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) |
+| Gyro          | No     | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) |
 | Temperature Sensor | nRF52 (uncalibrated) | PCT2075TP (calibrated)  |
 | MOSFET Output | No     | 1x         |
 
@@ -167,7 +167,7 @@ to with `digitalWrite([LED3,LED2,LED1], 7)`
 * Polling to get the button state wastes power, so it's better to use `setWatch`
 to call a function whenever the button changes state:
 
-```
+```JS
 setWatch(function() {
   console.log("Pressed");
 }, BTN, {edge:"rising", debounce:50, repeat:true});
@@ -194,7 +194,7 @@ reading (with x, y, and z axes).
 However you can also leave the magnetometer on permanently and use it to
 wake Puck.js up whenever it gets a reading. See [`Puck.magOn()`](/Reference#l_Puck_magOn)
 
-```
+```JS
 Puck.magOn();
 Puck.on('mag', function(xyz) {
   console.log(xyz);
@@ -206,6 +206,144 @@ If you have issues using the magnetometer, please check your battery percentage
 with `E.getBatteryPercentage()` to ensure that it has over 30% charge remaining.
 When the battery is almost empty the magnetometer can stop working correctly.
 
+**NOTE:** If you have a Puck.js v2 *with the original firmware* then magnetometer
+power usage will be higher than normal (~350uA vs 40uA). To fix this add
+`require("puckjsv2-2v05-fix")` to the beginning of your program.
+
+#### Field detection
+
+You can use the [[puckjsv2-mag-level.js]] module to configure the Puck.js
+magnetometer for ultra low power mode (40uA) while acting like a reed
+switch (detecting when field strength is high or low).
+
+```JS
+require("puckjsv2-mag-level").on();
+Puck.on('mag',function(m) {
+  digitalPulse(m.state ? LED1 : LED2, 1, 100);
+});
+// turn off with require("puckjsv2-mag-level").off();
+```
+
+* APPEND_JSDOC: puckjsv2-mag-level.js
+
+
+#### Direct configuration
+
+For more advanced usage you can also use [`Puck.magWr(reg,data)`](/Reference#l_Puck_magWr)
+and [`Puck.magRd(reg)`](/Reference#l_Puck_magRd) to configure the accelerometer
+chip exactly as required (using the [datasheet](/files/LIS3MDL.pdf))..
+
+### Accelerometer/Gyro (Puck.js v2)
+
+Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf)
+
+You can use [`Puck.accel()`](/Reference#l_Puck_accel) to return one accelerometer/gyro
+reading, for example:
+
+```
+>Puck.accel()
+={
+  "acc": { "x": 253, "y": -663, "z": 16249 },
+  "gyro": { "x": 551, "y": 2604, "z": 4265 }
+ }
+```
+
+However you can also leave the accelerometer on permanently and use it to
+wake Puck.js up whenever it gets a reading. See [`Puck.accelOn()`](/Reference#l_Puck_accelOn)
+
+```JS
+Puck.accelOn(); // default is 12.5Hz, with gyro
+// or Puck.accelOn(1.6); for 1.6Hz low power, without gyro
+Puck.on('accel', function(a) {
+  console.log(a);
+});
+// Turn events off with Puck.accelOff();
+```
+
+**NOTE:** If you have a Puck.js v2 *with the original firmware* then accelerometer
+power usage will be higher than normal for low data rates (~800uA vs 40uA). To fix this add
+`require("puckjsv2-2v05-fix")` to the beginning of your program.
+
+#### Movement detection
+
+You can use the [[puckjsv2-accel-movement.js]] module to configure the Puck.js
+accelerometer for ultra low power mode (40uA) while detecting movement:
+
+```JS
+require("puckjsv2-accel-movement").on();
+var idleTimeout;
+Puck.on('accel',function(a) {
+  LED.set();
+  if (idleTimeout) clearTimeout(idleTimeout);
+  else print("Motion", a);
+  idleTimeout = setTimeout(function() {
+    idleTimeout = undefined;
+    LED.reset();
+  },500);  
+});
+// turn off with require("puckjsv2-accel-movement").off();
+```
+
+* APPEND_JSDOC: puckjsv2-accel-movement.js
+
+#### Significant Movement detection
+
+You can use the [[puckjsv2-accel-bigmovement.js]] module to configure the Puck.js
+accelerometer for ultra low power mode (40uA) while detecting when the Puck
+has been moved significantly for more than a few seconds.
+
+```JS
+require("puckjsv2-accel-bigmovement").on();
+Puck.on('accel',function(a) {
+  digitalPulse(LED1,1,500);
+});
+// turn off with require("puckjsv2-accel-bigmovement").off();
+```
+
+* APPEND_JSDOC: puckjsv2-accel-bigmovement.js
+
+#### Step counting
+
+You can use the [[puckjsv2-accel-steps.js]] module to configure the Puck.js
+accelerometer for ultra low power mode (40uA) while detecting movement:
+
+```JS
+require("puckjsv2-accel-steps").on();
+var steps = 0;
+Puck.on('accel',function(a) {
+  digitalPulse(LED1,1,1);
+  steps++;
+});
+// turn off with require("puckjsv2-accel-steps").off();
+```
+
+* APPEND_JSDOC: puckjsv2-accel-steps.js
+
+#### Tilt detection
+
+You can use the [[puckjsv2-accel-tilt.js]] module to configure the Puck.js
+accelerometer for ultra low power mode (40uA) while detecting when it has
+been rotated by more than 35 degrees:
+
+```JS
+require("puckjsv2-accel-tilt").on();
+Puck.on('accel',function(a) {
+  digitalPulse(LED1,1,100);
+});
+// turn off with require("puckjsv2-accel-tilt").off();
+```
+
+* APPEND_JSDOC: puckjsv2-accel-tilt.js
+
+
+#### Direct configuration
+
+For more advanced usage you can also use [`Puck.accelWr(reg,data)`](/Reference#l_Puck_accelWr)
+and [`Puck.accelRd(reg)`](/Reference#l_Puck_accelRd) to configure the accelerometer
+chip exactly as required (using the [datasheet](/files/LSM6DS3TR-C.pdf)). ST has
+an [app note](https://www.st.com/resource/en/application_note/dm00472670-lsm6ds3trc-alwayson-3d-accelerometer-and-3d-gyroscope-stmicroelectronics.pdf)
+on possible configurations.
+
 ### IR / Infrared
 
 To transmit an IR signal, you just need to call [`Puck.IR([...])`](/Reference#l_Puck_IR)
@@ -214,7 +352,7 @@ should be `on` and `off` - eg. `[on, off, on, off, on, etc]`.
 
 For example the command to turn on a [cheap IR lightbulb](http://www.ebay.com/sch/i.html?_nkw=ir+rgb+light+bulb&_sacat=0) is:
 
-```
+```JS
 Puck.IR([9.6,4.9,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,
   0.7,0.6,1.9,0.5,1.9,0.5,1.9,0.6,1.9,0.5,1.9,0.5,1.9,0.6,1.9,0.5,1.9,0.5,1.9,
   0.6,1.9,0.5,1.9,0.6,0.7,0.5,0.6,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.6,0.6,0.7,0.5,
@@ -231,13 +369,13 @@ range can be increased slightly by removing the silicone cover.
 
 To set Puck.js up to redirect to a new NFC URL, just use [NRF.nfcURL(...)](/Reference#l_NRF_nfcURL):
 
-```
+```JS
 NRF.nfcURL("http://espruino.com");
 ```
 
 or to turn off, call it with no arguments:
 
-```
+```JS
 NRF.nfcURL();
 ```
 
@@ -259,7 +397,8 @@ for an example of how to connect to another device.
 
 Temperature can be accessed with `E.getTemperature()`. It returns the temperature in degrees C.
 
-**Note:** This uses an on-die temperature sensor. It is accurate to ~1 degree C
+* **Puck.js v2:** this uses a PCT2075TP temperature sensor
+* **Puck.js v1:** this uses an on-die temperature sensor. It is accurate to ~1 degree C
 for changes in temperature, however the absolute values can be 3-4 degrees C
 different. For best accuracy, work out each Puck.js's temperature offset by calling
 `E.getTemperature()` when it is at a known temperature.
@@ -320,13 +459,22 @@ for advertising, but values are roughly:
 * Not doing anything, watching the button for presses - 12uA
 * Advertising, 375ms 0dBm (default mode) - 20uA
 * Advertising, 375ms 0dBm (default mode), watching the button - 25uA
-* Advertising, magnetometer reading 0.63 Hz - 50uA
+* Advertising, magnetometer reading 0.63 Hz (`Puck.magOn()`) - 50uA
 * Advertising, magnetometer reading 10 Hz - 200uA
 * Connected via BLE - 200uA
-* One LED lit - 1-2mA
-* 100% CPU usage running JavaScript - 4mA
-* All LEDs lit, 100% CPU usage running JavaScript - 10mA
-* No LEDs lit, using `NRF.findDevices` to scan for devices - 12mA
+* Connected via BLE, `NRF.setConnectionInterval(200)` - 50uA
+* One LED lit - 1000-2000uA
+* 100% CPU usage running JavaScript - 4000uA
+* All LEDs lit, 100% CPU usage running JavaScript - 10000uA
+* No LEDs lit, using `NRF.findDevices` to scan for devices - 12000uA
+* Puck.js v2: Accelerometer on `Puck.accelOn()` (12.5Hz) : 350uA
+* Puck.js v2: Accelerometer on `Puck.accelOn(1.6)` (1.6Hz, no gyro) : 40uA
+* Puck.js v2: Accelerometer on, movement/tilt/step detect : 40uA
+
+**Note:** The first Puck.js v2 units shipped with 2v05 firmware
+which wasn't as efficient with the accelerometer/magnetometer. See
+the magnetometer/accelerometer notes above for the minor code change required
+to fix this.
 
 Puck.js sends advertising data without ever executing JavaScript. To get
 the best power consumption, make sure your code executes as rarely as
