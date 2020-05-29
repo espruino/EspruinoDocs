@@ -52,7 +52,7 @@ Puck.magOn = function() {
   i.writeTo(30,[0x22,0x20]); // poke REG3 again - seems to be required
 };
 
-
+/** replacement for magOff */
 Puck.magOff = function(){
   if (!watch) return;
   clearWatch(watch);

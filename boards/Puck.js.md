@@ -224,6 +224,8 @@ Puck.on('mag',function(m) {
 // turn off with require("puckjsv2-mag-level").off();
 ```
 
+##### puckjsv2-mag-level.js
+
 * APPEND_JSDOC: puckjsv2-mag-level.js
 
 
@@ -284,6 +286,8 @@ Puck.on('accel',function(a) {
 // turn off with require("puckjsv2-accel-movement").off();
 ```
 
+##### puckjsv2-accel-movement.js
+
 * APPEND_JSDOC: puckjsv2-accel-movement.js
 
 #### Significant Movement detection
@@ -299,6 +303,8 @@ Puck.on('accel',function(a) {
 });
 // turn off with require("puckjsv2-accel-bigmovement").off();
 ```
+
+##### puckjsv2-accel-bigmovement.js
 
 * APPEND_JSDOC: puckjsv2-accel-bigmovement.js
 
@@ -317,6 +323,8 @@ Puck.on('accel',function(a) {
 // turn off with require("puckjsv2-accel-steps").off();
 ```
 
+##### puckjsv2-accel-steps.js
+
 * APPEND_JSDOC: puckjsv2-accel-steps.js
 
 #### Tilt detection
@@ -332,6 +340,8 @@ Puck.on('accel',function(a) {
 });
 // turn off with require("puckjsv2-accel-tilt").off();
 ```
+
+##### puckjsv2-accel-tilt.js
 
 * APPEND_JSDOC: puckjsv2-accel-tilt.js
 

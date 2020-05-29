@@ -67,7 +67,7 @@ exports.on = function(options) {
   i.writeTo(30,[0x22,0x20]); // poke REG3 again - seems to be required
 };
 
-
+/** Turn magnetometer off */
 exports.off = function(){
   if (!watch) return;
   clearWatch(watch);
