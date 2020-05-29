@@ -426,6 +426,15 @@ Puck.js contains a capacitive sense pin `D11`. To use it, simply add some wire
 Then call [`Puck.capSense()`](/Reference#l_Puck_capSense) - this will
 return an integer value that rises as the capacitance attached to `D11` increases.
 
+### FET
+
+On Puck.js v2 there's a pin called `FET` (available from JS and
+marked on the Puck.js PCB). This is connected to a MOSFET that is
+capable of pulling the `FET` down to GND with around 200mA.
+
+* `FET.set()` will turn the FET on (shorting `FET` to GND)
+* `FET.reset()` will turn the FET off (leaving `FET` floating)
+
 
 Serial Console
 ---------------
