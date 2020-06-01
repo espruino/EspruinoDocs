@@ -458,17 +458,17 @@ Firmware Updates
   * Release `BTN2`
   * Release `BTN1` a moment later while `====` is going across the screen
   * The watch should now be in Dfu mode
-* Install the Nordic Semiconductor NRF Toolbox App for Android or iOS
-* Download the latest stable distribution zip from the [Espruino site](https://www.espruino.com/Download#banglejs) or the latest bleeding edge nightly build from [here](http://www.espruino.com/binaries/travis/master/).
-* Open the NRF Toolbox app
-* Tap the DFU icon
-* Tap Select File, choose Distribution Packet (ZIP), and choose the ZIP file you downloaded
-* If a Select scope window appears, choose All
-* Tap Select Device and choose the device called `DfuTarg`
-* Now tap Upload and wait
-* It will take around 90 seconds to complete
-* Once complete, long-press `BTN3` to go to the Clock
-* You should still have the original apps you installed
+  * Install the Nordic Semiconductor NRF Toolbox App for Android or iOS
+  * Download the latest stable distribution zip from the [Espruino site](https://www.espruino.com/Download#banglejs) or the latest bleeding edge nightly build from [here](http://www.espruino.com/binaries/travis/master/).
+  * Open the NRF Toolbox app
+  * Tap the DFU icon
+  * Tap Select File, choose Distribution Packet (ZIP), and choose the ZIP file you downloaded
+  * If a Select scope window appears, choose All
+  * Tap Select Device and choose the device called `DfuTarg`
+  * Now tap Upload and wait
+  * It will take around 90 seconds to complete
+  * Once complete, long-press `BTN3` to go to the Clock
+  * You should still have the original apps you installed
 
 
 Troubleshooting
