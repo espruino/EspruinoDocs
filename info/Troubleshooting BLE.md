@@ -156,7 +156,7 @@ align with the holes in the PCB).
 
 ### My magnetometer isn't working!
 
-Please check your battery percentage with `E.getBatteryPercentage()` to ensure
+Please check your battery percentage with `E.getBattery()` to ensure
 that it has over 30% charge remaining. Due to the discharge of CR2032 batteries
 by the time you get to this point, 90% of the power in the battery has been
 used.

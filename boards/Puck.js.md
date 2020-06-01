@@ -203,7 +203,7 @@ Puck.on('mag', function(xyz) {
 ```
 
 If you have issues using the magnetometer, please check your battery percentage
-with `E.getBatteryPercentage()` to ensure that it has over 30% charge remaining.
+with `E.getBattery()` to ensure that it has over 30% charge remaining.
 When the battery is almost empty the magnetometer can stop working correctly.
 
 **NOTE:** If you have a Puck.js v2 *with the original firmware* then magnetometer
