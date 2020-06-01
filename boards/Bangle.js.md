@@ -460,6 +460,7 @@ Firmware Updates
   * The watch should now be in Dfu mode
   * Install the Nordic Semiconductor NRF Toolbox App for Android or iOS
   * Download the latest stable distribution zip from the [Espruino site](https://www.espruino.com/Download#banglejs) or the latest bleeding edge nightly build from [here](http://www.espruino.com/binaries/travis/master/).
+  * In addition to activating the bluetooth, the location of Android 10 has to be activated because of [an issue in current NRF Toolbox app releases](https://devzone.nordicsemi.com/f/nordic-q-a/53938/android-10-need-to-toggle-location-permission-to-see-ble-devices)
   * Open the NRF Toolbox app
   * Tap the DFU icon
   * Tap Select File, choose Distribution Packet (ZIP), and choose the ZIP file you downloaded
