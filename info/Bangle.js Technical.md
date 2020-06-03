@@ -128,7 +128,7 @@ There's IO connected to the nRF52, plus an IO expander to provide power to some 
 | 0x40 | LCD reset |  1 |
 | 0x80 | HRM  | 1 |
 
-[https://github.com/espruino/EspruinoDocs/raw/master/info/Bangle.js Technical/PCB.jpg](![PCB](Bangle.js Technical/PCB.jpg))
+[![PCB](Bangle.js Technical/PCB.jpg)](https://github.com/espruino/EspruinoDocs/raw/master/info/Bangle.js Technical/PCB.jpg)
 
 Heart Rate monitor PCB
 ----------------------
