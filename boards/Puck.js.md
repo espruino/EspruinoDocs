@@ -237,7 +237,7 @@ chip exactly as required (using the [datasheet](/files/LIS3MDL.pdf))..
 
 ### Accelerometer/Gyro (Puck.js v2)
 
-Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf)
+Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf))
 
 You can use [`Puck.accel()`](/Reference#l_Puck_accel) to return one accelerometer/gyro
 reading, for example:

@@ -30,3 +30,8 @@ Reference
 ---------
 
 * APPEND_JSDOC: LPS22HB.js
+
+Using
+-----
+
+* APPEND_USES: LPS22HB

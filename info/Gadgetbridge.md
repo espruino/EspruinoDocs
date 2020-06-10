@@ -33,6 +33,7 @@ Currently implemented messages are:
 * `t:"weather", temp,hum,txt,wind,loc`  - weather report
 * `t:"musicstate", state:"play/pause",position,shuffle,repeat` - music play/pause/etc
 * `t:"musicinfo", artist,album,track,dur,c(track count),n(track num)` - currently playing music track
+* `t:"call", cmd:"accept/incoming/outgoing/reject/start/end", name: "name", number: "+491234"` - call
 
 ### Examples
 
@@ -40,6 +41,7 @@ Currently implemented messages are:
 GB({"t":"notify","id":1575479849,"src":"Hangouts","title":"A Name","body":"message contents"})
 GB({"t":"musicstate","state":"play","position":0,"shuffle":1,"repeat":1})
 GB({"t":"musicinfo","artist":"..","album":"..","track":"..","dur":241,"c":2,"n":2})
+GB({"t":"call","cmd":"accept","name":"name","number":"+491234"})
 ```
 
 Messages from Bangle.js to Phone
