@@ -11,6 +11,8 @@ Often you'll want to make a device that can sit in a place and will collect
 (log) data. Espruino is particularly good at this as all devices have a
 Real Time Clock (RTC) and don't draw much power when idle.
 
+**Note:** There's a Bangle.js specific [example of logging here](/bangle.js+Storage)
+
 At its most simple, all you need to do is have some code that looks like this:
 
 ```
@@ -61,7 +63,8 @@ Data Storage
 -------------
 
 The next step is to figure out how you're going to store your data. There are
-a few options here:
+a few options here. If you want to skip this and just want something that works, see
+`require("Storage").open` under **Flash memory** below.
 
 ### RAM - JavaScript variables
 
@@ -177,11 +180,11 @@ var event = {
 
 ### Flash memory
 
-So far we've only written to RAM, however some Espruino boards have big
-areas of flash memory that you can use.
+So far we've only written to RAM, however some Espruino boards have
+areas of flash memory that you can use to store nonvolatile data.
 
-You can use the [`require("Flash")`](/Reference#Flash) to write bytes straight
-to flash - but this is relatively advanced and requires you to deal with pages
+You can also use [`require("Flash")`](/Reference#Flash) to write bytes straight
+to flash - but this is pretty advanced and requires you to deal with pages
 and page erasure.
 
 On Espruino 1v97 and above there is the [`Storage` module](/Reference#Storage)
@@ -220,6 +223,33 @@ function saveData(txt) {
 setInterval(function() {
   saveData(getTime()+","+E.getTemperature()+"\n");
 }, 1000);
+
+
+// Read with:
+// storage.read("log1");
+```
+
+Espruino 2v05 and later also have `require("Storage").open` which allows you
+to open a Storage file for appending and vastly simplifies the process. This
+is what we'd now recommend you use:
+
+```
+var f = require("Storage").open("log","a");
+
+// Write some data
+setInterval(function() {
+  f.write(getTime()+","+E.getTemperature()+"\n");
+}, 1000);
+
+function getData(callback) {
+  var f = require("Storage").open("log","r")  
+  var l = f.readLine();
+  while (l!==undefined) {
+    callback(l);
+    l = f.readLine();
+  }
+}
+// Get data with: getData(print);
 ```
 
 ### External Flash/EEPROM Memory
