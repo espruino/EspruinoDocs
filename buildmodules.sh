@@ -8,7 +8,7 @@ MODULEDIR=$WEBSITE/www/modules
 mkdir -p $MODULEDIR
 
 # Minify all modules
-MODULES=`find devices modules boards -name "*.js"`
+MODULES=`find devices modules boards -name "*.js" | grep -v -f moduleignore`
 
 for module in $MODULES; do
  if [ -f $module ]; then
