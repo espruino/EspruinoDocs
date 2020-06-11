@@ -2,7 +2,7 @@
 Bangle.js Data Storage
 ========================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Storage. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+Storage. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Bangle.js,Development,interface,storage,data,log,logging,save,App,Apps,Application
 * USES: Bangle.js,Storage
@@ -137,7 +137,7 @@ require("Storage").write("gpspoilog.info",{
 Now, you can go for a walk - when you have a GPS signal you can start logging
 some data by choosing `Add Plant`, etc from the menu.
 
-![app](Bangle.js+Storage.png)
+![app](Bangle.js Storage.png)
 
 
 Reading the data
