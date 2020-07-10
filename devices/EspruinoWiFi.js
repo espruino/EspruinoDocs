@@ -416,9 +416,9 @@ exports.getIP = function(callback) {
   });
 };
 
-/* Set WiFi station IP address. Call with
-either: wifi.setAPIP(undefined, callback) // enable DHCP (the default) - can take a few seconds to complete
-either: wifi.setAPIP({ip:"192.168.1.9"}, callback) // disable DHCP, use static IP
+/* Set WiFi client IP address. Call with
+either: wifi.setIP(undefined, callback) // enable DHCP (the default) - can take a few seconds to complete
+either: wifi.setIP({ip:"192.168.1.9"}, callback) // disable DHCP, use static IP
 or: wifi.setIP({ip:"192.168.1.9", gw:"192.168.1.1", netmask:"255.255.255.0"}, callback) // disable DHCP, use static IP
 You must be connected to an access point to be able to call this successfully
 */
@@ -484,7 +484,7 @@ exports.setAPIP = function(settings, callback) {
   });
 };
 
-/* Set the name of the Espruino WiFi's access point */
+/* Set the name of the Espruino WiFi's access point (this isn't DNS, this is just the WiFi access point name) */
 exports.setHostname = function(hostname, callback) {
   turnOn(MODE.CLIENT, function(err) {
     if (err) return callback(err);
