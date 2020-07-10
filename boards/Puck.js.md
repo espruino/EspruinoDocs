@@ -59,17 +59,24 @@ You can also buy kits of different color cases for Puck.js from the
 Turning Puck.js on
 ------------------
 
-Puck.js is assembled with a **clear plastic tab** between the battery
+Puck.js is either supplied with a separate battery, or assembled with the
+battery inside and a **clear plastic tab** between the battery
 and PCB to keep it turned off. To turn it on, you need to:
 
 * Pull the silicone case off the top,
 * Tip the PCB out
-* Push the battery out from the back with a blunt object
-* Make sure the clear plastic tab is removed
-* Push the battery back in
+* If a battery is installed, push it out from the back with a blunt object and make sure the clear plastic tab is removed
+* Push the battery back in, with the `+` side of the battery (with the writing on)
+facing away from the Puck.js PCB:
+
+![Puck.js PCB and battery rear view](Puckjs/battery.jpg)  
+![Puck.js PCB and battery front view](Puckjs/battery2.jpg)  
+
 * Reassemble (note that the battery should be facing the black plastic case,
   and the button (next to the battery) should be positioned as far away from
-  the 'step' in the case as possible.
+  the 'step' in the case as possible:
+
+![Positioning in case](Puckjs/ledge.jpg)  
 
 **Note: Do not re-fit the PCB upside-down or force it into the case.** If
 positioned correctly it should slide in. Forcing the PCB or fitting it
