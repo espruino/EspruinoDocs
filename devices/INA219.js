@@ -15,7 +15,7 @@ Example usage:
   const ina219 = require("INA219").connect(I2C1);
 
   console.log(ina219.initDevice());
-  setInterval(() => {
+  setInterval(function() {
     console.log(ina219.getBusMilliVolts() / 1000 + 'V');
     console.log(ina219.getBusMicroAmps() * 1000 + 'mA');
     console.log(ina219.getBusMicroWatts() * 1000 + 'mW');
@@ -60,19 +60,19 @@ var C = {
   POWER_LSB : 20,
 };
 
-INA219.prototype.readWord = (address) => {
+INA219.prototype.readWord = function(address) {
   this.i2c.writeTo(this.deviceAddress, address);
 
   const returnData = this.i2c.readFrom(this.deviceAddress, 2);
   return returnData[1] | returnData[0] << 8;
 };
 
-INA219.prototype.readSigned = (address) => {
+INA219.prototype.readSigned = function(address) {
   const data = this.readWord(address);
   return (data & 32768) ? data - 65536 : data;
 };
 
-INA219.prototype.writeWord = (address, data) => {
+INA219.prototype.writeWord = function(address, data) {
   this.i2c.writeTo(this.deviceAddress, [address, data >> 8, data]);
 };
 
@@ -86,7 +86,7 @@ INA219.prototype.writeWord = (address, data) => {
  *
  *  returns an object with the calibration factor
  */
-INA219.prototype.initDevice = () => {
+INA219.prototype.initDevice = function() {
   const originalRegister = this.readWord(C.CONFIGURATION_REGISTER);
   this.writeWord(C.CONFIGURATION_REGISTER, C.RESET_DEVICE);
   const tempRegister = this.readWord(C.CONFIGURATION_REGISTER);
@@ -97,36 +97,36 @@ INA219.prototype.initDevice = () => {
   return({ calibrationFactor: calibration });
 };
 
-INA219.prototype.getBusRaw = () => {
+INA219.prototype.getBusRaw = function() {
   const raw = this.readWord(C.BUS_VOLTAGE_REGISTER);
   return raw >> 3;
 };
 
 /** returns the voltage measurement in millivolts */
-INA219.prototype.getBusMilliVolts = () => {
+INA219.prototype.getBusMilliVolts = function() {
   const busVoltage = this.getBusRaw();
   return busVoltage * C.BUS_VOLTAGE_LSB;
 };
 
-INA219.prototype.getShuntRaw = () => {
+INA219.prototype.getShuntRaw = function() {
   const raw = this.readWord(C.SHUNT_VOLTAGE_REGISTER);
   return raw >> 3;
 };
 
 /** returns the voltage drop across the shunt in micro volts */
-INA219.prototype.getShuntMicroVolts = () => {
+INA219.prototype.getShuntMicroVolts = function() {
   const shuntVoltage = this.getShuntRaw();
   return shuntVoltage * C.SHUNT_VOLTAGE_LSB;
 };
 
 /** returns the current measurement in microamps */
-INA219.prototype.getBusMicroAmps = () => {
+INA219.prototype.getBusMicroAmps = function() {
   const microAmps = this.readSigned(C.CURRENT_REGISTER);
   return microAmps * this.currentLsb;
 };
 
 /** returns the power measurement in microwatts */
-INA219.prototype.getBusMicroWatts = () => {
+INA219.prototype.getBusMicroWatts = function() {
   const microWatts = this.readSigned(C.POWER_REGISTER);
   return microWatts * this.currentLsb * C.POWER_LSB;
 };
