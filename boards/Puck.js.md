@@ -72,6 +72,10 @@ facing away from the Puck.js PCB:
 ![Puck.js PCB and battery rear view](Puckjs/battery.jpg)  
 ![Puck.js PCB and battery front view](Puckjs/battery2.jpg)  
 
+* As the battery is inserted the red LED should flash once, very briefly.
+* If the green LED lights or red stays lit, it is because you have accidentally
+pressed the button down while inserting the battery. Remove the battery and try
+again, making sure the button next to the battery connector isn't pressed.
 * Reassemble (note that the battery should be facing the black plastic case,
   and the button (next to the battery) should be positioned as far away from
   the 'step' in the case as possible:

@@ -13,16 +13,15 @@ Turning On
 
 ### <a class="specific puckjs"></a>Puck.js
 
-Your Puck.js shipped with a battery installed, but with a small plastic tab inserted to keep it turned off.
+Puck.js is either supplied with a separate battery, or assembled with the
+battery inside and a **clear plastic tab** between the battery
+and PCB to keep it turned off. To turn it on, you need to:
 
-To turn on your Puck.js, simply:
-
-* Remove Puck.js from its packaging
-* Peel the silicone case away from the hard base using your fingers
-* Tip the Puck.js circuit board out of the case
-* Remove the battery by poking it out from the rear with a blunt object
-* Remove the clear plastic tab that was under the battery
-* Re-insert the battery - the red LED should flash once, very briefly.
+* Pull the silicone case off the top,
+* Tip the PCB out
+* If a battery is installed, push it out from the back with a blunt object and make sure the clear plastic tab is removed
+* Push the battery back in, with the `+` side of the battery (with the writing on)
+facing away from the Puck.js PCB. The red LED should flash once, very briefly.
 * If the green LED lights or red stays lit, it is because you have accidentally
 pressed the button down while inserting the battery. Remove the battery and try
 again, making sure the button next to the battery connector isn't pressed.
@@ -30,10 +29,11 @@ again, making sure the button next to the battery connector isn't pressed.
 the battery side facing towards the plastic case, with the `Puck.js ...` text against
 the shelf in the case itself**
 
-While Puck.js ships with firmware that's fine for simple tasks, we're constantly
-improving the software and adding new features.
+Please [see the Puck.js reference page](/Puck.js#turning-puck-js-on) for some
+pictures of the correct orientation of the battery and Puck.js case.
 
-To get the best out of it, we'd recommend that you [update Puck.js's firmware](/Puck.js#firmware-updates) first.
+While Puck.js ships with firmware that's fine for simple tasks, we're constantly
+improving the software and adding new features. To get the best out of it, we'd recommend that you [update Puck.js's firmware](/Puck.js#firmware-updates) first.
 
 ### <a class="specific pixljs"></a>Pixl.js
 
