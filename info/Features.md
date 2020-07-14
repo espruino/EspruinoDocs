@@ -56,7 +56,8 @@ List of ES5 features from http://kangax.github.io/compat-table/es5/
 | Multiline String Literals | - |
 | Accessors (Getters and Setters)  | `2v00`  `Official` |
 | Trailing commas in object/array | `Yes` |
-| Reserved word as property keys | `Yes` |
+| Reserved words as property keys | `Yes` |
+| Reserved words as Identifiers (`var of=1`) | - |
 | `Object.create/defineProperty/defineProperties` | `Yes` |
 | `Object.getPrototypeOf/keys` | `Yes` |
 | `Object.seal/freeze/preventExtensions` | - |

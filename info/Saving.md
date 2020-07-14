@@ -47,7 +47,7 @@ If Espruino is reset with `load()` it follows the same steps as above, with `has
 However in Espruino 2v05 and later, `load(filename)` will follow the same steps but will load the
 specified file instead of `.bootcde`/`.bootrst`.
 
-There are two main ways to do it with Espruino.
+There are two main ways to save code with Espruino:
 
 
 `save()`
@@ -108,7 +108,7 @@ run `save()` to save the clean state back into flash memory.
 ### Gotchas
 
 * Unless you use  `onInit` or `E.on('init', ...)`, code won't run at boot time.
-* Since `setWatch` and `setInterval` are remembered, if you call them in `onInit` and then `save()` multiple times, you can end up with multiple copies. You can use `clearInterval()` and `clearWatch()` to avoid that.
+* Since `setWatch` and `setInterval` are remembered, if you call them in `onInit` and then `save()` multiple times, you can end up with multiple copies. You can use `clearInterval()` and `clearWatch()` in `onInit` to avoid that.
 * When uploading code with an `onInit()` or `E.on('init', ...)` function the function won't be called at upload time and to test you'll have to either `save()` or call `onInit()` manually.
 
 
@@ -127,13 +127,13 @@ the device is powered on (in contrast to what happens when you use `save()`.
 
 `Save on Send` (in the Communications section of the IDE) has three settings:
 
-* `No` - code is uploaded to RAM, but can be saved with `save()` (as above)
-* `Yes` - JavaScript code is saved to flash and loaded even after boot.
+* `No` - code is uploaded to RAM, but can be saved with `save()` (as above). `RAM` is displayed below the upload icon.
+* `Yes` - JavaScript code is saved to flash and loaded even after boot. `Flash` is displayed below the upload icon.
 If `reset()` is called, Espruino will remove all code from RAM and will
 not execute the saved JS code. This saved your JS code
 to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootcde`.
 * `Yes, execute even after reset()` - JavaScript code is saved to flash and
-loaded even after boot. If `reset()` is called, Espruino will remove all
+loaded even after boot. `⚠Flash` is displayed below the upload icon. If `reset()` is called, Espruino will remove all
 `save()`d code from RAM, but will still execute the JS code that you saved. See
 the 'Both Options' section. This saved your JS code
 to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootrst`.
@@ -152,13 +152,18 @@ is enabled in the IDE.
 
 * Your JavaScript code is stored in flash as plain text, so can easily be read out
 * If you make changes using the left-hand side of the IDE, there is no way to save them
-* `E.setFlags({pretokenise:1})` will have no effect, since a function's code will be kept in Flash
+* `E.setFlags({pretokenise:1})` will have no effect, since a function's code will be kept in Flash (you can still add `"ram"` as the first item in a function to force it to be loaded into RAM and pretokenised)
 * It isn't possible to run code at upload time - code only ever runs when the device powers on.
 
 ### Gotchas
 
 * If you turn on `Save on Send`, upload code, and then turn it off, you can be left
 with both bits of code in Espruino at the same time (see 'Both Options' below).
+* If you call `save()` after having saved to flash using a method below, you may
+get `Got EOF expected ..., [ERASED]` errors. These happen because there were
+function definitions in RAM that referenced code in Flash that is no longer
+there.
+
 
 
 To Storage

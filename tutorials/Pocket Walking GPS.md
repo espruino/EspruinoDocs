@@ -4,7 +4,7 @@ Pocket 'walking' GPS
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Pocket+Walking+GPS. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: GPS,LCD
+* KEYWORDS: GPS,LCD,OS Map,Ordnance Survey,Map,Grid Reference
 * USES: GPS,PCD8544,Espruino Board,Graphics
 
 Introduction
