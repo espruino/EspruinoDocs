@@ -147,9 +147,10 @@ Unlike other Espruino boards, these peripherals can be used on *any* pin.
 Information
 -----------
 
-* [Circuit Diagram](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjs_sch.pdf)
-* [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjs_brd.pdf)
-* [Eagle CAD files](https://github.com/espruino/EspruinoBoard/tree/master/Puck.js/eagle)
+* [Circuit Diagram (v1)](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjs_sch.pdf)
+* [Circuit Diagram (v2)](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjsc2_sch.pdf)
+* [Board Layout (v1)](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjs_brd.pdf)
+* [Eagle CAD files (v1)](https://github.com/espruino/EspruinoBoard/tree/master/Puck.js/eagle)
 * [3D Case design files](https://github.com/espruino/EspruinoBoard/tree/master/Puck.js/case)
 * [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
 * [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
