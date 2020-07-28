@@ -21,9 +21,6 @@ all copies or substantial portions of the Software.
 
 /* Module constants*/
 var C = {
-  ADDRESS_AD0_LOW     : 0x68, // address pin low (GND)
-  ADDRESS_AD0_HIGH    : 0x69, // address pin high (VCC)
-
   PWR1_CLKSEL_BIT     : 2,
   PWR1_CLKSEL_LENGTH  : 3,
   PWR1_SLEEP_BIT      : 6,
@@ -120,8 +117,8 @@ exports.connect = function (_i2c,_addr) {
 function MPU6050(_i2c, _addr) {
   this.i2c = _i2c;
   this.addr =
-    (undefined===_addr || false===_addr) ? C.ADDRESS_AD0_LOW :
-    (true===_addr) ? C.ADDRESS_AD0_HIGH :
+    (undefined===_addr || false===_addr) ? 0x68 /* address pin low (GND) */ :
+    (true===_addr) ? 0x69 /* address pin high (VCC) */ :
     _addr;
   this.initialize();
 }
@@ -392,7 +389,6 @@ MPU6050.prototype.setI2CMasterModeEnabled = function(enabled) {
 MPU6050.prototype.resetI2CMaster = function() {
     this.writeBit(R.USER_CTRL, C.USERCTRL_I2C_MST_RESET_BIT, true);
 }
-
 
 // XG_OFFS_TC register
 
