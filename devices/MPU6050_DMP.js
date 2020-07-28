@@ -90,7 +90,7 @@ exports.create = function (_mpu6050, _fifoRate) {
 };
 
 
-/** DMP Object 
+/** DMP Object
  * @fifoRate DMP output frequency = 200Hz / (1 + fifoRate)
  * Going faster than 100Hz (0x00=200Hz) tends to result in very noisy data.
  * It is important to make sure the host processor can keep up with reading and processing
@@ -169,7 +169,7 @@ DMP.prototype.getEuler = function(data) {
 }
 
 
-var DMP_MEMORY = new Uint8Array([
+/*var DMP_MEMORY = new Uint8Array([
     // bank 0, 256 bytes
     0xFB, 0x00, 0x00, 0x3E, 0x00, 0x0B, 0x00, 0x36, 0x00, 0x01, 0x00, 0x02, 0x00, 0x03, 0x00, 0x00,
     0x00, 0x65, 0x00, 0x54, 0xFF, 0xEF, 0x00, 0x00, 0xFA, 0x80, 0x00, 0x0B, 0x12, 0x82, 0x00, 0x01,
@@ -306,11 +306,15 @@ var DMP_MEMORY = new Uint8Array([
     0xA3, 0xB2, 0xA3, 0xA3, 0xA3, 0xA3, 0xA3, 0xA3, 0xB0, 0x87, 0xB5, 0x99, 0xF1, 0xA3, 0xA3, 0xA3,
     0x98, 0xF1, 0xA3, 0xA3, 0xA3, 0xA3, 0x97, 0xA3, 0xA3, 0xA3, 0xA3, 0xF3, 0x9B, 0xA3, 0xA3, 0xDC,
     0xB9, 0xA7, 0xF1, 0x26, 0x26, 0x26, 0xD8, 0xD8, 0xFF
-]);
+]);*/
+function getDMPMemory() {
+  //btoa(E.toString(require("heatshrink").compress(DMP_MEMORY)))
+  return new Uint8Array(require("heatshrink").decompress(atob("/YCBn0AhcAm0AgMAgUAgYQCssAqn/94GB/WACoMSwQVEABsoAQP//9FwIDB/VyCAsD9AECE4MBv4SB/2AA4MbF50+gcwoAGCgXK8cJnxTBgEgCwwTDsADCoP/BocLlQDBi1VAYMhwX9w8mqH9E4UAj4DCgoIDLohACNQY3FAAMEt4PBssyA4Ne4APFZ5WMt9d/tdhHZgF8uc7gFsiXMEgMTzoDB6HWAYMIHYUB+n/82AvLSFCYIDBk8Qf4RTGABBtDaQoHE/U2/+8mGORYP7+H/7Nb5H/6Ga3wTBiGp//0j2ygHO3f3F40ET4UCK4UM//CWYUBAYXPAYJXGJ40GAgcUVxwAkgc/tG2vM1lG841+6NsLIRXG2VqEps/+AECmBNhktNgEvuFtA4MF1ytBgXQCQllgFU//vfxVEA4cMXRIfBAANUAQIjJABLjGB7BEGgTsojYpoNYovqACfY7m60Xx72y3G01GByP3pWQv+RtXz/Pb1H52G60GA+XOwPz4Xx4Py4fz5mi2WA+PG7GA3Wn74AB+Wn4fL4u2+GH0WUklIuE8ytAtE0rGbvBDBweSltVvvY2O03Gh6GRHQNw+dw+V8wGo+MB2GYw/ZofYw3JxG60Pyh24y5GB1JCC1RGD1XF5vH1MM5Msy4ACCoOJk1Gs2w2m6wGs73y5Xx2WMgWp22YgGJh0Wj241O0zMsql82GK1GWm1Wu3x3Ov2mwwfA3Goy8R2OPzAMB+EkhFEiFkjHx0cpPYOvwe1yYQBgEoqANBw2fsOm7Xe7/Z/QJBy3bmOm7P47+602P4XF45XB4O40R7C0YDC7HY+JGB2WG2mYhs1ru41WY2GHls1nuy2261+My0Zx+f055C2maCwOHPQW50ZJBGIOxaYPE5vJGQKOCwYxCxIVBdwRwB0YoC1IkC3CWB+OXweoiOE0sJzGjwfw7SXFMQOlTAWlwuVgUal06q1aoFI/Pz0aMB+GYwYeFy+C1HxiINB0QNF7Xz73YwelykB7OjgXx0XDVgI8BwmS0VN7Uq7FItPZAgNoqvamXYqFx7IEBuFd7U67FYvPZAgN4PwIfd1GKzXwlFQvGe+eIjHxz8dzGo7MI7HIz8SBwMV1HaiUQL4Ov5GXw802u5ymkkPz7Mi7HyloFBI4PymoFBIYOB0lgsFh7Nh7FstBbBtPYulwK4Nx7Gx0eEjM9rrcBjU+r2TiEwwMQiO42Gvx+U+Xan3Y2ma1GHlPa/HYw+amoFEnoFC2O50mYwsCl1W0uBgEMimjy+wxXxlvZlHYpvZpHYtvZtAdBwkN7UO7GjlOD7UsAwWEpIHCpgIBKAKwC+sg1Xa7/Y1FA1XQ7XeAwNgBgPQBoPxy+G1ExzcGzMH1eXlGIzfwhkgilAFYO01GMznwgkoqN5jswik42WC1fQzEsqDrBvGb+Ma2HwxWc1EpDAOLAYWKklwrOLkFYuOKolpnGLnNAtGKslImOLmFJsGlxEghNxrFEtERnNkpMwjPx1kAllUvnwxmoJ4JCB+OIy8m1FZzGsxkCk1Gs3wxJKEIoRACHYWpxEJkFZuGriM4oFp1EZmNIsAyBnlBrkgvkA+OHzEZUgNuu1+1OZxEtqt9z250eKkWKt2Kq2Kr2f2ODgxICh0up1uzu41pnD+Wxxm0zIgBEwWByOsnGtnW1wYGBlvZlHYpvZpHYtvZtHYxmd10p7ME13YqIEDvIEB7GB+edHAON10ZwOt7MB7Hy13ak3Yx2RlOD0/Z1oAC+cq7HY+Ow1mJyM+r12+esl0u+JcBrWc1kslAABAoMwjGozGBlE0nmXkmnAoWckny2GJ1mRllMtmKzZuBGoJeBAYJdBHoWexGjmPaA4ORQZa0Byc1nuAkoWCwtpAgW0yeB0ZCC+erxf40eR20J2nZ1fe/Www+cYgPd+OjAAWVAoedBQny0e0yGAAgIAI2QGFFgO1zIfDzAkEy4ED+ebAYPc3On+MmAAJgB/4")));
+}
 
 
 
-var DMP_CONFIG = new Uint8Array([
+/*var DMP_CONFIG = new Uint8Array([
 //  BANK    OFFSET  LENGTH  [DATA]
     0x03,   0x7B,   0x03,   0x4C, 0xCD, 0x6C,         // FCFG_1 inv_set_gyro_calibration
     0x03,   0xAB,   0x03,   0x36, 0x56, 0x76,         // FCFG_3 inv_set_gyro_calibration
@@ -343,20 +347,11 @@ var DMP_CONFIG = new Uint8Array([
     0x07,   0x47,   0x04,   0xF1, 0x28, 0x30, 0x38,   // CFG_9 inv_send_gyro -> inv_construct3_fifo
     0x07,   0x6C,   0x04,   0xF1, 0x28, 0x30, 0x38,   // CFG_12 inv_send_accel -> inv_construct3_fifo
     0x02,   0x16,   0x02,   0x00, 0x00                // D_0_22 inv_set_fifo_rate. The last data Byte is the FifoRate and will be replaced later
-]);
-
-var DMP_UPDATES = [
-//   BANK  ADDRESS    DATA...
-    [0x01,   0xB2,   [0xFF, 0xFF]],
-    [0x01,   0x90,   [0x09, 0x23, 0xA1, 0x35]],
-    [0x01,   0x6A,   [0x06, 0x00]],
-    [0x01,   0x60,   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]],
-    [0x00,   0x60,   [0x40, 0x00, 0x00, 0x00]],
-    [0x01,   0x62,   [0x00, 0x00]],
-    [0x00,   0x60,   [0x00, 0x40, 0x00, 0x00]]
-];
-
-
+]);*/
+function getDMPConfig() {
+  //btoa(E.toString(require("heatshrink").compress(DMP_CONFIG)))
+  return new Uint8Array(require("heatshrink").decompress(atob("gd7gdM5tsgergc2q12gFogkC5dH0UCjEEgEFxfBgMMAwIgDv8GhnJlmXAAMDxMDk1Gs0AtkCkEAgVADQkCogGFpAGFpgGFqAGFqgGFrAGFrgGF3gGEgPsAwVALJJ1BgcNmtdgkJgmHls1nsA0cBEYkHw0B/0HoMF+MglEwnEHv0BmEHo0BzUHo8E+IODtgGEgUWgQnBA")));
+}
 
 DMP.prototype.writeDMPConfigurationSet = function(data) {
   var dataSize = data.length
@@ -558,9 +553,9 @@ var initialize1 = function(dmp) {
 
 var initialize2 = function(dmp, xgOffsetTC, ygOffsetTC, zgOffsetTC) {
   // load DMP code into memory banks
-  if (dmp.mpu.writeMemoryBlock(DMP_MEMORY, 0, 0)) {
+  if (dmp.mpu.writeMemoryBlock(getDMPMemory(), 0, 0)) {
     console.log("Success! DMP code written and verified.");
-    if (dmp.writeDMPConfigurationSet(DMP_CONFIG)) {
+    if (dmp.writeDMPConfigurationSet(getDMPConfig())) {
       console.log("Success! DMP configuration written and verified.");
 
       // Setting clock source to Z Gyro...
@@ -584,6 +579,18 @@ var initialize2 = function(dmp, xgOffsetTC, ygOffsetTC, zgOffsetTC) {
       dmp.mpu.setXGyroOffsetTC(xgOffsetTC);
       dmp.mpu.setYGyroOffsetTC(ygOffsetTC);
       dmp.mpu.setZGyroOffsetTC(zgOffsetTC);
+
+      var DMP_UPDATES = [
+    //   BANK  ADDRESS    DATA...
+        [0x01,   0xB2,   [0xFF, 0xFF]],
+        [0x01,   0x90,   [0x09, 0x23, 0xA1, 0x35]],
+        [0x01,   0x6A,   [0x06, 0x00]],
+        [0x01,   0x60,   [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]],
+        [0x00,   0x60,   [0x40, 0x00, 0x00, 0x00]],
+        [0x01,   0x62,   [0x00, 0x00]],
+        [0x00,   0x60,   [0x00, 0x40, 0x00, 0x00]]
+    ];
+
       // Writing final memory update 1/7 (function unknown)...
       dmp.mpu.writeMemoryBlock(DMP_UPDATES[0][2], DMP_UPDATES[0][0], DMP_UPDATES[0][1]);
       // Writing final memory update 2/7 (function unknown)...
@@ -636,6 +643,3 @@ var initialize2 = function(dmp, xgOffsetTC, ygOffsetTC, zgOffsetTC) {
     return 1; // main binary block loading failed
   }
 }
-
-
-
