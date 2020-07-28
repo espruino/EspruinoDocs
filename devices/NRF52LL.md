@@ -34,7 +34,7 @@ Uses GPIO and counter timer:
 ```
 var ll = require("NRF52LL");
 // Source of events - the button
-var btn = ll.gpiote(0, {type:"event",pin:BTN,lo2hi:1,hi2lo:1});
+var btn = ll.gpiote(7, {type:"event",pin:BTN,lo2hi:1,hi2lo:1});
 // A place to recieve Tasks - a counter
 var ctr = ll.timer(3,{type:"counter"});
 // Set up and enable PPI
@@ -57,8 +57,8 @@ var ll = require("NRF52LL");
 digitalWrite(D0,0);
 digitalWrite(D1,0);
 // create two 'toggle' tasks, one for each pin
-var t0 = ll.gpiote(0, {type:"task",pin:D0,lo2hi:1,hi2lo:1,initialState:0});
-var t1 = ll.gpiote(1, {type:"task",pin:D1,lo2hi:1,hi2lo:1,initialState:1});
+var t0 = ll.gpiote(7, {type:"task",pin:D0,lo2hi:1,hi2lo:1,initialState:0});
+var t1 = ll.gpiote(6, {type:"task",pin:D1,lo2hi:1,hi2lo:1,initialState:1});
 // create a timer that counts up to 1000 and back at full speed
 var tmr = ll.timer(3,{cc:[1000],cc0clear:1});
 // use two PPI to trigger toggle events
@@ -77,7 +77,7 @@ var ll = require("NRF52LL");
 // set up LED as an output
 digitalWrite(LED,0);
 // create a 'toggle' task for the LED
-var tog = ll.gpiote(0, {type:"task",pin:LED,lo2hi:1,hi2lo:1,initialState:0});
+var tog = ll.gpiote(7, {type:"task",pin:LED,lo2hi:1,hi2lo:1,initialState:0});
 // compare D31 against vref/2
 var comp = ll.lpcomp({pin:D31,vref:8});
 // use a PPI to trigger the toggle event
@@ -208,7 +208,7 @@ var ll = require("NRF52LL");
 // set up LED as an output
 digitalWrite(LED,0);
 // create a 'toggle' task for the LED
-var tog = ll.gpiote(0, {type:"task",pin:LED,lo2hi:1,hi2lo:1,initialState:0});
+var tog = ll.gpiote(7, {type:"task",pin:LED,lo2hi:1,hi2lo:1,initialState:0});
 
 // set up the rtc
 var rtc = ll.rtc(2);
@@ -227,8 +227,8 @@ Uses RTC, GPIO:
 var ll = require("NRF52LL");
 // Source of events - the button
 // Note: this depends on the polarity of the physical button (this assumes that 0=pressed)
-var btnu = ll.gpiote(0, {type:"event",pin:BTN,lo2hi:1,hi2lo:0});
-var btnd = ll.gpiote(1, {type:"event",pin:BTN,lo2hi:0,hi2lo:1});
+var btnu = ll.gpiote(7, {type:"event",pin:BTN,lo2hi:1,hi2lo:0});
+var btnd = ll.gpiote(6, {type:"event",pin:BTN,lo2hi:0,hi2lo:1});
 // A place to recieve Tasks - the RTC
 var rtc = ll.rtc(2);
 poke32(rtc.prescaler, 0); // no prescaler, 32 kHz
@@ -259,10 +259,10 @@ function capSense2(PINDRV, PIN1, PIN2) {
   digitalWrite(PINDRV,0);
   digitalRead([PIN1,PIN2]);
   // create a 'toggle' task for output
-  var t0 = ll.gpiote(0, {type:"task",pin:PINDRV,lo2hi:1,hi2lo:1,initialState:0});
+  var t0 = ll.gpiote(7, {type:"task",pin:PINDRV,lo2hi:1,hi2lo:1,initialState:0});
   // two input tasks, one for each cap sense input
-  var e1 = ll.gpiote(1, {type:"event",pin:PIN1,lo2hi:1,hi2lo:0});
-  var e2 = ll.gpiote(2, {type:"event",pin:PIN2,lo2hi:1,hi2lo:0});
+  var e1 = ll.gpiote(6, {type:"event",pin:PIN1,lo2hi:1,hi2lo:0});
+  var e2 = ll.gpiote(5, {type:"event",pin:PIN2,lo2hi:1,hi2lo:0});
   // create a timer that counts up to 1000 and back at full speed
   var tmr = ll.timer(3,{cc:[1000],cc0clear:1});
   // use a PPI to trigger toggle events
@@ -299,6 +299,9 @@ Espruino doesn't allow you to react to interrupts from these peripherals
 directly, however you can change the state of an external pin (see the
 examples above) and can then short that pin to another pin that you can
 use as an input with `setWatch`.
+
+**Note:** `setWatch` uses a **GPIOTE** peripheral for each watch, starting
+with GPIOTE 0 - so be careful not to overlap them!
 
 
 LPCOMP

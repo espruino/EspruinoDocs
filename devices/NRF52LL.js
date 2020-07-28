@@ -2,7 +2,10 @@
 /* nRF52 low level library */
 
 /** GPIO Tasks and Events
-  ch can be between 0 and 7 for low power GPIO
+  ch can be between 0 and 7 for low power GPIO. setWatch uses GPIOTEs internally
+  (starting from 0), so it's a good idea to start from GPIOTE 7 and work down to
+  avoid conflicts.
+
   opts is {
     type : "event"/"task"/"disabled", // default is disabled
     pin : D0, // pin number to use,
