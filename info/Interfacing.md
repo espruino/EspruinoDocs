@@ -25,6 +25,26 @@ by sending character code 16 `"\x10"` as the first character on the line - eg. `
 USB / Serial
 ------------
 
+### Web Serial (on Web Pages)
+
+You can use the [`Web Serial API`](https://codelabs.developers.google.com/codelabs/web-serial/#0) to access
+devices from a Web Page.
+
+To make this easier we've made the [UART.js](/UART.js) Library to provide a consistent API for accessing Serial/Bluetooth devices from the web:
+
+```HTML_demo_link
+<html>
+ <head>
+ </head>
+ <body>
+  <script src="http://www.espruino.com/js/uart.js"></script>
+  <button onclick="UART.write('LED1.set();\n');">LED On!</button>
+  <button onclick="UART.write('LED1.reset();\n');">LED Off!</button>
+ </body>
+</html>
+```
+
+
 ### Windows
 
 You can write to Espruino very easily with the Windows Command Prompt. For instance to turn an LED on, the command is:
@@ -159,13 +179,27 @@ get added.
 
 As a result you have to access the Nordic UART service via Bluetooth LE directly.
 
-### Web Bluetooth
+### Web Bluetooth (on Web Pages)
 
-Check out the page on [using Espruino with Web Bluetooth](http://www.espruino.com/Puck.js+Web+Bluetooth).
+Check out the page on [using Espruino with Web Bluetooth](http://www.espruino.com/Web+Bluetooth).
+
+```HTML_demo_link
+<html>
+ <head>
+ </head>
+ <body>
+  <script src="https://www.puck-js.com/puck.js"></script>
+  <button onclick="Puck.write('LED1.set();\n');">LED On!</button>
+  <button onclick="Puck.write('LED1.reset();\n');">LED Off!</button>
+ </body>
+</html>
+```
+
+We've also made the [UART.js](/UART.js) Library to provide a consistent API for accessing Serial/Bluetooth devices from the web.
 
 ### Node.js / JavaScript
 
-Run `npm install noble`, then:
+Run `npm install @abandonware/noble`, then:
 
 ```
 /* On Linux, BLE normally needs admin right to be able to access BLE
@@ -173,7 +207,7 @@ Run `npm install noble`, then:
  * sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
  */
 
-var noble = require('noble');
+var noble = require('@abandonware/noble');
 
 var ADDRESS = "ff:a0:c7:07:8c:29";
 var COMMAND = "\x03\x10clearInterval()\n\x10setInterval(function() {LED.toggle()}, 500);\n\x10print('Hello World')\n";
@@ -254,7 +288,7 @@ function write(data, callback) {
     if (!data.length) return callback();
     var d = data.substr(0,20);
     data = data.substr(20);
-    var buf = new Buffer(d.length);
+    var buf = Buffer.alloc(d.length);
     for (var i = 0; i < buf.length; i++)
       buf.writeUInt8(d.charCodeAt(i), i);
     txCharacteristic.write(buf, false, writeAgain);

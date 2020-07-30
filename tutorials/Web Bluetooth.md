@@ -7,10 +7,12 @@ Using Web Bluetooth with Espruino
 * KEYWORDS: Tutorials,Puck.js,GitHub,Web Bluetooth,BLE
 * USES: Puck.js,Web Bluetooth,BLE,Only BLE
 
-**Note:** Web Bluetooth currently works on Mac OS, Android, Chromebook, Linux and
-iOS (with [this app](https://itunes.apple.com/us/app/webble/id1193531073)). Google
-were supposed to add Web Bluetooth support for Windows in early 2017, but this has
-not yet happened - however [there are workarounds](https://github.com/urish/web-bluetooth-polyfill).
+Web Bluetooth allows a website to connect directly to Bluetooth LE devices.
+
+We've also made the [UART.js](/UART.js) Library to provide a consistent API for accessing Bluetooth *and Serial/USB* devices from the web.
+
+**Note:** Web Bluetooth currently works on Windows, Mac OS, Android, Chromebook, Linux and
+iOS (with [this app](https://itunes.apple.com/us/app/webble/id1193531073)).
 
 To work, Web Bluetooth needs to be run from a website that's served over HTTPS
 (not HTTP). While you can set one up yourself with [Let's Encrypt](https://letsencrypt.org/),
@@ -32,8 +34,8 @@ and click `Create` (if you don't, you'll have to use command-line tools to creat
  </head>
  <body>
   <script src="https://www.puck-js.com/puck.js"></script>
-  <button onclick="Puck.write('LED1.set();\n');">On!</button>
-  <button onclick="Puck.write('LED1.reset();\n');">Off!</button>
+  <button onclick="Puck.write('LED1.set();\n');">LED On!</button>
+  <button onclick="Puck.write('LED1.reset();\n');">LED Off!</button>
  </body>
 </html>
 ```

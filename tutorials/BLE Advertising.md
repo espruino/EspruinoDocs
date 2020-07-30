@@ -20,7 +20,7 @@ to focus on Advertising here.
 For tips on using a Bluetooth connection see:
 
 * [Connecting from another Espruino Device](/BLE+Communications)
-* [Connecting from a Web Page with Web Bluetooth](/Puck.js+Web+Bluetooth)
+* [Connecting from a Web Page with Web Bluetooth](/Web+Bluetooth)
 * [Connecting via Node.js or Python](/Interfacing#bluetooth-le)
 
 You could use [our Hub software](https://github.com/espruino/EspruinoHub) to

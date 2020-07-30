@@ -55,7 +55,7 @@ or `Date.now()` will give the number of milliseconds since 1970.
 The time reported is according to Espruino's Real-Time Clock. You can set it
 with `setTime(secondsSince1970)`, or can turn on `Set Current Time` in the
 Web IDE's Communication Settings and the time will be set automatically next time code is
-uploaded. (If you're using the [Puck.js](/Puck.js+Web+Bluetooth#extra-features)
+uploaded. (If you're using the [Puck.js](/Web+Bluetooth#extra-features)
 Web Bluetooth library you can also use `Puck.setTime()` on a Web Bluetooth website).
 
 
@@ -294,7 +294,7 @@ one step at a time.
 Something like this would work:
 
 ```
-function exportData() {
+function getData() {
   for (var i=0;i<log.length;i++)
     console.log(i+","+log[i]);
 }
@@ -335,7 +335,7 @@ function getData() {
 }
 
 // Dump our data in a human-readable format
-function exportData() {
+function getData() {
   for (var i=1;i<=log.length;i++) {
     var time = new Date(lastReadingTime - (log.length-i)*timePeriod);
     var data = log[(i+logIndex)%log.length];
@@ -353,10 +353,13 @@ it'll keep only the last 100 readings. You can easily increase the length of
 the array - most espruino boards will handle at least 5000 items, many will
 allow more.
 
-To get your data, simply type `exportData()` in the left-hand side of the
+To get your data, simply type `getData()` in the left-hand side of the
 IDE and hit enter, then copy the data out of the terminal. Because we're using
 tab (`\t`) as a separator character, you can usually paste the copied data
 directly into a spreadsheet like Google Sheets.
+
+**You can also download directly to a file - click the 'Try Me' button
+on the code blocks under 'Automatically recovering data'**
 
 Further Improvements
 --------------------
@@ -373,11 +376,63 @@ and store 4 times as much data (as long as the temperature was between -128 and 
 Automatically recovering data
 -----------------------------
 
-If you're trying to interface this to an application on your PC, for USB
-devices you just need to open the COM port, send the string `"\x10exportData()\n"`,
-and then read the data that is sent. For Bluetooth LE devices you can do
-the same with the [Puck.js library](/Puck.js+Web+Bluetooth) on a Web Bluetooth
-website:
+If you're trying to interface this to an application on your computer,
+you just need to open the Serial/Bluetooth connection, send the string `"\x10getData()\n"`,
+and then read the data that is sent in return.
+
+You can use the [Puck.js library](/Web+Bluetooth) or [UART.js library](/UART.js) to communicate
+using Web Bluetooth or Web Serial direct from a webpage. For example:
+
+**Click the 'Try Me' button on the code below to try it out
+and read data from your Espruino device**
+
+If you only need Web Bluetooth you can use the [Puck.js library](/Web+Bluetooth) too.
+
+```HTML_demo_link
+<html>
+ <head>
+ </head>
+ <body>
+  <script src="http://www.espruino.com/js/uart.js"></script>
+  <script>
+// Output debug info about received data to the console
+UART.debug=3;
+
+// Save the CSV file to disk
+function saveFile(csvText, fileName) {
+  var saver = document.createElement("a");
+  var blob = new Blob([csvText], {type : 'text/csv'});
+  var blobURL = saver.href = URL.createObjectURL(blob),
+      body = document.body;
+  saver.download = fileName;
+  body.appendChild(saver);
+  saver.dispatchEvent(new MouseEvent("click"));
+  body.removeChild(saver);
+  URL.revokeObjectURL(blobURL);
+}
+
+// Actually get the data from Espruino
+function getData() {
+  UART.write('\x03\x10getData()\n', function(data) {
+    console.log("Received",JSON.stringify(data));
+    // If getData uses console.log rather than Bluetooth.println,
+    // it'll cause a prompt to be written at the end of the output
+    // we detect that here are remove it.
+    if (data.endsWith(">")) data = data.slice(0,-1);
+    saveFile(data,"info.csv");
+  });
+}
+  </script>
+  <button onclick="getData()">Download Data</button>
+ </body>
+</html>
+```
+
+The code above handles the simplest case - however to keep code
+reliable the `uart.js` and `puck.js` libraries will time out
+after 30s of downloads. If your download will take longer than
+that then you'll need to manually handle each line of data as
+it comes in - for instance:
 
 ```
 function onLine(data) {
@@ -409,7 +464,7 @@ button.addEventListener("click", function() {
       }
     });
     // Request data from Puck.js
-    connection.write("\x10exportData()\n");
+    connection.write("\x10getData()\n");
   });
 });
 ```

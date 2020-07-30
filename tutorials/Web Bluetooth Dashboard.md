@@ -13,13 +13,13 @@ This tutorial will show you how to make something like the page below:
 
 ![dashboard](Web Bluetooth Dashboard.png)
 
-First, please check out [the Web Bluetooth tutorial](Puck.js+Web+Bluetooth),
+First, please check out [the Web Bluetooth tutorial](Web+Bluetooth),
 as it'll show you how to develop Web Bluetooth pages.
 
 We're going to use [TinyDash](https://github.com/espruino/TinyDash),
 a very simple HTML dashboard library that only needs a few files.
 
-Use the instructions in the [the Web Bluetooth tutorial](Puck.js+Web+Bluetooth)
+Use the instructions in the [the Web Bluetooth tutorial](Web+Bluetooth)
 to set up your own HTTPS webpage, then put the following in it:
 
 ```HTML_demo_link
@@ -152,7 +152,7 @@ Realtime Dashboard
 To get realtime updates from Puck.js we *could* repeatedly call `Puck.eval` to
 get the information we want, but that'll be quite slow.
 
-Instead, we'll use the [two-way communications example from the Web Bluetooth tutorial](Puck.js+Web+Bluetooth#two-way-communications).
+Instead, we'll use the [two-way communications example from the Web Bluetooth tutorial](Web+Bluetooth#two-way-communications).
 For that, we use `Puck.connect` to create a two-way connection, use `setInterval`
 on Puck.js to send data at regular intervals, and then pick it up in the
 `onLine` handler function.
