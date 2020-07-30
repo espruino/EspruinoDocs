@@ -30,7 +30,7 @@ and click `Create` (if you don't, you'll have to use command-line tools to creat
  <head>
  </head>
  <body>
-  <script src="http://www.espruino.com/js/uart.js"></script>
+  <script src="https://www.espruino.com/js/uart.js"></script>
   <button onclick="UART.write('LED1.set();\n');">LED On!</button>
   <button onclick="UART.write('LED1.reset();\n');">LED Off!</button>
  </body>
@@ -48,7 +48,7 @@ As well as `UART.write` for sending data, `UART.eval` is available for reading b
  <head>
  </head>
  <body>
-  <script src="http://www.espruino.com/js/uart.js"></script>
+  <script src="https://www.espruino.com/js/uart.js"></script>
   <script>
   function getTemperature() {
     UART.eval('E.getTemperature()', function(t) {

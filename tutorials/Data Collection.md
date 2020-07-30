@@ -393,7 +393,7 @@ If you only need Web Bluetooth you can use the [Puck.js library](/Web+Bluetooth)
  <head>
  </head>
  <body>
-  <script src="http://www.espruino.com/js/uart.js"></script>
+  <script src="https://www.espruino.com/js/uart.js"></script>
   <script>
 // Output debug info about received data to the console
 UART.debug=3;

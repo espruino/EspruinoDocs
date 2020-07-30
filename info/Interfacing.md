@@ -37,7 +37,7 @@ To make this easier we've made the [UART.js](/UART.js) Library to provide a cons
  <head>
  </head>
  <body>
-  <script src="http://www.espruino.com/js/uart.js"></script>
+  <script src="https://www.espruino.com/js/uart.js"></script>
   <button onclick="UART.write('LED1.set();\n');">LED On!</button>
   <button onclick="UART.write('LED1.reset();\n');">LED Off!</button>
  </body>
