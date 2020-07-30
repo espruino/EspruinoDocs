@@ -224,7 +224,7 @@ power usage will be higher than normal (~350uA vs 40uA). To fix this add
 
 #### Field detection
 
-You can use the [[puckjsv2-mag-level.js]] module to configure the Puck.js
+**Puck.js v2 only** You can use the [[puckjsv2-mag-level.js]] module to configure the Puck.js
 magnetometer for ultra low power mode (40uA) while acting like a reed
 switch (detecting when field strength is high or low).
 
@@ -247,9 +247,9 @@ For more advanced usage you can also use [`Puck.magWr(reg,data)`](/Reference#l_P
 and [`Puck.magRd(reg)`](/Reference#l_Puck_magRd) to configure the accelerometer
 chip exactly as required (using the [datasheet](/files/LIS3MDL.pdf))..
 
-### Accelerometer/Gyro (Puck.js v2)
+### Accelerometer/Gyro
 
-Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf))
+**Puck.js v2 only** Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf))
 
 You can use [`Puck.accel()`](/Reference#l_Puck_accel) to return one accelerometer/gyro
 reading, for example:
@@ -280,7 +280,7 @@ power usage will be higher than normal for low data rates (~800uA vs 40uA). To f
 
 #### Movement detection
 
-You can use the [[puckjsv2-accel-movement.js]] module to configure the Puck.js
+**Puck.js v2 only** You can use the [[puckjsv2-accel-movement.js]] module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting movement:
 
 ```JS
@@ -304,7 +304,7 @@ Puck.on('accel',function(a) {
 
 #### Significant Movement detection
 
-You can use the [[puckjsv2-accel-bigmovement.js]] module to configure the Puck.js
+**Puck.js v2 only** You can use the [[puckjsv2-accel-bigmovement.js]] module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting when the Puck
 has been moved significantly for more than a few seconds.
 
@@ -322,7 +322,7 @@ Puck.on('accel',function(a) {
 
 #### Step counting
 
-You can use the [[puckjsv2-accel-steps.js]] module to configure the Puck.js
+**Puck.js v2 only** You can use the [[puckjsv2-accel-steps.js]] module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting movement:
 
 ```JS
@@ -341,7 +341,7 @@ Puck.on('accel',function(a) {
 
 #### Tilt detection
 
-You can use the [[puckjsv2-accel-tilt.js]] module to configure the Puck.js
+**Puck.js v2 only**  You can use the [[puckjsv2-accel-tilt.js]] module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting when it has
 been rotated by more than 35 degrees:
 
@@ -360,7 +360,7 @@ Puck.on('accel',function(a) {
 
 #### Direct configuration
 
-For more advanced usage you can also use [`Puck.accelWr(reg,data)`](/Reference#l_Puck_accelWr)
+**Puck.js v2 only** For more advanced usage you can also use [`Puck.accelWr(reg,data)`](/Reference#l_Puck_accelWr)
 and [`Puck.accelRd(reg)`](/Reference#l_Puck_accelRd) to configure the accelerometer
 chip exactly as required (using the [datasheet](/files/LSM6DS3TR-C.pdf)). ST has
 an [app note](https://www.st.com/resource/en/application_note/dm00472670-lsm6ds3trc-alwayson-3d-accelerometer-and-3d-gyroscope-stmicroelectronics.pdf)
@@ -440,7 +440,7 @@ return an integer value that rises as the capacitance attached to `D11` increase
 
 ### FET
 
-On Puck.js v2 there's a pin called `FET` (available from JS and
+**Puck.js v2 only** On Puck.js v2 there's a pin called `FET` (available from JS and
 marked on the Puck.js PCB). This is connected to a MOSFET that is
 capable of pulling the `FET` down to GND with around 200mA.
 
