@@ -10,12 +10,15 @@ BBC micro:bit
 
 The BBC micro:bit is a small microcontroller board designed for computer education in the UK - see the [Wikipedia Article](https://en.wikipedia.org/wiki/Micro_Bit) for more information.
 
+**micro:bit v1.5 had hardware design changes** - to use the sensors you'll need 
+2v07 or later when released, or a 'cutting edge' Espruino build ([Download here](/Download#microbit)).
+
 It contains:
 
 * USB comminications and JST power connectors
 * A 5x5 array of LEDs for use as a display
 * Two user-configurable buttons, and one reset button
-* An accelerometer (MMA8652) and magnetometer (MAG3110)
+* An accelerometer and magnetometer (LSM303AGR, or MAG3110 + MMA8652 on older boards)
 * A Nordic nRF51822 ARM Cortex-M0 microcontroller (256kB flash, 16kB RAM)
 * A Freescale Kinetis chip to handle USB - this provides a virtual USB flash drive that allows firmware updates just by saving a file.
 
@@ -24,6 +27,7 @@ to provide bluetooth functionality and as a result some functionality has had to
 be removed:
 
 * No ES6 Features (ArrayBuffer map/forEach, template literals, arrow functions, etc)
+* No debug or code autocomplete
 * No advanced library functions (In [the reference](http://www.espruino.com/Reference),
 any function with the comment "Note: This is only available in some devices: not
 devices with low flash memory" will not be included)
