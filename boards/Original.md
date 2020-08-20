@@ -10,7 +10,13 @@ Original Espruino Board
 
 * BUYFROM: £25,£18,https://shop.espruino.com/original,/Order#original
 
-The Espruino board is an officially supported board - it comes pre-programmed with Espruino, so you just plug it in and it works.
+**The Espruino Board is a tiny USB-enabled microcontroller with SD
+card that can be programmed in JavaScript**
+
+Just plug it into your computer and get started in seconds with the
+[Web IDE](/ide) - no software installation needed!
+
+**Just got your Espruino Board? [Get started here!](/Quick+Start+USB)**
 
 Contents
 --------

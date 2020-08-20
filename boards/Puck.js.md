@@ -10,6 +10,13 @@ Puck.js
 
 * BUYFROM: £30,£21.60,https://shop.espruino.com/puckjs,/Order#puckjs
 
+**Puck.js is an easy to use, programmable Bluetooth sensor and button**
+
+You can customise Puck.js with JavaScript or a graphical programming language (Blockly). All you need is a Web Browser (Chrome, Edge or Opera) and you can upload code wirelessly! Puck.js comes with bluetooth low energy, accelerometer, gyro, 3 axis compass, temperature sensor, IR, NFC and more!
+
+**Just got your Puck.js? [Click here to get started!](https://www.puck-js.com/go)**
+
+
 Contents
 --------
 

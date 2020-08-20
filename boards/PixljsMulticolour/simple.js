@@ -173,7 +173,7 @@ Badge.badge = () => {
     lastTime = t;
 
     g.clear();
-    g.setRotation(NC.accel().y < 0 ? 2 : 0);
+    g.setRotation(NC.accel().y < -0.1 ? 2 : 0);
     // Draw the Name
     var y = 20; // y offset
     var l = Badge.NAME;

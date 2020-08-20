@@ -10,6 +10,14 @@ Espruino Pico
 
 * BUYFROM: £20,£14.40,https://shop.espruino.com/pico,/Order#pico
 
+**Espruino Pico is a tiny USB-enabled microcontroller that
+can be programmed in JavaScript**
+
+Just plug it into your computer and get started in seconds with the
+[Web IDE](/ide) - no software installation needed!
+
+**Just got your Pico? [Get started here!](/Quick+Start+USB)**
+
 Contents
 --------
 

@@ -10,6 +10,14 @@ Espruino WiFi
 
 * BUYFROM: £30,£21.60,https://shop.espruino.com/wifi,/Order#wifi
 
+**Espruino WiFi is a tiny USB and WiFi-enabled microcontroller that
+can be programmed in JavaScript**
+
+Just plug it into your computer and get started in seconds with the
+[Web IDE](/ide) - no software installation needed!
+
+**Just got your Espruino WiFi? [Get started here!](/Quick+Start+USB)**
+
 **Note:** Espruino WiFi provides an easy, well-supported way to get on the Internet, however it's not the only way to access a WiFi network from an Espruino board. [See here](/Internet#related-pages) for more information.
 
 Contents
