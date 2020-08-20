@@ -11,7 +11,7 @@ Often you'll want to make a device that can sit in a place and will collect
 (log) data. Espruino is particularly good at this as all devices have a
 Real Time Clock (RTC) and don't draw much power when idle.
 
-**Note:** There's a Bangle.js specific [example of logging here](/bangle.js+Storage)
+**Note:** There's a Bangle.js specific [example of logging here](/Bangle.js+Storage)
 
 At its most simple, all you need to do is have some code that looks like this:
 
