@@ -36,3 +36,8 @@ Examples
 --------
 
 * APPEND_KEYWORD: examples,-Tutorials
+
+Projects hosted on external websites
+-------------------------------------
+
+* APPEND_KEYWORD: external_projects
