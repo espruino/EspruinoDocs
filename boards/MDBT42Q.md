@@ -10,11 +10,13 @@ MDBT42Q Bluetooth Module
 
 * BUYFROM: £12,£5.96,https://shop.espruino.com/mdbt42q,/Order#mdbt42q
 
-This is the Bluetooth module that we use in [Puck.js](/Puck.js) and [Pixl.js](/Pixl.js)
+The MDBT42Q is the Bluetooth module that we use in [Puck.js](/Puck.js) and [Pixl.js](/Pixl.js)
 devices. You can get it with Espruino installed in two forms:
 
 * [Breakout board](https://shop.espruino.com/mdbt42q-breakout) with 0.1" pins, voltage regulator, Button and LEDs
 * [Bare module](https://shop.espruino.com/mdbt42q-module) (0.7mm pin pitch, surface mount)
+
+**Just got your MDBT42Q? [Take a look here!](/MDBT42Q#getting-started)**
 
 **Note:** We only provide support for MDBT42 modules purchased from us. Other
 modules don't have a bootloader installed and will need connecting to a programmer

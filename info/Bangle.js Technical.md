@@ -53,7 +53,7 @@ Hardware
 Want to get inside? Check out the [Bangle.js Disassembly page](/Bangle.js+Disassembly)
 
 * [KX023 accelerometer](http://kionixfs.kionix.com/en/datasheet/KX023-1025%20Specifications%20Rev%2012.0.pdf)
-* 3 axis compass - not known which one
+* [GMC303 3 axis compass](/files/GMC303.pdf)
 * BD 1668 heart rate sensor (HRM) (no datasheet). All analog - op-amp comparing two wavelengths of light
 * 32 mbit flash - similar command set to [Macronix MX25](https://media.digikey.com/pdf/Data%20Sheets/Macronix/MX25U12835F.pdf)
 * 240x240 LCD with [ST7789 driver](https://www.rhydolabz.com/documents/33/ST7789.pdf) used in 8 bit parallel mode
@@ -155,7 +155,7 @@ I2C
 
 SCK=D14, SDA=D15
 
-* 0x0C - magnetometer
+* 0x0C - GMC303 magnetometer
 * 0x1E - KX023 accelerometer
 * 0x20 - io expander
-* 0x7C - magnetometer? Only checked once by OEM firmware.
+* 0x7C - Unknown. Only checked once by OEM firmware.
