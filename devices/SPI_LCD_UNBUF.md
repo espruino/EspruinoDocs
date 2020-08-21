@@ -1,14 +1,33 @@
 <!--- Copyright (c) 2020 Mark Becker, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Custom library SPI_LCD_UNBUF
+SPI_LCD_UNBUF LCD Library
 ============================
 
-This library connect's a lcd tft 16bit color display via SPI to use it with Espruino Graphics library in unbuffered mode. That means each g.<call> is immediately processed, so no need to immplement and call g.flip(). 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/SPI_LCD_UNBUF. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-###Sample code using SPI\_LCD\_UNBUF###
+* KEYWORDS: Graphics,Graphics Driver,SPI LCD,SPI_LCD_UNBUF
+
+This library allows you to connect a TFT LCD 16bit color display via [[SPI]] and use
+it with the Espruino Graphics library in unbuffered mode. That means each `g.<call>`
+ is immediately processed, so no need to implement and call `g.flip()`.
+
+[Support for SPI LCDs](/Graphics#graphics-drivers) is normally provided in Espruino using a
+JavaScript graphics driver that is called either:
+
+* For each pixel (slow)
+* When `g.flip()` is called (using a lot of memory for a buffer)
+
+`SPI_LCD_UNBUF` is called for every pixel, but is written in compiled C code,
+making it substantially faster. Due to its very specific nature, it is not
+compiled into Espruino board firmwares, and [must be compiled into a custom firmware](/Building+Custom+Firmware)
+
+### Sample module using SPI_LCD_UNBUF
+
+Once you have a firmware with SPI_LCD_UNBUF:
 
 Create a module based on this code and replace it with init commands suitable for your specific lcd board.
+You may be able to consult [existing Graphics Drivers](/Graphics#graphics-drivers) for this.
 
-```
+```JS
 // ST7789V-SLU.js
 /* Copyright (c) 2020 MaBecker, based on 2020 Akos Lukacs. See the file LICENSE for copying permission. */
 /*
@@ -41,7 +60,7 @@ function init(spi, dc, cs, rst, callback) {
         setTimeout(function() {
             //MADCTL: Set Memory access control (directions), 1 arg: row addr/col addr, bottom to top refresh
             cmd(0x36, 0x08);
-            //COLMOD: Set color mode, 1 arg, no delay: 16-bit color 
+            //COLMOD: Set color mode, 1 arg, no delay: 16-bit color
             cmd(0x3a, 0x05);
             //PORCTRL: Porch control
             cmd(0xb2, [0x0c, 0x0c, 0x00, 0x33, 0x33]);
@@ -53,13 +72,13 @@ function init(spi, dc, cs, rst, callback) {
             cmd(0xc0, 0xc0);
             //VDVVRHEN: VDV and VRH command enable
             cmd(0xc2, 0x01);
-            // VRHS: VRH Set 
+            // VRHS: VRH Set
             cmd(0xc3, 0x19);
             // VDVS: VDV Set
             cmd(0xc4, 0x20);
             //VCMOFSET: VCOM Offset Set .
             cmd(0xC5, 0xF);
-            //PWCTRL1: Power Control 1 
+            //PWCTRL1: Power Control 1
             cmd(0xD0, [0xA4, 0xA1]);
             // PVGAMCTRL: Positive Voltage Gamma Control
             cmd(0xe0, [0x70, 0x15, 0x20, 0x15, 0x10, 0x09, 0x48, 0x33, 0x53, 0x0B, 0x19, 0x15, 0x2a, 0x2f]);
@@ -128,9 +147,11 @@ exports.connect = function(spi, opt, callback) {
 };
 ```
 
-###Calling the module and run a demo code
+### Using the module
 
-```
+Once you have a module, you can use it using some code like the below:
+
+```JS
 // ST7789V demo
 PIN_CS = <LCD_CS_PIN>;
 PIN_DC = <LCD_DC_PIN>;
@@ -158,7 +179,7 @@ SPI1.setup({ sck: PIN_SCK, mosi: PIN_MOSI, baud: 30000000 });
 
 PIN_BL.set();
 
-// init the ST778V lcd and assign the SPI LCD unbufferd driver 
+// init the ST778V lcd and assign the SPI LCD unbufferd driver
 g = require("ST7789V-SLU").connect(SPI1, {
         cs: PIN_CS,
         dc: PIN_DC,
@@ -169,10 +190,3 @@ g = require("ST7789V-SLU").connect(SPI1, {
         inverse: 1 }, demo);
 
 ```
-
-
-
-
-
-
-
