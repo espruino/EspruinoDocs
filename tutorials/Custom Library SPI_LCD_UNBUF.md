@@ -4,7 +4,7 @@ Custom library SPI_LCD_UNBUF
 
 This library connect's a lcd tft 16bit color display via SPI to use it with Espruino Graphics library in unbuffered mode. That means each g.<call> is immediately processed, so no need to immplement and call g.flip(). 
 
-###Sample code using SPI\_LCD\_UNBUF###
+### Sample code using SPI\_LCD\_UNBUF###
 
 Create a module based on this code and replace it with init commands suitable for your specific lcd board.
 
@@ -128,7 +128,7 @@ exports.connect = function(spi, opt, callback) {
 };
 ```
 
-###Calling the module and run a demo code
+### Calling the module and run a demo code
 
 ```
 // ST7789V demo

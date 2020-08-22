@@ -9,11 +9,11 @@ For your project you like to used a ESPPRUINOWIFI board in a different way as di
  * [README BuildProcess](https://github.com/espruino/Espruino/blob/master/README_BuildProcess.md)
  * [README Building](https://github.com/espruino/Espruino/blob/master/README_Building.md)
 
-###Create the custom board 
+### Create the custom board 
 
 * copy boards/ESPRUINOWIFI.py to boards/ESPRUINOWIFI_CUSTOM.py 
 
-###Think about required changes
+### Think about required changes
 
 * give your board a name eg MYESPRUINOWIFI
 
@@ -82,7 +82,7 @@ info : {
       .....
 ```
 
-###Build firmware for this custom board 
+### Build firmware for this custom board 
 
 ```
 export BOARD=ESPRUINOWIFI_CUSTOM 
@@ -99,7 +99,7 @@ espruino_2v06.83_wifi_MYESPRUINOWIFI.lst
 
 ```
 
-###Flash and check the custom firmware
+### Flash and check the custom firmware
 
 ```
 >process.env.BOARD
