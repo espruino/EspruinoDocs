@@ -213,7 +213,7 @@ Now you need to add the 'interface' file - copy the following to `apps/gpspoilog
     <button class="btn btn-default" id="btnSave">Save</button>
     <button class="btn btn-default" id="btnDelete">Delete</button>
 
-    <script src="../../lib/interface.js"></script>
+    <script src="../../core/lib/interface.js"></script>
     <script>
 var dataElement = document.getElementById("data");
 var csvData = "";
