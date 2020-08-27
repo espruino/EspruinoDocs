@@ -133,6 +133,8 @@ wifi.startAP('EspruinoAP', { password: '0123456789', authMode: 'wpa2' }, functio
 
 See the reference below for more information. `startAP` and `connect` can be used together to make Espruino become an access point while also connecting to another WiFi network. In that case, it'll have the DHCP-assigned IP address on the WiFi network it is connected to, and the IP address `192.168.4.1` on the access point it has created.
 
+**Note:** In 2v06 and earlier, you must specify a dummy password in order to have a 'open' access point, eg. `wifi.startAP('EspruinoAP', { password: '0123456789', authMode: 'open' }, ...`. In 2v07 and later this is fixed, and even just `wifi.startAP('EspruinoAP', { }, ...` will create an open access point.
+
 ### WiFi events
 
 You can also be notified on particular WiFi events:

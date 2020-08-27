@@ -350,8 +350,7 @@ exports.disconnect = function(callback) {
 exports.startAP = function(ssid, options, callback) {
   callback = callback||function(){};
   options = options||{};
-  if (!options.password || options.password.length<8) throw new Error("Password must be at least 8 characters");
-  var enc = options.password?"3":"0"; // wpa2 or open
+  var enc = options.password?3:0; // wpa2 or open
   if (options.authMode) {
     enc={
       "open":0,
@@ -361,6 +360,9 @@ exports.startAP = function(ssid, options, callback) {
     }[options.authMode];
     if (enc===undefined) throw new Error("Unknown authMode "+options.authMode);
   }
+  if (enc) {
+    if (!options.password || options.password.length<8) throw new Error("Password must be at least 8 characters");
+  } else options.password="";
   if (options.channel===undefined) options.channel=5;
   turnOn(MODE.AP, function(err) {
     if (err) return callback(err);
