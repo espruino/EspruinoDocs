@@ -4,7 +4,7 @@ Building Custom Firmware
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Building+Custom+Firmware. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Firmware,Building,Compiling,Custom,Customised,Customise,Customize,bin,hex,SPI_LCD_UNBUF
+* KEYWORDS: Firmware,Building,Compiling,Custom,Customised,Customise,Customize,bin,hex,LCD_SPI_UNBUF
 * USES: EspruinoWiFi
 
 For your project you might want to use an [Espruino WiFi](/WiFi) (or other) board with firmware
@@ -25,7 +25,7 @@ To get started (assuming you have an Espruino WiFi):
 
 Here's what you might do to cut out some un-needed code and
 add support for a special LCD display type. For more info on the
-[SPI_LCD_UNBUF, click here](/SPI_LCD_UNBUF)
+[LCD_SPI_UNBUF, click here](/LCD_SPI_UNBUF)
 
 
 See the comments in-line:
@@ -58,8 +58,8 @@ info : {
             'CRYPTO', 'SHA256', 'SHA512',
             'TLS',
             'NEOPIXEL'
-    # Add SPI_LCD_UNBUF to handle 16bit color tft lcd displays
-            'SPI_LCD_UNBUF'
+    # Add LCD_SPI_UNBUF to handle 16bit color tft lcd displays
+            'LCD_SPI_UNBUF'
         ],
      'makefile' : [
          ....
@@ -67,7 +67,7 @@ info : {
           # 'WIZNET=1', # Add support for W5500 by default
          ....
 
-    # Set SPI buffer transfer size (for SPI_LCD_UNBUF)
+    # Set SPI buffer transfer size (for LCD_SPI_UNBUF)
          'DEFINES+=-DSPISENDMANY_BUFFER_SIZE=64',
     # add 6x8 font - a nice 255 character font
          'DEFINES+=-DUSE_FONT_6X8',
