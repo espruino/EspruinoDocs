@@ -111,6 +111,9 @@ In order to protect the Espruino board (and what it is connected to), a 1000mA t
 
 See [Connecting Batteries](#connecting_batteries) below for information on connecting Batteries.
 
+**Note:** On rev 1v3 the voltage regulator draws 80uA, which makes up the majority of the 110uA power draw when sleeping. rev 1v4 has a much more efficient regulator, which allows a power draw of just 30uA.
+
+
 Connecting
 ---------
 

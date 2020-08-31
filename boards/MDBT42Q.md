@@ -27,6 +27,7 @@ Contents
 
 * APPEND_TOC
 
+
 Features
 --------
 
@@ -84,6 +85,16 @@ It is recommended to connect all the `GND` pins together (especially when
 designing a PCB) but it is not absolutely required - you can boot the
 MDBT42Q module with just two wires.
 
+
+Power Consumption
+-----------------
+
+* No advertising - 5uA
+* Advertising - 80uA
+* Connected via BLE - 900uA (idle 40uA)
+* LED1 on - 10mA
+* 100% CPU usage running JavaScript - 8mA
+* Using NRF.findDevices to scan for devices - 12mA
 
 
 On-board peripherals

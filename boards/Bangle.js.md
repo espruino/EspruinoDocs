@@ -41,7 +41,8 @@ Features
 Power Consumption
 -----------------
 
-* Idle, accelerometer on - 0.7mA
+* Idle, accelerometer on 12.5Hz - 0.35mA
+* Idle, accelerometer on 1.25Hz - 0.15mA (default if not moved)
 * BLE Connected in high bandwidth mode - 0.5mA
 * Compass on - 2mA
 * Heart rate monitor on - 2.5mA
@@ -50,7 +51,11 @@ Power Consumption
 * LCD on - 40mA
 * Turned off - 0.08mA (0.6mA if turned off via Bootloader)
 
-This means that when idle (in the normal power-on state) you can expect around 20 days of battery life.
+This means that when idle (in the normal power-on state) you can expect around 30-90 days
+of battery life depending on whether Bangle.js is moved or not.
+
+**Note:** These figures are based on the latest Bangle.js firmware.
+Earlier firmwares have slightly higher power consumption figures.
 
 
 Charging
