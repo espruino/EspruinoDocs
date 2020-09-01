@@ -56,7 +56,7 @@ g.drawString(txt,120,120);
         // send finished app (in addition to contents of app.json)
         sendCustomizedApp({
           storage:[
-            {name:"myapp.app.js", content:app},
+            {name:"myapp.app.js", url:"app.js", content:app},
           ]
         });
       });
@@ -69,9 +69,13 @@ g.drawString(txt,120,120);
 Now edit your app's JSON and add the line `"custom": "custom.html",` just
 before `"storage"`.
 
-Since you're now supplying your app's Js file directly you can also
+Since you're now supplying your app's JS file directly you can also
 change `{"name":"myapp.app.js", "url":"app.js"},` to just `{"name":"myapp.app.js"},`
 and remove the original app's `app.js` file.
+
+**Note:** we specify a `url:"app.js"` for JS files in `sendCustomizedApp` even though
+`app.js` doesn't exist and will never be loaded. This is so the app loader can tell if
+it's a JavaScript file based on the extension, and if so it can minify and pretokenise it.
 
 And now you're ready to go! When you start the App Loader you'll be able
 to create a custom app.
