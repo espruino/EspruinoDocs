@@ -103,8 +103,11 @@ When a command is executed, Espruino prints '=' followed by the value that is re
 >1+2
 =3
 >analogRead(A0)
-=0.0324```
+=0.0324
+```
 However if you call a function that doesn't return a value, it will return 'undefined' - which is what you are seeing:
+
+```
 >digitalWrite(D0,1)
 =undefined
 ```
