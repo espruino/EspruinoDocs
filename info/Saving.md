@@ -36,9 +36,10 @@ When Espruino starts up, it does a few things:
 
 * If `BTN1` is pressed or if it reset because of a call to `reset()`, it sets `hasBeenReset` to `true`.
 * If `hasBeenReset` wasn't set, it looks for a compressed image (`.varimg` [in Storage](https://www.espruino.com/Reference#Storage)) of the interpreter's state that was saved with `save()`. If it exists it unpacks it into RAM.
-* (v2.0 and later) It looks for files [in Storage](https://www.espruino.com/Reference#Storage) named `.boot0`, `.boot1`, `.boot2` and `.boot3` and executes them in sequence.
-* If `hasBeenReset` **wasn't** set, it looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootcde` and executes it (see [Save on Send](#save-on-send) below)
-* If `hasBeenReset` **was** set, it looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootrst` and executes it (see [Save on Send](#save-on-send) below)
+* (v2.0 and later) Looks for files [in Storage](https://www.espruino.com/Reference#Storage) named `.boot0`, `.boot1`, `.boot2` and `.boot3` and executes them in sequence. (On [Bangle.js](/Bangle.js) these are *not* executed if `BTN1` is held down, but all other devices execute them each time)
+* Looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootrst` and executes it if it exists (see [Save on Send](#save-on-send) below)
+* If `hasBeenReset` **wasn't** set and `.bootrst` wasn't found in the last step, it looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootcde` and executes it (see [Save on Send](#save-on-send) below)
+
 * Initialises any previously-initialised peripherals
 * Runs any handlers registered with `E.on('init', function() { ... });`
 * Runs a function called `onInit()` if it exists.
@@ -128,15 +129,17 @@ the device is powered on (in contrast to what happens when you use `save()`.
 `Save on Send` (in the Communications section of the IDE) has three settings:
 
 * `No` - code is uploaded to RAM, but can be saved with `save()` (as above). `RAM` is displayed below the upload icon.
-* `Yes` - JavaScript code is saved to flash and loaded even after boot. `Flash` is displayed below the upload icon.
+* `Yes` - JavaScript code is saved to flash and loaded at boot time. `Flash` is displayed below the upload icon.
 If `reset()` is called, Espruino will remove all code from RAM and will
-not execute the saved JS code. This saved your JS code
+not execute the saved JS code. This saves your JS code
 to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootcde`.
-* `Yes, execute even after reset()` - JavaScript code is saved to flash and
+* (deprecated) `Yes, execute even after reset()` - JavaScript code is saved to flash and
 loaded even after boot. `⚠Flash` is displayed below the upload icon. If `reset()` is called, Espruino will remove all
-`save()`d code from RAM, but will still execute the JS code that you saved. See
-the 'Both Options' section. This saved your JS code
-to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootrst`.
+`save()`d code from RAM, but *will still execute the JS code that you saved*. See
+the 'Both Options' section. This saves your JS code
+to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootrst`. **We've now removed
+this option from the Web IDE** as it is dangerous and is almost certainly not what is required in 99% of cases.
+If you still wish to use it, you can choose to save to Storage as `.bootrst`.
 
 To remove any code saved with `Save on Send`, simply call `E.setBootCode()` with
 no arguments.
