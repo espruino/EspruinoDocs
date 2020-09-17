@@ -405,17 +405,25 @@ life won't be impacted significantly.
 
 However, it's very easy to draw more power:
 
-* Staying connected via Bluetooth will often draw around 10x more power than idle
 * Lighting a LED can draw around 100x more power than when idle
-* Running JavaScript code continuously will draw around 200x more power than at idle
+* Staying connected via Bluetooth will draw around 20x more power than idle *while data is being transferred*. After
+1-2 minutes of inactivity Espruino will enter a lower bandwidth low power mode which draws about the same as if it
+was disconnected. On activity it'll go back up to the high power mode again.
+* Running JavaScript code continuously (eg. `while(true);`) will draw around 200x more power than at idle. Executing
+JavaScript on an event (eg `setWatch(myCode, BTN)` or `setInterval(myCode, 100000)` draws negligible extra power).
 
-As a result, if you've been using your device but don't intend to use the code
+As a result, if you've been **experimenting** with your device but don't intend to use the code
 you've uploaded it's recommended that you either remove the battery, or connect
 to your device and type `reset()`, to ensure that no code is running in the
 background that might flatten the battery.
 
+However for normal, non-buggy code power consumption is low enough that there
+ is no reason not to leave the device powered on.
+
 * [Puck.js power consumption](/Puck.js#power-consumption)
 * [Pixl.js power consumption](/Pixl.js#power-consumption)
+* [MDBT42Q power consumption](/MDBT42Q#power-consumption)
+* [Bangle.js power consumption](/Bangle.js#power-consumption)
 
 
 <script>
