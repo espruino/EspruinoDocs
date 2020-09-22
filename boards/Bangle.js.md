@@ -459,6 +459,8 @@ var a = analogRead(D29); // read the raw PPG value
 Firmware Updates
 ------------------
 
+[[http://youtu.be/uHJGsSaU6Zo]]
+
   * Long-press `BTN1` + `BTN2` for about 6 seconds until the screen goes blank
   * Release `BTN2`
   * Release `BTN1` a moment later while `====` is going across the screen
