@@ -495,12 +495,14 @@ for advertising, but values are roughly:
 
 * Not doing anything - 3uA
 * Not doing anything, watching the button for presses - 12uA
-* Advertising, 375ms 0dBm (default mode) - 20uA
-* Advertising, 375ms 0dBm (default mode), watching the button - 25uA
-* Advertising, magnetometer reading 0.63 Hz (`Puck.magOn()`) - 50uA
+* Advertising, 375ms 0dBm (nonconnectable, nonscannable) - 22uA
+* Advertising, 375ms 0dBm (nonconnectable, nonscannable), watching the button - 27uA
+* Advertising, 375ms 0dBm (connectable) - **default** - 40uA
+* Advertising, magnetometer reading 0.63 Hz (`Puck.magOn()`) - 60uA
 * Advertising, magnetometer reading 10 Hz - 200uA
-* Connected via BLE - 200uA
-* Connected via BLE, `NRF.setConnectionInterval(200)` - 50uA
+* Connected via BLE **default** - 600uA
+* Connected via BLE **default**, inactive for 1 minute  - 32uA
+* Connected via BLE, `NRF.setConnectionInterval(200)` - 40uA
 * One LED lit - 1000-2000uA
 * 100% CPU usage running JavaScript - 4000uA
 * All LEDs lit, 100% CPU usage running JavaScript - 10000uA
