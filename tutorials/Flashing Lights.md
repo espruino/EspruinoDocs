@@ -154,4 +154,17 @@ setInterval(function() {
 }, 20);
 ```
 
-```Math.random()``` returns a random number between 0 and 1. By checking if it is above 0.5 or not, we can give the LED a 50/50 chance of being on. In this code, 20 means 20ms. This is 20 1/1000ths of a second - which is 50 times a second.
+`Math.random()` returns a random number between 0 and 1. By checking if it is above 0.5 or not, we can give the LED a 50/50 chance of being on. In this code, 20 means 20ms. This is 20 1/1000ths of a second - which is 50 times a second.
+
+### Try 6
+
+Using JavaScript and `setTimeout`/`setInterval` is usually fine for flashing lights, but is you're busy executing JavaScript code doing something else, the timings can be affected.
+
+There is functionality built into Espruino to handle sending accurately timed waveforms using built-in hardware timers. Even if you don't need the accuracy, `digitalPulse` can still be a convenient way to flash lights - just give it the pin, the polarity to start pulsing, then a list of times in milliseconds:
+
+```
+digitalPulse(LED1,1,[10,500,10,500,10]);
+```
+
+Flash LED1 on (`1`) for 0.01s, off for 0.5s, on for 0.01s, off for 0.5s and finally on for 0.01s.
+
