@@ -1,4 +1,4 @@
-<!--- Copyright (c) 2014 Mikael Ganehag Brorsson. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2020 Gordon Williams. See the file LICENSE for copying permission. -->
 HMAC Module
 ===========
 
@@ -6,27 +6,25 @@ HMAC Module
 
 * KEYWORDS: Module,HMAC,Hashlib,Crypto
 
-This [[hmac.js]] module implements a HMAC for Espruino.  It depends on the inclusion of hashlib to compute the checksums.
+This [[hmac.js]] module implements a HMAC for Espruino.
+
+**Note:** There was an older `hmac` module that depended on `hashlib` (a built-in module
+  that is no longer included in Espruino). This new `hmac` has a different API
+  that uses the [`crypto` library](http://www.espruino.com/Reference#crypto).
 
 How to use the module:
 
 ```
-  var hmac = require("hmac");
-  var hashlib = require("hashlib");
-  var foo = hmac.create("secret", "message", hashlib.sha256);
-  var bar = hmac.create("secret", "another message", hashlib.sha256);
-
-  foo.digest() // raw digest
-  foo.hexdigest() // hex encoded digest
-
-  foo.update('more message') // used to iterate parts of a message
-
-  // This function uses an approach designed to prevent timing analysis,
-  // making it appropriate for cryptography.
-  hmac.compare_digest(foo.digest(), bar.digest())
+const HMAC = require('hmac');
+var hmac = HMAC.SHA1(E.toArrayBuffer('my secret key'));
+console.log(hmac.digest(E.toArrayBuffer('my message')));
+// FixedSHA1 is faster than SHA1, but digested message must always be the same fixed length.
+var hmacf = HMAC.FixedSHA1(E.toArrayBuffer('my secret key'), 2); // 2 bytes
+console.log(hmacf.digest(E.toArrayBuffer('bb')));
+console.log(hmacf.digest(E.toArrayBuffer('xx')));
 ```
 
 Reference
 --------------
- 
+
 * APPEND_JSDOC: hmac.js

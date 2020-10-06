@@ -1,101 +1,50 @@
-/* Copyright (c) 2015 Mikael Ganehag Brorsson. See the file LICENSE for copying permission. */
-/*
-Small module to add HMAC support. Depends on 'hashlib'.
-*/
+/* Copyright (c) 2020 Dominik Enzinger. See the file LICENSE for copying permission. */
+function bitwiseOr0x36(b) {"compiled"; return b ^ 0x36; }
 
-function hmac(key, message, digestmod) {
-  if (digestmod == null) {
-    digestmod = hashlib.sha256;
-  }
+function bitwiseOr0x5c(b) {"compiled"; return b ^ 0x5c; }
 
-  this.finished = false;
-  this.inner = digestmod();
-  this.outer = digestmod();
-
-  var i, pad = new Uint8Array(this.inner.block_size);
-
-  if (key.length > this.inner.block_size) {
-    var h = (new digestmod()).update(k),
-        ah = E.toBufferArray(h.digest());
-
-    for(i = 0; i < ah.length; i++) {
-      pad[i] = ah[i].charCodeAt(0);
-    }
-  }
-  else {
-    for (i = 0; i < key.length; i++) {
-      pad[i] = key[i].charCodeAt(0);
-    }
-  }
-      
-  for (i = 0; i < pad.length; i++) {
-    pad[i] ^= 0x36;
-  }
-  this.inner.update(String.fromCharCode.apply(null, pad));
-
-  for (i = 0; i < pad.length; i++) {
-    pad[i] ^= 0x36 ^ 0x5c;
-  }
-  this.outer.update(String.fromCharCode.apply(null, pad));
-
-  for (i = 0; i < pad.length; i++) {
-    pad[i] = 0;
-  }
-
-  if(message) {
-    this.inner.update(message);
-  }
-}
-
-hmac.prototype.update = function(m) {
-  if(m) {
-    this.finished = false;
-    this.inner.update(m);  
-  }
-  return this;
+/// Returns an MAC instance using the given hash. Eg. HMAC(key, require('crypto').SHA1, 64, 20)
+exports.HMAC = function(key, hash, blockSize, outputSize) {
+  if ( key.byteLength > blockSize )
+    key = hash(key);
+  this.hash = hash;
+  this.keyLength = Math.max(blockSize, key.byteLength);
+  key = new Uint8Array(key, 0, this.keyLength);
+  this.oBuf = new Uint8Array(this.keyLength + outputSize);
+  this.oBuf.set(key.map(bitwiseOr0x5c).buffer, 0);
+  this.iKeyPad = key.map(bitwiseOr0x36).buffer;
 };
 
-hmac.prototype.digest = function() {
-  if(!this.finished) {
-    this.outer.update(this.inner.digest())
-    this.finished = true;
-  }
-  return this.outer.digest();
+
+/// Take a message as an arraybuffer or string, return an arraybuffer
+exports.HMAC.prototype.digest = function(message) {
+  const iBuf = new Uint8Array(this.keyLength + message.byteLength);
+  iBuf.set(this.iKeyPad, 0);
+  iBuf.set(message, this.keyLength);
+  this.oBuf.set(this.hash(iBuf), this.keyLength);
+  return this.hash(this.oBuf);
 };
 
-hmac.prototype.hexdigest = function() {
-  var i, v, s = "", h = this.digest();
-  for(i = 0; i < h.length; i++)
-    s += (256+h.charCodeAt(i)).toString(16).substr(-2);
-  return s;
+function FixedHMAC(key, messageSize, hash, blockSize, outputSize) {
+  exports.HMAC.call(this, key, hash, blockSize, outputSize);
+  this.iBuf = new Uint8Array(this.keyLength + messageSize);
+  this.iBuf.set(this.iKeyPad, 0);
+  delete this.ikeyPad;
 };
 
-exports.create = function(key, message, digestmod) {
-  return new hmac(key, message, digestmod);
-}
+/// Take a message as an arraybuffer or string, return an arraybuffer
+FixedHMAC.prototype.digest = function(message) {
+  this.iBuf.set(message, this.keyLength);
+  this.oBuf.set(this.hash(this.iBuf), this.keyLength);
+  return this.hash(this.oBuf);
+};
 
-/**
-  compare_digest(a, b) -> bool
-        
-  Return 'a == b'.  This function uses an approach designed to prevent
-  timing analysis, making it appropriate for cryptography.
-  a and b must both be of the same type.
-  
-  Note: If a and b are of different lengths, or if an error occurs,
-  a timing attack could theoretically reveal information about the
-  types and lengths of a and b--but not their values.
-*/
-exports.compare_digest = function(a, b) {
-  var match, i;
+/// Create a basic HMAC using SHA1
+exports.SHA1 = function(key) {
+  return new exports.HMAC(key, require('crypto').SHA1, 64, 20);
+};
 
-  if(a.length != b.length) {
-    return false;
-  }
-
-  match = 0;
-  for(i = 0; i < a.length; i++) {
-    match |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  }
-
-  return match == 0;
+/// FixedSHA1 is faster than SHA1, but digested message must always be the same fixed length.
+exports.FixedSHA1 = function(key, messageSize) {
+  return new FixedHMAC(key, messageSize, require('crypto').SHA1, 64, 20);
 };
