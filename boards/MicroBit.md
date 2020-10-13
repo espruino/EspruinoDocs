@@ -4,27 +4,40 @@ BBC micro:bit
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MicroBit. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: micro:bit,Micro Bit,MicroBit,nRF51822
+* KEYWORDS: micro:bit,Micro Bit,MicroBit,nRF51822,nRF52833
 
 ![The BBC micro:bit](MicroBit/board.jpg)
 
 The BBC micro:bit is a small microcontroller board designed for computer education in the UK - see the [Wikipedia Article](https://en.wikipedia.org/wiki/Micro_Bit) for more information.
 
-**micro:bit v1.5 had hardware design changes** - to use the sensors you'll need 
-2v07 or later when released, or a 'cutting edge' Espruino build ([Download here](/Download#microbit)).
+There are multiple versions of the micro:bit available:
 
-It contains:
+* micro:bit v2 - full-featured support with 2v08 and later (these are the ones with a speaker)
+* micro:bit v1.5 - (cut-down Espruino, limited memory) to use the sensors you'll need 2v07 or later
+* micro:bit v1 - (cut-down Espruino, limited memory) supported from Espruino 1v95
 
-* USB comminications and JST power connectors
+We are currently *not* using universal hex files, so you will need to load the
+correct hex file (`_microbit1` or `_microbit2`) for your board.
+
+micro:bit contains:
+
+* USB communications and JST power connectors
 * A 5x5 array of LEDs for use as a display
 * Two user-configurable buttons, and one reset button
 * An accelerometer and magnetometer (LSM303AGR, or MAG3110 + MMA8652 on older boards)
-* A Nordic nRF51822 ARM Cortex-M0 microcontroller (256kB flash, 16kB RAM)
+* Speaker & Microphone on v2
+* A Nordic nRF52833 ARM Cortex-M4 microcontroller (512kB flash, 128kB RAM) on v2, or nRF51822 ARM Cortex-M0 microcontroller (256kB flash, 16kB RAM) on v1.
 * A Freescale Kinetis chip to handle USB - this provides a virtual USB flash drive that allows firmware updates just by saving a file.
 
-**Note:** While we provide Espruino for the micro:bit, it takes a lot of memory
-to provide bluetooth functionality and as a result some functionality has had to
-be removed:
+Contents
+--------
+
+* APPEND_TOC
+
+micro:bit v1
+------------
+
+While we do provide Espruino for the micro:bit v1, it takes a lot of memory to provide Bluetooth functionality and as a result some functionality has had to be removed compared to the v2 and other Espruino devices:
 
 * No ES6 Features (ArrayBuffer map/forEach, template literals, arrow functions, etc)
 * No debug or code autocomplete
@@ -34,16 +47,7 @@ devices with low flash memory" will not be included)
 * Low program memory (Espruino on micro:bit has only 350 vars available, whereas
 on other devices it has over 10 times that)
 
-[[http://youtu.be/0FgjHf4UEwQ]]
-
 If you want the full experience, please consider buying [an official Espruino Board](http://www.espruino.com/Order).
-[Puck.js](http://www.espruino.com/Puck.js) and [Pixl.js](http://www.espruino.com/Pixl.js)  are especially useful if you want to
-experiment with Bluetooth LE.
-
-Contents
---------
-
-* APPEND_TOC
 
 Flashing Espruino
 ------------------
@@ -53,7 +57,7 @@ Flashing Espruino
 To flash onto your micro:bit:
 
 * Plug it into USB. A drive called `MICROBIT` should appear
-* Download the `.hex` file for Espruino, and save it directly into the root of that drive
+* Download the microbit `.hex` file for Espruino (ensuring that you have the `microbit1` or `microbit2` file depending on your device), and save it directly into the root of that drive
 * The yellow LED on the micro:bit will blink quickly for a few seconds, and will then stop.
 * The Espruino firmware is now installed!
 
@@ -75,25 +79,15 @@ Follow the [instructions in the Quick Start tutorial](/Quick+Start) to install t
 
 ### Bluetooth Low Energy (BT 4.0 / Bluetooth Smart)
 
-You can also program the micro:bit wirelessly! There are two main ways to do this:
+You can also program the micro:bit wirelessly!
 
-#### Web Bluetooth (Google Chromebook, Android 6)
-
-If you have a device that supports [Web Bluetooth](https://webbluetoothcg.github.io/web-bluetooth/), you can go directly to the [Online Web IDE](https://espruino.github.io/EspruinoWebIDE/) in your web browser, and can connect with that:
-
-[[http://youtu.be/HKEHXOSLzCQ]]
+If you have a device that supports [Web Bluetooth](https://webbluetoothcg.github.io/web-bluetooth/), you can go directly to the [Online Web IDE](https://espruino.com/ide) in your web browser, and can connect with that.
 
 * Click the connect icon at the top left
-* Choose `Web Bluetooth` - if this doesn't exist, it's because your device doesn't have Web Bluetooth enabled.
-* If it isn't enabled:
-  * If you're on Android, make sure you install `Chrome Dev`
-  * Enter `chrome://flags/#enable-web-bluetooth` in your address bar
-  * Click to enable it, and restart Chrome
+* Choose `Web Bluetooth` - if this doesn't exist, it's because your device doesn't have Web Bluetooth enabled. Click the `status` link for more information.
 * Now you should be prompted for a device to connect to by the web browser
 * Click it, and wait - connection can take around 10 seconds
 * Finally the icon up the top left should change state to 'Connected', and you'll be able to program Espruino as normal - but via Bluetooth!
-
-**Note:** You can still use Web Bluetooth on Android 5, but you need the latest 'Chromium' builds. [See this post on StackOverflow](http://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop/34810195#34810195)
 
 micro:bit Functionality
 -----------------------
@@ -159,19 +153,39 @@ setInterval(function() {
 }, 100);
 ```
 
-## `acceleration()`
+## `Microbit` class
+
+This contains functions for interfacing with the Micro:bit hardware. See [a full reference here](http://www.espruino.com/Reference#Microbit)
+
+**Note:** In `2v07` and earlier the `Microbit` class doesn't exist and instead there are just `acceleration()` and `compass()` functions.
+
+### `Microbit.accel()`
 
 This returns an object with `x`, `y`, and `z` elements, each containing the force in that axis in `g`.
 
-## `compass()`
+**Note:** In `2v07` and earlier this doesn't exist and `acceleration()` is available instead.
+
+You can also use `Microbit.accelOn()` which then creates an event whenever data is available, which can be read with `Microbit.on('accel', function(d) { ... })`
+
+### `Microbit.mag()`
 
 This returns an object with `x`, `y`, and `z` elements, indicating the current direction of the magnetic field
+
+**Note:** In `2v07` and earlier this doesn't exist and `compass()` is available instead.
+
+### `Microbit.play(waveform, samplesPerSecond, callback)`
+
+**Micro:bit version 2 only:** plays a sound - [see the reference](http://www.espruino.com/Reference#l_Microbit_play) for more information
+
+### `Microbit.record(samplesPerSecond, callback, samples)`
+
+**Micro:bit version 2 only:** records a sound - see the reference](http://www.espruino.com/Reference#l_Microbit_record) for more information
 
 
 Pinout
 ------
 
-* APPEND_PINOUT: MICROBIT
+* APPEND_PINOUT: MICROBIT2
 
 
 Tutorials
@@ -193,7 +207,7 @@ Tutorials using Bluetooth LE and functionality that may not be part of the micro
 Buying
 -------
 
-micro:bits are currently available to buy [in the UK](https://www.element14.com/community/community/stem-academy/microbit) and [in the United States](https://www.techwillsaveus.com/shop/microbit/).
+micro:bits are currently available to buy [all over the world](https://microbit.org/buy/).
 
 
 Official Espruino Boards

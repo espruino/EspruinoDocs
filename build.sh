@@ -18,7 +18,7 @@ node bin/commenter.js
 
 cd ../Espruino
 
-for BOARDNAME in PICO_R1_3 ESPRUINOBOARD ESP8266_BOARD EMW3165 MICROBIT ESPRUINOWIFI PUCKJS PIXLJS ESP32 WIO_LTE MDBT42Q THINGY52 NRF52832DK STM32L496GDISCOVERY RAK8211 RAK8212 RAK5010
+for BOARDNAME in PICO_R1_3 ESPRUINOBOARD ESP8266_BOARD EMW3165 MICROBIT2 ESPRUINOWIFI PUCKJS PIXLJS ESP32 WIO_LTE MDBT42Q THINGY52 NRF52832DK STM32L496GDISCOVERY RAK8211 RAK8212 RAK5010
 do
   python scripts/build_board_docs.py $BOARDNAME pinout
   mv boards/$BOARDNAME.html $DIR/html/boards
@@ -34,7 +34,7 @@ git ls-tree -r --name-only HEAD | xargs -I{} git log -1 --format="%at {}" -- {} 
 echo "2000000000 tutorials/Bangle.js Getting Started.md" >> ordering.txt
 echo "2000000000 tutorials/Bangle.js Development.md" >> ordering.txt
 # Built reference docs and references.json
-node bin/build.js $BUILDARGS || exit 1
+node --trace-deprecation bin/build.js $BUILDARGS || exit 1
 
 #rm $WEBSITE/reference/*
 cp html/*.html $WEBSITE/reference/
