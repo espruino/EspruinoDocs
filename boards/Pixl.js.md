@@ -335,14 +335,31 @@ GPIO pins are numbered `D0` to `D13` and `A0` to `A5` (matching the Arduino head
 You can use the same `digitalWrite`/`digitalRead` commands with these that you
 did with the LEDs and buttons, but you can also use [[PWM]], [[I2C]], [[SPI]] and [[Analog]].
 
+### NFC - Near Field Communications
+
+To set Puck.js up to redirect to a new NFC URL, just use [NRF.nfcURL(...)](/Reference#l_NRF_nfcURL):
+
+```JS
+NRF.nfcURL("http://espruino.com");
+```
+
+or to turn off, call it with no arguments:
+
+```JS
+NRF.nfcURL();
+```
+
+Other NFC functionality is available - check out the reference for `NRF.nfc*`
+methods and events, and see the [Web NFC](/Web+NFC) page for information
+on transferring data via NFC.
+
 
 Known Problems
 ---------------
 
-On the 2v01 firmware release (which many Pixls ship with), NFC doesn't work.
+On the 2v01 firmware release (which the first Pixl.js shiped with), NFC doesn't work.
 
-The 2v02 firmware will have this fixed, however 'cutting edge' builds from
-http://www.espruino.com/Download#pixljs can be used and will work as well.
+If you upgrade, 2v02 firmware and later have this fixed.
 
 
 Serial Console

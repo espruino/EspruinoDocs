@@ -408,6 +408,10 @@ or to turn off, call it with no arguments:
 NRF.nfcURL();
 ```
 
+Other NFC functionality is available - check out the reference for `NRF.nfc*`
+methods and events, and see the [Web NFC](/Web+NFC) page for information
+on transferring data via NFC.
+
 ### Light sensor
 
 To get a light value you can simply call [`Puck.light()`](/Reference#l_Puck_light).
@@ -448,11 +452,13 @@ return an integer value that rises as the capacitance attached to `D11` increase
 ### FET
 
 **Puck.js v2 only** On Puck.js v2 there's a pin called `FET` (available from JS and
-marked on the Puck.js PCB). This is connected to a MOSFET that is
+marked on the Puck.js PCB). This is connected to a MOSFET ([NTZD3154](https://www.onsemi.com/pub/Collateral/NTZD3154N-D.PDF)) that is
 capable of pulling the `FET` down to GND with around 200mA.
 
 * `FET.set()` will turn the FET on (shorting `FET` to GND)
 * `FET.reset()` will turn the FET off (leaving `FET` floating)
+
+See the [Puck.js FET](/Puck.js+FET) page for more information.
 
 
 Serial Console
