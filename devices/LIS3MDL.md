@@ -18,6 +18,7 @@ The IKDS01A1 shield includes the following sensors:
 * [LIS3MDL](/LIS3MDL)
 
 ## Required Resources
+
 This module require the following resources:
 
 - I2C Interface, data rate max is 400k, in this example we use B8 and B9
@@ -25,10 +26,12 @@ This module require the following resources:
 - INT Pin if you se the interrupt. (C1, A4 on shield)
 
 ## Enable and use the Sensor
+
 In this example the Sensor is enabled in normal operating mode, with interrupt enabled.
 Temperature sensor is also enabled.
 If you like to use the default parameters (no interrupts, no temperature sensing) just remove the parameters.
 The maxscale is also adjusted. Values for Gauss can be 4, 8, 12 and 16.
+
 ```
 I2C1.setup({scl:B8,sda:B9});
 var temp = require("LIS3MDL").connect(I2C1);
@@ -45,17 +48,23 @@ print ("z:"+result[2]);
 
 print ("Temp:"+temp.GetTemperature());  
 ```
+
 ## Diagnostic data
+
 To verify our configuration we can use the logReg function.
 This function will dump all relevant register values, including configuration
 and status registers to the serial interface.
 This function is intended to be used only during development.
+
 ```
 temp.logReg();
 ```
+
 ## Enable the Sensor
+
 To verify if we are connected to the expected periveral we can read the chip ID.
 The return value should be 61 (dec).
+
 ```
 print(temp.GetID()); // Who I am
 ```
