@@ -11,7 +11,7 @@ Overview
 
 A digital potentiometer is a potentiometer that can be controlled via digital means (typically I2C or SPI). They consist of a "resistor ladder" of many identical value resistors between two pins (the ends of the potentiometer), while a third pin (the wiper) can be connected between any of those resistors. The number of taps (points between resistors that the wiper can be connected to) varies, but is typically a power of two, or 1 more than a power of two. Some digital potentiometers have non-volatile memory and use that to initialize the wiper position on startup. Digital pots are available in the same resistance ranges as analog pots. Digital rheostats are also available. Note that in most digital potentiometers, the voltage on any of the potentiometer terminals must always be between ground and supply voltage (sometimes with allowance for voltages slightly beyond that), though there do exist digital potentiometers capable of handling much higher voltages on the analog pins. Digital potentiometers generally cannot handle very much current - see the datasheet for specifics. 
 
-See also: [[MCP4xxx.md]]
+See also: [[MCP4xxx]]
 
 Supported Parts
 ------------------

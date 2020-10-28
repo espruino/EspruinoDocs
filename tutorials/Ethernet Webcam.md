@@ -81,7 +81,7 @@ setInterval(function() {
 </html>
 ```
 
-Then, you need to package it up into a string that can be stored in Espruino. You could have saved it to a file on an SD card, but storing the webpage as a string means that Espruino doesn't need a card to operate. To do this I simply removed the comments (to save on space) and opened the file in the [[File Converter] page.
+Then, you need to package it up into a string that can be stored in Espruino. You could have saved it to a file on an SD card, but storing the webpage as a string means that Espruino doesn't need a card to operate. To do this I simply removed the comments (to save on space) and opened the file in the [File Converter](/File+Converter] page.
 
 And this is the code for the Espruino itself - see the inline comments:
 
