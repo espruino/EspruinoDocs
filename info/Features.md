@@ -34,7 +34,7 @@ General
 | Feature | Implementation Status |
 |---------|-----------------------|
 | Unicode Strings | - (8 bit strings only) |
-| Regular Expressions | `1v95` `Official` |
+| Regular Expressions | `1v95` `Official` (see below) |
 | Labels | - |
 | `Object.propertyIsEnumerable` | - |
 | `with` keyword | - |
@@ -104,6 +104,7 @@ List of ES6 features from http://es6-features.org:
 | Binary/Octal Literals | `Yes` |
 | Unicode String/RegExp | - |
 | RegExp Sticky Matching | - |
+| RegExp Sticky Matching | - |
 | Enhanced Object Properties | - |
 | Destructing Assignment | - |
 | Modules (`import`/`export`) | - |
@@ -130,6 +131,18 @@ List of ES6 features from http://es6-features.org:
 | Promise Combination | `1v90` `Official`  |
 | Proxying / Reflection | - |
 | Internationalization & Localization | - |
+
+
+Regular Expressions
+-------------------
+
+Espruino aims to support most commonly used RegExp contructs, however some parts of the spec are not implemented:
+
+* [Assertions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions) other than `^` and `$`
+* [Numeric quantifiers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers) (eg `x{3}`)
+
+There's a GitHub issue [concerning RegExp features here](https://github.com/espruino/Espruino/issues/1257)
+
 
 
 Any features not listed here, or differences in Espruino that users should be aware of? Please [let us know!](https://github.com/espruino/EspruinoDocs/issues/new?title=info/Features.md)
