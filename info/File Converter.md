@@ -9,6 +9,11 @@ Converting files to Strings
 
 This page helps you to convert a file into a quoted JavaScript string of bytes.
 
+**NOTE:** The [Web IDE](/ide) now provides a 'Storage' window which allows
+you to upload/download files from an on-chip filesystem. This would normally
+be the preferred way to upload files to Espruino if it doesn't make sense
+to put them directly into a Templated String.
+
 It's useful if:
 
 * You're [making a webserver](/Internet) and you want to encode an image in a string.
