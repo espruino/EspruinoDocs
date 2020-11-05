@@ -1,5 +1,5 @@
 <!--- Copyright (c) 2015 bartmichu, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Analog RGB LED Control 
+Analog RGB LED Control
 ======================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/RGBLed. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
@@ -33,10 +33,11 @@ If you want, you can also specify initial color:
 var led = require("RGBLed").connect([C7, C8, C9], true, "#00ff00")
 ```
 
-The same as above but for common anode LED:
+The same as above but for common anode LED (eg all LEDs connected to VCC rather than GND):
 
 ```
-var led = require("RGBLed").connect([C7, C8, C9], true, "#00ff00", true)
+var led = require("RGBLed").connect([C7, C8, C9], true, "#00ff00");
+led.invert(true)
 ```
 
 Start blinking every second:
@@ -65,7 +66,8 @@ Module reference
 * pins (Array) - Three pins, for Red, Green, and Blue
 * initialState (Boolean) - Optional. LED is on by default but you can change it with this parameter.
 * initialColor (String) - Optional. Initial color is set to "#FFFFFF" but you can change it with this parameter.
-* isAnode (Boolean) - Set this to true to indicate the LED is a common anode LED. Defaults to false, indicating a common cathode LED.
+
+`function invert(inv)` - Set `inv` to true to indicate the LED is a common anode LED (eg all LEDs connected to VCC rather than GND). Defaults to false, indicating a common cathode LED.
 
 `function on()` - Turn the Led on using previous color value. Stops the interval operation, if any.
 
