@@ -1,3 +1,4 @@
+#!/usr/bin/nodejs
 /*
 Minify Espruino Modules
 -----------------------
@@ -38,7 +39,6 @@ if (fs.existsSync(fileExterns)) {
 if (!advancedOptimisation) {
   js = wrapSelfInvocation( js );
 }
-
 
 var compilation_level = advancedOptimisation ? 'ADVANCED_OPTIMIZATIONS' : 'SIMPLE_OPTIMIZATIONS';
 if (js.includes("MINIFY_WHITESPACE_ONLY"))
