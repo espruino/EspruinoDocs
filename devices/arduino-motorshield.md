@@ -11,25 +11,53 @@ Arduino Motor Shield
 
 This is a cheap (<4USD) motor shield for Arduino that contains two L293D driver IC, and a 74HCT595N shift register IC.
 
-⚠️ The pixl.js is a 3.3V device, and the  Arduino Motor Shield is a 5V shield. You need to connect the Vin pin to 5V pin, the jumper shown just right of the red circle. Without this the shield will have the green light shine dimly, and do nothing!
+**NOTE:** [Pixl.js](/Pixl.js) is a 3.3V device, and the  Arduino Motor Shield is a 5V shield. You need to connect the Vin pin to 5V pin, the jumper shown just right of the red circle. Without this the shield will have the green light shine dimly and do nothing!
 
 ![Vin to 5V](https://www.espruino.com/refimages/Pixljs_jst.jpg)
 
 Support is provided via the [[arduino-motorshield.js]] module.
 
+First, initialise the module:
+
 ```
 var motor = require("arduino-motorshield").connect(); // Pixl.js
 var motor = require("arduino-motorshield").connect(require("ArduinoPico")); // Espruino Pico Shim
 var motor = require("arduino-motorshield").connect(Nucleo); // Nucleo
+```
 
+Then you can control it simply with `motor.set`:
+
+```
+// reset to power on state
+motor.reset();
+// turn drivers on
+motor.on();
+// set which motors to move
+let FORWARD = 0b00100000; // M1A
+let BACKWRD = 0b00010000; // M1B
+motor.set(FORWARD); // Motor 1 forwards
+
+// M3A, set(0b10000000)
+// M2A, set(0b01000000)
+// M1A, set(0b00100000)
+// M1B, set(0b00010000)
+// M2B, set(0b00001000)
+// M4A, set(0b00000100)
+// M3B, set(0b00000010)
+// M4B, set(0b00000001)
+```
+
+Or you can use PWM:
+
+```
 function ramp(direction,durationSec) {
   return new Promise(function(resolve, reject) {
     // Ramp over a period of durationSec
-    let steps = durationSec * 100 / 10; 
+    let steps = durationSec * 100 / 10;
     let n = 0;
     let animInterval = setInterval(function() {
       console.log(new Date().toISOString().substring(11, 22), "ramp",direction, n*100);
-      n += 1 / steps; // steps 
+      n += 1 / steps; // steps
       if (n > 1) {
         clearInterval(animInterval); //stop function
         resolve();
@@ -42,7 +70,6 @@ function ramp(direction,durationSec) {
 
 function motorControl() {
   // Define Motors Used and Wiring
-  // WARNING never set M1A and M1B at the same time, this will cause a short circuit.
   // M3A, set(0b10000000)
   // M2A, set(0b01000000)
   // M1A, set(0b00100000)
