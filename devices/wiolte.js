@@ -352,7 +352,7 @@ var netCallbacks = {
       at.unregisterLine('ERROR');
       clearTimeout(idWaitingModemRsp);
       busy = false;
-      socks[sckt]=="tobeclosed"
+      socks[sckt]="tobeclosed";
       return "";
     });
 
@@ -364,7 +364,7 @@ var netCallbacks = {
       at.unregisterLine('ERROR');
       clearTimeout(idWaitingModemRsp);
       busy = false;
-      socks[sckt]=="tobeclosed"
+      socks[sckt]="tobeclosed";
       return "";
     });
 

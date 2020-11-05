@@ -137,7 +137,7 @@ APDS9960.prototype.getGesture = function() {
     return undefined;
 
   /* Read the current FIFO level */
-  var fifo_level = this.r(R.GFLVL, fifo_level);
+  var fifo_level = this.r(R.GFLVL);
   /* If there's stuff in the FIFO, read it into our data block */
   if( fifo_level === 0) return undefined;
 

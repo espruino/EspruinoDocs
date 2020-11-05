@@ -1,5 +1,4 @@
-/** Create a new vector 
-
+/** @constructor Create a new vector 
 * Either with an object: new Vec3({x:1, y:2, z:3});
 * 3 values: new Vec3(1,2,3);
 * or nothing, for 0,0,0: new Vec3(); */

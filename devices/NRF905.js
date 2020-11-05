@@ -39,7 +39,7 @@ function NRF(_spi, _csn, _dr, _txen, _ce) {
   this.CE = _ce;
   this.spi = _spi;
   this.busy=false;
-  this.userCallback;
+  this.userCallback=undefined;
   this.rxWatch=false;//watching DR for recieved data
   this.txWatch=false;//watching DR for data was sent
 }
@@ -124,7 +124,6 @@ NRF.prototype.send = function(txAddr,data) {
 
 /** Initialise the NRF module*/
 NRF.prototype.init = function(myAddr,Callback) {
-    clearWatch();
     this.userCallback=Callback;
     this.busy=true;
     digitalWrite(this.CE,0);//enable standby+SPI programming

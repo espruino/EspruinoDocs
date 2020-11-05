@@ -144,8 +144,7 @@ WebServer.prototype.router = function (req, res) {
 };
 
 WebServer.prototype.evalFile = function (file) {
-	var chunk = txt = '',
-		content;
+	var chunk = '', txt = '', content;
 
 	try {
 		while (chunk = file.read(8)) {

@@ -145,7 +145,7 @@ ATSMS.prototype.get = function(index, callback) {
       } catch (e) { }
       return cb;
     }
-    if (callback) callback(d=="OK"?null:("CMGR ERROR "+d), list);
+    if (callback) callback(d=="OK"?null:("CMGR ERROR "+d), currItem);
   });
 };
 

@@ -92,7 +92,7 @@ MPL3115A2.prototype.w = function(addr, data) {
 
 // pressure in Pascals (not kPa)
 MPL3115A2.prototype.getPressure = function(callback) {
-  if (this.busy) throw new "MPL3115A2 is busy";
+  if (this.busy) throw new Error("MPL3115A2 is busy");
   this.w(REG.CTRL_REG1, 
     F.CTRL_REG1_SBYB |
     F.CTRL_REG1_OS128 |
@@ -111,7 +111,7 @@ MPL3115A2.prototype.getPressure = function(callback) {
 
 // get altitude in m above sea level
 MPL3115A2.prototype.getAltitude = function(callback) {
-  if (this.busy) throw new "MPL3115A2 is busy";
+  if (this.busy) throw new Error("MPL3115A2 is busy");
   this.w(REG.CTRL_REG1,
     F.CTRL_REG1_SBYB |
     F.CTRL_REG1_OS128 |
@@ -132,7 +132,7 @@ MPL3115A2.prototype.getAltitude = function(callback) {
 
 // temperature in centigrade
 MPL3115A2.prototype.getTemperature = function(callback) {
-  if (this.busy) throw new "MPL3115A2 is busy";
+  if (this.busy) throw new Error("MPL3115A2 is busy");
   this.busy = setInterval(function() {
     if (this.r(REG.STATUS,1)[0] & F.STATUS_TDR) {
       var d = this.r(REG.TEMP_MSB, 2);

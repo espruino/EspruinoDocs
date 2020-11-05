@@ -45,8 +45,7 @@ var C = {
 *
 */
 function getCodeWordA(sGroup, sDevice, bStatus) {
-  var sReturn = "";
-
+  var i, sReturn = "";
   for (i = 0; i < sGroup.length; i++) {
     sReturn += sGroup[i] == '0' ? 'F' : '0';
   }
@@ -64,9 +63,9 @@ function getCodeWordA(sGroup, sDevice, bStatus) {
  * @constructor
  */
 function RcSwitch(protocol_id, pin, repeat) {
-  _protocol = C.PROTOCOLS[protocol_id - 1];
-  _pin = pin;
-  _repeat = repeat;
+  this._protocol = C.PROTOCOLS[protocol_id - 1];
+  this._pin = pin;
+  this._repeat = repeat;
 }
 
 /**
@@ -75,23 +74,23 @@ function RcSwitch(protocol_id, pin, repeat) {
 * then the bit at position length-2, and so on, till finally the bit at position 0.
 */
 RcSwitch.prototype.send = function (value, length) {
-  var signal = [];
+  var i, signal = [];
 
   for (i = length - 1; i >= 0; i--) {
     if (value & (1 << i)) {
-      signal.push(_protocol.pulseLength * _protocol.one.high);
-      signal.push(_protocol.pulseLength * _protocol.one.low);
+      signal.push(this._protocol.pulseLength * this._protocol.one.high);
+      signal.push(this._protocol.pulseLength * this._protocol.one.low);
     }
     else {
-      signal.push(_protocol.pulseLength * _protocol.zero.high);
-      signal.push(_protocol.pulseLength * _protocol.zero.low);
+      signal.push(this._protocol.pulseLength * this._protocol.zero.high);
+      signal.push(this._protocol.pulseLength * this._protocol.zero.low);
     }
   }
-  signal.push(_protocol.pulseLength * _protocol.syncFactor.high);
-  signal.push(_protocol.pulseLength * _protocol.syncFactor.low);
+  signal.push(this._protocol.pulseLength * this._protocol.syncFactor.high);
+  signal.push(this._protocol.pulseLength * this._protocol.syncFactor.low);
 
-  for (nRepeat = 0; nRepeat < _repeat; nRepeat++) {
-    digitalPulse(_pin, _protocol.invertedSignal ? 0 : 1, signal);
+  for (var nRepeat = 0; nRepeat < this._repeat; nRepeat++) {
+    digitalPulse(this._pin, this._protocol.invertedSignal ? 0 : 1, signal);
   }
 };
 
@@ -100,8 +99,8 @@ RcSwitch.prototype.send = function (value, length) {
 */
 RcSwitch.prototype.sendTriState = function (sCodeWord) {
   // turn the tristate code word into the corresponding bit pattern, then send it
-  code = 0;
-  length = 0;
+  var i, code = 0, length = 0;
+  
 
   for (i = 0; i < sCodeWord.length; i++) {
     code = code << 2;

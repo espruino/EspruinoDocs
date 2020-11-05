@@ -9,22 +9,6 @@ manager.start();
 
  */
 
-///////////////////////////////////////////
-// Dummy JSDOC definitions for to avoid IDEA warnings.
-/**
- * @class OneWire
- * @property {String} pin
- */
-/**
- * @class exports
- * @method create
- */
-/**
- * @function require
- * @param {String}
- */
-///////////////////////////////////////////
-
 var ds18b20 = require("DS18B20");
 
 var C = {
@@ -33,16 +17,16 @@ var C = {
 
 /**
  * Class for handling JS
- * @param {String|String[]|OneWire|OneWire[]} v - OneWire pins or OneWire bus instances
+ * v - OneWire pins or OneWire bus instances
  * @constructor
  */
 var OneWireTempManager = function (v) {
     var i;
 
-    /**@type OneWire[] */
+    /** OneWire[] */
     this.buses = [];
 
-    /**@type DS18B20[] */
+    /** DS18B20[] */
     this.sensors = []; //
 
     this.scanTimer = null;
@@ -65,11 +49,6 @@ OneWireTempManager.prototype._addBusOrPin = function(p) {
     this.buses.push(p);
 };
 
-/**
- * @param {String} pin
- * @returns {OneWire}
- * @private
- */
 OneWireTempManager.prototype._getBus = function(pin){
     for (var i=0; i<this.buses.length; i++) {
         var bus = this.buses[i];
@@ -102,9 +81,6 @@ OneWireTempManager.prototype.scan = function () {
 
     /**
      * Array diff function
-     * @param {Array} a
-     * @param {Array} b
-     * @returns {Array.<T>|*}
      */
     var diff=function (a,b) {
         return b.filter(function(i) {return a.indexOf(i) < 0;});
@@ -112,8 +88,8 @@ OneWireTempManager.prototype.scan = function () {
 
     /**
      * Hash function "{PIN}={ADDR}".
-     * @param {DS18B20} s
-     * @returns {string}
+     * param {DS18B20} s
+     * returns {string}
      */
     var hash=function(s){
       return s.bus.pin + "=" + s.sCode;
@@ -149,9 +125,9 @@ OneWireTempManager.prototype.scan = function () {
 
 /**
  * Hook to make custom configuration of the sensor
- * @param {DS18B20} sensor
+ * @param {Object} sensor DS18B20 
  */
-OneWireTempManager.prototype.configureSensor = function(_sensor){
+OneWireTempManager.prototype.configureSensor = function(sensor){
 };
 
 /**
@@ -165,8 +141,8 @@ OneWireTempManager.prototype.poll = function () {
 };
 
 /**
- * @param {DS18B20} sensor
- * @param {float} temp
+ * @param {Object} sensor DS18B20 
+ * @param {number} temp
  */
 OneWireTempManager.prototype.callBack = function(sensor, temp){
     console.log("Temp on " + sensor.sCode + ": " + temp);

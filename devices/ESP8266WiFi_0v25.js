@@ -59,7 +59,7 @@ var netCallbacks = {
     /* Create a socket and return its index, host is a string, port is an integer.
     If host isn't defined, create a server socket */
     if (host===undefined && type!=2) {
-      sckt = MAXSOCKETS;
+      var sckt = MAXSOCKETS;
       socks[sckt] = "Wait";
       sockData[sckt] = "";
       at.cmd("AT+CIPSERVER=1,"+port+"\r\n", 10000, function(d) {

@@ -365,8 +365,8 @@ VL53L1X.prototype.setDistanceMode = function(mode) {
     // reapply timing budget
     this.setMeasurementTimingBudget(timingBudget);
 
-    // save mode so it can be returned by getDistanceMode()
-    distance_mode = mode;
+    // save mode
+    this.distanceMode = mode;
 
     return true;
 };

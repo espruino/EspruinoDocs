@@ -75,11 +75,11 @@ W25.prototype.writeSector = function (pageNumber, arrayBuffer) {
   // overwrites a sector (256*16 bytes)
   // that memory MUST be erased first
   // todo: check if arrayBuffer has 256*16 bytes
-  for (p = 0; p < 16; p++) {
-    pageToWrite = pageNumber + p;
-    pageStart = p * 256;
-    pageEnd = pageStart + 256;
-    page = arrayBuffer.slice(pageStart, pageEnd);
+  for (var p = 0; p < 16; p++) {
+    var pageToWrite = pageNumber + p;
+    var pageStart = p * 256;
+    var pageEnd = pageStart + 256;
+    var page = arrayBuffer.slice(pageStart, pageEnd);
     this.startWrite(pageToWrite, 0);
     this.spi.write(page);
     this.finish();
@@ -160,7 +160,7 @@ W25.prototype.readSector = function (sector) {
 W25.prototype.readPageString = function (page) {
   var x = "";
   this.seek(page, 0);
-  for (i = 0; i < 256; i++) {
+  for (var i = 0; i < 256; i++) {
     x += String.fromCharCode(this.spi.send(0));
   }
   return x;
@@ -168,7 +168,7 @@ W25.prototype.readPageString = function (page) {
 
 exports.connect = function (spi, csPin) {
   var flash = new W25(spi, csPin);
-  jedec = flash.getJedec();
+  var jedec = flash.getJedec();
   if ((jedec.manufacturerId != 0xEF) || (jedec.deviceId != 0x13)) flash = null;
   return flash;
 };

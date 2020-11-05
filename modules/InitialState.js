@@ -55,12 +55,12 @@ function convData(obj) {
   InitialState.
 */
 exports.sendEventsInsecure = function () {
+  var callback = arguments[arguments.length - 1] || print;
   if (arguments.length < 2) {
     callback({ message: 'Not enough arguments' });
     return;
   }
   var bucket = arguments[0];
-  var callback = arguments[arguments.length - 1];
   var eventmax = arguments.length - 1;
   if (typeof(callback) !== 'function') {
     callback = undefined;

@@ -32,14 +32,12 @@ Pixy.prototype.getWord = function() {
   // instead of 2 bytes in a 16-bit word as with I2C
   var w, cout = 0;
 
-  if (this.outBuf)
-  {
+  if (this.outBuf) {
     w = this.spi.send(C.PIXY_SYNC_BYTE_DATA);
     cout = this.outBuf[this.outIndex++];
-    if (this.outIndex==this.outLen)
-    this.outBuf = undefined; 
-  }
-  else
+    if (this.outIndex==C.PIXY_OUTBUF_SIZE)
+      this.outBuf = undefined; 
+  } else
     w = this.spi.send(C.PIXY_SYNC_BYTE);
   return (w<<8) | this.spi.send(cout);
 };

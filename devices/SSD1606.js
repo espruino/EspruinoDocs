@@ -44,7 +44,7 @@ var C  = {
  * <li>For some future-proof you can set up the clearScreenTimeOut and hardwareResetTimeOut.</li>
  * </ul>
  * @constructor
- * @param {config} - configuration with displayType, SPI and additional pins.
+ * @param config - configuration with displayType, SPI and additional pins.
  */
 function SSD1606(config) {
   if (config.displayType === 'GDE021A1') {
@@ -96,7 +96,7 @@ SSD1606.prototype.reset = function() {
  */
 SSD1606.prototype.on = function() {
   if(this.powerPin) {
-    digitalWrite(this.powerPin, HIGH);
+    digitalWrite(this.powerPin, 1);
   }
 };
 /**
@@ -104,16 +104,16 @@ SSD1606.prototype.on = function() {
  */
 SSD1606.prototype.off = function() {
   if(this.powerPin) {
-    digitalWrite(this.powerPin, LOW);
+    digitalWrite(this.powerPin, 0);
   }
 };
 /**
  * Use resetPin to make a hardware reset.
- * @param {callback} callback - callback function
+ * @param {Function} callback - callback function
  */
 SSD1606.prototype.hwReset = function(callback) {
-  digitalWrite(this.resetPin, LOW);
-  digitalWrite(this.resetPin, HIGH);
+  digitalWrite(this.resetPin, 0);
+  digitalWrite(this.resetPin, 1);
   return setTimeout(callback, this.hwResetTimeOut); // is that even needed?
 };
 /**
@@ -134,12 +134,12 @@ SSD1606.prototype.hwReset = function(callback) {
  * <li>Set border waveform control</li>
  * <li>Set display update sequence option - enable sequence: clk -> CP -> LUT -> initial display -> pattern display</li>
  * </ol>
- * @param {options} options - provided options, useBs1Pin and clearScreenColor
- * @param {callback} callback - callback function
+ * @param {Object} options - provided options, useBs1Pin and clearScreenColor
+ * @param {Function} callback - callback function
  */
 SSD1606.prototype.init = function(callback, options) {
   if(this.bs1Pin) {
-    digitalWrite(this.bs1Pin, LOW);
+    digitalWrite(this.bs1Pin, 0);
   }
   this.scd(0x10, 0x00);
   this.scd(0x11, 0x03); // 0x03 für alten Wert
@@ -247,30 +247,29 @@ SSD1606.prototype.init = function(callback, options) {
  * <li>0xF0 - Booster feedback selection</li>
  * <li>0xFF - no operation NOP</li>
  * </ol>
- * @param {command} - a command
- * @see SSD1606.C.cmd
+ * @param {number} command - a command
  */
 SSD1606.prototype.sc = function(command) {
-  digitalWrite(this.dcPin, LOW);
+  digitalWrite(this.dcPin, 0);
   this.spi.write(command, this.cs1Pin);
 };
 /**
  * Prepare send data, prepares the controller to receive data.
  */
 SSD1606.prototype.psd = function() {
-  digitalWrite(this.dcPin, HIGH);
+  digitalWrite(this.dcPin, 1);
 };
 /**
  * Send data to the controller.
- * @param {data} - the data
+ * @param data - the data
  */
 SSD1606.prototype.sd = function(data) {
   this.spi.write(data, this.cs1Pin);
 };
 /**
  * Send command and data to the controller.
- * @param {command} - the command
- * @param {data} - the data
+ * @param command - the command
+ * @param data - the data
  */
 SSD1606.prototype.scd = function(command, data) {
   this.sc(command);
@@ -279,7 +278,7 @@ SSD1606.prototype.scd = function(command, data) {
 };
 /**
  * Checks the busyPin and runs the callback, wenn the busyPin is LOW.
- * @param {callback} - the callback function
+ * @param {Function} callback - the callback function
  */
 SSD1606.prototype.cbp = function(callback) {
   return setWatch(callback, this.busyPin, { repeat:false, edge:'falling' });
@@ -300,8 +299,8 @@ SSD1606.prototype.cbp = function(callback) {
  * To leave the write RAM mode a 'NOP' command is sent.
  * According to specification a check of the BusyPin is needed, but this does not work here.
  * It seems the display driver encapsulates this behaviour.
- * @param {byte} - the color to set
- * @param {callback} - the callback function, will be called, when finished
+ * @param {Function} callback - the callback function, will be called, when finished
+ * @param {number} clearScreenColor - the color to set
  */
 SSD1606.prototype.csb = function(callback, clearScreenColor) {
   this.scd(0x44, 0x00);
@@ -323,7 +322,7 @@ SSD1606.prototype.csb = function(callback, clearScreenColor) {
  * <li>Master activation  - part of <em>closebump</em> in specification</li>
  * <li>check BusyPin before the display can receive further commands or data. Part of <em>closebump</em> in specification</li>
  * </ol>
- * @param {callback} - callback is called, when busy pin is ready.
+ * @param {Function} callback - callback is called, when busy pin is ready.
  */
 SSD1606.prototype.refreshScreen = function(callback) {
   this.sc(0x20);
@@ -333,8 +332,8 @@ SSD1606.prototype.refreshScreen = function(callback) {
 };
 /**
  * Sets the X and Y RAM counter.
- * @param {int} - X RAM counter
- * @param {int} - Y RAM counter
+ * @param {number} xCount - X RAM counter
+ * @param {number} yCount - Y RAM counter
  */
 SSD1606.prototype.sxyc = function(xCount, yCount) {
   this.scd(0x4E, xCount);

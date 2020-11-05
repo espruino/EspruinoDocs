@@ -44,7 +44,7 @@ var netCallbacks = {
     /* Create a socket and return its index, host is a string, port is an integer.
     If host isn't defined, create a server socket */
     if (host===undefined && type!=2) {
-      sckt = MAXSOCKETS;
+      var sckt = MAXSOCKETS;
       socks[sckt] = "Wait";
       sockData[sckt] = "";
       at.cmd("AT+CIPSERVER=1,"+port+"\r\n", 10000, function(d) {
@@ -462,7 +462,7 @@ exports.getAPIP = function(callback) {
     }
     if (d.substr(0,10)=="+CIPAP_CUR") {
       d = d.split(":");
-      if (d[1]=="gateway")d[1]=="gw";
+      if (d[1]=="gateway")d[1]="gw";
       ip[d[1]] = JSON.parse(d[2]);
     }
     return cb;

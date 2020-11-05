@@ -56,7 +56,7 @@ DS2xxx.prototype.write= function (addr, data) {
         this.s([0xAA]); //read spad.
         //room for improvement: Manufacturer recommends reading back the scratch pad completely, and verifying it aginast the data, before comitting it. 
         this.s(E.toUint8Array(0x55,this.ow.read(3))); 
-        var et=getTime()+0.07; while (getTime() < et) {"";} //delay(7) - it says it needs 5, but let's not rush it.
+        var et=getTime()+0.07; while (getTime() < et) {} //delay(7) - it says it needs 5, but let's not rush it.
         if (this.ow.read()==170) { //check for the indication of successful write - if not, we'll try again per datasheet. 
             // get ready for next iteration, if there is one
             idx+=l;

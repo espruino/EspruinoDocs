@@ -34,7 +34,7 @@ var viziblesFuncs = {
 				return (function (d) {
 					if(d=='ERROR') return callback("Error");
 					else {
-						m=d.split("=");
+						var m=d.split("=");
 						return (callback(m[1]));
 					}  
 				});
@@ -48,7 +48,7 @@ var viziblesFuncs = {
 				return (function (d) {
 					if(d=='ERROR') return callback("Error");
 					else {
-						m=d.split("=");
+						var m=d.split("=");
 						return (callback(m[1]));
 					}  
 				});
@@ -91,7 +91,7 @@ var viziblesFuncs = {
 			at.write("AT+SETOPTIONS=");
 			var i = 0;
 			var keys = Object.keys(options).length;
-			for (o in options) {
+			for (var o in options) {
 				at.write('"' + o + '","' + options[o] + '"');
 				i++;
 				if(i<keys){
@@ -119,7 +119,7 @@ var viziblesFuncs = {
 			at.write("AT+UPDATE=");
 			var i = 0;
 			var keys = Object.keys(variables).length;
-			for (o in variables) {
+			for (var o in variables) {
 				at.write('"' + o + '","' + variables[o] + '"');
 				i++;
 				if(i<keys){
@@ -180,7 +180,7 @@ var viziblesFuncs = {
 				at.write("=");
 				var i = 0;
 				var keys = Object.keys(options).length;
-				for (o in options) {
+				for (var o in options) {
 					at.write('"' + o + '","' + options[o] + '"');
 					i++;
 					if(i<keys){
@@ -213,7 +213,7 @@ var viziblesFuncs = {
 				return (function (d) {
 					if(d=='ERROR'||d.indexOf('Vizibles AT')!=7) return callback("Error");
 					else {
-						m=d.substring(d.indexOf('='), d.indexOf('O'));
+						var m=d.substring(d.indexOf('='), d.indexOf('O'));
 						return (callback(m));
 					}  
 				});

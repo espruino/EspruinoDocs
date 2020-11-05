@@ -68,19 +68,19 @@ MS5803.prototype.getADCconversion = function(measurement, precision) {
   this._i2c.writeTo(this._address, C.CMD_ADC_CONV + measurement + precision);
   let delay = 11;
   switch (precision) {
-    case C.ADC_256:
+    case this.PRECISION.ADC_256:
       delay = 2;
       break;
-    case C.ADC_512:
+    case this.PRECISION.ADC_512:
       delay = 4;
       break;
-    case C.ADC_1024:
+    case this.PRECISION.ADC_1024:
       delay = 5;
       break;
-    case C.ADC_2048:
+    case this.PRECISION.ADC_2048:
       delay = 7;
       break;
-    case C.ADC_4096:
+    case this.PRECISION.ADC_4096:
       delay = 11;
       break;
   }

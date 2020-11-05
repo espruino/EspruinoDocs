@@ -49,7 +49,7 @@ LIS3MDL.prototype.SetInterruptCfg = function ( IntCfg ) {
 */
 LIS3MDL.prototype.SetThreshold = function ( Threshold ) {
 	this.w(C.INT_THS[0], Threshold&0xff);
-	this.w(C.INT_THS[1], (Threshold)>>8)&0x7F;
+	this.w(C.INT_THS[1], (Threshold>>8)&0x7F);
 }
 
 /** enable

@@ -87,15 +87,6 @@ LSM6DSL.prototype.SetReg = function ( CFGREG, NewCfg ) {
 LSM6DSL.prototype.GetReg = function ( CFGREG ) {
 	return this.r(CFGREG);
 }
-/**
-* Set threshold for interrupt.
-* Value should be between 0..32767
-* not yet used
-*/
-LSM6DSL.prototype.SetThreshold = function ( Threshold ) {
-	this.w(C.INT_THS[0], Threshold&0xff);
-	this.w(C.INT_THS[1], (Threshold)>>8)&0x7F;
-}
 
 /** enable
 * Init the LSM6DSL with default values.
@@ -165,7 +156,7 @@ LSM6DSL.prototype.GetID = function () {
  * Return value is only provided if temperature measurement is enabled.
 */
 LSM6DSL.prototype.GetTemperature = function () {
-	return this.r2(C.TEMP_OUT[0]);
+	return this.r2(C.OUT_TEMP[0]);
 }
 
 /** logReg

@@ -91,7 +91,7 @@ exports.create = function (_mpu6050, _fifoRate) {
 
 
 /** DMP Object
- * @fifoRate DMP output frequency = 200Hz / (1 + fifoRate)
+ * @param fifoRate DMP output frequency = 200Hz / (1 + fifoRate)
  * Going faster than 100Hz (0x00=200Hz) tends to result in very noisy data.
  * It is important to make sure the host processor can keep up with reading and processing
  * the FIFO output at the desired rate.
@@ -118,7 +118,7 @@ DMP.prototype.getData = function() {
     return undefined;
   } else if (status & 0x02) { // otherwise, check for DMP data ready interrupt (this should happen frequently)
     // wait for correct available data length, should be a VERY short wait
-    while (fifoCount < PACKET_SIZE) fifoCount = DMP.getFIFOCount();
+    while (fifoCount < PACKET_SIZE) fifoCount = this.getFIFOCount();
 
     var packet = this.getFIFOBytes(PACKET_SIZE);
     // console.log(args.time + " - STATUS: " + status + " Count: " + fifoCount + " FIFO: ");

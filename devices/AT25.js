@@ -72,7 +72,7 @@ AT25.prototype.write= function(add,data) {
 		t=t+data.substr(idx,i);
 		this.spi.send(t,this.cspin);
 		var et=getTime()+0.012;
-		while (getTime() < et && this.pgsz) {"";}
+		while (getTime() < et && this.pgsz) {}
 		idx+=i; add+=i;
 	}
 	return l;

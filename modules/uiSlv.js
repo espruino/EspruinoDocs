@@ -1,4 +1,5 @@
 /* Copyright (c) allObjects - See the file https://muet.mit-license.org LICENSE for copying permission. */
+// MINIFY_WHITESPACE_ONLY
 /*
 
 ----- uiSli ------------------------- 20191016

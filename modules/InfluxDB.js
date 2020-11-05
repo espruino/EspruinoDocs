@@ -6,7 +6,7 @@
 /**
  * Create and setup an instance of INFLUXDB.
  * @param  {Object} influxDBParams JSON object with InfluxDB parameters.
- * @return {Boolean}
+ * @return {Object}
  */
 exports.setup = function(influxDBParams) {
     return new INFLUXDB(influxDBParams);
@@ -23,12 +23,12 @@ function INFLUXDB(influxDBParams) {
 
 /**
  * Send GET or POST request to InfluDB.
- * @param  {String} data request body one or multi lines (separator '\n').
- * @param  {String} httpCmd GET or POST only.
- * @param  {String} influxDBCmd write for POST and query for GET.
- * @return {String|Boolean}
+ * @param  {string} data request body one or multi lines (separator '\n').
+ * @param  {string} httpCmd GET or POST only.
+ * @param  {string} influxDBCmd write for POST and query for GET.
+ * @param  {Function} callback with response
  */
-INFLUXDB.prototype.process = function(data, httpCmd, influxDBCmd) {
+INFLUXDB.prototype.process = function(data, httpCmd, influxDBCmd, callback) {
 
     var options = {
         host: this.influxDBParams.influxDBHost,
@@ -43,10 +43,9 @@ INFLUXDB.prototype.process = function(data, httpCmd, influxDBCmd) {
         }
     };
 
+    var response = "";
+
     var request = require("http").request(options, function(res) {
-
-        var response = "";
-
         console.log('STATUS: ' + res.statusCode);
         console.log('HEADERS: ' + JSON.stringify(res.headers));
 
@@ -64,12 +63,13 @@ INFLUXDB.prototype.process = function(data, httpCmd, influxDBCmd) {
         });
 
     request.on('close', function(data) {
-        if (cmd == 'POST') {
-            return true;
-        } else if (cmd === 'GET')
-            return response;
-        else {
-            return false;
+        if (!callback) return;
+        if (httpCmd == 'POST') {
+            callback(true);
+        } else if (httpCmd === 'GET') {
+            callback(response);
+        } else {
+            callback(false);
         }
     });
 
@@ -81,19 +81,17 @@ INFLUXDB.prototype.process = function(data, httpCmd, influxDBCmd) {
 /**
  * https://docs.influxdata.com/influxdb/v1.3/guides/writing_data/
  * Write data to influxDB.
- * @param  {String} data request body, one or multi lines (separator '\n').
- * @return {Boolean}
+ * @param  {string} data request body, one or multi lines (separator '\n').
  */
-INFLUXDB.prototype.write = function(data) {
-    return this.process(data, 'POST', 'write');
+INFLUXDB.prototype.write = function(data, callback) {
+    return this.process(data, 'POST', 'write', callback);
 }
 
 /**
  * https://docs.influxdata.com/influxdb/v1.3/guides/querying_data/
  * Send query to influxDB.
- * @param  {String} query influxDB request.
- * @return {String}
+ * @param  {string} query influxDB request.
  */
-INFLUXDB.prototype.query = function(query) {
-    return this.process(query, 'GET', 'query');
+INFLUXDB.prototype.query = function(query, callback) {
+    return this.process(query, 'GET', 'query', callback);
 }

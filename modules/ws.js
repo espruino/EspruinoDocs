@@ -86,7 +86,7 @@ function WebSocket(host, options) {
   this.protocol = options.protocol;
   this.lastData = "";
   this.key = buildKey();
-  this.connected = false || options.connected;
+  this.connected = options.connected || false;
   this.headers = options.headers || {};
 }
 

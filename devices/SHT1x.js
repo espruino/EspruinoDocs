@@ -20,9 +20,9 @@ function SHT11(scl,sda) {
   this.clockpin = scl;
   this.ack = 0;
   this.timeout = 0;
-  this.lastTemperature;
-  this.lastHumidity;
-  this.lastDewPoint;
+  this.lastTemperature = undefined;
+  this.lastHumidity = undefined;
+  this.lastDewPoint = undefined;
 }
 
 
@@ -62,14 +62,14 @@ SHT11.prototype.sendCommand = function(command){
  }
  this.clockTick(1);
  this.ack = digitalRead(this.datapin);
- if (this.ack != 0){
-  //print("nack1 error")
- }
+ /*if (this.ack != 0){
+  print("nack1 error")
+ }*/
  this.clockTick(0);
  this.ack = digitalRead(this.datapin);
- if (this.ack != 1){
-  //print("nack2 error")
- }
+/* if (this.ack != 1){
+  print("nack2 error")
+ }*/
 }
 
 SHT11.prototype.shiftIn = function(bitnum){

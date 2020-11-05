@@ -63,7 +63,7 @@ AT24.prototype.write= function(add,data) {
 		var i=this.pgsz?(this.pgsz-(add%this.pgsz)):data.length;
 		this.i2c.writeTo(this.i(add),this.a(add)+data.substr(idx,i));
 		var et=getTime()+0.012;
-		while (getTime() < et && this.pgsz) {"";}
+		while (getTime() < et && this.pgsz) {}
 		idx+=i; add+=i;
 	}
 	return data.length;
