@@ -10,6 +10,8 @@ Ruuvitag
 
 The Ruuvitag is a Bluetooth LE beacon with an environment sensor and accelerometer built in.
 
+**NOTE: Espruino for Ruuvitag is no longer officially supported. The last available build is 2v06**
+
 <a name="firmware-updates"></a>Full details on flashing Ruuvitag can be found at [https://ruu.vi/setup](https://ruu.vi/setup/)
 
 Binaries can be found in:

@@ -11,6 +11,7 @@ Nordic Thingy:52
 
 The Nordic Thingy:52 is a compact, power-optimized, multi-sensor development kit. It is an easy-to-use development platform, designed to help you build IoT prototypes and demos, without the need to build hardware or write firmware.
 
+**NOTE: Espruino for Thingy:52 is no longer officially supported. The last available build is 2v06**
 
 Contents
 --------
