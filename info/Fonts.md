@@ -169,6 +169,9 @@ You can also create your own fonts. To do this, see [`g.setFontCustom(...)`](/Re
 
 You'll need a string containing a column-first, most significant bit first, 1 bit per pixel bitmap containing the font bitmap. Optionally you can also have another string containing the widths of each character.
 
+We now have a [Font Converter page](/Font Converter) that allows you to
+create fonts for Espruino based on a Web Font.
+
 Matt Brailsford has made an excellent [online font converter](http://ebfc.mattbrailsford.com/) specifically for creating fonts for Espruino.
 ... or for an example of how to create the data programmatically, take a look at
 [the JS file used to make Espruino's font modules](https://github.com/espruino/Espruino/blob/master/scripts/create_custom_font.js).
