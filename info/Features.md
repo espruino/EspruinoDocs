@@ -27,6 +27,9 @@ Some features are left out intentionally where:
 * It would be too costly to implement them (eg. Unicode Strings)
 * They're generally considered bad practice (eg. labels)
 
+If you want a feature that isn't implemented [you can vote on this GitHub issue](https://github.com/espruino/Espruino/issues/1302)
+
+Any features not listed here, or differences in Espruino that users should be aware of? Please [let us know!](https://github.com/espruino/EspruinoDocs/issues/new?title=info/Features.md)
 
 General
 -------
@@ -133,6 +136,23 @@ List of ES6 features from http://es6-features.org:
 | Internationalization & Localization | - |
 
 
+ES7/ES8
+-------
+
+| ES7 Feature | Implementation Status |
+|-------------|----------------------|
+| Array.prototype.includes | `2v05` `Official` |
+| String.prototype.padStart/End | `2v08` `Official` |
+| Exponentiation Operator | - |
+| Async functions | - |
+| Async generators | - |
+| Object.getOwnPropertyDescriptors | - |
+| Object.values/entries | - |
+| Typed Objects | - |
+| Trailing commas in function syntax | - |
+| Object rest/spread properties | - |
+
+
 Regular Expressions
 -------------------
 
@@ -144,5 +164,3 @@ Espruino aims to support most commonly used RegExp contructs, however some parts
 There's a GitHub issue [concerning RegExp features here](https://github.com/espruino/Espruino/issues/1257)
 
 
-
-Any features not listed here, or differences in Espruino that users should be aware of? Please [let us know!](https://github.com/espruino/EspruinoDocs/issues/new?title=info/Features.md)
