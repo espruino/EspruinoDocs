@@ -27,6 +27,8 @@ Some features are left out intentionally where:
 * It would be too costly to implement them (eg. Unicode Strings)
 * They're generally considered bad practice (eg. labels)
 
+**Try Espruino for yourself online [in the emulator](https://www.espruino.com/ide/emulator.html)**
+
 If you want a feature that isn't implemented [you can vote on this GitHub issue](https://github.com/espruino/Espruino/issues/1302)
 
 Any features not listed here, or differences in Espruino that users should be aware of? Please [let us know!](https://github.com/espruino/EspruinoDocs/issues/new?title=info/Features.md)
