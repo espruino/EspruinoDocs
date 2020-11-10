@@ -196,9 +196,9 @@ on-chip bootloader though - see below.
 
 
 Advanced Reflashing
------------------
+-------------------
 
-In very rare cases (if you are experimenting with writing to Flash Memory), you may be able to damage the bootloader, which will effecitively 'brick' the Espruino WiFi.
+In very rare cases (if you are experimenting with writing to Flash Memory), you may be able to damage the bootloader, which will effectively 'brick' the Espruino WiFi.
 
 To fix this, you'll have to use the hard-wired USB DFU (Device Firmware Upgrade) bootloader. You can also use this method for flashing non-Espruino firmwares to Espruino.
 
@@ -215,7 +215,24 @@ Updating ESP8266 firmware
 ---------------------------
 
 Espruino WiFi contains and ESP8266 module to handle WiFi communications. It
-ships with firmware 0v40, but it can be updated reasonably easily if needed.
+ships with firmware 0v40, but it can be updated reasonably easily if needed:
+
+* In the Web IDE, click `Settings`, `Flasher`
+* Down the bottom of the screen, under `Espruino WiFi Firmware` click the
+`Update WiFi module` button to update the firmware. This will take several
+minutes, but will result in the firmware being updated.
+* If you are unsure of your currently installed version, you can
+click `Check version` to find out what is installed.
+
+
+### Advanced ESP8266 Reflashing
+
+You can also turn your Espruino WiFi's CPU into a USB-serial bridge, allowing
+you to use your desktop PC to flash the Espruino WiFi.
+
+**USE WITH CAUTION:** The unmodified `esptool.py` tool for updating firmware
+sends packets of data that are too large, and will not be able to successfully
+flash the ESP8266, leaving it bricked.
 
 * First connect to your Espruino WiFi with the Web IDE - make a note of the Espruino
 Path (usually `/dev/ttySomething` or `COMxx`) that is displayed in the connection screen.
@@ -240,6 +257,10 @@ LoopbackA.setConsole();
 
 * Download `esptool` from https://github.com/espressif/esptool
 
+* Check out tag `v2.0` with `git checkout v2.0`
+
+* Modify `esptool.py` to change both `ESP_RAM_BLOCK` and `FLASH_WRITE_SIZE` to `0x100`
+
 * Download the [ESP8266 1.5.4 firmware](/files/ESP8266_AT_1_5_4.zip)
 (originally from [here](https://www.electrodragon.com/w/ESP8266_AT-Command_firmware))
 
@@ -247,7 +268,7 @@ LoopbackA.setConsole();
 the device path (see the first step)
 
 ```
-esptool.py --port /dev/ttyACM0 --baud 115200 write_flash --flash_mode dio 0 AiThinker_ESP8266_DIO_32M_32M_20160615_V1.5.4.bin
+./esptool.py --no-stub --port /dev/ttyACM0 --baud 74880 write_flash --flash_mode dio 0 AiThinker_ESP8266_DIO_32M_32M_20160615_V1.5.4.bin
 ```
 
 * When complete, unplug the Espruno WiFi and re-plug it
