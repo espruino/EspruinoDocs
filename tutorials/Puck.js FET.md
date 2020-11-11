@@ -5,7 +5,7 @@ Puck.js FET
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+FET. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Puck.js,FET
-* USES: Puck.js,Web Bluetooth,BLE
+* USES: Puck.js
 
 [Puck.js](/Puck.js) version 2 contains an on-board FET. This allows you to control
 medium current (up to 200mA) devices  direct from Puck.js, without external components.
