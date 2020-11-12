@@ -8,7 +8,7 @@ Bangle.js
 
 [![](Banglejs/bangle-leaf.jpg)](https://shop.espruino.com/banglejs)
 
-* BUYFROM: £47,,https://shop.espruino.com/banglejs
+* BUYFROM: £59,£45,https://shop.espruino.com/banglejs,/Order#banglejs
 
 **Bangle.js is an open, hackable smartwatch**
 

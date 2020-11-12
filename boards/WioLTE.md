@@ -10,6 +10,8 @@ Seeed Wio LTE
 
 The [Seeed Wio LTE](http://wiki.seeedstudio.com/Wio_LTE_Cat.1/) board is an open source gateway which enable faster IoT GPS solutions.
 
+**NOTE: Espruino for Wio LTE is no longer officially supported. The last available build is 2v08**
+
 It contains:
 
 * Worldwide LTE and UMTS/HSPA+
