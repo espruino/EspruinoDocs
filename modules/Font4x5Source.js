@@ -1,4 +1,3 @@
-
 /* Copyright (c) 2020 Gordon Williams, Pur3 Ltd and MaBe. See the file LICENSE for copying permission. */
 
 var fontBitmap = Graphics.createImage(`
