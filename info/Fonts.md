@@ -99,6 +99,7 @@ Current modules are:
 | ![](Font4x4Numeric.js) | [[Font4x4Numeric.js]] | Tiny 4x4 fixed width font with no space between characters (only digits 0-9) |
 | ![](Font4x4.js) | [[Font4x4.js]] | Tiny 4x4 fixed width font by jose1711 |
 | ![](Font4x5Numeric.js) | [[Font4x5Numeric.js]] | 4x5 variable width font (only `./0123456789`) |
+| ![](Font4x5.js) | [[Font4x5.js]] | Tiny 4x5 fixed width font |
 | ![](Font4x8Numeric.js) | [[Font4x8Numeric.js]] | 4x8 fixed width font (only digits 0-9) |
 | ![](Font5x7Numeric7Seg.js) | [[Font5x7Numeric7Seg.js]] | 5x7 7 segment-style font (only `.0123456789:ABCDEF`) |
 | ![](Font7x11Numeric7Seg.js) | [[Font7x11Numeric7Seg.js]] | 7x11 7 segment-style font (only `.0123456789:ABCDEF`) |
