@@ -6,10 +6,10 @@ LIS3DH Accelerometer
 
 * KEYWORDS: Module,LIS3DH,I2C,Sensor,Accelerometer
 
-The [LIS2MDL](http://www.st.com/en/mems-and-sensors/lis3dh.html) is an ultra-low-power, high performance
-3-axis digital magnetic sensor.
+The [LIS3DH](http://www.st.com/en/mems-and-sensors/lis3dh.html) is an ultra-low-power, high performance
+3-axis digital acceleration sensor.
 
-You can use the [[LIS2MDL.js]] module with the LIS2MDL as follows:
+You can use the [[LIS3DH.js]] module with the LIS3DH as follows:
 
 I2C
 ---
