@@ -36,7 +36,7 @@ function BH1792(options,r,w) {
   w(R.RESET, 0x80); // force software reset
 }
 
-/** Get a default set of options that can be modified */
+/** Get a default set of options for streaming green HR readings that can be modified */
 BH1792.prototype.getDefaultOptions = function() {
   return {
     sel_adc : 0, // 0=green+ir, 1=ir
@@ -49,39 +49,77 @@ BH1792.prototype.getDefaultOptions = function() {
   };
 };
 
+/** Get a default set of options for taking a single reading - either green (ir=false) or IR (ir=true)*/
+BH1792.prototype.getSingleOptions = function(ir) {
+  return {
+    sel_adc : ir ? 1 : 0, // 0=green+ir, 1=ir
+    msr : 7, // 0=32Hz, 7=single measurement
+    led_en : 0, // 3 bits (led1,led1,led2). 0=pulsed
+    led_cur1 : 1, // in milliamps
+    led_cur2 : 1, // in milliamps
+    ir_th : 0xFFFC, // 16 bits
+    int_sel : 3  // measurement finished interrupt
+  };
+};
+
 /** Start measurements */
 BH1792.prototype.start = function(o) {
   var t=this;
   t.w(R.MEAS_CTRL1, [
     0b10000000 | (o.sel_adc<<4) | o.msr,// CTRL1 - RDY,green+ir,
-    ((o.led_en>>1)<<6) | o.led_cur1,
-    ((o.led_en&1)<<7) | o.led_cur2,
-    o.ir_th,
-    o.ir_th>>8,
-    o.int_sel,
+    ((o.led_en>>1)<<6) | o.led_cur1, // CTRL2
+    ((o.led_en&1)<<7) | o.led_cur2, // CTRL3
+    o.ir_th,    // CTRL4_lsb
+    o.ir_th>>8, // CTRL4_msb
+    o.int_sel,  // CTRL5
     1 // MEAS_START
   ]);
-  t.w(R.MEAS_SYNC, 1);
+  var streaming = o.msr!=7;
   if (t.syncInterval) clearInterval(t.syncInterval);
   if (t.irqWatch) clearWatch(t.irqWatch);
+  t.syncInterval = undefined;
   t.irqWatch = undefined;
-  if (t.options.irq) {
-    pinMode(t.options.irq, "input_pullup");
-    t.irqWatch = setWatch(function() {
-      var d = h.getFIFO();
-      if (t.options.callback)
-        t.options.callback(d);
-    }, t.options.irq, {edge:-1, repeat:true});
-    t.syncInterval = setInterval(function() {
-      t.w(R.MEAS_SYNC, 1);
-    },1000);
-  } else {
-    t.syncInterval = setInterval(function() {
-      t.w(R.MEAS_SYNC, 1);
-      var d = h.getFIFO();
-      if (t.options.callback)
-        t.options.callback(d);
-    },1000);
+  t.r(R.INT_CLEAR, 1); // reading to clear IRQ pin
+  if (streaming) {
+    if (t.options.irq) {
+      pinMode(t.options.irq, "input_pullup");
+      t.irqWatch = setWatch(function() {
+        var d = h.getFIFO();
+        if (t.options.callback)
+          t.options.callback(d);
+      }, t.options.irq, {edge:-1, repeat:true});
+      t.syncInterval = setInterval(function() {
+        t.w(R.MEAS_SYNC, 1);
+      },1000);
+    } else {    
+      t.syncInterval = setInterval(function() {
+        t.w(R.MEAS_SYNC, 1);
+        var d = h.getFIFO();
+        if (t.options.callback)
+          t.options.callback(d);
+      },1000);
+    }
+    t.w(R.MEAS_SYNC, 1);
+  } else { // not streaming - single measurement
+    if (t.options.irq) {
+      pinMode(t.options.irq, "input_pullup");
+      t.irqWatch = setWatch(function() {
+        t.irqWatch = undefined;
+        var d = t.getMeasurements();
+        t.w(R.RESET, 0x80); // sw reset, turns everything off
+        if (t.options.callback)
+          t.options.callback(d);
+      }, t.options.irq, {edge:-1, repeat:false});
+    } else {
+      t.syncInterval = setTimeout(function() {
+        t.syncInterval = undefined;
+        var d = t.getMeasurements();
+        t.w(R.RESET, 0x80); // sw reset, turns everything off
+        if (t.options.callback)
+          t.options.callback(d);
+      },100);
+    }
+    t.w(R.MEAS_START, 1);
   }
 };
 
@@ -98,7 +136,8 @@ BH1792.prototype.stop = function() {
   }
 };
 
-/** Reads from the FIFO, return only data for green with light on.
+/** Reads from the FIFO for streaming operation, return only data for green with light on.
+Returns data as a Uint16Array of LED on readings
 This is used internally */
 BH1792.prototype.getFIFO = function() {
   var l = h.r(R.FIFO_LEV);
@@ -107,16 +146,29 @@ BH1792.prototype.getFIFO = function() {
   for (var i=0;i<dat.length;i++) {
     var d = new Uint16Array(h.r(R.FIFO_DATA0_LSBS,4).buffer);
     // d=[led_off, led_on]
-    dat[i] = d[1];
+    dat[i] = d[1]; // subtract on from off?
   }
   return dat;
+};
+
+/** Reads the current measurement data for non-streaming operation, also clears IRQ
+ Returns data in the form { "irOff": ..., "irOn": ..., "greenOff": ..., "greenOn": ... } 
+ This is used internally*/
+BH1792.prototype.getMeasurements = function() {
+  var d = new Uint16Array(h.r(R.IRDATA_LEDOFF_LSBS,9).buffer);
+  return {
+    irOff : d[0],
+    irOn : d[1],
+    greenOff : d[2],
+    greenOn : d[3]
+  };
 };
 
 /** Connect to BH1792 and return an instance of BH1792.
   options = {
   addr,      // I2C address (optional)
   irq,       // irq pin (optional)
-  callback   // data callback
+  callback   // data callback - see getFIFO(if streaming)/getMeasurements(single) for data format
 } */
 exports.connect = function(i2c, options) {
   options=options||{};
