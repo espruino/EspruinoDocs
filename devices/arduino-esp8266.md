@@ -84,6 +84,10 @@ function onInit() {
 
 # Software
 
+**Note:** your module **may not come with ESP8266 AT firmware installed**. To fix this,
+see the [the ESP8266 page](/ESP8266#updating-esp8266-firmware). If you're using Pixl.js
+you can now update the firmware on the ESP8266 module via the `Flasher` section of the Web IDE.
+
 ## Client
 
 To connect to a WiFi access point.

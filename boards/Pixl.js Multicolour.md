@@ -421,6 +421,8 @@ var wifi = require("ESP8266WiFi_0v25").connect(Serial1, function(err) {
 Check out [http://www.espruino.com/Internet](Espruino's page on Internet stuff)
 for more info.
 
+You can [now update ESP8266 firmware using the Web IDE](/ESP8266#use-the-espruino-ide).
+
 ## Updating Espruino
 
 The badges came with Espruino v2.00, but there have [been a few changes](https://github.com/espruino/Espruino/blob/master/ChangeLog)
