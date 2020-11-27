@@ -20,6 +20,7 @@ See the [Graphics](/Graphics) library page for more information.
 <input type="file" id="fileLoader"/><br/>
 <input type="checkbox" id="compression" onchange="imageLoaded()">Use Compression?</input><br/>
 <input type="checkbox" id="transparent" onchange="imageLoaded()" checked>Transparency?</input><br/>
+<input type="checkbox" id="autoCrop" onchange="imageLoaded()">Crop?</input><br/>
 Diffusion:
 <select id="diffusion" onchange="imageLoaded()">
 <option value="none" selected="selected">Flat</option>
@@ -60,6 +61,7 @@ Output As: <select id="outputStyle" onchange="imageLoaded()">
     options.diffusion = diffusionSelect.options[diffusionSelect.selectedIndex].value;
     options.compression = document.getElementById("compression").checked;
     options.transparent = document.getElementById("transparent").checked;
+    options.autoCrop = document.getElementById("autoCrop").checked;
     options.brightness = 0|document.getElementById("brightness").value;
     var colorSelect = document.getElementById("colorStyle");
     options.mode = colorSelect.options[colorSelect.selectedIndex].value;
@@ -81,12 +83,15 @@ Output As: <select id="outputStyle" onchange="imageLoaded()">
 
     if (true) {
       var imageData = ctx.getImageData(0, 0, img.width, img.height);
+      ctx.fillStyle = 'white';
+      ctx.fillRect(options.width, 0, img.width, img.height);
       var rgba = imageData.data;
       options.rgbaOut = rgba;
       options.width = img.width;
       options.height = img.height;
       imgstr = "var img = "+imageconverter.RGBAtoString(rgba, options);
-      ctx.putImageData(imageData,img.width,0);
+      var outputImageData = new ImageData(options.rgbaOut, options.width, options.height);
+      ctx.putImageData(outputImageData,img.width,0);
     }/* else { // output the image as slices
       var SLICEHEIGHT = 8;
       for (var y=0;y<img.height;y+=SLICEHEIGHT) {
@@ -102,7 +107,7 @@ Output As: <select id="outputStyle" onchange="imageLoaded()">
 
     // checkerboard for transparency on original image
     var imageData = ctx.getImageData(0, 0, img.width, img.height);
-    imageconverter.RGBAtoCheckerboard(imageData.data, options)
+    imageconverter.RGBAtoCheckerboard(imageData.data, {width:img.width,height:img.height});
     ctx.putImageData(imageData,0,0);
 
     document.getElementById("ressize").innerHTML = imgstr.length+" Characters";
