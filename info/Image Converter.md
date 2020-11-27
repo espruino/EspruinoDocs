@@ -40,6 +40,9 @@ Colours: <select id="colorStyle" onchange="imageLoaded()">
 <option value="web">8 bit Web palette</option>
 <option value="vga">8 bit VGA palette</option>
 <option value="rgb565">16 bit RGB565</option>
+<option value="opt1bit">Optimal 1 bit</option>
+<option value="opt2bit">Optimal 2 bit</option>
+<option value="opt4bit">Optimal 4 bit</option>
 </select><br/>
 Output As: <select id="outputStyle" onchange="imageLoaded()">
 <option value="object" selected="selected">Image Object</option>
