@@ -110,23 +110,6 @@ function mqttPacket(cmd, variable, payload) {
   return fromCharCode(cmd) + mqttPacketLength(variable.length + payload.length) + variable + payload;
 }
 
-/** PUBLISH packet parser - returns object with topic and message */
-function parsePublish(cmd,data) {
-  if (data.length >= 2 && typeof data !== "undefined") {
-    var qos = (cmd & 0x6) >> 1;
-    var topic_len = data.charCodeAt(0) << 8 | data.charCodeAt(1);
-    var msg_start = 2 + topic_len + (qos?2:0); // skip message ID if QoS!=0
-    return {
-      topic  : data.substr(2, topic_len),
-      message: data.substr(msg_start, data.length - msg_start),
-      dup    : (cmd & 0x8) >> 3,
-      qos    : qos,
-      pid    : qos?data.substr(2+topic_len,2):0,
-      retain : cmd & 0x1
-    };
-  }
-}
-
 /** Generate random UID */
 var mqttUid = (function () {
   function s4() {
@@ -183,120 +166,124 @@ function mqttUnsubscribe(topic) {
 
 /** Create escaped hex value from number */
 function createEscapedHex(number) {
-    return fromCharCode(parseInt(number.toString(16), 16));
+  return fromCharCode(parseInt(number.toString(16), 16));
 }
+
+// Handle a single packet of data
+MQTT.prototype.packetHandler = function(data) {
+  // if we had some data left over from last
+  // time, add it on
+  if (this.partData) {
+    data = this.partData + data;
+    this.partData = '';
+  }
+  // Figure out packet length...
+  var dLen = mqttPacketLengthDec(data.substr(1, 5));
+  var pLen = dLen.decLen + dLen.lenBy + 1;
+  // less than one packet?
+  if (data.length < pLen) {
+    this.partData = data;
+    return;
+  }
+  // Get the data for this packet
+  var pData = data.substr(dLen.lenBy + 1, dLen.decLen);
+  // more than one packet? re-emit it so we handle it later
+  if (data.length > pLen)
+    this.client.emit('data', data.substr(pLen));
+  // Now handle this MQTT packet
+  var cmd = data.charCodeAt(0);
+  var type = cmd >> 4;
+  if (type === TYPE.PUBLISH) {
+    var qos = (cmd & 0x6) >> 1;
+    var topic_len = pData.charCodeAt(0) << 8 | pData.charCodeAt(1);
+    var msg_start = 2 + topic_len + (qos?2:0); // skip message ID if QoS!=0
+    var parsedData = {
+      topic  : pData.substr(2, topic_len),
+      message: pData.substr(msg_start, pData.length - msg_start),
+      dup    : (cmd & 0x8) >> 3,
+      qos    : qos,
+      pid    : qos?pData.substr(2+topic_len,2):0,
+      retain : cmd & 0x1
+    };
+    if(parsedData.qos)
+      this.client.write(fromCharCode(((parsedData.qos == 1)?TYPE.PUBACK:TYPE.PUBREC) << 4) + "\x02" + parsedData.pid);
+    this.emit('publish', parsedData);
+    this.emit('message', parsedData.topic, parsedData.message);
+  } else if (type === TYPE.PUBACK) {
+    this.emit('puback', data.charCodeAt(2) << 8 | data.charCodeAt(3));
+  } else if (type === TYPE.PUBREC) {
+    this.client.write(fromCharCode(TYPE.PUBREL << 4 | 2) + "\x02" + getPid(pData));
+  } else if (type === TYPE.PUBREL) {
+    this.client.write(fromCharCode(TYPE.PUBCOMP << 4) + "\x02" + getPid(pData));
+  } else if (type === TYPE.PUBCOMP) {
+    this.emit('pubcomp', data.charCodeAt(2) << 8 | data.charCodeAt(3));
+  } else if (type === TYPE.SUBACK) {
+    if(pData.length > 0) {
+      if(pData[pData.length - 1] == 0x80) {
+        //console.log("Subscription failed");
+        this.emit('subscribed_fail');
+      } else {
+        //console.log("Subscription succesfull");
+        this.emit('subscribed');
+      }
+    }
+  } else if (type === TYPE.UNSUBACK) {
+    //console.log("Unsubscription succesful.");
+    this.emit('unsubscribed');
+  } else if (type === TYPE.PINGREQ) {
+    this.client.write(fromCharCode(TYPE.PINGRESP << 4) + "\x00");
+  } else if (type === TYPE.PINGRESP) {
+    this.emit('ping_reply');
+  } else if (type === TYPE.CONNACK) {
+    if (this.ctimo) clearTimeout(this.ctimo);
+    this.ctimo = undefined;
+    this.partData = '';
+    var returnCode = pData.charCodeAt(3);
+    if (RETURN_CODES[returnCode] === 'ACCEPTED') {
+      this.connected = true;
+      // start pinging
+      if (this.pintr) clearInterval(this.pintr);
+      this.pintr = setInterval(this.ping.bind(this), this.ping_interval * 1000);
+      // emit connected events
+      this.emit('connected');
+      this.emit('connect');
+    } else {
+      var mqttError = "Connection refused, ";
+      this.connected = false;
+      if (returnCode > 0 && returnCode < 6) {
+        mqttError += RETURN_CODES[returnCode];
+      } else {
+        mqttError += "unknown return code: " + returnCode + ".";
+      }
+      this.emit('error', mqttError);
+    }
+  } else {
+    this.emit('error', "MQTT unsupported packet type: " + type);
+    //console.log("[MQTT]" + data.split("").map(function (c) { return c.charCodeAt(0); }));
+  }
+};
 
 /* Public interface ****************************/
 
 /** Establish connection and set up keep_alive ping */
 MQTT.prototype.connect = function (client) {
   var mqo = this;
-  var pinger = function () {
-    if (mqo.pintr) clearInterval(mqo.pintr);
-    mqo.pintr = setInterval(function () {
-      mqo.ping();
-    }, mqo.ping_interval * 1000);
-  };
-
   var onConnect = function () {
+    mqo.client = client;
+    // write connection message
     client.write(mqo.mqttConnect(mqo.client_id));
-
+    // handle connection timeout if too slow
     mqo.ctimo = setTimeout(function () {
-        mqo.ctimo = undefined;
-        mqo.emit('disconnected');
-        mqo.disconnect();
+      mqo.ctimo = undefined;
+      mqo.emit('disconnected');
+      mqo.disconnect();
     }, mqo.C.CONNECT_TIMEOUT);
-
     // Incoming data
-    client.on('data', function (data) {
-      // if we had some data left over from last
-      // time, add it on
-      if (mqo.partData) {
-        data = mqo.partData + data;
-        mqo.partData = '';
-      }
-      // Figure out packet length...
-      var dLen = mqttPacketLengthDec(data.substr(1, 5));
-      var pLen = dLen.decLen + dLen.lenBy + 1;
-      // less than one packet?
-      if (data.length < pLen) {
-        mqo.partData = data;
-        return;
-      }
-      // Get the data for this packet
-      var pData = data.substr(dLen.lenBy + 1, dLen.decLen);
-      // more than one packet? re-emit it so we handle it later
-      if (data.length > pLen)
-        client.emit('data', data.substr(pLen));
-      // Now handle this MQTT packet
-      var type = data.charCodeAt(0) >> 4;
-      if (type === TYPE.PUBLISH) {
-        var parsedData = parsePublish(data[0],pData);
-        if (parsedData !== undefined) {
-          if(parsedData.qos)
-            client.write(fromCharCode(((parsedData.qos == 1)?TYPE.PUBACK:TYPE.PUBREC) << 4) + "\x02" + parsedData.pid);
-          mqo.emit('publish', parsedData);
-          mqo.emit('message', parsedData.topic, parsedData.message);
-        }
-      }
-      else if (type === TYPE.PUBACK) {
-        mqo.emit('puback', data.charCodeAt(2) << 8 | data.charCodeAt(3));
-      } else if (type === TYPE.PUBREC) {
-        client.write(fromCharCode(TYPE.PUBREL << 4 | 2) + "\x02" + getPid(pData));
-      } else if (type === TYPE.PUBREL) {
-        client.write(fromCharCode(TYPE.PUBCOMP << 4) + "\x02" + getPid(pData));
-      } else if (type === TYPE.PUBCOMP) {
-        mqo.emit('pubcomp', data.charCodeAt(2) << 8 | data.charCodeAt(3));
-      }
-      else if (type === TYPE.SUBACK) {
-        if(pData.length > 0)
-        {
-          if(pData[pData.length - 1] == 0x80) {
-            //console.log("Subscription failed");
-            mqo.emit('subscribed_fail');
-          } else {
-            //console.log("Subscription succesfull");
-            mqo.emit('subscribed');
-          }
-        }
-      } else if (type === TYPE.UNSUBACK) {
-        //console.log("Unsubscription succesful.");
-        mqo.emit('unsubscribed');
-      } else if (type === TYPE.PINGREQ) {
-        client.write(fromCharCode(TYPE.PINGRESP << 4) + "\x00");
-      } else if (type === TYPE.PINGRESP) {
-        mqo.emit('ping_reply');
-      } else if (type === TYPE.CONNACK) {
-        if (mqo.ctimo) clearTimeout(mqo.ctimo);
-        mqo.ctimo = undefined;
-        mqo.partData = '';
-        var returnCode = pData.charCodeAt(3);
-        if (RETURN_CODES[returnCode] === 'ACCEPTED') {
-          mqo.connected = true;
-          pinger(); // start pinging
-          mqo.emit('connected');
-          mqo.emit('connect');
-        } else {
-          var mqttError = "Connection refused, ";
-          mqo.connected = false;
-          if (returnCode > 0 && returnCode < 6) {
-            mqttError += RETURN_CODES[returnCode];
-          } else {
-            mqttError += "unknown return code: " + returnCode + ".";
-          }
-          mqo.emit('error', mqttError);
-        }
-      } else {
-        mqo.emit('error', "MQTT unsupported packet type: " + type);
-        //console.log("[MQTT]" + data.split("").map(function (c) { return c.charCodeAt(0); }));
-      }
-    });
-
-    client.on('end', function () {
+    client.on('data', mqo.packetHandler.bind(mqo));
+    // Socket closed
+    client.on('end', function() {
       mqo._scktClosed();
     });
-
-    mqo.client = client;
   };
   if (client) {
     onConnect();
