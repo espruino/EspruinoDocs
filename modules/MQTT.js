@@ -211,25 +211,27 @@ MQTT.prototype.connect = function (client) {
 
         // Incoming data
         client.on('data', function (data) {
+            // if we had some data left over from last
+            // time, add it on
             if (mqo.partData) {
                 data = mqo.partData + data;
                 mqo.partData = '';
             }
-
-            var type = data.charCodeAt(0) >> 4;
+            // Figure out packet length...
             var dLen = mqttPacketLengthDec(data.substr(1, 5));
             var pLen = dLen.decLen + dLen.lenBy + 1;
-
+            // less than one packet?
             if (data.length < pLen) {
                 mqo.partData = data;
                 return;
             }
-            var pData = data.substr(dLen.lenBy + 1, pLen);
-
-            if (data.length > pLen) {
-                client.emit('data', data.substr(pLen));
-            }
-
+            // Get the data for this packet
+            var pData = data.substr(dLen.lenBy + 1, dLen.decLen);
+            // more than one packet? re-emit it so we handle it later
+            if (data.length > pLen)
+              client.emit('data', data.substr(pLen));
+            // Now handle this MQTT packet
+            var type = data.charCodeAt(0) >> 4;
             if (type === TYPE.PUBLISH) {
                 var parsedData = parsePublish(data[0],pData);
                 if (parsedData !== undefined) {
