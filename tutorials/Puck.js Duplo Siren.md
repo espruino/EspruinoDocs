@@ -34,6 +34,8 @@ Wire up as in the video:
 Software
 --------
 
+You can also upload this [direct from the Espruino App Loader](http://www.espruino.com/apps#pucksiren)
+
 ```
 D2.reset();
 D30.reset();

@@ -28,6 +28,7 @@ Contents
 
 ### Firmwares
 
+- Upload firmware [direct from the Espruino App Loader](http://www.espruino.com/apps#pixlmulticolbadge)
 - [Simple Badge firmware](https://github.com/Espruino/EspruinoDocs/blob/master/boards/PixljsMulticolour/simple.js)
 - [The Nodeconf EU Badge's default firmware](https://github.com/nearform/nceubadge2018/blob/master/js/badge.js)
 

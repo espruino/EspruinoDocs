@@ -18,7 +18,7 @@ This can easily be ported to other devices by:
 * Making sure `g` is an instance of [[Graphics]]
 * Ensuring `BTNL/R/U` are set correctly
 
-
+You can also upload this [direct from the Espruino App Loader](http://www.espruino.com/apps#trex)
 
 
 */

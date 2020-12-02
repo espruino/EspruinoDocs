@@ -25,6 +25,8 @@ The code will work on any Bluetooth LE capable Espruino board - if you're not
 using a Pixl you can add your own display with the Graphics instance as the `g` variable,
 or you can just replace `displayInfo`.
 
+You can also upload this [direct from the Espruino App Loader](http://www.espruino.com/apps#tilthydro)
+
 */
 
 
