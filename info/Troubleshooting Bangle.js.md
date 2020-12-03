@@ -15,9 +15,15 @@ Please also check out the [Bluetooth specific troubleshooting page](http://www.e
 
 ### I can't connect to my Bangle.js
 
+First, you can check your computer is capable of Web Bluetooth by [going to the Web IDE](https://www.espruino.com/ide/),
+clicking the connect icon up the top right, then the `Status` link in the menu that pops up.
+
+In addition:
+
 * If you paired Bangle.js in the Bluetooth settings of any of your devices, make sure to unpair it.
-* Ensure `HID` is `Off` and `BLE` and `Programmable` are set to `On` in the `Settings` screen.
+* Ensure `HID` is `Off`, and `BLE` and `Programmable` are set to `On` in the `Settings` screen.
 * Hold `BTN1` and `BTN2` for 5 seconds to force a full software reset of Bangle.js: https://www.espruino.com/Bangle.js#resetting
+* On Mac OS Big Sur, it may help to go to your Mac's Bluetooth Widget (in the toolbar), choose `Bluetooth Preferences`, then remove the Bangle.js from the list of devices.
 
 Then go to https://banglejs.com/apps and connect using the window provided by the Web Browser.
 
