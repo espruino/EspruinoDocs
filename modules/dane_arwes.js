@@ -135,8 +135,6 @@ Arwes.prototype.drawFrameNoCorners = function (x1, y1, x2, y2) {
   g.fillRect(x1 + C.borderWidth, y1 + C.borderWidth, x2 - C.borderWidth, y2 - C.borderWidth);
 }
 
-
-/** This is 'exported' so it can be used with `require('MOD123.js').connect(pin1,pin2)` */
 exports.create = function (cornerSize, cornerOffset, borderWidth) {
   return new Arwes(cornerSize, cornerOffset, borderWidth);
 };
