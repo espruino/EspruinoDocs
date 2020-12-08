@@ -59,8 +59,6 @@ Arwes.prototype.C = {
 
 
 function drawTopLeftCorner(obj, x, y) {
-  "compiled";
-
   g.setColor(obj.C.color.primary.base);
   const x1 = x - obj.cornerOffset;
   const y1 = y - obj.cornerOffset;
@@ -70,8 +68,6 @@ function drawTopLeftCorner(obj, x, y) {
 }
 
 function drawTopRightCorner(obj, x, y) {
-  "compiled";
-
   g.setColor(obj.C.color.primary.base);
   const x1 = x + obj.cornerOffset;
   const y1 = y - obj.cornerOffset;
@@ -81,8 +77,6 @@ function drawTopRightCorner(obj, x, y) {
 }
 
 function drawBottomLeftCorner(obj, x, y) {
-  "compiled";
-
   g.setColor(obj.C.color.primary.base);
   const x1 = x - obj.cornerOffset;
   const y1 = y + obj.cornerOffset;
@@ -92,8 +86,6 @@ function drawBottomLeftCorner(obj, x, y) {
 }
 
 function drawBottomRightCorner(obj, x, y) {
-  "compiled";
-
   g.setColor(obj.C.color.primary.base);
   const x1 = x + obj.cornerOffset;
   const y1 = y + obj.cornerOffset;
@@ -104,8 +96,6 @@ function drawBottomRightCorner(obj, x, y) {
 
 
 Arwes.prototype.drawFrame = function (x1, y1, x2, y2) {
-  "compiled";
-
   drawTopLeftCorner(this, x1, y1);
   drawTopRightCorner(this, x2, y1);
   drawBottomLeftCorner(this, x1, y2);
@@ -114,32 +104,24 @@ Arwes.prototype.drawFrame = function (x1, y1, x2, y2) {
 }
 
 Arwes.prototype.drawFrameBottomCorners = function (x1, y1, x2, y2) {
-  "compiled";
-
   drawBottomLeftCorner(this, x1, y2);
   drawBottomRightCorner(this, x2, y2);
   this.drawFrameNoCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameTopCorners = function (x1, y1, x2, y2) {
-  "compiled";
-
   drawTopLeftCorner(this, x1, y1);
   drawTopRightCorner(this, x2, y1);
   this.drawFrameNoCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameLeftCorners = function (x1, y1, x2, y2) {
-  "compiled";
-
   drawTopLeftCorner(this, x1, y1);
   drawBottomLeftCorner(this, x1, y2);
   this.drawFrameNoCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameRightCorners = function (x1, y1, x2, y2) {
-  "compiled";
-
   drawTopRightCorner(this, x2, y1);
   drawBottomRightCorner(this, x2, y2);
   this.drawFrameNoCorners(x1, y1, x2, y2);
@@ -147,8 +129,6 @@ Arwes.prototype.drawFrameRightCorners = function (x1, y1, x2, y2) {
 
 
 Arwes.prototype.drawFrameNoCorners = function (x1, y1, x2, y2) {
-  "compiled";
-
   g.setColor(this.C.color.primary.dark);
   g.drawRect(x1, y1, x2, y2);
   g.setColor("#000000");
