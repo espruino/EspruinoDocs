@@ -110,7 +110,7 @@ Arwes.prototype.drawFrame = function (x1, y1, x2, y2) {
   drawTopRightCorner(this, x2, y1);
   drawBottomLeftCorner(this, x1, y2);
   drawBottomRightCorner(this, x2, y2);
-  this.drawFrameTopCorners(x1, y1, x2, y2);
+  this.drawFrameNoCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameBottomCorners = function (x1, y1, x2, y2) {
@@ -118,7 +118,7 @@ Arwes.prototype.drawFrameBottomCorners = function (x1, y1, x2, y2) {
 
   drawBottomLeftCorner(this, x1, y2);
   drawBottomRightCorner(this, x2, y2);
-  this.drawFrameTopCorners(x1, y1, x2, y2);
+  this.drawFrameNoCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameTopCorners = function (x1, y1, x2, y2) {
@@ -126,7 +126,7 @@ Arwes.prototype.drawFrameTopCorners = function (x1, y1, x2, y2) {
 
   drawTopLeftCorner(this, x1, y1);
   drawTopRightCorner(this, x2, y1);
-  this.drawFrameTopCorners(x1, y1, x2, y2);
+  this.drawFrameNoCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameLeftCorners = function (x1, y1, x2, y2) {
@@ -134,7 +134,7 @@ Arwes.prototype.drawFrameLeftCorners = function (x1, y1, x2, y2) {
 
   drawTopLeftCorner(this, x1, y1);
   drawBottomLeftCorner(this, x1, y2);
-  this.drawFrameTopCorners(x1, y1, x2, y2);
+  this.drawFrameNoCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameRightCorners = function (x1, y1, x2, y2) {
@@ -142,7 +142,7 @@ Arwes.prototype.drawFrameRightCorners = function (x1, y1, x2, y2) {
 
   drawTopRightCorner(this, x2, y1);
   drawBottomRightCorner(this, x2, y2);
-  this.drawFrameTopCorners(x1, y1, x2, y2);
+  this.drawFrameNoCorners(x1, y1, x2, y2);
 }
 
 
