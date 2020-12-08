@@ -13,7 +13,6 @@ function Arwes(cornerSize, cornerOffset, borderWidth) {
   this.cornerSize = cornerSize;
   this.cornerOffset = cornerOffset;
   this.borderWidth = borderWidth;
-  this.color = this.C.color;
 }
 
 
@@ -59,10 +58,10 @@ Arwes.prototype.C = {
 };
 
 
-function drawTopLeftCorner(x, y) {
+function drawTopLeftCorner(C, x, y) {
   
 
-  g.setColor(this.C.color.primary.base);
+  g.setColor(C.color.primary.base);
   const x1 = x - C.cornerOffset;
   const y1 = y - C.cornerOffset;
   g.fillRect(x1, y1, x1 + C.cornerSize, y1 + C.cornerSize);
@@ -70,10 +69,10 @@ function drawTopLeftCorner(x, y) {
   g.fillRect(x, y, x + C.cornerSize - C.cornerOffset, y + C.cornerSize - C.cornerOffset);
 }
 
-function drawTopRightCorner(x, y) {
+function drawTopRightCorner(C, x, y) {
   
 
-  g.setColor(this.C.color.primary.base);
+  g.setColor(C.color.primary.base);
   const x1 = x + C.cornerOffset;
   const y1 = y - C.cornerOffset;
   g.fillRect(x1, y1, x1 - C.cornerSize, y1 + C.cornerSize);
@@ -81,10 +80,10 @@ function drawTopRightCorner(x, y) {
   g.fillRect(x, y, x - C.cornerSize - C.cornerOffset, y + C.cornerSize - C.cornerOffset);
 }
 
-function drawBottomLeftCorner(x, y) {
+function drawBottomLeftCorner(C, x, y) {
   
 
-  g.setColor(this.C.color.primary.base);
+  g.setColor(C.color.primary.base);
   const x1 = x - C.cornerOffset;
   const y1 = y + C.cornerOffset;
   g.fillRect(x1, y1, x1 + C.cornerSize, y1 - C.cornerSize);
@@ -92,10 +91,10 @@ function drawBottomLeftCorner(x, y) {
   g.fillRect(x, y, x + C.cornerSize - C.cornerOffset, y - C.cornerSize + C.cornerOffset);
 }
 
-function drawBottomRightCorner(x, y) {
+function drawBottomRightCorner(C, x, y) {
   
 
-  g.setColor(this.C.color.primary.base);
+  g.setColor(C.color.primary.base);
   const x1 = x + C.cornerOffset;
   const y1 = y + C.cornerOffset;
   g.fillRect(x1, y1, x1 - C.cornerSize, y1 - C.cornerSize);
@@ -107,42 +106,42 @@ function drawBottomRightCorner(x, y) {
 Arwes.prototype.drawFrame = function (x1, y1, x2, y2) {
   
 
-  drawTopLeftCorner(x1, y1);
-  drawTopRightCorner(x2, y1);
-  drawBottomLeftCorner(x1, y2);
-  drawBottomRightCorner(x2, y2);
+  drawTopLeftCorner(this, x1, y1);
+  drawTopRightCorner(this, x2, y1);
+  drawBottomLeftCorner(this, x1, y2);
+  drawBottomRightCorner(this, x2, y2);
   this.drawFrameTopCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameBottomCorners = function (x1, y1, x2, y2) {
   
 
-  drawBottomLeftCorner(x1, y2);
-  drawBottomRightCorner(x2, y2);
+  drawBottomLeftCorner(this, x1, y2);
+  drawBottomRightCorner(this, x2, y2);
   this.drawFrameTopCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameTopCorners = function (x1, y1, x2, y2) {
   
 
-  drawTopLeftCorner(x1, y1);
-  drawTopRightCorner(x2, y1);
+  drawTopLeftCorner(this, x1, y1);
+  drawTopRightCorner(this, x2, y1);
   this.drawFrameTopCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameLeftCorners = function (x1, y1, x2, y2) {
   
 
-  drawTopLeftCorner(x1, y1);
-  drawBottomLeftCorner(x1, y2);
+  drawTopLeftCorner(this, x1, y1);
+  drawBottomLeftCorner(this, x1, y2);
   this.drawFrameTopCorners(x1, y1, x2, y2);
 }
 
 Arwes.prototype.drawFrameRightCorners = function (x1, y1, x2, y2) {
   
 
-  drawTopRightCorner(x2, y1);
-  drawBottomRightCorner(x2, y2);
+  drawTopRightCorner(this, x2, y1);
+  drawBottomRightCorner(this, x2, y2);
   this.drawFrameTopCorners(x1, y1, x2, y2);
 }
 
