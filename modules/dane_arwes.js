@@ -58,48 +58,48 @@ Arwes.prototype.C = {
 };
 
 
-function drawTopLeftCorner(C, x, y) {
+function drawTopLeftCorner(obj, x, y) {
   
 
-  g.setColor(C.color.primary.base);
-  const x1 = x - C.cornerOffset;
-  const y1 = y - C.cornerOffset;
-  g.fillRect(x1, y1, x1 + C.cornerSize, y1 + C.cornerSize);
+  g.setColor(obj.C.color.primary.base);
+  const x1 = x - obj.cornerOffset;
+  const y1 = y - obj.cornerOffset;
+  g.fillRect(x1, y1, x1 + obj.cornerSize, y1 + obj.cornerSize);
   g.setColor("#000000");
-  g.fillRect(x, y, x + C.cornerSize - C.cornerOffset, y + C.cornerSize - C.cornerOffset);
+  g.fillRect(x, y, x + obj.cornerSize - obj.cornerOffset, y + obj.cornerSize - obj.cornerOffset);
 }
 
-function drawTopRightCorner(C, x, y) {
+function drawTopRightCorner(obj, x, y) {
   
 
-  g.setColor(C.color.primary.base);
-  const x1 = x + C.cornerOffset;
-  const y1 = y - C.cornerOffset;
-  g.fillRect(x1, y1, x1 - C.cornerSize, y1 + C.cornerSize);
+  g.setColor(obj.C.color.primary.base);
+  const x1 = x + obj.cornerOffset;
+  const y1 = y - obj.cornerOffset;
+  g.fillRect(x1, y1, x1 - obj.cornerSize, y1 + obj.cornerSize);
   g.setColor("#000000");
-  g.fillRect(x, y, x - C.cornerSize - C.cornerOffset, y + C.cornerSize - C.cornerOffset);
+  g.fillRect(x, y, x - obj.cornerSize - obj.cornerOffset, y + obj.cornerSize - obj.cornerOffset);
 }
 
-function drawBottomLeftCorner(C, x, y) {
-  
+function drawBottomLeftCorner(obj, x, y) {
 
-  g.setColor(C.color.primary.base);
-  const x1 = x - C.cornerOffset;
-  const y1 = y + C.cornerOffset;
-  g.fillRect(x1, y1, x1 + C.cornerSize, y1 - C.cornerSize);
+
+  g.setColor(obj.C.color.primary.base);
+  const x1 = x - obj.cornerOffset;
+  const y1 = y + obj.cornerOffset;
+  g.fillRect(x1, y1, x1 + obj.cornerSize, y1 - obj.cornerSize);
   g.setColor("#000000");
-  g.fillRect(x, y, x + C.cornerSize - C.cornerOffset, y - C.cornerSize + C.cornerOffset);
+  g.fillRect(x, y, x + obj.cornerSize - obj.cornerOffset, y - obj.cornerSize + obj.cornerOffset);
 }
 
-function drawBottomRightCorner(C, x, y) {
+function drawBottomRightCorner(obj, x, y) {
   
 
-  g.setColor(C.color.primary.base);
-  const x1 = x + C.cornerOffset;
-  const y1 = y + C.cornerOffset;
-  g.fillRect(x1, y1, x1 - C.cornerSize, y1 - C.cornerSize);
+  g.setColor(obj.C.color.primary.base);
+  const x1 = x + obj.cornerOffset;
+  const y1 = y + obj.cornerOffset;
+  g.fillRect(x1, y1, x1 - obj.cornerSize, y1 - obj.cornerSize);
   g.setColor("#000000");
-  g.fillRect(x, y, x - C.cornerSize + C.cornerOffset, y - C.cornerSize + C.cornerOffset);
+  g.fillRect(x, y, x - obj.cornerSize + obj.cornerOffset, y - obj.cornerSize + obj.cornerOffset);
 }
 
 
@@ -162,5 +162,5 @@ exports.create = function (cornerSize, cornerOffset, borderWidth) {
 };
 
 exports.default = function () {
-  return new Arwes(14, 3, 1);
+  return new Arwes(C.cornerSize, C.cornerOffset, C.borderWidth);
 };
