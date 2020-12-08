@@ -13,6 +13,7 @@ function Arwes(cornerSize, cornerOffset, borderWidth) {
   this.cornerSize = cornerSize;
   this.cornerOffset = cornerOffset;
   this.borderWidth = borderWidth;
+  this.color = this.C.color;
 }
 
 
