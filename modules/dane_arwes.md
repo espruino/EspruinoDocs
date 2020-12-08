@@ -2,22 +2,18 @@
 DANE Arwes Graphics
 =====================
 
-* KEYWORDS: Module,Comma,separated,list,of,search,words
+* KEYWORDS: Module,Arwes,Graphics
 
-A bit about my module. Use the [MOD123](/modules/MOD123.js) ([About Modules](/Modules)) module for it.
+A UI Framework for BangleJs base on [Arwes](https://arwes.dev)
 
-You can wire this up as follows:
 
-| Device Pin | Espruino |
-| ---------- | -------- |
-| 1 (GND)    | GND      |
-| 2 (VCC)    | 3.3      |
-| 3 (SIGIN)  | A0       |
-| 4 (SIGNOUT)| A1       |
+How to use the module:
 
-How to use my module:
 
 ```
-  var foo = require("MOD123").connect(A0,A1);
-  foo.usingFoo();
+  var d = require("https://raw.githubusercontent.com/OmegaVoid/EspruinoDocs/master/modules/dane_arwes.js");
+  var Arwes = d.default();
+  
+  Arwes.drawFrame(3, 33, 110, 120);
+
 ```
