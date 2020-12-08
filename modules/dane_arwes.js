@@ -1,4 +1,4 @@
-/* 2 */
+/* Copyright (c) 2020 OmegaRogue. See the file LICENSE for copying permission. */
 /*
 Graphics Functions based on the React Sci-Fi UI Framework Arwes
 */
