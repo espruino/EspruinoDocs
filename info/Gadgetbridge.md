@@ -34,6 +34,7 @@ Currently implemented messages are:
 * `t:"musicstate", state:"play/pause",position,shuffle,repeat` - music play/pause/etc
 * `t:"musicinfo", artist,album,track,dur,c(track count),n(track num)` - currently playing music track
 * `t:"call", cmd:"accept/incoming/outgoing/reject/start/end", name: "name", number: "+491234"` - call
+* `t:"act", hrm:bool, stp:bool, int:int`  - Enable realtime step counting, realtime heart rate. 'int' is the report interval in seconds
 
 ### Examples
 
@@ -52,15 +53,17 @@ send a command, simply use `Bluetooth.println(JSON.stringify(json))`.
 
 Available message types are:
 
-* `t:"info", msg:"..."`
-* `t:"warn", msg:"..."`
-* `t:"error", msg:"..."`
+* `t:"info", msg:"..."` - display info popup on phone
+* `t:"warn", msg:"..."` - display warning popup on phone
+* `t:"error", msg:"..."` - display error popup on phone
 * `t:"status", bat:0..100, volt:float(voltage)` - status update
 * `t:"findPhone", n:bool`
 * `t:"music", n:"play/pause/next/previous/volumeup/volumedown"`
 * `t:"call", n:"ACCEPT/END/INCOMING/OUTGOING/REJECT/START/IGNORE"`
 * `t:"notify", id:int, n:"DISMISS,DISMISS_ALL/OPEN/MUTE/REPLY", `
   * if `REPLY` can use `tel:string(optional), msg:string`
+* `t:"ver", fw1:string, fw2:string` - firmware versions - sent at connect time
+* `t:"act", hrm:int, stp:int` - activity data - heart rate, steps since last call
 
 For example:
 
