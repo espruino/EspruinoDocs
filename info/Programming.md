@@ -14,17 +14,20 @@ Connection Types
 
 ### USB
 
-Normal Espruino boards have a USB connector, and when you plug this into
+Many Espruino boards have a USB connector, and when you plug this into
 your PC the board appears as a USB Serial device, which you can then connect
 to.
 
 This is what we'd suggest programming Espruino devices with.
 
+**NOTE:** [Pixl.js](/Pixl.js) is an exception here - is has a USB connector but it is for
+charging only.
+
 ### Bluetooth LE
 
-[Puck.js](/Puck.js) devices present themselves as as Bluetooth LE 'Nordic UART'
-device, and can be connected to and programmed through that. It's the suggested
-method of connection for [Puck.js](/Puck.js).
+[Puck.js](/Puck.js) and other Espruino Bluetooth devices present themselves as as
+Bluetooth LE 'Nordic UART' device, and can be connected to and programmed through
+that. It's the suggested method of connection for [Puck.js](/Puck.js).
 
 Adafruit make a [Bluetooth LE UART board](https://www.adafruit.com/product/2479)
 that can be used to add Bluetooth LE UART capability to other Espruino devices.
@@ -36,12 +39,16 @@ port on two of their pins at 9600 baud so that they can be programmed via Serial
 The pins used for this are detailed in the Pinout section of your board's specific
 reference page (eg [the Pico](/Pico#pinout), where they're marked with `!`).
 
-To save power, [Puck.js](/Puck.js) only powers up the serial port if it detects
-a voltage on the RX pin at boot time. See [Puck.js](/Puck.js#serial-console)
+**NOTE:**  [ESP32](/ESP32) and [ESP8266](/EspruinoESP8266) devices use 115200 baud
+for serial, not the 9600 that every other Espruino does.
+
+To save power, [Puck.js](/Puck.js) and other Bluetooth Espruinos only power up
+the serial port if they detect a voltage on the RX pin at boot time.
+See [Puck.js](/Puck.js#serial-console)
 
 ### Bluetooth UART
 
-The [Original Espruino Board](/Original) has a footprint on the back for 
+The [Original Espruino Board](/Original) has a footprint on the back for
 an [HC-05/HC-06 Bluetooth Module](/Bluetooth). Once soldered, it uses the
 standard Serial port (detailed above) for communication. For more information
 [see here](/Bluetooth).
@@ -69,7 +76,7 @@ However, using `reset()` will break your connection.
 
 ### Headphone Jack
 
-Yes, it is even possible to program Espruino from your headphone jack with a
+It is even possible to program Espruino from your headphone jack with a
 few external components! [See here!](/Headphone)
 
 
@@ -81,17 +88,20 @@ Applications
 This is what we'd suggest you use for programming Espruino. It comes in a few
 flavours:
 
+* [Online](http://www.espruino.com/Web+IDE#online) is what we're suggesting
+everyone use at the moment. It supports Bluetooth LE and USB/Serial based Espruinos.
+It is amazingly easy to use (just [go here](https://www.espruino.com/ide)
+in Chrome).
 * [Chrome Web App](http://www.espruino.com/Web+IDE#from-the-chrome-web-store) -
-we'd suggest this for USB Espruino devices, and it's nice and easy to install.
-* [Online](http://www.espruino.com/Web+IDE#online) - should be used for Bluetooth
-LE based Espruinos ([Puck.js](/Puck.js)). It is amazingly easy to use (just [go here](https://www.espruino.com/ide)
-in Chrome), however it doesn't yet work on Windows without ([some effort](https://github.com/urish/web-bluetooth-polyfill)).
-It does however support using your [headphone jack!](/Headphone)!
-* [Native App](http://www.espruino.com/Web+IDE#as-a-native-application) is needed
-to communicate with Bluetooth LE devices like [Puck.js](/Puck.js) on Windows.
-* [Locally hosted](https://github.com/espruino/EspruinoHub) IDE can be run on a Raspberry Pi, and can allow you to program [Puck.js](/Puck.js) devices through any Web Browser that has access to your local network.
+allows you to install the IDE locally on your computer. However Google will be
+disabling Chrome Apps in the near future so we're not recommending this for now.
+* [Native App](http://www.espruino.com/Web+IDE#as-a-native-application) allows
+you to install the Web IDE and run it locally on Windows (it's needed for
+programming Bluetooth LE Espruinos on Windows 7 or earlier).
+* [Locally hosted](https://github.com/espruino/EspruinoHub) IDE can be run on a Raspberry Pi,
+and can allow you to program Bluetooth Espruino devices through any Web Browser that has access to your local network.
 
-Despite being called a 'Web IDE', the IDE itself (including the fully online version)
+Despite being called a 'Web IDE', the IDE itself (including [the fully online version](https://www.espruino.com/ide))
 can function without an internet connection. If you're using modules you may need to
 download 'offline data' under settings first though!
 
