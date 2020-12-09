@@ -9,10 +9,9 @@ var C = {
   borderWidth: 1     // description
 };
 
-function Arwes(cornerSize, cornerOffset, borderWidth) {
+function Arwes(cornerSize, cornerOffset) {
   this.cornerSize = cornerSize;
   this.cornerOffset = cornerOffset;
-  this.borderWidth = borderWidth;
 }
 
 
@@ -58,87 +57,72 @@ Arwes.prototype.C = {
 };
 
 
-function drawTopLeftCorner(obj, x, y) {
+function drawCorner(obj, x, y, n) {
   g.setColor(obj.C.color.primary.base);
-  const x1 = x - obj.cornerOffset;
-  const y1 = y - obj.cornerOffset;
-  g.fillRect(x1, y1, x1 + obj.cornerSize, y1 + obj.cornerSize);
-  g.setColor("#000000");
-  g.fillRect(x, y, x + obj.cornerSize - obj.cornerOffset, y + obj.cornerSize - obj.cornerOffset);
+  let s1, s2 = 1;
+  switch (n) {
+    case 0: // Top Left
+      s1 = s2 = -1;
+      break;
+    case 1: // Top Right
+      s2 = -1;
+      break;
+    case 2: // Bottom Left
+      s1 = -1;
+      break;
+    case 3: // Bottom
+      break;
+  }
+  const x1 = x + obj.cornerOffset *s1;
+  const y1 = y + obj.cornerOffset *s2;
+  g.fillRect(x1, y1, x, y - obj.cornerSize*(s1*-1) + obj.cornerOffset*s1);
+  g.fillRect(x1, y1, x - obj.cornerSize*(s2*-1) + obj.cornerOffset*s2, y);
 }
-
-function drawTopRightCorner(obj, x, y) {
-  g.setColor(obj.C.color.primary.base);
-  const x1 = x + obj.cornerOffset;
-  const y1 = y - obj.cornerOffset;
-  g.fillRect(x1, y1, x1 - obj.cornerSize, y1 + obj.cornerSize);
-  g.setColor("#000000");
-  g.fillRect(x, y, x - obj.cornerSize - obj.cornerOffset, y + obj.cornerSize - obj.cornerOffset);
-}
-
-function drawBottomLeftCorner(obj, x, y) {
-  g.setColor(obj.C.color.primary.base);
-  const x1 = x - obj.cornerOffset;
-  const y1 = y + obj.cornerOffset;
-  g.fillRect(x1, y1, x1 + obj.cornerSize, y1 - obj.cornerSize);
-  g.setColor("#000000");
-  g.fillRect(x, y, x + obj.cornerSize - obj.cornerOffset, y - obj.cornerSize + obj.cornerOffset);
-}
-
-function drawBottomRightCorner(obj, x, y) {
-  g.setColor(obj.C.color.primary.base);
-  const x1 = x + obj.cornerOffset;
-  const y1 = y + obj.cornerOffset;
-  g.fillRect(x1, y1, x1 - obj.cornerSize, y1 - obj.cornerSize);
-  g.setColor("#000000");
-  g.fillRect(x, y, x - obj.cornerSize + obj.cornerOffset, y - obj.cornerSize + obj.cornerOffset);
-}
-
-
-Arwes.prototype.drawFrame = function (x1, y1, x2, y2) {
-  drawTopLeftCorner(this, x1, y1);
-  drawTopRightCorner(this, x2, y1);
-  drawBottomLeftCorner(this, x1, y2);
-  drawBottomRightCorner(this, x2, y2);
-  this.drawFrameNoCorners(x1, y1, x2, y2);
-}
-
-Arwes.prototype.drawFrameBottomCorners = function (x1, y1, x2, y2) {
-  drawBottomLeftCorner(this, x1, y2);
-  drawBottomRightCorner(this, x2, y2);
-  this.drawFrameNoCorners(x1, y1, x2, y2);
-}
-
-Arwes.prototype.drawFrameTopCorners = function (x1, y1, x2, y2) {
-  drawTopLeftCorner(this, x1, y1);
-  drawTopRightCorner(this, x2, y1);
-  this.drawFrameNoCorners(x1, y1, x2, y2);
-}
-
-Arwes.prototype.drawFrameLeftCorners = function (x1, y1, x2, y2) {
-  drawTopLeftCorner(this, x1, y1);
-  drawBottomLeftCorner(this, x1, y2);
-  this.drawFrameNoCorners(x1, y1, x2, y2);
-}
-
-Arwes.prototype.drawFrameRightCorners = function (x1, y1, x2, y2) {
-  drawTopRightCorner(this, x2, y1);
-  drawBottomRightCorner(this, x2, y2);
-  this.drawFrameNoCorners(x1, y1, x2, y2);
-}
-
 
 Arwes.prototype.drawFrameNoCorners = function (x1, y1, x2, y2) {
   g.setColor(this.C.color.primary.dark);
   g.drawRect(x1, y1, x2, y2);
-  g.setColor("#000000");
-  g.fillRect(x1 + C.borderWidth, y1 + C.borderWidth, x2 - C.borderWidth, y2 - C.borderWidth);
 }
 
-exports.create = function (cornerSize, cornerOffset, borderWidth) {
-  return new Arwes(cornerSize, cornerOffset, borderWidth);
+Arwes.prototype.drawFrame = function (x1, y1, x2, y2) {
+  drawCorner(this, x1, y1, 0);
+  drawCorner(this, x2, y1, 1);
+  drawCorner(this, x1, y2, 2);
+  drawCorner(this, x2, y2, 3);
+  this.drawFrameNoCorners(x1, y1, x2, y2);
+}
+
+Arwes.prototype.drawFrameBottomCorners = function (x1, y1, x2, y2) {
+  drawCorner(this, x1, y2, 2);
+  drawCorner(this, x2, y2, 3);
+  this.drawFrameNoCorners(x1, y1, x2, y2);
+}
+
+Arwes.prototype.drawFrameTopCorners = function (x1, y1, x2, y2) {
+  drawCorner(this, x1, y1, 0);
+  drawCorner(this, x2, y1, 1);
+  this.drawFrameNoCorners(x1, y1, x2, y2);
+}
+
+Arwes.prototype.drawFrameLeftCorners = function (x1, y1, x2, y2) {
+  drawCorner(this, x1, y1, 0);
+  drawCorner(this, x1, y2, 2);
+  this.drawFrameNoCorners(x1, y1, x2, y2);
+}
+
+Arwes.prototype.drawFrameRightCorners = function (x1, y1, x2, y2) {
+  drawCorner(this, x2, y1, 1);
+  drawCorner(this, x2, y2, 3);
+  this.drawFrameNoCorners(x1, y1, x2, y2);
+}
+
+
+
+
+exports.create = function (cornerSize, cornerOffset) {
+  return new Arwes(cornerSize, cornerOffset);
 };
 
 exports.default = function () {
-  return new Arwes(C.cornerSize, C.cornerOffset, C.borderWidth);
+  return new Arwes(C.cornerSize, C.cornerOffset);
 };
