@@ -34,11 +34,12 @@ Brightness:<input type="range" id="brightness" min="-255" max="255" value="0" on
 Colours: <select id="colorStyle" onchange="imageLoaded()">
 <option value="1bit" selected="selected">1 bit black/white</option>
 <option value="1bitinverted">1 bit white/black</option>
-<option value="2bitbw">2 bit black & white</option>
+<option value="2bitbw">2 bit greyscale</option>
 <option value="4bit">4 bit RGBA</option>
 <option value="4bitmac">4 bit Mac palette</option>
 <option value="web">8 bit Web palette</option>
 <option value="vga">8 bit VGA palette</option>
+<option value="8bitbw">8 bit greyscale</option>
 <option value="rgb565">16 bit RGB565</option>
 <option value="opt1bit">Optimal 1 bit</option>
 <option value="opt2bit">Optimal 2 bit</option>
