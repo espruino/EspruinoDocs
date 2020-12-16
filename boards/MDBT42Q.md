@@ -108,8 +108,7 @@ enables the bootloader.
 * There is a LED (`LED`/`LED1`) between pin `D1` and GND. This is flashes at
 boot and also indicates bootloader mode.
 
-The breakout board also contains a green LED on pin `D2`. As of build 1v99 this
-isn't mapped to a built-in variable, but a simple `global.LED2=D2` command will add it.
+The breakout board also contains a green LED (LED2) on pin `D2` (Espruino 1v99 and earlier require `global.LED2=D2` to use this). Since `D2` is an analog input it is possible to detect ambient light using `analogRead(LED2)` - values range from around 0 (dark) to 0.25 (bright).
 
 
 Hard Reset
