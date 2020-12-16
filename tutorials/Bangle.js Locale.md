@@ -4,7 +4,7 @@ Bangle.js Internationalisation
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+Locale. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Tutorials,Bangle.js,Development,App Loader,App,Locale,Languale,Internationalisation,Internationalization
+* KEYWORDS: Tutorials,Bangle.js,Development,App Loader,App,Locale,Languale,Internationalisation,Internationalization,Translate,Translation,Lang,Intl
 * USES: Bangle.js
 
 If you have an app (eg by following the [Bangle.js First App](/Bangle.js+First+App)
