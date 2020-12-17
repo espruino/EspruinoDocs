@@ -17,8 +17,9 @@ You'll need
 -----------
 
 * An [MDBT42Q](/MDBT42Q) breakout, but any bluetooth Espruino board will do (although [Puck.js](/Puck.js) would need to be self-powered as it has no coltage regulator)
-* 2x 100kOhm Resistors
-* 1x 24kOhm Resistor
+* 1x 1 Ohm high current (1W or more) resistor
+* 2x 100 kOhm Resistors
+* 1x 24 kOhm Resistor
 * 2x Capacitors (0.1uF used here, almost anything will do)
 
 Wiring
