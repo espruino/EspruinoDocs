@@ -88,6 +88,18 @@ Averager.prototype.print = function() {
     print('"last":',this.series[k].getLast(),k==last?'}}':'},');
   }
 };
+/// Get all data as a (large!) JS object
+Averager.prototype.get = function() {
+  var o = {};
+  for (var k in this.series) {
+    o[k] = {
+      current : this.series[k].getCurrent(),
+      avr : this.series[k].getAvr(),
+      last :this.series[k].getLast()
+    };
+  }
+  return o;
+};
 
 exports.Series = Series;
 exports.Averager = Averager;
