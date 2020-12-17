@@ -6,13 +6,16 @@ EEPROM on Flash
 
 * KEYWORDS: Module,Flash,EEPROM,storage,non-volatile,memory,rom,storage
 
-STM32-based chips don't have nonvolatile EEPROM memory (which can be changed one byte at a
+STM32 and NRF52-based chips don't have nonvolatile EEPROM memory (which can be changed one byte at a
 time). Instead, they have Flash memory in which 32 bit words can be written one at a time,
 *but not overwritten*.
 
 To overwrite some data, you need to erase an entire flash page, which could be as much as 128kB long!
 
 To work around this, We've provided a 'Fake EEPROM' module called [[FlashEEPROM.js]].
+
+**DO NOT USE THIS MODULE IN NEW CODE**. We now have the [Storage Library](/Reference#Storage)
+which provides a fast, easy to use and reliable storage method, built-in to Espruino.
 
 This stores a 'journal' of all written data. When you write something new to it, that data
 goes on the end of the journal (if it's too long, everything is read into RAM, the page is
