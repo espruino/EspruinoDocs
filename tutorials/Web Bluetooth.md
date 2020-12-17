@@ -434,3 +434,10 @@ Dashboards
 ----------
 
 You might also be interested in the [Web Bluetooth Dashboard tutorial](/Web+Bluetooth+Dashboard).
+
+Tutorials
+---------
+
+Check out other tutorials using Web Bluetooth:
+
+* APPEND_USES: Web Bluetooth

@@ -5,7 +5,7 @@ Bluetooth Time Setter
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bluetooth+Time. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Bluetooth,Time,Date,setTime,Tools,set time
-* USES: BLE,Only BLE
+* USES: BLE,Only BLE,Web Bluetooth
 
 This page uses [Web Bluetooth](Puck.js Web Bluetooth) to set the current time on your Bluetooth LE-enabled Espruino device direct from the web page.
 
