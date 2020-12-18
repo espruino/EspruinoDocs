@@ -4,7 +4,7 @@ Using Web Bluetooth with Espruino
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Web+Bluetooth. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Tutorials,Puck.js,GitHub,Web Bluetooth,BLE
+* KEYWORDS: Tutorials,Puck.js,GitHub,Web Bluetooth,BLE,connection,website connection,multiple connections
 * USES: Puck.js,Web Bluetooth,BLE,Only BLE
 
 Web Bluetooth allows a website to connect directly to Bluetooth LE devices.
@@ -429,6 +429,89 @@ console would cause the `>` prompt character to be removed, the text to be
 written, and then `>` to be written again. By writing direct to `Bluetooth` the
 console device is unaware of what's going on and doesn't output any extra
 characters.
+
+Multiple Connections
+--------------------
+
+While the Puck.js library contains convenience functions `Puck.write`
+and `Puck.eval` that apply to a single Bluetooth device, you can use
+`Puck.connect` to create multiple connections to different devices.
+
+The amount of connections allowed depends on the computer used and
+what it is connected to (if you're using a Bluetooth Mouse, that's one
+less connection available), but you should normally be able to connect
+to around 6 devices at once.
+
+In the following code, you click `Add Device` to add a new device.
+Once added, you can toggle `LED1` on each device individually by
+pressing the button, and the current temperature of each device
+will be reported to the right-hand side.
+
+```HTML_demo_link
+<html>
+<head>
+  <script src="https://puck-js.com/puck.js"></script>
+</head>
+<body>
+<p>Click 'Add Device' to add a new device. Once added, you can toggle
+LED1 by pressing the button, and the current temperature will be reported
+to the right-hand side.</p>
+<div id="devices"></div>
+<button id="addDevice">Add Device</button>
+<script>
+var _counter = 0;
+
+document.getElementById("addDevice").addEventListener('click', event => {
+  Puck.connect(function(connection) {
+    if (connection===null) {
+      console.log("Connection failed!");
+      return;
+    }
+
+    // Work out a connection number so we can display it on the screen
+    // conId/conName are local variables (like connection) so there will
+    // be copies of these for each device that is connected to.
+    _counter++;    
+    var conId = _counter;
+    var conName = "dev"+conId;
+    // Add an HTML line for the device with a button
+    var div = document.createElement("div");
+    div.innerHTML =
+      `<div>Device ${conId}: <button id="btn${conId}">LED</button>&nbsp;<span id="${conName}" style="font-family: monospace;"></span>`;
+    document.getElementById("devices").append(div);
+    // reset the device and upload code to print the temperature every second (and reset when we disconnect)
+    connection.write("\x03\x10reset();\n", function() {
+      setTimeout(function() {
+        connection.write("\x10setInterval(()=>Bluetooth.println(E.getTemperature()), 1000);NRF.on('disconnect',()=>reset());\n", function() {  
+          console.log(conName, "connected successfully");
+        });
+      },500);
+    });
+    // When the button is pressed, send a command to toggle the LED
+    document.getElementById("btn"+conId).addEventListener('click', event => {
+      console.log(conName, "Sending LED.toggle()");
+      connection.write("\x10LED.toggle()\n");
+    });
+    // Handle data coming back
+    var line = "";
+    connection.on('data',function(d) {
+      // This code detects each new line coming in
+      line += d;
+      var lines = d.split("\n");
+      line = lines.pop();
+      // For each new line
+      lines.forEach(function(l) {
+        // display the line on the webpage
+        console.log(conName, "Got "+l);
+        document.getElementById(conName).innerText = l;
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>
+```
 
 Dashboards
 ----------
