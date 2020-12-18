@@ -16,7 +16,7 @@ and display them as a graph on the PC.
 You'll need
 -----------
 
-* An [MDBT42Q](/MDBT42Q) breakout, but any bluetooth Espruino board will do (although [Puck.js](/Puck.js) would need to be self-powered as it has no coltage regulator)
+* An [MDBT42Q](/MDBT42Q) breakout, but any bluetooth Espruino board will do (although [Puck.js](/Puck.js) would need to be self-powered as it has no voltage regulator)
 * 1x 1 Ohm high current (1W or more) resistor
 * 2x 100 kOhm Resistors
 * 1x 24 kOhm Resistor
