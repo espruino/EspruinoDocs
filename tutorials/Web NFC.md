@@ -93,12 +93,11 @@ Then you can click the 'try now' link at the bottom of the page below to try it 
 <script>
 /* Starting a scan at startup stops Android from
 moving away from the Chrome window when a tag is found*/
-const reader = new NDEFReader();
-const writer = new NDEFWriter();
-reader.scan();
+const ndef = new NDEFReader();
+ndef.scan();
 
 function send(msg) {
-  writer.write(msg).then(_=>console.log("Written ",msg));
+  ndef.write(msg).then(_=>console.log("Written ",msg));
 }
 </script>
 <button onclick="send('red')">Red</button>
