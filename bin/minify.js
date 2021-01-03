@@ -55,7 +55,8 @@ function closureOnline() {
     ['output_info','warnings'],
     ['warning_level','VERBOSE'],
     ['js_code',js],
-    ['js_externs',jsExterns]
+    ['js_externs',jsExterns],
+    ['language_out','ECMASCRIPT_2015'],
    //['language','ECMASCRIPT5_STRICT'],
   ];
   var post_data = options.map( o => encodeURIComponent(o[0])+"="+encodeURIComponent(o[1])).join("&");
