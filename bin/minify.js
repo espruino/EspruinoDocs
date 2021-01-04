@@ -43,12 +43,15 @@ if (!advancedOptimisation) {
 var compilation_level = advancedOptimisation ? 'ADVANCED_OPTIMIZATIONS' : 'SIMPLE_OPTIMIZATIONS';
 if (js.includes("MINIFY_WHITESPACE_ONLY"))
   compilation_level = "WHITESPACE_ONLY";
-console.log("compilation_level =",compilation_level);
+var language_out = (js.includes('ECMASCRIPT_2015')?'ECMASCRIPT_2015':'STABLE');
+console.log("compilation_level =",compilation_level,
+            "\nlanguage_out =",language_out);
 
 function closureOnline() {
   var https = require("https");
   var options = [
     ['compilation_level',compilation_level],
+    ['language_out',language_out],
     ['output_format','json'],
     ['output_info','compiled_code'],
     ['output_info','errors'],
