@@ -71,4 +71,6 @@ This is a known issue with the 2v05 firmware that Bangle.js initially shipped wi
 
 When you get the Bangle (or after it has run out of battery and been recharged) the GPS is in a 'fresh' state. It has no idea of the time or where it is in the world. It can take 5-10 minutes with a GPS app running **outside** or on a windowsill in order to get a fix. After having got an initial fix the GPS will be significantly faster at getting a fix next time.
 
+You can now install the [AGPS App](https://banglejs.com/apps/#agps) from the App Loader which will pre-load GPS position/correction information that will stay valid for a few days. This will drastically reduce the time taken to get a GPS lock.
+
 **Why?** Phones and internet-connected GPS devices use AGPS (A=Assisted). They use the time and rough location info from mobile phone masts to help them get a fix much faster. Since Bangle.js doesn't have that info it's working from first principles and it can take a while to get a lock (just like any other standalone GPS device).
