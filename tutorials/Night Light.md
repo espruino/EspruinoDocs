@@ -39,7 +39,7 @@ Software
 --------
 
 ```
-var light, on;
+var light = 0, on = false;
 
 setInterval(function() {
   light = analogRead(LED2);
@@ -63,6 +63,19 @@ disconnect from Bluetooth and will be a usable night light.
 LED turns on and off. Simply do this by removing the last bit of code,
 then while connected type `light` into the Web IDE's console to find
 out what the light value is at different brightness levels.
+
+Improvements
+------------
+
+As noted in the video, the usage of hysteresis can help to stop the
+light from flickering on and off, however there are some other additions
+that can really help.
+
+* Replace `light = analogRead(LED2);` with `D15.reset(); light = analogRead(LED2); D15.write(on);`. Suggested by Akos Lukacs
+in the video comments, this turns the LED off very briefly in order to take a light reading, then turns it back on. There's a
+barely perceptible flicker.
+* Flip the MDBT42 PCB over, so the LED used for sensing is facing away from the LED producing the light.
+* Blank off the bottom of the ping-pong ball so light doesn't shine directly down onto the sensor.
 
 
 3D Printed Case
