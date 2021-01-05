@@ -91,18 +91,40 @@ Then you can click the 'try now' link at the bottom of the page below to try it 
 <html>
 <body>
 <script>
-/* Starting a scan at startup stops Android from
-moving away from the Chrome window when a tag is found*/
+if (typeof NDEFReader==="undefined") {
+  document.write("NDEFReader is not supported on this browser<br/>");
+}
+
 const ndef = new NDEFReader();
-ndef.scan();
+ndef.onreading = event => {
+  console.log("NFC", event);
+};
+
+function start() {
+  /* Starting a scan stops Android from
+  moving away from the Chrome window when a tag is found*/
+  ndef.scan();
+  // hide 'start' button
+  document.querySelector("#startButton").style.display = "none";
+  document.querySelector("#buttons").style.display = "block";
+}
+
+// If we already have permission, start right up!
+// Otherwise we need the user to press a button
+navigator.permissions.query({ name: "nfc" }).then(p => {
+  if (p.state === "granted") start();
+});
 
 function send(msg) {
   ndef.write(msg).then(_=>console.log("Written ",msg));
 }
 </script>
+<button id="startButton" onclick="start()">Start!</button>
+<div id="buttons" style="display:none">
 <button onclick="send('red')">Red</button>
 <button onclick="send('green')">Green</button>
 <button onclick="send('blue')">Blue</button>
+</div>
 </body>
 </html>
 ```
@@ -110,6 +132,10 @@ function send(msg) {
 Simply click one of the buttons while in NFC range of the Puck.js
 (eg your phone buzzes), and when you exit NFC range of the device the relevant
 LED will light.
+
+**Note:** Old versions of Web NFC used `NDEFWriter`. If you get a
+`ndef.write is not a function` error, you'll need to update your browser.
+
 
 Android app
 ------------
