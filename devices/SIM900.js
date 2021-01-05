@@ -73,12 +73,12 @@ var netCallbacks = {
           at.registerLine(sckt + ', CONNECT FAIL', function() {
             at.unregisterLine(sckt + ', CONNECT FAIL');
             at.unregisterLine(sckt + ', CONNECT OK');
-            at.unregisterLine(sckt + ', CLOSED');
+            at.unregisterLine(sckt + ', CLOSE');
             socks[sckt] = undefined;
             return "";
           });
-          at.registerLine(sckt + ', CLOSED', function() {
-            at.unregisterLine(sckt + ', CLOSED');
+          at.registerLine(sckt + ', CLOSE', function() {
+            at.unregisterLine(sckt + ', CLOSE');
             unregisterSocketCallbacks(sckt);
             socks[sckt] = undefined;
             busy = false;
