@@ -26,7 +26,7 @@ at.register("+IPD", function() {
 // don't do it any more
 at.unregister("+IPD");
 
-// As soon as we get the complete line `Foo`, execute the function
+// As soon as we get a complete line that begins with `Foo`, execute the function
 at.registerLine("Foo", function() { ... });
 // Now don't listen
 at.unregisterLine("Foo");
