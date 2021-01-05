@@ -68,21 +68,12 @@ var netCallbacks = {
             at.unregisterLine(sckt + ', CONNECT OK');
             at.unregisterLine(sckt + ', CONNECT FAIL');
             socks[sckt] = true;
-            return "";
           });
           at.registerLine(sckt + ', CONNECT FAIL', function() {
             at.unregisterLine(sckt + ', CONNECT FAIL');
             at.unregisterLine(sckt + ', CONNECT OK');
             at.unregisterLine(sckt + ', CLOSE');
             socks[sckt] = undefined;
-            return "";
-          });
-          at.registerLine(sckt + ', CLOSE', function() {
-            at.unregisterLine(sckt + ', CLOSE');
-            unregisterSocketCallbacks(sckt);
-            socks[sckt] = undefined;
-            busy = false;
-            return "";
           });
         } else {
           socks[sckt] = undefined;
@@ -332,12 +323,22 @@ var gprsFuncs = {
     at.cmd('AT+CIFSR\r\n', 2000, cb);
   }
 };
+
+function sckClosed(ln) {
+  var sckt = ln[0];
+  unregisterSocketCallbacks(sckt);
+  socks[sckt] = undefined;
+  busy = false;
+}
+
 exports.connect = function(usart, resetPin, connectedCallback) {
   rst = resetPin;
   gprsFuncs.at = at = require('AT').connect(usart);
   require("NetworkJS").create(netCallbacks);
   at.register("+RECEIVE", receiveHandler);
   at.register("+D", receiveHandler2);
+  for (var i=0;i<MAXSOCKETS;i++)
+    at.registerLine(i+", CLOSE", sckClosed);
   gprsFuncs.reset(connectedCallback);
   return gprsFuncs;
 };
