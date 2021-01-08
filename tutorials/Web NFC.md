@@ -93,6 +93,8 @@ Then you can click the 'try now' link at the bottom of the page below to try it 
 <script>
 if (typeof NDEFReader==="undefined") {
   document.write("NDEFReader is not supported on this browser<br/>");
+  // hide 'start' button
+  document.querySelector("#startButton").style.display = "none";
 }
 
 const ndef = new NDEFReader();
