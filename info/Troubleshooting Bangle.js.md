@@ -49,6 +49,13 @@ be done if you use `Save to Flash` to write code in the IDE.
 * Click `About -> Install default apps` which will erase everything and return Bangle.js to default (or try installing just `Bootloader` from library)
 
 
+### My Bangle shows `Searching for GPS Time` for a second after a hard reboot.
+
+This is expected. If you do a hard reset (BTN1 + BTN2) or the battery goes flat, Bangle.js loses the time. However, if you've ever had a GPS lock in the past, as long as the battery didn't go flat the GPS receiver will still have the correct time.
+
+So when Bangle.js starts it sees the time isn't set, then it asks the GPS receiver if it has the time, and if it does, it uses it to set the time up. If the GPS receiver didn't have the time then your clock will stay set at midnight, 1970.
+
+
 ### My Bangle is stuck showing `Searching for GPS Time`
 
 This may seem like a GPS issue, but the culprit is usually that an app/widget on the Bangle either has an error or that the Bangle runs out of memory.
