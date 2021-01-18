@@ -64,17 +64,7 @@ var netCallbacks = {
       sockData[sckt] = "";
       at.cmd('AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n',10000, function(d) {
         if (d=="OK") {
-          at.registerLine(sckt + ', CONNECT OK', function() {
-            at.unregisterLine(sckt + ', CONNECT OK');
-            at.unregisterLine(sckt + ', CONNECT FAIL');
-            socks[sckt] = true;
-          });
-          at.registerLine(sckt + ', CONNECT FAIL', function() {
-            at.unregisterLine(sckt + ', CONNECT FAIL');
-            at.unregisterLine(sckt + ', CONNECT OK');
-            at.unregisterLine(sckt + ', CLOSE');
-            socks[sckt] = undefined;
-          });
+          // just wait - sckConnect should now be called with CONNECT OK/CONNECT FAIL
         } else {
           socks[sckt] = undefined;
           return "";
@@ -90,7 +80,6 @@ var netCallbacks = {
       at.cmd('AT+CIPCLOSE='+sckt+",1\r\n",1000, function(/*d*/) {
         socks[sckt] = undefined;
       });
-
     }
   },
   /* Accept the connection on the server socket. Returns socket number or -1 if no connection */
@@ -325,10 +314,18 @@ var gprsFuncs = {
 };
 
 function sckClosed(ln) {
+  // called for "0, CLOSE" / "0, CLOSED"
   var sckt = ln[0];
   unregisterSocketCallbacks(sckt);
   socks[sckt] = undefined;
   busy = false;
+}
+
+function sckConnect(ln) {
+  // called for "0, CONNECT OK" / "0, CONNECT FAIL"
+  var sckt = ln[0];
+  if (ln.indexOf("OK")>=0) socks[sckt] = true;
+  else if (ln.indexOf("FAIL")>=0) socks[sckt] = undefined;
 }
 
 exports.connect = function(usart, resetPin, connectedCallback) {
@@ -337,8 +334,10 @@ exports.connect = function(usart, resetPin, connectedCallback) {
   require("NetworkJS").create(netCallbacks);
   at.register("+RECEIVE", receiveHandler);
   at.register("+D", receiveHandler2);
-  for (var i=0;i<MAXSOCKETS;i++)
+  for (var i=0;i<MAXSOCKETS;i++) {
     at.registerLine(i+", CLOSE", sckClosed);
+    at.registerLine(i+", CONNECT", sckConnect);
+  }
   gprsFuncs.reset(connectedCallback);
   return gprsFuncs;
 };
