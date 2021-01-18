@@ -103,10 +103,11 @@ ndef.onreading = event => {
 function start() {
   /* Starting a scan stops Android from
   moving away from the Chrome window when a tag is found*/
-  ndef.scan();
-  // hide 'start' button
-  document.querySelector("#startButton").style.display = "none";
-  document.querySelector("#buttons").style.display = "block";
+  ndef.scan().then(_ => {
+    // hide 'start' button
+    document.querySelector("#startButton").style.display = "none";
+    document.querySelector("#buttons").style.display = "block";
+  });
 }
 
 // If we already have permission, start right up!
