@@ -85,6 +85,8 @@ function init(spi, dc, ce, rst, callback) {
 exports.connect = function(options, callback) {
   var palette = options.palette, spi=options.spi, dc=options.dc, ce=options.cs, rst=options.rst;
   if (options.height) LCD_HEIGHT=options.height;
+  var padx = options.padx||0;
+  var pady = options.pady||0;
   var bits;
   if (palette.length>16) bits=8;
   else if (palette.length>4) bits=4;
@@ -94,9 +96,9 @@ exports.connect = function(options, callback) {
   g.flip = function() {
     ce.reset();
     spi.write(0x2A,dc);
-    spi.write(0,2,0,LCD_WIDTH+1);
+    spi.write(0,padx,0,LCD_WIDTH+padx-1);
     spi.write(0x2B,dc);
-    spi.write(0,3,0,LCD_HEIGHT+2);
+    spi.write(0,pady,0,LCD_HEIGHT+pady-1);
     spi.write(0x2C,dc);
     var lines = 16; // size of buffer to use for un-paletting
     var a = new Uint16Array(LCD_WIDTH*lines);
