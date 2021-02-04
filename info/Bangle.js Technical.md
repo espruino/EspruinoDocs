@@ -145,9 +145,14 @@ has just a single analog output, which is `D29`.
 
 ![HRM PCB](Bangle.js Technical/HRM.jpg)
 
+Charging pins
+-------------
+
 The two circular gold pads interface with the charging circuit. The right-hand
 one (with them at the top of the watch) is connected to `GND`, and the left-hand
 one goes to the charging circuitry.
+
+![Charging pins](Bangle.js Technical/Charging-pins.jpg)
 
 
 I2C
