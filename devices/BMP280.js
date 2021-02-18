@@ -51,12 +51,10 @@ function convS16(data, offs) {
 BMP280.prototype.readCoefficients = function() {
   var data = new Uint8Array(24+1+7);
   data.set(this.read(0x88, 24), 0);
-  data.set(this.read(0xA1, 1), 24);
-  data.set(this.read(0xE1, 7), 25);
-  this.dT = [/*empty element*/,(data[1] << 8) | data[0],
+  this.dT = [/*empty element*/,convS16(data,0),
               convS16(data,2),
               convS16(data,4)];
-  this.dP = [/*empty element*/,(data[7] << 8) | data[6],
+  this.dP = [/*empty element*/,convS16(data,6),
               convS16(data,8),
               convS16(data,10),
               convS16(data,12),
@@ -69,10 +67,9 @@ BMP280.prototype.readCoefficients = function() {
 
 /* Read Raw data from the sensor */
 BMP280.prototype.readRawData = function() {
-  var data = this.read(0xF7, 8);
+  var data = this.read(0xF7, 6);
   this.pres_raw = (data[0] << 12) | (data[1] << 4) | (data[2] >> 4);
   this.temp_raw = (data[3] << 12) | (data[4] << 4) | (data[5] >> 4);
-  this.hum_raw = (data[6] << 8) | data[7];
 };
 
 /* Calibration of Temperature, algorithm is taken from the datasheet */
