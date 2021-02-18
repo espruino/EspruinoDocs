@@ -2,17 +2,17 @@
 /* 7 segment 5x9 font - only '-.0123456789ABCDEF' */
 /*
 // Magic 7 segment font maker
-var W = 5; // width +1 for empty column
-var WC = 3; // width of colon
+var W = 6; // width +1 for empty column
+var WC = 2; // width of colon
 var Ht = 9;
 var H;
 var base = `
  aaa
 f   b
-f.  b
 f   b
+F   b
  ggg
-e.  c
+E   c
 e   c
 e   c
  ddd `;
@@ -35,14 +35,14 @@ var widths = [W,0,0,0,0,0,0,0,0,0,0,0,0,W, // space ... -
 function drawCh(g,n,x,y) {
  var b = base;
  var d = digits[n];
+ if (d&128) b = b.replace(/[EF]/g,"#");
  b = b.replace(/a/g,(d&1)?"#":" ");
  b = b.replace(/b/g,(d&2)?"#":" ");
  b = b.replace(/c/g,(d&4)?"#":" ");
  b = b.replace(/d/g,(d&8)?"#":" ");
- b = b.replace(/e/g,(d&16)?"#":" ");
- b = b.replace(/f/g,(d&32)?"#":" ");
+ b = b.replace(/[eE]/g,(d&16)?"#":" ");
+ b = b.replace(/[fF]/g,(d&32)?"#":" ");
  b = b.replace(/g/g,(d&64)?"#":" ");
- b = b.replace(/\./g,(d&128)?"#":" ");
  g.drawImage(Graphics.createImage(b),x,y);
 }
 var gr = Graphics.createArrayBuffer(Ht,(1+digits.length)*W+2,1,{msb:true}); // "1+" for space, +2 for full stop
@@ -57,7 +57,7 @@ gr.setRotation(0);
 var font = E.toString(gr.asImage().buffer);
 var widths = E.toString(widths);
 g.setFontCustom(font, 32, widths, 256|Ht);
-g.drawString("012345.6789-:ABCDEF",20,20);
+g.drawString("012345.678:9-ABCDEF",20,20);
 console.log(g.stringWidth("012345.6789:ABCDEF"));
 g.flip();
 print('this.setFontCustom(atob('+JSON.stringify(btoa(font))+
@@ -66,6 +66,6 @@ print('this.setFontCustom(atob('+JSON.stringify(btoa(font))+
 */
 exports.add = function(graphics) {
   graphics.prototype.setFont5x9Numeric7Seg = function() {
-    this.setFontCustom(atob("AAAAAAAABAAACAQCAAd0BgMBdwAAAAADuB0RiMRcAAiMRiLucAQCAQdzgiMRiIOd0RiMRBwAgEAgDud0RiMRdzgiMRiLuABIADuiEQiDudwRCIRBzugMBgIABwRCIRdzuiMRiIAd0QiEQAAAAAA="), 32, atob("BQAAAAAAAAAAAAAAAAUCAAUFBQUFBQUFBQUDAAAAAAAABQUFBQUF"), 9);
+    this.setFontCustom(atob("AAAAAAAAAAIAAAQCAQAAAd0BgMBdwAAAAAAAdwAB0RiMRcAAAERiMRdwAcAQCAQdwAcERiMRBwAd0RiMRBwAAEAgEAdwAd0RiMRdwAcERiMRdwAFAAd0QiEQdwAdwRCIRBwAd0BgMBAAABwRCIRdwAd0RiMRAAAd0QiEQAAAAAAAAAA="), 32, atob("BgAAAAAAAAAAAAAAAAYCAAYGBgYGBgYGBgYCAAAAAAAABgYGBgYG"), 9);
   }
 }
