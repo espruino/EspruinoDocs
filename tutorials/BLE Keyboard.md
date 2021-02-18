@@ -95,6 +95,23 @@ controls.volumeUp(function() {
 //controls.volumeDown();
 ```
 
+Mouse
+------
+
+You can also use the [[ble_hid_mouse.js]] module to emulate a mouse. For example:
+
+```
+var mouse = require("ble_hid_mouse");
+NRF.setServices(undefined, { hid : mouse.report });
+
+function btnPressed() {
+  mouse.send(0,0,mouse.BUTTONS.LEFT); // X movement, Y movement, buttons pressed
+}
+
+// trigger btnPressed whenever the button is pressed
+setWatch(btnPressed, BTN, {edge:"rising",repeat:true,debounce:50});
+```
+
 
 Low Level control
 ------------------
