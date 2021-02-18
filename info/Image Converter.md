@@ -19,7 +19,9 @@ See the [Graphics](/Graphics) library page for more information.
 
 <input type="file" id="fileLoader"/><br/>
 <input type="checkbox" id="compression" onchange="imageLoaded()">Use Compression?</input><br/>
+<input type="checkbox" id="alphaToColor" onchange="imageLoaded()">Transparency to Color</input><br/>
 <input type="checkbox" id="transparent" onchange="imageLoaded()" checked>Transparency?</input><br/>
+<input type="checkbox" id="inverted" onchange="imageLoaded()">Inverted?</input><br/>
 <input type="checkbox" id="autoCrop" onchange="imageLoaded()">Crop?</input><br/>
 Diffusion:
 <select id="diffusion" onchange="imageLoaded()">
@@ -33,8 +35,8 @@ Diffusion:
 Brightness:<input type="range" id="brightness" min="-255" max="255" value="0" onchange="imageLoaded()"></input><br/>
 Colours: <select id="colorStyle" onchange="imageLoaded()">
 <option value="1bit" selected="selected">1 bit black/white</option>
-<option value="1bitinverted">1 bit white/black</option>
 <option value="2bitbw">2 bit greyscale</option>
+<option value="4bitbw">4 bit greyscale</option>
 <option value="4bit">4 bit RGBA</option>
 <option value="4bitmac">4 bit Mac palette</option>
 <option value="web">8 bit Web palette</option>
@@ -64,18 +66,15 @@ Output As: <select id="outputStyle" onchange="imageLoaded()">
     var diffusionSelect = document.getElementById("diffusion");
     options.diffusion = diffusionSelect.options[diffusionSelect.selectedIndex].value;
     options.compression = document.getElementById("compression").checked;
+    options.alphaToColor = document.getElementById("alphaToColor").checked;
     options.transparent = document.getElementById("transparent").checked;
+    options.inverted = document.getElementById("inverted").checked;
     options.autoCrop = document.getElementById("autoCrop").checked;
     options.brightness = 0|document.getElementById("brightness").value;
     var colorSelect = document.getElementById("colorStyle");
     options.mode = colorSelect.options[colorSelect.selectedIndex].value;
-    if (options.mode=="1bitinverted") {
-      options.mode="1bit";
-      options.inverted=true;
-    }
     var outputSelect = document.getElementById("outputStyle");
     options.output = outputSelect.options[outputSelect.selectedIndex].value;
-
     var canvas = document.getElementById("canvas")
     canvas.width = img.width*2;
     canvas.height = img.height;
