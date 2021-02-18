@@ -65,7 +65,7 @@ This may seem like a GPS issue, but the culprit is usually that an app/widget on
 * Click `About -> Install default apps` which will erase everything and return Bangle.js to default
 
 
-### Settings won't change / Welcome screen keeps appearing#
+### Settings won't change / Welcome screen keeps appearing
 
 This is a known issue with the 2v05 firmware that Bangle.js initially shipped with. The filesystem could occasionally get corrupted and the contents of files can not be changed.
 
@@ -81,3 +81,16 @@ When you get the Bangle (or after it has run out of battery and been recharged) 
 You can now install the [AGPS App](https://banglejs.com/apps/#agps) from the App Loader which will pre-load GPS position/correction information that will stay valid for a few days. This will drastically reduce the time taken to get a GPS lock.
 
 **Why?** Phones and internet-connected GPS devices use AGPS (A=Assisted). They use the time and rough location info from mobile phone masts to help them get a fix much faster. Since Bangle.js doesn't have that info it's working from first principles and it can take a while to get a lock (just like any other standalone GPS device).
+
+### Bangle.js keeps entering the Launcher or Settings menu
+
+The Launcher is entered from the Clock if you press `BTN2`. Since by default
+`BTN2` wakes Bangle.js up, simply pressing it twice in quick succession will enter
+the Launcher. Since `Settings` is usually the first menu item, a third click of
+`BTN2` will bring you to `Settings`.
+
+To stop this, go to `Settings`, then `LCD`, then `Wake on BTN2` and turn it to `Off`.
+You can also turn off `Wake on Twist` as well.
+
+Now, the only way to get to settings is to press `BTN1` or `BTN3` to wake the clock,
+and then `BTN2` - which is much less likely to happen accidentally.
