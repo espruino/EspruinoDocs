@@ -1,23 +1,21 @@
 /* Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
-/* 7 segment 7x11 font - only '-.0123456789ABCDEF' */
+/* 7 segment 5x9 font - only '-.0123456789ABCDEF' */
 /*
 // Magic 7 segment font maker
-var W = 7; // width +1 for empty column
-var WC = 5; // width of colon
-var Ht = 11;
+var W = 5; // width +1 for empty column
+var WC = 3; // width of colon
+var Ht = 9;
 var H;
 var base = `
- aaaa
-f    b
-f..  b
-f..  b
-f    b
- gggg
-e    c
-e..  c
-e..  c
-e    c
- dddd `;
+ aaa
+f   b
+f.  b
+f   b
+ ggg
+e.  c
+e   c
+e   c
+ ddd `;
 
 var digits = [
 // 0x0,                 // space
@@ -67,7 +65,7 @@ print('this.setFontCustom(atob('+JSON.stringify(btoa(font))+
      '), '+Ht+');');
 */
 exports.add = function(graphics) {
-  graphics.prototype.setFont7x11Numeric7Seg = function() {
-    this.setFontCustom(atob("AAAAAAAAAAAAAAEAAAAQAgBACAAAAHvQBgDAGAL3gAAAAAAAAAAHvAAA9CGEMIYQvAAAACEMIYQwhe8AB4AIAQAgBA94ADwIQwhhDCEDwAHvQhhDCGEIHgAAAgBACAEAHvAAe9CGEMIYQveAA8CEMIYQwhe8AAABjDGAAAA96EEIIQQge8AB7wIQQghBCB4AD3oAwBgDAEAAAAPAhBCCEEL3gAPehDCGEMIQAAAe9CCEEIIQAAAAAAAA"), 32, atob("BwAAAAAAAAAAAAAAAAcCAAcHBwcHBwcHBwcFAAAAAAAABwcHBwcH"), 11);
+  graphics.prototype.setFont5x9Numeric7Seg = function() {
+    this.setFontCustom(atob("AAAAAAAABAAACAQCAAd0BgMBdwAAAAADuB0RiMRcAAiMRiLucAQCAQdzgiMRiIOd0RiMRBwAgEAgDud0RiMRdzgiMRiLuABIADuiEQiDudwRCIRBzugMBgIABwRCIRdzuiMRiIAd0QiEQAAAAAA="), 32, atob("BQAAAAAAAAAAAAAAAAUCAAUFBQUFBQUFBQUDAAAAAAAABQUFBQUF"), 9);
   }
 }

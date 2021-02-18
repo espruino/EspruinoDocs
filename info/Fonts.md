@@ -101,8 +101,9 @@ Current modules are:
 | ![](Font4x5Numeric.js) | [[Font4x5Numeric.js]] | 4x5 variable width font (only `./0123456789`) |
 | ![](Font4x5.js) | [[Font4x5.js]] | Tiny 4x5 fixed width font |
 | ![](Font4x8Numeric.js) | [[Font4x8Numeric.js]] | 4x8 fixed width font (only digits 0-9) |
-| ![](Font5x7Numeric7Seg.js) | [[Font5x7Numeric7Seg.js]] | 5x7 7 segment-style font (only `.0123456789:ABCDEF`) |
-| ![](Font7x11Numeric7Seg.js) | [[Font7x11Numeric7Seg.js]] | 7x11 7 segment-style font (only `.0123456789:ABCDEF`) |
+| ![](Font5x7Numeric7Seg.js) | [[Font5x7Numeric7Seg.js]] | 5x7 7 segment-style font (only `-.0123456789:ABCDEF`) |
+| ![](Font5x9Numeric7Seg.js) | [[Font5x9Numeric7Seg.js]] | 5x9 7 segment-style font (only `-.0123456789:ABCDEF`) |
+| ![](Font7x11Numeric7Seg.js) | [[Font7x11Numeric7Seg.js]] | 7x11 7 segment-style font (only `-.0123456789:ABCDEF`) |
 | ![](FontCopasetic40x58Numeric.js) | [[FontCopasetic40x58Numeric.js]] | 40x58 numeric font (only `0123456789`) by [abhigkar](https://github.com/abhigkar/bangleJs-Custom-Fonts) |
 | ![](Font6x8.js) | [[Font6x8.js]] | Variable width 8px high font |
 | ![](Font6x12.js) | [[Font6x12.js]] | Variable width 12px high font |
