@@ -304,6 +304,8 @@ function SX(options) {
   setTimeout(this.init.bind(this), 7);
   this.options = {};
   this.state = "";
+  if (options.callback)
+    setTimeout(options.callback, 10);
 }
 
 SX.prototype.w = function(a,v) {
