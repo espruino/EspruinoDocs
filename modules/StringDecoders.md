@@ -6,11 +6,9 @@ String Decoders
 
 * KEYWORDS: Module,StringDecoders
 
-This [[StringDecoder.js]] module implements helper for string decoding helper.
+This [[StringDecoder.js]] module implements helper for string decoding tasks.
 
 How to use the module:
-
-
 
 ```js
 //fitWords(text,rows,width)
