@@ -1,8 +1,7 @@
 /* Copyright (c) 2018 Gordon Williams See the file LICENSE for copying permission. */
 
 /**
-Options should contain:
-{
+var scale = require('HX711') {
   sck   : PD_SCK pin
   miso  : DOUT pin
   lsbGrams : 0.00103123388(default) - grams per LSB
@@ -10,7 +9,19 @@ Options should contain:
     "A128" = Channel A, 128 gain (default)
     "B32" = Channel B, 32 gain
     "A64" = Channel A, 64 gain
+};
+
+// remove weight and tare the scale 
+  scale.tare();
+
+// calculate lsbGrams with a known weigth like a Tetra Pak Oatly which is 1030Kg
+  scale.lsbGrams =  1030 / (scale.readRaw - scale.zero)
+
+// now you are good to go  
+  var weight = scale.readGrams();
+
 */
+
 function HX711(options) {
   options = options||{};
   this.sck = options.sck;
@@ -36,7 +47,7 @@ HX711.prototype.readRaw = function() {
   }[this.mode];
   if (!finalClk) throw "Invalid mode";
   var c = 0b10101010;
-  var d = this.spi.send([c,c,c,c,c,c,finalClk]);
+  var d = this.spi.send(new Uint8Array([c, c, c, c, c, c, finalClk]));
   // mosi left as 0, so power on.
   function ex(x) { return ((x&128)?8:0)|((x&32)?4:0)|((x&8)?2:0)|((x&2)?1:0); }
   var val = (ex(d[0])<<20)|(ex(d[1])<<16)|(ex(d[2])<<12)|(ex(d[3])<<8)|(ex(d[4])<<4)|ex(d[5]);
