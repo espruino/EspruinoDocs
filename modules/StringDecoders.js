@@ -15,7 +15,7 @@ var wrappedLine= require('StringDecoders').fitWords(longString,rows,width);
 
 */
 
-exports.fitWords(text,rows,width) {
+exports.fitWords = function(text,rows,width) {
   // We never need more than rows*width characters anyway, split by any whitespace
   const words = text.trim().substr(0,rows*width).split(/\s+/);
   let row=1,len=0,limit=width;
@@ -36,4 +36,4 @@ exports.fitWords(text,rows,width) {
     len += (len?1:0) + word.length;
   }
   return result;
-}
+};
