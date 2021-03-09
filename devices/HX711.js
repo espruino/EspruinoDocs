@@ -1,27 +1,3 @@
-/* Copyright (c) 2018 Gordon Williams See the file LICENSE for copying permission. */
-
-/**
-var scale = require('HX711') {
-  sck   : PD_SCK pin
-  miso  : DOUT pin
-  lsbGrams : 0.00103123388(default) - grams per LSB
-  mode  :
-    "A128" = Channel A, 128 gain (default)
-    "B32" = Channel B, 32 gain
-    "A64" = Channel A, 64 gain
-};
-
-// remove weight and tare the scale 
-  scale.tare();
-
-// calculate lsbGrams with a known weigth like a Tetra Pak Oatly which is 1030Kg
-  scale.lsbGrams =  1030 / (scale.readRaw - scale.zero)
-
-// now you are good to go  
-  var weight = scale.readGrams();
-
-*/
-
 function HX711(options) {
   options = options||{};
   this.sck = options.sck;
@@ -37,6 +13,12 @@ function HX711(options) {
   this.spi.setup({miso:this.miso, mosi:this.sck, baud: 2000000/*ignored atm*/});
   this.sck.write(0); // idle, but on
   this.zero = 0;
+  if (options.median)
+    this.median = new Int32Array(options.median);
+  // throw away first reading
+  this.readRaw();
+  if (options.median)
+    this.median.fill(this.readRaw());
 }
 
 HX711.prototype.readRaw = function() {
@@ -52,11 +34,25 @@ HX711.prototype.readRaw = function() {
   function ex(x) { return ((x&128)?8:0)|((x&32)?4:0)|((x&8)?2:0)|((x&2)?1:0); }
   var val = (ex(d[0])<<20)|(ex(d[1])<<16)|(ex(d[2])<<12)|(ex(d[3])<<8)|(ex(d[4])<<4)|ex(d[5]);
   if (val&0x800000) val-=0x1000000; // two's complement
+  // If we're using a median filter, do filtering here
+  if (this.median) {
+    this.median.set(new Int32Array(this.median.buffer,4), 0);
+    this.median[this.median.length-1] = val;
+    var m = new Int32Array(this.median);
+    m.sort();
+    var quarter = m.length>>2;
+    var mid = new Int32Array(m.buffer, quarter*4, m.length>>2);
+    val = E.sum(mid) / mid.length;
+  }
   return val;
 };
 /// Set the current reading to be the zero
 HX711.prototype.tare = function() {
   this.zero = this.readRaw();
+};
+/// Given a known weight on the scale (after tare) calculate a new 'lsbGrams'
+HX711.prototype.calculateScale = function(weightInGrams) {
+  return (this.lsbGrams = 1000 / (this.readRaw() - this.zero));
 };
 /// Read the ADC and return the result in grams (based on options.lsbGrams)
 HX711.prototype.readGrams = function() {
@@ -69,6 +65,12 @@ HX711.prototype.isReady = function() {
 /// Set whether the ADC is in standby mode or not
 HX711.prototype.setStandby = function(isStandby) {
   this.sck.write(isStandby);
+};
+/// Work out the amount of grams the values in the median filter vary by
+HX711.prototype.getVariance = function() {
+  if (!scale.median) throw new Error("No Median Filter");
+  var avr = E.sum(scale.median) / scale.median.length;
+  return Math.sqrt(E.variance(scale.median,avr)) * 2 * this.lsbGrams / scale.median.length;
 };
 
 exports.connect = function(options) {
