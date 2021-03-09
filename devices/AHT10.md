@@ -25,7 +25,7 @@ How to use the module:
 
 ```
 const sensor = require("AHT10").connect(SCL,SDA, bitrate); // Bitrate is optional, defaults to 300000
-sensor.getTemerature();
+sensor.getTemperature();
 sensor.getHumidity();
 sensor.getDewPoint();
 ```

@@ -52,7 +52,7 @@ HX711.prototype.tare = function() {
 };
 /// Given a known weight on the scale (after tare) calculate a new 'lsbGrams'
 HX711.prototype.calculateScale = function(weightInGrams) {
-  return (this.lsbGrams = 1000 / (this.readRaw() - this.zero));
+  return (this.lsbGrams = weightInGrams / (this.readRaw() - this.zero));
 };
 /// Read the ADC and return the result in grams (based on options.lsbGrams)
 HX711.prototype.readGrams = function() {
