@@ -60,6 +60,13 @@ it is closed (Click the square icon to get to the application chooser, and swipe
 the application to the left or right)
 
 
+### I can't see any Bluetooth devices from Web Bluetooth on Mac OS
+
+Mac OS's `Security & Privacy` settings may be blocking Chrome.
+
+Try: `System Preferences` —> `Security & Privacy` —> `Bluetooth` -> Add `Google Chrome`
+
+
 ### I can't reconnect to my device on Mac OS
 
 This often happens if you've turned your Espriuno into a [HID device](/Puck.js+Keyboard) and paired it with your Mac.

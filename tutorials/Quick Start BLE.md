@@ -146,7 +146,7 @@ Using the Espruino IDE
 
 If your computer supports it, Web Bluetooth is the easiest way to get started with Espruino.
 
-You'll need an up to date version of [Google Chrome](https://www.google.com/chrome/browser/desktop/) or Opera Web Browsers on one of:
+You'll need an up to date version of [Google Chrome](https://www.google.com/chrome/browser/desktop/), Edge or Opera Web Browsers on one of:
 
 #### Mac OS
 
@@ -164,6 +164,9 @@ If it doesn't:
 (to go back to the old behaviour type `sudo nvram -d bluetoothHostControllerSwitchBehavior`)
 * Reboot your Mac
 * **Make sure that you turn off (or un-pair) any Bluetooth devices that were using your internal Bluetooth** - they may stop your Mac from using the new adaptor
+
+If the Web Bluetooth option appears but you're unable to see any Bluetooth devices,
+try: `System Preferences` —> `Security & Privacy` —> `Bluetooth` -> Add `Google Chrome`
 
 #### Windows
 

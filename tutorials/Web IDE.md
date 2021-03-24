@@ -12,36 +12,35 @@ The Web IDE is the preferred way to program Espruino. It's got a syntax-highligh
 Installing
 ----------
 
+### Online
+
+The easiest way to use the Web IDE is [straight from the Web Browser](https://www.espruino.com/ide)
+
+You'll need an up to date version of [Chrome](https://www.google.com/chrome/), Edge or Opera to get access to Web Bluetooth and
+Web Serial options.
+
+**Note:**
+
+* Versions of Windows before Windows 10 don't support Web Bluetooth. You'll
+need to install the Native application (below).
+* Web Bluetooth and Web Serial may not be enabled in your Browser by default. Have a look
+at the [Quick Start guide](/Quick+Start) for information on how to enable it.
+
+
 ### From the Chrome Web Store
 
-The easiest way to install the Web IDE is to do so via the [Chrome Web Store](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo)
+You can install the IDE from the [Chrome Web Store](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo)
 
 This video is from the [[Quick Start]] page, which contains extra information on installing the Web IDE:
 
 [[http://youtu.be/32mewNGxax4]]
 
-**Note:** On Windows, the Web IDE from the Chrome Web Store doesn't
+**Note:**
+* Google has deprecated the Chrome Web Store and will be removing it during 2021, so this installation method may not be available soon.
+* On Windows, the Web IDE from the Chrome Web Store doesn't
 support Bluetooth Low Energy, needed for communicating with Bluetooth LE
 Espruino device. If you're using Windows you'll need to use the Native Application (below).
 
-### Online
-
-If you're using a Bluetooth Espruino board like [Puck.js](/Puck.js) on a Web Bluetooth-capable computer, you
-can use the Web IDE straight from your Web Browser.
-
-Just follow [this link to the Online Web IDE](https://www.espruino.com/ide) using
-an up to date version of the [Google Chrome web browser](https://www.google.com/chrome/).
-
-**Note:**
-
-*  Versions of Windows before Windows 10 don't support Web Bluetooth. You'll
-need to install the Native application (below).
-* Due to security restrictions, the online Web IDE can't access USB
-devices, so you'll be unable to use it with USB Espruino boards (you need the
-Native or Web Store versions for that).
-* Web Bluetooth may not be enabled in your Browser. Have a look
-at the [Bluetooth Quick Start guide](/Quick+Start+BLE) for information
-on how to enable it.
 
 ### As a Native application
 
