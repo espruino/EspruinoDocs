@@ -15,7 +15,7 @@ How it works:
 * Go to [https://fonts.google.com/](https://fonts.google.com/), find a font
 * Click `Select This Style`
 * Copy the `&lt;link href=...` line
-* Paste it into the text box below
+* Paste it into the text box below (or use a link to a '.otf' font)
 * Check the options
 * Click 'Go'
 * Copy and paste the font code out
@@ -139,7 +139,7 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
     }
     prevCtx.putImageData( prevImg, (ch&15)*fontHeight, (ch>>4)*fontHeight );     
   }
-  
+
   //console.log("Max color value = "+maxCol+", in bpp "+maxP);
   // if all fonts are the same width...
   var fixedWidth = fontWidths.every(w=>w==fontWidths[0]);
@@ -147,7 +147,7 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   var result = document.getElementById("result");
   result.style.display = "inherit";
   result.innerHTML = `
-// Actual height ${maxY+1-minY} (${maxY} - ${minY}) 
+// Actual height ${maxY+1-minY} (${maxY} - ${minY})
 ${fixedWidth?"":`var widths = atob("${btoa(String.fromCharCode.apply(null,fontWidths))}");`}
 var font = atob("${btoa(String.fromCharCode.apply(null,fontData))}");
 var scale = 1; // size multiplier for this font
@@ -157,35 +157,40 @@ g.setFontCustom(font, ${charMin}, ${fixedWidth?fontWidths[0]:"widths"}, ${fontHe
 
 document.getElementById("calculateFont").addEventListener('click',function() {
   fontLink = document.getElementById('fontLink').value.trim();
-  var fontName = "Sans Serif";
+  fontName = "Sans Serif";
   if (fontLink!="") {
-  if (fontLink.startsWith("http")) {
-    console.log("fontLink: Found bare URL");
+    if (fontLink.startsWith("http")) {
+      console.log("fontLink: Found bare URL");
     } else if (fontLink.startsWith("<")) {
       console.log("fontLink: Found <link...");
-    var m = fontLink.match(/href="([^"]+)"/);
-    if (m!==null) {
-      console.log("fontLink: Found CSS Link");
-      fontLink = m[1];
-    } else {
-      alert("Malformed Font link");
-      return;
-    }
+      var m = fontLink.match(/href="([^"]+)"/);
+      if (m!==null) {
+        console.log("fontLink: Found CSS Link");
+        fontLink = m[1];
+      } else {
+        alert("Malformed Font link");
+        return;
+      }
     } else {
       console.log("fontLink: Assuming it's a font name");
       fontName = fontLink;
       fontLink = "";
-  }
+    }
     if (fontLink) {
-  var m = fontLink.match(/family=([\w+]+)/);
-  if (m!==null) {
-    fontName = m[1].replace(/\+/g," ");
-  } else {
-    alert("Unable to work out font family from link");
-    return;
+      fontName = undefined;
+      var m;
+      m = fontLink.match(/family=([\w+]+)/);
+      if (m!==null)
+        fontName = m[1].replace(/\+/g," ");
+      m = fontLink.match(/([^/]*)\.otf/);
+      if (m!==null)
+        fontName = decodeURI(m[1]);      
+      if (fontName===undefined) {
+        alert("Unable to work out font family from link");
+        return;
+      }
+    }
   }
-  } 
-  } 
   console.log("URL:" + (fontLink?fontLink:"[none]"));  
   console.log("Family:" + fontName);  
   var fontHeight = parseInt(document.getElementById('fontSize').value);
@@ -206,10 +211,17 @@ document.getElementById("calculateFont").addEventListener('click',function() {
     return callback();
   }
   if (cssNode) cssNode.remove();
-  cssNode = document.createElement("link");
-  cssNode.rel = "stylesheet";
-  cssNode.type = "text/css";
-  cssNode.href = fontLink;
+  if (fontLink.endsWith(".otf")) {
+    cssNode = document.createElement("style");
+    cssNode.innerText = '@font-face { font-family: '+fontName+'; src: url('+JSON.stringify(fontLink)+') format("opentype"); }';
+    cssNode.href = fontLink;
+  } else {
+    // assume CSS
+    cssNode = document.createElement("link");
+    cssNode.rel = "stylesheet";
+    cssNode.type = "text/css";
+    cssNode.href = fontLink;
+  }
   var head = document.getElementsByTagName("head")[0];
   head.appendChild(cssNode);
 
