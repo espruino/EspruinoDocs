@@ -20,7 +20,7 @@ How it works:
 * Click 'Go'
 * Copy and paste the font code out
 
-<form>
+<form id="fontForm">
 <input id="fontLink" type="text" value="<link href=&quot;https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&display=swap&quot; rel=&quot;stylesheet&quot;>" size="80"></input><br/>
 Size : <input type="range" min="4" max="90" value="16" class="slider" style="width:500px" id="fontSize"><span id="fontSizeText">16</span><br/>
 BPP : <select id="fontBPP">
@@ -155,7 +155,7 @@ g.setFontCustom(font, ${charMin}, ${fixedWidth?fontWidths[0]:"widths"}, ${fontHe
   `.trim();
 }
 
-document.getElementById("calculateFont").addEventListener('click',function() {
+function loadFontAndCalculate() {
   fontLink = document.getElementById('fontLink').value.trim();
   fontName = "Sans Serif";
   if (fontLink!="") {
@@ -179,16 +179,20 @@ document.getElementById("calculateFont").addEventListener('click',function() {
     if (fontLink) {
       fontName = undefined;
       var m;
-      m = fontLink.match(/family=([\w+]+)/);
+      m = fontLink.match(/family=([%\w+]+)/);
       if (m!==null)
-        fontName = m[1].replace(/\+/g," ");
-      m = fontLink.match(/([^/]*)\.otf/);
-      if (m!==null)
-        fontName = decodeURI(m[1]);      
+        fontName = decodeURI(m[1].replace(/\+/g," "));
+      if (fontName===undefined) {
+        m = fontLink.match(/([^/]*)\.otf/);
+        if (m!==null)
+          fontName = decodeURI(m[1]);      
+      }
       if (fontName===undefined) {
         alert("Unable to work out font family from link");
         return;
       }
+      if (fontLink.includes("#"))
+        fontLink = fontLink.substr(0,fontLink.indexOf("#"));
     }
   }
   console.log("URL:" + (fontLink?fontLink:"[none]"));  
@@ -211,7 +215,7 @@ document.getElementById("calculateFont").addEventListener('click',function() {
     return callback();
   }
   if (cssNode) cssNode.remove();
-  if (fontLink.endsWith(".otf")) {
+  if (fontLink.match(/\.otf([?#].*)?/)) {
     cssNode = document.createElement("style");
     cssNode.innerText = '@font-face { font-family: '+fontName+'; src: url('+JSON.stringify(fontLink)+') format("opentype"); }';
     cssNode.href = fontLink;
@@ -232,10 +236,17 @@ document.getElementById("calculateFont").addEventListener('click',function() {
       callback();
     }, 100);
   };
-
+}
+document.getElementById("calculateFont").addEventListener('click',function(e) {
+  e.preventDefault();
+  loadFontAndCalculate();
 });
 document.getElementById('fontSize').addEventListener('mousemove',function() {
   document.getElementById('fontSizeText').innerHTML = document.getElementById('fontSize').value;
+});
+document.getElementById("fontForm").addEventListener('submit', function(e) {
+  e.preventDefault();
+  loadFontAndCalculate();
 });
 
 </script>
