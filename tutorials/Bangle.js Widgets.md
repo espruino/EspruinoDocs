@@ -106,9 +106,10 @@ WIDGETS = {}; // for testing only
     g.reset(); // reset the graphics context to defaults (color/font/etc)
     g.setFontAlign(0,0); // center fonts    
     g.drawRect(this.x, this.y, this.x+width-1, this.y+23); // check the bounds!
-    // Use 'locale' module to get a shortened day of the week
+    
+    // Use 'locale' module to get a shortened month name
     // in the correct language    
-  	var text = require("locale").month(date,1);
+    var text = require("locale").month(date, 1);
     g.setFont("6x8");
     g.drawString(text, this.x+width/2, this.y+12);
   }
