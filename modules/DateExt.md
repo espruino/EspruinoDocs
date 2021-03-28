@@ -36,7 +36,7 @@ Date Extensions provides two new Date methods in support of local dates and time
 
 #### Date.prototype.local(optionalLocaleDefinition)
 
-Method to optionally set locale paramters and return a "local-adjusted" date object.
+Method to optionally set locale parameters and return a "local-adjusted" date object.
 
 ```javascript
   var d = new Date();
