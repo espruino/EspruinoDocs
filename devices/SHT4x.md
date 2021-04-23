@@ -1,4 +1,4 @@
-<!--- Copyright (c) 2014 Gerrit Niezen. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2021 Gerrit Niezen. See the file LICENSE for copying permission. -->
 SHT4x Temperature and Humidity sensor
 =====================================
 
