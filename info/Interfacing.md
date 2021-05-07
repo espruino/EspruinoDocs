@@ -171,7 +171,12 @@ and you can connect exactly as you would have done for Serial/USB above.
 Bluetooth LE
 -------------
 
-Espruino Bluetooth LE devices provide a serial port as something called the
+If you just wish to receive non-private data from an Espruino Bluetooth LE device (eg temperature, or
+when a button is pressed) we'd recommend that you use [Bluetooth LE Advertising](/BLE+Advertising). This
+is connectionless and low power, so is flexible and robust. [See this link](/BLE+Advertising) for
+code examples.
+
+For two way communication, Espruino Bluetooth LE devices provide a serial port as something called the
 'Nordic UART Service'. While this is now used by many devices, it is
 not part of the Bluetooth SIG's standard for Bluetooth LE, so no operating
 system will add it as a communications port in the same way that USB devices
@@ -222,10 +227,16 @@ noble.on('stateChange', function(state) {
     noble.startScanning([], true);
 });
 
+var foundDevice = false;
 noble.on('discover', function(dev) {
+  if (foundDevice) return; 
   console.log("Found device: ",dev.address);
   if (dev.address != ADDRESS) return;
   noble.stopScanning();
+  // noble doesn't stop right after stopScanning is called,
+  // so we have to use foundDevice to ensure we onloy connect once
+  foundDevice = true;
+  // Now connect!
   connect(dev, function() {
     // Connected!
     write(COMMAND, function() {
