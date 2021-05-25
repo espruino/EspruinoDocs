@@ -2,7 +2,7 @@
 IoT for Kitchen Gardens
 =======================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/ble_duplo_train. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/IoTKG. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Bluetooth,BLE,IoT,Sensing,Plants,Garden,Teaching,School
 * USES: BLE,Puck.js,Pixl.js
@@ -11,4 +11,4 @@ IoTKG is a free open access program that combines STEM and digital technologies 
 
 ![](IoTKG.jpg)
 
-[See the full project and teaching materials at iotkg.org](https://iotkg.org/)
+[See the full project and teaching materials at IoTKG.org](https://iotkg.org/)
