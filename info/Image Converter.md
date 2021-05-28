@@ -18,35 +18,19 @@ See the [Graphics](/Graphics) library page for more information.
 <p>An online image converter for Espruino...</p>
 
 <input type="file" id="fileLoader"/><br/>
-<input type="checkbox" id="compression" onchange="imageLoaded()">Use Compression?</input><br/>
-<input type="checkbox" id="alphaToColor" onchange="imageLoaded()">Transparency to Color</input><br/>
-<input type="checkbox" id="transparent" onchange="imageLoaded()" checked>Transparency?</input><br/>
-<input type="checkbox" id="inverted" onchange="imageLoaded()">Inverted?</input><br/>
-<input type="checkbox" id="autoCrop" onchange="imageLoaded()">Crop?</input><br/>
-Diffusion:
-<select id="diffusion" onchange="imageLoaded()">
-<option value="none" selected="selected">Flat</option>
-<option value="random1">Random small</option>
-<option value="random2">Random large</option>
-<option value="error">Error Diffusion</option>
-<option value="errorrandom">Randomised Error Diffusion</option>
-</select><br/>
+<input type="checkbox" id="compression" onchange="imageLoaded()"> Use Compression?</input><br/>
+<input type="checkbox" id="alphaToColor" onchange="imageLoaded()"> Transparency to Color</input><br/>
+<input type="checkbox" id="transparent" onchange="imageLoaded()" checked> Transparency?</input><br/>
+<input type="checkbox" id="inverted" onchange="imageLoaded()"> Inverted?</input><br/>
+<input type="checkbox" id="autoCrop" onchange="imageLoaded()"> Crop?</input><br/>
+Diffusion: <select id="diffusion" onchange="imageLoaded()"></select><br/>
 
-Brightness:<input type="range" id="brightness" min="-255" max="255" value="0" onchange="imageLoaded()"></input><br/>
-Colours: <select id="colorStyle" onchange="imageLoaded()">
-<option value="1bit" selected="selected">1 bit black/white</option>
-<option value="2bitbw">2 bit greyscale</option>
-<option value="4bitbw">4 bit greyscale</option>
-<option value="4bit">4 bit RGBA</option>
-<option value="4bitmac">4 bit Mac palette</option>
-<option value="web">8 bit Web palette</option>
-<option value="vga">8 bit VGA palette</option>
-<option value="8bitbw">8 bit greyscale</option>
-<option value="rgb565">16 bit RGB565</option>
-<option value="opt1bit">Optimal 1 bit</option>
-<option value="opt2bit">Optimal 2 bit</option>
-<option value="opt4bit">Optimal 4 bit</option>
-</select><br/>
+Brightness: <span id="brightnessv"></span>
+<input type="range" id="brightness" min="-127" max="127" value="0" onchange="imageLoaded()"></input><br/>
+Contrast: <span id="contrastv"></span>
+<input type="range" id="contrast" min="-255" max="255" value="0" onchange="imageLoaded()"></input><br/>
+
+Colours: <select id="colorStyle" onchange="imageLoaded()"></select><br/>
 Output As: <select id="outputStyle" onchange="imageLoaded()">
 <option value="object" selected="selected">Image Object</option>
 <option value="string">Image String</option>
@@ -59,6 +43,9 @@ Output As: <select id="outputStyle" onchange="imageLoaded()">
 <textarea id="resdata" style="display:none;"></textarea>
 
 <script>
+  imageconverter.setFormatOptions(document.getElementById("colorStyle"));
+  imageconverter.setDiffusionOptions(document.getElementById("diffusion"));
+
   var img;
   function imageLoaded() {
     if (img === undefined) return;
@@ -71,6 +58,9 @@ Output As: <select id="outputStyle" onchange="imageLoaded()">
     options.inverted = document.getElementById("inverted").checked;
     options.autoCrop = document.getElementById("autoCrop").checked;
     options.brightness = 0|document.getElementById("brightness").value;
+    document.getElementById("brightnessv").innerText = options.brightness;
+    options.contrast = 0|document.getElementById("contrast").value;
+    document.getElementById("contrastv").innerText = options.contrast;
     var colorSelect = document.getElementById("colorStyle");
     options.mode = colorSelect.options[colorSelect.selectedIndex].value;
     var outputSelect = document.getElementById("outputStyle");
