@@ -14,6 +14,8 @@ const os = require('os');
 const path = require('path');
 const child_process = require("child_process");
 
+var CLOSURE_JAR = path.join(__dirname, "..", "closure-compiler.jar");
+
 if (process.argv.length!=4 && process.argv.length!=5) {
   console.log("USAGE: node minify.js fileIn.js fileOut.min.js [fileIn.externs]");
   process.exit(1);
@@ -145,7 +147,7 @@ function closureOffline() {
     ["js_output_file", tmpPath+".out.js"]
   ];
   var cli;// = "closure-compiler";
-  cli = "java -jar closure-compiler.jar";
+  cli = "java -jar "+CLOSURE_JAR;
   cli += " "+options.map( o => "--"+o[0]+" "+o[1]).join(" ");
   child_process.exec(cli, (error, stdout, stderr) => {
     fs.unlinkSync(tmpPath+".js", js)
@@ -194,7 +196,8 @@ function unwrapSelfInvocation( wrappedJs ) {
 }
 
 // any other way to test for existence??
-if (!fs.existsSync("closure-compiler.jar")) {
+if (!fs.existsSync(CLOSURE_JAR)) {
+  console.log(CLOSURE_JAR);
   console.log("===================================================================");
   console.log("Using online closure compiler. To use faster offline version download");
   console.log("the closure compiler jar to closure-compiler.jar");
