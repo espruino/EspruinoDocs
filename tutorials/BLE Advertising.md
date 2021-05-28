@@ -260,11 +260,11 @@ type (`ffff`) is in the same `value` variable as the actual data.
 
 * Add the following code to `advertising_python.py`:
 
-```
+```Python
 from bluepy.btle import Scanner, DefaultDelegate
 
 def onDeviceChanged(addr, data):
-  print "Device %s, value %s" % (addr,data)
+  print("Device %s, value %s" % (addr,data))
 
 # The devices we're searching for
 devices = [
