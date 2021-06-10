@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
-if (process.env.HWVERSION!=2) throw new Error("Puck.js v2 required for this module");
+if (process.env.HWVERSION!=2 && process.env.HWVERSION!=2.1) throw new Error("Puck.js v2 required for this module");
 function clearIRQ() {
   Puck.accelRd(0x53);
 }

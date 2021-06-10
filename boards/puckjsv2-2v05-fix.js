@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 /* Collection of tweaks to accelerometer/magnetometer power consumption */
-
-if (process.env.HWVERSION!=2) throw new Error("Puck.js v2 required for this module");
+if (process.env.HWVERSION!=2 && process.env.HWVERSION!=2.1) throw new Error("Puck.js v2 required for this module");
 
 /** On puck.js v2 with original 2v05 firmware, drops accelerometer power
 consumption from 800uA to:

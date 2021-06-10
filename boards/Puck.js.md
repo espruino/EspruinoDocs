@@ -40,15 +40,15 @@ Features
 * Dimensions of plastic case: 36mm dia, 12.5mm thick
 * Dimensions of bare PCB: 29mm dia, 9mm thick
 
-| Features  | Puck.js v1 | Puck.js v2 |
-|-----------|------------|------------|
-| 0.1" GPIO |  8         | 7          |
-| SMD  GPIO |  9         | 2          |
-| Magnetometer | MAG3110 | [LIS3MDLTR](/files/LIS3MDL.pdf)  |
-| Accelerometer | No     | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) |
-| Gyro          | No     | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) |
-| Temperature Sensor | nRF52 (uncalibrated) | PCT2075TP (calibrated)  |
-| MOSFET Output | No     | 1x         |
+| Features  | Puck.js v1 | Puck.js v2 | Puck.js v2.1 |
+|-----------|------------|------------|------------|
+| 0.1" GPIO |  8         | 7          | 7          |
+| SMD  GPIO |  9         | 2          | 2          |
+| Magnetometer | MAG3110 | [LIS3MDLTR](/files/LIS3MDL.pdf)  | [MMC5603NJ](/files/MMC5603NJ.pdf)  |
+| Accelerometer | No     | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) |
+| Gyro          | No     | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) |
+| Temperature Sensor | nRF52 (uncalibrated) | PCT2075TP (calibrated)  | PCT2075TP (calibrated)  |
+| MOSFET Output | No     | 1x         | 1x         |
 
 
 
@@ -234,7 +234,7 @@ power usage will be higher than normal (~350uA vs 40uA). To fix this add
 
 **Puck.js v2 only** You can use the [[puckjsv2-mag-level.js]] module to configure the Puck.js
 magnetometer for ultra low power mode (40uA) while acting like a reed
-switch (detecting when field strength is high or low).
+switch (detecting when field strength is high or low). **This will not currently work on Puck.js v2.1**
 
 ```JS
 require("puckjsv2-mag-level").on();
@@ -257,7 +257,7 @@ chip exactly as required (using the [datasheet](/files/LIS3MDL.pdf))..
 
 ### Accelerometer/Gyro
 
-**Puck.js v2 only** Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf))
+**Puck.js v2 / v2.1 only** Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf))
 
 You can use [`Puck.accel()`](/Reference#l_Puck_accel) to return one accelerometer/gyro
 reading, for example:
@@ -288,7 +288,7 @@ power usage will be higher than normal for low data rates (~800uA vs 40uA). To f
 
 #### Movement detection
 
-**Puck.js v2 only** You can use the [[puckjsv2-accel-movement.js]] module to configure the Puck.js
+**Puck.js v2 / v2.1 only** You can use the [[puckjsv2-accel-movement.js]] module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting movement:
 
 ```JS
@@ -312,7 +312,7 @@ Puck.on('accel',function(a) {
 
 #### Significant Movement detection
 
-**Puck.js v2 only** You can use the [[puckjsv2-accel-bigmovement.js]] module to configure the Puck.js
+**Puck.js v2 / v2.1 only** You can use the [[puckjsv2-accel-bigmovement.js]] module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting when the Puck
 has been moved significantly for more than a few seconds.
 
@@ -330,7 +330,7 @@ Puck.on('accel',function(a) {
 
 #### Step counting
 
-**Puck.js v2 only** You can use the [[puckjsv2-accel-steps.js]] module to configure the Puck.js
+**Puck.js v2 / v2.1 only** You can use the [[puckjsv2-accel-steps.js]] module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting movement:
 
 ```JS
@@ -349,7 +349,7 @@ Puck.on('accel',function(a) {
 
 #### Tilt detection
 
-**Puck.js v2 only**  You can use the [[puckjsv2-accel-tilt.js]] module to configure the Puck.js
+**Puck.js v2 / v2.1 only**  You can use the [[puckjsv2-accel-tilt.js]] module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting when it has
 been rotated by more than 35 degrees:
 
@@ -368,7 +368,7 @@ Puck.on('accel',function(a) {
 
 #### Direct configuration
 
-**Puck.js v2 only** For more advanced usage you can also use [`Puck.accelWr(reg,data)`](/Reference#l_Puck_accelWr)
+**Puck.js v2 / v2.1 only** For more advanced usage you can also use [`Puck.accelWr(reg,data)`](/Reference#l_Puck_accelWr)
 and [`Puck.accelRd(reg)`](/Reference#l_Puck_accelRd) to configure the accelerometer
 chip exactly as required (using the [datasheet](/files/LSM6DS3TR-C.pdf)). ST has
 an [app note](https://www.st.com/resource/en/application_note/dm00472670-lsm6ds3trc-alwayson-3d-accelerometer-and-3d-gyroscope-stmicroelectronics.pdf)
@@ -452,7 +452,7 @@ return an integer value that rises as the capacitance attached to `D11` increase
 
 ### FET
 
-**Puck.js v2 only** On Puck.js v2 there's a pin called `FET` (available from JS and
+**Puck.js v2 / v2.1 only** On Puck.js v2 there's a pin called `FET` (available from JS and
 marked on the Puck.js PCB). This is connected to a MOSFET ([NTZD3154](https://www.onsemi.com/pub/Collateral/NTZD3154N-D.PDF)) that is
 capable of pulling the `FET` down to GND with around 200mA.
 
@@ -531,6 +531,8 @@ possible.
 Firmware Updates
 -----------------
 
+**Note:** On Puck.js v2 **do not install firmwares 2v04 and earlier**. See 'recovery after 2v04 installation' below.
+
 ### via nRF Toolbox App (iOS & Android)
 
 * On your Bluetooth LE capable phone, install the `nRF Toolbox` app
@@ -567,6 +569,16 @@ Troubleshooting
 ---------------
 
 Please check out the [Bluetooth Troubleshooting](Troubleshooting+BLE) or [General Troubleshooting](/Troubleshooting) pages.
+
+
+Recovery after 2v04 Installation
+--------------------------------
+
+On Puck.js v2 (v2.1 is unaffected), you should not install firmwares 2v04 and earlier. The pin `D21/nRESET` is used on Puck.js v2, and is pulled low by default.
+
+Pre-2v05 firmwares that are not designed for Puck.js v2 configure `D21/nRESET` as a reset pin. This then forces the chip into a reset state, effectively 'bricking' your Puck.js.
+
+In the very rare case that an old firmware was installed, you can recover your Puck.js by temporarily connecting [pin D21 on the bluetooth module](/MDBT42Q#pinout) to the 3v pin on the Puck. You can then flash an up to date firmware via DFU and the problem will be fixed.
 
 
 Other Official Espruino Boards
