@@ -15,9 +15,25 @@ to help support its continued development*
 We've added a 'Bangle.js' device to Gadgetbridge which allows you to connect
 your phone to [Bangle.js](/Bangle.js) (or any Bluetooth-capable Espruino).
 
+How to set up
+-------------
 
-Messages sent to Bangle.js from Phone
---------------------------------------
+* Install [Gadgetbridge](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) on your Android phone. **Do not install the Play Store version** as it is not the official one. Instead download and install [the F-droid version](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) manually.
+* On Bangle.js, install [the Gadgetbridge Widget](https://banglejs.com/apps/#gbridge), and ensure you disconnect your computer from Bangle.js
+* Start the Gadgetbridge app and click the blue `+` in the bottom right
+* Choose your Bangle.js device from the list
+* Right now we'd suggest choosing `Don't pair` when prompted in order to get the most reliable connection
+* Everything should now be working. From the menu in the top-left of the Gadgetbridge Android app you can choose `Debug` and can test out notifications/etc
+
+### Weather
+
+You can also get weather from Gadgetbridge. Install the [Weather Widget](https://banglejs.com/apps/#weather) and check out the `Read more...` link on the app page for more information. An additional app is required to forward the current weather into Gadgetbridge.
+
+
+How it works internally
+--------------------------
+
+### Messages sent to Bangle.js from Phone
 
 Messages are wrapped in the text `"\x10" + "GB(...)\n"`, so that if they're
 sent to a normal Espruino REPL the `GB` function will be executed with the
@@ -36,7 +52,7 @@ Currently implemented messages are:
 * `t:"call", cmd:"accept/incoming/outgoing/reject/start/end", name: "name", number: "+491234"` - call
 * `t:"act", hrm:bool, stp:bool, int:int`  - Enable realtime step counting, realtime heart rate. 'int' is the report interval in seconds
 
-### Examples
+For example:
 
 ```
 GB({"t":"notify","id":1575479849,"src":"Hangouts","title":"A Name","body":"message contents"})
@@ -45,8 +61,7 @@ GB({"t":"musicinfo","artist":"..","album":"..","track":"..","dur":241,"c":2,"n":
 GB({"t":"call","cmd":"accept","name":"name","number":"+491234"})
 ```
 
-Messages from Bangle.js to Phone
---------------------------------
+### Messages from Bangle.js to Phone
 
 Any line beginning with `{` will be parsed as JSON by Gadgetbridge, so to
 send a command, simply use `Bluetooth.println(JSON.stringify(json))`.
@@ -75,9 +90,9 @@ will display a message on your phone's screen.
 
 
 Building Gadgetbridge
-----------------------
+------------------------
 
-There's proper documentation at https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Developer-Documentation
+If you want to build Gadgetbridge yourself there's proper documentation at https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Developer-Documentation
 
 Once you have the Android development tools on your system, all you need to do to build is:
 
