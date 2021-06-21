@@ -130,6 +130,22 @@ There's IO connected to the nRF52, plus an IO expander to provide power to some 
 
 [![PCB](Bangle.js Technical/PCB.jpg)](https://github.com/espruino/EspruinoDocs/raw/master/info/Bangle.js Technical/PCB.jpg)
 
+
+SWD / Programming
+------------------
+
+You can completely reprogram (and even debug) the nRF52 chip inside
+Bangle.js with the SWD pins. These are on the circuit board under the
+LCD.
+
+You can carefully pull up the LCD and cut/tear through the foam tape holding
+it on. Underneath that you'll find 4 pins, labelled as follows:
+
+![SWD pins](Bangle.js Technical/SWD.jpg)
+
+You only need `GND`, `SWDID` and `SWDCLK` (VDD is not required).
+
+
 Heart Rate monitor PCB
 ----------------------
 
