@@ -144,7 +144,7 @@ Publish can also be given a third argument:  `mqtt.publish(topic, message, { qos
 Subscribe/Unsubscribe
 -----------
 
-Subscriptions are managed using the ```subscribe(topic_filter)``` and ```unsubscribe(topic_filter)```functions. A topic filter can be just a specific topic or contain wildcards that matches groups and/or sub-groups of topics. An event, publish, is fired whenever a message is recieved by the client. The event emitter calls the listener with an object containin all the relevant packet information: topic, message, (dup, qos and retain).
+Subscriptions are managed using the ```subscribe(topic_filter)``` and ```unsubscribe(topic_filter)```functions. A topic filter can be just a specific topic or contain wildcards that matches groups and/or sub-groups of topics. An event, publish, is fired whenever a message is received by the client. The event emitter calls the listener with an object containin all the relevant packet information: topic, message, (dup, qos and retain).
 
 ```
 mqtt.subscribe("test/espruino");
