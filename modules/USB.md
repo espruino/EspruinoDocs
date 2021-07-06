@@ -6,6 +6,8 @@ USB and USB HID
 
 * KEYWORDS: USB,HID,Human Interface Device,VCP,CDC,Mouse,Keyboard,Joystick
 
+**If you have a Bluetooth Espruino device, you can use [Bluetooth HID](/BLE+Keyboard)**
+
 Both the [Espruino Board](/Original) and the [[Pico]] have USB ports. When connected to a PC, they appear as a Virtual Communications Port (VCP) - as if you plugged in a USB-Serial converter dongle. On that port there's the console interface, which allows you to write code on Espruino using nothing more than a simple serial terminal.
 
 However Espruino [[Pico]] **also contains** a [USB HID mode](http://en.wikipedia.org/wiki/USB_human_interface_device_class). This means that when set up, it can appear to be a USB Human Interface device such as a Mouse, Keyboard, or Joystick in addition to a Virtual Com Port.
@@ -26,12 +28,14 @@ setWatch(function() {
   kb.setModifiers(kb.MODIFY.SHIFT, function() {
     kb.type("HELLO WORLD", function() {
       kb.setModifiers(0, function() {
-        kb.tap(kb.KEY.ENTER); 
+        kb.tap(kb.KEY.ENTER);
       });
     });
   });
 }, BTN, {debounce:100,repeat:true, edge:"rising"});
 ```
+
+To see the available keys/modifiers, check out on [[USBKeyboard.js]]
 
 You could for instance store temperature readings, and then output them as keypresses when the button is pressed:
 
@@ -58,6 +62,8 @@ function outputData() {
 setWatch(outputData, BTN, {debounce:100,repeat:true, edge:"rising"});
 ```
 
+
+
 Mouse
 -----
 
@@ -71,6 +77,8 @@ setWatch(function() {
   mouse.send(20, 20, mouse.BUTTONS.NONE); // X movement, Y movement, buttons pressed
 }, BTN, {debounce:100,repeat:true, edge:"rising"});
 ```
+
+Available buttons are `NONE / LEFT / RIGHT / MIDDLE`.
 
 
 Tablet
@@ -91,6 +99,23 @@ setWatch(function() {
   }, 10);
 }, BTN, {debounce:100,repeat:true, edge:"rising"});
 ```
+
+Available buttons are `NONE / LEFT / RIGHT / MIDDLE`.
+
+Media Controls
+-----------------
+
+Handled by the [[USBMedia.js]] module.
+
+```
+var media = require("USBMedia");
+
+setWatch(function() {
+  media.playpause();
+}, BTN, {debounce:100,repeat:true, edge:"rising"});
+```
+
+Available functions are `next / prev / stop / playpause / mute/ volumeUp / volumeDown`.
 
 
 Other devices
