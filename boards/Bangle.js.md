@@ -190,10 +190,10 @@ Information
 <a name="lcd"></a>LCD Screen
 ---------------------------------
 
-Bangle.js displays the REPL (JavaScript console) by
-default, so any calls like `print("Hello")` or `console.log("World")` will output
-to the LCD when there is no computer connected via Bluetooth or [Serial](#serial-console).
-Any errors generated when there is no connection will also be displayed on the LCD.
+Bangle.js displays the REPL (JavaScript console) if `Debug Info: show` has
+been set in settings. If enabled, any calls like `print("Hello")` or `console.log("World")` will output
+to the LCD when there is no computer connected via Bluetooth. Any errors generated when there is no
+connection will also be displayed on the LCD.
 
 ### Graphics
 
@@ -230,6 +230,9 @@ You can also call `Bangle.setLCDMode()` to return to normal, unbuffered mode.
 ### Menus
 
 Bangle.js comes with a built-in menu library that can be accessed with the [`E.showMenu()`](/Reference#l_E_showMenu) command.
+
+[`E.showPrompt()`](/Reference#l_E_showPrompt) and [`E.showMessage()`](/Reference#l_E_showMessage) can also be used for simple
+prompts and full-screen messages.
 
 ```
 // Two variables to update
