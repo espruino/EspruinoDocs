@@ -5,7 +5,7 @@
 var media = require("USBMedia");
 
 setWatch(function() {
-  media.playpause();
+  media.playpause(()=>{console.log("playpause");});
 }, BTN, {debounce:100,repeat:true, edge:"rising"});
 ```
 
