@@ -44,7 +44,7 @@ function p(c, cb) {
   E.sendUSBHID([c]);
   setTimeout(function() {
     E.sendUSBHID([0]);
-    cb();
+    if (cb) setTimeout(cb,100);
   },100);
 }
 

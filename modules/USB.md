@@ -111,7 +111,9 @@ Handled by the [[USBMedia.js]] module.
 var media = require("USBMedia");
 
 setWatch(function() {
-  media.playpause();
+  media.playpause(function() {
+    // command has been sent
+  });
 }, BTN, {debounce:100,repeat:true, edge:"rising"});
 ```
 
