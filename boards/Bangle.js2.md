@@ -9,12 +9,12 @@ Bangle.js 2
 **There's going to be a new [Bangle.js](/Bangle.js)!** This one is based on the
 [SMA Q3](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch).
 
-=================================
+------------------------
 
 Please [enter your email address here](https://docs.google.com/forms/d/e/1FAIpQLSccmslHw13z4IKS6RKrOiYuBT5lL6jMfMZuIwQB_6uLR-_t9A/viewform?usp=sf_link) if you'd
 like us to email you when it launches!
 
-=================================
+------------------------
 
 **Bangle.js 2 is an open, hackable smartwatch**
 
