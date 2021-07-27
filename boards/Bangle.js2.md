@@ -2,12 +2,19 @@
 Bangle.js 2
 ============
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js2. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Espruino,Official Board,nRF52832,nRF52,Nordic,Board,Bluetooth,BLE,Bluetooth LE,Graphics,Bangle.js,Bangle,Banglejs,Smartwatch,Watch
 
 **There's going to be a new [Bangle.js](/Bangle.js)!** This one is based on the
 [SMA Q3](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch).
+
+=================================
+
+Please [enter your email address here](https://docs.google.com/forms/d/e/1FAIpQLSccmslHw13z4IKS6RKrOiYuBT5lL6jMfMZuIwQB_6uLR-_t9A/viewform?usp=sf_link) if you'd
+like us to email you when it launches!
+
+=================================
 
 **Bangle.js 2 is an open, hackable smartwatch**
 
