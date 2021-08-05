@@ -14,7 +14,11 @@ Bangle.js 2
 Please [enter your email address here](https://docs.google.com/forms/d/e/1FAIpQLSccmslHw13z4IKS6RKrOiYuBT5lL6jMfMZuIwQB_6uLR-_t9A/viewform?usp=sf_link) if you'd
 like us to email you when it launches!
 
+[Development versions of Bangle.js 2 are now available](https://shop.espruino.com/banglejs2-dev)
+
 ------------------------
+
+![](Bangle.js2.jpg)
 
 **Bangle.js 2 is an open, hackable smartwatch**
 
@@ -30,8 +34,8 @@ Features
 * 1.3 inch 176x176 always-on 3 bit colour LCD display (LPM013M126)
 * Full touchscreen
 * GPS/Glonass receiver (AT6558)
-* Heart rate monitor
-* 3 Axis Accelerometer
+* Heart rate monitor (Vcare VC31)
+* 3 Axis Accelerometer (Kionix KX023)
 * 3 Axis Magnetometer
 * Air Pressure/Temperature sensor (Bosch BMP280)
 * Vibration motor
@@ -62,6 +66,14 @@ Powering off
 * Enter the launcher by pressing the button to unlock, then pressing it again to enter the launcher (while showing a clock)
 * Tap on `Settings`
 * Scroll down to `Turn off` and tap again
+
+
+Apps
+----
+
+Apps are provided by the [same Bangle.js app loader](https://banglejs.com/apps/#b2) as for Bangle.js 1.
+
+Right now compatible apps are tagged with `b2` and incompatible apps are tagged with `nbo2`. You can use the link `https://banglejs.com/apps/#b2` to see apps which are designed to work on Bangle.js 2.
 
 
 Resetting
