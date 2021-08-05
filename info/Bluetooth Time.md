@@ -12,6 +12,7 @@ This page uses [Web Bluetooth](Puck.js Web Bluetooth) to set the current time on
 See the [Graphics](/Graphics) library page for more information.
 
 <button id="setTime" type="button" class="btn btn-primary">Set Time!</button>
+<span id="status"></span>
 <script src="https://www.puck-js.com/puck.js"></script>
 <script>
 // Force HTTPS - needed for web bluetooth
@@ -20,9 +21,22 @@ if (l.substr(0,7)=="http://" && !window.location.port)
   window.location = "https://"+l.substr(7);
 
 document.getElementById("setTime").addEventListener("click",function() {
-  Puck.setTime(function() {
-    Puck.close();
-    window.alert("Time set successfully!");
+  document.getElementById("status").innerHTML = "Connecting...";
+  Puck.write(" \x03",function() {
+    document.getElementById("status").innerHTML = "Connected.";
+    // give the connection time to negotiate a higher speed
+    // higher speed = less time delay between time sent
+    // and being updated
+    setTimeout(function() {
+      document.getElementById("status").innerHTML = "Setting time...";
+      Puck.setTime(function() {
+        setTimeout(function() {
+          Puck.close();
+          document.getElementById("status").innerHTML = "";
+        }, 100);
+        window.alert("Time set successfully!");
+      });
+    }, 1000);
   });
 });
 </script>
