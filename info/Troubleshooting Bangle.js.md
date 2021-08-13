@@ -94,3 +94,11 @@ You can also turn off `Wake on Twist` as well.
 
 Now, the only way to get to settings is to press `BTN1` or `BTN3` to wake the clock,
 and then `BTN2` - which is much less likely to happen accidentally.
+
+### What is the difference between an app, a clock, a widget?
+
+An app is a piece of code which is launched manually or triggered by another app. Only one app runs at the same time.
+
+Clock is a specific app which is launched at startup. The clock app could be selected in settings menu.
+
+A widget is a piece of code which could run in background like a pedometer. Several widgets can run at the same time in addition to an app.
