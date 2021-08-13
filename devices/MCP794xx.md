@@ -2,7 +2,7 @@
 MCP794xx Battery-Backed I2C Real-Time Clock/Calendar with SRAM, (optional) EEPROM and Protected EEPROM
 ===================================================================================================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MCP9808. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/MCP794xx. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,I2C,RTC,EEPROM,MCP79400,MCP79401,MCP79402,MCP79410,MCP79411,MCP79412
 
