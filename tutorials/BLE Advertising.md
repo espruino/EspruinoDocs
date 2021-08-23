@@ -41,10 +41,10 @@ and upload the following code:
 var presses = 0;
 NRF.setAdvertising({},{manufacturer: 0x0590, manufacturerData:[presses]});
 
-setWatch(function() {                                                          
-  presses++;                                                                   
-  NRF.setAdvertising({},{manufacturer: 0x0590, manufacturerData:[presses]});   
-}, BTN, {edge:"rising", repeat:1, debounce:20})  
+setWatch(function() {
+  presses++;
+  NRF.setAdvertising({},{manufacturer: 0x0590, manufacturerData:[presses]});
+}, BTN, {edge:"rising", repeat:1, debounce:20})
 ```
 
 This will advertise a single byte, `0`, which will increment each time the
@@ -91,6 +91,15 @@ and can read the `manufacturerData` field to get the transmitted data.
 **Note:** Scanning for advertising data uses a lot of power as Puck.js's radio
 has to stay on all the time - so if running off a battery you should do it as
 rarely as possible.
+
+
+Chrome / Edge / Web Bluetooth
+-----------------------------
+
+On Chrome based browsers, it is possible to scan for advertisements. You can either use [`navigator.bluetooth.requestLEScan`](https://googlechrome.github.io/samples/web-bluetooth/scan.html) to scan for all devices,
+or [`device.watchAdvertisements()`](https://googlechrome.github.io/samples/web-bluetooth/watch-advertisements.html) to scan for devices one by one.
+
+However as of August 2021, this functionality only appears to be implemented enough to be useful on Chrome for Android.
 
 
 Node.js
