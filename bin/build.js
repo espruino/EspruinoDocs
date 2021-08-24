@@ -564,7 +564,12 @@ markdownFiles.forEach(function (file) {
    contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+)\]\]/g,"[$1](/$1)");
    contents = contents.replace(/!\[\]\((Font[a-zA-Z0-9_]+\.js)\)/g, function(match, filename) {
      console.log("Font Preview: "+JSON.stringify(filename));
-     return "!["+filename+"]("+require("./fontpreview.js").getFontPreview("../modules/"+filename)+")";
+     var js = "";
+     if (filename.startsWith("Font") && filename.endsWith(".js")) {
+       var fontName = filename.slice(4,-3);
+       js = '<br /> `require("Font'+fontName+'").add(Graphics);` <br /> `g.setFont("'+fontName+'");`';
+     }
+     return "!["+filename+"]("+require("./fontpreview.js").getFontPreview("../modules/"+filename)+")"+js;
    });
    for (var i=0;i<3;i++) // cope with multiple spaces in links (nasty!)
      contents = contents.replace(/(\[.+\]\([^) ]+) ([^)]+\))/g,"$1+$2"); // spaces in links
