@@ -63,13 +63,26 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   function drawChSimple(ch, ox, oy) {
     var xPos = 0;
     ctx.fillStyle = "black";
-    ctx.fillRect(xPos,0,fontHeight*2,fontHeight);
+    ctx.fillRect(xPos,0,fontHeight*2,fontHeight*2);
     ctx.fillStyle = "white";  
     ctx.fillText(ch, xPos+ox, fontHeight+oy);  
     var chWidth = Math.round(ctx.measureText(ch).width);
-    var img = { width:0, height:fontHeight, data:[] };
-    if (chWidth)
-      img = ctx.getImageData(xPos,0,chWidth,fontHeight);
+    var img = { width:0, height:fontHeight+1, data:[] };
+    if (chWidth) {
+      // Sometimes, fonts drop below the bottom of their
+      // font box. In this case, we nudge them up by a pixel or two
+      var yPos = 0;  
+      do {
+        img = ctx.getImageData(xPos,fontHeight+yPos,chWidth,1);
+        var allClear = true;
+        for (var i=0;i<img.data.length;i+=4)
+          if (img.data[i]) allClear = false;
+        if (!allClear) yPos++;          
+      } while(!allClear);
+      if (yPos) console.log("Nudging character "+JSON.stringify(ch)+" up by "+yPos+" pixels to it fits");
+      // get image data
+      img = ctx.getImageData(xPos,yPos,chWidth,fontHeight);
+    }
     return img; // data/width/height
   }
 
