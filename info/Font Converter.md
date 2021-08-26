@@ -34,6 +34,7 @@ Range : <select id="fontRange">
   <option value="ISO8859-1">ISO8859-1 / ISO Latin (32-255)</option>
   <option value="Numeric">Numeric (46-58)</option>
 </select><br/>
+Align to increase sharpness : <input type="checkbox" id="fontJitter"></input><br/>
 </form>
 <button id="calculateFont">Go!</button><br/>
 
@@ -48,19 +49,23 @@ var fontRanges = {
  "ISO8859-1" : {min:32, max:255},
  "Numeric" : {min:46, max:58},
 };
+// Each character can be moved around slightly in order to ensure the maximum
+// amount of 'solid' pixels
+var FONT_JITTER = false;
 var cssNode;
 
 function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   var canvas = document.getElementById("fontcanvas");
   var ctx = canvas.getContext("2d");
   ctx.font = fontHeight+"px "+fontName;
+  ctx.textBaseline = "bottom";
 
   function drawChSimple(ch, ox, oy) {
     var xPos = 0;
     ctx.fillStyle = "black";
     ctx.fillRect(xPos,0,fontHeight*2,fontHeight);
     ctx.fillStyle = "white";  
-    ctx.fillText(ch, xPos+ox, fontHeight+oy-2);  
+    ctx.fillText(ch, xPos+ox, fontHeight+oy);  
     var chWidth = Math.round(ctx.measureText(ch).width);
     var img = { width:0, height:fontHeight, data:[] };
     if (chWidth)
@@ -71,16 +76,26 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   // This one draws the same character at different offsets to try and get the clearest image
   // clearest image = most bright pixels
   function drawCh(ch) {
-    var adjust = [{x:0,y:0},{x:-0.5,y:0},{x:0,y:-0.5},{x:-0.5,y:-0.5}];
-    var bestPixelCnt = -1, bestImg;
+    var adjust = [{x:0,y:0}];
+    if (FONT_JITTER) {
+      adjust = [];
+      for (var x=-0.5;x<0.5;x+=0.25)
+        for (var y=-0.5;y<0.5;y+=0.25)
+          adjust.push({x:x,y:y});
+    }
+    var bestPixelCnt, bestImg;
     adjust.forEach(a=>{
       var img = drawChSimple(ch, a.x, a.y);
-      var brightPixels = 0;
-      for (var i=0;i<img.data.length;i+=4)
-        if (img.data[i]>200)
-          brightPixels++;
-      if (brightPixels > bestPixelCnt) {
-        bestPixelCnt = brightPixels;
+      var greyPixelAmt = 0;
+      for (var i=0;i<img.data.length;i+=4) {
+        var greyAmt = img.data[i];
+        if (greyAmt>128) greyAmt = 255-greyAmt;
+        // the higher 'blurry' is, the more grey
+        // the image is
+        greyPixelAmt += greyAmt*greyAmt;
+      }
+      if (bestPixelCnt===undefined || greyPixelAmt < bestPixelCnt) {
+        bestPixelCnt = greyPixelAmt;
         bestImg = img;
       }
     });
@@ -139,6 +154,16 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
     }
     prevCtx.putImageData( prevImg, (ch&15)*fontHeight, (ch>>4)*fontHeight );     
   }
+  // draw grid lines
+  prevCtx.strokeStyle = "red";
+  prevCtx.lineWidth = 0.1;
+  for (var i=0;i<16;i++) {
+    prevCtx.moveTo(0, fontHeight*i);
+    prevCtx.lineTo(fontHeight*16, fontHeight*i);
+    prevCtx.moveTo(fontHeight*i, 0);
+    prevCtx.lineTo(fontHeight*i, fontHeight*16);
+  }
+  prevCtx.stroke();
 
   //console.log("Max color value = "+maxCol+", in bpp "+maxP);
   // if all fonts are the same width...
@@ -202,6 +227,7 @@ function loadFontAndCalculate() {
   var fontRangeName =  document.getElementById("fontRange").value;
   var fontRange = fontRanges[fontRangeName];
   if (!fontRange) throw new Error("Unknown font range");
+  FONT_JITTER = document.getElementById("fontJitter").checked;
 
   document.getElementById('fontTest').style = `font-family: '${fontName}';font-size: ${fontHeight}px`;
 
