@@ -122,9 +122,7 @@ Check out the specific instuctions on your device's page:
 * [Puck.js](/Puck.js#firmware-updates)
 * [Pixl.js](/Pixl.js#firmware-updates)
 * [MDBT42Q](/MDBT42Q#firmware-updates)
-* [Thingy:52](/Thingy52#firmware-updates)
-* [nRF52832DK](/nRF52832DK#firmware-updates)
-* [RuuviTag](/RuuviTag#firmware-updates)
+* [Bangle.js](/Bangle.js#firmware-updates)
 
 ### I can't get the battery out
 
@@ -133,6 +131,16 @@ something nonconductive from behind, like a matchstick.
 
 If you just want to reset your Puck.js you can also lift the battery away from the PCB
 slightly with a fingernail (although this doesn't work on [Pixl.js](/Pixl.js)).
+
+### When power is applied a LED stays lit
+
+Usually this happens if you're holding a button at startup, and
+the device enters bootloader mode.
+
+However in rare cases, your firmware may have got corrupted and so the
+bootloader is unable to boot into Espruino. In this case, please follow
+your board's instructions (above) to update the firmware, which
+should fix the problem.
 
 
 [Puck.js](/Puck.js)
