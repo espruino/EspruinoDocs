@@ -133,13 +133,20 @@ the only time we call `Bangle.drawWidgets()`
 ### BTN2 to start the launcher
 
 Every clock needs to be able to start the launcher, and
-the default for this is `BTN2`. All you need to do
-is add this code to the end of the clock code (not in a function):
+the default for this is the middle button. All you need to do
+is add this to the end of the clock code (not in a function):
 
 ```JS
 // Show launcher when middle button pressed
-setWatch(Bangle.showLauncher, BTN2, { repeat: false, edge: "falling" });
+Bangle.setUI("clock");
 ```
+
+**Note:** In Bangle.js firmwares before 2v08, apps used the following code to
+explicitly show the launcher when `BTN2` is pressed:
+`setWatch(Bangle.showLauncher, BTN2, { repeat: false, edge: "falling" });`. Using
+[`Bangle.setUI`](http://www.espruino.com/Reference#l_Bangle_setUI) allows users
+to install different apps which start the launcher (or other apps) with different
+functionality, independent of the clock face.
 
 ### Power saving
 
@@ -212,7 +219,7 @@ Bangle.on('lcdPower',on=>{
 Bangle.loadWidgets();
 Bangle.drawWidgets();
 // Show launcher when middle button pressed
-setWatch(Bangle.showLauncher, BTN2, { repeat: false, edge: "falling" });
+Bangle.setUI("clock");
 ```
 
 
