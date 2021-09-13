@@ -35,8 +35,9 @@ Now, let's enable "GitHub Pages", which allows you to view and use
 your own copy of the repository.
 
 * Click `Settings` up the top right of the repository page
-* Scroll down to `GitHub Pages`
+* On the left panel, select `Pages`
 * Under `Source`, choose `master branch`
+* Now click `Save`
 * The page will refresh and under `GitHub Pages` it'll then say:
 
 ```
