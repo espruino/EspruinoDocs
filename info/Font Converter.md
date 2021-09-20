@@ -44,10 +44,10 @@ Align to increase sharpness : <input type="checkbox" id="fontJitter"></input><br
 <canvas id="fontPreview" style="display:none;border:1px solid black;width:100%;image-rendering: pixelated;"></canvas>
 <script>
 var fontRanges = {
- "ASCII" : {min:32, max:127},
- "ASCIICAPS" : {min:32, max:93},
- "ISO8859-1" : {min:32, max:255},
- "Numeric" : {min:46, max:58},
+ "ASCII" : {min:32, max:127, txt:"This is a test of the font"},
+ "ASCIICAPS" : {min:32, max:93, txt:"THIS IS A TEST OF THE FONT"},
+ "ISO8859-1" : {min:32, max:255, txt:"This is a test of the font"},
+ "Numeric" : {min:46, max:58, txt:"0.123456789:/"},
 };
 // Each character can be moved around slightly in order to ensure the maximum
 // amount of 'solid' pixels
@@ -62,26 +62,37 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
 
   function drawChSimple(ch, ox, oy) {
     var xPos = 0;
+    var yPos = Math.round(fontHeight*0.5);
     ctx.fillStyle = "black";
     ctx.fillRect(xPos,0,fontHeight*2,fontHeight*2);
     ctx.fillStyle = "white";  
-    ctx.fillText(ch, xPos+ox, fontHeight+oy);  
+    ctx.fillText(ch, xPos + ox, fontHeight + yPos + oy);  
+    
     var chWidth = Math.round(ctx.measureText(ch).width);
     var img = { width:0, height:fontHeight+1, data:[] };
     if (chWidth) {
-      // Sometimes, fonts drop below the bottom of their
-      // font box. In this case, we nudge them up by a pixel or two
-      var yPos = 0;  
+      var yOffset = 0;  
+      // sometimes fonts are too high up - if so, nudge them down
       do {
-        img = ctx.getImageData(xPos,fontHeight+yPos,chWidth,1);
+        img = ctx.getImageData(xPos,yPos+yOffset-1,chWidth,1);
         var allClear = true;
         for (var i=0;i<img.data.length;i+=4)
           if (img.data[i]) allClear = false;
-        if (!allClear) yPos++;          
-      } while(!allClear);
-      if (yPos) console.log("Nudging character "+JSON.stringify(ch)+" up by "+yPos+" pixels to it fits");
+        if (!allClear) yOffset--;          
+      } while(!allClear && yOffset>-fontHeight);
+      // Sometimes, fonts drop below the bottom of their
+      // font box. In this case, we nudge them up by a pixel or two
+      if (!yOffset) do {
+        img = ctx.getImageData(xPos,fontHeight+yPos+yOffset,chWidth,1);
+        var allClear = true;
+        for (var i=0;i<img.data.length;i+=4)
+          if (img.data[i]) allClear = false;
+        if (!allClear) yOffset++;          
+      } while(!allClear && yOffset<fontHeight);
+      if (yOffset>0) console.log("Nudging character "+JSON.stringify(ch)+" up by "+yOffset+" pixels to it fits");
+      if (yOffset<0) console.log("Nudging character "+JSON.stringify(ch)+" down by "+(-yOffset)+" pixels to it fits");
       // get image data
-      img = ctx.getImageData(xPos,yPos,chWidth,fontHeight);
+      img = ctx.getImageData(xPos,yPos+yOffset,chWidth,fontHeight);
     }
     return img; // data/width/height
   }
@@ -185,12 +196,10 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   var result = document.getElementById("result");
   result.style.display = "inherit";
   result.innerHTML = `
-// Actual height ${maxY+1-minY} (${maxY} - ${minY})
-${fixedWidth?"":`var widths = atob("${btoa(String.fromCharCode.apply(null,fontWidths))}");`}
-var font = atob("${btoa(String.fromCharCode.apply(null,fontData))}");
-var scale = 1; // size multiplier for this font
-g.setFontCustom(font, ${charMin}, ${fixedWidth?fontWidths[0]:"widths"}, ${fontHeight}+(scale<<8)+(${BPP}<<16));
-  `.trim();
+Graphics.prototype.setFont${fontName.replace(/[^A-Za-z0-9]/g,"")} = function(scale) {
+  // Actual height ${maxY+1-minY} (${maxY} - ${minY})
+  g.setFontCustom(atob("${btoa(String.fromCharCode.apply(null,fontData))}"), ${charMin}, ${fixedWidth?fontWidths[0]:`atob("${btoa(String.fromCharCode.apply(null,fontWidths))}")`}, ${fontHeight}+(scale<<8)+(${BPP}<<16));
+}`.trim();
 }
 
 function loadFontAndCalculate() {
@@ -243,6 +252,7 @@ function loadFontAndCalculate() {
   FONT_JITTER = document.getElementById("fontJitter").checked;
 
   document.getElementById('fontTest').style = `font-family: '${fontName}';font-size: ${fontHeight}px`;
+  document.getElementById('fontTest').innerText = fontRange.txt;
 
 
   function callback() {
