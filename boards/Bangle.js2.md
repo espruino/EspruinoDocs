@@ -43,6 +43,16 @@ Features
 * 36mm x 43mm x 12mm watch body, with standard 20mm watch straps
 
 
+Pre-release hardware
+--------------------
+
+This is pre-release hardware at the moment and there are a few things you should be aware of:
+
+* The 'Developer Edition' Bangle.js devices **are not water resistant**
+* Many Bangle.js 1.0 apps don't work yet. Many apps will be updated, and the app loader will eventually ask which device you're using and filter accordingly, but for now use the search keyword `b2` to find apps known to work: https://banglejs.com/apps/#b2
+* The standard `notify` library does not work on Bangle.js 2 as it uses features specific to Bangle.js 1's LCD driver. To make `Gadgetbridge` function you'll need to install `Gadgetbridge` then uninstall `Notifications` (`notify`) and install `Fullscreen Notifications` (`notifyfs`)
+
+
 Power Consumption
 -----------------
 
