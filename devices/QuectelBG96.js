@@ -102,7 +102,7 @@ function atcmd(cmd,timeout) {
   return new Promise(function(resolve,reject) {
     var data = "";
     at.cmd(cmd+"\r\n",timeout||1000,function cb(d) {
-      if (d===undefined || d=="ERROR") reject(cmd+": "+d?d:"TIMEOUT");
+      if (d===undefined || d=="ERROR") reject(cmd+": "+(d||"TIMEOUT"));
       else if (d=="OK") resolve(data);
       else { data+=(data?"\n":"")+d; return cb; }
     });
@@ -141,14 +141,18 @@ lte : bool, Are we using LTE? This changes how we check if we're registered
 apn : optional access point name.
 username : optional username
 password : optional password
+debug : bool, should we output debug info to console?
 } */
 exports.connect = function(usart, options, callback) {
   options = options || {};
   usart.removeAllListeners();
   gprsFuncs.at = at = require('AT').connect(usart);
-  // at.debug();
+  if (options.debug) {
+    at.debug();
+    gprsFuncs.debug(1);
+  }
   require("NetworkJS").create(netCallbacks);
-  // Handle +QIURC: “recv” input data
+  // Handle +QIURC: "recv" input data
   at.register('+QIURC: "recv"', function(line) {
     var eol = line.indexOf("\r\n");
     if (eol<0) return line; // wait until we have a full CR/LF
@@ -184,22 +188,23 @@ exports.connect = function(usart, options, callback) {
     console.log(e);
   });
 
-  atcmd("ATE0").then(function() { // echo off
+  atcmd("ATE0",4000).then(function() { // echo off
     return atcmd("AT+CEREG=2"); //turn on extended cereg response for cell tower info
   }).then(function() { // Wait 60s for registration
     return new Promise(function(resolve, reject) {
       var n = 60;
+      var creg = "";
       var i = setInterval(function() {
         at.cmd(options.lte?"AT+CEREG?\r":"AT+CREG?\r",500,function(d) {
-          var n = d.split(",")[1]; //1 =connected,5=connected,roaming
-          if (n==1 || n==5) {
+          creg = d&&d.split(",")[1]; //1 =connected,5=connected,roaming
+          if (creg==1 || creg==5) {
             clearInterval(i);
             resolve();
           }
         });
         if (n-- <= 0) {
           clearInterval(i);
-          reject("Timeout while registering.");
+          reject("Timeout while registering. CREG = "+creg);
         }
       }, 1000);
     });
@@ -208,7 +213,7 @@ exports.connect = function(usart, options, callback) {
   }).then(function() {
     return atcmd("AT+CGREG?"); // Check GPRS registered
   }).then(function(d) {
-    var n = d.split(",")[1]; // 1=connected, 2=connecting, 5=connected, roaming
+    var n = d&&d.split(",")[1]; // 1=connected, 2=connecting, 5=connected, roaming
     if (n==2) throw new Error("GPRS still connecting, "+d);
     if (n!=1 && n!=5) throw new Error("GPRS not registered, "+d);
     return atcmd("AT+COPS?"); // Operator
@@ -218,11 +223,16 @@ exports.connect = function(usart, options, callback) {
     dbg("Operator "+op);
     return atcmd(`AT+QICSGP=1,1,${JSON.stringify(options.apn||"")},${JSON.stringify(options.username||"")},${JSON.stringify(options.password||"")}`,60000); // Set up context, IPv4
   }).then(function() {
-    return atcmd("AT+QIACT=1",60000); // Activate context - can take 60s!
+    return atcmd("AT+QIACT?"); // Check context
+  }).then(function(d) {
+    dbg("QIACT state "+d);
+    var state = d&&d.split(",")[1];
+    if (state==1) return; // already connected!
+    return atcmd("AT+QIACT=1"); // Activate context - can take 60s!
   }).then(function() {
     if (callback) callback(null);
   }).catch(function(e) {
-    if (callback) callback(e);
+    if (callback) callback(e||"Unknown error");
   });
   return gprsFuncs;
 };

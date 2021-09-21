@@ -36,6 +36,7 @@ gprs = require('QuectelBG96').connect(Serial1, {
   if (err) throw err;
   connectionReady();
 });
+// gprs.debug(); // show just debug info from BG96 module
 ```
 
 The second argument to `connect` is an object that can contain:
@@ -46,6 +47,7 @@ The second argument to `connect` is an object that can contain:
   apn : "", // optional access point name.
   username : "", // optional username
   password : "", // optional password
+  // debug : true // to show raw AT command info
 }
 ```
 
