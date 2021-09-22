@@ -6,19 +6,18 @@ Bangle.js 2
 
 * KEYWORDS: Espruino,Official Board,nRF52832,nRF52,Nordic,Board,Bluetooth,BLE,Bluetooth LE,Graphics,Bangle.js,Bangle,Banglejs,Smartwatch,Watch
 
-**There's going to be a new [Bangle.js](/Bangle.js)!** This one is based on the
+Bangle.js is the successor to [Bangle.js](/Bangle.js), and is based on the
 [SMA Q3](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch).
 
-------------------------
-
-Please [enter your email address here](https://docs.google.com/forms/d/e/1FAIpQLSccmslHw13z4IKS6RKrOiYuBT5lL6jMfMZuIwQB_6uLR-_t9A/viewform?usp=sf_link) if you'd
-like us to email you when it launches!
-
-[Development versions of Bangle.js 2 are now available](https://shop.espruino.com/banglejs2-dev)
+**[Bangle.js 2 is now on KickStarter!](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)** 
 
 ------------------------
 
-![](Bangle.js2.jpg)
+[Development versions of Bangle.js 2 are now available in our shop](https://shop.espruino.com/banglejs2-dev)
+
+------------------------
+
+[![](Banglejs2/main.jpg)](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)
 
 **Bangle.js 2 is an open, hackable smartwatch**
 
@@ -39,7 +38,7 @@ Features
 * 3 Axis Magnetometer
 * Air Pressure/Temperature sensor (Bosch BMP280)
 * Vibration motor
-* 200mAh battery, 1 week standby time
+* 200mAh battery, 2 weeks standby time
 * 36mm x 43mm x 12mm watch body, with standard 20mm watch straps
 
 
@@ -53,10 +52,36 @@ This is pre-release hardware at the moment and there are a few things you should
 * The standard `notify` library does not work on Bangle.js 2 as it uses features specific to Bangle.js 1's LCD driver. To make `Gadgetbridge` function you'll need to install `Gadgetbridge` then uninstall `Notifications` (`notify`) and install `Fullscreen Notifications` (`notifyfs`)
 
 
+Quick Usage Notes
+-----------------
+
+There are a few things to know that'll really help you get started quickly:
+
+* Long-pressing the one button will take you back to the default clock app
+* The touchscreen is only active when the lock symbol isn't displayed in the top left hand corner. Unlocking can be configured in several ways but the easiest is just to press the button.
+* In the default launcher, drag the screen to scroll, and tap the icon you want to launch
+* **In text menus, you don't need to tap on the text line to select it.** Instead, drag your finger up and down to change the selected entry, and then **tap anywhere** to select.
+
+
 Power Consumption
 -----------------
 
-To be confirmed...
+* Idle, accelerometer on 12.5Hz - 1.3mA
+* Idle, accelerometer on 1.25Hz - 1.15mA (default if not moved)
+* BLE Connected in high bandwidth mode - 1.65mA
+* Compass on - 1.4mA (+0.1mA)
+* Heart rate monitor on - 5.5mA (+4mA)
+* 100% CPU usage running JavaScript - 4.1mA (+3mA)
+* GPS on - 26mA (+25mA)
+* LCD touchscreen enabled (unlocked) - 3.8mA (+2.5mA)
+* LCD backlight on - 15mA (+14mA)
+* Turned off - 0.45mA
+
+Right now you can expect around 7 days of battery life with a clock that
+updates once a minute. 
+
+**Note:** These figures are based on Bangle.js firmware 2v10 and power usage 
+when idle and off **will** decrease substantially in the future.
 
 
 Charging
@@ -430,6 +455,29 @@ detailed information from the GPS.
 
 See [the reference](https://banglejs.com/reference#l_Bangle_GPS) for
 more information.
+
+
+Hardware SWD
+------------
+
+Bangle.js 2 has the hardware SWD pin brought out on the back of the watch along with the charging pins:
+
+![](Banglejs2/SWD.jpg)
+
+This can be connected to an SWD programmer. We'd recommend using an [nRF52 DK](https://www.nordicsemi.com/Products/Development-hardware/nrf52-dk) (or nRF52840DK). 
+When using the nRF52DK you'll need to short the `GND DETECT` pin to `GND` to tell it you're programming the Bangle.js and not the on-board nRF52.
+
+![](Banglejs2/nRF52DK.jpg)
+
+The easiest way to connect to these is to use the provided USB charge cable and to wire up a USB type A socket:
+
+| Pin # | Connect |
+|-------|---------|
+| 1     | 5v (not required) |
+| 2     | SWDIO   |
+| 3     | SWDCLK  |
+| 4     | GND     |
+
 
 
 Other Official Espruino Boards

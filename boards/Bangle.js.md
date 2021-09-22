@@ -12,6 +12,12 @@ Bangle.js
 
 **Bangle.js is an open, hackable smartwatch**
 
+------------------------
+
+**[Bangle.js 2 is now on KickStarter!](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)**
+
+------------------------
+
 You can easily install new apps from the web or develop your own using JavaScript or a graphical programming language (Blockly). All you need is a Web Browser (Chrome, Edge or Opera) and you can upload apps or write code to run on your watch wirelessly! Bangle.js is waterproof and AI enabled and comes with Bluetooth Low Energy, GPS, a heart rate monitor, accelerometer and more.
 
 **Just got your Bangle.js? Check out [The Bangle.js 'Getting Started' page](/Bangle.js Getting Started)**
