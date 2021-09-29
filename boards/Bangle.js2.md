@@ -66,22 +66,19 @@ There are a few things to know that'll really help you get started quickly:
 Power Consumption
 -----------------
 
-* Idle, accelerometer on 12.5Hz - 0.9mA
-* Idle, accelerometer on 1.25Hz - 0.75mA (default if not moved)
-* BLE Connected in high bandwidth mode - 1.25mA
-* Compass on - 1.0mA (+0.1mA)
-* Heart rate monitor on - 5.5mA (+4.5mA)
-* 100% CPU usage running JavaScript - 4.1mA (+3mA)
+* Idle, accelerometer on 12.5Hz - 0.3mA
+* Idle, accelerometer on 1.25Hz - 0.15mA (default if not moved for ~120s)
+* BLE Connected in high bandwidth mode - 0.75mA
+* Compass on - 0.4mA (+0.1mA)
+* Heart rate monitor on - 5mA (+4.5mA)
+* 100% CPU usage running JavaScript - 4mA (+3mA)
 * GPS on - 26mA (+25mA)
-* LCD touchscreen enabled (unlocked) - 3.8mA (+2.5mA)
+* LCD touchscreen enabled (unlocked) - 2.8mA (+2.5mA)
 * LCD backlight on - 17mA (+16mA)
 * Turned off - 0.04mA
 
-Right now you can expect around 10 days of battery life with a clock that
-updates once a minute. 
-
-**Note:** These figures are based on latest Bangle.js firmware and power usage 
-when idle **will** decrease substantially in the future.
+Right now you can expect around 1 month of battery life with a clock that
+updates once a minute, using the latest firmware. 
 
 
 Charging
