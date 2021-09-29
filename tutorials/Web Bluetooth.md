@@ -497,7 +497,7 @@ document.getElementById("addDevice").addEventListener('click', event => {
     connection.on('data',function(d) {
       // This code detects each new line coming in
       line += d;
-      var lines = d.split("\n");
+      var lines = line.split("\n");
       line = lines.pop();
       // For each new line
       lines.forEach(function(l) {
