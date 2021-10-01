@@ -30,9 +30,9 @@ TBD
 * [Python](https://www.python.org/downloads/)
    * used to split a file with samples into separate .CSV-files for importing into Edge Impulse
    * not strictly necessary, but very useful if you want to collect lots of samples
-   * this tutorial will not cover how to install or use Python 
-   * Notepad, Notepad++, Excel etc. can also be used, but needs manual work
-
+   * for information about how to install or use Python, check e.g. [Python documentation](https://www.python.org/doc/)
+   * Notepad, Notepad++, Excel etc. can also be used to manually split files, not feasible with lots of samples
+ 
 <p align="left">
   <img src="https://banglejs.com/img/bangle-leaf.jpg" width="350" title="hover text">
 </p>
