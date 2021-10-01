@@ -5,7 +5,7 @@
 * KEYWORDS: Tutorials, Bangle.js, Edge Impulse, AI, Machine Learning
 * USES: Bangle.js
 
-# Use Bangle_JS and Edge Impulse for Machine Learning 
+# Use Bangle.js and Edge Impulse for Machine Learning 
 
 **Introduction…**
 -----------------
@@ -32,5 +32,9 @@ TBD
    * not strictly necessary, but very useful if you want to collect lots of samples
    * for information about how to install or use Python, check e.g. [Python documentation](https://www.python.org/doc/)
    * Notepad, Notepad++, Excel etc. can also be used to manually split files, not feasible with lots of samples
+----------
+**Preparation**
+---------------
+* Install the app 'Gesture Test' from the [Bangle App Loader](https://banglejs.com/apps/#gesture)
  
 
