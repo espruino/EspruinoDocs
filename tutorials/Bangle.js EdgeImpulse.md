@@ -2,6 +2,9 @@
   <img src="https://banglejs.com/img/bangle-leaf.jpg" width="500" title="hover text">
 </p>
 
+* KEYWORDS: Tutorials, Bangle.js, Edge Impulse, AI, Machine Learning
+* USES: Bangle.js
+
 # Bangle_JS
 
 **Introduction…**
