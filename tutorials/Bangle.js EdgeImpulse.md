@@ -40,9 +40,10 @@ In this tutorial you will learn how to get started with Machine Learning on your
 ------------------
 **Collect gesture samples**
 -----------------
-This step will guide you how to collect multiple samples for one gesture type at a time.
+This step will guide you how to use your watch to collect multiple samples for one gesture type at a time.
 
 * Paste the below code to your watch into the *right side* in the Espruino Web IDE (adapted from [this code](https://github.com/gfwilliams/workshop-nodeconfeu2019/blob/master/step4.md#getting-more-data))
+  * the code will create a text file in the watch memory
 * Name the event you are going to collect samples for by changing the line `event="left;"`
   * use e.g. `event="left;"` for twitching your watch hand left and later on `event="right;"` for the opposite direction
   * upload the code to **RAM**
