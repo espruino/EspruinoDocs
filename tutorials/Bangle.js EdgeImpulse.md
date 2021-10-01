@@ -10,7 +10,7 @@
 **Introduction…**
 -----------------
 
-TBD
+In this tutorial you will learn how to get started with Machine Learning on your Bangle.js watch. Specifically you will build and train a model learning to recognize different movements of your watch hand. The steps include how to collect data, how to use Edge Impulse for the machine learning part and how to finally upload the learned model back to the watch and utilise it there.
 
 **Prerequisites**
 -----------------
