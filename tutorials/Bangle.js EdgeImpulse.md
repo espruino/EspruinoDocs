@@ -35,6 +35,51 @@ In this tutorial you will learn how to get started with Machine Learning on your
 ----------
 **Preparation**
 ---------------
-* Install the app 'Gesture Test' from the [Bangle App Loader](https://banglejs.com/apps/#gesture)
+* Install the app 'Gesture Test' on your watch from the [Bangle App Loader](https://banglejs.com/apps/#gesture)
+
+------------------
+**Collect gesture samples**
+-----------------
+This step will guide you how to collect multiple samples for one gesture type at a time.
+
+* Paste the below code to your watch into the *right side* in the Espruino Web IDE (adapted from [this code](https://github.com/gfwilliams/workshop-nodeconfeu2019/blob/master/step4.md#getting-more-data))
+* Name the event you are going to collect samples for by changing the line `event="left;"`
+  * use e.g. `event="left;"` for twitching your watch hand left and later on `event="right;"` for the opposite direction
+  * upload the code to **RAM**
+
+*Gesture collecting code:*
+```
+name="Gesture";
+event="left";
+
+var fname = 1;
+
+function gotGesture(d) {  
+  var f = require("Storage").open(event + "." + fname + ".csv", "a");
+  
+  print("timestamp, x, y, z");
+  f.write("timestamp, x, y, z\n");
+  for (var j=0;j<d.length;j+=3) {
+       print(j +", ", d[j] + ", " + d[j+1] + ", " + d[j+2] );
+       f.write(j + ", " + d[j] + ", " + d[j+1] + ", " + d[j+2] +"\n" );
+  }
+
+  g.clear();
+  g.setColor(1,1,1);
+  var my = g.getHeight()/2;
+  var sy = my/128;
+  var sx = g.getWidth()/(50*3);
+  g.drawLine(0,my,g.getWidth(),my);
+  for (var i=0;i<d.length-3;i+=3) {
+    for (var c=0;c<3;c++) {
+      g.setColor(c==0,c==1,c==2);
+      g.drawLine(i*sx, my+d[i+c]*sy, (i+3)*sx, my+d[i+c+3]*sy);
+    }
+  }
+  g.flip(1);
+}
+
+Bangle.on('gesture',gotGesture);
+```
  
 
