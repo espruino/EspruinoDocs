@@ -24,8 +24,8 @@ exports.connect = function(/*=I2C*/_i2c) {
   i2c.writeTo(0x52, [0xFB,0x00]);
   // actual object
   return { read : function () {
-    var d = i2c.readFrom(0x52, 6);
     i2c.writeTo(0x52, 0);
+    var d = i2c.readFrom(0x52, 6);
     // TODO: we could get another 2 bits of accelerometer data from d[5]
     return { joy : {x:(d[0]-127)/128,y:(d[1]-127)/128},
             acc : {x:(d[2]-127)/54,y:(d[3]-127)/54,z:(d[4]-127)/54},
