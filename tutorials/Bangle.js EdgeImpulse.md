@@ -1,11 +1,11 @@
 <p align="left">
-  <img src="https://banglejs.com/img/bangle-leaf.jpg" width="500" title="hover text">
+  <img src="https://banglejs.com/img/bangle-leaf.jpg" width="700" title="hover text">
 </p>
 
 * KEYWORDS: Tutorials, Bangle.js, Edge Impulse, AI, Machine Learning
 * USES: Bangle.js
 
-# Bangle_JS
+# Use Bangle_JS and Edge Impulse for Machine Learning 
 
 **Introduction…**
 -----------------
@@ -33,6 +33,4 @@ TBD
    * for information about how to install or use Python, check e.g. [Python documentation](https://www.python.org/doc/)
    * Notepad, Notepad++, Excel etc. can also be used to manually split files, not feasible with lots of samples
  
-<p align="left">
-  <img src="https://banglejs.com/img/bangle-leaf.jpg" width="350" title="hover text">
-</p>
+
