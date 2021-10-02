@@ -7,8 +7,8 @@
 
 # Use Bangle.js and Edge Impulse for Machine Learning 
 
-**Introduction…**
------------------
+# INTRODUCTION
+
 
 In this tutorial you will learn how to get started with Machine Learning on your Bangle.js watch. Specifically you will build and train a model learning to recognize different movements of your watch hand. The steps include how to collect data, how to use Edge Impulse for the machine learning part and how to finally upload the learned model back to the watch and utilise it there.
 
@@ -35,7 +35,7 @@ In this tutorial you will learn how to get started with Machine Learning on your
 ----------
 **Preparation**
 ---------------
-* Install the app 'Gesture Test' on your watch from the [Bangle App Loader](https://banglejs.com/apps/#gesture)
+* Install the app `Gesture Test` on your watch from the [Bangle App Loader](https://banglejs.com/apps/#gesture)
 
 ------------------
 **Collect gesture samples**
@@ -43,11 +43,11 @@ In this tutorial you will learn how to get started with Machine Learning on your
 This part will guide you how to use your watch to collect multiple samples for one gesture type at a time.
 
 1. Pair your computer with the watch using Espruino Web IDE
-2. Paste the below *Gesture collection code* to your watch into the *right side* in the Espruino Web IDE (adapted from [this code](https://github.com/gfwilliams/workshop-nodeconfeu2019/blob/master/step4.md#getting-more-data))
+2. Paste the below *Gesture collection code* into the *right side* in Espruino Web IDE (adapted from [this code](https://github.com/gfwilliams/workshop-nodeconfeu2019/blob/master/step4.md#getting-more-data))
     * the code will create a text file in the watch memory
 3. Name the event you are going to collect samples for by changing the line `event="left";`
     * use e.g. `event="left";` for twitching your watch hand left and later on `event="right";` for the opposite direction
-    * upload the code to **RAM**
+    * upload the code to **RAM**. Do **not** upload this code to flash or storage, you might in worst case need to reset the watch completely.
 4. Perform the gesture 
     * repeat the gesture *many* times, the more the merrier!
        * wait a second between each
@@ -143,8 +143,8 @@ split_file(PATENTS)
 ```
 
 ----------------------
-**Use Edge Impulse**
----------------------
+# Use Edge Impulse for machine learning
+
 In this part you will learn how to upload the sample files you've created earlier, create a machine learning model, train and finally analyse it. This tutorial will only cover the  essential steps needed for Bangle.js. To learn more about Edge Impulse, see e.g. [getting started](https://docs.edgeimpulse.com/docs/getting-started) and [continuous motion recognition](https://docs.edgeimpulse.com/docs/continuous-motion-recognition).
 
 ####  Log in and create a project
@@ -211,8 +211,8 @@ Here you will download the trained model to your computer.
 * Scroll down to the section `Download block output` and click on the icon next to `NN Classifier model	TensorFlow Lite (int8 quantized)`
    * The *float32* model might sometimes perform slightly better than the *int8* model, but it requires more memory and might cause Bangle.js to crash because of this.
 * Save the file to a folder of your choice
-
 ------------------
+# DEPLOYMENT
 **Transfer the trained model to Bangle.js from your computer**
 -----------------
 This part will guide you how to transfer the model file from your computer to Bangle.js.
@@ -230,3 +230,24 @@ This part will guide you how to transfer the model file from your computer to Ba
 * Select the file you just created
 * Change the filename to `.tfnames` and click `Ok`
 
+
+#### Test the gestures on Bangle.js!
+
+Finally you will be able to test how well the trained model performs in real life! Just a few steps left.
+* Paste the below code into the *right side* in Espruino Web IDE
+* Upload the code to **RAM**
+   * This short program will trigger your watch to sense movements and try to recognise which movement it was.
+   * The recognised movement, e.g. `left` or `right`, will be shown in the left window in Espruino Web IDE as well as on your watch display.
+
+```
+Bangle.on('aiGesture',(gesture,raw)=>print(gesture,raw));
+
+Bangle.on('aiGesture',(gesture)=>{
+  E.showMessage(gesture);
+  setTimeout(()=>g.clear(), 1000);
+});
+
+```
+---------------
+# FINAL COMMENTS
+First of all, hopefully you with this short tutorial were successful in training and recognising gesture events from your Bangle.js. Hopefully it also inspires you to try to improve the performance, e.g. by collecting more samples, by collecting more event types or by tweaking the different parameters and settings in Edge Impulse. 
