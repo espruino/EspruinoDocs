@@ -165,5 +165,6 @@ In this part you will learn how to upload the sample files you've created earlie
     * The upload process is shown on the right side, if everything goes well, you should at the end see a message like this: `Done. Files uploaded successful: 85. Files that failed to upload: 0.
 Job completed`
     * Take a look at a sample by selecting any row
+    ![Image Description](Bangle.js+EdgeImpulse/EI_15.png)
 
 
