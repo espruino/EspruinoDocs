@@ -42,14 +42,22 @@ In this tutorial you will learn how to get started with Machine Learning on your
 -----------------
 This step will guide you how to use your watch to collect multiple samples for one gesture type at a time.
 
-* Paste the below code to your watch into the *right side* in the Espruino Web IDE (adapted from [this code](https://github.com/gfwilliams/workshop-nodeconfeu2019/blob/master/step4.md#getting-more-data))
-  * the code will create a text file in the watch memory
-* Name the event you are going to collect samples for by changing the line `event="left;"`
-  * use e.g. `event="left;"` for twitching your watch hand left and later on `event="right;"` for the opposite direction
-  * upload the code to **RAM**
+1. Pair your computer with the watch
+2. Paste the below code to your watch into the *right side* in the Espruino Web IDE (adapted from [this code](https://github.com/gfwilliams/workshop-nodeconfeu2019/blob/master/step4.md#getting-more-data))
+    * the code will create a text file in the watch memory
+3. Name the event you are going to collect samples for by changing the line `event="left";`
+    * use e.g. `event="left";` for twitching your watch hand left and later on `event="right";` for the opposite direction
+    * upload the code to **RAM**
+4. Perform the gesture 
+    * repeat the gesture *many* times, the more the merrier!
+       * wait a second between each
+    * the gesture collecting code will append each sample to the .CSV-file
+    * a graph will also be shown on your watch screen
+5. Repeat steps 3-4 above, remember to change `event="<gesture>";` where `<gesture>` is the hand movement you will collect
 
 *Gesture collecting code:*
 ```
+// ******* Gesture collecting code ********
 name="Gesture";
 event="left";
 
