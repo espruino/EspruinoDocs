@@ -164,6 +164,11 @@ In this part you will learn how to upload the sample files you've created earlie
 * Click `Begin upload` - this will now quickly upload the files to your project.
     * The upload process is shown on the right side, if everything goes well, you should at the end see a message like this: `Done. Files uploaded successful: 85. Files that failed to upload: 0.
 Job completed`
-    * Take a look at a sample by selecting any row
+* Take a look at a sample by selecting any row
+    
+    ![Image Description](Bangle.js%20EdgeImpulse/EI_15.png)
 
-
+* Notice that the labels (``left`` and ``right`` in this example) were automatically inferred from the filenames you used.
+* Always strive to get a roughly similar amount of samples for each gesture. You can see the balance in the pie graph besides *data collected*.
+* Also notice that Edge Impulse splitted the sample files so that approximately 80 % will be used for training and 20 % for testing purposes.
+* Through the four small icons you can filter your data, select multiple items, upload more data or see a slightly more detailed list view. With the help of these you can e.g. mass delete many files at a time.  
