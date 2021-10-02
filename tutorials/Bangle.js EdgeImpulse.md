@@ -145,7 +145,7 @@ split_file(PATENTS)
 ----------------------
 **Use Edge Impulse**
 ---------------------
-In this part you will learn how to upload the sample files you've created earlier, create a machine learning model, train and finally test it. This tutorial will only cover the  essential steps needed for Bangle.js. To learn more about Edge Impulse, see e.g. [getting started](https://docs.edgeimpulse.com/docs/getting-started) and [continuous motion recognition](https://docs.edgeimpulse.com/docs/continuous-motion-recognition).
+In this part you will learn how to upload the sample files you've created earlier, create a machine learning model, train and finally analyse it. This tutorial will only cover the  essential steps needed for Bangle.js. To learn more about Edge Impulse, see e.g. [getting started](https://docs.edgeimpulse.com/docs/getting-started) and [continuous motion recognition](https://docs.edgeimpulse.com/docs/continuous-motion-recognition).
 
 ####  Log in and create a project
 * Log in to [Edge Impulse](https://www.edgeimpulse.com/), using the credentials for the free account you created in the beginning.
@@ -174,7 +174,7 @@ Job completed`
 * Through the four small icons you can filter your data, select multiple items, upload more data or see a slightly more detailed list view. With the help of these you can e.g. mass delete many files at a time.
 
 #### Create an impulse
-An impulse takes raw data, uses signal processing to extract features, and then uses a learning block to classify new data.
+An impulse takes raw data, uses signal processing to extract features, and then uses a learning block to classify new data. These steps will create an impulse.
 
 * Click `Create impulse`
 * Change the window size and increase according to the screenshot below.
@@ -197,8 +197,32 @@ An impulse takes raw data, uses signal processing to extract features, and then 
 <img src="Bangle.js%20EdgeImpulse/EI_24.png" alt="Feature explorer" width="400"/>
 
 #### Train the neural network
+Here you will train the neural network and analyse its performance.
 * Click `NN Classifier` from the left hand menu
 * Change the `Number of training cycles` to 100. This is another parameter to tweak, the higher this number is, the longer time the training will take, but also the better the network will perform, at least until it can't improve anymore.
 * Click on `Start training`
 * Within a few minutes, depending on the number of labels and data quantity you have, the training will finish.
-<img src="Bangle.js%20EdgeImpulse/EI_28.png" alt="Training performance" width="400"/>
+* The graph shows the training performance and accuracy. While 100 % looks like a perfect score, it isn't necessary so. The reason is that the network might perform poorly in real situations when confronted with sample data not seen before.
+<img src="Bangle.js%20EdgeImpulse/EI_28.png" alt="Training performance" width="500"/>
+
+#### Download the trained model
+Here you will download the trained model to your computer.
+* Click `Dashboard` from the left hand menu
+* Scroll down to the section `Download block output` and click on the icon next to `NN Classifier model	TensorFlow Lite (int8 quantized)`
+   * The *float32* model might sometimes perform slightly better than the *int8* model, but it requires more memory and might cause Bangle.js to crash because of this.
+* Save the file to a folder of your choice
+
+------------------
+**Transfer the trained model to Bangle.js from your computer**
+-----------------
+This part will guide you how to transfer the model file from your computer to Bangle.js.
+* In Espruino Web IDE, click the Storage icon (4 discs) in the middle of the screen
+* Click ´Upload a file´
+* Select the model file you downloaded from Edge Impulse
+* Change the filename to ´.tfmodel´ and click `Ok`
+* Create a text file, e.g. with Notepad
+   * Write the event names in alphabetical order, separated by commas, e.g. ´left,right´
+   * Save the file to a folder of your choice
+* In Espruino Web IDE, click the Storage icon (4 discs) in the middle of the screen
+* Select the file you just created
+* Change the filename to ´.tfnames´ and click `Ok`
