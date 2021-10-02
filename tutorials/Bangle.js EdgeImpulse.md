@@ -145,6 +145,25 @@ split_file(PATENTS)
 ----------------------
 **Use Edge Impulse**
 ---------------------
-In this part you will learn how to upload the sample files you've created earlier, create a machine learning model, train and finally test it
-* Create a new project
-* 
+In this part you will learn how to upload the sample files you've created earlier, create a machine learning model, train and finally test it. This tutorial will only cover the  essential steps needed for Bangle.js. To learn more about Edge Impulse, see e.g. [getting started](https://docs.edgeimpulse.com/docs/getting-started) and [continuous motion recognition](https://docs.edgeimpulse.com/docs/continuous-motion-recognition).
+
+####  Log in and create a project
+* Log in to [Edge Impulse](https://www.edgeimpulse.com/), using the credentials for the free account you created in the beginning.
+* Create a new project and give it a name, why not Bangle.js
+* Select `Accelerometer data ` when asked for the  type of data you are dealing with.
+* Click `Let's get started`
+
+#### Upload sample data
+* Select `Data acquisition` from the left hand menu
+* Click on the icon labeled `Upload existing data` 
+* Click on `Choose files`
+  * Navigate to the folder you used to store the .CSV-files (e.g. c:\temp)
+  * Select **all** the sample files that were created earlier, but **not** the original files you downloaded from your watch. I.e. select only the .CSV-files with a number at the end of the file name, e.g. `left.1.csv (StorageFile)-0.csv`.
+  * You can also upload smaller batches at a time
+  * `Automatically split between training and testing` and `Infer from filename` should both be selected
+* Click `Begin upload` - this will now quickly upload the files to your project.
+    * The upload process is shown on the right side, if everything goes well, you should at the end see a message like this: `Done. Files uploaded successful: 85. Files that failed to upload: 0.
+Job completed`
+    * Take a look at a sample by selecting any row
+
+
