@@ -169,6 +169,29 @@ Job completed`
     ![Image Description](Bangle.js%20EdgeImpulse/EI_15.png)
 
 * Notice that the labels (``left`` and ``right`` in this example) were automatically inferred from the filenames you used.
-* Always strive to get a roughly similar amount of samples for each gesture. You can see the balance in the pie graph besides *data collected*.
-* Also notice that Edge Impulse splitted the sample files so that approximately 80 % will be used for training and 20 % for testing purposes.
-* Through the four small icons you can filter your data, select multiple items, upload more data or see a slightly more detailed list view. With the help of these you can e.g. mass delete many files at a time.  
+* Always strive to get a roughly similar amount of samples for each gesture. You can see the balance in the pie graph on the left.
+* Also notice that Edge Impulse split the sample files so that approximately 80 % will be used for training and 20 % for testing purposes.
+* Through the four small icons you can filter your data, select multiple items, upload more data or see a slightly more detailed list view. With the help of these you can e.g. mass delete many files at a time.
+
+#### Create an impulse
+An impulse takes raw data, uses signal processing to extract features, and then uses a learning block to classify new data.
+
+* Click `Create impulse`
+* Change the window size and increase according to the screenshot below.
+* Add the `Raw Data` processing block
+* Add the `Classification (Keras)` learning block
+* Click `Save Impulse`
+
+    ![Image Description](Bangle.js%20EdgeImpulse/EI_19.png)
+
+* Note that you often need to tweak one or several of the settings, this is depending on what you want to achieve and the quality & quantity of your data.
+
+#### Generate features
+* Click `Raw data` from the left hand menu
+    * You will see a graph of one of the samples as well as the raw features.
+* In this case you don't need to change anything, so click `Save parameters` which will take you to the second tab.
+* Click `Generate features`
+    * This processes the samples
+	* After a while you will see a graph in the `Feature explorer`. This gives you a 3D view of  how well your data can be clustered into different groups. In an ideal situation all similar samples should be clustered into same group with a clear distinction between groups. If that's not the case, no worries at this point, the neural network algorithm will in many cases still be able to do a very good job!
+	
+  *  ![Image Description](Bangle.js%20EdgeImpulse/EI_24.png)
