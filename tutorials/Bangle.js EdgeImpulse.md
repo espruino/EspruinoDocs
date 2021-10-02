@@ -54,6 +54,7 @@ This part will guide you how to use your watch to collect multiple samples for o
     * the gesture collecting code will append each sample to the .CSV-file
     * a graph will also be shown on your watch screen
 5. Repeat steps 3-4 above, remember to change `event="<gesture>";` where `<gesture>` is the hand movement you will collect
+6. The devil is in the details, do not e.g. remove the seemingly insignificant semi-colon `;` !
 
 *Gesture collecting code:*
 ```
@@ -91,7 +92,7 @@ function gotGesture(d) {
 Bangle.on('gesture',gotGesture);
 ```
 ------------------
-**Transfer .CSV-files from watch to computer**
+**Transfer .CSV-files from Bangle.js to your computer**
 -----------------
 This part will guide you how to transfer the .CSV-files from your watch to your computer.
 * In Espruino Web IDE, click the Storage icon (4 discs) in the middle of the screen
@@ -106,6 +107,7 @@ This part will guide you how to split the .CSV-files you've downloaded from your
 2.  Replace the path on the second line (starting with `PATENTS = ...`) with the full path and filename for the first file you want to split. I.e. the file you downloaded in previous steps.
 3. Run the code in your Python editor
    * The program will search for the string `'timestamp, x, y, z'` in the original file and for each time (= sample) it finds, create a new file.
+   * If you don't use Python, you'd need to split the file for each sample using some other method, manual or automatic. Remember that the samples aren't all of the same size so the amount of rows will vary.
    * You should now have several .CSV-files in the folder you chose. The files will be named like `left.1.csv (StorageFile)-15.csv` where `-15` at the end is a running number.
 4. Repeat steps 2-3 above for each file you downloaded from your watch.
 
@@ -123,7 +125,7 @@ def split_file(filename):
         # Start reading file line by line
         for i, line in enumerate(r):
 
-            # If line match with teplate -- <?xml --increase counter n
+            # If line match with template -- <?xml --increase counter n
             if re.match(r'timestamp, x, y, z', line):
                 n+=1
 
@@ -138,6 +140,11 @@ def split_file(filename):
                 f.write(line)
 
 split_file(PATENTS)
-
 ```
 
+----------------------
+**Use Edge Impulse**
+---------------------
+In this part you will learn how to upload the sample files you've created earlier, create a machine learning model, train and finally test it
+* Create a new project
+* 
