@@ -96,16 +96,22 @@ Bangle.on('gesture',gotGesture);
 This part will guide you how to transfer the .CSV-files from your watch to your computer.
 * In Espruino Web IDE, click the Storage icon (4 discs) in the middle of the screen
 * Search for your file/files, they start with the event name you provided in earlier steps e.g. `left.1.csv (StorageFile)`
-* Click on `Save` (the floppy disc icon) one file at a time and save them to a folder of your choice
+* Click on `Save` (the floppy disc icon) for one file at a time and save the files to a folder of your choice, e.g. to `c:\temp`
 
 ------------------
 **Split .CSV-files using Python**
 -----------------
 This part will guide you how to split the .CSV-files you've downloaded from your watch into separate .CSV-files. The reason for this is that Edge Impulse requires one .CSV-file per sample.
-The following Python code (shamelessly copied from [Stackoverflow](https://stackoverflow.com/questions/546508/how-can-i-split-a-file-in-python)) will spl
+1.  Copy the below Python code (shamelessly copied from [Stackoverflow](https://stackoverflow.com/questions/546508/how-can-i-split-a-file-in-python)) into your favourite Python editor.
+2.  Replace the path on the second line (starting with `PATENTS = ...`) with the full path and filename for the first file you want to split. I.e. the file you downloaded in previous steps.
+3. Run the code in your Python editor
+   * The program will search for the string `'timestamp, x, y, z'` in the original file and for each time (= sample) it finds, create a new file.
+   * You should now have several .CSV-files in the folder you chose. The files will be named like `left.1.csv (StorageFile)-15.csv` where `-15` at the end is a running number.
+4. Repeat steps 2-3 above for each file you downloaded from your watch.
+
 ```
 import re
-PATENTS = 'C:/temp/circleright.1.csv (StorageFile)'
+PATENTS = 'C:/temp/left.1.csv (StorageFile)'
 
 def split_file(filename):
     # Open file to read
