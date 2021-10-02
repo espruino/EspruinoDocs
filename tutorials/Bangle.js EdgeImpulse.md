@@ -217,12 +217,16 @@ Here you will download the trained model to your computer.
 -----------------
 This part will guide you how to transfer the model file from your computer to Bangle.js.
 * In Espruino Web IDE, click the Storage icon (4 discs) in the middle of the screen
-* Click ´Upload a file´
+
+<img src="Bangle.js%20EdgeImpulse/Bang_05.png" alt="Upload file" width="400"/>
+
+* Click `Upload a file`
 * Select the model file you downloaded from Edge Impulse
-* Change the filename to ´.tfmodel´ and click `Ok`
+* Change the filename to `.tfmodel` and click `Ok`
 * Create a text file, e.g. with Notepad
-   * Write the event names in alphabetical order, separated by commas, e.g. ´left,right´
+   * Write the event names in alphabetical order, separated by commas, e.g. `left,right`
    * Save the file to a folder of your choice
 * In Espruino Web IDE, click the Storage icon (4 discs) in the middle of the screen
 * Select the file you just created
-* Change the filename to ´.tfnames´ and click `Ok`
+* Change the filename to `.tfnames` and click `Ok`
+
