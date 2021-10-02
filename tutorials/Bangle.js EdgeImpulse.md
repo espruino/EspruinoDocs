@@ -40,10 +40,10 @@ In this tutorial you will learn how to get started with Machine Learning on your
 ------------------
 **Collect gesture samples**
 -----------------
-This step will guide you how to use your watch to collect multiple samples for one gesture type at a time.
+This part will guide you how to use your watch to collect multiple samples for one gesture type at a time.
 
-1. Pair your computer with the watch
-2. Paste the below code to your watch into the *right side* in the Espruino Web IDE (adapted from [this code](https://github.com/gfwilliams/workshop-nodeconfeu2019/blob/master/step4.md#getting-more-data))
+1. Pair your computer with the watch using Espruino Web IDE
+2. Paste the below *Gesture collection code* to your watch into the *right side* in the Espruino Web IDE (adapted from [this code](https://github.com/gfwilliams/workshop-nodeconfeu2019/blob/master/step4.md#getting-more-data))
     * the code will create a text file in the watch memory
 3. Name the event you are going to collect samples for by changing the line `event="left";`
     * use e.g. `event="left";` for twitching your watch hand left and later on `event="right";` for the opposite direction
@@ -90,5 +90,48 @@ function gotGesture(d) {
 
 Bangle.on('gesture',gotGesture);
 ```
- 
+------------------
+**Transfer .CSV-files from watch to computer**
+-----------------
+This part will guide you how to transfer the .CSV-files from your watch to your computer.
+* In Espruino Web IDE, click the Storage icon (4 discs) in the middle of the screen
+* Search for your file/files, they start with the event name you provided in earlier steps e.g. `left.1.csv (StorageFile)`
+* Click on `Save` (the floppy disc icon) one file at a time and save them to a folder of your choice
+
+------------------
+**Split .CSV-files using Python**
+-----------------
+This part will guide you how to split the .CSV-files you've downloaded from your watch into separate .CSV-files. The reason for this is that Edge Impulse requires one .CSV-file per sample.
+The following Python code (shamelessly copied from [Stackoverflow](https://stackoverflow.com/questions/546508/how-can-i-split-a-file-in-python)) will spl
+```
+import re
+PATENTS = 'C:/temp/circleright.1.csv (StorageFile)'
+
+def split_file(filename):
+    # Open file to read
+    with open(filename, "r") as r:
+
+        # Counter
+        n=0
+
+        # Start reading file line by line
+        for i, line in enumerate(r):
+
+            # If line match with teplate -- <?xml --increase counter n
+            if re.match(r'timestamp, x, y, z', line):
+                n+=1
+
+                # This "if" can be deleted, without it will start naming from 1
+                # or you can keep it. It depends where is "re" will find at
+                # first time the template. In my case it was first line
+                if i == 0:
+                    n = 0               
+
+            # Write lines to file    
+            with open("{}-{}.csv".format(PATENTS, n), "a") as f:
+                f.write(line)
+
+split_file(PATENTS)
+
+```
 
