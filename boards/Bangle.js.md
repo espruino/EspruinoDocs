@@ -488,6 +488,9 @@ Firmware Updates
   * Once complete, long-press `BTN3` to go to the Clock
   * You should still have the original apps you installed
 
+**Note:** It is also possible to use the [Web IDE](https://www.espruino.com/ide/)
+to update Bangle.js firmware. Click `Settings` (top right), then `Flasher`
+and follow the instructions.
 
 Troubleshooting
 ---------------

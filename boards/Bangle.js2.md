@@ -1,4 +1,4 @@
-<!--- Copyright (c) 2019 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
+<!--- Copyright (c) 2021 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Bangle.js 2
 ============
 
@@ -9,7 +9,7 @@ Bangle.js 2
 Bangle.js is the successor to [Bangle.js](/Bangle.js), and is based on the
 [SMA Q3](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch).
 
-**[Bangle.js 2 is now on KickStarter!](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)** 
+**[Bangle.js 2 is now on KickStarter!](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)**
 
 ------------------------
 
@@ -23,6 +23,10 @@ Bangle.js is the successor to [Bangle.js](/Bangle.js), and is based on the
 
 You can easily install new apps from the web or develop your own using JavaScript or a graphical programming language (Blockly). All you need is a Web Browser (Chrome, Edge or Opera) and you can upload apps or write code to run on your watch wirelessly! Bangle.js is waterproof and AI enabled and comes with Bluetooth Low Energy, GPS, a heart rate monitor, accelerometer and more.
 
+Contents
+--------
+
+* APPEND_TOC
 
 Features
 --------
@@ -78,7 +82,7 @@ Power Consumption
 * Turned off - 0.04mA
 
 Right now you can expect around 1 month of battery life with a clock that
-updates once a minute, using the latest firmware. 
+updates once a minute, using the latest firmware.
 
 
 Charging
@@ -461,7 +465,7 @@ Bangle.js 2 has the hardware SWD pin brought out on the back of the watch along 
 
 ![](Banglejs2/SWD.jpg)
 
-This can be connected to an SWD programmer. We'd recommend using an [nRF52 DK](https://www.nordicsemi.com/Products/Development-hardware/nrf52-dk) (or nRF52840DK). 
+This can be connected to an SWD programmer. We'd recommend using an [nRF52 DK](https://www.nordicsemi.com/Products/Development-hardware/nrf52-dk) (or nRF52840DK).
 When using the nRF52DK you'll need to short the `GND DETECT` pin to `GND` to tell it you're programming the Bangle.js and not the on-board nRF52.
 
 ![](Banglejs2/nRF52DK.jpg)
@@ -475,6 +479,41 @@ The easiest way to connect to these is to use the provided USB charge cable and 
 | 3     | SWDCLK  |
 | 4     | GND     |
 
+
+Firmware Updates
+------------------
+
+[[http://youtu.be/uHJGsSaU6Zo]]
+
+  * Long-press the button for about 10 seconds until the screen goes blank
+  * While `====` is going across the screen, release the button (releasing it later will just boot back to Bangle.js)
+  * The watch should now be in DFU mode
+  * Install the Nordic Semiconductor NRF Toolbox App for Android or iOS
+  * Download the latest stable distribution zip from the [Espruino site](https://www.espruino.com/Download#banglejs2) or the latest bleeding edge nightly build from [here](http://www.espruino.com/binaries/travis/master/).
+  * In addition to activating the bluetooth, the location of Android 10 has to be activated because of [an issue in current NRF Toolbox app releases](https://devzone.nordicsemi.com/f/nordic-q-a/53938/android-10-need-to-toggle-location-permission-to-see-ble-devices)
+  * Open the NRF Toolbox app
+  * Tap the DFU icon
+  * Tap Select File, choose Distribution Packet (ZIP), and choose the ZIP file you downloaded
+  * If a Select scope window appears, choose All
+  * Tap Select Device and choose the device called `DfuTarg`
+  * Now tap Upload and wait
+  * It will take around 90 seconds to complete
+  * Once complete, long-press `BTN3` to go to the Clock
+  * You should still have the original apps you installed
+
+**Note:** It is also possible to use the [Web IDE](https://www.espruino.com/ide/)
+to update Bangle.js firmware. Click `Settings` (top right), then `Flasher`
+and follow the instructions.
+
+
+Troubleshooting
+---------------
+
+Check out:
+
+* [Bangle.js Troubleshooting](Troubleshooting+Bangle.js)
+* [Bluetooth Espruino Troubleshooting](Troubleshooting+BLE)
+* [General Espruino Troubleshooting](/Troubleshooting)
 
 
 Other Official Espruino Boards
