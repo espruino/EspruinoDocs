@@ -1,11 +1,15 @@
-<p align="left">
-  <img src="https://banglejs.com/img/bangle-leaf.jpg" width="700" title="hover text">
-</p>
+<!--- Copyright (c) 2021 Thomas Vikström. See the file LICENSE for copying permission. -->
+Bangle.js and Edge Impulse for Machine Learning
+=========================================
+
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+EdgeImpulse. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials, Bangle.js, Edge Impulse, AI, Machine Learning
 * USES: Bangle.js
 
-# Use Bangle.js and Edge Impulse for Machine Learning 
+<p align="left">
+  <img src="https://banglejs.com/img/bangle-leaf.jpg" width="700" title="hover text">
+</p>
 
 # INTRODUCTION
 
@@ -48,7 +52,7 @@ This part will guide you how to use your watch to collect multiple samples for o
 3. Name the event you are going to collect samples for by changing the line `event="left";`
     * use e.g. `event="left";` for twitching your watch hand left and later on `event="right";` for the opposite direction
     * upload the code to **RAM**. Do **not** upload this code to flash or storage, you might in worst case need to reset the watch completely.
-4. Perform the gesture 
+4. Perform the gesture
     * repeat the gesture *many* times, the more the merrier!
        * wait a second between each
     * the gesture collecting code will append each sample to the .CSV-file
@@ -66,7 +70,7 @@ var fname = 1;
 
 function gotGesture(d) {  
   var f = require("Storage").open(event + "." + fname + ".csv", "a");
-  
+
   print("timestamp, x, y, z");
   f.write("timestamp, x, y, z\n");
   for (var j=0;j<d.length;j+=3) {
@@ -155,7 +159,7 @@ In this part you will learn how to upload the sample files you've created earlie
 
 #### Upload sample data
 * Select `Data acquisition` from the left hand menu
-* Click on the icon labeled `Upload existing data` 
+* Click on the icon labeled `Upload existing data`
 * Click on `Choose files`
   * Navigate to the folder you used to store the .CSV-files (e.g. c:\temp)
   * Select **all** the sample files that were created earlier, but **not** the original files you downloaded from your watch. I.e. select only the .CSV-files with a number at the end of the file name, e.g. `left.1.csv (StorageFile)-0.csv`.
@@ -165,8 +169,8 @@ In this part you will learn how to upload the sample files you've created earlie
     * The upload process is shown on the right side, if everything goes well, you should at the end see a message like this: `Done. Files uploaded successful: 85. Files that failed to upload: 0.
 Job completed`
 * Take a look at a sample by selecting any row
-    
-    ![Upload sample data](Bangle.js%20EdgeImpulse/EI_15.png)
+
+![Upload sample data](Bangle.js EdgeImpulse/EI_15.png)
 
 * Notice that the labels (``left`` and ``right`` in this example) were automatically inferred from the filenames you used.
 * Always strive to get a roughly similar amount of samples for each gesture. You can see the balance in the pie graph on the left.
@@ -182,7 +186,7 @@ An impulse takes raw data, uses signal processing to extract features, and then 
 * Add the `Classification (Keras)` learning block
 * Click `Save Impulse`
 
-    ![Create impulse](Bangle.js%20EdgeImpulse/EI_19.png)
+![Create impulse](Bangle.js EdgeImpulse/EI_19.png)
 
 * Note that you often need to tweak one or several of the settings, this is depending on what you want to achieve and the quality & quantity of your data.
 
@@ -193,8 +197,8 @@ An impulse takes raw data, uses signal processing to extract features, and then 
 * Click `Generate features`
     * This processes the samples
 	* After a while you will see a graph in the `Feature explorer`. This gives you a 3D view of  how well your data can be clustered into different groups. In an ideal situation all similar samples should be clustered into same group with a clear distinction between groups. If that's not the case, no worries at this point, the neural network algorithm will in many cases still be able to do a very good job!
-	
-<img src="Bangle.js%20EdgeImpulse/EI_24.png" alt="Feature explorer" width="400"/>
+
+![Feature explorer](Bangle.js EdgeImpulse/EI_24.png)
 
 #### Train the neural network
 Here you will train the neural network and analyse its performance.
@@ -203,7 +207,8 @@ Here you will train the neural network and analyse its performance.
 * Click on `Start training`
 * Within a few minutes, depending on the number of labels and data quantity you have, the training will finish.
 * The graph shows the training performance and accuracy. While 100 % looks like a perfect score, it isn't necessary so. The reason is that the network might perform poorly in real situations when confronted with sample data not seen before.
-<img src="Bangle.js%20EdgeImpulse/EI_28.png" alt="Training performance" width="500"/>
+
+![Training performance](Bangle.js EdgeImpulse/EI_28.png)
 
 #### Download the trained model
 Here you will download the trained model to your computer.
@@ -218,7 +223,7 @@ Here you will download the trained model to your computer.
 This part will guide you how to transfer the model file from your computer to Bangle.js.
 * In Espruino Web IDE, click the Storage icon (4 discs) in the middle of the screen
 
-<img src="Bangle.js%20EdgeImpulse/Bang_05.png" alt="Upload file" width="400"/>
+![Upload file](Bangle.js EdgeImpulse/Bang_05.png)
 
 * Click `Upload a file`
 * Select the model file you downloaded from Edge Impulse
@@ -250,4 +255,4 @@ Bangle.on('aiGesture',(gesture)=>{
 ```
 ---------------
 # FINAL COMMENTS
-First of all, hopefully you with this short tutorial were successful in training and recognising gesture events from your Bangle.js. Hopefully it also inspires you to try to improve the performance, e.g. by collecting more samples, by collecting more event types or by tweaking the different parameters and settings in Edge Impulse. 
+First of all, hopefully you with this short tutorial were successful in training and recognising gesture events from your Bangle.js. Hopefully it also inspires you to try to improve the performance, e.g. by collecting more samples, by collecting more event types or by tweaking the different parameters and settings in Edge Impulse.
