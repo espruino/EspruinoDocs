@@ -213,7 +213,7 @@ Just:
 
 * Short out the `BOOT0/BTN` solder jumper on the back of the board - you can do this by drawing over it with a pencil.
 * Install [ST's DFU utility](http://www.st.com/web/en/catalog/tools/FM147/CL1794/SC961/SS1533/PF257916) on Windows, or [dfu-util](http://dfu-util.sourceforge.net/) for Mac or Linux
-* Download the latest Espruino Pico binary from [espruino.com/binaries](http://www.espruino.com/binaries/)
+* Download the latest Espruino Pico binary from [the download page](https://www.espruino.com/Download#pico_1r3) (Cutting Edge builds will not work as these don't include a bootloader)
 * Hold down the Pico's button while plugging it into USB
 * Use the DFU tool to flash the firmware. Using the GUI on windows, or with the command `sudo dfu-util -a 0 -s 0x08000000 -D espruino_binary_file.bin` for `dfu-util` on Mac/Linux.
 * Un-short the `BOOT0/BTN` jumper to re-use the original Espruino Bootloader. If you used a Pencil mark then you may need to use cleaning fluid and a small brush to totally clear out the graphite.
