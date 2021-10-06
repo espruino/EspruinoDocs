@@ -72,6 +72,7 @@ Power Consumption
 
 * Idle, accelerometer on 12.5Hz - 0.3mA
 * Idle, accelerometer on 1.25Hz - 0.15mA (default if not moved for ~120s)
+* Idle, clock ([`s7clk`](https://banglejs.com/apps/#s7clk)) updating once a second - 0.5mA
 * BLE Connected in high bandwidth mode - 0.75mA
 * Compass on - 0.4mA (+0.1mA)
 * Heart rate monitor on - 5mA (+4.5mA)
@@ -83,6 +84,10 @@ Power Consumption
 
 Right now you can expect around 1 month of battery life with a clock that
 updates once a minute, using the latest firmware.
+
+A clock that updates once a second all the time (like [`s7clk`](https://banglejs.com/apps/#s7clk))
+will reduce the battery life to 2 weeks, and more complicated clocks can increase the power
+draw further.
 
 
 Charging
