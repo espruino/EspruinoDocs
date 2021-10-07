@@ -71,10 +71,11 @@ Power Consumption
 -----------------
 
 * Idle, accelerometer on 12.5Hz - 0.3mA
-* Idle, accelerometer on 1.25Hz - 0.15mA (default if not moved for ~120s)
+* Idle, accelerometer on 1.25Hz (`Bangle.setPollInterval(800)`) - 0.15mA (default if not moved for ~120s)
 * Idle, clock ([`s7clk`](https://banglejs.com/apps/#s7clk)) updating once a second - 0.5mA
 * BLE Connected in high bandwidth mode - 0.75mA
-* Compass on - 0.4mA (+0.1mA)
+* Compass on, 12.5Hz - 5.5mA (+5mA)
+* Compass on, 1.25Hz (`Bangle.setPollInterval(800)`) - 0.9mA (+0.6mA)
 * Heart rate monitor on - 5mA (+4.5mA)
 * 100% CPU usage running JavaScript - 4mA (+3mA)
 * GPS on - 26mA (+25mA)
