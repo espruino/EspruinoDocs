@@ -9,7 +9,8 @@ Bangle.js 2
 Bangle.js is the successor to [Bangle.js](/Bangle.js), and is based on the
 [SMA Q3](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch).
 
-**[Bangle.js 2 is now on KickStarter!](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)**
+**[Bangle.js 2 has now finished funding on KickStarter!](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)** If you'd like
+to be notified when you can order one, [please enter your email address here](https://forms.gle/kT1fktc8tsC9rBE67)
 
 ------------------------
 
@@ -42,7 +43,7 @@ Features
 * 3 Axis Magnetometer
 * Air Pressure/Temperature sensor (Bosch BMP280)
 * Vibration motor
-* 200mAh battery, 2 weeks standby time
+* 200mAh battery, 4 weeks standby time
 * 36mm x 43mm x 12mm watch body, with standard 20mm watch straps
 
 
