@@ -5,7 +5,7 @@ Bangle.js Layout library
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+Layout. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Bangle.js,Development,App,Layout,Alignment
-* USES: Bangle.js
+* USES: Bangle.js,Bangle.js2
 
 You might have tried making an app (eg by following the [Bangle.js First App](/Bangle.js+First+App)
 tutorial), but as your app gets more complicated it can be more of a pain laying things out on the screen -
