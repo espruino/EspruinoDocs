@@ -185,6 +185,7 @@ BlueZ 5.41+ required (5.43 is more stable) - you can check by typing `bluetoothd
 
 * Type `chrome://flags` in the address bar
 * You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`).
+* Also enable `Use the new permissions backend for Web Bluetooth` (`chrome://flags/#enable-web-bluetooth-new-permissions-backend`) if it exists
 * Restart your browser
 
 #### Chromebook
