@@ -71,7 +71,7 @@ Now, we'll add a Watch. This uses Espruino's hardware to call your function only
 ```
 setWatch(function(e) {
   digitalWrite(LED1, e.state);
-}, BTN, { repeat: true });
+}, BTN, { repeat: true, edge: "both" });
 ```
 
 Now, the light will still turn on when the Button if pressed, but Espruino won't be doing anything except when the button is pressed or released. You can now do the following again:
@@ -91,7 +91,7 @@ setWatch(function(e) {
   digitalWrite(LED1, e.state);
   presses++;
   console.log("Pressed "+presses);
-}, BTN, { repeat: true });
+}, BTN, { repeat: true, edge: "both" });
 ```
 
 If you press the button now, you'll see that the counter increases when the button is pressed, and also when it's released. But sometimes it increases by more than one.
@@ -104,7 +104,7 @@ setWatch(function(e) {
   digitalWrite(LED1, e.state);
   presses++;
   console.log("Pressed "+presses);
-}, BTN, { repeat: true, debounce : 50 });
+}, BTN, { repeat: true, edge:"both", debounce : 25 });
 ```
 
 We've set `debounce` to 50ms, so your code will only be called after the button has stayed in the same state for at least 50ms.
@@ -117,10 +117,12 @@ setWatch(function() {
   digitalPulse(LED1, 1, 50);
   presses++;
   console.log("Pressed "+presses);
-}, BTN, { repeat: true, debounce : 50, edge: "rising" });
+}, BTN, { repeat: true, edge: "rising", debounce : 25 });
 ```
 
-Now, we've added `edge: "rising"`, so the function is only called when the button is pressed. I've changed `digitalWrite` to `digitalPulse` to just flash the LED, and we don't even need access to the pin's state any more, because we know that it will always be pressed when the code is called.
+Now, we've changed `edge` to  `edge: "rising"`, so the function is only called when the button is pressed. I've changed `digitalWrite` to `digitalPulse` to just flash the LED, and we don't even need access to the pin's state any more, because we know that it will always be pressed when the code is called.
+
+**Note:** For internal buttons, Espruino now automatically applies  `edge: "rising"` *and* `debounce: 25` so you don't need to specify them. However these defaults do not apply to external inputs, like we're going to use now.
 
 
 Software - External button
