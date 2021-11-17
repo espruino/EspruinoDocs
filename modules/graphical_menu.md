@@ -38,7 +38,7 @@ var mainmenu = {
   },
   "A Number" : {
     value : number,
-    min:0,max:100,step:10,
+    min:0,max:100,step:10,wrap:true,
     onchange : v => { number=v; }
   }
 };
@@ -102,6 +102,7 @@ var menuinfo = {
     value : 42,       // A number or boolean to be changed
     step : 1,         // optional (default 1) - the amount to inc/dec the number
     min / max : ...,  // minimum/maximum values to clamp to
+    wrap : boolean,   // optional - wrap around from minimum to maximum and vise versa
     onchange : function(value) // optional - called when the value changes
     format : function(value) // optional - converts the value to a string to be displayed
   }
