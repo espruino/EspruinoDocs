@@ -271,6 +271,7 @@ convert myimage.png -resize 16x16\! -depth 8 rgb:output.raw
 convert myimage.png -resize 16x16\! -depth 8  gray:output.raw
 
 # Create a 1 bit, 16x16 pixel black and white image called output.raw
+# Note this one only works if your image is a multiple of 8 pixels wide
 convert myimage.png -resize 16x16\! -depth 1  gray:output.raw
 ```
 
