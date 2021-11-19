@@ -10,7 +10,7 @@ Bangle.js is the successor to [Bangle.js](/Bangle.js), and is based on the
 [SMA Q3](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch).
 
 **[Bangle.js 2 has now finished funding on KickStarter!](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)** If you'd like
-to be notified when you can order one, [please enter your email address here](https://forms.gle/kT1fktc8tsC9rBE67)
+to be notified when you can order one (likely Jan 2022), [please enter your email address here](https://forms.gle/kT1fktc8tsC9rBE67)
 
 ------------------------
 
@@ -46,26 +46,17 @@ Features
 * 200mAh battery, 4 weeks standby time
 * 36mm x 43mm x 12mm watch body, with standard 20mm watch straps
 
-
-Pre-release hardware
---------------------
-
-This is pre-release hardware at the moment and there are a few things you should be aware of:
-
-* The 'Developer Edition' Bangle.js devices **are not water resistant**
-* Many Bangle.js 1.0 apps don't work yet. Many apps will be updated, and the app loader will eventually ask which device you're using and filter accordingly, but for now use the search keyword `b2` to find apps known to work: https://banglejs.com/apps/#b2
-* The standard `notify` library does not work on Bangle.js 2 as it uses features specific to Bangle.js 1's LCD driver. To make `Gadgetbridge` function you'll need to install `Gadgetbridge` then uninstall `Notifications` (`notify`) and install `Fullscreen Notifications` (`notifyfs`)
-
-
 Quick Usage Notes
 -----------------
 
-There are a few things to know that'll really help you get started quickly:
+There are a few things to know that'll help you get started quickly:
 
-* Long-pressing the one button will take you back to the default clock app
-* The touchscreen is only active when the lock symbol isn't displayed in the top left hand corner. Unlocking can be configured in several ways but the easiest is just to press the button.
-* In the default launcher, drag the screen to scroll, and tap the icon you want to launch
+* Long-pressing the button (~2 seconds) will take you back to the default clock app
+* When the lock symbol is displayed in the top left hand corner, the touchscreen is not active. Unlocking can be configured in several ways via the settings app, but by default pressing the button will unlock the Bangle and allow you to use the touchscreen.
+* In the default [App Launcher](https://github.com/espruino/BangleApps/wiki#glossary) (which you get to by pressing the button while on the clock), drag the screen to scroll through apps, and tap the icon you want to launch
 * **In text menus, you don't need to tap on the text line to select it.** Instead, drag your finger up and down to change the selected entry, and then **tap anywhere** to select.
+
+Please check out [The Bangle.js Wiki](https://github.com/espruino/BangleApps/wiki) for more hints and common questions.
 
 
 Power Consumption
@@ -98,9 +89,9 @@ Charging
 The supplied charge cable connects to a USB port to charge Bangle.js (despite there
 being 4 wires, those are for SWD programming and there is no USB data connection).
 
-**The cable is magnetic and the wires are connected directly to USB power.** Do
-not leave your cable plugged in or it might attract itself to the nearest
-magnetic (probably conductive) object and short out.
+**The cable is magnetic and the wires are connected to USB power.** While the cable in
+Bangle.js 2 does have short circuit protection, please do not leave your cable plugged in
+or it might attract itself to the nearest magnetic (probably conductive) object and short out.
 
 
 Powering off
@@ -114,9 +105,9 @@ Powering off
 Apps
 ----
 
-Apps are provided by the [same Bangle.js app loader](https://banglejs.com/apps/#b2) as for Bangle.js 1.
+Apps are provided by the [same Bangle.js app loader](https://banglejs.com/apps) as for Bangle.js 1,
+you just need to select `Bangle.js 2` when prompted (or from the drop-down in the top left)
 
-Right now compatible apps are tagged with `b2` and incompatible apps are tagged with `nbo2`. You can use the link `https://banglejs.com/apps/#b2` to see apps which are designed to work on Bangle.js 2.
 
 
 Resetting
@@ -512,12 +503,16 @@ Firmware Updates
 to update Bangle.js firmware. Click `Settings` (top right), then `Flasher`
 and follow the instructions.
 
+**Note:** The App Loader also provides a firmware updater at https://banglejs.com/apps/#fwupdate
+however for the moment we'd advise using the normal NRF Connect/Toolbox method.
+
 
 Troubleshooting
 ---------------
 
 Check out:
 
+* [The Bangle.js Wiki and FAQ](https://github.com/espruino/BangleApps/wiki)
 * [Bangle.js Troubleshooting](Troubleshooting+Bangle.js)
 * [Bluetooth Espruino Troubleshooting](Troubleshooting+BLE)
 * [General Espruino Troubleshooting](/Troubleshooting)

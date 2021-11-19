@@ -258,6 +258,7 @@ It'll write the relevant info to the file `myclock.info`
 
 ```JS
 require("Storage").write("myclock.info",{
+  "id":"myclock",
   "name":"My Clock",
   "type":"clock",
   "src":"myclock.app.js"

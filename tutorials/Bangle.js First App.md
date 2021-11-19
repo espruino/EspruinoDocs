@@ -5,7 +5,7 @@ Bangle.js First Application (Timer)
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+First+App. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Bangle.js,Development,Timer,App,Apps,Application
-* USES: Bangle.js
+* USES: Bangle.js,Bangle.js2
 
 We'll assume you've already been through the [Bangle.js Development page](/Bangle.js+Development)
 and have an idea how to get started.
@@ -29,7 +29,7 @@ function countDown() {
   // draw the current counter value
   g.drawString(counter, g.getWidth()/2, g.getHeight()/2);
   // optional - this keeps the watch LCD lit up
-  g.flip();
+  Bangle.setLCDPower(1);
 }
 
 var interval = setInterval(countDown, 1000);
@@ -112,7 +112,7 @@ function countDown() {
   // draw the current counter value
   g.drawString(counter,120,120);
   // optional - this keeps the watch LCD lit up
-  g.flip();
+  Bangle.setLCDPower(1);
 }
 
 counterInterval = setInterval(countDown, 1000);
@@ -121,8 +121,8 @@ counterInterval = setInterval(countDown, 1000);
 ![](Bangle.js First App/countdown_end.png)
 
 This will just keep on beeping and buzzing until you reset the
-watch with a long-press of **BTN3**. Let's just make the press of
-**BTN2** clear the timer:
+watch with a long-press of the button. Let's just make the press of
+the middle button clear the timer:
 
 * Add `if (counterInterval) return;` as the first line in `function outOfTime() {`
 * Replace `counterInterval = setInterval(countDown, 1000);` with:
@@ -138,7 +138,12 @@ function startTimer() {
 startTimer();
 ```   
 
-* And finally we'll make a button press reset it. Add `setWatch(startTimer, BTN2);`
+To be compatible with both Bangle.js 1 and Bangle.js 2 we need to either
+choose which button to use based on the device type (eg by checking
+`process.env.HWVERSION==2`) or to use a command like [`Bangle.setUI`](http://www.espruino.com/Reference#l_Bangle_setUI)
+that provides an abstraction for both devices.
+
+* So finally we'll make a button press reset the timer. Add `setWatch(startTimer, (process.env.HWVERSION==2) ? BTN1 : BTN2);`
 just before the call to `outOfTime();` in `countDown`.
 
 Your code should now look like:
@@ -164,7 +169,7 @@ function countDown() {
   if (counter<=0) {
     clearInterval(counterInterval);
     counterInterval = undefined;
-    setWatch(startTimer, BTN2);
+    setWatch(startTimer, (process.env.HWVERSION==2) ? BTN1 : BTN2)
     outOfTime();
     return;
   }
@@ -175,7 +180,7 @@ function countDown() {
   // draw the current counter value
   g.drawString(counter,120,120);
   // optional - this keeps the watch LCD lit up
-  g.flip();
+  Bangle.setLCDPower(1);
 }
 
 function startTimer() {
@@ -224,13 +229,14 @@ It'll write the relevant info to the file `timer.info`
 
 ```JS
 require("Storage").write("timer.info",{
+  "id":"timer",
   "name":"My Timer",
   "src":"timer.app.js"
 });
 ```
 
-If you now long-press **BTN3** to get to the clock, the press
-**BTN2** to get to the menu, you can scroll down and see `My Timer`.
+If you now long-press **BTN3** on Bangle.js 1 (or the single button on Bangle.js 2)
+to get to the clock, the press the middle button to get to the menu, you can scroll down and see `My Timer`.
 If you select it, it'll execute your app!
 
 **Note:** The [Bangle App Loader](https://banglejs.com/apps/)
@@ -269,6 +275,7 @@ and paste this into the left-hand side of the IDE:
 
 ```JS
 require("Storage").write("timer.info",{
+  "id":"timer",
   "name":"My Timer",
   "src":"timer.app.js",
   "icon":"timer.img"

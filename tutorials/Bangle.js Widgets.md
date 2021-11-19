@@ -35,7 +35,7 @@ for calling `Bangle.drawWidgets()` again.
 However if your widget needs to change what it displays, it should
 call its `draw` method again. If it needs to change its width (eg.
 to add a 'charging' indicator) it should call `Bangle.drawWidgets()`
-for force all widgets to lay out and draw again.
+to force all widgets to lay out and draw again.
 
 
 How to develop
@@ -49,12 +49,21 @@ lets develop on its own since we can do that in [the emulator](https://www.espru
 
 First, check out the example widget in [`apps/_example_widget/`](https://github.com/espruino/BangleApps/blob/master/apps/_example_widget)
 
-Add `WIDGETS = {};` to the top of the code, and `Bangle.drawWidgets();` to the bottom,
+Add `WIDGETS = {};` to the top of the code, and `Bangle.drawWidgets();` to the bottom.
+
+**Now come up with an ID for your widget**. Ideally this should start with
+`wid`, be lowercase without spaces and be less than 20 chard long. Check
+out [the list of existing apps](https://github.com/espruino/BangleApps/tree/master/apps)
+for ideas.
+
+Eventually you'll use this ID when adding to the app loader, but you should
+also use it when assigning your widget, for example `mywidget` in
+`WIDGETS["mywidget"] = ...` in the code below.
 
 The Example widget will look like:
 
 ```JS
-WIDGETS = {};
+WIDGETS = {}; // <-- for development only
 
 (() => {
   function draw() {
@@ -71,7 +80,7 @@ WIDGETS = {};
   };
 })()
 
-Bangle.drawWidgets();
+Bangle.drawWidgets(); // <-- for development only
 ```
 
 **Ensure the IDE is set to upload to RAM** (the default) - use the down-arrow below
@@ -87,7 +96,7 @@ Example - displaying the date
 
 As an example, let's display the date...
 
-* Change the widget name from `mywidget` to `dayofweek`
+* Change the widget name from `mywidget` to `widdate` (the ID we came up with)
 * Place it where we want it - in this case `tl` is top left
 * Change the width
 * Write our own `draw` function - in this case draw just the month
@@ -96,7 +105,7 @@ In this case I've added a `drawRect` so we can see the bounds that
 we need to stay within.
 
 ```JS
-WIDGETS = {}; // for testing only
+WIDGETS = {}; // <-- for development only
 
 (() => {
   var width = 24; // width of the widget
@@ -106,7 +115,7 @@ WIDGETS = {}; // for testing only
     g.reset(); // reset the graphics context to defaults (color/font/etc)
     g.setFontAlign(0,0); // center fonts    
     g.drawRect(this.x, this.y, this.x+width-1, this.y+23); // check the bounds!
-    
+
     // Use 'locale' module to get a shortened month name
     // in the correct language    
     var text = require("locale").month(date, 1);
@@ -115,18 +124,18 @@ WIDGETS = {}; // for testing only
   }
 
   setInterval(function() {
-    WIDGETS["date"].draw(WIDGETS["date"]);
+    WIDGETS["widdate"].draw(WIDGETS["widdate"]);
   }, 10*60000); // update every 10 minutes
 
   // add your widget
-  WIDGETS["date"]={
+  WIDGETS["widdate"]={
     area:"tl", // tl (top left), tr (top right), bl (bottom left), br (bottom right)
     width: width, // how wide is the widget? You can change this and call Bangle.drawWidgets() to re-layout
     draw:draw // called to draw the widget
   };
 })()
 
-Bangle.drawWidgets(); // for testing only
+Bangle.drawWidgets(); // <-- for development only
 ```
 
 The widget should now look like: ![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5AQDCiM4PQiwMwAAAHtJREFUSMftVEEKwCAMy0YP/f9rcyhslylFZDpnbw14qJakislB44VACACoaAg5jTgRjBRIgSABGvcabcYwHsWYNEJF63nXsE9U1FVqv//WM+r7/UR+6t4NpCX2Tb72ol+yS1YmXf5FLcmIdEb0jJw+oyIFNobdzvRscQMCqlSnDW+pqQAAAABJRU5ErkJggg==)
@@ -137,7 +146,7 @@ update our widget every 10 minutes:
 
 ```JS
 setInterval(function() {
-  WIDGETS["date"].draw(WIDGETS["date"]);
+  WIDGETS["widdate"].draw(WIDGETS["widdate"]);
 }, 10*60000); // update every 10 minutes
 ```
 
@@ -160,7 +169,7 @@ g.drawImage(atob("DA0CDQBwv//+////////1VVX0AAH0AAH0AAH0AAH0AAH0AAH1VVXv//+"), th
 One the image is drawn, you could then draw the current day of the month inside it. And finally, the code looks like:
 
 ```JS
-WIDGETS = {}; // for testing only
+WIDGETS = {}; // <-- for development only
 
 (() => {
   var width = 24; // width of the widget
@@ -182,18 +191,18 @@ WIDGETS = {}; // for testing only
   }
 
   setInterval(function() {
-    WIDGETS["date"].draw(WIDGETS["date"]);
+    WIDGETS["widdate"].draw(WIDGETS["widdate"]);
   }, 10*60000); // update every 10 minutes
 
   // add your widget
-  WIDGETS["date"]={
+  WIDGETS["widdate"]={
     area:"tl", // tl (top left), tr (top right), bl (bottom left), br (bottom right)
     width: width, // how wide is the widget? You can change this and call Bangle.drawWidgets() to re-layout
     draw:draw // called to draw the widget
   };
 })()
 
-Bangle.drawWidgets(); // for testing only
+Bangle.drawWidgets(); // <-- for development only
 ```
 
 And the widget displayed should be: ![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAXCAYAAAARIY8tAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5AQDCiYX6655LwAAAMlJREFUSMfFVTEOxCAM850y8DwGBp7HyHBDn5cBiZuQEC0pAapaQi2E4gCOCwBZapw4W2dP49bZzInz3ffoBUIMmRMPtRBDl+BTWFpwYmhgyFyOf/EwSAp674cWiTHOEQDA8TvEuHVWjA8fESdW34uKwJCBIaMmUV0yJ+6qZQvBzA5Ik72k9x7EQtPIVCJ+xyp24XGreIdgpmKXZNoSFsWUwruT8OkPVj/b93aONA9AXj6iOuurHZDkNXW/JtVUM81kusUqVl204A/oQ/4PSLzwIQAAAABJRU5ErkJggg==)
@@ -202,7 +211,9 @@ And the widget displayed should be: ![](data:image/png;base64,iVBORw0KGgoAAAANSU
 Trying in an app
 -----------------
 
-**Note:** this won't work in the emulator
+**Note:** if you're in the emulator you need to have a clock app installed
+already. If you don't, run `Bangle.factoryReset()` on the left-hand side of
+the IDE to install one.
 
 Trying inside an app requires some changes to the IDE's settings. We want to
 write the widget to a file in Storage, but to then run the default app (a clock)
@@ -211,7 +222,7 @@ and *not* the widget itself.
 * Click the down-arrow below the Upload button
 * Click `Storage`
 * Click `New File`
-* Enter `date.wid.js` as the name
+* Enter `widdate.wid.js` as the name
 * Open `Settings`, `Communications` and change `Load after saving` to `Load default application`
 * Delete the lines `WIDGETS = {};` (top) and `Bangle.drawWidgets();` (bottom) from your code
 
@@ -227,7 +238,7 @@ Checking out the page on [adding an app to the Bangle.js App Loader](/Bangle.js+
 
 Adding the widget is very similar...
 
-* Come up with a short name (no spaces) for your widget that isn't listed in https://github.com/espruino/BangleApps/tree/master/apps
+* As mentioned above, come up with a short name (no spaces) for your widget that isn't listed in https://github.com/espruino/BangleApps/tree/master/apps - ideally starting with `wid`
 * Copy [the example widget](https://github.com/espruino/BangleApps/tree/master/apps/_example_widget) to `apps/yourshortname`
 * Save your widget's code to `apps/yourshortname/widget.js`
 * Find an icon for the app loader and put it in `apps/yourshortname/widget.png`

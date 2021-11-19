@@ -55,10 +55,19 @@ Currently implemented messages are:
 For example:
 
 ```
+// new message
 GB({"t":"notify","id":1575479849,"src":"Hangouts","title":"A Name","body":"message contents"})
+// message changed
+GB({"t":"notify~","id":1575479849,"body":"this changed"})
+// remove message
+GB({"t":"notify-","id":1575479849}); 
+// maps navigation
+GB({"t":"notify","id":1,"src":"Maps","title":"0 yd - High St","body":"Campton - 11:48 ETA","img":"Y2MBAA....AAAAAAAAAAAAAA="})
+// music
 GB({"t":"musicstate","state":"play","position":0,"shuffle":1,"repeat":1})
-GB({"t":"musicinfo","artist":"..","album":"..","track":"..","dur":241,"c":2,"n":2})
-GB({"t":"call","cmd":"accept","name":"name","number":"+491234"})
+GB({"t":"musicinfo","artist":"My Artist","album":"My Album","track":"Track One","dur":241,"c":2,"n":2})
+// Call coming in 
+GB({"t":"call","cmd":"accept","name":"name","number":"+441234123123"})
 ```
 
 ### Messages from Bangle.js to Phone

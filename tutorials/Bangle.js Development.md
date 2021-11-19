@@ -5,7 +5,7 @@ Bangle.js Development
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+Development. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Bangle.js,Development
-* USES: Bangle.js
+* USES: Bangle.js,Bangle.js2
 
 You may also be interested in the [Bangle.js](Bangle.js Hardware reference)
 
@@ -18,11 +18,23 @@ however you won't get access to the sensors, Bluetooth, speaker, or vibration mo
 If your watch isn't connectable by Bluetooth:
 -----------------------------------------------
 
-* In your watch, press the middle button (**BTN2**)
+### Bangle.js 1
+
+* When you're at the clock screen on Bangle.js, press the middle button (**BTN2**)
 * Use the bottom button (**BTN3**) to scroll down until you get to Settings
 * Press **BTN2** to select
 * **Either:** Ensure `BLE` and `Programmable` are `On` to enable programming permanently, and then choose `Back` to exit settings
 * **Or:** Scroll down to `Make Connectable`, select it, and leave Bangle.js displaying on the `Connectable` screen
+
+### Bangle.js 2
+
+* When you're at the clock screen on Bangle.js, press the button
+* Scroll down until you get to Settings and then tap on it
+* Now you drag your finger up and down to change the selected menu item and tap to select.
+* **Either:** Ensure `BLE` and `Programmable` are `On` to enable programming permanently, and then choose `Back` to exit settings
+* **Or:** Scroll down to `Make Connectable`, select it, and leave Bangle.js displaying on the `Connectable` screen
+
+### Then...
 
 * Head to https://espruino.com/ide in Chrome
 * Click `Connect` up the top left of the screen
@@ -33,11 +45,7 @@ You should hopefully be connected now! If not, take a look at http://www.espruin
 
 If you just want to get started and have an Android phone, you can use that too! If you don't have an external keyboard then you might want to install the free 'Hackers Keyboard' app to get access to arrow keys via touchscreen.
 
-**Note:** If you've used Espruino before, make sure the Upload button (middle of the screen) shows `RAM` underneath it. Otherwise by writing to `Flash` you can remove the watch's built-in menu (you can just re-add it using https://banglejs.com/apps)
-
-**On Firmwares shipped on KickStarter Bangle.js** please either leave `Debug Info`
-set to `Hide` in Bangle.js's `Settings`, or update to the latest Bootloader
-version using https://banglejs.com/apps.
+**Note:** If you've used Espruino before, make sure the Upload button (middle of the screen) shows `RAM` underneath it. Otherwise by writing to `Flash` you can remove the watch's built-in menu (you can just re-add it by removing and installing `bootloader` using https://banglejs.com/apps)
 
 Once connected
 ---------------
@@ -89,12 +97,9 @@ Bangle.beep();
 Will make it beep.
 
 **Note:** The majority of Bangle.js devices do not contain a piezo speaker,
-but instead use the vibration motor for sound. If you received your device
-and it doesn't make a noise when using `Bangle.beep();`, please update
-the `Bootloader` and `Settings` app via the App Loader. Afterwards you
-can change the Beep mode in the `Settings` to Vibrate.
+but instead use the vibration motor for sound.
 
-You'll notice they return promises, so you can chain them:
+You'll notice the functions return promises, so you can chain them:
 
 ```JS
 Bangle.buzz().then(() => {
@@ -129,22 +134,24 @@ if `Debug info` is set to `Show` in `Settings`. This can be a great way of
 seeing if your app is failing in unexpected ways when in every day use.
 
 Want to react to user input on the buttons? You can query the button state.
-**BTN1** is the top button, **BTN2** is the middle, **BTN3** is the bottom:
+
+* **Bangle.js 1** - **BTN1/BTN** is the top button, **BTN2** is the middle, **BTN3** is the bottom
+* **Bangle.js 2** - **BTN1** or **BTN** refers to the only button
 
 ```JS
-BTN2.read();
+BTN1.read();
 ```
 
-Will output `true` or `false` depending on the state of the middle button, but often we don't want to poll because running
+Will output `true` or `false` depending on the state of the button, but often we don't want to poll because running
 code all the time would use battery.
 
 Instead, you can use [`setWatch`](http://www.espruino.com/Reference#l__global_setWatch). This sets up the hardware to watch for a button press:
 
 ```JS
 setWatch(() => {
-  E.showMessage("You\npressed\nthe middle\nbutton!");
+  E.showMessage("You\npressed\nthe button!");
   setTimeout(()=>g.clear(), 1000);
-}, BTN2);
+}, BTN1);
 ```
 
 **At this point the code's getting longer, so you might want to
@@ -181,7 +188,7 @@ and `Communications`:
 * `RAM` - you should normally try and use this - it writes nothing permanently
 to Bangle.js so is quick and safe to develop with.
 * `Flash`/`Flash (always)` - DO NOT USE THIS ON BANGLE.JS because you will
-overwrite the existing Bangle.js bootloader with your own app.
+overwrite the existing Bangle.js bootloader with your own app (if you do, you can re-install the `bootloader` app using https://banglejs.com/apps).
 * `Storage` - you can use this to select a file on Storage to write to. This
 is great for developing your own apps - see [Bangle.js: First Application](Bangle.js+First+App)
 
@@ -192,9 +199,9 @@ Next Steps
 You might want to check out:
 
 * [Bangle.js: First Application](Bangle.js+First+App)
-* https://github.com/gfwilliams/workshop-nodeconfeu2019 (Step 2 and later)
-* https://github.com/espruino/BangleApps/blob/master/README.md for making custom apps
+* https://github.com/espruino/BangleApps/blob/master/README.md for detailed info on the format of custom apps
 * https://github.com/espruino/BangleApps/tree/master/apps for all the source code for existing apps
+* https://github.com/gfwilliams/workshop-nodeconfeu2019 (Step 2 and later) of the Nodeconf workshop for Bangle.js 1
 
 Tutorials
 ----------

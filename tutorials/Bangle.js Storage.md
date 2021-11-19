@@ -129,6 +129,7 @@ it via the app store:
 
 ```JS
 require("Storage").write("gpspoilog.info",{
+  "id":"gpspoilog",
   "name":"GPS POI Log",
   "src":"gpspoilog.app.js"
 });
