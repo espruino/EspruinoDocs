@@ -49,6 +49,8 @@ Features
 Quick Usage Notes
 -----------------
 
+Check out the [Bangle.js 2 Getting Started Guide](https://banglejs.com/start2)
+
 There are a few things to know that'll help you get started quickly:
 
 * Long-pressing the button (~2 seconds) will take you back to the default clock app
@@ -57,30 +59,6 @@ There are a few things to know that'll help you get started quickly:
 * **In text menus, you don't need to tap on the text line to select it.** Instead, drag your finger up and down to change the selected entry, and then **tap anywhere** to select.
 
 Please check out [The Bangle.js Wiki](https://github.com/espruino/BangleApps/wiki) for more hints and common questions.
-
-
-Power Consumption
------------------
-
-* Idle, accelerometer on 12.5Hz - 0.3mA
-* Idle, accelerometer on 1.25Hz (`Bangle.setPollInterval(800)`) - 0.15mA (default if not moved for ~120s)
-* Idle, clock ([`s7clk`](https://banglejs.com/apps/#s7clk)) updating once a second - 0.5mA
-* BLE Connected in high bandwidth mode - 0.75mA
-* Compass on, 12.5Hz - 5.5mA (+5mA)
-* Compass on, 1.25Hz (`Bangle.setPollInterval(800)`) - 0.9mA (+0.6mA)
-* Heart rate monitor on - 5mA (+4.5mA)
-* 100% CPU usage running JavaScript - 4mA (+3mA)
-* GPS on - 26mA (+25mA)
-* LCD touchscreen enabled (unlocked) - 2.8mA (+2.5mA)
-* LCD backlight on - 17mA (+16mA)
-* Turned off - 0.04mA
-
-Right now you can expect around 1 month of battery life with a clock that
-updates once a minute, using the latest firmware.
-
-A clock that updates once a second all the time (like [`s7clk`](https://banglejs.com/apps/#s7clk))
-will reduce the battery life to 2 weeks, and more complicated clocks can increase the power
-draw further.
 
 
 Charging
@@ -94,20 +72,19 @@ Bangle.js 2 does have short circuit protection, please do not leave your cable p
 or it might attract itself to the nearest magnetic (probably conductive) object and short out.
 
 
-Powering off
-------------
-
-* Enter the launcher by pressing the button to unlock, then pressing it again to enter the launcher (while showing a clock)
-* Tap on `Settings`
-* Scroll down to `Turn off` and tap again
-
-
 Apps
 ----
 
 Apps are provided by the [same Bangle.js app loader](https://banglejs.com/apps) as for Bangle.js 1,
 you just need to select `Bangle.js 2` when prompted (or from the drop-down in the top left)
 
+
+Powering off
+------------
+
+* Enter the launcher by pressing the button to unlock, then pressing it again to enter the launcher (while showing a clock)
+* Tap on `Settings`
+* Scroll down to `Turn off` and tap again
 
 
 Resetting
@@ -202,6 +179,30 @@ Information
 * Links to shipping documentation: [Classification](/files/Bangle.js-shipping.pdf), [Battery UN38.3](/files/Bangle.js-UN38.3.pdf) and [Battery MSDS](/files/Bangle.js-MSDS.pdf)
 
 
+Power Consumption
+-----------------
+
+* Idle, accelerometer on 12.5Hz - 0.3mA
+* Idle, accelerometer on 1.25Hz (`Bangle.setPollInterval(800)`) - 0.15mA (default if not moved for ~120s)
+* Idle, clock ([`s7clk`](https://banglejs.com/apps/#s7clk)) updating once a second - 0.5mA
+* BLE Connected in high bandwidth mode - 0.75mA
+* Compass on, 12.5Hz - 5.5mA (+5mA)
+* Compass on, 1.25Hz (`Bangle.setPollInterval(800)`) - 0.9mA (+0.6mA)
+* Heart rate monitor on - 5mA (+4.5mA)
+* 100% CPU usage running JavaScript - 4mA (+3mA)
+* GPS on - 26mA (+25mA)
+* LCD touchscreen enabled (unlocked) - 2.8mA (+2.5mA)
+* LCD backlight on - 17mA (+16mA)
+* Turned off - 0.04mA
+
+Right now you can expect around 1 month of battery life with a clock that
+updates once a minute, using the latest firmware.
+
+A clock that updates once a second all the time (like [`s7clk`](https://banglejs.com/apps/#s7clk))
+will reduce the battery life to 2 weeks, and more complicated clocks can increase the power
+draw further.
+
+
 <a name="lcd"></a>LCD Screen
 ---------------------------------
 
@@ -217,7 +218,7 @@ that is an instance of the [Graphics class](/Reference#Graphics). Unlike Bangle.
 the display is buffered so changes to the display will only take effect when you call
 `g.flip()` *or* your code finishes executing and Bangle.js returns to idle.
 
-```
+```JS
 // Draw a pattern with lines
 g.clear();
 for (i=0;i<64;i+=7.9) g.drawLine(0,i,i,63);
@@ -231,7 +232,7 @@ Bangle.js comes with a built-in menu library that can be accessed with the [`E.s
 [`E.showPrompt()`](/Reference#l_E_showPrompt) and [`E.showMessage()`](/Reference#l_E_showMessage) can also be used for simple
 prompts and full-screen messages.
 
-```
+```JS
 // Two variables to update
 var boolean = false;
 var number = 50;
@@ -282,7 +283,7 @@ You can even move the JavaScript console (REPL) to the LCD while connected
 via Bluetooth, and use your bluetooth connection as a simple keyboard using
 the following commands:
 
-```
+```JS
 Bluetooth.on("data",d=>Terminal.inject(d));
 Terminal.setConsole();
 ```
@@ -305,6 +306,28 @@ with `e` as an object containing `{x,y,dx,dy,b}` whenever a finger
 is dragged over the screen. `b` is 0 when the finger is lifted
 or `1` when pressed.
 
+`Bangle.on('stroke', function(e) { ... });` will call the function
+with `e` as an object containing `{xy:newUint8Array(x1,y1,x2,y2,...), stroke:string/undefined}` whenever a
+finger has been dragged over the screen for more that half the screen's distance.
+
+`stroke` will only be set in the `stroke` event if `Bangle.strokes` has been set up with
+a series of strokes to recognise. To do this, use some code as follows. The array
+passed to `Unistroke.new` needs to be a `Uint8Array` of XY coordinates (as you might
+get from `xy` in the `stroke` event).
+
+```JS
+Bangle.strokes = {
+  up : Unistroke.new(new Uint8Array([57, 151, 57, 147, 58, 136, 61, 119, 65, 102, 70, 88, 74, 78, 80, 71, 86, 70, 94, 72, 107, 79, 129, 97, 140, 110, 147, 120, 152, 127, 156, 134, 158, 137])),
+  cw : Unistroke.new(new Uint8Array([91, 60, 93, 60, 98, 60, 108, 60, 121, 61, 131, 64, 137, 70, 139, 81, 139, 96, 135, 111, 128, 126, 119, 136, 108, 140, 97, 141, 86, 139, 75, 134, 70, 126, 66, 115, 64, 100, 65, 88, 69, 78, 75, 71, 81, 67, 84, 63])
+),
+ ccw : Unistroke.new(new Uint8Array([114, 71, 112, 71, 108, 71, 102, 71, 93, 72, 82, 76, 71, 81, 62, 88, 56, 97, 53, 107, 54, 116, 59, 127, 70, 137, 86, 142, 103, 145, 115, 144, 124, 143, 131, 136, 135, 122, 131, 99, 124, 83, 115, 72])
+),
+ alpha : Unistroke.new(new Uint8Array([161, 55, 160, 58, 158, 62, 155, 71, 149, 81, 141, 97, 132, 114, 119, 129, 107, 140, 96, 147, 86, 151, 77, 154, 69, 153, 59, 149, 49, 143, 40, 133, 31, 117, 28, 104, 27, 90, 28, 78, 34, 71, 44, 69, 60, 72, 84, 84, 111, 107, 132, 128, 146, 144, 154, 155, 159, 161])),
+ right : Unistroke.new(new Uint8Array([49, 52, 54, 52, 68, 57, 90, 65, 114, 76, 134, 84, 148, 91, 157, 95, 163, 98, 167, 100, 169, 102, 168, 105, 163, 114, 147, 126, 127, 137, 107, 147, 94, 152, 82, 156, 72, 159])),
+double : Unistroke.new(new Uint8Array([75, 61, 87, 61, 117, 68, 142, 85, 147, 111, 129, 134, 92, 140, 59, 133, 45, 116, 50, 89, 86, 72, 128, 88, 138, 121, 108, 138, 68, 129, 56, 104, 57, 90]))
+};
+```
+
 ### LED
 
 There are two 'fake' LED variables called `LED1` and `LED2` that create red and
@@ -321,7 +344,7 @@ time and strength arguments, and returns a promise. [See the reference](http://w
 
 For example:
 
-```
+```JS
 Bangle.buzz().then(()=>{
   return new Promise(resolve=>setTimeout(resolve,500)); // wait 500ms
 }).then(()=>{
@@ -339,7 +362,7 @@ You can use `Bangle.beep()` in much the same way as `.buzz` above to make sounds
 
 To output an entire scale of notes, you could do:
 
-```
+```JS
 Bangle.beep(200,207.65*8).then(
 ()=>Bangle.beep(200,220.00*8)).then(
 ()=>Bangle.beep(200,246.94*8)).then(
@@ -364,7 +387,7 @@ There is just one button on Bangle.js - called `BTN` or `BTN1` in code.
 * Polling to get the button state wastes power, so it's better to use `setWatch`
 to call a function whenever the button changes state:
 
-```
+```JS
 setWatch(function() {
   console.log("Pressed");
 }, BTN, {edge:"rising", debounce:50, repeat:true});
@@ -376,7 +399,7 @@ setWatch(function() {
 The accelerometer runs all the time and produces `accel` events on the
 `Bangle` object.
 
-```
+```JS
 Bangle.on('accel', function(acc) {
   // acc = {x,y,z,diff,mag}
 });
@@ -401,7 +424,7 @@ will be created with the name of the detected gesture.
 The compass can be turned on with `Bangle.setCompassPower(1)` and when
 enabled, `mag` events are created 12.5 times a second:
 
-```
+```JS
 Bangle.setCompassPower(1)
 Bangle.on('mag', function(mag) {
   // mag = {x,y,z,dx,dy,dz,heading}
@@ -415,7 +438,7 @@ more information.
 
 To use the barometer, you can either request one pressure value:
 
-```
+```JS
 Bangle.getPressure().then(print)
 // prints this after ~1 sec
 // { "temperature": 23.03918464465, "pressure": 1005.56287398937, "altitude": 64.19805781010 }
@@ -423,7 +446,7 @@ Bangle.getPressure().then(print)
 
 Or can request to be notified on each new reading:
 
-```
+```JS
 Bangle.setBarometerPower(true)
 Bangle.on('pressure', print)
 // prints...
@@ -441,7 +464,7 @@ more information.
 The GPS can be turned on with `Bangle.setGPSPower(1)` and when
 enabled, `GPS` events are created once a second:
 
-```
+```JS
 Bangle.setGPSPower(1)
 Bangle.on('GPS', function(gps) {
   // gps = {lat,lon,alt,speed,etc}
