@@ -23,24 +23,27 @@ exports.connect = function (pin,options) {
     mul = options.range;
     offs = 1.5-(mul/2);
   }
-
   return {move:function(pos, time, callback) {
-    if (time===undefined) time = 1000;
+    if (typeof time === 'function') {
+      callback = time; time = undefined;
+    }
+    if (typeof time !== 'number') time = 1000;
+    
     var amt = 0;
     if (currentPos===undefined) currentPos = pos;
     if (interval)
       clearInterval(interval);
     var initial = currentPos;
     interval = setInterval(function() {
-      if (amt>1) {
-        clearInterval(interval);
-        interval = undefined;
-        amt = 1;
-        if (callback) callback();
-      }
       currentPos = pos*amt + initial*(1-amt);
       digitalPulse(pin, 1, offs+E.clip(currentPos,0,1)*mul);
-      amt += 1000.0 / (20*time);
+      if (amt >= 1) {
+        clearInterval(interval);
+        interval = undefined;
+        if (callback) callback();
+      } else {
+        amt += 1000.0 / (20*time);
+      }
     }, 20);
   }};
 };
