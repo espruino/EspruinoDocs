@@ -71,6 +71,9 @@ being 4 wires, those are for SWD programming and there is no USB data connection
 Bangle.js 2 does have short circuit protection, please do not leave your cable plugged in
 or it might attract itself to the nearest magnetic (probably conductive) object and short out.
 
+**DO NOT CONNECT A BANGLE.JS 1 CHARGE CABLE TO BANGLE.JS 2** - there are a different
+number of pins and connecting it could cause damage to your device.
+
 
 Apps
 ----
