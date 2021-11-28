@@ -83,13 +83,14 @@ Pinout                 Page contains pinout info
 
 ## Build Requirements
 
-### Step 1: Obtain Espruino Source Code
+### Step 1: Obtain Espruino Source Code & Web Tools
 
-Checked out the `Espruino` source at the same same level as `EspruinoDocs` folder. Assuming you're in the `EspruinoDocs` folder...
+Check out the `Espruino` and `EspruinoWebTools` repositories at the same same level as `EspruinoDocs` folder. Assuming you're in the `EspruinoDocs` folder...
 
 ```
 $ cd ..
 $ git clone git@github.com:espruino/Espruino.git`
+$ git clone git@github.com:espruino/EspruinoWebTools.git
 $ cd EspruinoDocs
 ```
 
