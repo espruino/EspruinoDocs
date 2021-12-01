@@ -61,6 +61,24 @@ There are a few things to know that'll help you get started quickly:
 Please check out [The Bangle.js Wiki](https://github.com/espruino/BangleApps/wiki) for more hints and common questions.
 
 
+⚠️ Skin Irritation Warning
+--------------------------
+
+Bangle.js 2 has 4 contacts on the rear. The two on the ends are used for charging
+and are not powered, however the middle two are SWD debug/programming pins connected
+straight to the IC that have weak resistors connecting them to 3.3v.
+
+At most, 0.0001A of current at 3.3v can be provided, however if exposed to salty
+water (eg sweat) or other conductive conditions, the contacts will corrode and it
+is possible that in extreme cases there could be some skin irritation.
+
+While future devices will be supplied with the offending middle pins covered
+with lacquer, on KickStarter devices these pins are exposed. If you're planning
+on doing anything with Bangle.js where you might sweat a lot we would strongly
+advise you to apply some paint, tape, a sticker or laquer over the middle two
+contacts to avoid having any issues.
+
+
 Charging
 --------
 
