@@ -24,42 +24,22 @@ is your app's ID. We're using `"myapp.json"` here (which what we would suggest).
 In the app itself, you can read settings using code like this:
 
 ```JS
-// read settings file, or if it doesn't exist use {}
-var settings = require('Storage').readJSON("myapp.json", true) || {};
-// if an item doesn't exist, you can set a default
-if (settings.something === undefined)
-  settings.something = 123;
-```
-
-You can also specify all default values at once:
-
-```JS
 var settings = Object.assign({
+  // default values
   something: 123,
   anotherthing: 456,
 }, require('Storage').readJSON("myapp.json", true) || {});
 ```
 
-Or you can use a helper function:
+If you don't set defaults, your code needs to be able to handle missing items:
 
 ```JS
-var settings = require('Storage').readJSON("myapp.json", true) || {};
-function getSetting(key, def) {
-  return (key in settings) ? settings[key] : def;
-}
-
-var value = getSetting('something', 123);
-```
-
-Or you could only check values when using them:
-
-```JS
+// read settings file, or if it doesn't exist use {}
 var settings = require('Storage').readJSON("myapp.json", true) || {};
 
-var value = settings.something;
-if (typeof(value) !== "number")
-  value = 123;
+var value = settings.something || 123;
 ```
+
 It's important to think about both memory usage and speed:
 
 * **Do you only have a few settings, or you use them often?** It's probably easier
