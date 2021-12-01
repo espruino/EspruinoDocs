@@ -21,27 +21,45 @@ is your app's ID. We're using `"myapp.json"` here (which what we would suggest).
 
 ## Using settings in your app
 
-In the app itself, you can load settings in two main ways:
-
-* You can use the `Settings` library, which
-
-```JS
-// read a single app setting, with a default value
-value = require('Settings').get("myapp", key, default);
-// omit key to read all app settings
-value = require('Settings').get("myapp");
-```
-
-* You can read the file directly, using code like this:
+In the app itself, you can read settings using code like this:
 
 ```JS
 // read settings file, or if it doesn't exist use {}
 var settings = require('Storage').readJSON("myapp.json", true) || {};
 // if an item doesn't exist, you can set a default
-if (settings.something === undefined)  
+if (settings.something === undefined)
   settings.something = 123;
 ```
 
+You can also specify all default values at once:
+
+```JS
+var settings = Object.assign({
+  something: 123,
+  anotherthing: 456,
+}, require('Storage').readJSON("myapp.json", true) || {});
+```
+
+Or you can use a helper function:
+
+```JS
+var settings = require('Storage').readJSON("myapp.json", true) || {};
+function getSetting(key, def) {
+  return (key in settings) ? settings[key] : def;
+}
+
+var value = getSetting('something', 123);
+```
+
+Or you could only check values when using them:
+
+```JS
+var settings = require('Storage').readJSON("myapp.json", true) || {};
+
+var value = settings.something;
+if (typeof(value) !== "number")
+  value = 123;
+```
 It's important to think about both memory usage and speed:
 
 * **Do you only have a few settings, or you use them often?** It's probably easier
@@ -49,7 +67,13 @@ just to load the settings right at the time your app loads, and keep them in
 memory.
 * **Do you have a lot of settings, not use settings often, or you're a Widget
 that needs to keep memory usage down?** Maybe you should load the settings
-as and when you need them.
+as and when you need them:
+
+```JS
+var settings = require('Storage').readJSON("myapp.json", true) || {};
+var value = settings.something || 123;
+delete settings; // remove unneeded settings from memory
+```
 
 **Note:** You should never depend upon a settings file being present,
 or even having some field, so defaults are a good idea. Someone may
@@ -85,10 +109,9 @@ following:
 (function(back) {
   var FILE = "myapp.json";
   // Load settings
-  var settings = require('Storage').readJSON(FILE, true) || {};
-  // set defaults
-  if (settings.something === undefined)
-    settings.something = 123;
+  var settings = Object.assign({
+    something: 123,
+  }, require('Storage').readJSON(FILE, true) || {});
 
   function writeSettings() {
     require('Storage').writeJSON(FILE, settings);
@@ -99,7 +122,7 @@ following:
     "" : { "title" : "App Name" },
     "< Back" : () => back(),
     'On or off?': {
-      value: !!settings.onoroff,
+      value: !!settings.onoroff,  // !! converts undefined to false
       format: v => v?"On":"Off",
       onchange: v => {
         settings.onoroff = v;
@@ -107,7 +130,7 @@ following:
       }
     },
     'How Many?': {
-      value: 0|settings.howmany,
+      value: 0|settings.howmany,  // 0| converts undefined to 0
       min: 0, max: 10,
       onchange: v => {
         settings.howmany = v;
@@ -121,9 +144,6 @@ following:
 It's pretty easy to add different options - check out the [`E.showMenu`](http://www.espruino.com/Reference#l_E_showMenu)
 docs for more ideas.
 
-**Note: Due to the way Settings pages are loaded, you may not currently use the `Settings` library from within
-a settings page.**
-
 This is great for testing, however to create a settings app, you must remove the
 `(load)` from the end of the code, so it should look like this:
 
@@ -131,10 +151,9 @@ This is great for testing, however to create a settings app, you must remove the
 (function(back) {
   var FILE = "myapp.json";
   // Load settings
-  var settings = require('Storage').readJSON(FILE, true) || {};
-  // set defaults
-  if (settings.something === undefined)
-    settings.something = 123;
+  var settings = Object.assign({
+    something: 123,
+  }, require('Storage').readJSON(FILE, true) || {});
 
   function writeSettings() {
     require('Storage').writeJSON(FILE, settings);
@@ -145,7 +164,7 @@ This is great for testing, however to create a settings app, you must remove the
     "" : { "title" : "App Name" },
     "< Back" : () => back(),
     'On or off?': {
-      value: !!settings.onoroff,
+      value: !!settings.onoroff,  // !! converts undefined to false
       format: v => v?"On":"Off",
       onchange: v => {
         settings.onoroff = v;
@@ -153,7 +172,7 @@ This is great for testing, however to create a settings app, you must remove the
       }
     },
     'How Many?': {
-      value: 0|settings.howmany,
+      value: 0|settings.howmany,  // 0| converts undefined to 0
       min: 0, max: 10,
       onchange: v => {
         settings.howmany = v;
@@ -190,7 +209,7 @@ Assuming this is your app, add the lines marked:
     {"name":"myapp.settings.js","url":"settings.js"}, // < ------- HERE
     {"name":"myapp.img","url":"app-icon.js","evaluate":true},
   ],
-  "data": [{"name":"messages.json"}]  // < ------- HERE
+  "data": [{"name":"myapp.json"}]  // < ------- HERE
 },
 ```
 
