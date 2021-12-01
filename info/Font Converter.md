@@ -12,31 +12,63 @@ with Espruino's [Graphics](/Graphics) library.
 
 How it works:
 
-* Go to [https://fonts.google.com/](https://fonts.google.com/), find a font
-* Click `Select This Style`
-* Copy the `&lt;link href=...` line
-* Paste it into the text box below (or use a link to a '.otf' font)
+* Use one of the two methods below to select a font
 * Check the options
 * Click 'Go'
-* Copy and paste the font code out
+* Copy and paste the generated font code into your Espruino project
 
 <form id="fontForm">
-<input id="fontLink" type="text" value="<link href=&quot;https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&display=swap&quot; rel=&quot;stylesheet&quot;>" size="80"></input><br/>
-Size : <input type="range" min="4" max="90" value="16" class="slider" style="width:500px" id="fontSize"><span id="fontSizeText">16</span><br/>
-BPP : <select id="fontBPP">
-  <option value="1" selected>1 bpp (black & white)</option>
-  <option value="2">2 bpp</option>
-  <option value="4">4 bpp</option>
-</select><br/>
-Range : <select id="fontRange">
-  <option value="ASCII">ASCII (32-127)</option>
-  <option value="ASCIICAPS" selected>ASCII capitals (32-127)</option>
-  <option value="ISO8859-1">ISO8859-1 / ISO Latin (32-255)</option>
-  <option value="Numeric">Numeric (46-58)</option>
-</select><br/>
-Align to increase sharpness : <input type="checkbox" id="fontJitter"></input><br/>
-</form>
-<button id="calculateFont">Go!</button><br/>
+
+<table style="margin-left: 0">
+  <tr>
+    <td width="50%">
+      <h4>Use an external font:</h4>
+      <ul>
+        <li>Go to <a href="https://fonts.google.com/">https://fonts.google.com/</a>, find a font</li>
+        <li>Click <code>Select This Style</code></li>
+        <li>Copy the <code>&lt;link href=...</code> line</li>
+        <li>Paste it into the text box below</li>
+        <li>Or use a link to .otf or .woff file, or the name of a font installed on your computer</li>
+      </ul>
+      <p>
+        <input id="fontLink" type="text" style="width: 330px; margin-left: 24px;" value="<link href=&quot;https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&display=swap&quot; rel=&quot;stylesheet&quot;>" size="80"></input>
+      </p>
+    </td>
+    <td width="50%" style="vertical-align:top;">
+      <h4>OR use a font file:</h4>
+      <ul>
+        <li>Select a .otf or .woff font file on your computer</li>
+        <li>Enter a name for your font in the text box below</li>
+      </ul>
+      <p style="margin-left:24px; ">
+        <input id="fontFile" type="file" onchange="onChangeFontFile()" />
+      </p>
+      <p style="margin-left:24px; ">
+        <span>Font name: </span>
+        <input id="fontFileName" type="text" value="CustomFontName" />
+      </p>
+    </td>
+  </tr>
+</table>
+
+<h4>Set font options:</h4>
+<div style="margin-left: 24px">
+  Size : <input type="range" min="4" max="90" value="16" class="slider" style="width:500px" id="fontSize"><span id="fontSizeText">16</span><br/>
+  BPP : <select id="fontBPP">
+    <option value="1" selected>1 bpp (black & white)</option>
+    <option value="2">2 bpp</option>
+    <option value="4">4 bpp</option>
+  </select><br/>
+  Range : <select id="fontRange">
+    <option value="ASCII">ASCII (32-127)</option>
+    <option value="ASCIICAPS" selected>ASCII capitals (32-127)</option>
+    <option value="ISO8859-1">ISO8859-1 / ISO Latin (32-255)</option>
+    <option value="Numeric">Numeric (46-58)</option>
+  </select><br/>
+  Align to increase sharpness : <input type="checkbox" id="fontJitter"></input><br/>
+  </form>
+</div>
+<button id="calculateFont" style="font-size: 14pt;">Go!</button><br/>
 
 <span style="display:none;" id="fontTest" >This is a test of the font</span><br/>
 <canvas width="256" height="256" id="fontcanvas" style="display:none"></canvas>
@@ -202,11 +234,39 @@ Graphics.prototype.setFont${fontName.replace(/[^A-Za-z0-9]/g,"")} = function(sca
 }`.trim();
 }
 
-function loadFontAndCalculate() {
-  fontLink = document.getElementById('fontLink').value.trim();
-  fontName = "Sans Serif";
-  if (fontLink!="") {
-    if (fontLink.startsWith("http")) {
+function onChangeFontFile() {
+  // when user selects a font file, prepopulate its font name based on the file name
+  var fontFile = document.getElementById('fontFile').files[0];
+  if(fontFile) {
+    var fileName = fontFile.name.split('.')[0];
+    var fontName = fileName.replace(/\W/g, ''); // remove non-alphanumeric chars
+    document.getElementById('fontFileName').value = fontName;
+  }
+}
+
+function getFontLinkAndName(callback) {
+  var fontFile = document.getElementById('fontFile').files[0];
+  if(fontFile) {
+    var fontName = document.getElementById('fontFileName').value.trim();
+    console.log("fontLink: Found font file upload - creating data url");
+    // use FileReader to load font file & read as base64 data URL string
+    const reader = new FileReader();
+    reader.addEventListener("load", function onLoadFontData() {
+      const dataUrl = reader.result;
+      console.log("fontLink: loaded data URL");
+      callback(dataUrl, fontName);
+      reader.removeEventListener("load", onLoadFontData);
+    }, false);
+    reader.readAsDataURL(fontFile);
+
+  } else {
+    var fontLink = document.getElementById('fontLink').value.trim();
+    var fontName = "Sans Serif";
+    if(!fontLink.length) {
+      alert("No font name, link or file provided");
+      return;
+    }
+    if (fontLink.startsWith("http") || fontLink.startsWith("data:")) {
       console.log("fontLink: Found bare URL");
     } else if (fontLink.startsWith("<")) {
       console.log("fontLink: Found <link...");
@@ -241,9 +301,14 @@ function loadFontAndCalculate() {
       if (fontLink.includes("#"))
         fontLink = fontLink.substr(0,fontLink.indexOf("#"));
     }
+    callback(fontLink, fontName);
   }
-  console.log("URL:" + (fontLink?fontLink:"[none]"));  
-  console.log("Family:" + fontName);  
+
+}
+
+function loadFontAndCalculate(fontLink, fontName) {
+  console.log("URL: " + (fontLink ? fontLink.substring(0, 500) : "[none]"));
+  console.log("Family: " + fontName);
   var fontHeight = parseInt(document.getElementById('fontSize').value);
   var fontBPP = parseInt(document.getElementById("fontBPP").value);
   var fontRangeName =  document.getElementById("fontRange").value;
@@ -254,7 +319,6 @@ function loadFontAndCalculate() {
   document.getElementById('fontTest').style = `font-family: '${fontName}';font-size: ${fontHeight}px`;
   document.getElementById('fontTest').innerText = fontRange.txt;
 
-
   function callback() {
     createFont(fontName, fontHeight, fontBPP, fontRange.min, fontRange.max);
   }
@@ -264,7 +328,7 @@ function loadFontAndCalculate() {
     return callback();
   }
   if (cssNode) cssNode.remove();
-  if (fontLink.match(/\.otf([?#].*)?/)) {
+  if (fontLink.match(/\.otf([?#].*)?/) || fontLink.match(/^data:/)) {
     cssNode = document.createElement("style");
     cssNode.innerText = '@font-face { font-family: '+fontName+'; src: url('+JSON.stringify(fontLink)+') format("opentype"); }';
     cssNode.href = fontLink;
@@ -286,16 +350,16 @@ function loadFontAndCalculate() {
     }, 100);
   };
 }
+
 document.getElementById("calculateFont").addEventListener('click',function(e) {
   e.preventDefault();
-  loadFontAndCalculate();
+  getFontLinkAndName(loadFontAndCalculate);
 });
 document.getElementById('fontSize').addEventListener('mousemove',function() {
   document.getElementById('fontSizeText').innerHTML = document.getElementById('fontSize').value;
 });
 document.getElementById("fontForm").addEventListener('submit', function(e) {
   e.preventDefault();
-  loadFontAndCalculate();
+  getFontLinkAndName(loadFontAndCalculate);
 });
-
 </script>
