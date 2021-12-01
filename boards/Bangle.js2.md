@@ -61,7 +61,7 @@ There are a few things to know that'll help you get started quickly:
 Please check out [The Bangle.js Wiki](https://github.com/espruino/BangleApps/wiki) for more hints and common questions.
 
 
-⚠️ Skin Irritation Warning
+Skin Irritation Warning
 --------------------------
 
 Bangle.js 2 has 4 contacts on the rear. The two on the ends are used for charging
