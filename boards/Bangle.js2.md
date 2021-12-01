@@ -121,14 +121,14 @@ Deleting all code
 You can do this either while your watch is in its normal state, or
 if you have reset it without loading any code (above).
 
-### Either:
+### Either
 
 * Go to https://banglejs.com/apps
 * Click `About -> Install default apps`
 
 This will erase everything and install just the default apps.
 
-### Or:
+### Or
 
 * Go to https://banglejs.com/apps
 * Go to `About -> Remove All Apps`
