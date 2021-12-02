@@ -37,6 +37,10 @@ If you don't set defaults, your code needs to be able to handle missing items:
 // read settings file, or if it doesn't exist use {}
 var settings = require('Storage').readJSON("myapp.json", true) || {};
 
+// Use the setting, or a default value if undefined
+var value = settings.something!==undefined ? settings.something : 123;
+
+// Or a cleaner version when you know a value of '0' isn't valid:
 var value = settings.something || 123;
 ```
 
