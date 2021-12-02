@@ -21,18 +21,7 @@ is your app's ID. We're using `"myapp.json"` here (which what we would suggest).
 
 ## Using settings in your app
 
-In the app itself, you can load settings in two main ways:
-
-* You can use the `Settings` library, which
-
-```JS
-// read a single app setting, with a default value
-value = require('Settings').get("myapp", key, default);
-// omit key to read all app settings
-value = require('Settings').get("myapp");
-```
-
-* You can read the file directly, using code like this:
+In the app itself, you can load settings using code like this:
 
 ```JS
 // read settings file, or if it doesn't exist use {}
