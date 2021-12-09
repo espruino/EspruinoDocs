@@ -90,21 +90,22 @@ var menuinfo = {
     "cF" : -1, // optional, foreground colour
     "cHB" : 0,  // optional, background colour of highlighted item
     "cHF" : -1, // optional, foreground colour of highlighted item
-    "predraw": function(gfx) {} // optional, function called before menu is drawn
+    "predraw": function(gfx) {}, // optional, function called before menu is drawn
                                 // (you could for instance set the font in here)
     "preflip": function(gfx,less,more) {} // optional, function called after menu is drawn,
                                 // before it's sent to the screen.
                                 // less is true if there are menu items off the top of the screen
                                 // more is true if there are menu items off the bottom of the screen
   },
-  "menu text" : function() { called when menu item selected };,
+  "menu text" : function() {}, // called when menu item selected
   "another menu" : {
     value : 42,       // A number or boolean to be changed
     step : 1,         // optional (default 1) - the amount to inc/dec the number
-    min / max : ...,  // minimum/maximum values to clamp to
+    min : 1,        // minimum value to clamp to
+    max : 100,        // maximum value to clamp to
     wrap : boolean,   // optional - wrap around from minimum to maximum and vise versa
-    onchange : function(value) // optional - called when the value changes
-    format : function(value) // optional - converts the value to a string to be displayed
+    onchange : function(value) {}, // optional - called when the value changes
+    format : function(value){} // optional - converts the value to a string to be displayed
   }
 };
 ```
