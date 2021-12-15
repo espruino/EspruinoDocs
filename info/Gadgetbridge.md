@@ -19,7 +19,10 @@ How to set up
 -------------
 
 * Install [Gadgetbridge](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) on your Android phone. **Do not install the Play Store version** as it is not the official one. Instead download and install [the F-droid version](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) manually.
-* On Bangle.js, install [the Gadgetbridge Widget](https://banglejs.com/apps/#gbridge), and ensure you disconnect your computer from Bangle.js
+* On Bangle.js, install ONE OF (not both!):
+  * [Android Integration app](https://banglejs.com/apps/#android) - this is the new and recommended way of interfacing to Gadgetbridge, which allows you to view all notifications in a list
+  * [The Gadgetbridge Widget](https://banglejs.com/apps/#gbridge) - this is the old way of interfacing to Gadgetbridge - it displays just one notification at a time.
+* Now ensure you disconnect your computer from Bangle.js
 * Start the Gadgetbridge app and click the blue `+` in the bottom right
 * Choose your Bangle.js device from the list
 * Right now we'd suggest choosing `Don't pair` when prompted in order to get the most reliable connection
@@ -28,7 +31,6 @@ How to set up
 ### Weather
 
 You can also get weather from Gadgetbridge. Install the [Weather Widget](https://banglejs.com/apps/#weather) and check out the `Read more...` link on the app page for more information. An additional app is required to forward the current weather into Gadgetbridge.
-
 
 How it works internally
 --------------------------
@@ -96,6 +98,21 @@ Bluetooth.println(JSON.stringify({t:"info", msg:"Hello World"}))
 ```
 
 will display a message on your phone's screen.
+
+### Debugging
+
+There's a [Gadgetbridge Debug](https://banglejs.com/apps/#gbdebug) app you can install. When running this
+will show you the data that is being received from Gadgetbridge. See `Read more...` next to the app for
+more information.
+
+You can then disconnect Gadgetbridge, connect with the Web IDE and issue that command by pasting it 
+into the left-hand side of the IDE - for example:
+
+```
+GB({"t":"notify","id":1575479849,"src":"Hangouts","title":"A Name","body":"message contents"})
+```
+
+If there are any errors shown you'll be able to see them and use them to debug what is happening.
 
 
 Building Gadgetbridge
