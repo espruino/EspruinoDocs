@@ -58,25 +58,34 @@ There are a few things to know that'll help you get started quickly:
 * In the default [App Launcher](https://github.com/espruino/BangleApps/wiki#glossary) (which you get to by pressing the button while on the clock), drag the screen to scroll through apps, and tap the icon you want to launch
 * **In text menus, you don't need to tap on the text line to select it.** Instead, drag your finger up and down to change the selected entry, and then **tap anywhere** to select.
 
+This video shows you how to get started using the menu and App Loader:
+
+[[http://youtu.be/EfwjPPZNKJc]]
+
 Please check out [The Bangle.js Wiki](https://github.com/espruino/BangleApps/wiki) for more hints and common questions.
 
 
-Skin Irritation Warning
---------------------------
+Contact Corrosion / Skin Irritation
+-----------------------------------
 
 Bangle.js 2 has 4 contacts on the rear. The two on the ends are used for charging
 and are not powered, however the middle two are SWD debug/programming pins connected
-straight to the IC that have weak resistors connecting them to 3.3v.
+straight to the IC. One has a weak resistor connecting it to 3.3v. At most, 0.0001A of
+current at 3.3v can be provided, however if exposed to salty water (eg sweat) or other
+conductive conditions, the contacts will corrode and it is possible that in extreme 
+cases there could be some skin irritation.
 
-At most, 0.0001A of current at 3.3v can be provided, however if exposed to salty
-water (eg sweat) or other conductive conditions, the contacts will corrode and it
-is possible that in extreme cases there could be some skin irritation.
+![](Banglejs2/corrosion.jpg)
 
-While future devices will be supplied with the offending middle pins covered
-with lacquer, on KickStarter devices these pins are exposed. If you're planning
-on doing anything with Bangle.js where you might sweat a lot we would strongly
-advise you to apply some paint, tape, a sticker or laquer over the middle two
-contacts to avoid having any issues.
+While future devices will be supplied with the offending middle pins covered, on 
+KickStarter devices these pins are exposed. If see any discoloration or you're planning
+on doing anything with Bangle.js where you might sweat a lot or otherwise get 
+it salty we would strongly advise you apply some paint, tape, a sticker or 
+laquer over the middle two contacts as shown in the images below:
+
+![](Banglejs2/corrosion_fix1.jpg)
+
+![](Banglejs2/corrosion_fix2.jpg)
 
 
 Charging
@@ -525,7 +534,7 @@ The easiest way to connect to these is to use the provided USB charge cable and 
 Firmware Updates
 ------------------
 
-[[http://youtu.be/uHJGsSaU6Zo]]
+[[http://youtu.be/qwe8oFVlxsU]]
 
   * Long-press the button for about 10 seconds until the screen goes blank
   * While `====` is going across the screen, release the button (releasing it later will just boot back to Bangle.js)
@@ -547,8 +556,13 @@ Firmware Updates
 to update Bangle.js firmware. Click `Settings` (top right), then `Flasher`
 and follow the instructions.
 
+**Note:** It has been reported that some users with modern iPhones find that the NRF Toolbox
+app disconnects from the Bangle after performing only part of the update process. If this
+happens to you, you'll have to manually click to start the update multiple times (it will
+start from where it left off) in order to complete the update.
+
 **Note:** The App Loader also provides a firmware updater at https://banglejs.com/apps/#fwupdate
-however for the moment we'd advise using the normal NRF Connect/Toolbox method.
+however this does not work reliably right now and we'd advise using the normal NRF Connect/Toolbox method.
 
 
 Troubleshooting
