@@ -13,7 +13,7 @@ inside your app, Bangle.js provides a way to add extra menus to the
 global `Settings` application.
 
 First, check out the tutorial on [adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader)
-as it'll help you to understand about `apps.json`.
+as it'll help you to understand about `metadata.json`.
 
 First off, you need to store your settings in a file. Apps in Bangle.js generally
 use either `"myapp.json"` or `"myapp.settings.json"` as the filename, where `myapp`
@@ -175,7 +175,7 @@ settings by going to `Settings` -> `App/Widget Settings` and your App's Name.
 
 * Save the settings file above to a file called `settings.js` in your app's
 folder in the App Loader.
-* Now you need to add both `myapp.settings.js` and `myapp.json` to `apps.json`
+* Now you need to add both `myapp.settings.js` and `myapp.json` to `metadata.json`
 
 Assuming this is your app, add the lines marked:
 
@@ -194,7 +194,7 @@ Assuming this is your app, add the lines marked:
     {"name":"myapp.img","url":"app-icon.js","evaluate":true},
   ],
   "data": [{"name":"myapp.json"}]  // < ------- HERE
-},
+}
 ```
 
 And you're finished!

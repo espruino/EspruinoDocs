@@ -221,11 +221,10 @@ Now everything is working, you can turn this into an app.
 * Create a new folder like `BangleApps/apps/mytweaks`
 * In that folder, save your `E.showMessage` implementation as `boot.js`
 * Add a nice 48x48px icon as `app.png`
-* Now add the following to the end of `BangleApps/apps.json`, remembering
+* Now add the following `metadata.json`, remembering
 to change `mytweaks` to whatever app ID you decided to use:
 
 ```
-},
 {
   "id": "mytweaks",
   "name": "Rounded showMessage",

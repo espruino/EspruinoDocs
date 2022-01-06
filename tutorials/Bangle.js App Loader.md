@@ -95,15 +95,13 @@ Now we need to upload the icon in a form that Bangle.js understands
 At this point you could add a ChangeLog file so others can see what changed if
 you release multiple versions of your app, but we're going to skip that for now.
 
-Finally, it's time to add a description of your app. There's an example at https://github.com/espruino/BangleApps/blob/master/apps/_example_app/add_to_apps.json
+Finally, it's time to add a description of your app. There's an example at https://github.com/espruino/BangleApps/blob/master/apps/_example_app/metadata.json
 
-* Go back to the root of the BangleApps repository and click on `apps.json`
-* Click on the file `apps.json`
+* Click on the file `metadata.json`
 * Click on the little pencil 'edit' icon in the top right
-* Now scroll down and add the following at the end of the file:
+* Now edit the file to contain:
 
 ```JSON
-},
 { "id": "timer",
   "name": "My Timer App",
   "shortName":"My Timer",
@@ -116,14 +114,10 @@ Finally, it's time to add a description of your app. There's an example at https
     {"name":"timer.img","url":"app-icon.js","evaluate":true}
   ]
 }
-]
 ```
 
 There is more information about the format of this file on
 https://github.com/espruino/BangleApps/blob/master/README.md
-
-**It's extremely important that you add the extra comma to the end of what
-was the last bit of JSON code** (shown in the first line above)
 
 * Now click `Commit Changes` and you're done!
 
@@ -140,7 +134,7 @@ Using your new App
 * You can now press **BTN3** on your Bangle.js, open the Launcher, and see your app in there!
 
 **Note:** If the App Loader doesn't work, it's almost certainly because of an error
-in the `apps.json` file that was changed earlier.
+in the `metadata.json` file that was changed earlier.
 
 
 Documenting your App
@@ -153,7 +147,7 @@ To add this documentation in a way that can be found easily
 from the app loader, create a file called `README.md` (a [markdown file](https://en.wikipedia.org/wiki/Markdown))
 in your app's folder.
 
-Then, in your app's section of the `apps.json` file, add:
+Then, in your app's `metadata.json` file, add:
 
 ```
   "readme":"README.md",
@@ -179,7 +173,7 @@ that you add a `ChangeLog` file so users can see what has changed.
 0.03: Added fancy text
 ```
 
-* Edit `apps.json` and change the line `"version":"0.01",` in your app
+* Edit `metadata.json` and change the line `"version":"0.01",` in your app
 to match the last number in the ChangeLog.
 
 After this, if a user clicks on the version number in the App Loader

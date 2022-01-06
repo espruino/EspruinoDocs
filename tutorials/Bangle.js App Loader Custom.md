@@ -29,25 +29,24 @@ server (not HTTP) for Web Bluetooth to work.
 Adding and Removing apps
 ------------------------
 
-All the information on apps is stored in `apps.json` in the root directory
-of the BangleApps repository.
+All the information on apps is stored in `metadata.json` 
 
-The simplest form of modification is to just remove the items from this file
+The simplest form of modification is to just remove these files from apps
 that you don't want.
 
 * Go to https://github.com/your_user_name/BangleApps
-* Click on `apps.json`
-* Click on the little pencil 'edit' icon in the top right
-* Delete all the JSON elements `{...}` containing apps you don't want - ensure
-that you don't have too many or too few commas between them.
+* Click on `apps` then on the folder of the app you don't want
+* Click on the little 'garbage can' icon in the top right
+* repeat for any other app you don't want.
 
 
 Changing Default apps
 ---------------------
 
-The list of default apps installed when you click `Install default apps` is listed in `defaultapps.json`.
+The list of default apps installed when you click `Install default apps` is listed in
+`defaultapps_banglejs1.json` and `defaultapps_banglejs2.json` for the given devices.
 
-Simple remove or add app IDs from `apps.json` to modify it.
+Simple remove or add app IDs from `metadata.json` to modify it.
 
 
 Changing Look and Feel
