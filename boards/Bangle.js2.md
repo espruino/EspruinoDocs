@@ -101,6 +101,12 @@ or it might attract itself to the nearest magnetic (probably conductive) object 
 **DO NOT CONNECT A BANGLE.JS 1 CHARGE CABLE TO BANGLE.JS 2** - there are a different
 number of pins and connecting it could cause damage to your device.
 
+We'll be selling new/replacement Bangle.js charge cables on shop.espruino.com soon, however
+until then (or if you need a cable next day) you can use:
+
+* [Amazon US Compatible cable](https://www.amazon.com/gp/product/B08R9GLMJD/ref=ppx_od_dt_b_asin_title_s00)
+* [Amazon DE Compatible cable](https://www.amazon.de/dp/B077RFZJ8Z/ref=cm_sw_r_apan_glt_i_6ZH025Y98QRKS0HJK3A7)
+
 
 Apps
 ----
@@ -539,7 +545,7 @@ Firmware Updates
   * Long-press the button for about 10 seconds until the screen goes blank
   * While `====` is going across the screen, release the button (releasing it later will just boot back to Bangle.js)
   * The watch should now be in DFU mode
-  * Install the Nordic Semiconductor NRF Toolbox App for Android or iOS
+  * Install the Nordic Semiconductor NRF Toolbox App for [Android](https://play.google.com/store/apps/details?id=no.nordicsemi.android.nrftoolbox) or [Apple iOS](https://apps.apple.com/us/app/nrf-toolbox/id820906058)
   * Download the latest stable distribution zip from the [Espruino site](https://www.espruino.com/Download#banglejs2) or the latest bleeding edge nightly build from [here](http://www.espruino.com/binaries/travis/master/).
   * In addition to activating the bluetooth, the location of Android 10 has to be activated because of [an issue in current NRF Toolbox app releases](https://devzone.nordicsemi.com/f/nordic-q-a/53938/android-10-need-to-toggle-location-permission-to-see-ble-devices)
   * Open the NRF Toolbox app

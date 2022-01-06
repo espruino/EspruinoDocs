@@ -475,7 +475,7 @@ Firmware Updates
   * Release `BTN2`
   * Release `BTN1` a moment later while `====` is going across the screen
   * The watch should now be in Dfu mode
-  * Install the Nordic Semiconductor NRF Toolbox App for Android or iOS
+  * Install the Nordic Semiconductor NRF Toolbox App for [Android](https://play.google.com/store/apps/details?id=no.nordicsemi.android.nrftoolbox) or [Apple iOS](https://apps.apple.com/us/app/nrf-toolbox/id820906058)
   * Download the latest stable distribution zip from the [Espruino site](https://www.espruino.com/Download#banglejs) or the latest bleeding edge nightly build from [here](http://www.espruino.com/binaries/travis/master/).
   * In addition to activating the bluetooth, the location of Android 10 has to be activated because of [an issue in current NRF Toolbox app releases](https://devzone.nordicsemi.com/f/nordic-q-a/53938/android-10-need-to-toggle-location-permission-to-see-ble-devices)
   * Open the NRF Toolbox app
