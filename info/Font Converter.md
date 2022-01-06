@@ -53,7 +53,7 @@ How it works:
 
 <h4>Set font options:</h4>
 <div style="margin-left: 24px">
-  Size : <input type="range" min="4" max="90" value="16" class="slider" style="width:500px" id="fontSize"><span id="fontSizeText">16</span><br/>
+  Size : <input type="range" min="4" max="150" value="16" class="slider" style="width:500px" id="fontSize"><span id="fontSizeText">16</span><br/>
   BPP : <select id="fontBPP">
     <option value="1" selected>1 bpp (black & white)</option>
     <option value="2">2 bpp</option>
@@ -230,8 +230,9 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   result.innerHTML = `
 Graphics.prototype.setFont${fontName.replace(/[^A-Za-z0-9]/g,"")} = function(scale) {
   // Actual height ${maxY+1-minY} (${maxY} - ${minY})
-  g.setFontCustom(atob("${btoa(String.fromCharCode.apply(null,fontData))}"), ${charMin}, ${fixedWidth?fontWidths[0]:`atob("${btoa(String.fromCharCode.apply(null,fontWidths))}")`}, ${fontHeight}+(scale<<8)+(${BPP}<<16));
-}`.trim();
+  this.setFontCustom(atob("${btoa(String.fromCharCode.apply(null,fontData))}"), ${charMin}, ${fixedWidth?fontWidths[0]:`atob("${btoa(String.fromCharCode.apply(null,fontWidths))}")`}, ${fontHeight}+(scale<<8)+(${BPP}<<16));
+  return this;
+}`.trim();  
 }
 
 function onChangeFontFile() {
