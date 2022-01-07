@@ -6,9 +6,34 @@ Tested on windows 10, android and linux.
 Usage:
   var int = require("ble_hid_combo");
   NRF.setServices(undefined, { hid : int.report });
-  int.tap(kb.KEY.A, 0);
-  int.tap(kb.KEY.A, kb.MODIFY.SHIFT);
-
+  // Press key:
+  int.tapKey(int.KEY.A);
+  int.tapKey(int.KEY.A, int.MODIFY.SHIFT);
+  // Hold key:
+  // (note you need to wait a few ms between calls or use callbacks at least)
+  int.keyDown(int.KEY.B);
+  int.keyUp(int.key.B);
+  // Supports up to 5 concurrent keys:
+  int.keyDown(int.KEY.Z);
+  int.keyDown([int.KEY.Y, int.KEY.X, int.KEY.W, int.KEY.V]);
+  int.getHoldingKeys(); // Returns array containing V, W, X, Y, Z keycodes.
+  // Change modifiers while holding:
+  int.updateModifiers(int.MODIFY.SHIFT | int.MODIFY.ALT);
+  // And release all:
+  int.keyUp(int.KEY.ALL);
+  // Press mouse:
+  int.clickButton(int.BUTTON.LEFT);
+  // Drag middle mouse:
+  // (note you need to wait a few ms between calls or use callbacks at least)
+  int.holdButton(int.BUTTON.MIDDLE);
+  int.moveMouse(5, 10);
+  int.getHoldingButtons(); // returns number with bit positions of holded buttons (only 2^1=4 currently).
+  int.moveMouse(10, 5);
+  int.releaseButton(int.BUTTON.ALL);
+  // Click at the same time:
+  int.clickButton(int.BUTTON.LEFT | int.BUTTON.FORWARD);
+  // Scroll vertically and horizontally:
+  int.scroll(10, -20);
 */
 
 /** The BLE HID Report specifying the keyboard mouse combo. */
