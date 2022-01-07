@@ -112,6 +112,24 @@ function btnPressed() {
 setWatch(btnPressed, BTN, {edge:"rising",repeat:true,debounce:50});
 ```
 
+Combination
+------
+
+If you find you require multiple HID defices at the same time (EG a keyboard and mouse combination) that is possible with more advanced custom HID reports. If you are looking for a quite complete keyboard and mouse combination implementation you can use the [[ble_hid_combo.js]] module.
+
+```
+var int = require("ble_hid_combo");
+NRF.setServices(undefined, { hid : int.report });
+
+function btnPressed() {
+  int.scroll(10);         // Scroll down
+  int.moveMouse(30, 0);   // Move mouse horizontally
+  int.tapKey(int.KEY.Y);  // Also press the Y key
+}
+
+// trigger btnPressed whenever the button is pressed
+setWatch(btnPressed, BTN, {edge:"rising",repeat:true,debounce:50});
+```
 
 Low Level control
 ------------------
