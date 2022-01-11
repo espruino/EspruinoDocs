@@ -2859,8 +2859,8 @@
     },
     "getOptions": {
       "!type": "fn() -> ?",
-      "!doc": "<p>Return the current state of options as set by <code>Bangle.getOptions</code></p>\n",
-      "!url": "http://www.espruino.com/Reference#l_Bangle_getOptions"
+      "!doc": "<p>Return the current state of options as set by <code>Bangle.setOptions</code></p>\n",
+      "!url": "http://www.espruino.com/Reference#l_Bangle_setOptions"
     },
     "isLCDOn": {
       "!type": "fn() -> bool",
