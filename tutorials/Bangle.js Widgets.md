@@ -22,7 +22,7 @@ Not every application enables widgets (they need to call `Bangle.loadWidgets()` 
 How does it work?
 -----------------
 
-`Bangle.loadWidgets()` loads any file ending in `.widget.js`, and those
+`Bangle.loadWidgets()` loads any file ending in `.wid.js`, and those
 files add widgets to the global `WIDGETS` variable.
 
 `Bangle.drawWidgets()` then goes through everything in `WIDGETS`
@@ -240,7 +240,7 @@ Adding the widget is very similar...
 
 * As mentioned above, come up with a short name (no spaces) for your widget that isn't listed in https://github.com/espruino/BangleApps/tree/master/apps - ideally starting with `wid`
 * Copy [the example widget](https://github.com/espruino/BangleApps/tree/master/apps/_example_widget) to `apps/yourshortname`
-* Save your widget's code to `apps/yourshortname/widget.js`
+* Save your widget's code to `apps/yourshortname/wid.js`
 * Find an icon for the app loader and put it in `apps/yourshortname/widget.png`
 * Open `apps/yourshortname/add_to_apps.json`, change `7chname` to `yourshortname`, add your widget's details, then add the contents of the file to `apps.json` in the root of the BangleApps repository and delete `apps/yourshortname/add_to_apps.json`
 
