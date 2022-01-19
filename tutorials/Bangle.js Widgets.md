@@ -242,6 +242,6 @@ Adding the widget is very similar...
 * Copy [the example widget](https://github.com/espruino/BangleApps/tree/master/apps/_example_widget) to `apps/yourshortname`
 * Save your widget's code to `apps/yourshortname/wid.js`
 * Find an icon for the app loader and put it in `apps/yourshortname/widget.png`
-* Open `apps/yourshortname/add_to_apps.json`, change `7chname` to `yourshortname`, add your widget's details, then add the contents of the file to `apps.json` in the root of the BangleApps repository and delete `apps/yourshortname/add_to_apps.json`
+* Open `apps/yourshortname/metadata.json`, change `7chname` to `yourshortname`, add your widget's details
 
 You can then try it out your own custom App Loader and issue a Pull Request (PR) to add it to the main [Bangle.js App Loader](https://banglejs.com/apps/)

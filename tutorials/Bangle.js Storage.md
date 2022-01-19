@@ -181,11 +181,9 @@ addition - a `"interface"` element in the JSON.
 * Set up [your own App loader as described here](https://www.espruino.com/Bangle.js+App+Loader#enable-github-pages)
 * Copy the directory `apps/_example_app` to `apps/gpspoilog`
 * Write the JS file above over the top of `apps/gpspoilog/app.js`
-* Delete `apps/gpspoilog/add_to_apps.json`
-* Add the following to the end of `apps.json` in the root folder (without the `original line` comments), ensuring you add a comma to the end of the previous item in the JSON as shown:
+* Change `metadata.json`, as shown:
 
 ```
-  }, //<--- original line - add comma here
   { "id": "gpspoilog",
     "name": "GPS POI Logger",
     "shortName":"GPS POI Log",
@@ -199,7 +197,6 @@ addition - a `"interface"` element in the JSON.
       {"name":"gpspoilog.img","url":"app-icon.js","evaluate":true}
     ]
   }
-] //<--- original line
 ```
 
 Now you need to add the 'interface' file - copy the following to `apps/gpspoilog/interface.html`.
