@@ -324,6 +324,21 @@ Bluetooth.on("data",d=>Terminal.inject(d));
 Terminal.setConsole();
 ```
 
+Screenshots
+-----------
+
+On Bangle.js 2, there's an offscreen buffer for the display (described above). As a result
+it is possible to create a screenshot of what's on the display with a simple command. Just
+type:
+
+```
+g.dump()
+```
+
+In the left-hand side of the IDE. The contents of the screen will then be copied into
+the Web IDE. From there you can copy or even right-click and save to a PNG file.
+
+
 <a name="onboard"></a>On-device Peripherals
 ------------------------------------------------------
 
