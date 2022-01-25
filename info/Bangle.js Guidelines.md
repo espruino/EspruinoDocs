@@ -38,7 +38,7 @@ possible.
   * Don't render in the top or bottom 24px of the screen (reserved for Widgets)
   * Avoid clearing the whole screen with `g.clear()`, but if you do, call `Bangle.drawWidgets()` right after
 * Give your app an icon (icons from [icons8.com](https://icons8.com/) are fine)
-* Where possible, use `"allow_emulator":true` in `apps.json` to allow your app
+* Where possible, use `"allow_emulator":true` in `metadata.json` to allow your app
 to be previewed online in the emulator.
 
 
