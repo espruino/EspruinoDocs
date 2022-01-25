@@ -232,17 +232,26 @@ power usage will be higher than normal (~350uA vs 40uA). To fix this add
 
 #### Field detection
 
-**Puck.js v2 only** You can use the [[puckjsv2-mag-level.js]] module to configure the Puck.js
-magnetometer for ultra low power mode (40uA) while acting like a reed
-switch (detecting when field strength is high or low). **This will not currently work on Puck.js v2.1**
+You can use the [[puckjsv2-mag-level.js]] module to configure the Puck.js
+magnetometer for ultra low power mode (40uA on Puck.js v2.0) while acting like a reed
+switch (detecting when field strength is high or low).
 
 ```JS
 require("puckjsv2-mag-level").on();
-Puck.on('mag',function(m) {
+Puck.on('field',function(m) {
   digitalPulse(m.state ? LED1 : LED2, 1, 100);
 });
 // turn off with require("puckjsv2-mag-level").off();
 ```
+
+**Note:** The low power mode is opnly available on Puck.js v2.0. On
+Puck.js v1 and v2.1 the same functionality is implemented, but in
+software. The actual difference in power usage is relatively
+small.
+
+**Note:** older versions of this library created a `Puck.on('mag'`
+event, but while it's still sent on Puck.js v2.0 for compatibility,
+we'd recommend using the new `Puck.on('field'` event.
 
 ##### puckjsv2-mag-level.js
 
@@ -257,7 +266,7 @@ chip exactly as required (using the [datasheet](/files/LIS3MDL.pdf))..
 
 ### Accelerometer/Gyro
 
-**Puck.js v2 / v2.1 only** Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf))
+**Puck.js v2.0 / v2.1 only** Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf))
 
 You can use [`Puck.accel()`](/Reference#l_Puck_accel) to return one accelerometer/gyro
 reading, for example:
