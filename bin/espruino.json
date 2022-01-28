@@ -3029,7 +3029,7 @@
     },
     "factoryReset": {
       "!type": "fn()",
-      "!doc": "<p>Erase all storage and reload it with the default\ncontents.</p>\n<p>This is only available on Bangle.js 2.0. On Bangle.js 1.0\nyou need to use <code>Install Default Apps</code> under the About page\nof <a href=\"http://banglejs.com/apps\">http://banglejs.com/apps</a></p>\n",
+      "!doc": "<p>Erase all storage and reload it with the default\ncontents.</p>\n<p>This is only available on Bangle.js 2.0. On Bangle.js 1.0\nyou need to use <code>Install Default Apps</code> under the More... page\nof <a href=\"http://banglejs.com/apps\">http://banglejs.com/apps</a></p>\n",
       "!url": "http://www.espruino.com/Reference#l_Bangle_factoryReset"
     }
   },
