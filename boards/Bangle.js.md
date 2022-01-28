@@ -141,14 +141,14 @@ if you have reset it without loading any code (above).
 ### Either:
 
 * Go to https://banglejs.com/apps
-* Click `About -> Install default apps`
+* Click `More... -> Install default apps`
 
 This will erase everything and install just the default apps.
 
 ### Or:
 
 * Go to https://banglejs.com/apps
-* Go to `About -> Remove All Apps`
+* Go to `More... -> Remove All Apps`
 * Re-install `Bootloader` and a `Clock` from `Library`
 
 

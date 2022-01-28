@@ -72,15 +72,15 @@ Bangle.js 2 has 4 contacts on the rear. The two on the ends are used for chargin
 and are not powered, however the middle two are SWD debug/programming pins connected
 straight to the IC. One has a weak resistor connecting it to 3.3v. At most, 0.0001A of
 current at 3.3v can be provided, however if exposed to salty water (eg sweat) or other
-conductive conditions, the contacts will corrode and it is possible that in extreme 
+conductive conditions, the contacts will corrode and it is possible that in extreme
 cases there could be some skin irritation.
 
 ![](Banglejs2/corrosion.jpg)
 
-While future devices will be supplied with the offending middle pins covered, on 
+While future devices will be supplied with the offending middle pins covered, on
 KickStarter devices these pins are exposed. If see any discoloration or you're planning
-on doing anything with Bangle.js where you might sweat a lot or otherwise get 
-it salty we would strongly advise you apply some paint, tape, a sticker or 
+on doing anything with Bangle.js where you might sweat a lot or otherwise get
+it salty we would strongly advise you apply some paint, tape, a sticker or
 laquer over the middle two contacts as shown in the images below:
 
 ![](Banglejs2/corrosion_fix1.jpg)
@@ -157,14 +157,14 @@ if you have reset it without loading any code (above).
 ### Either
 
 * Go to https://banglejs.com/apps
-* Click `About -> Install default apps`
+* Click `More... -> Install default apps`
 
 This will erase everything and install just the default apps.
 
 ### Or
 
 * Go to https://banglejs.com/apps
-* Go to `About -> Remove All Apps`
+* Go to `More... -> Remove All Apps`
 * Re-install `Bootloader` and a `Clock` from `Library`
 
 

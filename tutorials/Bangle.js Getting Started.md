@@ -100,7 +100,7 @@ If you uploaded something that runs at startup and breaks Bangle.js you may need
 * Keep holding **BTN1** while Bangle.js boots
 * Release it - you should have the Bangle.js logo, version, and MAC address
 
-You can now go to  http://banglejs.com/apps , connect, then go to `About`-> `Install default apps` and you’re good to go.
+You can now go to  http://banglejs.com/apps , connect, then go to `More...`-> `Install default apps` and you’re good to go.
 
 
 Tutorials

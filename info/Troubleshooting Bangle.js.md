@@ -46,7 +46,7 @@ This may be because the JS bootloader has been overwritten, which can
 be done if you use `Save to Flash` to write code in the IDE.
 
 * Go to https://banglejs.com/apps
-* Click `About -> Install default apps` which will erase everything and return Bangle.js to default (or try installing just `Bootloader` from library)
+* Click `More... -> Install default apps` which will erase everything and return Bangle.js to default (or try installing just `Bootloader` from library)
 
 
 ### My Bangle shows `Searching for GPS Time` for a second after a hard reboot.
@@ -62,14 +62,14 @@ This may seem like a GPS issue, but the culprit is usually that an app/widget on
 
 * Force a [reset of Bangle.js without loading code](https://www.espruino.com/Bangle.js#resetting-without-loading-any-code)
 * Go to https://banglejs.com/apps
-* Click `About -> Install default apps` which will erase everything and return Bangle.js to default
+* Click `More... -> Install default apps` which will erase everything and return Bangle.js to default
 
 
 ### Settings won't change / Welcome screen keeps appearing
 
 This is a known issue with the 2v05 firmware that Bangle.js initially shipped with. The filesystem could occasionally get corrupted and the contents of files can not be changed.
 
-* `About -> Install default` from https://banglejs.com/apps will temporarily fix the problem
+* `More... -> Install default` from https://banglejs.com/apps will temporarily fix the problem
 * However installing [the latest firmware](https://www.espruino.com/Bangle.js#firmware-updates) will stop it from happening again
 * You'll still have to 'Install default apps' after installing new firmware
 
