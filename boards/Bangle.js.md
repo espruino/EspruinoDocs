@@ -12,9 +12,7 @@ Bangle.js
 
 **Bangle.js is an open, hackable smartwatch**
 
-------------------------
-
-**[Bangle.js 2 is now on KickStarter!](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)**
+Bangle.js 1 is no longer for sale, however you can now purchase the much improved [Bangle.js 2!](/Bangle.js2)
 
 ------------------------
 

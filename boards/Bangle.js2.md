@@ -9,16 +9,9 @@ Bangle.js 2
 Bangle.js is the successor to [Bangle.js](/Bangle.js), and is based on the
 [SMA Q3](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch).
 
-**[Bangle.js 2 has now finished funding on KickStarter!](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)** If you'd like
-to be notified when you can order one (likely Jan 2022), [please enter your email address here](https://forms.gle/kT1fktc8tsC9rBE67)
-
-------------------------
-
-[Development versions of Bangle.js 2 are now available in our shop](https://shop.espruino.com/banglejs2-dev)
-
-------------------------
-
 [![](Banglejs2/main.jpg)](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)
+
+* BUYFROM: £64,£51,https://shop.espruino.com/banglejs2,/Order#banglejs2
 
 **Bangle.js 2 is an open, hackable smartwatch**
 
@@ -555,6 +548,30 @@ The easiest way to connect to these is to use the provided USB charge cable and 
 Firmware Updates
 ------------------
 
+### App Loader
+
+You can now update your Bangle.js firmware using the [App Loader](https://banglejs.com/apps/#fwupdate). This is what
+we're recommend for all new firmware updates.
+
+* Open the [App Loader](https://banglejs.com/apps)
+* Connect to your Bangle.js with the `Connect` button in the top right
+* Go to the `Firmware Update` app and click `≡` icon to the right of it
+* Click on the Firmware version you want, and click the `Upload` button when it appears
+
+The firmware will upload to Bangle.js, and when it is complete, Bangle.js will
+restart and install the firmware.
+
+**Note:** KickStarter Bangles that shipped with 2v10 firmware will have 2v10 bootloaders
+which need updating before you use the firmware updater. Just follow the instructions on
+the `Firmware Update` page to update your bootloader.
+
+
+### Android/iOS App
+
+The Android/iOS app method is good as a fallback way to update your firmware, however
+it seems that new versions of iOS require you to retry the upload multiple times, so
+we'd recommend using an Android device if at all possible.
+
 [[http://youtu.be/qwe8oFVlxsU]]
 
   * Long-press the button for about 10 seconds until the screen goes blank
@@ -577,13 +594,11 @@ Firmware Updates
 to update Bangle.js firmware. Click `Settings` (top right), then `Flasher`
 and follow the instructions.
 
-**Note:** It has been reported that some users with modern iPhones find that the NRF Toolbox
-app disconnects from the Bangle after performing only part of the update process. If this
+**Note:** It has been reported that on modern iOS devices the NRF Toolbox
+app disconnects from the Bangle after performing only part of the update process (iOS 12.5 works flawlessly). If this
 happens to you, you'll have to manually click to start the update multiple times (it will
 start from where it left off) in order to complete the update.
 
-**Note:** The App Loader also provides a firmware updater at https://banglejs.com/apps/#fwupdate
-however this does not work reliably right now and we'd advise using the normal NRF Connect/Toolbox method.
 
 
 Troubleshooting
