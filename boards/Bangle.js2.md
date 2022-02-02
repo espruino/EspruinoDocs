@@ -113,6 +113,7 @@ Powering off
 
 * Enter the launcher by pressing the button to unlock, then pressing it again to enter the launcher (while showing a clock)
 * Tap on `Settings`
+* Select item `Utilities`
 * Scroll down to `Turn off` and tap again
 
 
