@@ -82,7 +82,7 @@ Available message types are:
 * `t:"info", msg:"..."` - display info popup on phone
 * `t:"warn", msg:"..."` - display warning popup on phone
 * `t:"error", msg:"..."` - display error popup on phone
-* `t:"status", bat:0..100, volt:float(voltage)` - status update
+* `t:"status", bat:0..100, volt:float(voltage), chg:0/1` - status update
 * `t:"findPhone", n:bool`
 * `t:"music", n:"play/pause/next/previous/volumeup/volumedown"`
 * `t:"call", n:"ACCEPT/END/INCOMING/OUTGOING/REJECT/START/IGNORE"`
