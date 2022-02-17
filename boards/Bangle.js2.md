@@ -105,7 +105,14 @@ Apps
 ----
 
 Apps are provided by the [same Bangle.js app loader](https://banglejs.com/apps) as for Bangle.js 1,
-you just need to select `Bangle.js 2` when prompted (or from the drop-down in the top left)
+you just need to select `Bangle.js 2` when prompted (or from the drop-down in the top left).
+
+> Note for iPhone users
+Web bluetooth is not supported by default with Safari. You will need a browser that has support for
+web bluetooth such as [WebBLE](https://apps.apple.com/us/app/webble/id1193531073). If your Bangle
+is paired for notifications, you will need to disconnect from the device for it to show up when
+you press the "Connect" button. This is due to an issue with the WebBLE browser, and there is an
+[open issue](https://github.com/daphtdazz/WebBLE/issues/49) for it.
 
 
 Powering off
