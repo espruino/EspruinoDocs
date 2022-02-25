@@ -1,4 +1,6 @@
-/* Copyright (c) 2019 Akos Lukacs. See the file LICENSE for copying permission. */
+/* Copyright (c) 2019 Akos Lukacs.
+   Copyright (c) 2022 Gerrit Niezen.
+   See the file LICENSE for copying permission. */
 /*
  Driver for Plantower PMS 7003 particulate matter sensor on UART
 */
@@ -11,7 +13,7 @@ function _processBuffer(buff, details) {
     var checksumCalc = E.sum(buff.slice(0, 30));
 
     // Frame length bytes are always [0, 28], but don't check it, since the checksum should catch any comm errors...
-    if (checksum != checksumCalc) {return {checksumOk: false}}
+    if (checksum != checksumCalc) {return {checksumOk: false};}
 
     //CF=1, standard particle
     var dCF1 = {
@@ -39,23 +41,39 @@ function _processBuffer(buff, details) {
     return rv;
 }
 
-function PmsDriver(serialPort, rxPin, callback, details) {
-    if (!(serialPort instanceof Serial)) {throw '"serialPort" parameter is not a serial port!'}
+function PmsDriver(serialPort, rxPin, txPin, callback, details) {
+    if (!(serialPort instanceof Serial)) {throw '"serialPort" parameter is not a serial port!';}
     if (!(rxPin instanceof Pin)) {throw '"rx" parameter is not a Pin!';}
+    if (!(txPin instanceof Pin)) {throw '"tx" parameter is not a Pin!';}
 
     this.buffer = new Uint8Array(32);
     this.bufferIndex = 0;
 
     this.callback = callback;
     this.details = !!details;
+    this.serial = serialPort;
 
-    serialPort.setup(9600, {rx: rxPin});
-    serialPort.on('data', this.onSerial.bind(this));
+    this.serial.setup(9600, {rx: rxPin, tx: txPin});
+    this.serial.on('data', this.onSerial.bind(this));
 }
+
+PmsDriver.prototype.sleep = function() {
+  this.serial.write( [0x42, 0x4d, 0xe4, 0x00, 0x00, 0x01, 0x73] );
+};
+
+PmsDriver.prototype.wakeup = function() {
+  this.serial.write( [0x42, 0x4d, 0xe4, 0x00, 0x01, 0x01, 0x74] );
+};
 
 PmsDriver.prototype.onSerial = function(sd) {
     // Start characters are always [0x42, 0x4d]. If the first character is not 0x42, just wait for the start character!
-    if (this.bufferIndex == 0 && sd.charCodeAt() !== 0x42) {return;}
+   if (this.bufferIndex == 0 && sd.charCodeAt() !== 0x42) {return;}
+
+    // clear buffer if there's a new start character
+    if (sd.charCodeAt() === 0x42) {
+        this.bufferIndex = 0;
+        this.buffer.fill(0);
+    }
 
     E.toUint8Array(sd).forEach(x => {
         // push received characters to buffer
@@ -69,16 +87,17 @@ PmsDriver.prototype.onSerial = function(sd) {
             this.bufferIndex = 0;
         }
     });
-}
+};
 
 /** Returns a new PmsDriver object that handles the data coming from the PMS7003.
  ```
  serialPort: Serial - a serial port, can be hw or sw serial. Required.
  rxPin: Pin - The rx pin for the serial port. Required.
+ txPin: Pin - The tx pin for the serial port. Required for sleep/wakeup
  callback: function - callback to be called with the data.
  details: boolean - should the callback include the raw data from the sensor? Optional.
  ```
  */
-exports.connect = function(serialPort, rxPin, callback, details) {
-    return new PmsDriver(serialPort, rxPin, callback, details);
+exports.connect = function(serialPort, rxPin, txPin, callback, details) {
+    return new PmsDriver(serialPort, rxPin, txPin, callback, details);
 }
