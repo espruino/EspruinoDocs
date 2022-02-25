@@ -185,6 +185,7 @@ On Bangle.js 2, if there's one button it'll use the 'hard' button with a label (
 You can also do touchscreen buttons on Bangle.js 2 as well just by adding a `btn`:
 
 ```
+var Layout = require("Layout");
 var layout = new Layout( {
   type:"v", c: [
     {type:"txt", font:"6x8:2", label:"A Test", id:"label"},
@@ -219,6 +220,7 @@ or as the image string itself.
 As function:
 
 ```
+var Layout = require("Layout");
 var layout = new Layout( {
   type:"h", c: [
     {type:"img", pad:4, src:function() { return require("heatshrink").decompress(atob("ikUwYFCgVJkgMDhMkyVJAwQFCAQNAgESAoQCBwEBBwlIgAFDpNkyAjDkm/5MEBwdf+gUEl/6AoVZkmX/oLClv6pf+DQn1/4+E3//0gFBkACBv/SBYI7D5JiDLJx9CBAR4CAoWQQ4Z9DgAA==")); }
@@ -234,6 +236,7 @@ layout.render();
 As image string:
 
 ```
+var Layout = require("Layout");
 var layout = new Layout( {
   type:"h", c: [
     {type:"img", pad:4, src:require("heatshrink").decompress(atob("ikUwYFCgVJkgMDhMkyVJAwQFCAQNAgESAoQCBwEBBwlIgAFDpNkyAjDkm/5MEBwdf+gUEl/6AoVZkmX/oLClv6pf+DQn1/4+E3//0gFBkACBv/SBYI7D5JiDLJx9CBAR4CAoWQQ4Z9DgAA==")) },
@@ -269,6 +272,7 @@ function renderGraph(l) {
 }
 
 // The layout, referencing the custom renderer
+var Layout = require("Layout");
 var layout = new Layout( {
   type:"v", c: [
     {type:"custom", render:renderGraph, id:"graph", bgCol:g.theme.bg, fillx:1, filly:1 },
