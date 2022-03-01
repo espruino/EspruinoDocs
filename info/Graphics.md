@@ -195,7 +195,9 @@ var img = {
 You can also specify the image as a string or arraybuffer, in the following form:
 
 * For nontransparent: `[width, height, bpp, pixel data...]`
+* For nontransparent with 16 bit palette: `[width, height, bpp|64, col0_lo, col0_hi, col1_lo, col1_hi, ..., pixel data...]`
 * For transparent: `[width, height, bpp|128, transparent col, pixel data...]`
+* For transparent with 16 bit palette: `[width, height, bpp|64|128, transparent col, col0_lo, col0_hi, col1_lo, col1_hi, ..., pixel data...]`
 
 
 ### Creating images

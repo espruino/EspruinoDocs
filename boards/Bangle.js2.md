@@ -31,10 +31,10 @@ Features
 * 1.3 inch 176x176 always-on 3 bit colour LCD display (LPM013M126)
 * Full touchscreen
 * GPS/Glonass receiver (AT6558)
-* Heart rate monitor (Vcare VC31)
+* Heart rate monitor (Vcare VC31 / VC31B)
 * 3 Axis Accelerometer (Kionix KX023)
 * 3 Axis Magnetometer
-* Air Pressure/Temperature sensor (Bosch BMP280)
+* Air Pressure/Temperature sensor (Bosch BMP280 / Goertek SPL06)
 * Vibration motor
 * 200mAh battery, 4 weeks standby time
 * 36mm x 43mm x 12mm watch body, with standard 20mm watch straps
