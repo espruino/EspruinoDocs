@@ -80,6 +80,7 @@ Each object is as follows:
 var menuinfo = {
   "" : {
     "title": "...", // optional, the menu's title
+    "back" : function() { } // optional - adds a menu item to go 'back' which calls this function
     "selected": 0, // optional, first selected menu item's index
     "fontHeight": 0, // optional, height of the font being used (default is 6)
     "y": 0, // optional, y offset of menu

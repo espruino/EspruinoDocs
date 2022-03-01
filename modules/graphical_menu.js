@@ -3,7 +3,13 @@
 exports.list = function(g, items) {
   var options = items[""];
   var menuItems = Object.keys(items);
-  if (options) menuItems.splice(menuItems.indexOf(""),1);
+  if (options) {
+    menuItems.splice(menuItems.indexOf(""),1);
+    if (options.back) { // handle 'options.back'
+      items["< Back"] = options.back;
+      menuItems.unshift("< Back");
+    }
+  }
   if (!(options instanceof Object)) options = {};
   if (options.selected === undefined)
     options.selected = 0;
