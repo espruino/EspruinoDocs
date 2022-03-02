@@ -31,7 +31,7 @@ First, we need to advertise some data. This can be done with the [`NRF.setAdvert
 
 There are two main types of advertising:
 
-* **Services** - each Service has a Service UUID. These can be 16 bit or 128 bit. 16 bit UUIDs are [assigned by the Bluetooth SIG](https://developer.bluetooth.org/gatt/services/Pages/ServicesHome.aspx) so you need to use the right ones. You can use your own 128 bit UUIDs as long as they are random, however Bluetooth LE advertisements are so small that there isn't usually enough room for much data once you have used a 128 bit UUID. We could for instance use the Service UUID `0xFFFF` (which shouldn't be used in production) with the command `NRF.setAdvertising({0xFFFF:"Hello"});`.
+* **Services** - each Service has a Service UUID. These can be 16 bit or 128 bit. 16 bit UUIDs are [assigned by the Bluetooth SIG](https://btprodspecificationrefs.blob.core.windows.net/assigned-values/16-bit%20UUID%20Numbers%20Document.pdf) so you need to use the right ones. You can use your own 128 bit UUIDs as long as they are random, however Bluetooth LE advertisements are so small that there isn't usually enough room for much data once you have used a 128 bit UUID. We could for instance use the Service UUID `0xFFFF` (which shouldn't be used in production) with the command `NRF.setAdvertising({0xFFFF:"Hello"});`.
 * **Manufacturer Data** Espruino/Puck.js firmware 1v95 and later allows Manufacturer Data to be specified. This is almost the same as using Services with 16 bit UUIDs, however Espruino/Puck.js has its own 16 bit UUID reserved (0x0590), which you can use for whatever use you want.
 
 We're going to use Manufacturer Data here. Connect to Puck.js with the Web IDE
