@@ -130,7 +130,7 @@ Resetting
 * Release the button
 * Bangle.js will boot as if it just turned on normally
 
-If you the button too late you'll enter bootloader mode, in
+If you release the button too late you'll enter bootloader mode, in
 which case you need to wait for 30 seconds for the watch to
 automatically exit.
 
