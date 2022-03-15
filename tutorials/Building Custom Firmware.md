@@ -21,6 +21,8 @@ To get started (assuming you have an Espruino WiFi):
 * Clone the [Espruino GitHub Reposutory](https://github.com/espruino/Espruino) locally
 * Copy `boards/ESPRUINOWIFI.py` to `boards/ESPRUINOWIFI_CUSTOM.py`
 
+**Note:** The board name file should be only alphanumeric capitals or underscores, starting with a letter (no dashes or lowercase).
+
 ### Make changes in ESPRUINOWIFI_CUSTOM.py
 
 Here's what you might do to cut out some un-needed code and
