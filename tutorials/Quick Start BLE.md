@@ -208,7 +208,7 @@ webpage viewed with [WebBLE](https://itunes.apple.com/us/app/webble/id1193531073
 
 ### Once Web Bluetooth is set up:
 
-* Go to the [Puck.js site](https://puck-js.com/go). It should tell you that you have Web Bluetooth.
+* Go to the [Puck.js site](https://www.puck-js.com/go). It should tell you that you have Web Bluetooth.
 * Click the [Web IDE option](/ide).
 * Click the orange **Connect/Disconnect** icon in the Top Left: ![Connect icon](Quick Start BLE/connect.png)
 * You may see a list of connection options - choose `Web Bluetooth`:
@@ -324,7 +324,7 @@ Sending Individual Commands
 You can use Web Bluetooth on your own website to control Espruino BLE devices, as long as you have a compatible browser.
 
 While you can use Web Bluetooth directly, we've provided a helpful library. Just include
-`<script src="https://puck-js.com/puck.js"></script>` in your website (served off `HTTPS`)
+`<script src="https://www.puck-js.com/puck.js"></script>` in your website (served off `HTTPS`)
 and you can easily execute commands just by running JS code like:
 
 ```

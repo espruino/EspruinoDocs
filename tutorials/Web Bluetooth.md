@@ -450,7 +450,7 @@ will be reported to the right-hand side.
 ```HTML_demo_link
 <html>
 <head>
-  <script src="https://puck-js.com/puck.js"></script>
+  <script src="https://www.puck-js.com/puck.js"></script>
 </head>
 <body>
 <p>Click 'Add Device' to add a new device. Once added, you can toggle
