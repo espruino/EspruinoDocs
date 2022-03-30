@@ -47,7 +47,7 @@ document.getElementById("setTime").addEventListener("click",function() {
     setTimeout(function() {
       document.getElementById("status").innerHTML = "Setting time...";
       Puck.setTime(function() {
-        if (sendReload) Puck.write("load()\n");
+        if (sendReload) Puck.write("load()\n", function() {});
         setTimeout(function() {
           Puck.close();
           document.getElementById("status").innerHTML = "";
