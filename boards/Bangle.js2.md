@@ -63,18 +63,18 @@ Contact Corrosion / Skin Irritation
 
 Bangle.js 2 has 4 contacts on the rear. The two on the ends are used for charging
 and are not powered, however the middle two are SWD debug/programming pins connected
-straight to the IC. One has a weak resistor connecting it to 3.3v. At most, 0.0001A of
+straight to the CPU. One has a weak resistor connecting it to 3.3v. At most, 0.0001A of
 current at 3.3v can be provided, however if exposed to salty water (eg sweat) or other
 conductive conditions, the contacts will corrode and it is possible that in extreme
 cases there could be some skin irritation.
 
 ![](Banglejs2/corrosion.jpg)
 
-While future devices will be supplied with the offending middle pins covered, on
-KickStarter devices these pins are exposed. If see any discoloration or you're planning
-on doing anything with Bangle.js where you might sweat a lot or otherwise get
-it salty we would strongly advise you apply some paint, tape, a sticker or
-laquer over the middle two contacts as shown in the images below:
+Bangle.js 2 devices sold since the KickStarter campaign ship with a small
+piece of tape covering the contacts to prevent any problems. If you have
+a watch without this tape we would strongly advise you apply some paint, 
+tape, a sticker or laquer over the middle two contacts as shown in the 
+images below:
 
 ![](Banglejs2/corrosion_fix1.jpg)
 
@@ -86,6 +86,10 @@ Charging
 
 The supplied charge cable connects to a USB port to charge Bangle.js (despite there
 being 4 wires, those are for SWD programming and there is no USB data connection).
+
+**Do not force the cable on to your Bangle.js** If the cable does not pull itself on
+to the Bangle it's probably the wrong way around. Forcing it to make contact in this
+case could damage your Bangle.
 
 **The cable is magnetic and the wires are connected to USB power.** While the cable in
 Bangle.js 2 does have short circuit protection, please do not leave your cable plugged in
