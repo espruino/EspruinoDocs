@@ -6,20 +6,22 @@ Saving code on Espruino
 
 * KEYWORDS: Built-In,Save,saving,write,flash,flashing,save(),load,non-volatile,onInit,upload,uploading,tutorials
 
-When you upload code to Espruino normally, it is stored in Espruino's RAM.
+Normally when you upload code to Espruino via the IDE, it is stored in Espruino's RAM.
 If you reset the board or power is lost, all your code will be lost.
 
 However it's easy to save your code to flash memory and make it permanent.
 
+
 Summary
 --------
 
-Just type `save()` on the left-hand side of the IDE and the current state of
-Espruino including all saved code will be written so that it is loaded at
-boot time.
+On normal Espruino devices, just type `save()` on the left-hand side of the IDE and the current state of
+Espruino including all saved code will be written so that it is loaded at boot time.
 
-However there are other methods of saving code that can be more efficient,
-or can allow you to do things like saving constants.
+`save()` doesn't work on Bangle.js watches, since you wouldn't want to save the current state of the device
+(including any Widgets/etc) into flash memory.
+
+There are other methods of saving code that can be more efficient, or can allow you to do things like saving constants.
 
 You can change methods using the down-arrow below the Upload icon in the IDE,
 or under `Communications` in the `Settings` window. See below for more
@@ -36,7 +38,7 @@ When Espruino starts up, it does a few things:
 
 * If `BTN1` is pressed or if it reset because of a call to `reset()`, it sets `hasBeenReset` to `true`.
 * If `hasBeenReset` wasn't set, it looks for a compressed image (`.varimg` [in Storage](https://www.espruino.com/Reference#Storage)) of the interpreter's state that was saved with `save()`. If it exists it unpacks it into RAM.
-* (v2.0 and later) Looks for files [in Storage](https://www.espruino.com/Reference#Storage) named `.boot0`, `.boot1`, `.boot2` and `.boot3` and executes them in sequence. (On [Bangle.js](/Bangle.js) these are *not* executed if `BTN1` is held down, but all other devices execute them each time)
+* (2v00 and later) Looks for files [in Storage](https://www.espruino.com/Reference#Storage) named `.boot0`, `.boot1`, `.boot2` and `.boot3` and executes them in sequence. (On [Bangle.js](/Bangle.js) these are *not* executed if `BTN1` is held down, but all other devices execute them each time)
 * Looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootrst` and executes it if it exists (see [Save on Send](#save-on-send) below)
 * If `hasBeenReset` **wasn't** set and `.bootrst` wasn't found in the last step, it looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootcde` and executes it (see [Save on Send](#save-on-send) below)
 
