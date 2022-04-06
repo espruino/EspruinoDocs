@@ -32,8 +32,6 @@ Contrast: <span id="contrastv"></span>
 
 Colours: <select id="colorStyle" onchange="imageLoaded()"></select><br/>
 Output As: <select id="outputStyle" onchange="imageLoaded()">
-<option value="object" selected="selected">Image Object</option>
-<option value="string">Image String</option>
 </select><br/>
 
 <canvas id="canvas" style="display:none;"></canvas>
@@ -45,6 +43,7 @@ Output As: <select id="outputStyle" onchange="imageLoaded()">
 <script>
   imageconverter.setFormatOptions(document.getElementById("colorStyle"));
   imageconverter.setDiffusionOptions(document.getElementById("diffusion"));
+  imageconverter.setOutputOptions(document.getElementById("outputStyle"));
 
   var img;
   function imageLoaded() {
