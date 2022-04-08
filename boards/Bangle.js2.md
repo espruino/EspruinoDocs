@@ -215,8 +215,8 @@ Information
 
 * For detailed technical information about Bangle.js, check out [the Bangle.js Technical Information page](/Bangle.js+Technical)
 * There's a [Bangle.js API reference here](https://banglejs.com/reference) - however this is currently missing some Bangle.js 2 functionality
-* Links to [CE](/files/Bangle.js-CE.pdf), [FCC ID 2AILG-F18](/files/Bangle.js-FCC.pdf) and [RoHS](/files/Bangle.js-RoHS.pdf) Certifications
-* Links to shipping documentation: [Classification](/files/Bangle.js-shipping.pdf), [Battery UN38.3](/files/Bangle.js-UN38.3.pdf) and [Battery MSDS](/files/Bangle.js-MSDS.pdf)
+* Links to [CE/RED report](/files/Bangle.js2-RED.pdf) and [FCC ID 2AKUO-10](/files/Bangle.js2-FCC.pdf) Certifications
+* Links to shipping documentation: [Battery UN38.3](/files/Bangle.js2-UN38.3.pdf)
 
 
 Power Consumption
