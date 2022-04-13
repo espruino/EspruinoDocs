@@ -231,7 +231,7 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   if (document.getElementById("useHeatshrink").checked) {
     encodedFont = 
       "require('heatshrink').decompress(atob('" +
-      btoa(heatshrink.compress(String.fromCharCode.apply(null, fontData))) +
+      btoa(heatshrink.compress(new Uint8Array(fontData))) +
       "')";
   } else {
     encodedFont = "atob('" + btoa(String.fromCharCode.apply(null, fontData)) + "')";
