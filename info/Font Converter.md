@@ -66,14 +66,16 @@ How it works:
     <option value="Numeric">Numeric (46-58)</option>
   </select><br/>
   Align to increase sharpness : <input type="checkbox" id="fontJitter"></input><br/>
-  </form>
+  Use compression : <input type="checkbox" id="useHeatshrink"></input><br/>
 </div>
+</form>
 <button id="calculateFont" style="font-size: 14pt;">Go!</button><br/>
 
 <span style="display:none;" id="fontTest" >This is a test of the font</span><br/>
 <canvas width="256" height="256" id="fontcanvas" style="display:none"></canvas>
 <textarea id="result" style="width:100%;display:none" rows="16"></textarea>
 <canvas id="fontPreview" style="display:none;border:1px solid black;width:100%;image-rendering: pixelated;"></canvas>
+<script src="/js/heatshrink.js"></script>
 <script>
 var fontRanges = {
  "ASCII" : {min:32, max:127, txt:"This is a test of the font"},
@@ -225,12 +227,26 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   // if all fonts are the same width...
   var fixedWidth = fontWidths.every(w=>w==fontWidths[0]);
 
+  var encodedFont;
+  if (document.getElementById("useHeatshrink").checked) {
+    encodedFont = 
+      "require('heatshrink').decompress(atob('" +
+      btoa(heatshrink.compress(String.fromCharCode.apply(null, fontData))) +
+      "')";
+  } else {
+    encodedFont = "atob('" + btoa(String.fromCharCode.apply(null, fontData)) + "')";
+  }
   var result = document.getElementById("result");
   result.style.display = "inherit";
   result.innerHTML = `
 Graphics.prototype.setFont${fontName.replace(/[^A-Za-z0-9]/g,"")} = function(scale) {
   // Actual height ${maxY+1-minY} (${maxY} - ${minY})
-  this.setFontCustom(atob("${btoa(String.fromCharCode.apply(null,fontData))}"), ${charMin}, ${fixedWidth?fontWidths[0]:`atob("${btoa(String.fromCharCode.apply(null,fontWidths))}")`}, ${fontHeight}+(scale<<8)+(${BPP}<<16));
+  this.setFontCustom(
+    ${encodedFont},
+    ${charMin},
+    ${fixedWidth?fontWidths[0]:`atob("${btoa(String.fromCharCode.apply(null,fontWidths))}")`},
+    ${fontHeight}+(scale<<8)+(${BPP}<<16)
+  );
   return this;
 }`.trim();  
 }
