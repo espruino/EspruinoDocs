@@ -229,16 +229,18 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
 
   var encodedFont;
   if (document.getElementById("useHeatshrink").checked) {
+    const fontArray = new Uint8Array(fontData);
+    const compressedFont = String.fromCharCode.apply(null, heatshrink.compress(fontArray));
     encodedFont = 
-      "require('heatshrink').decompress(atob('" +
-      btoa(heatshrink.compress(new Uint8Array(fontData))) +
-      "'))";
+      "E.toString(require('heatshrink').decompress(atob('" +
+      btoa(compressedFont) +
+      "')))";
   } else {
     encodedFont = "atob('" + btoa(String.fromCharCode.apply(null, fontData)) + "')";
   }
   var result = document.getElementById("result");
   result.style.display = "inherit";
-  result.innerHTML = `
+  result.value = `
 Graphics.prototype.setFont${fontName.replace(/[^A-Za-z0-9]/g,"")} = function(scale) {
   // Actual height ${maxY+1-minY} (${maxY} - ${minY})
   this.setFontCustom(
