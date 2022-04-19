@@ -7,7 +7,7 @@ Bangle.js Development
 * KEYWORDS: Tutorials,Bangle.js,Development
 * USES: Bangle.js,Bangle.js2
 
-You may also be interested in the [Bangle.js](Bangle.js Hardware reference)
+You may also be interested in the [Bangle.js 1](Bangle.js) or [Bangle.js 2](Bangle.js2) Hardware reference pages.
 
 Don't have a watch?
 ------------------------------
