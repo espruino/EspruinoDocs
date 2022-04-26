@@ -228,7 +228,7 @@ Power Consumption
 * BLE Connected in high bandwidth mode - 0.75mA
 * Compass on, 12.5Hz - 5.5mA (+5mA)
 * Compass on, 1.25Hz (`Bangle.setPollInterval(800)`) - 0.9mA (+0.6mA)
-* Heart rate monitor on - 5mA (+4.5mA)
+* Heart rate monitor on - 1.0mA (+0.7mA) (KickStarter version = ~1.5mA)
 * 100% CPU usage running JavaScript - 4mA (+3mA)
 * GPS on - 26mA (+25mA)
 * LCD touchscreen enabled (unlocked) - 2.8mA (+2.5mA)

@@ -47,7 +47,7 @@ Currently implemented messages are:
 
 * `t:"notify", id:int, src,title,subject,body,sender,tel:string`  - new notification
 * `t:"notify-", id:int`  - delete notification
-* `t:"alarm", d:[{h,m},...]`  - set alarms
+* `t:"alarm", d:[{h:int,m:int,rep:int},...]`  - set alarms (rep=binary mask of weekdays)
 * `t:"find", n:bool`  - findDevice
 * `t:"vibrate", n:int`  - vibrate
 * `t:"weather", temp,hum,txt,wind,loc`  - weather report
@@ -72,6 +72,8 @@ GB({"t":"musicstate","state":"play","position":0,"shuffle":1,"repeat":1})
 GB({"t":"musicinfo","artist":"My Artist","album":"My Album","track":"Track One","dur":241,"c":2,"n":2})
 // Call coming in 
 GB({"t":"call","cmd":"accept","name":"name","number":"+441234123123"})
+// Set a single alarm, 6:30am, every day of the week
+GB({"t":"alarm", "d":[{"h":"6","m":"30:","rep":127}]})
 ```
 
 ### Messages from Bangle.js to Phone
