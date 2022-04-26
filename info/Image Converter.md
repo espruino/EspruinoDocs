@@ -81,7 +81,7 @@ Output As: <select id="outputStyle" onchange="imageLoaded()">
       options.rgbaOut = rgba;
       options.width = img.width;
       options.height = img.height;
-      imgstr = "var img = "+imageconverter.RGBAtoString(rgba, options);
+      imgstr = imageconverter.RGBAtoString(rgba, options);
       var outputImageData = new ImageData(options.rgbaOut, options.width, options.height);
       ctx.putImageData(outputImageData,img.width,0);
     }/* else { // output the image as slices
