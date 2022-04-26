@@ -18,7 +18,7 @@ However, two way communications are possible by emulating an NFC tag on Puck.js.
 To make a complete system, we'll write code for Puck.js that emulates a tag,
 and will then send text to it from a [Web Page with Web NFC](https://w3c.github.io/web-nfc/).
 
-> **Note:** More information is avaibalbe on the Espruino [NFC Tag Module page](https://www.espruino.com/NFCTag) and the [NRF NFC documentation](https://www.espruino.com/Reference#t_l_NRF_nfcStart).
+> **Note:** More information is available on the Espruino [NFC Tag Module page](https://www.espruino.com/NFCTag) and the [NRF NFC documentation](https://www.espruino.com/Reference#t_l_NRF_nfcStart).
 
 Puck.js
 ---------
