@@ -31,14 +31,27 @@ exports.connect = function(i2c, callback, options) {
   let MPR = {
     read: (count) => i2c.readFrom(addr, count),
     write: (data) => i2c.writeTo(addr, data),
-
-    touched: function() {
-      i2c.writeTo(addr, 0x00);
+    readWord : (reg) => {
+      i2c.writeTo({address:addr, stop:false}, reg);
       var data = i2c.readFrom(addr, 2);
       return (data[1] << 8) || data[0];
     },
-
-    setThresholds: function(touch, release) {
+    readByte : (reg) =>  {
+      i2c.writeTo({address:addr, stop:false}, reg);
+      return i2c.readFrom(addr, 1)[0];
+    },
+    filteredData : (pin) =>  {
+      if (pin<0 || pin>=12) throw new Error("Invalid pin");
+      return this.readWord(0x04 + pin*2);
+    },
+    baselineData : (pin) =>  {
+      if (pin<0 || pin>=12) throw new Error("Invalid pin");
+      return this.readByte(0x1E + pin)<<2;
+    },
+    touched: () => {
+      return this.readWord(0);
+    },
+    setThresholds: (touch, release) => {
       for (var i=0; i<24; i+=2) {
         i2c.writeTo(addr, 0x41+i, touch);
         i2c.writeTo(addr, 0x42+i, release);
@@ -75,4 +88,3 @@ exports.connect = function(i2c, callback, options) {
   if (callback) callback(MPR);
   return MPR;
 };
-
