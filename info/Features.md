@@ -99,8 +99,8 @@ List of ES6 features from http://es6-features.org:
 
 | ES6 Feature | Implementation Status |
 |---------|-----------------------|
-| Constants | - (`const` is parsed, but treated like `var`) |
-| Block scoped Functions/Variables | - (`let` is parsed, but treated like `var`) |
+| Constants | `2v14` (`const` is parsed but treated like `var` in earlier FW) |
+| Block scoped Functions/Variables | `2v14` (`let` is parsed but treated like `var` in earlier FW) |
 | Arrow Functions | `1v88` `Official` |
 | Default Parameter Values | - |
 | Rest/Spread | - |
@@ -109,8 +109,7 @@ List of ES6 features from http://es6-features.org:
 | Binary/Octal Literals | `Yes` |
 | Unicode String/RegExp | - |
 | RegExp Sticky Matching | - |
-| RegExp Sticky Matching | - |
-| Enhanced Object Properties | - |
+| Enhanced Object Properties | `2v14` (methods) |
 | Destructing Assignment | - |
 | Modules (`import`/`export`) | - |
 | Class Definition | `1v96` `Official` |
@@ -149,7 +148,7 @@ ES7/ES8
 | Async functions | - |
 | Async generators | - |
 | Object.getOwnPropertyDescriptors | - |
-| Object.values/entries | - |
+| Object.values/entries | `2v14` |
 | Typed Objects | - |
 | Trailing commas in function syntax | - |
 | Object rest/spread properties | - |
