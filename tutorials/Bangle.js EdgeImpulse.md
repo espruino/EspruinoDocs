@@ -21,7 +21,7 @@ In this tutorial you will learn how to get started with Machine Learning on your
 
 **Hardware**
 
-* [Bangle JS, version 1](https://shop.espruino.com/banglejs) (v2 will be supported once it’s available)
+* [Bangle JS, version 1](https://shop.espruino.com/banglejs), [or version 2](https://shop.espruino.com/banglejs2)
   * Theoretically the Bangle Emulator might work as well, but you can’t of course collect real accelerometer or heart rate data with an emulator!
 * Computer with Bluetooth (BLE)
 * Get the watch up and running by following these [guidelines](https://banglejs.com/start)
