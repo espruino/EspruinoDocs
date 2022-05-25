@@ -308,9 +308,7 @@ multiple elements with `fillx:number` then space will be spread accordingly.
 * `col` will specify a color for the text, eg `#f00` for red
 * `bgCol` is for background color (and if specified, any call to `render` will automatically clear the background)
 
-
-
 More information
 ----------------
 
-There are other layout options too. Check out the documentation at the top of https://github.com/espruino/BangleApps/blob/master/modules/Layout.js for some examples.
+There are other layout options too. Check out the documentation at https://github.com/espruino/BangleApps/blob/master/modules/Layout.md for some examples.
