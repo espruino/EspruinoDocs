@@ -233,7 +233,8 @@ Power Consumption
 * GPS on - 26mA (+25mA)
 * LCD touchscreen enabled (unlocked) - 2.8mA (+2.5mA)
 * LCD backlight on - 17mA (+16mA)
-* Turned off - 0.04mA
+* Turned off (Bangle.off - no RTC) - 0.02mA
+* Turned off (Bangle.softOff) - 0.03mA
 
 Right now you can expect around 1 month of battery life with a clock that
 updates once a minute, using the latest firmware.
