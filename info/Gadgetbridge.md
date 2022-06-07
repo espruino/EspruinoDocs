@@ -7,7 +7,7 @@ Gadgetbridge for Android
 * KEYWORDS: Gadgetbridge,Gadget bridge,Android,Notifications
 * USES: Bangle.js
 
-[Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health monitoring without the need for a proprietary application or web service.
+[Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health monitoring without the need for a proprietary application or web service. We also have `Bangle.js for Gadgetbridge` on the Google Play store (see below)
 
 *If you like Gadgetbridge, [please consider donating](https://liberapay.com/Gadgetbridge/donate)
 to help support its continued development*
@@ -18,7 +18,7 @@ your phone to [Bangle.js](/Bangle.js) (or any Bluetooth-capable Espruino).
 How to set up
 -------------
 
-* Install [Gadgetbridge](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) on your Android phone. **Do not install the Play Store version** as it is not the official one. Instead download and install [the F-droid version](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) manually.
+* Install [Gadgetbridge](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) on your Android phone. See below for info on our `Bangle.js for Gadgetbridge` app.
 * On Bangle.js, install ONE OF (not both!):
   * [Android Integration app](https://banglejs.com/apps/#android) - this is the new and recommended way of interfacing to Gadgetbridge, which allows you to view all notifications in a list
   * [The Gadgetbridge Widget](https://banglejs.com/apps/#gbridge) - this is the old way of interfacing to Gadgetbridge - it displays just one notification at a time.
@@ -30,9 +30,43 @@ How to set up
 
 **Does Gadgetbridge keep disconnecting from your Bangle?** It may be that your phone is doing some 'battery usage optimisation' and deciding that Gadgetbridge should be shut down. See https://dontkillmyapp.com/ for device-specific advice on how to stop this happening.
 
+Bangle.js for Gadgetbridge
+----------------------------
+
+We are currently developing a slightly altered Gadgetbridge app for Bangle.js that can be listed on the Play Store.
+
+To try it go to https://play.google.com/apps/testing/com­.espruino.gadgetbridge.banglejs and click the button, then you can install straight from Google Play!
+
+### HTTP requests
+
+**Must be enabled first** by clicking the gear icon next to the Bangle.js you're connected to in Gadgetbridge, and then enabling `Allow Internet Access`
+
+On Bangle.js send something like:
+
+```
+Bluetooth.println(JSON.stringify({t:"htt­p", url:"https://192.168.1.14/bangletest",xpath:"­/html/body/p/div[3]/a"}));
+```
+
+And Gadgetbridge will call `GB({t:"http",resp:"......"})` with the response. Right now you *must* use HTTPS (HTTP is not supported).
+
+
+### Intents
+
+**Must be enabled first** by clicking the gear icon next to the Bangle.js you're connected to in Gadgetbridge, and then enabling `Allow Intents`
+
+On Bangle.js send something like:
+
+```
+Bluetooth.println(JSON.stringify({t:"int­ent",action:"com.sonyericsson.alarm.ALAR­M_ALERT",extra:{key1:"asdfas"}}));
+```
+
+Will send a Global Android intent. This can open cause certain apps/windows to open, or can be used with apps like `Tasker`.
+
+
 ### Weather
 
 You can also get weather from Gadgetbridge. Install the [Weather Widget](https://banglejs.com/apps/#weather) and check out the `Read more...` link on the app page for more information. An additional app is required to forward the current weather into Gadgetbridge.
+
 
 How it works internally
 --------------------------
