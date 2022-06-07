@@ -7,18 +7,16 @@ Gadgetbridge for Android
 * KEYWORDS: Gadgetbridge,Gadget bridge,Android,Notifications
 * USES: Bangle.js
 
-[Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health monitoring without the need for a proprietary application or web service. We also have `Bangle.js for Gadgetbridge` on the Google Play store (see below)
+[Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health monitoring without the need for a proprietary application or web service. We also have `Bangle.js Gadgetbridge` on the Google Play store (see below)
 
 *If you like Gadgetbridge, [please consider donating](https://liberapay.com/Gadgetbridge/donate)
 to help support its continued development*
 
-We've added a 'Bangle.js' device to Gadgetbridge which allows you to connect
-your phone to [Bangle.js](/Bangle.js) (or any Bluetooth-capable Espruino).
 
 How to set up
 -------------
 
-* Install [Gadgetbridge](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) on your Android phone. See below for info on our `Bangle.js for Gadgetbridge` app.
+* Install [Gadgetbridge](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) on your Android phone. See below for info on our `Bangle.js Gadgetbridge` app.
 * On Bangle.js, install ONE OF (not both!):
   * [Android Integration app](https://banglejs.com/apps/#android) - this is the new and recommended way of interfacing to Gadgetbridge, which allows you to view all notifications in a list
   * [The Gadgetbridge Widget](https://banglejs.com/apps/#gbridge) - this is the old way of interfacing to Gadgetbridge - it displays just one notification at a time.
@@ -30,7 +28,7 @@ How to set up
 
 **Does Gadgetbridge keep disconnecting from your Bangle?** It may be that your phone is doing some 'battery usage optimisation' and deciding that Gadgetbridge should be shut down. See https://dontkillmyapp.com/ for device-specific advice on how to stop this happening.
 
-Bangle.js for Gadgetbridge
+Bangle.js Gadgetbridge app
 ----------------------------
 
 We are currently developing a slightly altered Gadgetbridge app for Bangle.js that can be listed on the Play Store.
