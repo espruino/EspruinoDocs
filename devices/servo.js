@@ -23,7 +23,7 @@ exports.connect = function (pin,options) {
     mul = options.range;
     offs = 1.5-(mul/2);
   }
-  return {move:function(pos, time, callback) {
+  return {move:function(pos, time, callback, options) {
     if (typeof time === 'function') {
       callback = time; time = undefined;
     }
@@ -37,7 +37,7 @@ exports.connect = function (pin,options) {
     interval = setInterval(function() {
       currentPos = pos*amt + initial*(1-amt);
       digitalPulse(pin, 1, offs+E.clip(currentPos,0,1)*mul);
-      if (amt >= 1) {
+      if (amt >= 1 && options.soft !== false) {
         clearInterval(interval);
         interval = undefined;
         if (callback) callback();
