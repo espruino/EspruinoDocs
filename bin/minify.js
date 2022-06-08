@@ -139,7 +139,7 @@ function closureOffline() {
   var options = [
     ['compilation_level',compilation_level],
     ['warning_level','VERBOSE'],
-    ['language_in','ECMASCRIPT6'],
+    ['language_in','ECMASCRIPT_2020'],
     ['language_out','ECMASCRIPT_2015'],
     ['jscomp_warning','undefinedVars'],
     ["js", tmpPath+".js"],
