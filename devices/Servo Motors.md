@@ -26,12 +26,13 @@ If you just want to move servo motors around in the simplest possible way, use t
 
 Just use `require("servo").connect` with the pin the servo motor is attached to, and call `move` with a position between 0 and 1, and an optional parameter specifying the time taken to move, and another parameter that is a function to call when the movement is finished:
 
-```
+```JavaScript
 var s = require("servo").connect(C7);
 
 s.move(0); // move to position 0 over 1 second
 s.move(1); // move to position 1 over 1 second
 s.move(0.5, 3000); // move to position 0.5 over 3 seconds
+s.move(0.5, 3000, {soft:false}); // move to position 0.5 over 3 seconds and hold the position
 
 // move to position 0 over 1 second, then move to position 1
 s.move(0, 1000, function() {
@@ -112,10 +113,10 @@ You can also use a hardware timer to produce the pulse - this means that you don
 function setServo(pin,pos) {
  if (pos<0) pos=0;
  if (pos>1) pos=1;
- analogWrite(pin, (1+pos) / 50.0, {freq:20});
+ analogWrite(pin, (1+pos) / 50.0, {freq:20, soft: false});
 }
 
-setServo(A1, 0.5); // set servo connected to A1 to the halfway position
+setServo(A1, 0.5); // set servo connected to A1 to the halfway position and hold that position
 ```
 
 Note that some pins don't have hardware timers on them. You can find which ones do by typing: 'analogWrite()'
