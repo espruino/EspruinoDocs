@@ -4,7 +4,7 @@ Bangle.js and Edge Impulse for Machine Learning
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Bangle.js+EdgeImpulse. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Tutorials, Bangle.js, Edge Impulse, AI, Machine Learning
+* KEYWORDS: Tutorials,Bangle.js,Edge Impulse,AI,Machine Learning,tensorflow,tf,tflite
 * USES: Bangle.js
 
 <p align="left">
