@@ -37,9 +37,11 @@ exports.connect = function (pin,options) {
     interval = setInterval(function() {
       currentPos = pos*amt + initial*(1-amt);
       digitalPulse(pin, 1, offs+E.clip(currentPos,0,1)*mul);
-      if (amt >= 1 && options.soft !== false) {
-        clearInterval(interval);
-        interval = undefined;
+      if (amt >= 1 ) {
+        if((options && options.soft !== false) || !options) {
+          clearInterval(interval);
+          interval = undefined;
+        }
         if (callback) callback();
       } else {
         amt += 1000.0 / (20*time);
