@@ -109,7 +109,7 @@ correctly in the console. They may need to be rendered with
 ="15:49"
 
 // Date to meridian (text describing morning/evening)
->require("locale").medidian(new Date())
+>require("locale").meridian(new Date())
 ="" // or "pm" for en_GB
 ```
 
