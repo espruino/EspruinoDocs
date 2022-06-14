@@ -33,7 +33,7 @@ Bangle.js Gadgetbridge app
 
 We are currently developing a slightly altered Gadgetbridge app for Bangle.js that can be listed on the Play Store.
 
-To try it go to https://play.google.com/apps/testing/com­.espruino.gadgetbridge.banglejs and click the button, then you can install straight from Google Play!
+To try it go to https://play.google.com/apps/testing/com.espruino.gadgetbridge.banglejs and click the button, then you can install straight from Google Play!
 
 ### HTTP requests
 
