@@ -65,6 +65,8 @@ Will send a Global Android intent. This can open cause certain apps/windows to o
 
 You can also get weather from Gadgetbridge. Install the [Weather Widget](https://banglejs.com/apps/#weather) and check out the `Read more...` link on the app page for more information. An additional app is required to forward the current weather into Gadgetbridge.
 
+If you're using the Play Store 'Bangle.js Gadgetbridge' app, you need to set the package name to `com.espruino.gadgetbridge.banglejs`
+
 
 How it works internally
 --------------------------
