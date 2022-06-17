@@ -74,7 +74,7 @@ WIDGETS = {}; // <-- for development only
 
   // add your widget
   WIDGETS["mywidget"]={
-    area:"tl", // tl (top left), tr (top right), bl (bottom left), br (bottom right)
+    area:"tl", // tl (top left), tr (top right), bl (bottom left), br (bottom right), be aware that not all apps support widgets at the bottom of the screen
     width: 28, // how wide is the widget? You can change this and call Bangle.drawWidgets() to re-layout
     draw:draw // called to draw the widget
   };
@@ -129,7 +129,7 @@ WIDGETS = {}; // <-- for development only
 
   // add your widget
   WIDGETS["widdate"]={
-    area:"tl", // tl (top left), tr (top right), bl (bottom left), br (bottom right)
+    area:"tl", // tl (top left), tr (top right), bl (bottom left), br (bottom right), be aware that not all apps support widgets at the bottom of the screen
     width: width, // how wide is the widget? You can change this and call Bangle.drawWidgets() to re-layout
     draw:draw // called to draw the widget
   };
@@ -196,7 +196,7 @@ WIDGETS = {}; // <-- for development only
 
   // add your widget
   WIDGETS["widdate"]={
-    area:"tl", // tl (top left), tr (top right), bl (bottom left), br (bottom right)
+    area:"tl", // tl (top left), tr (top right), bl (bottom left), br (bottom right), be aware that not all apps support widgets at the bottom of the screen
     width: width, // how wide is the widget? You can change this and call Bangle.drawWidgets() to re-layout
     draw:draw // called to draw the widget
   };
