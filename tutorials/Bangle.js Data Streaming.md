@@ -271,3 +271,133 @@ render();
  </body>
 </html>
 ```
+
+
+Bonus 2: Heart Rate Monitoring Graph
+-------------------
+
+Here's another example showing the heartrate sensor data over time. The code is similar to the other examples. The big difference here is the code uploaded to the bangle and the bottom part where the graph is rendered as a [canvas.js](https://canvasjs.com) chart.
+
+![window](Bangle.js Data Streaming/hr_graph.png)
+
+```HTML_demo_link
+</html>
+<head>
+  <title>Bangle.js Heartrate streaming graph</title>
+</head>
+<body>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <script src="https://www.puck-js.com/puck.js"></script>
+  <div id="chartContainer" style="height: 370px; width:100%;"></div>
+  <button id="btnConnect">Connect</button>
+</body>
+</html>
+<script>
+  // Code to upload to Bangle.js
+  var BANGLE_CODE = `
+  Bangle.setHRMPower(1)
+  Bangle.on('HRM',function(hrm) {
+    var d = [
+      "H",
+      hrm.bpm,
+      hrm.confidence
+      ];
+    Bluetooth.println(d.join(","));
+  })
+  `;
+
+  // When we click the connect button...
+  var connection;
+  document.getElementById("btnConnect").addEventListener("click", function() {
+    // disconnect if connected already
+    if (connection) {
+      connection.close();
+      connection = undefined;
+    }
+    // Connect
+    Puck.connect(function(c) {
+      if (!c) {
+        alert("Couldn't connect!");
+        return;
+      }
+      connection = c;
+      // Handle the data we get back, and call 'onLine'
+      // whenever we get a line
+      var buf = "";
+      connection.on("data", function(d) {
+        buf += d;
+        var l = buf.split("\n");
+        buf = l.pop();
+        l.forEach(onLine);
+      });
+      // First, reset the Bangle
+      connection.write("reset();\n", function() {
+        // Wait for it to reset itself
+        setTimeout(function() {
+          // Now upload our code to it
+          connection.write("\x03\x10if(1){"+BANGLE_CODE+"}\n",
+            function() { console.log("Ready..."); });
+        }, 1500);
+      });
+    });
+  });
+
+  //Chart Setup
+  var dps = []; // dataPoints
+  var chart = new CanvasJS.Chart("chartContainer", {
+    title :{
+      text: "Bangle.js HeartRate Monitoring Over Time"
+    },
+    axisY:{
+      title: "Heart Rate",
+    },
+    axisX:{
+      title: "Time",
+      valueFormatString: "HH:mm:ss",
+    },
+    data: [{
+      type: "spline",
+      indexLabel: "{y}",
+      dataPoints: dps
+    }]
+  });
+
+  chart.render();
+  var dataLength = 30; // number of dataPoints visible at any point
+
+  var updateChart = function (hr) {
+    if (dps.length <= dataLength) {
+      labelVal = new Date().toISOString();
+      xVal = new Date;
+      yVal = hr;
+      dps.push({
+        x: xVal,
+        y: yVal
+      });
+    }
+
+    if (dps.length > dataLength) {
+      dps.shift();
+    }
+
+    chart.render();
+  };
+
+  // When we get a line of data, check it and if it's
+  // from the heart rate monitor, update it
+  function onLine(line) {
+    console.log("RECEIVED:"+line);
+    var d = line.split(",");
+    if (d.length==3 && d[0]=="H") {
+      // we have an HR monitor reading
+      var hr_data = {
+        hr : parseInt(d[1]),
+        conf : parseInt(d[2]),
+      };
+      updateChart(hr_data.hr);
+    }
+  }
+
+</script>
+</html>
+```
