@@ -250,7 +250,7 @@ exports.getHoldingButtons = function() {
  * @param {number} [b] - The buttons to hold during this movement.
  * @param {number} [wheel] - The relative amount to scroll vertically. (-127 to 127)
  * @param {number} [hwheel] - The relative amount to scroll horizontally. (-127 to 127)
- * @param {function} [callback] - Function to call when bluetooth message is sent.
+ * @param {function()} [callback] - Function to call when bluetooth message is sent.
  */
 exports.moveMouse = function(x, y, b, wheel, hwheel, callback) {
   if (!b) b = holdingButtons;
@@ -265,17 +265,17 @@ exports.moveMouse = function(x, y, b, wheel, hwheel, callback) {
  * Scrolls the mouse.
  * @param {number} wheel - The relative amount to scroll vertically (-127 to 127)
  * @param {number} [hwheel] - The relative amount to scroll horizontally (-127 to 127)
- * @param {function} [callback] - Function to call when bluetooth message is sent.
+ * @param {function()} [callback] - Function to call when bluetooth message is sent.
  */
 exports.scroll = function(wheel, hwheel, callback) {
-  moveMouse(0, 0, holdingButtons, wheel, hwheel, callback);
+  exports.moveMouse(0, 0, holdingButtons, wheel, hwheel, callback);
 };
 
 /**
  * Start holding mouse buttons.
  * Note: you can hold multiple buttons using button = BUTTON.LEFT | BUTTON.RIGHT;
  * @param {number} b - The button or buttons to start holding.
- * @param {function} [callback] - Function to call when bluetooth message is sent.
+ * @param {function()} [callback] - Function to call when bluetooth message is sent.
  */
 exports.holdButton = function(b, callback) {
   holdingButtons |= b;
@@ -286,7 +286,7 @@ exports.holdButton = function(b, callback) {
  * Release mouse buttons.
  * Note: you can release all buttons using button = BUTTON.ALL;
  * @param {number} b - The button or buttons to release.
- * @param {function} [callback] - Function to call when bluetooth message is sent.
+ * @param {function()} [callback] - Function to call when bluetooth message is sent.
  */
 exports.releaseButton = function(b, callback) {
   holdingButtons &= ~b;
@@ -296,7 +296,7 @@ exports.releaseButton = function(b, callback) {
 /**
  * Single click a certain (mouse) button (hold & immidiatly release).
  * @param {number} b - The button or buttons to click.
- * @param {function} callback - Function to call when the bluetooth messages are sent.
+ * @param {function()} callback - Function to call when the bluetooth messages are sent.
  */
 exports.clickButton = function(b, callback) {
   exports.holdButton(b, () => exports.releaseButton(b, callback));
@@ -313,7 +313,7 @@ exports.getHoldingKeys = function() {
  * Update the keyboard modifiers while holding keys.
  * Also updates the currently holding keys.
  * @param {number} modifiers - The keyboard modifier(s) to use.
- * @param {function} [callback] - Function to call when the bluetooth messages are sent.
+ * @param {function()} [callback] - Function to call when the bluetooth messages are sent.
  */
 exports.updateModifiers = function(modifiers, callback) {
   if (!modifiers) modifiers = 0;
@@ -346,7 +346,7 @@ function removePressedKey(k) {
     holdingKeys.fill(0);
     return;
   }
-  for (j = 0; j < holdingKeys.length; j++) {
+  for (var j = 0; j < holdingKeys.length; j++) {
     if (holdingKeys[j] == k) holdingKeys[j] = 0;
   }
 }
@@ -355,9 +355,9 @@ function removePressedKey(k) {
  * Start holding a key down. 
  * Note: Maximum of 5 concurrent keys are supported! 
  * More keys will result in the previous being dropped.
- * @param {number|number[]} keyCode - The keycode(s) to press in.
+ * @param {number|Array<number>} keyCode - The keycode(s) to press in.
  * @param {number} [modifiers] - The keyboard mofifier(s) to use.
- * @param {function} [callback] - Function to call when the bluetooth messages are sent.
+ * @param {function()} [callback] - Function to call when the bluetooth messages are sent.
  */
 exports.keyDown = function(keyCode, modifiers, callback) {
   if (!Array.isArray(keyCode)) keyCode = [keyCode];
@@ -369,8 +369,8 @@ exports.keyDown = function(keyCode, modifiers, callback) {
 
 /**
  * Stop holding a key down. 
- * @param {number|number[]} keyCode - The keycode(s) to release (use -1 for all keys)
- * @param {function} [callback] - Function to call when the bluetooth messages are sent.
+ * @param {number|Array<number>} keyCode - The keycode(s) to release (use -1 for all keys)
+ * @param {function()} [callback] - Function to call when the bluetooth messages are sent.
  */
 exports.keyUp = function(keyCode, callback) {
   if (!Array.isArray(keyCode)) keyCode = [keyCode];
@@ -382,9 +382,9 @@ exports.keyUp = function(keyCode, callback) {
 
 /**
  * Single tap a certain (keyboard) key (hold & immidiatly release).
- * @param {number|number[]} keyCode - The keycode(s) to tap.
+ * @param {number|Array<number>} keyCode - The keycode(s) to tap.
  * @param {number} [modifiers] - The keyboard modifier(s) to use.
- * @param {function} [callback] - Function to call when the bluetooth messages are sent.
+ * @param {function()} [callback] - Function to call when the bluetooth messages are sent.
  */
 exports.tapKey = function(keyCode, modifiers, callback) {
   exports.keyDown(keyCode, modifiers, () => exports.keyUp(keyCode, callback));
