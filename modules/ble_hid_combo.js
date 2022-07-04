@@ -325,7 +325,7 @@ exports.updateModifiers = function(modifiers, callback) {
 };
 
 function insertPressedKey(k) {
-  // Fill empty spots first.
+  // Fill empty spots first  
   for (var j = 0; j < holdingKeys.length; j++) {
     if (holdingKeys[j] == k) return;
     if (holdingKeys[j] == 0) {
@@ -334,11 +334,9 @@ function insertPressedKey(k) {
     }
   }
   // Otherwise FIFO key replace. (> 5 keys are used!)
-  for (j = 0; j < holdingKeys.length - 1; j++) {
+  for (j = 0; j < holdingKeys.length - 1; j++)
     holdingKeys[j] = holdingKeys[j + 1];
-  }
   holdingKeys[holdingKeys.length - 1] = k;
-  return;
 }
 
 function removePressedKey(k) {
@@ -361,9 +359,7 @@ function removePressedKey(k) {
  */
 exports.keyDown = function(keyCode, modifiers, callback) {
   if (!Array.isArray(keyCode)) keyCode = [keyCode];
-  for (var i = 0; i < keyCode.length; i++) {
-    insertPressedKey(keyCode[i]);
-  }
+  keyCode.forEach(insertPressedKey)
   exports.updateModifiers(modifiers, callback);
 };
 
@@ -374,9 +370,7 @@ exports.keyDown = function(keyCode, modifiers, callback) {
  */
 exports.keyUp = function(keyCode, callback) {
   if (!Array.isArray(keyCode)) keyCode = [keyCode];
-  for (var i = 0; i < keyCode.length; i++) {
-    removePressedKey(keyCode[i]);
-  }
+  keyCode.forEach(removePressedKey);
   exports.updateModifiers(0, callback);
 };
 
