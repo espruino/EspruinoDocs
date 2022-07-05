@@ -7,9 +7,9 @@ Bangle.js Technical Information
 * KEYWORDS: Bangle.js,Bangle,Banglejs,Smartwatch,Watch,pinout,pins,io,specs,spec
 * USES: Bangle.js
 
-**For general Bangle.js information, [try this page](/Bangle.js)**
+**For general Bangle.js information, try [the Bangle.js 1](/Bangle.js) or [the Bangle.js 2](/Bangle.js2) pages**
 
-This page contains detailed information on Bangle.js's internals. If you're
+This page contains detailed information on Bangle.js's 1's internals. If you're
 just writing JS then you should have no need for this information, but if you
 plan on modifying the Bangle.js firmware it might be of interest.
 

@@ -213,8 +213,9 @@ to find what you want.
 Information
 -----------
 
-* For detailed technical information about Bangle.js, check out [the Bangle.js Technical Information page](/Bangle.js+Technical)
-* There's a [Bangle.js API reference here](https://banglejs.com/reference) - however this is currently missing some Bangle.js 2 functionality
+* For detailed technical information about Bangle.js 2, check out [the Hackaday project page](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch)
+* The Espruino board file for Bangle.js [can be found here](https://github.com/espruino/Espruino/blob/master/boards/BANGLEJS2.py) and contains pinouts and other configuration info
+* There's a [Bangle.js API reference here](https://banglejs.com/reference)
 * Links to [CE/RED report](/files/Bangle.js2-RED.pdf) and [FCC ID 2AKUO-10](/files/Bangle.js2-FCC.pdf) Certifications
 * Links to shipping documentation: [Battery UN38.3](/files/Bangle.js2-UN38.3.pdf)
 
