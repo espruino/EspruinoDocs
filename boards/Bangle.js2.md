@@ -543,9 +543,9 @@ Bangle.js 2 has the hardware SWD pin brought out on the back of the watch along 
 ![](Banglejs2/SWD.jpg)
 
 This can be connected to an SWD programmer. We'd recommend using an [nRF52 DK](https://www.nordicsemi.com/Products/Development-hardware/nrf52-dk) (or nRF52840DK).
-When using the nRF52DK you'll need to short the `GND DETECT` pin to `GND` to tell it you're programming the Bangle.js and not the on-board nRF52.
+When using the nRF52DK you'll need to short the `GND DETECT` pin to `GND` and short the `VTG` pin to `VDD` to tell it you're programming the Bangle.js and not the on-board nRF52. See the example schematic below. 
 
-![](Banglejs2/nRF52DK.jpg)
+![](Banglejs2/nRF52DK_schematic.png)
 
 The easiest way to connect to these is to use the provided USB charge cable and to wire up a USB type A socket:
 
@@ -555,6 +555,8 @@ The easiest way to connect to these is to use the provided USB charge cable and 
 | 2     | SWDIO   |
 | 3     | SWDCLK  |
 | 4     | GND     |
+
+Be sure to fully remove the tape and adheisive covering the SWDIO and SWDCLK pins.
 
 
 Firmware Updates
