@@ -104,12 +104,12 @@ correctly in the console. They may need to be rendered with
 >require("locale").time(new Date())
 ="15:49:39"
 
-// Date to time string (long)
+// Date to time string (short)
 >require("locale").time(new Date(), 1)
 ="15:49"
 
 // Date to meridian (text describing morning/evening)
->require("locale").medidian(new Date())
+>require("locale").meridian(new Date())
 ="" // or "pm" for en_GB
 ```
 
