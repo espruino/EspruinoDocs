@@ -52,6 +52,8 @@ And Gadgetbridge will call `GB({t:"http",resp:"......"})` with the response. Rig
 
 **Must be enabled first** by clicking the gear icon next to the Bangle.js you're connected to in Gadgetbridge, and then enabling `Allow Intents`
 
+#### Bangle -> Android
+
 On Bangle.js send something like:
 
 ```
@@ -59,6 +61,20 @@ Bluetooth.println(JSON.stringify({t:"int­ent",action:"com.sonyericsson.alarm.AL
 ```
 
 Will send a Global Android intent. This can open cause certain apps/windows to open, or can be used with apps like `Tasker`.
+
+#### Bangle -> Android
+
+On the Android device, you can send code to execute to your Bangle.js (Programmable must be set to `true` in the Bangle's settings).
+
+Just send an intent to `com.banglejs.uart.tx`, with Extra Data of `line` set to the JavaScript to execute. For example to display a variable from [`Tasker`](https://tasker.joaoapps.com/) on the Bangle's LCD (scrolling everything else up), set up:
+
+```
+Action: com.banglejs.uart.tx
+Cat: None
+Extra: line:Terminal.println(%avariable)
+Target: Broadcast Receiver
+Variable: Number, Configure on Import, NOT structured, Value set, Nothing Exported, NOT Same as value
+```
 
 
 ### Weather
