@@ -72,8 +72,8 @@ cases there could be some skin irritation.
 
 Bangle.js 2 devices sold since the KickStarter campaign ship with a small
 piece of tape covering the contacts to prevent any problems. If you have
-a watch without this tape we would strongly advise you apply some paint, 
-tape, a sticker or laquer over the middle two contacts as shown in the 
+a watch without this tape we would strongly advise you apply some paint,
+tape, a sticker or laquer over the middle two contacts as shown in the
 images below:
 
 ![](Banglejs2/corrosion_fix1.jpg)
@@ -215,7 +215,7 @@ Information
 
 * For detailed technical information about Bangle.js 2, check out [the Hackaday project page](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch)
 * The Espruino board file for Bangle.js [can be found here](https://github.com/espruino/Espruino/blob/master/boards/BANGLEJS2.py) and contains pinouts and other configuration info
-* There's a [Bangle.js API reference here](https://banglejs.com/reference)
+* There's a [Bangle.js 2 API reference here](https://espruino.com/ReferenceBANGLEJS2)
 * Links to [CE/RED report](/files/Bangle.js2-RED.pdf) and [FCC ID 2AKUO-10](/files/Bangle.js2-FCC.pdf) Certifications
 * Links to shipping documentation: [Battery UN38.3](/files/Bangle.js2-UN38.3.pdf)
 
@@ -544,7 +544,7 @@ Bangle.js 2 has the hardware SWD pin brought out on the back of the watch along 
 ![](Banglejs2/SWD.jpg)
 
 This can be connected to an SWD programmer. We'd recommend using an [nRF52 DK](https://www.nordicsemi.com/Products/Development-hardware/nrf52-dk) (or nRF52840DK).
-When using the nRF52DK you'll need to short the `GND DETECT` pin to `GND` and short the `VTG` pin to `VDD` to tell it you're programming the Bangle.js and not the on-board nRF52. See the example schematic below. 
+When using the nRF52DK you'll need to short the `GND DETECT` pin to `GND` and short the `VTG` pin to `VDD` to tell it you're programming the Bangle.js and not the on-board nRF52. See the example schematic below.
 
 ![](Banglejs2/nRF52DK_schematic.png)
 

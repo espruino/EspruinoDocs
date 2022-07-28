@@ -78,6 +78,7 @@ Layout
 Information
 ----------
 
+* There's an [API reference here](https://espruino.com/ReferenceESPRUINOBOARD)
 * [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/Original/pdf/espruino_schematic.pdf)
 * [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/Original/pdf/espruino_pcb.pdf)
 * [Part library for Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)

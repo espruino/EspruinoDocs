@@ -50,6 +50,7 @@ Pinout
 Information
 -----------
 
+* There's an [API reference here](https://espruino.com/ReferencePICO_R1_3)
 * [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/Pico/pdf/schematic_1v3.pdf)
 * [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/Pico/pdf/board_1v3.pdf)
 * [STM32F401CD Datasheet](/datasheets/STM32F401xD.pdf)

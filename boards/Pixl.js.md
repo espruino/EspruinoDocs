@@ -169,6 +169,7 @@ Information
 
 ![Pixl.js](Pixljs/back.jpg)
 
+* There's an [API reference here](https://espruino.com/ReferencePIXLJS)
 * [Circuit Diagram](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_sch.pdf)
 * [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_brd.pdf)
 * [Eagle CAD files](https://github.com/espruino/EspruinoBoard/tree/master/Pixl.js/eagle)

@@ -164,6 +164,7 @@ Information
 
 [![MDBT42Q library](MDBT42Q/lbr.png)](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/MDBT42/mdbt42.lbr)
 
+* There's an [MDBT42Q API reference here](https://espruino.com/ReferenceMDBT42Q)
 * [Eagle CAD footprint](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/MDBT42/mdbt42.lbr)
 * [Eagle design files](https://github.com/espruino/EspruinoBoard/tree/master/MDBT42/eagle) for breakout board and simple beacon
 * [PDF schematic and board layouts](https://github.com/espruino/EspruinoBoard/tree/master/MDBT42/pdf) for breakout board and simple beacon

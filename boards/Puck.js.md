@@ -154,6 +154,7 @@ Unlike other Espruino boards, these peripherals can be used on *any* pin.
 Information
 -----------
 
+* There's an [API reference here](https://espruino.com/ReferencePUCKJS)
 * [Circuit Diagram (v1)](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjs_sch.pdf)
 * [Circuit Diagram (v2)](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjsv2_sch.pdf)
 * [Board Layout (v1)](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjs_brd.pdf)
