@@ -7,7 +7,9 @@ Gadgetbridge for Android
 * KEYWORDS: Gadgetbridge,Gadget bridge,Android,Notifications
 * USES: Bangle.js
 
-[Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health monitoring without the need for a proprietary application or web service. We also have `Bangle.js Gadgetbridge` on the Google Play store (see below)
+[Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health 
+monitoring without the need for a proprietary application or web service. We also have 
+[`Bangle.js Gadgetbridge`](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) on the Google Play store (see below)
 
 *If you like Gadgetbridge, [please consider donating](https://liberapay.com/Gadgetbridge/donate)
 to help support its continued development*
@@ -16,36 +18,53 @@ to help support its continued development*
 How to set up
 -------------
 
-* Install [Gadgetbridge](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) on your Android phone. See below for info on our `Bangle.js Gadgetbridge` app.
+* Install [Bangle.js Gadgetbridge from the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) on your Android phone (see below for more info on our `Bangle.js Gadgetbridge` app). 
+You can also install the default [Gadgetbridge on F-Droid](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/), but this doesn't provide the Internet connectivity features.
 * On Bangle.js, install ONE OF (not both!):
-  * [Android Integration app](https://banglejs.com/apps/#android) - this is the new and recommended way of interfacing to Gadgetbridge, which allows you to view all notifications in a list
-  * [The Gadgetbridge Widget](https://banglejs.com/apps/#gbridge) - this is the old way of interfacing to Gadgetbridge - it displays just one notification at a time.
+  * [Android Integration app](https://banglejs.com/apps/?id=android) - this is the new and recommended way of interfacing to Gadgetbridge, which allows you to view all notifications in a list
+  * [The Gadgetbridge Widget](https://banglejs.com/apps/?id=gbridge) - this is the old way of interfacing to Gadgetbridge - it displays just one notification at a time.
 * Now ensure you disconnect your computer from Bangle.js
 * Start the Gadgetbridge app and click the blue `+` in the bottom right
 * Choose your Bangle.js device from the list
 * Right now we'd suggest choosing `Don't pair` when prompted in order to get the most reliable connection
 * Everything should now be working. From the menu in the top-left of the Gadgetbridge Android app you can choose `Debug` and can test out notifications/etc
 
+### Extra Setup
+
 **Does Gadgetbridge keep disconnecting from your Bangle?** It may be that your phone is doing some 'battery usage optimisation' and deciding that Gadgetbridge should be shut down. See https://dontkillmyapp.com/ for device-specific advice on how to stop this happening.
+
+By default, some features are disabled in Gadgetbridge and you may well want to enable them:
+
+* Click on your device, then the Gear icon
+  * `auto-reconnect to device` should probably be ticked, so Gadgetbridge reconnects if it loses the connection
+  * `Text as Bitmaps` detects non-ascii characters (including Emoji) that can't be displayed on the Bangle and converts them to images that can be displayed
+  * `Allow high MTU` improves transfer speed to Bangle.js
+  * `Allow Internet Access` enables HTTP requests from Bangle.js apps (see below)
+  * `Allow Intents` enables Bangle.js apps to interact with Android apps
+  
 
 Bangle.js Gadgetbridge app
 ----------------------------
 
-We are currently developing a slightly altered Gadgetbridge app for Bangle.js that can be listed on the Play Store.
+We have a version of Gadgetbridge for Bangle.js that allows Internet Access and is [available on the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs).
 
-To try it go to https://play.google.com/apps/testing/com.espruino.gadgetbridge.banglejs and click the button, then you can install straight from Google Play!
+To try it go to https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs and install straight from Google Play!
 
 ### HTTP requests
 
 **Must be enabled first** by clicking the gear icon next to the Bangle.js you're connected to in Gadgetbridge, and then enabling `Allow Internet Access`
 
-On Bangle.js send something like:
+On Bangle.js just do something like this to make an HTTP request:
 
 ```
-Bluetooth.println(JSON.stringify({t:"htt­p", url:"https://192.168.1.14/bangletest",xpath:"­/html/body/p/div[3]/a"}));
+Bangle.http("https://pur3.co.uk/hello.txt").then(data=>{
+  console.log("Got ",data);
+});
 ```
 
-And Gadgetbridge will call `GB({t:"http",resp:"......"})` with the response. Right now you *must* use HTTPS (HTTP is not supported).
+For more information check out the [`Android Integration`](https://banglejs.com/apps/?id=android) app's `Read more...` link.
+
+Right now you *must* use HTTPS (HTTP is not supported). The low-level implementation is described in `How it works internally` below.
 
 
 ### Intents
@@ -106,6 +125,11 @@ Currently implemented messages are:
 * `t:"call", cmd:"accept/incoming/outgoing/reject/start/end", name: "name", number: "+491234"` - call
 * `t:"act", hrm:bool, stp:bool, int:int`  - Enable realtime step counting, realtime heart rate. 'int' is the report interval in seconds
 
+Bangle.js Gadgetbridge also provides:
+
+* `t:"http",resp:"......",[id:"..."],[id:"..."]` - a response to an HTTP request (see below)
+* `t:"http",err:"......"` - an HTTP request failed.
+
 For example:
 
 ```
@@ -145,6 +169,13 @@ Available message types are:
 * `t:"ver", fw1:string, fw2:string` - firmware versions - sent at connect time
 * `t:"act", hrm:int, stp:int` - activity data - heart rate, steps since last call
 
+Bangle.js Gadgetbridge also provides:
+
+* `t:"htt­p", url:"https://pur3.co.uk/hello.txt"[,xpath:"­/html/body/p/div[3]/a"][,id:"..."]` - make an HTTPS request (HTTP not supported right now). 
+  * If `xpath` is supplied, the document is loaded as XML (not all HTML is XML!), the xpath is applied and the result returned instead
+  * If `id` is supplied (as a string), the response returns the same `id` (so multiple HTTP requests can be in flight at once)
+* `t:"intent", action:"...", extra:{key1:"..."}` - sends an Android Intent (which can be used to send data to other apps like Tasker)
+
 For example:
 
 ```
@@ -155,12 +186,18 @@ will display a message on your phone's screen.
 
 ### Debugging
 
+You can click `Debug` -> `Fetch Device Debug Logs` in Gadgetbridge which will save a log of
+all data sent to/from Bangle.js to a file on your phone. This is very helpful for debugging
+and will show if any exceptions/errors have happened on the Bangle, and what commands
+caused them. You can then connect with the Web IDE and re-issue those commands by copy/pasting
+them into the IDE's left hand side to help you reproduce.
+
 There's a [Gadgetbridge Debug](https://banglejs.com/apps/#gbdebug) app you can install. When running this
 will show you the data that is being received from Gadgetbridge. See `Read more...` next to the app for
 more information.
 
-You can then disconnect Gadgetbridge, connect with the Web IDE and issue that command by pasting it 
-into the left-hand side of the IDE - for example:
+Once you know the command that caused the problem you can then disconnect Gadgetbridge, connect with the 
+Web IDE and issue that command by pasting it into the left-hand side of the IDE - for example:
 
 ```
 GB({"t":"notify","id":1575479849,"src":"Hangouts","title":"A Name","body":"message contents"})
