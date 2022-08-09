@@ -179,14 +179,20 @@ as this is able to access the Bluetooth adaptor directly.
 
 #### Linux
 
-Linux is not officially supported in Chrome.  However, because ChromeOS is supported it can be possible to enable Linux support:
+Linux is not officially supported in Chrome and is not enabled by default, but it does work.
 
-BlueZ 5.41+ required (5.43 is more stable) - you can check by typing `bluetoothd --version`. If it isn't there are some [Bluez installation instructions here](/Web Bluetooth On Linux)
+To enable it:
 
 * Type `chrome://flags` in the address bar
 * You need to enable `Experimental Web Platform Features` (`chrome://flags/#enable-experimental-web-platform-features`).
 * Also enable `Use the new permissions backend for Web Bluetooth` (`chrome://flags/#enable-web-bluetooth-new-permissions-backend`) if it exists
 * Restart your browser
+
+Other potential issues:
+
+* Try using Google's Chrome (not Brave or Chromium). Brave doesn't implement Web Bluetooth and Chromium can work but some distributions' builds appear not to.
+* [Flatpaks](https://flatpak.org/) don't work out of the box as Bluetooth priviledges aren't granted. You can change them using [flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal) or just install a native package for your OS.
+* BlueZ 5.41+ required (5.43 is more stable) - you can check by typing `bluetoothd --version`. Pretty much every Linux distribution from the past 5 years is now up to date, but if yours isn't there are some [Bluez installation instructions here](/Web Bluetooth On Linux)
 
 #### Chromebook
 
