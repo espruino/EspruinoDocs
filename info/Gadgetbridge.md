@@ -9,7 +9,8 @@ Gadgetbridge for Android
 
 [Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health 
 monitoring without the need for a proprietary application or web service. We also have 
-[`Bangle.js Gadgetbridge`](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) on the Google Play store (see below)
+[`Bangle.js Gadgetbridge`](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) on the Google Play store 
+or [F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs/) (see below)
 
 *If you like Gadgetbridge, [please consider donating](https://liberapay.com/Gadgetbridge/donate)
 to help support its continued development*
@@ -18,8 +19,8 @@ to help support its continued development*
 How to set up
 -------------
 
-* Install [Bangle.js Gadgetbridge from the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) on your Android phone (see below for more info on our `Bangle.js Gadgetbridge` app). 
-You can also install the default [Gadgetbridge on F-Droid](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/), but this doesn't provide the Internet connectivity features.
+* Install [Bangle.js Gadgetbridge from the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) 
+or [F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs/) on your Android phone (see below for more info on our `Bangle.js Gadgetbridge` app).
 * On Bangle.js, install ONE OF (not both!):
   * [Android Integration app](https://banglejs.com/apps/?id=android) - this is the new and recommended way of interfacing to Gadgetbridge, which allows you to view all notifications in a list
   * [The Gadgetbridge Widget](https://banglejs.com/apps/?id=gbridge) - this is the old way of interfacing to Gadgetbridge - it displays just one notification at a time.
@@ -46,7 +47,7 @@ By default, some features are disabled in Gadgetbridge and you may well want to 
 Bangle.js Gadgetbridge app
 ----------------------------
 
-We have a version of Gadgetbridge for Bangle.js that allows Internet Access and is [available on the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs).
+We have a version of Gadgetbridge for Bangle.js that allows Internet Access and is [available on the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) or [F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs/).
 
 To try it go to https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs and install straight from Google Play!
 
