@@ -8,8 +8,10 @@ Gadgetbridge for Android
 * USES: Bangle.js
 
 [Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health 
-monitoring without the need for a proprietary application or web service. We also have 
-[`Bangle.js Gadgetbridge`](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) on the Google Play store (see below)
+monitoring without the need for a proprietary application or web service. We have a modified
+[`Bangle.js Gadgetbridge`](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) app on the 
+[Google Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) 
+or [F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs/) (see [below](#bangle-js-gadgetbridge-app))
 
 *If you like Gadgetbridge, [please consider donating](https://liberapay.com/Gadgetbridge/donate)
 to help support its continued development*
@@ -18,8 +20,10 @@ to help support its continued development*
 How to set up
 -------------
 
-* Install [Bangle.js Gadgetbridge from the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) on your Android phone (see below for more info on our `Bangle.js Gadgetbridge` app). 
-You can also install the default [Gadgetbridge on F-Droid](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/), but this doesn't provide the Internet connectivity features.
+* Install Bangle.js Gadgetbridge on your Android phone (see below for more info on our `Bangle.js Gadgetbridge` app). This can be:
+  * [Bangle.js Gadgetbridge from the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) - easiest for most users
+  * [Bangle.js Gadgetbridge from F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs)
+  * Normal [Gadgetbridge from F-Droid](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) (this doesn't provide any Internet connectivity features)
 * On Bangle.js, install ONE OF (not both!):
   * [Android Integration app](https://banglejs.com/apps/?id=android) - this is the new and recommended way of interfacing to Gadgetbridge, which allows you to view all notifications in a list
   * [The Gadgetbridge Widget](https://banglejs.com/apps/?id=gbridge) - this is the old way of interfacing to Gadgetbridge - it displays just one notification at a time.
@@ -46,10 +50,15 @@ By default, some features are disabled in Gadgetbridge and you may well want to 
 Bangle.js Gadgetbridge app
 ----------------------------
 
-We have a version of Gadgetbridge for Bangle.js that allows Internet Access and is [available on the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs).
+We have a version of Gadgetbridge for Bangle.js that allows Internet Access (normal Gadgetbridge does not). It is available from:
 
-To try it go to https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs and install straight from Google Play!
-
+  * [the Google Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) - recommended
+  * [F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs)
+  
+The Bangle.js Gadgetbridge app is built [from the same source code](https://codeberg.org/Freeyourgadget/Gadgetbridge) as
+the normal Gadgetbridge, however the `Bangle.js Gadgetbridge` app requires extra internet permissions to install and so can
+provide extra features:
+  
 ### HTTP requests
 
 **Must be enabled first** by clicking the gear icon next to the Bangle.js you're connected to in Gadgetbridge, and then enabling `Allow Internet Access`
@@ -211,9 +220,3 @@ Building Gadgetbridge
 
 If you want to build Gadgetbridge yourself there's proper documentation at https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Developer-Documentation
 
-Once you have the Android development tools on your system, all you need to do to build is:
-
-```Bash
-./gradlew assembleDebug
-adb install app/build/outputs/apk/debug/app-debug.apk
-```
