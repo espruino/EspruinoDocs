@@ -8,7 +8,7 @@ LIS302DL Accelerometer
 
 [Datasheet](/datasheets/LIS302DL.pdf)
 
-This is the accelerometer that is on the STM32F4DISCOVERY board.
+This is the accelerometer that is on some STM32F4DISCOVERY boards (newer boards have the [LIS3DSH](/LIS3DH)).
 
 This code snippet reads a value from the accelerometer, and lights the 4 LEDs depending on the angle of the board.
 
