@@ -89,9 +89,31 @@ On Bangle.js send something like:
 Bluetooth.println(JSON.stringify({t:"int­ent",action:"com.sonyericsson.alarm.ALAR­M_ALERT",extra:{key1:"asdfas"}}));
 ```
 
-Will send a Global Android intent. This can open cause certain apps/windows to open, or can be used with apps like `Tasker`.
+This will send a Global Android intent. This can cause certain apps/windows to open, or can be used with apps like `Tasker`.
 
-#### Bangle -> Android
+(The following is not present in Gadgetbridge version 0.68.0 published on F-droid as of 2022-08-17, but working if building from source).
+
+Or:
+
+```
+Bluetooth.println(JSON.stringify({t:"intent", action:"android.media.action.MEDIA_PLAY_FROM_SEARCH", category:"android.intent.category.DEFAULT", target:"activity", extra:{"query":'artist:"The Beatles" track:"Hello Little Girl"'}}))
+```
+
+This will search for and play the song "Hello Little Girl" 
+
+Gadgetbridge with a Bangle.js supports sending broadcasts and starting activities. Targeting services is yet to be implemented.
+
+The following information can be supplied to intents: action, category, mimetype, data, extra, package, class and target (these are also the corresponding keys to use when programming intent messages to send to gadgetbridge). Values to pass to target are "", "broadcastreceiver", "activity", "service" or target can be left out.
+
+Template for initiating an intent through javascript-code from a Bangle.js app that sends message to Gadgetbridge:
+
+```
+Bluetooth.println(JSON.stringify({t:"intent", action:"", category:"", mimetype:"", data:"", package:"", class:"", target:"", extra:{someKey:"someValueOrString"}}));
+```
+
+Key/value-pairs in the template above can be omitted if not applicable in your specific case.
+
+#### Android -> Bangle
 
 On the Android device, you can send code to execute to your Bangle.js (Programmable must be set to `true` in the Bangle's settings).
 
