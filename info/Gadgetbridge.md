@@ -89,29 +89,29 @@ On Bangle.js send something like:
 Bluetooth.println(JSON.stringify({t:"int­ent",action:"com.sonyericsson.alarm.ALAR­M_ALERT",extra:{key1:"asdfas"}}));
 ```
 
-This will send a Global Android intent. This can cause certain apps/windows to open, or can be used with apps like `Tasker`.
+This will send a Global Android intent which can cause certain apps/windows to open, or can be used with apps like `Tasker`.
 
-(The following is not present in Gadgetbridge version 0.68.0 published on F-droid as of 2022-08-17, but working if building from source).
+*(The following is not present in Gadgetbridge version 0.68.0 published on F-droid as of 2022-08-18, but works for beta testers of "Bangle.js Gadgetbridge" on Google Play Store. Or if building from source.)*
 
 Or:
 
 ```
-Bluetooth.println(JSON.stringify({t:"intent", action:"android.media.action.MEDIA_PLAY_FROM_SEARCH", category:"android.intent.category.DEFAULT", target:"activity", extra:{"query":'artist:"The Beatles" track:"Hello Little Girl"'}}))
+Bluetooth.println(JSON.stringify({t:"intent", action:"android.media.action.MEDIA_PLAY_FROM_SEARCH", category:"android.intent.category.DEFAULT", target:"activity", extra:{"query":'track:"Sittin\' on the Dock of the Bay" artist:"Otis Redding"'}}))
 ```
 
-This will search for and play the song "Hello Little Girl" 
+This will search for and play the song "Sittin' on the Dock of the Bay". The android device will ask about what app to use.
 
-Gadgetbridge with a Bangle.js supports sending broadcasts and starting activities. Targeting services is yet to be implemented.
+Gadgetbridge with a Bangle.js can broadcast intents and start activities. Targeting of services is not yet implemented.
 
-The following information can be supplied to intents: action, category, mimetype, data, extra, package, class and target (these are also the corresponding keys to use when programming intent messages to send to gadgetbridge). Values to pass to target are "", "broadcastreceiver", "activity", "service" or target can be left out.
+The following type of information can be supplied for intents: target, action, category, package, class, mimetype, data and extra. Values to pass with the target key are "broadcastreceiver", "activity" or "service". Intents will default to being broadcast if no target is specified.
 
-Template for initiating an intent through javascript-code from a Bangle.js app that sends message to Gadgetbridge:
+Template for initiating an intent from a Bangle.js app:
 
 ```
-Bluetooth.println(JSON.stringify({t:"intent", action:"", category:"", mimetype:"", data:"", package:"", class:"", target:"", extra:{someKey:"someValueOrString"}}));
+Bluetooth.println(JSON.stringify({t:"intent", target:"", action:"", category:"", package:"", class:"", mimetype:"", data:"", extra:{someKey:"someValueOrString"}}));
 ```
 
-Key/value-pairs in the template above can be omitted if not applicable in your specific case.
+Key/value-pairs can be omitted if they are not needed.
 
 #### Android -> Bangle
 
