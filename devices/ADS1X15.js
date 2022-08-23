@@ -52,6 +52,7 @@ DR_920SPS    : (0x0060),  // 920 samples per second
 DR_1600SPS   : (0x0080),  // 1600 samples per second (default)
 DR_2400SPS   : (0x00A0),  // 2400 samples per second
 DR_3300SPS   : (0x00C0),  // 3300 samples per second
+DR_ADS1115_860SPS : (0x00E0),  // 860 samples per second (only valid for ADS1115, used as default)
          
 CMODE_MASK   : (0x0010),
 CMODE_TRAD   : (0x0000),  // Traditional comparator with hysteresis (default)
@@ -92,10 +93,12 @@ var REG = {
   LOWTHRESH : 2,
   HITHRESH : 3
 };
-function ADS1X15(i2c) {
+function ADS1X15(i2c,opts={part:"ads1015"}) {
   this.i2c = i2c;
   this.addr = 0x48;
   this.gain = 2048;
+  this.part = opts.part;
+  
 }
 // used internally for writing to the ADC
 ADS1X15.prototype.writeRegister = function(reg, value) {
@@ -123,7 +126,7 @@ ADS1X15.prototype.getADC = function(channelSpec, callback) {
                     CONFIG.CLAT_NONLAT  | // Non-latching (default val)
                     CONFIG.CPOL_ACTVLOW | // Alert/Rdy active low   (default val)
                     CONFIG.CMODE_TRAD   | // Traditional comparator (default val)
-                    CONFIG.DR_1600SPS   | // 1600 samples per second (default)
+                    (this.part=="ads1015"?CONFIG.DR_1600SPS:DR_ADS1115_860SPS)   | // 1600 samples per second (default) for ads1015, 860 samples per second if ads1115
                     CONFIG.MODE_SINGLE;   // Single-shot mode (default)
   // single ended (channelSpec is a number) or differential (channelSpec is array w/ valid channel duo)
   if ("number" == typeof channelSpec) { // Set single-ended input channel
@@ -158,6 +161,6 @@ ADS1X15.prototype.getADCVoltage = function(channel, callback) {
 };
 
 // Create an instance of ADS1X15
-exports.connect = function(/*=I2C*/i2c) {
-  return new ADS1X15(i2c);
+exports.connect = function(/*=I2C*/i2c,opts) {
+  return new ADS1X15(i2c,opts);
 };
