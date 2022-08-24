@@ -93,24 +93,28 @@ var REG = {
   LOWTHRESH : 2,
   HITHRESH : 3
 };
-function ADS1X15(i2c,opts={part:"ads1015"}) {
+
+/**
+ * opts = {part:"ads1015/ads1115"}
+ * @constructor */
+function ADS1X15(i2c,opts) {
+  opts = opts||{};
   this.i2c = i2c;
   this.addr = 0x48;
   this.gain = 2048;
-  this.part = opts.part;
-  
+  this.part = opts.part||"ads1015";  
 }
-// used internally for writing to the ADC
+/// used internally for writing to the ADC
 ADS1X15.prototype.writeRegister = function(reg, value) {
   this.i2c.writeTo(this.addr, reg, value>>8, value);  
 };
-// used internally for reading from the ADC
+/// used internally for reading from the ADC
 ADS1X15.prototype.readRegister = function(reg) {
   this.i2c.writeTo(this.addr, reg);  
   var d = this.i2c.readFrom(this.addr, 2);
   return (d[0] << 8) | d[1];  
 };
-/* Set the I2C address. 
+/** Set the I2C address. 
 By default it's 0x48, but it could also be 0x4B if the ADDR pin is 1  */
 ADS1X15.prototype.setAddr = function(addr) { this.addr = addr; };
 /* set the gain, with a value in mv (6144, 4096, 2048, 1024, 512 or 256). 
@@ -119,14 +123,14 @@ ADS1X15.prototype.setGain = function(gain) {
   if (!(gain in GAINS)) throw new Error("Gain "+gain+" not found");
   this.gain = gain;
 };
-/* Get an ADC reading and call `callback` with the raw data as a 16 bit signed value. 
+/** Get an ADC reading and call `callback` with the raw data as a 16 bit signed value. 
 `channel` is a value between 0 and 3, or an array of inputs. Either `[0,1]`, `[0,3]`, `[1,3]` or `[2,3]`  */
 ADS1X15.prototype.getADC = function(channelSpec, callback) {
   var config = CONFIG.CQUE_NONE    | // Disable the comparator (default val)
                     CONFIG.CLAT_NONLAT  | // Non-latching (default val)
                     CONFIG.CPOL_ACTVLOW | // Alert/Rdy active low   (default val)
                     CONFIG.CMODE_TRAD   | // Traditional comparator (default val)
-                    (this.part=="ads1015"?CONFIG.DR_1600SPS:DR_ADS1115_860SPS)   | // 1600 samples per second (default) for ads1015, 860 samples per second if ads1115
+                    (this.part=="ads1015"?CONFIG.DR_1600SPS:CONFIG.DR_ADS1115_860SPS)   | // 1600 samples per second (default) for ads1015, 860 samples per second if ads1115
                     CONFIG.MODE_SINGLE;   // Single-shot mode (default)
   // single ended (channelSpec is a number) or differential (channelSpec is array w/ valid channel duo)
   if ("number" == typeof channelSpec) { // Set single-ended input channel
@@ -151,7 +155,7 @@ ADS1X15.prototype.getADC = function(channelSpec, callback) {
     callback(d); 
   }, 8);
 };
-/* Get an ADC reading and call `callback` with the voltage as a floating point value.
+/** Get an ADC reading and call `callback` with the voltage as a floating point value.
 `channel` is a value between 0 and 3, or an array of inputs. Either `[0,1]`, `[0,3]`, `[1,3]` or `[2,3]`  */
 ADS1X15.prototype.getADCVoltage = function(channel, callback) {
   var mul = this.gain / 32768000;
@@ -160,7 +164,7 @@ ADS1X15.prototype.getADCVoltage = function(channel, callback) {
   });
 };
 
-// Create an instance of ADS1X15
+/// Create an instance of ADS1X15. opts = {part:"ads1015/ads1115"}
 exports.connect = function(/*=I2C*/i2c,opts) {
-  return new ADS1X15(i2c,opts);
+  return new ADS1X15(i2c, opts);
 };
