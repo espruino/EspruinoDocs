@@ -22,7 +22,7 @@ Just 'connect' the module to the correct I2C port and call `getADC` to get a val
 
 ```
 I2C1.setup({ scl : ..., sda: ...} );
-var ads = require("ADS1X15").connect(I2C1);
+var ads = require("ADS1X15").connect(I2C1); // alternatively, if ADS1115 is used, use ´var ads = require("ADS1X15").connect(I2C1,{ part:"ads1115"});´ instead
 ads.setGain(256); // +/- 0.256mV
 ads.getADC(0, function(val) {
   console.log("Read ADC value: "+val);
