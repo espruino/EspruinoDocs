@@ -191,7 +191,8 @@ exports.tap = function(key, callback) {
   }, 10);
 }
 
-exports.type = function(txt, delay, callback) {
+exports.type = function(txt, callback, delay) {
+  delay = delay||20;
   var intr = setInterval(function() {
     if (!txt.length) {
       clearInterval(intr);
