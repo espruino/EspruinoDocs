@@ -191,7 +191,8 @@ exports.tap = function(key, callback) {
   }, 10);
 }
 
-exports.type = function(txt, callback) {
+exports.type = function(txt, callback, delay) {
+  delay = delay||20;
   var intr = setInterval(function() {
     if (!txt.length) {
       clearInterval(intr);
@@ -200,5 +201,5 @@ exports.type = function(txt, callback) {
       if (txt[0] in KEY) exports.tap(KEY[txt[0]]);
       txt = txt.substr(1);
     }
-  }, 20);
+  }, delay);
 }
