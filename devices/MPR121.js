@@ -42,14 +42,14 @@ exports.connect = function(i2c, callback, options) {
     },
     filteredData : (pin) =>  {
       if (pin<0 || pin>=12) throw new Error("Invalid pin");
-      return this.readWord(0x04 + pin*2);
+      return MPR.readWord(0x04 + pin*2);
     },
     baselineData : (pin) =>  {
       if (pin<0 || pin>=12) throw new Error("Invalid pin");
-      return this.readByte(0x1E + pin)<<2;
+      return MPR.readByte(0x1E + pin)<<2;
     },
     touched: () => {
-      return this.readWord(0);
+      return MPR.readWord(0);
     },
     setThresholds: (touch, release) => {
       for (var i=0; i<24; i+=2) {
