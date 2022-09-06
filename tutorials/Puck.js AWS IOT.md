@@ -1,36 +1,39 @@
 <!--- Copyright (c) 2017 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Puck.js to GCP BigQuery & Data Studio
+Stream from Puck.js to AWS IOT Core & SNS Email
 =========================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+GCP+BigQuery. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Puck.js+AWS+IOT. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Magnetic,GCP,Google Cloud Platform,Pub/Sub,BigQuery
+* KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Magnetic,AWS,Amazon Web Services,IOT Core,SNS
 * USES: Puck.js,BLE,Only BLE
 
-This tutorial shows you how use [Puck.js](/Puck.js) and a Raspberry Pi to stream data to GCP.
+This tutorial shows you how use [Puck.js](/Puck.js) and a Raspberry Pi to stream data to AWS.
 
-The GCP Tutorial (Temperature data to GCP BigQuery Table & Data Studio Graph):
-- ![window](Puck.js GCP BigQuery/process-map.png)
-- The puck.js app advertises the temperature (and other info) to the Raspberry Pi EspruinoHub MQTT broker 
+[[https://youtube.com/shorts/Ejb9RpYWCKc]]
+
+The AWS Tutorial (Door Alarm SNS Email):
+- ![window](Puck.js to AWS IOT/process-map.png)
+- The puck.js app advertises movement/magnetic field fluctuations (and other info) to the Raspberry Pi EspruinoHub MQTT broker 
 - NodeRed ingests the MQTT message & cleans it up with a function
-- NodeRed sends temperature data to a GCP Pub/Sub topic via node-red-contrib-google-cloud pub/sub out node with credentials
-- A GCP Pub/Sub topic accepts the message & relays it to the subscribers
-- A GCP Pub/sub subscription stores the data to a BigQuery Table
-- A Data Studio dashboard displays the data from BigQuery
+- A AWS IOT Core Rule publishes a message to an SNS Topic
+- The SNS topic accepts the message & relays it to the subscribers
+- An SNS subscription sends the message as an email to a subscriber 
+- Subscriber receives an email on their phone letting them know their door is open/closed or the "security system" is armed/disarmed 
 
 Prerequesites
 --------
 * A [Puck.js](/Puck.js) device (or other [Espruino board](/Order) if you don't need Bluetooth LE
+* A Magnet & Command Strips to hold Magnet & Puck.js to Door & Door Frame
 * Raspberry Pi with Bluettoth/Wifi Capabilities and NodeRed & EspruinoHub installed on it
 * Install [Espruino Hub](https://github.com/espruino/EspruinoHub) & [NodeRed](https://www.espruino.com/BLE+Node-RED) on the Raspberry Pi
 * Set EspruinoHub & NodeRed to auto start on a reboot
-* A GCP Account (This is free to set up & this project can be done in a free tier)
+* A AWS Account (This is free to set up & this project can be run for pennies a month or entirely for free)
 
 Raspberry Pi Setup
 --------
 #### Note: This tutorial assumes you have EspruinoHub & NodeRed installed on your Raspberry Pi already!
 
-#### Edit the Raspberry Pi so EspruinoHub will ingest the MQTT messages and NodeRed will publish to the right GCP project 
+#### Edit the Raspberry Pi so EspruinoHub will ingest the MQTT messages 
 
 * SSH into the Raspberry Pi and edit the attribute.js file in the EspruinoHub. This code will create a filterable channel on the MQTT broker.
 
@@ -93,31 +96,18 @@ exports.names = {
 };
 ```
 
-* Open the NodeRed service file
-```
-cd 
-cd /.
-cd lib/systemd/system
-sudo nano nodered.service
-```
-
-* Add a GOOGLE_CLOUD_PROJECT name as an environment variable to the NodeRed Service file. 
-    * This will allow you to publish to the GCP topic you're about to set up.
-```
-Environment="GOOGLE_CLOUD_PROJECT=mygooglecloudproject-123456"
-```
-
 * Reload the systemctl daemon
 ```
 systemctl daemon-reload
 ```
+
 
 Flash the Code to Puck.js
 --------
 * What the Code Does
     * As long as the button state remains 1, every minute, your Puck.js will advertise the temperature (f), battery level, voltage, light, and LED states. It also will advertise when it senses movement, a change in magnetic field, NFC field, or a button press. For this tutorial, we'll just be using the temperature advertisements. Upload the code to the Puck.js's flash, so it'll still be there if you swap out the battery.
 * Testing the Code in [Espruino Web IDE](https://www.espruino.com/ide/)
-    * ![window](Puck.js GCP BigQuery/puck-flash.png)
+    * ![window](Puck.js AWS IOT/puck-flash.png)
     * Check that the code is running by reading the console log output. Make surethat temperature data is coming across. Sometimes temperature data doesn't advertise if the temperature hasn't changed. If you want to test the temperature advertisement, warm up or cool down the puck temp sensor by transferring heat with your hand.
 * Start Advertising!    
     * To get the data to stop showing up in the console & start advertising, take the battey out & put it back in. As long as the code was uploaded to the device's flash, it'll start advertising when the battery is put back in. The temperature data won't start sending over until one minute has gone by. Then it'll advertise the temp every minute.
@@ -257,49 +247,109 @@ NRF.on('NFCoff', function() {
 });
 ```
 
-Setting up GCP Pub/Sub & BigQuery
+Setting up AWS IOT Core & SNS Topic/Subscription
 --------
-* Go to your GCP Console
-* Create a Pub/Sub Schema for to Ingest Temperature Data
-    * ![window](Puck.js GCP BigQuery/pubsub-schema.png)
-```
-{
-  "type": "record",
-  "name": "Avro",
-  "fields": [
-    {
-      "name": "temperature_fahrenheit",
-      "type": "int"
-    }
-  ]
-}
-```
+* Go to your AWS Console
+* Open the IOT Core Service & Create a Thing 
+    * Manage --> Devices --> Things --> Create Thing
+        * ![window](Puck.js AWS IOT/iot-core-create-thing1.png)
+    * Name your device & click next
+        * ![window](Puck.js AWS IOT/iot-core-create-thing2.png)
+    * Click "Auto-generate a new certificate" and click next
+        * ![window](Puck.js AWS IOT/iot-core-create-thing3.png)
+    * Click "Create Policy"
+        * ![window](Puck.js AWS IOT/iot-core-create-thing4.png)
+    * Name the policy & allow all for policy action & policy source. Click Create
+        * ![window](Puck.js AWS IOT/iot-core-create-thing5-policy.png)
+    * Choose the new polcy you just created & click "Create Thing"
+        * ![window](Puck.js AWS IOT/iot-core-create-thing6.png)
+    * Optn the thing you just created and create/download certificates
+        * ![window](Puck.js AWS IOT/iot-core-create-thing7-certificates.png)
+
 * Create a Pub/Sub Topic
-    * ![window](Puck.js GCP BigQuery/pubsub-topic.png)
-* Create a Dataset & Table in BigQuery
-    * ![window](Puck.js GCP BigQuery/bigquery-table.png)
-* Create a Pub/Sub Subscription that writes to the BigQuery Table
-    * ![window](Puck.js GCP BigQuery/pubsub-subscription.png)
+    * Manage --> Message Routing --> Rules --> Create Rule
+        * ![window](Puck.js AWS IOT/iot-core-create-rule1.png)
+    * Paste the SQL in & click next. This allows the rule to fire when AWS IOT Core receives a MQTT message with this topic.
+        * ![window](Puck.js AWS IOT/iot-core-create-rule2.png)
+    ```
+    SELECT *,  timestamp() as dts FROM 'esp_door'
+    ```
+    * Click Create SNS Topic
+        * ![window](Puck.js AWS IOT/iot-core-create-rule3.png)
+    * Create SNS Topic with a standard type and click next 
+        * ![window](Puck.js AWS IOT/iot-core-create-rule4-sns-topic.png)
+    * Go back to the other page & find the topic you just created (may need to click refresh). Create & name a new rule. Click Next. 
+        * ![window](Puck.js AWS IOT/iot-core-create-rule5.png)
+    * Now we have a SNS topic being published to, we need to create a SNS subscription that sends an email to yout email address.  
+        * ![window](Puck.js AWS IOT/iot-core-create-rule6-sns-subscription.png)
 
 Setting up NodeRed
 --------
-* ![window](Puck.js GCP BigQuery/noedred-process.png)
-* Add a MQTT In Node that listens for the temperature data
-    * ![window](Puck.js GCP BigQuery/noedred-mqttin.png)
-* Add a function node that processes the message payload
-    * ![window](Puck.js GCP BigQuery/noedred-tempfunction.png)
-* Install "node-red-contrib-google-cloud" to your nodered palette
-    * ![window](Puck.js GCP BigQuery/install_node-red-contrib-google-cloud.png)
-* Add a pub/sub out node that publishes to your GCP Pub/sub topic
-    * ![window](Puck.js GCP BigQuery/nodered-gcp-pubtopic.png)
-* Edit the pub/sub out node to add GCP credentials from IAM. This will allow you to publish to that topic
+* ![window](Puck.js AWS IOT/noedred-process.png)
+* Add a MQTT In Node that listens for the button press data. 
+    * ![window](Puck.js AWS IOT/noedred-mqttin-button.png)
+* Add a MQTT In Node that listens for the magnetic field data
+    * ![window](Puck.js AWS IOT/noedred-mqttin-mag.png)
+* Add a MQTT In Node that listens for the movement data
+    * ![window](Puck.js AWS IOT/noedred-mqttin-move.png)
 
-BigQuery & Data Studio
+* Add a function node that processes the button message payload
+    * ![window](Puck.js AWS IOT/noedred-buttonfunction.png)
+```
+var message_object = {};
+if (msg.payload["data"][0] === 0) {    
+    message_object["WARNING"] = "Survailence Turned Off";
+    message_object["sensor"] = "button";
+    msg.payload = message_object;
+    return msg;
+}
+else {
+    message_object["message"] = "Survailence Turned On";
+    message_object["sensor"] = "button";
+    msg.payload = message_object;
+    return msg;
+};
+```
+* Add a function node that processes the magnetic field message payload
+    * ![window](Puck.js AWS IOT/noedred-magfunction.png)
+```
+var message_object = {};
+if (msg.payload["data"][0] === 0) {    
+    message_object["WARNING"] = "Door Ajar - Home Not Secure!";
+    msg.payload = message_object;
+    return msg;
+}
+else {
+    message_object["Message"] = "Door Closed";
+    msg.payload = message_object;
+    return msg;
+};
+
+```
+* Add a function node that processes the movement message payload
+    * ![window](Puck.js AWS IOT/noedred-movefunction.png)
+```
+var message_object = {};
+if (msg.payload["data"][0] === 1) {    
+    message_object["WARNING"] = "Door in Motion - Home Not Secure!";
+    message_object["sensor"] = "motion";
+    msg.payload = message_object;
+    return msg;
+};
+```
+* Add a MQTT out node that publishes to your AWS pub/sub iot core
+    * ![window](Puck.js AWS IOT/nodered-aws-pubtopic.png)
+
+
+
+
+Test!
 --------
-* Open up the table in BigQuery, Click Export & Explore in Data Studio
-    * ![window](Puck.js GCP BigQuery/big-query-to-data-studio.png)
-* Explore the data set & make a line graph or timeseries graph displaying temperature over time
-    * ![window](Puck.js GCP BigQuery/data-studio-graph-from-bigquery.png)
+* Tip: Please reatert the puck.js by taking the battery out and putting it bakc in. As long as the code was flashed to the puck it'll start advertising immediately
+* Put a Magnet near your door frame and the Puck right next to it. 
+    * [[https://youtube.com/shorts/Ejb9RpYWCKc?feature=share]]
+* Test the features by opening/closing your door, and pressing the button. You'll get emails from AWS about door movement, door open/closed/ and alarm on/off.
+    * ![window](Puck.js AWS IOT/sns-notification.png)
 
 Buying
 ------
