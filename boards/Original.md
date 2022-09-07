@@ -164,9 +164,9 @@ Firmware Updates
 -----------------
 
 We'd **strongly** recommend that you use the Web IDE to update the firmware
-on this board - See [The Download page](/Download#flashing) for instructions.
+on this board - please see the [Firmware Update](/Firmware+Update#stm32) page for detailed instructions.
 
-In case you manage to erase all your board's flash memory you can use the
+If you do manage to erase all your board's flash memory you can use the
 on-chip bootloader though - see below.
 
 

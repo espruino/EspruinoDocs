@@ -565,13 +565,10 @@ Firmware Updates
 
 ### App Loader
 
-You can now update your Bangle.js firmware using the [App Loader](https://banglejs.com/apps/#fwupdate). This is what
-we're recommend for all new firmware updates.
+Bangle.js 2 provides its own firmware update mechanism using the [App Loader](https://banglejs.com/apps/?id=fwupdate).
 
-* Open the [App Loader](https://banglejs.com/apps)
-* Connect to your Bangle.js with the `Connect` button in the top right
-* Go to the `Firmware Update` app and click `≡` icon to the right of it
-* Click on the Firmware version you want, and click the `Upload` button when it appears
+**On Bangle.js 2 this is the recommended method** (although other methods still work). Simply click on the **≡** icon
+to the right of the [`Firmware Update`](https://banglejs.com/apps/?id=fwupdate) app and follow the instructions.
 
 The firmware will upload to Bangle.js, and when it is complete, Bangle.js will
 restart and install the firmware.
@@ -580,39 +577,9 @@ restart and install the firmware.
 which need updating before you use the firmware updater. Just follow the instructions on
 the `Firmware Update` page to update your bootloader.
 
+### DFU
 
-### Android/iOS App
-
-The Android/iOS app method is good as a fallback way to update your firmware, however
-it seems that new versions of iOS require you to retry the upload multiple times, so
-we'd recommend using an Android device if at all possible.
-
-[[http://youtu.be/qwe8oFVlxsU]]
-
-  * Long-press the button for about 10 seconds until the screen goes blank
-  * While `====` is going across the screen, release the button (releasing it later will just boot back to Bangle.js)
-  * The watch should now be in DFU mode
-  * Install the Nordic Semiconductor NRF Toolbox App for [Android](https://play.google.com/store/apps/details?id=no.nordicsemi.android.nrftoolbox) or [Apple iOS](https://apps.apple.com/us/app/nrf-toolbox/id820906058)
-  * Download the latest stable distribution zip from the [Espruino site](https://www.espruino.com/Download#banglejs2) or the latest bleeding edge nightly build from [here](http://www.espruino.com/binaries/travis/master/).
-  * In addition to activating the bluetooth, the location of Android 10 has to be activated because of [an issue in current NRF Toolbox app releases](https://devzone.nordicsemi.com/f/nordic-q-a/53938/android-10-need-to-toggle-location-permission-to-see-ble-devices)
-  * Open the NRF Toolbox app
-  * Tap the DFU icon
-  * Tap Select File, choose Distribution Packet (ZIP), and choose the ZIP file you downloaded
-  * If a Select scope window appears, choose All
-  * Tap Select Device and choose the device called `DfuTarg`
-  * Now tap Upload and wait
-  * It will take around 90 seconds to complete
-  * Once complete, long-press `BTN3` to go to the Clock
-  * You should still have the original apps you installed
-
-**Note:** It is also possible to use the [Web IDE](https://www.espruino.com/ide/)
-to update Bangle.js firmware. Click `Settings` (top right), then `Flasher`
-and follow the instructions.
-
-**Note:** It has been reported that on modern iOS devices the NRF Toolbox
-app disconnects from the Bangle after performing only part of the update process (iOS 12.5 works flawlessly). If this
-happens to you, you'll have to manually click to start the update multiple times (it will
-start from where it left off) in order to complete the update.
+Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
 
 
 

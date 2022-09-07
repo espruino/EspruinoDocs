@@ -32,6 +32,7 @@ Power usage varies slightly with the board used (based on voltage regulators and
 * [Pixl.js Power Consumption](/Pixl.js#power-consumption)
 * [MDBT42Q Power Consumption](/MDBT42Q#power-consumption)
 * [Bangle.js Power Consumption](/Bangle.js#power-consumption)
+* [Bangle.js 2 Power Consumption](/Bangle.js2#power-consumption)
 
 STM32
 -----

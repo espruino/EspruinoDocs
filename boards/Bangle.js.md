@@ -8,8 +8,6 @@ Bangle.js
 
 [![](Banglejs/bangle-leaf.jpg)](https://shop.espruino.com/banglejs)
 
-* BUYFROM: £59,£45,https://shop.espruino.com/banglejs,/Order#banglejs
-
 **Bangle.js is an open, hackable smartwatch**
 
 Bangle.js 1 is no longer for sale, however you can now purchase the much improved [Bangle.js 2!](/Bangle.js2)
@@ -467,28 +465,7 @@ var a = analogRead(D29); // read the raw PPG value
 Firmware Updates
 ------------------
 
-[[http://youtu.be/uHJGsSaU6Zo]]
-
-  * Long-press `BTN1` + `BTN2` for about 6 seconds until the screen goes blank
-  * Release `BTN2`
-  * Release `BTN1` a moment later while `====` is going across the screen
-  * The watch should now be in Dfu mode
-  * Install the Nordic Semiconductor NRF Toolbox App for [Android](https://play.google.com/store/apps/details?id=no.nordicsemi.android.nrftoolbox) or [Apple iOS](https://apps.apple.com/us/app/nrf-toolbox/id820906058)
-  * Download the latest stable distribution zip from the [Espruino site](https://www.espruino.com/Download#banglejs) or the latest bleeding edge nightly build from [here](http://www.espruino.com/binaries/travis/master/).
-  * In addition to activating the bluetooth, the location of Android 10 has to be activated because of [an issue in current NRF Toolbox app releases](https://devzone.nordicsemi.com/f/nordic-q-a/53938/android-10-need-to-toggle-location-permission-to-see-ble-devices)
-  * Open the NRF Toolbox app
-  * Tap the DFU icon
-  * Tap Select File, choose Distribution Packet (ZIP), and choose the ZIP file you downloaded
-  * If a Select scope window appears, choose All
-  * Tap Select Device and choose the device called `DfuTarg`
-  * Now tap Upload and wait
-  * It will take around 90 seconds to complete
-  * Once complete, long-press `BTN3` to go to the Clock
-  * You should still have the original apps you installed
-
-**Note:** It is also possible to use the [Web IDE](https://www.espruino.com/ide/)
-to update Bangle.js firmware. Click `Settings` (top right), then `Flasher`
-and follow the instructions.
+Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
 
 Troubleshooting
 ---------------

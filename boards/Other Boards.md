@@ -33,9 +33,11 @@ Contents
   | **Official Boards** |  |  |  |  |  |  |  |  |  |
  | [**Espruino Original**](/Original) | STM32F104 | 72 | 2200 | £21 | Y | 3 | 2 | Y | Micro SD, Optional Bluetooth Serial, Proto area |
  | [**Espruino Pico**](/Pico) | STM32F401 | 84 | 5100 | £17 | Y | 3 | 2 | Y |  |
- | [**Espruino WiFi**](/WiFi) | STM32F411 | 100 | 7100 | £25 | Y | 3 | 2 | N |  WiFi |
- | [**Espruino Puck.js**](/Puck.js) | nRF52832 | 64 | 2200 | £25 | N | 1 | 1 | Y |  Bluetooth LE, Case with Button |
- | [**Espruino Pixl.js**](/Pixl.js) | nRF52832 | 64 | 2200 | £30 | N | 1 | 1 | Y | Arduino Headers, Bluetooth LE, LCD Display |
+ | [**Espruino WiFi**](/WiFi) | STM32F411 | 100 | 7100 | -- | Y | 3 | 2 | N |  WiFi |
+ | [**Espruino Puck.js**](/Puck.js) | nRF52832 | 64 | 2200 | £25 | N | 1 | 1 | Y |  Bluetooth LE, Case with Button, Accelerometer, Gyro, Magnetometer, Temperature |
+ | [**Espruino Pixl.js**](/Pixl.js) | nRF52832 | 64 | 2200 | £30 | N | 1 | 1 | Y |  LCD Display, Arduino Headers, Bluetooth LE |
+ | [**Espruino Bangle.js**](/Bangle.js) | nRF52832 | 64 | 2200 | -- | N | - | - | Y | LCD Display, Bluetooth LE, Vibration, Accelerometer |
+ | [**Espruino Bangle.js 2**](/Bangle.js2) | nRF52840 | 64 | 12000 | £64 | N | - | - | Y | LCD Display, Bluetooth LE, Vibration, Accelerometer |
  | [**Espruino MDBT42Q Breakout**](/MDBT42Q) | nRF52832 | 64 | 2200 | £17 | N | 1 | 1 | N | Bluetooth LE |
  | [**Espruino MDBT42Q Module**](/MDBT42Q) | nRF52832 | 64 | 2200 | £10 | N | 1 | 1 | N | Bluetooth LE, Bare Module |
  | **Third Party Boards** |  |  |  |  |  |  |  |  |  |
@@ -58,6 +60,7 @@ Contents
  | [**'HY' 2.8" LCD**](/ReferenceHYSTM32_28) | STM32F103RB | 72 | 700 | €30 | Y | 3 | 2 | N | SD Card (unsupported),LCD Display |
  | [**'HY' 3.2" LCD**](/ReferenceHYSTM32_32) | STM32F103VC | 72 | 2000 | €30 | Y | 3 | 2 | N | SD Card, LCD Display |
  | [**micro:bit**](/MicroBit) | nRF51822 | 16 | 200 | - | Y | 1 | 1 | Y | Bluetooth LE, LED matrix |
+ | [**micro:bit 2**](/MicroBit) | nRF52833 | 64 | 6000 | - | Y | 1 | 1 | Y | Bluetooth LE, LED matrix, Speaker, Mic |
  | [**ESP8266**](/EspruinoESP8266) | Xtensa | 80 | 1023 | €10 | N | 1 | 1 | N | WiFi |
  | [**ESP32**](/ESP32) | Xtensa | 240 | 5000 | $10 | N | 2 | 2 | N | Flash FS, WiFi |
 

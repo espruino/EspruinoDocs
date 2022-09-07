@@ -24,7 +24,7 @@ function draw() {
   // work out how to display the current time
   var d = new Date();
   var h = d.getHours(), m = d.getMinutes();
-  var time = h + ":" + ("0"+m).substr(-2);
+  var time = h + ":" + m.toString().padStart(2,0);
 
   // Reset the state of the graphics library
   g.reset();
@@ -38,12 +38,13 @@ function draw() {
 g.clear();
 // draw immediately at first
 draw();
+// now draw every second
 var secondInterval = setInterval(draw, 1000);
 ```
 
 You'll now have some tiny text in the middle of the screen, which displays the time.
 
-The slightly odd ` ("0"+m).substr(-2)` code zero-pads the minutes for us (so 1 minute past 12 gets written as `"12:01"` rather than `"12:1"`).
+The slightly odd ` m.toString().padStart(2,0)` code zero-pads the minutes for us (so 1 minute past 12 gets written as `"12:01"` rather than `"12:1"`).
 
 **Why is the code formatted like this?** Check out the [Code Style](/Code+Style)
 page for some tips and the reasoning behind it.
@@ -68,7 +69,7 @@ function draw() {
   // work out how to display the current time
   var d = new Date();
   var h = d.getHours(), m = d.getMinutes();
-  var time = (" "+h).substr(-2) + ":" + ("0"+m).substr(-2);
+  var time = (" "+h).substr(-2) + ":" + m.toString().padStart(2,0);
   // Reset the state of the graphics library
   g.reset();
   // draw the current time (4x size 7 segment)
@@ -84,6 +85,7 @@ function draw() {
 g.clear();
 // draw immediately at first
 draw();
+// now draw every second
 var secondInterval = setInterval(draw, 1000);
 ```
 
@@ -112,24 +114,6 @@ Extra Clock Features
 We now have something that tells the time, but we need to add a few
 extra bits before we can make this a clock face:
 
-### Widgets
-
-Most clocks show widgets. To do this you just need to add the following
-code to the end of the clock:
-
-```JS
-Bangle.loadWidgets();
-Bangle.drawWidgets();
-```
-
-You can call `Bangle.drawWidgets()` every time the screen is cleared
-and widgets need to redraw themselves - but it's good practice to
-do that as rarely as possible to avoid flicker.
-
-In our example we only clear the screen once (at startup) so that's
-the only time we call `Bangle.drawWidgets()`
-
-
 ### BTN2 to start the launcher
 
 Every clock needs to be able to start the launcher, and
@@ -148,14 +132,46 @@ explicitly show the launcher when `BTN2` is pressed:
 to install different apps which start the launcher (or other apps) with different
 functionality, independent of the clock face.
 
-### Power saving
 
-Right now, we're redrawing the screen every second regardless of whether
-it is on or not - that's obviously going to be bad for battery.
+### Widgets
 
-To get around this we can listen for when the screen is turned off
+Most clocks show widgets. To do this you just need to add the following
+code to the end of the clock:
+
+```JS
+Bangle.loadWidgets();
+Bangle.drawWidgets();
+```
+
+You can call `Bangle.drawWidgets()` every time the screen is cleared
+and widgets need to redraw themselves - but it's good practice to
+do that as rarely as possible to avoid flicker.
+
+In our example we only clear the screen once (at startup) so that's
+the only time we call `Bangle.drawWidgets()`
+
+
+### Power saving 1
+
+Right now, we're redrawing the whole screen every second, and this
+can eat up a reasonable amount of battery (it'll reduce Bangle.js 2
+battery life by a factor of 2 or more) compared to updates once a minute.
+
+* If your clock face doesn't show seconds, consider only updating once
+a minute - [here is an example](/Bangle.js+Clock+Font)
+* If possible, you could update the clock face once a minute using the
+code above and then update **just** the area of the clock face responsible
+for seconds once a second.
+
+### Power saving 2
+
+On Bangle.js 1, the screen isn't on all the time, so we can stop updates
+when it is off. To do this we listen for the `lcdPower` event
 and cancel our `secondInterval` interval, then restart it when the
 screen is turned on (and immediately redraw):
+
+**Note:** On Bangle.js 2 the screen is on all the time, so this code
+isn't required.
 
 ```JS
 // Stop updates when LCD is off, restart when on
@@ -183,7 +199,7 @@ function draw() {
   // work out how to display the current time
   var d = new Date();
   var h = d.getHours(), m = d.getMinutes();
-  var time = (" "+h).substr(-2) + ":" + ("0"+m).substr(-2);
+  var time = (" "+h).substr(-2) + ":" + m.toString().padStart(2,0);
   // Reset the state of the graphics library
   g.reset();
   // draw the current time (4x size 7 segment)
@@ -205,6 +221,7 @@ function draw() {
 g.clear();
 // draw immediately at first
 draw();
+// now draw every second
 var secondInterval = setInterval(draw, 1000);
 // Stop updates when LCD is off, restart when on
 Bangle.on('lcdPower',on=>{
@@ -215,7 +232,9 @@ Bangle.on('lcdPower',on=>{
     draw(); // draw immediately
   }
 });
-// Show launcher when middle button pressed
+/* Show launcher when middle button pressed
+This should be done *before* Bangle.loadWidgets so that
+widgets know if they're being loaded into a clock app or not */
 Bangle.setUI("clock");
 // Load widgets
 Bangle.loadWidgets();

@@ -543,36 +543,7 @@ Firmware Updates
 
 **Note:** On Puck.js v2 **do not install firmwares 2v04 and earlier**. See 'recovery after 2v04 installation' below.
 
-### via nRF Toolbox App (iOS & Android)
-
-* On your Bluetooth LE capable phone, install the `nRF Toolbox` app
-* Download the latest `espruino_xxx_puckjs.zip` file from [the Download page](/Download#puckjs)
-* [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED should be lit
-* Release the button within 3 seconds of inserting the battery - either the Red LED should light instead or on new Puck.js devices, Green will light more brightly. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
-* Open the `nRF Toolbox` app
-* Tap the `DFU` icon
-* Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the ZIP file you downloaded
-* If choosing the ZIP file opens the ZIP and displays files inside (it can do on some Android 7 devices) then hit back, long-press on the ZIP, and choose `Open` in the top right.
-* If a `Select scope` window appears, choose `All`
-* Tap `Select Device` and choose the device called `DfuTarg`
-* Now tap `Upload` and wait. The LED should turn blue and the DFU process will start - it will take around 90 seconds to complete
-* If you have problems after completion, perform a [Hard Reset](#hard-reset)
-
-### via nRF Connect App (Android)
-
-[[http://youtu.be/N3CJbl29vy0]]
-
-* On your Bluetooth LE capable phone, install the `nRF Connect` app
-* Download the latest `espruino_xxx_puckjs.zip` file from [the Download page](/Download#puckjs)
-* [Reset Puck.js](#resetting-puck-js) with the button held down - the Green LED should be lit
-* Release the button within 3 seconds of inserting the battery - either the Red LED should light instead or on new Puck.js devices, Green will light more brightly. If it doesn't, you'll need to try again, holding the button down for less time after inserting the battery.
-* Open the `nRF Connect` app
-* It should show some Bluetooth devices, including one called `DfuTarg`
-* Click `Connect` to the right of `DfuTarg`
-* Once connected, a `DFU` symbol in a circle will appear in the top right of the App
-* Click it, choose `Distribution Packet (ZIP)`, and your Download. If clicking on the downloaded zip file opens its contents (Android 7 may do this) then long-press on the zip and tap open instead.
-* The DFU process will start - it will take around 90 seconds to complete
-* If you have problems after completion, perform a [Hard Reset](#hard-reset)
+Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
 
 
 Troubleshooting
@@ -588,7 +559,19 @@ On Puck.js v2 (v2.1 is unaffected), you should not install firmwares 2v04 and ea
 
 Pre-2v05 firmwares that are not designed for Puck.js v2 configure `D21/nRESET` as a reset pin. This then forces the chip into a reset state, effectively 'bricking' your Puck.js.
 
-In the very rare case that an old firmware was installed, you can recover your Puck.js by temporarily connecting [pin D21 on the bluetooth module](/MDBT42Q#pinout) to the 3v pin on the Puck. You can then flash an up to date firmware via DFU and the problem will be fixed.
+In the very rare case that an old firmware was installed, you can recover your Puck.js by temporarily connecting [pin D21 on the bluetooth module](/MDBT42Q#pinout) to the 3v pin on the Puck. You can then flash an up to date firmware via DFU, rebooting into Espruno, connecting and running the following code (which resets the reset pin configuration flag):
+
+```
+setTimeout(function() { NRF.restart(function(){
+poke32(0x4001e504,2);while(!peek32(0x4001e400)); // enable flash erase
+poke32(0x4001e514,1);while(!peek32(0x4001e400)); // erase whole uicr
+poke32(0x4001e504,1);while(!peek32(0x4001e400)); // enable flash writing
+poke32(0x10001014,0x7A000);while(!peek32(0x4001e400)); // set bootloader
+poke32(0x10001018,0x7E000);while(!peek32(0x4001e400)); // set mbr settings
+poke32(0x1000120c,0xfffffffe);while(!peek32(0x4001e400)); // NFC pins as GPIO
+poke32(0x4001e504, 0);while(!peek32(0x4001e400)); // disable flash writing
+}) }, 2000);NRF.disconnect();
+```
 
 
 Other Official Espruino Boards

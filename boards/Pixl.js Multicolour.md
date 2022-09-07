@@ -424,7 +424,7 @@ for more info.
 
 You can [now update ESP8266 firmware using the Web IDE](/ESP8266#use-the-espruino-ide).
 
-## Updating Espruino
+## Firmware Updates
 
 The badges came with Espruino v2.00, but there have [been a few changes](https://github.com/espruino/Espruino/blob/master/ChangeLog)
 to Espruino since then that have fixed:
@@ -433,7 +433,7 @@ to Espruino since then that have fixed:
 - Filesystem issues when repeatedly calling `require("Storage").write`
 - Other issues
 
-To update Espruino, just [follow the Pixl.js instructions here](http://www.espruino.com/Pixl.js#firmware-updates)
+To update Espruino, just follow the normal [Firmware Update](/Firmware+Update#nrf52) instructions
 with the 'Cutting edge' build linked from [the firmware download page](http://www.espruino.com/Download#pixljs).
 
 This'll take a few minutes, and you then need to follow the steps for [Returning your badge to normal](#returning-to-standard) - so if you're fine with everything as it is, we'd recommend that you keep version 2.00 for now.

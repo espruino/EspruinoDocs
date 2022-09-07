@@ -203,14 +203,7 @@ the UART but don't power down and power on the MDBT42Q, you won't get a serial p
 Firmware Updates
 -----------------
 
-Up to date firmwares are available from [the Download page](/Download#mdbt42q).
-
-Check out the [Puck.js firmware update instructions](/Puck.js#firmware-updates)
-for full details. All you need to do is apply power to your module with
-pin `D0` connected to `VDD` (or `BTN` held down on the breakout board), then
-release it after a second to enter bootloader mode. The module will advertise
-itself as `DfuTarg`, and you can then connect with the `nRF Connect` app and
-write new firmware.
+Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
 
 **Note:** If you hold `BTN` (or leave `D0` connected to `VDD`) for too long (> 3 sec),
 the MDBT42 will leave bootloader mode and will instead start Espruino *without loading

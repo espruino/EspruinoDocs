@@ -393,34 +393,7 @@ the UART but don't power down and power on Pixl.js, you won't get a serial port.
 Firmware Updates
 -----------------
 
-### via nRF Toolbox App (iOS & Android)
-
-* On your Bluetooth LE capable phone, install the `nRF Toolbox` app
-* Download the latest `espruino_xxx_pixljs.zip` file from [the Download page](/Download#pixljs)
-* [Reset Pixl.js](#resetting-pixl-js) with `BTN1` held down. The display will show `BOOTLOADER` `RELEASE BTN1 FOR DFU`. Make sure release `BTN1` before the progress bar reaches the end.
-* The display should now show `DFU STARTED` `READY TO UPDATE`
-* Open the `nRF Toolbox` app
-* Tap the `DFU` icon
-* Tap `Select File`, choose `Distribution Packet (ZIP)`, and choose the ZIP file you downloaded
-* If choosing the ZIP file opens the ZIP and displays files inside (it can do on some Android 7 devices) then hit back, long-press on the ZIP, and choose `Open` in the top right.
-* If a `Select scope` window appears, choose `All`
-* Tap `Select Device` and choose the device called `DfuTarg`
-* Now tap `Upload` and wait. Pixl.js's LCD should show a connection and the DFU process will start - it will take around 90 seconds to complete
-* If you have problems after completion, perform a [Hard Reset](#hard-reset)
-
-### via nRF Connect App (Android)
-
-* On your Bluetooth LE capable phone, install the `nRF Connect` app
-* Download the latest `espruino_xxx_pixljs.zip` file from [the Download page](/Download#pixljs)
-* [Reset Pixl.js](#resetting-pixl-js) with `BTN1` held down. The display will show `BOOTLOADER` `RELEASE BTN1 FOR DFU`. Make sure release `BTN1` before the progress bar reaches the end.
-* The display should now show `DFU STARTED` `READY TO UPDATE`
-* Open the `nRF Connect` app
-* It should show some Bluetooth devices, including one called `DfuTarg`
-* Click `Connect` to the right of `DfuTarg`
-* Once connected, a `DFU` symbol in a circle will appear in the top right of the App
-* Click it, choose `Distribution Packet (ZIP)`, and your Download. If clicking on the downloaded zip file opens its contents (Android 7 may do this) then long-press on the zip and tap open instead.
-* The DFU process will start - it will take around 90 seconds to complete
-* If you have problems after completion, perform a [Hard Reset](#hard-reset)
+Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
 
 
 Troubleshooting
