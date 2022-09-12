@@ -10,8 +10,10 @@ Puck.js to GCP BigQuery & Data Studio
 This tutorial shows you how use [Puck.js](/Puck.js) and a Raspberry Pi to stream data to GCP.
 
 The GCP Tutorial (Temperature data to GCP BigQuery Table & Data Studio Graph):
-- ![window](Puck.js GCP BigQuery/process-map.png)
-- The puck.js app advertises the temperature (and other info) to the Raspberry Pi EspruinoHub MQTT broker 
+
+![window](Puck.js GCP BigQuery/process-map.png)
+
+- The puck.js app advertises the temperature (and other info) to the Raspberry Pi EspruinoHub MQTT broker
 - NodeRed ingests the MQTT message & cleans it up with a function
 - NodeRed sends temperature data to a GCP Pub/Sub topic via node-red-contrib-google-cloud pub/sub out node with credentials
 - A GCP Pub/Sub topic accepts the message & relays it to the subscribers
@@ -28,21 +30,24 @@ Prerequesites
 
 Raspberry Pi Setup
 --------
-#### Note: This tutorial assumes you have EspruinoHub & NodeRed installed on your Raspberry Pi already!
 
-#### Edit the Raspberry Pi so EspruinoHub will ingest the MQTT messages and NodeRed will publish to the right GCP project 
+**Note: This tutorial assumes you have EspruinoHub & NodeRed installed on your Raspberry Pi already!**
+
+#### Edit the Raspberry Pi so EspruinoHub will ingest the MQTT messages and NodeRed will publish to the right GCP project
 
 * SSH into the Raspberry Pi and edit the attribute.js file in the EspruinoHub. This code will create a filterable channel on the MQTT broker.
 
-Go into the attributes.js file 
+Go into the attributes.js file
+
 ```
 cd
 cd EspruinoHub/lib
 nano attributes.js
 ```
 
-* Edit the exports.names dictionary in the attributes.js file, adding the code between the "Add These" Comments. 
+* Edit the exports.names dictionary in the attributes.js file, adding the code between the "Add These" Comments.
     * This adds an MQTT channel for Voltage, Light, Acceleration, Gyro, Movement, Magnetic Field info, Button Presses, LED states, NFC info and bluetooth info. The Puck will advertise info to the Raspberry Pi on these channels. Only one of these channels will be used for this project, but adding these in allows us to advertise the other sensor states in a later builds.
+
 ```
 exports.names = {
   // https://www.bluetooth.com/specifications/gatt/services/
@@ -94,20 +99,23 @@ exports.names = {
 ```
 
 * Open the NodeRed service file
+
 ```
-cd 
+cd
 cd /.
 cd lib/systemd/system
 sudo nano nodered.service
 ```
 
-* Add a GOOGLE_CLOUD_PROJECT name as an environment variable to the NodeRed Service file. 
+* Add a GOOGLE_CLOUD_PROJECT name as an environment variable to the NodeRed Service file.
     * This will allow you to publish to the GCP topic you're about to set up.
+
 ```
 Environment="GOOGLE_CLOUD_PROJECT=mygooglecloudproject-123456"
 ```
 
 * Reload the systemctl daemon
+
 ```
 systemctl daemon-reload
 ```
@@ -121,6 +129,7 @@ Flash the Code to Puck.js
     * Check that the code is running by reading the console log output. Make surethat temperature data is coming across. Sometimes temperature data doesn't advertise if the temperature hasn't changed. If you want to test the temperature advertisement, warm up or cool down the puck temp sensor by transferring heat with your hand.
 * Start Advertising!    
     * To get the data to stop showing up in the console & start advertising, take the battey out & put it back in. As long as the code was uploaded to the device's flash, it'll start advertising when the battery is put back in. The temperature data won't start sending over until one minute has gone by. Then it'll advertise the temp every minute.
+
 ```
 var state =1;
 NRF.setTxPower(4); // Full Power advertising
@@ -195,7 +204,7 @@ setWatch(function() {
         digitalPulse(LED3,1,100); //short flash blue light
     console.log('button_press_count : [' + pressCount + ']');
     console.log('button_state : [' + (pressCount+1) + ']');
-    console.log('state: ' + state); 
+    console.log('state: ' + state);
     NRF.setAdvertising({
         0xFFFF : [pressCount],
         0x183c: [((pressCount+1)%2)],
@@ -262,6 +271,7 @@ Setting up GCP Pub/Sub & BigQuery
 * Go to your GCP Console
 * Create a Pub/Sub Schema for to Ingest Temperature Data
     * ![window](Puck.js GCP BigQuery/pubsub-schema.png)
+
 ```
 {
   "type": "record",
@@ -274,6 +284,7 @@ Setting up GCP Pub/Sub & BigQuery
   ]
 }
 ```
+
 * Create a Pub/Sub Topic
     * ![window](Puck.js GCP BigQuery/pubsub-topic.png)
 * Create a Dataset & Table in BigQuery
@@ -283,11 +294,11 @@ Setting up GCP Pub/Sub & BigQuery
 
 Setting up NodeRed
 --------
-* ![window](Puck.js GCP BigQuery/noedred-process.png)
+* ![window](Puck.js GCP BigQuery/nodered-process.png)
 * Add a MQTT In Node that listens for the temperature data
-    * ![window](Puck.js GCP BigQuery/noedred-mqttin.png)
+    * ![window](Puck.js GCP BigQuery/nodered-mqttin.png)
 * Add a function node that processes the message payload
-    * ![window](Puck.js GCP BigQuery/noedred-tempfunction.png)
+    * ![window](Puck.js GCP BigQuery/nodered-tempfunction.png)
 * Install "node-red-contrib-google-cloud" to your nodered palette
     * ![window](Puck.js GCP BigQuery/install_node-red-contrib-google-cloud.png)
 * Add a pub/sub out node that publishes to your GCP Pub/sub topic

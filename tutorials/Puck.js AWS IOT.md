@@ -9,16 +9,18 @@ Stream from Puck.js to AWS IOT Core & SNS Email
 
 This tutorial shows you how use [Puck.js](/Puck.js) and a Raspberry Pi to stream data to AWS.
 
-[[https://youtube.com/shorts/Ejb9RpYWCKc]]
+[[https://youtu.be/Ejb9RpYWCKc]]
 
 The AWS Tutorial (Door Alarm SNS Email):
-- ![window](Puck.js to AWS IOT/process-map.png)
-- The puck.js app advertises movement/magnetic field fluctuations (and other info) to the Raspberry Pi EspruinoHub MQTT broker 
+
+![window](Puck.js AWS IOT/process-map.png)
+
+- The puck.js app advertises movement/magnetic field fluctuations (and other info) to the Raspberry Pi EspruinoHub MQTT broker
 - NodeRed ingests the MQTT message & cleans it up with a function
 - A AWS IOT Core Rule publishes a message to an SNS Topic
 - The SNS topic accepts the message & relays it to the subscribers
-- An SNS subscription sends the message as an email to a subscriber 
-- Subscriber receives an email on their phone letting them know their door is open/closed or the "security system" is armed/disarmed 
+- An SNS subscription sends the message as an email to a subscriber
+- Subscriber receives an email on their phone letting them know their door is open/closed or the "security system" is armed/disarmed
 
 Prerequesites
 --------
@@ -31,21 +33,24 @@ Prerequesites
 
 Raspberry Pi Setup
 --------
-#### Note: This tutorial assumes you have EspruinoHub & NodeRed installed on your Raspberry Pi already!
 
-#### Edit the Raspberry Pi so EspruinoHub will ingest the MQTT messages 
+**Note: This tutorial assumes you have EspruinoHub & NodeRed installed on your Raspberry Pi already!**
+
+#### Edit the Raspberry Pi so EspruinoHub will ingest the MQTT messages
 
 * SSH into the Raspberry Pi and edit the attribute.js file in the EspruinoHub. This code will create a filterable channel on the MQTT broker.
 
-Go into the attributes.js file 
+Go into the attributes.js file
+
 ```
 cd
 cd EspruinoHub/lib
 nano attributes.js
 ```
 
-* Edit the exports.names dictionary in the attributes.js file, adding the code between the "Add These" Comments. 
+* Edit the exports.names dictionary in the attributes.js file, adding the code between the "Add These" Comments.
     * This adds an MQTT channel for Voltage, Light, Acceleration, Gyro, Movement, Magnetic Field info, Button Presses, LED states, NFC info and bluetooth info. The Puck will advertise info to the Raspberry Pi on these channels. Only one of these channels will be used for this project, but adding these in allows us to advertise the other sensor states in a later builds.
+
 ```
 exports.names = {
   // https://www.bluetooth.com/specifications/gatt/services/
@@ -97,6 +102,7 @@ exports.names = {
 ```
 
 * Reload the systemctl daemon
+
 ```
 systemctl daemon-reload
 ```
@@ -111,6 +117,7 @@ Flash the Code to Puck.js
     * Check that the code is running by reading the console log output. Make surethat temperature data is coming across. Sometimes temperature data doesn't advertise if the temperature hasn't changed. If you want to test the temperature advertisement, warm up or cool down the puck temp sensor by transferring heat with your hand.
 * Start Advertising!    
     * To get the data to stop showing up in the console & start advertising, take the battey out & put it back in. As long as the code was uploaded to the device's flash, it'll start advertising when the battery is put back in. The temperature data won't start sending over until one minute has gone by. Then it'll advertise the temp every minute.
+
 ```
 var state =1;
 NRF.setTxPower(4); // Full Power advertising
@@ -185,7 +192,7 @@ setWatch(function() {
         digitalPulse(LED3,1,100); //short flash blue light
     console.log('button_press_count : [' + pressCount + ']');
     console.log('button_state : [' + (pressCount+1) + ']');
-    console.log('state: ' + state); 
+    console.log('state: ' + state);
     NRF.setAdvertising({
         0xFFFF : [pressCount],
         0x183c: [((pressCount+1)%2)],
@@ -250,7 +257,7 @@ NRF.on('NFCoff', function() {
 Setting up AWS IOT Core & SNS Topic/Subscription
 --------
 * Go to your AWS Console
-* Open the IOT Core Service & Create a Thing 
+* Open the IOT Core Service & Create a Thing
     * Manage --> Devices --> Things --> Create Thing
         * ![window](Puck.js AWS IOT/iot-core-create-thing1.png)
     * Name your device & click next
@@ -271,14 +278,16 @@ Setting up AWS IOT Core & SNS Topic/Subscription
         * ![window](Puck.js AWS IOT/iot-core-create-rule1.png)
     * Paste the SQL in & click next. This allows the rule to fire when AWS IOT Core receives a MQTT message with this topic.
         * ![window](Puck.js AWS IOT/iot-core-create-rule2.png)
+
     ```
     SELECT *,  timestamp() as dts FROM 'esp_door'
     ```
+
     * Click Create SNS Topic
         * ![window](Puck.js AWS IOT/iot-core-create-rule3.png)
-    * Create SNS Topic with a standard type and click next 
+    * Create SNS Topic with a standard type and click next
         * ![window](Puck.js AWS IOT/iot-core-create-rule4-sns-topic.png)
-    * Go back to the other page & find the topic you just created (may need to click refresh). Create & name a new rule. Click Next. 
+    * Go back to the other page & find the topic you just created (may need to click refresh). Create & name a new rule. Click Next.
         * ![window](Puck.js AWS IOT/iot-core-create-rule5.png)
     * Now we have a SNS topic being published to, we need to create a SNS subscription that sends an email to yout email address.  
         * ![window](Puck.js AWS IOT/iot-core-create-rule6-sns-subscription.png)
@@ -286,7 +295,7 @@ Setting up AWS IOT Core & SNS Topic/Subscription
 Setting up NodeRed
 --------
 * ![window](Puck.js AWS IOT/noedred-process.png)
-* Add a MQTT In Node that listens for the button press data. 
+* Add a MQTT In Node that listens for the button press data.
     * ![window](Puck.js AWS IOT/noedred-mqttin-button.png)
 * Add a MQTT In Node that listens for the magnetic field data
     * ![window](Puck.js AWS IOT/noedred-mqttin-mag.png)
@@ -295,6 +304,7 @@ Setting up NodeRed
 
 * Add a function node that processes the button message payload
     * ![window](Puck.js AWS IOT/noedred-buttonfunction.png)
+
 ```
 var message_object = {};
 if (msg.payload["data"][0] === 0) {    
@@ -310,8 +320,10 @@ else {
     return msg;
 };
 ```
+
 * Add a function node that processes the magnetic field message payload
     * ![window](Puck.js AWS IOT/noedred-magfunction.png)
+
 ```
 var message_object = {};
 if (msg.payload["data"][0] === 0) {    
@@ -326,8 +338,10 @@ else {
 };
 
 ```
+
 * Add a function node that processes the movement message payload
     * ![window](Puck.js AWS IOT/noedred-movefunction.png)
+
 ```
 var message_object = {};
 if (msg.payload["data"][0] === 1) {    
@@ -337,6 +351,7 @@ if (msg.payload["data"][0] === 1) {
     return msg;
 };
 ```
+
 * Add a MQTT out node that publishes to your AWS pub/sub iot core
     * ![window](Puck.js AWS IOT/nodered-aws-pubtopic.png)
 
@@ -346,7 +361,7 @@ if (msg.payload["data"][0] === 1) {
 Test!
 --------
 * Tip: Please reatert the puck.js by taking the battery out and putting it bakc in. As long as the code was flashed to the puck it'll start advertising immediately
-* Put a Magnet near your door frame and the Puck right next to it. 
+* Put a Magnet near your door frame and the Puck right next to it.
     * [[https://youtube.com/shorts/Ejb9RpYWCKc?feature=share]]
 * Test the features by opening/closing your door, and pressing the button. You'll get emails from AWS about door movement, door open/closed/ and alarm on/off.
     * ![window](Puck.js AWS IOT/sns-notification.png)
