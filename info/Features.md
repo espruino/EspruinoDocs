@@ -130,7 +130,7 @@ List of ES6 features from http://es6-features.org:
 | `Number.isSafeInteger` | - |
 | `Number.EPSILON` | - |
 | `Math.trunc` | - |
-| `Math.sign` | - |
+| `Math.sign` | `2v16` |
 | Promises | `1v86` `Official` |
 | Promise Combination | `1v90` `Official`  |
 | Proxying / Reflection | - |
@@ -163,5 +163,3 @@ Espruino aims to support most commonly used RegExp contructs, however some parts
 * [Numeric quantifiers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers) (eg `x{3}`)
 
 There's a GitHub issue [concerning RegExp features here](https://github.com/espruino/Espruino/issues/1257)
-
-

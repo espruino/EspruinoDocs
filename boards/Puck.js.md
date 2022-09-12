@@ -511,9 +511,15 @@ Nordic provides [a tool to work out power consumption](https://devzone.nordicsem
 for advertising, but values are roughly:
 
 * Not doing anything - 3uA
+  * `NRF.sleep();`
 * Not doing anything, watching the button for presses - 12uA
+  * `NRF.sleep(); setWatch(..., BTN1);`
 * Advertising, 375ms 0dBm (nonconnectable, nonscannable) - 22uA
+  * `NRF.setAdvertising({},{connectable:false, scannable:false});`
 * Advertising, 375ms 0dBm (nonconnectable, nonscannable), watching the button - 27uA
+  * `NRF.setAdvertising({},{connectable:false, scannable:false}); setWatch(..., BTN1);`
+* Advertising, 2000ms 0dBm (nonconnectable, nonscannable) - under 10uA
+  * `NRF.setAdvertising({},{connectable:false, scannable:false, interval:2000});`  
 * Advertising, 375ms 0dBm (connectable) - **default** - 40uA
 * Advertising, magnetometer reading 0.63 Hz (`Puck.magOn()`) - 60uA
 * Advertising, magnetometer reading 10 Hz - 200uA

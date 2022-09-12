@@ -2222,6 +2222,11 @@
       "!type": "fn(args: ?) -> number",
       "!doc": "<p>Find the maximum of a series of numbers</p>\n",
       "!url": "http://www.espruino.com/Reference#l_Math_max"
+    },
+    "sign": {
+      "!type": "fn(x: number) -> number",
+      "!doc": "",
+      "!url": "http://www.espruino.com/Reference#l_Math_sign"
     }
   },
   "Queue": {
