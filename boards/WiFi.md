@@ -8,8 +8,6 @@ Espruino WiFi
 
 ![Espruino WiFi](WiFi/angled.jpg)
 
-* BUYFROM: £30,£21.60,https://shop.espruino.com/wifi,/Order#wifi
-
 <span style="color:red">**The Espruino WiFi board is now discontinued. We will be releasing a new WiFi + Bluetooth board in 2022**</span>
 
 **Espruino WiFi is a tiny USB and WiFi-enabled microcontroller that

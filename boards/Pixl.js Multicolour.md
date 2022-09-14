@@ -8,7 +8,7 @@ Pixl.js Multicolour
 
 ![Pixl.js Multicolour](PixljsMulticolour/board.jpg)
 
-* BUYFROM: £54,,https://shop.espruino.com/pixljs-multicolour
+* BUYFROM: £45,,https://shop.espruino.com/pixljs-multicolour
 
 A special version of the [[Pixl.js]] Smart LCD with multicolour LEDs,
 sensors and a rechargeable battery.

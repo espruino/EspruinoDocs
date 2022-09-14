@@ -8,7 +8,7 @@ MDBT42Q Bluetooth Module
 
 ![Raytac MDBT42Q](MDBT42Q/board.jpg)
 
-* BUYFROM: £12,£5.96,https://shop.espruino.com/mdbt42q,/Order#mdbt42q
+* BUYFROM: £10,£5,https://shop.espruino.com/mdbt42q,/Order#mdbt42q
 
 The MDBT42Q is the Bluetooth module that we use in [Puck.js](/Puck.js) and [Pixl.js](/Pixl.js)
 devices. You can get it with Espruino installed in two forms:

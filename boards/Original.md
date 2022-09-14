@@ -8,7 +8,7 @@ Original Espruino Board
 
 ![Espruino Board](Original/main.jpg)
 
-* BUYFROM: £25,£18,https://shop.espruino.com/original,/Order#original
+* BUYFROM: £20.83,£15,https://shop.espruino.com/original,/Order#original
 
 **The Espruino Board is a tiny USB-enabled microcontroller with SD
 card that can be programmed in JavaScript**

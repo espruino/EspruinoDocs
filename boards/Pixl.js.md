@@ -8,7 +8,7 @@ Pixl.js
 
 ![Pixl.js](Pixljs/board.jpg)
 
-* BUYFROM: £36,£25.92,https://shop.espruino.com/pixljs,/Order#pixljs
+* BUYFROM: £30,£21.60,https://shop.espruino.com/pixljs,/Order#pixljs
 
 **Pixl.js is a smart LCD with Bluetooth LE.**
 

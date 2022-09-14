@@ -456,7 +456,14 @@ function inferFile(filename, fileContents, baseLineNumber) {
       urls[url].push({ url : link+lineNumber, title : fileTitles[filename]});
   }
 
-  var cx = new infer.Context(defs, null);
+  var cx;
+  try {
+    cx = new infer.Context(defs, null);
+  } catch (e) {
+    console.log(`ERROR: Tern parse of bin/espruino.json failed`);
+    console.log(e);
+    process.exit(1);
+  }
   infer.withContext(cx, function() {
     //console.log(JSON.stringify(filename));
     var ast = infer.parse(fileContents, {}, {});
@@ -517,7 +524,7 @@ function inferMarkdownFile(filename, fileContents) {
     codeBlocks.forEach(function(code) {
       if (code.indexOf("```\n")==0 || code.indexOf("```JavaScript\n")==0) {
         code = code.slice(code.indexOf("\n")+1,-3);
-        inferFile(filename, code, baseLineNumber);
+        //inferFile(filename, code, baseLineNumber);
       } else {
         //console.log("Ignoring code block because first line is "+JSON.stringify(code.split("\n")[0]));
       }
@@ -677,8 +684,14 @@ markdownFiles.forEach(function (file) {
       <h1 style="margin-top:0px"><a name="buy"></a><small>From</small>  ${info[0]}</h1>
       `;
       if (info[1]) html += `<p><small>Or ${info[1]} in volume</small></p>`;
-      html += `      <a role="button" class="btn btn-primary" style="width:100%" href="${info[2]}">Espruino Shop</a><br/>`;
-      if (info[3]) html += `      <a role="button" class="btn btn-default" style="width:100%" href="${info[3]}">&#x1F30E; Distributors</a>`;
+
+      for (var j=2;j<info.length;j++) {
+        var link = info[j].split("|");
+        var name = link[0].includes("shop.espruino.com") ? "Espruino Shop" : "&#x1F30E; Distributors";
+        var btnType = link[0].includes("shop.espruino.com") ? "btn-primary" : "btn-default";
+        if (link[1]) name += " ("+link[1]+")";
+        html += `      <a role="button" class="btn ${btnType}" style="width:100%" href="${link[0]}">${name}</a>${(j<info.length-1)?"<br/>":""}\n`;
+      }
       html += `   </div>
   </div>`;
       contentLines[i] = html;

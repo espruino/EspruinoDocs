@@ -8,7 +8,7 @@ Puck.js
 
 ![Puck.js](Puckjs/board.jpg)
 
-* BUYFROM: £30,£21.60,https://shop.espruino.com/puckjs,/Order#puckjs
+* BUYFROM: £27,£21,https://shop.espruino.com/puckjs|v2,https://shop.espruino.com/puckjslite|Lite,/Order#puckjs
 
 **Puck.js is an easy to use, programmable Bluetooth sensor and button**
 
