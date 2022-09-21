@@ -115,7 +115,7 @@ Services can act while the android device is locked and/or sleeping. Activities 
 Bluetooth.println(JSON.stringify({t:"intent", target:"activity", flags:["FLAG_ACTIVITY_NEW_TASK", "FLAG_ACTIVITY_CLEAR_TASK", "FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS", "FLAG_ACTIVITY_NO_ANIMATION"], package:"gadgetbridge", class:"nodomain.freeyourgadget.gadgetbridge.activities.WakeActivity"}));
 ```
 
-If the waking intent doesn't work then try sending it twice in a row. If that doesn't do it, make sure to add the Bangle.js as a trusted device in android settings for it to be able to bypass the lock screen. If it still doesn't work, try re-adding the Bangle.js via Gadgetbridge with "CompanionDevice Pairing" activated.
+If the waking intent doesn't work then try sending it twice in a row. If that doesn't do it, make sure to add the Bangle.js as a trusted device in android settings for it to be able to bypass the lock screen. If it still doesn't work, try [re-adding the Bangle.js via Gadgetbridge with "CompanionDevice Pairing" activated](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Companion-Device-pairing).
 
 The following type of information can be supplied for intents: ```target```, ```action```, ```flags```, ```categories```, ```package```, ```class```, ```mimetype```, ```data``` and ```extra```. Values to pass with the ```target```-key are ```"broadcastreceiver"```, ```"activity"```, ```"service"``` or ```"foregroundservice"```. Intents will default to being broadcast if no target is specified. To accommodate the different Gadgetbridge versions a special package-value, ```"gadgetbridge"```, can be supplied with the ```package```-key.
 
