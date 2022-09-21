@@ -27,7 +27,7 @@ Features
 
 * IP67 Water Resistant (everyday use, **not swimming or baths**)
 * Nordic 64MHz nRF52840 ARM Cortex-M4 processor with Bluetooth LE
-* 256kB RAM 1024kB on-chip flash, 8MB external flash
+* 256kB RAM 1024kB on-chip flash, 8MB external flash (GD25Q64C/E)
 * 1.3 inch 176x176 always-on 3 bit colour LCD display (LPM013M126)
 * Full touchscreen
 * GPS/Glonass receiver (AT6558)
