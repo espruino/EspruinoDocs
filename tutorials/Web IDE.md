@@ -36,9 +36,8 @@ This video is from the [[Quick Start]] page, which contains extra information on
 [[http://youtu.be/32mewNGxax4]]
 
 **Note:**
-* Google has deprecated the Chrome Web Store and will be removing it during 2021, so this installation method may not be available soon.
-* On Windows, the Web IDE from the Chrome Web Store doesn't
-support Bluetooth Low Energy, needed for communicating with Bluetooth LE
+* Google has deprecated the Chrome Web Store and will be removing it at some point, so this installation method may not be available soon.
+* On Windows 8 and earlier, the Web IDE from the Chrome Web Store doesn't support Bluetooth Low Energy, needed for communicating with Bluetooth LE
 Espruino device. If you're using Windows you'll need to use the Native Application (below).
 
 

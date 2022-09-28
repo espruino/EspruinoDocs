@@ -36,15 +36,16 @@ Plugging in
 Set up a Terminal App
 ------------------
 
-**Note:** We recommend that you use our [Chrome Web App](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo) (it has a bunch of extra features, including firmware updates). However you can access Espruino from any terminal program. See [[Alternative Terminal Apps]] for some examples.
+**Note:** We recommend that you use our [Web IDE](https://www.espruino.com/ide) (it has a bunch of extra features, including firmware updates). However you can access Espruino from any terminal program. See [[Alternative Terminal Apps]] for some examples.
 
 * Install the [Chrome Web Browser](https://www.google.com/intl/en/chrome/browser/)
-* [Click here to get the Espruino Web IDE](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo) and click ```+FREE``` in the top right to install it.
+* [Click here to run the Espruino Web IDE](https://www.espruino.com/ide) straight from the browser
 
 Now, to use the IDE:
 
 * Run **Espruino Web IDE** from Chrome's home screen (or the App Launcher)
 * Click the orange **Connect/Disconnect** icon in the Top Left: ![Connect icon](Quick Start USB/connect.png)
+* Click `Web Serial` in the popup window (if you don't see this, click the `status` link for more information)
 * In the window that pops up, make sure the correct serial port is chosen (Usually the highest `COM#` number on Windows, `/dev/tty.usbmodem1234` on Mac, or `ttyACM0/ttyUSB0` on Linux).
 * If you don't see a port or can't get it working, please see [[Troubleshooting]]
 
