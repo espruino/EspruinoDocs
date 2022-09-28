@@ -91,27 +91,43 @@ Bluetooth.println(JSON.stringify({t:"int­ent",action:"com.sonyericsson.alarm.AL
 
 This will send a Global Android intent which can cause certain apps/windows to open, or can be used with apps like `Tasker`.
 
-*(The following is not present in Gadgetbridge version 0.68.0 published on F-droid as of 2022-08-18, but works for beta testers of "Bangle.js Gadgetbridge" on Google Play Store. It's also available in the [nightly releases](https://freeyourgadget.codeberg.page/fdroid/repo/), or if [building from source](https://www.espruino.com/Gadgetbridge#building-gadgetbridge).)*
+*(The following is as of 2022-09-20 available in the [nightly releases](https://freeyourgadget.codeberg.page/fdroid/repo/), or if [building from source](https://www.espruino.com/Gadgetbridge#building-gadgetbridge).)*
 
 Or:
 
 ```
-Bluetooth.println(JSON.stringify({t:"intent", action:"android.media.action.MEDIA_PLAY_FROM_SEARCH", category:"android.intent.category.DEFAULT", target:"activity", extra:{"query":'track:"Sittin\' on the Dock of the Bay" artist:"Otis Redding"'}}))
+Bluetooth.println(JSON.stringify({t:"intent", target:"activity", action:"android.media.action.MEDIA_PLAY_FROM_SEARCH", flags:["FLAG_ACTIVITY_NEW_TASK"], categories:["android.intent.category.DEFAULT"], extra:{"query":'track:"Sittin\' on the Dock of the Bay" artist:"Otis Redding"'}}))
 ```
 
-This will search for and play the song "Sittin' on the Dock of the Bay". The android device will ask about what app to use.
+This will search for and play the song "Sittin' on the Dock of the Bay". The android device will ask about what app to use. The flag ```"FLAG_ACTIVITY_NEW_TASK"``` is needed in order for the activity to launch in this case.
 
-Gadgetbridge with a Bangle.js can broadcast intents and start activities. Targeting of services is not yet implemented.
+Gadgetbridge connected to a Bangle.js watch can broadcast intents and start activities or services.
 
-The following type of information can be supplied for intents: target, action, category, package, class, mimetype, data and extra. Values to pass with the target key are "broadcastreceiver", "activity" or "service". Intents will default to being broadcast if no target is specified.
+Toggling play/pause of the android music app Poweramp can be done via its [API-service](https://github.com/maxmpz/powerampapi/blob/master/poweramp_api_lib/readme.md):
+
+```
+Bluetooth.println(JSON.stringify({t:"intent", target:"foregroundservice", action:"com.maxmpz.audioplayer.API_COMMAND", package:"com.maxmpz.audioplayer", extra:{cmd:"TOGGLE_PLAY_PAUSE"}}));
+```
+
+Services can act while the android device is locked and/or sleeping. Activities cannot. A way around this is to fire this intent that wakes and unlocks the device:
+
+```
+Bluetooth.println(JSON.stringify({t:"intent", target:"activity", flags:["FLAG_ACTIVITY_NEW_TASK", "FLAG_ACTIVITY_CLEAR_TASK", "FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS", "FLAG_ACTIVITY_NO_ANIMATION"], package:"gadgetbridge", class:"nodomain.freeyourgadget.gadgetbridge.activities.WakeActivity"}));
+```
+
+If the waking intent doesn't work then try sending it twice in a row. If that doesn't do it, make sure to add the Bangle.js as a trusted device in android settings for it to be able to bypass the lock screen. If it still doesn't work, try [re-adding the Bangle.js via Gadgetbridge with "CompanionDevice Pairing" activated](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Companion-Device-pairing).
+
+The following type of information can be supplied for intents: ```target```, ```action```, ```flags```, ```categories```, ```package```, ```class```, ```mimetype```, ```data``` and ```extra```. Values to pass with the ```target```-key are ```"broadcastreceiver"```, ```"activity"```, ```"service"``` or ```"foregroundservice"```. Intents will default to being broadcast if no target is specified. To accommodate the different Gadgetbridge versions a special package-value, ```"gadgetbridge"```, can be supplied with the ```package```-key.
 
 Template for initiating an intent from a Bangle.js app:
 
 ```
-Bluetooth.println(JSON.stringify({t:"intent", target:"", action:"", category:"", package:"", class:"", mimetype:"", data:"", extra:{someKey:"someValueOrString"}}));
+Bluetooth.println(JSON.stringify({t:"intent", target:"", action:"", flags:["flag1", "flag2",...], categories:["category1","category2",...], package:"", class:"", mimetype:"", data:"", extra:{someKey:"someValueOrString", anotherKey:"anotherValueOrString",...}}));
 ```
 
 Key/value-pairs can be omitted if they are not needed.
+
+*The main resource on android intents is the [android documentation intent reference](https://developer.android.com/reference/android/content/Intent). For inspiration search for "tasker intent" in your favourite search engine.*
 
 #### Android -> Bangle
 
