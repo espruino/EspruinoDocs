@@ -25,6 +25,8 @@ do
   cp boards/img/$BOARDNAME.* $WEBSITE/www/img
   cp boards/img/$BOARDNAME.* $DIR/html/img
 done
+cp boards/img/PUCKJS_2.jpg $DIR/html/img
+cp boards/img/PUCKJS_LITE.jpg $DIR/html/img
 
 cd $DIR
 
