@@ -1,31 +1,27 @@
+<!--- Copyright (c) 2022 Joe Teglasi. License: MIT -->
 # Simple Fetch-like API for Espruino
-created by Joe Teglasi, Copyright 2022, License: MIT
+--------------------------------------------
 
+* KEYWORDS: Module, fetch, http, https, internet
 
 #### Initiation:
 ```
-const http = require('http');
-const fetch = require('fetch.js')(http);
+const fetch = require('fetch.js')
 ```
-OR
-```
-const fetch = require('fetch.js')() //defaults to using 'http' module
-```
-(eventually, using 'tls' module instead of 'http' will be supported, hopefully)
 
 
 #### Usage:
 ```
-fetch(url, params).then(response => response.text()).then(text=>{
+fetch(url, fetchParams).then(fetchResponse => fetchResponse.text()).then(text=>{
 //do stuff with text
 // e.g. console.log(text)
 });
 ```
 
 url should look like: 'http://google.com/whatever/you/want?foo=bar'
-params are optional, but should look like:
+fetchParams are optional, but should look like:
 
-const params = {
+const fetchParams = {
 method: 'GET'(default) or 'PUT' or 'POST' or 'DELETE',
 body: String //(for PUT/POST)
 ...any other params that you'd supply to http.request()
@@ -33,94 +29,43 @@ body: String //(for PUT/POST)
 
 
 Working examples:
-```
-fetch('http://google.com').then(r=>r.text()).then(console.log);
-fetch('http://example.com', {
+
+1. `fetch('https://google.com').then(r=>r.text()).then(console.log);`
+
+2. `fetch('https://example.com', {
   method: 'POST', 
   body:JSON.stringify({answer:42}), 
   headers:{'Content-Type':'application/json'}
-}).then(r=>r.text()).then(console.log);
+}).then(r=>r.text()).then(console.log);`
+
+#### Advanced: use with Certs
+Under the hood, fetch uses a call to `http.request(reqParams)`. The `reqParams` object inherits properties from `fetchParams`, so cert fields can be provided in fetchParams, and they will be used for the request.
+
+
+#### Advanced: AbortControllers (experimental)
+If you want to abort a fetch request, you can use an AbortController.
+Example:
+```
+const fetch = require('fetch.js');
+const AbortController = require('AbortController.js');
+
+const abortController = new AbortController();
+
+setTimeout(abortController.abort, 2000); //a 2-second timeout, where the request will abort if not completed before the timeout.
+
+fetch('https://brokenlink1234567890.com', {
+  signal: abortController.signal
+}).then(r=>r.text()).then(console.log).catch((e)=>console.log('Error:',e))
+
 ```
 
+Reference
+  ---------
 
+  * APPEND_JSDOC: fetch.js
+  * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
-Here is the original, unminified code:
+Using
+  -----
 
-```
-//module for fetch api, 
-//currently only accepts espruino 'http' module
-//later will accept TLS module with cert params for security
-
-class FetchResponse {
-    constructor(res) {
-        this.res = res;
-    }
-    text() {
-        const _this = this;
-        return new Promise(function (r, j) {
-            let timeout;
-            let data = "";
-            function handleClose() {
-                clearTimeout(timeout);
-                r(data);
-            };
-            _this.res.on('data', function (chunk) {
-                data += chunk;
-            });
-
-            _this.res.on('close', handleClose);
-
-            timeout = setTimeout(function () {
-                _this.res.removeListener('close', handleClose);
-                j('FetchRequest Timed-Out!');
-            }, 5e3);
-        });
-    }
-    json() {
-        return this.text().then(JSON.parse);
-    }
-}
-
-
-function useFetch(_module){
-    if(!_module) _module = require('http');
-
-    return function fetch(address, params) {
-        const _params = params || {};
-    
-        const content = _params.body || _params.data;
-        if (content) _params.headers["Content-Length"] = content.length;
-    
-        delete _params.body
-        delete _params.data
-    
-        const signal = _params.signal;
-        if (signal) delete _params.signal;
-        const options = Object.assign(url.parse(address), _params);
-        return new Promise(function (r, j) {
-    
-            if (signal) {
-                function abortFetch() { j('Fetch Error: REQUEST TIMEOUT.') }
-                signal.on('abort', abortFetch);
-            }
-    
-            const req = _module.request(options, function (res) {
-                try {
-                    if (signal) signal.removeAllListeners('abort');
-                    r(new FetchResponse(res))
-                } catch (e) {
-                    j("Could Not Create FetchResponse Object: " + e)
-                }
-            });
-            req.on('error', function (e) {
-                //console.log('HTTP Error:', e);
-                j('HTTP Error: ' + e);
-            });
-            req.end(content);
-        });
-    }
-
-}
-
-exports = useFetch;
-```
+  * APPEND_USES: MOD123
