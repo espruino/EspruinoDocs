@@ -1,21 +1,39 @@
-# Simple Fetch-like API for Espruino
-created by Joe Teglasi, Copyright 2022, License: MIT
+<!--- Copyright (c) 2022 Joe Teglasi. See the file LICENSE for copying permission. -->
+Simple Fetch-like API for Espruino
+====================================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/fetch. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-#### Initiation:
-```
+* KEYWORDS: http,internet,fetch
+
+The [fetch](/modules/fetch.js) module provides a wrapper around `http` to provide
+a simple promise-based page getter.
+
+This module loads the entire webpage into RAM, so while in most cases it'll
+work fine, for very big queries you may still need to fall back to `http`
+to handle the data in a streaming manner.
+
+Initialisation
+---------------
+
+```JS
 const http = require('http');
 const fetch = require('fetch.js')(http);
 ```
+
 OR
-```
+
+```JS
 const fetch = require('fetch.js')() //defaults to using 'http' module
 ```
+
 (eventually, using 'tls' module instead of 'http' will be supported, hopefully)
 
 
-#### Usage:
-```
+Usage
+-------
+
+```JS
 fetch(url, params).then(response => response.text()).then(text=>{
 //do stuff with text
 // e.g. console.log(text)
@@ -33,7 +51,8 @@ body: String //(for PUT/POST)
 
 
 Working examples:
-```
+
+```JS
 fetch('http://google.com').then(r=>r.text()).then(console.log);
 fetch('http://example.com', {
   method: 'POST', 
@@ -42,85 +61,3 @@ fetch('http://example.com', {
 }).then(r=>r.text()).then(console.log);
 ```
 
-
-
-Here is the original, unminified code:
-
-```
-//module for fetch api, 
-//currently only accepts espruino 'http' module
-//later will accept TLS module with cert params for security
-
-class FetchResponse {
-    constructor(res) {
-        this.res = res;
-    }
-    text() {
-        const _this = this;
-        return new Promise(function (r, j) {
-            let timeout;
-            let data = "";
-            function handleClose() {
-                clearTimeout(timeout);
-                r(data);
-            };
-            _this.res.on('data', function (chunk) {
-                data += chunk;
-            });
-
-            _this.res.on('close', handleClose);
-
-            timeout = setTimeout(function () {
-                _this.res.removeListener('close', handleClose);
-                j('FetchRequest Timed-Out!');
-            }, 5e3);
-        });
-    }
-    json() {
-        return this.text().then(JSON.parse);
-    }
-}
-
-
-function useFetch(_module){
-    if(!_module) _module = require('http');
-
-    return function fetch(address, params) {
-        const _params = params || {};
-    
-        const content = _params.body || _params.data;
-        if (content) _params.headers["Content-Length"] = content.length;
-    
-        delete _params.body
-        delete _params.data
-    
-        const signal = _params.signal;
-        if (signal) delete _params.signal;
-        const options = Object.assign(url.parse(address), _params);
-        return new Promise(function (r, j) {
-    
-            if (signal) {
-                function abortFetch() { j('Fetch Error: REQUEST TIMEOUT.') }
-                signal.on('abort', abortFetch);
-            }
-    
-            const req = _module.request(options, function (res) {
-                try {
-                    if (signal) signal.removeAllListeners('abort');
-                    r(new FetchResponse(res))
-                } catch (e) {
-                    j("Could Not Create FetchResponse Object: " + e)
-                }
-            });
-            req.on('error', function (e) {
-                //console.log('HTTP Error:', e);
-                j('HTTP Error: ' + e);
-            });
-            req.end(content);
-        });
-    }
-
-}
-
-exports = useFetch;
-```
