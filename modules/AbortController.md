@@ -1,12 +1,15 @@
 <!--- Copyright (c) 2022 Joe Teglasi. License: MIT -->
-A Basic AbortController for Espruino
------------------------------
+AbortController for Espruino
+--------------------------------
+
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/AbortController. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module, AbortController, fetch, abort, request, http, https, internet
 
 This module implements a basic AbortController. It is compatible with fetch.js.
 
-#### Usage with Fetch:
+## Usage with Fetch:
+
 ```
 const fetch = require('fetch.js');
 const AbortController = require('AbortController.js');
@@ -18,7 +21,7 @@ fetch('https://google.com',{
 }).then(r=>r.text()).then(console.log).catch(e=>console.log('Error:',e));
 ```
 
-#### Make your own use-case:
+## Make your own use-case:
 
 ```
 const AbortController = require('AbortController.js');
