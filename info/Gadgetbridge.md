@@ -91,8 +91,6 @@ Bluetooth.println(JSON.stringify({t:"int­ent",action:"com.sonyericsson.alarm.AL
 
 This will send a Global Android intent which can cause certain apps/windows to open, or can be used with apps like `Tasker`.
 
-*(The following is as of 2022-09-20 available in the [nightly releases](https://freeyourgadget.codeberg.page/fdroid/repo/), or if [building from source](https://www.espruino.com/Gadgetbridge#building-gadgetbridge).)*
-
 Or:
 
 ```
