@@ -91,8 +91,6 @@ Bluetooth.println(JSON.stringify({t:"int­ent",action:"com.sonyericsson.alarm.AL
 
 This will send a Global Android intent which can cause certain apps/windows to open, or can be used with apps like `Tasker`.
 
-*(The following is as of 2022-09-20 available in the [nightly releases](https://freeyourgadget.codeberg.page/fdroid/repo/), or if [building from source](https://www.espruino.com/Gadgetbridge#building-gadgetbridge).)*
-
 Or:
 
 ```
@@ -117,7 +115,7 @@ Bluetooth.println(JSON.stringify({t:"intent", target:"activity", flags:["FLAG_AC
 
 If the waking intent doesn't work then try sending it twice in a row. If that doesn't do it, make sure to add the Bangle.js as a trusted device in android settings for it to be able to bypass the lock screen. If it still doesn't work, try [re-adding the Bangle.js via Gadgetbridge with "CompanionDevice Pairing" activated](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Companion-Device-pairing).
 
-The following type of information can be supplied for intents: ```target```, ```action```, ```flags```, ```categories```, ```package```, ```class```, ```mimetype```, ```data``` and ```extra```. Values to pass with the ```target```-key are ```"broadcastreceiver"```, ```"activity"```, ```"service"``` or ```"foregroundservice"```. Intents will default to being broadcast if no target is specified. To accommodate the different Gadgetbridge versions a special package-value, ```"gadgetbridge"```, can be supplied with the ```package```-key.
+The following type of information can be supplied for intents: ```target```, ```action```, ```flags```, ```categories```, ```package```, ```class```, ```mimetype```, ```data``` and ```extra```. Values to pass with the ```target```-key are ```"broadcastreceiver"```, ```"activity"```, ```"service"``` or ```"foregroundservice"``` (falls back to ```"service"``` if below Android 8.0). Intents will default to being broadcast if no target is specified. To accommodate the different Gadgetbridge versions a special package-value, ```"gadgetbridge"```, can be supplied with the ```package```-key.
 
 Template for initiating an intent from a Bangle.js app:
 
