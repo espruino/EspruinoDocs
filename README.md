@@ -54,6 +54,8 @@ EspruinoWiFi
 Pico
 Puck.js
 Pixl.js
+Bangle.js
+Bangle.js2
 MDBT42Q
 MicroBit
 Thingy52
