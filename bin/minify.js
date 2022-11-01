@@ -142,6 +142,7 @@ function closureOffline() {
     ['language_in','ECMASCRIPT_2020'],
     ['language_out','ECMASCRIPT_2015'],
     ['jscomp_warning','undefinedVars'],
+    ['strict_mode_input','false'],
     ["js", tmpPath+".js"],
     ["externs", tmpPath+".ext.js"],
     ["js_output_file", tmpPath+".out.js"]
