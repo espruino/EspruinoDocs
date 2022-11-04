@@ -14,13 +14,14 @@ Installing
 
 ### Online
 
-The easiest way to use the Web IDE is [straight from the Web Browser](https://www.espruino.com/ide)
+The easiest and recommended way to use the Web IDE is [straight from the Web Browser](https://www.espruino.com/ide)
 
 You'll need an up to date version of [Chrome](https://www.google.com/chrome/), Edge or Opera to get access to Web Bluetooth and
 Web Serial options.
 
 **Note:**
 
+* While this IDE is a website, it still works if you're offline (navigating to https://www.espruino.com/ide will still work)
 * Versions of Windows before Windows 10 don't support Web Bluetooth. You'll
 need to install the Native application (below).
 * Web Bluetooth and Web Serial may not be enabled in your Browser by default. Have a look
@@ -29,14 +30,10 @@ at the [Quick Start guide](/Quick+Start) for information on how to enable it.
 
 ### From the Chrome Web Store
 
-You can install the IDE from the [Chrome Web Store](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo)
-
-This video is from the [[Quick Start]] page, which contains extra information on installing the Web IDE:
-
-[[http://youtu.be/32mewNGxax4]]
+You can install the IDE from the [Chrome Web Store](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo).
 
 **Note:**
-* Google has deprecated the Chrome Web Store and will be removing it at some point, so this installation method may not be available soon.
+* Google has deprecated the Chrome Web Store and will be removing it in 2023, so this installation method may not be available soon and isn't recommended.
 * On Windows 8 and earlier, the Web IDE from the Chrome Web Store doesn't support Bluetooth Low Energy, needed for communicating with Bluetooth LE
 Espruino device. If you're using Windows you'll need to use the Native Application (below).
 
@@ -47,6 +44,9 @@ The Web IDE is available as:
 
 * [Download for Windows 32 bit - 0.75.8](/files/espruino_ide_win32_0v75.8.exe)
 * [Download for Windows 64 bit - 0.75.8](/files/espruino_ide_win64_0v75.8.exe)
+
+The Native IDE versions lag behind the Online IDE, so if you're able to use the Online
+IDE we strongly recommend it.
 
 Older versions of the IDE (not recommended) [are available here](http://www.espruino.com/files/)
 

@@ -235,9 +235,7 @@ On some platforms (Windows, or Linux with older versions of `Bluez`) Web
 Bluetooth isn't supported yet.
 
 On these you'll need to install a native application. We've created a
-[Web IDE installer for Windows](/Web+IDE#as-a-native-application) - don't
-use the Chrome Web Store version at the top of that page, as it won't
-give you access to Bluetooth devices.
+[Web IDE installer for Windows](/Web+IDE#as-a-native-application).
 
 Once installed, you need to run `Espruino IDE` - which is confusingly
 similar to the `Espruino Web IDE` which you may have had installed if you'd

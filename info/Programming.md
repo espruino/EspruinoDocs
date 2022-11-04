@@ -91,15 +91,19 @@ flavours:
 * [Online](http://www.espruino.com/Web+IDE#online) is what we're suggesting
 everyone use at the moment. It supports Bluetooth LE and USB/Serial based Espruinos.
 It is amazingly easy to use (just [go here](https://www.espruino.com/ide)
-in Chrome).
-* [Chrome Web App](http://www.espruino.com/Web+IDE#from-the-chrome-web-store) -
-allows you to install the IDE locally on your computer. However Google will be
-disabling Chrome Apps in the near future so we're not recommending this for now.
-* [Native App](http://www.espruino.com/Web+IDE#as-a-native-application) allows
-you to install the Web IDE and run it locally on Windows (it's needed for
-programming Bluetooth LE Espruinos on Windows 7 or earlier).
+in Chrome). While [espruino.com/ide](https://www.espruino.com/ide) is a website,
+it is also a PWA which means it still works when you're offline. 
 * [Locally hosted](https://github.com/espruino/EspruinoHub) IDE can be run on a Raspberry Pi,
 and can allow you to program Bluetooth Espruino devices through any Web Browser that has access to your local network.
+* [Native App](http://www.espruino.com/Web+IDE#as-a-native-application) allows
+you to install the Web IDE and run it locally on Windows (it's needed for
+programming Bluetooth LE Espruinos on Windows 7 or earlier) - the version
+of this app usually lags significantly behind the Online IDE and this
+is not recommended.
+* [Chrome Web App](http://www.espruino.com/Web+IDE#from-the-chrome-web-store) -
+allows you to install the IDE locally on your computer. However Google will be
+disabling Chrome Apps in the near future so we're not recommending this.
+
 
 Despite being called a 'Web IDE', the IDE itself (including [the fully online version](https://www.espruino.com/ide))
 can function without an internet connection. If you're using modules you may need to

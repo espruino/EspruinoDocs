@@ -93,7 +93,7 @@ to upload it.
 
 If you set a project folder with `Web IDE -> Settings -> Project`, the Web IDE will automatically create an empty `modules` folder inside it. Put a module there and you can load it with ```require("myCustomModule");```.
 
-**Note:** This feature is not currently implemented in the 'Web App' IDE available at https://www.espruino.com/ide/. You'll need to use the [Chrome Web Store / Native versions](http://www.espruino.com/Web+IDE)
+**Note:** This feature is not currently implemented in the 'Web App' IDE available at https://www.espruino.com/ide/. You'll need to use the [Native versions](http://www.espruino.com/Web+IDE)
 
 With default Web IDE configuration, it will look for modules following this order:
 
