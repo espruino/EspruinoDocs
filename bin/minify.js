@@ -148,7 +148,7 @@ function closureOffline() {
     ["js_output_file", tmpPath+".out.js"]
   ];
   var cli;// = "closure-compiler";
-  cli = "java -jar "+CLOSURE_JAR;
+  cli = "java -jar "+'"'+CLOSURE_JAR+'"';
   cli += " "+options.map( o => "--"+o[0]+" "+o[1]).join(" ");
   child_process.exec(cli, (error, stdout, stderr) => {
     fs.unlinkSync(tmpPath+".js", js)
