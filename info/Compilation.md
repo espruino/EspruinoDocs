@@ -179,5 +179,5 @@ Can I help?
 
 Absolutely! We're always after contributions. The actual code you need is here:
 
-* [Compiler client in the Web IDE](https://github.com/espruino/EspruinoTools/blob/gh-pages/plugins/compiler.js)
+* [Compiler client in the Web IDE](https://github.com/espruino/EspruinoTools/blob/master/plugins/compiler.js)
 * [Compiler server](https://github.com/gfwilliams/EspruinoCompiler)
