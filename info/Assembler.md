@@ -6,6 +6,11 @@ Inline Assembler
 
 * KEYWORDS: Assembler,Asm,ARM,Thumb,Thumb2,Thumb-2,C code,inline C,Built-In
 
+This page shows you how you can write assembly code and have it assembled
+by the Web IDE and uploaded as a function. However there are other ways
+to get your code running fast! Please check out the [Performance page](/Performance)
+for more information!
+
 The Web IDE allows you to write inline assembler in the right-hand pane.
 You can use a series of normal JS Strings:
 
@@ -47,7 +52,7 @@ This is handled as follows:
 
 * This only works on ARM-based microcontrollers - ARM Thumb assembler will not work on ESP8266/ESP32.
 * The assembler is only partially implemented so will only parse some opcodes at the moment. If you find something missing [please let us know!](https://github.com/espruino/EspruinoTools/issues)
-* If this is a bit hardcore for you, there are now the options of [Compiled JavaScript](/Compilation) or [Inline C](/InlineC)
+* If this is a bit hardcore for you, there are other options that allow you to write JS or C - please check out the [Performance page](/Performance) for more information!
 
 For an ARM Thumb reference, [see this link](https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf)
 

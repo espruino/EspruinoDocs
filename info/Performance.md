@@ -17,7 +17,8 @@ Check out [some easy Code Style changes](/Code+Style) to make your code run bett
 JavaScript on Embedded devices will never be as efficient as compiled code, so we've made it easy for you to add extremely fast code *where it is needed*:
 
 * Add `"ram"` to the top of your function to tell Espruino to keep it in RAM and pretokenise it.
-* Use the Web IDE to [compile JavaScript into optimised Thumb Code](/Compilation)
+* Add `"jit"` to the top of your function to [tell Espruino to JIT compile it](/JIT) on the device (2v16 firmware and later)
+* Use the Web IDE to [compile JavaScript into optimised Thumb Code](/Compilation) using an Online service
 * Create functions with [Inline C](/InlineC) or [Inline Assembler](/Assembler)
 * Recompile the Espruino firmware [with your own C code](/Extending+Espruino+1)
 
@@ -146,10 +147,11 @@ It's editable, *just about* readable, and it's only 167 bytes - so *it is smalle
 | Espruino Compiled JS | 1136 |
 | GCC Compiled C code (`-Os`) | 290 |
 | Minified JS | 167 |
+| Minified and pretokenised JS | 149 |
 
 So by executing from source, we use around the same amount of memory as we would if we compiled or used bytecode, while still having everything we need to edit and debug the code on-chip.
 
-However, if you need to make things smaller, you can minify the JavaScript functions you don't need to edit, which will use less RAM than even size-optimised C code!
+However, if you need to make things smaller, you can minify the JavaScript functions you don't need to edit, which will use around half the RAM of even size-optimised C code!
 
 ### What does executing from source mean?
 
@@ -169,13 +171,16 @@ while (1) { A0.set();                 A0.reset();               }
 
 This applies equally to comments - so it pays to keep comments above or below a function declaration or loop, not inside it.
 
-**Note:** You can turn on 'pretokenisation' with `E.setFlags({pretokenise:1})`.
-Any functions defined after pretokenisation is enabled will have all whitespace
+**Note:** You can turn on 'pretokenisation' globally with `E.setFlags({pretokenise:1})` or
+by beginning a function's code with the string `"ram"`. Pretokenised functions have all whitespace
 removed, and any tokens (such as `this`, `function`, `for`, etc) will be turned
 into numeric values. This means that the above (whitespace slowing down
 execution) will not apply - however your original code formatting will be lost,
 which will make debugging significantly more difficult.
 
+**Note:** On Bangle.js devices JS code is executed direct from external flash
+memory. Using the `"ram"` string as above will also load the function into RAM
+which will improve speed further.
 
 
 EXECUTING CODE HAS A NOTICABLE OVERHEAD - GIVE AS MUCH WORK TO ESPRUINO IN ONE GO AS YOU CAN
@@ -222,12 +227,14 @@ ESPRUINO STORES NORMAL ARRAYS AND OBJECTS IN LINKED LISTS
 
 So the number of elements in an array or object will seriously affect the time it takes to access elements in it. For instance, if you're storing two-dimensional data, it is faster to store data in a two-dimensional array than it is to store it in a single-dimensional array!
 
-To work around this, try and use `Array.map`, `Array.forEach`, and `Array.reduce` wherever possible, as these can iterate over the linked list very efficiently.
+To work around this, try and use `Array.map`, `Array.forEach`, `Array.reduce`, `for (i of ...)` and `for (i in ...)` wherever possible, as these can iterate over the linked list very efficiently.
 
 For example to AND together all values in an array:
 
 ```
-var anded = myArray.reduce(function(last, value) { return last & value; }, 0xFFFFFFFF /*initial value*/);
+var anded = myArray.reduce(function(last, value) {
+  return last & value;
+}, 0xFFFFFFFF /*initial value*/);
 ```
 
 Or to send the contents of an array to digital outputs:
@@ -238,23 +245,30 @@ myArray.forEach(function(value) {
 });
 ```
 
-or even (see below):
+or you can even pre-bind array arguments to speed things up further (see below):
 
 ```
 myArray.forEach(digitalWrite.bind(null,[A0,A1,A2,A3]));
 ```
 
+If you need to go really fast you can also tag specific functions as `"ram"` or
+even JIT compile them (see the very top of this page) and then use them
+with `forEach`/`map`/etc.
+
+**Note:** Espruino contains some extra functions like `E.sum` and `E.variance` to
+help with common tasks like summing all values in an array. It's a lot faster
+to try and use these if possible.
 
 
-EVERY DATATYPE IN ESPRUINO IS BASED ON A SINGLE 16 BYTE STORAGE UNIT
-------------------------------------------------------------
 
-This makes allocation and deallocation very fast for Espruino and avoids memory fragmentation. However, if you allocate a single boolean it will still take up 16 bytes of memory.
+EVERY DATATYPE IN ESPRUINO IS BASED ON A SINGLE STORAGE UNIT (12-16 BYTES)
+--------------------------------------------------------------------------
+
+The actual size of storage unit (referred to as `JsVar` internally) depends on how many vars your device needs to be able to address. You can check `process.memory().blocksize` to find out the actual size.
+
+This makes allocation and deallocation very fast for Espruino and avoids memory fragmentation. However, if you allocate a single boolean it will still take up one storage unit (12-16 bytes) of memory.
 
 This may seem inefficient, but if you compare this with a naive malloc/free implementation you'll realise that it saves a significant amount of RAM.
-
-**Note:** on smaller devices (with less than 1024 variables) Espruino uses 12 bytes per storage unit (not 16).
-
 
 
 ARRAYS AND OBJECTS USE TWO STORAGE UNITS PER ELEMENT (ONE FOR THE KEY, AND ONE FOR THE VALUE)
@@ -283,6 +297,10 @@ number of other JsVars that are used as one flat memory area.
 Allocating a Flat String takes more time than allocating a normal string
 as a contiguous area of memory has to be found (and isn't guaranteed to exist
 even if you have the available free memory, since memory can get fragmented).
+
+**Note:** You can now call [`E.defrag()`](http://www.espruino.com/Reference#l_E_defrag) to
+defragment memory, but this can be slow. It's not recommended you call this unless you
+are absolutely sure you have to.
 
 However, once allocated a Flat String is very efficient for large amounts of
 data and allows for very fast accesses.
@@ -315,6 +333,10 @@ Turns into something like  `#foobar(){#(#.x==#)##Error("Hello");##;}` where
 `#` is a special token representing that reserved word. This saves a lot of
 memory and also speeds up execution by 10-20%. However it does remove line
 numbers from stack traces and so makes debugging harder.
+
+If you're using a device with external flash (like Bangle.js) then  `"ram"`
+(but not `E.setFlags({pretokenise:1})`) will ensure that your function is loaded
+into RAM rather than being executed from flash.
 
 
 Functions in Flash
@@ -453,7 +475,7 @@ access data without taking up any RAM.
 
 While you can use `E.memoryArea` directly, you can also use [the `Storage` library](http://www.espruino.com/Reference#Storage)
 to write data to Flash memory using a simple file system. When retrieving data
-with [`require('Storage').get(...)`](http://www.espruino.com/Reference#l_Storage_read)
+with [`require('Storage').read(...)`](http://www.espruino.com/Reference#l_Storage_read)
 the returned data will be a Native String.
 
 If you [save your code with Save on Send](/Saving) then any functions that are

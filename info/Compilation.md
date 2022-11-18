@@ -1,6 +1,6 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 JavaScript Compilation
-===================
+======================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Compilation. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
@@ -10,7 +10,9 @@ Normally, when you upload code to Espruino it is executed straight from source -
 
 While this is fast enough for most things, occasionally you may need your code to run faster. Up until now you've had the option of writing [Inline Assembler](/Assembler), but now you can actually compile JavaScript directly into native code.
 
-**Note:** This is an online service that is only provided for [official Espruino boards](/Order). It won't work on devices like ESP8266 or ESP32.
+The Compiler uses a web service provided from espruino.com to convert your code to C, compile it with GCC, and then upload it to your board. There is [now the option of a JIT Compiler](/JIT) which runs completely on your device,
+
+**Note:** The compiler is an online service that is only provided for [official Espruino boards](/Order). It won't work on devices like ESP8266 or ESP32.
 
 
 How do I use it?
@@ -73,6 +75,7 @@ function f(pin, val) {
   d(pin, val&1);
 }
 ```
+
 If you want extremely fast IO, you can take advantage of `peek32` and `poke32` to access the registers directly - however which registers you write to depends on the chip you're running Espruino on. As of Espruino 1v81 this is a lot easier, as you can query the bit-banded address of the specific pin that you need:
 
 ```
