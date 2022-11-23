@@ -40,12 +40,17 @@ How to set up
 
 By default, some features are disabled in Gadgetbridge and you may well want to enable them:
 
+* Click on the three bars icon (`≡`) in the top left, then `Settings`
+  * Enable `Connect to Hadgetbridge device when Bluetooth is turned on`
+  * Enable `Reconnect automatically`, so Gadgetbridge reconnects if it loses the connection
+  * `Sync time` is on by default, but needs to be left on if you want to enable `Sync Calendar Events` (below)
+
 * Click on your device, then the Gear icon
-  * `auto-reconnect to device` should probably be ticked, so Gadgetbridge reconnects if it loses the connection
   * `Text as Bitmaps` detects non-ascii characters (including Emoji) that can't be displayed on the Bangle and converts them to images that can be displayed
   * `Allow high MTU` improves transfer speed to Bangle.js
   * `Allow Internet Access` enables HTTP requests from Bangle.js apps (see below)
   * `Allow Intents` enables Bangle.js apps to interact with Android apps
+  * `Sync Calendar Events` allows Gadgetbridge to send info on your Calendar events to Bangle.js, to be viewed with the `Agenda` app.
   
 
 Bangle.js Gadgetbridge app
@@ -170,6 +175,9 @@ Currently implemented messages are:
 * `t:"musicinfo", artist,album,track,dur,c(track count),n(track num)` - currently playing music track
 * `t:"call", cmd:"accept/incoming/outgoing/reject/start/end", name: "name", number: "+491234"` - call
 * `t:"act", hrm:bool, stp:bool, int:int`  - Enable realtime step counting, realtime heart rate. 'int' is the report interval in seconds
+* `t:"calendar", id:int, type:int, timestamp:seconds, durationInSeconds, title:string, description:string,location:string,calName:string.color:int,allDay:bool`  - Add a calendar event
+* `t:"calendar-", id:int` - remove calendar event
+* `t:"force_calendar_sync_start"` - cause Bangle.js to send a `force_calendar_sync`
 
 Bangle.js Gadgetbridge also provides:
 
@@ -214,6 +222,7 @@ Available message types are:
   * if `REPLY` can use `tel:string(optional), msg:string`
 * `t:"ver", fw1:string, fw2:string` - firmware versions - sent at connect time
 * `t:"act", hrm:int, stp:int` - activity data - heart rate, steps since last call
+* `t:"force_calendar_sync", ids:[int,int,...]` - Sends a list of Bangle's existing calendar IDs, and ask Gadgetbridge to add/remove any calendar items that are different
 
 Bangle.js Gadgetbridge also provides:
 
