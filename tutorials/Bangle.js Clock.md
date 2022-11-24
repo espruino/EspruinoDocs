@@ -171,7 +171,8 @@ and cancel our `secondInterval` interval, then restart it when the
 screen is turned on (and immediately redraw):
 
 **Note:** On Bangle.js 2 the screen is on all the time, so this code
-isn't required.
+isn't required. However you can still use `Bangle.on('lock'` to allow
+you to display a clock face with seconds *only* when the Bangle is unlocked.
 
 ```JS
 // Stop updates when LCD is off, restart when on
@@ -301,5 +302,7 @@ Next Steps
 
 Ok, so now we've got a clock!
 
-How about adding it to the [Bangle.js App Loader](http://banglejs.com/apps)?
-Check out [Adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader)
+* How about adding it to the [Bangle.js App Loader](http://banglejs.com/apps)? Check out [Adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader)
+* You can [add useful information to the clock face with Clock Info](/Bangle.js+Clock+Info)
+* You can make the clock [Fast Load](/Bangle.js+Fast+Load) into the Launcher
+* What about [auto-hiding the widgets](/Bangle.js+Hideable+Widgets)
