@@ -41,7 +41,7 @@ How to set up
 By default, some features are disabled in Gadgetbridge and you may well want to enable them:
 
 * Click on the three bars icon (`≡`) in the top left, then `Settings`
-  * Enable `Connect to Hadgetbridge device when Bluetooth is turned on`
+  * Enable `Connect to Gadgetbridge device when Bluetooth is turned on`
   * Enable `Reconnect automatically`, so Gadgetbridge reconnects if it loses the connection
   * `Sync time` is on by default, but needs to be left on if you want to enable `Sync Calendar Events` (below)
 
@@ -52,6 +52,13 @@ By default, some features are disabled in Gadgetbridge and you may well want to 
   * `Allow Intents` enables Bangle.js apps to interact with Android apps
   * `Sync Calendar Events` allows Gadgetbridge to send info on your Calendar events to Bangle.js, to be viewed with the `Agenda` app.
   
+On some phones, even though Gadgetbriddge requests permissions, they may not have been granted by default:
+
+* Go to `Android Settings` on your Android Device
+* Go to `Apps` then `Permissions` then `Permissions`(again)
+* Now click `Calendar` and scroll down to `Bangle.js Gadgetbridge` and check if it is under `Allowed`. If not, click it under `Denied` and then click `Allow`
+* Now click `Location` and scroll down to `Bangle.js Gadgetbridge` and check if it is under `Allowed All the Time`. If it is, click it and then click `Allow`
+
 
 Bangle.js Gadgetbridge app
 ----------------------------
