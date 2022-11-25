@@ -82,7 +82,7 @@ Each item in `items` contains:
 ```JS
   {
     'text'  // the text to display for this item
-    'img'   // a 24x24px image to display for this item
+    'img'   // an optional 24x24px image to display for this item (if not supplied, text may be 2 lines separated with \n)
     'v'     // (if hasRange==true) a numerical value
     'min','max' // (if hasRange==true) a minimum and maximum numerical value (if this were to be displayed as a guage)
   }
@@ -130,8 +130,8 @@ let clockInfoMenu = require("clock_info").addInteractive(clockInfoItems, {
     if (options.focus) g.drawRect(options.x, options.y, options.x+options.w-2, options.y+options.h-1); // show if focused
     // we're drawing center-aligned here
     var midx = options.x+options.w/2;
-    g.drawImage(info.img, midx-12,options.y+4); // draw the image
-    g.setFont("6x8:2").setFontAlign(0,0).drawString(info.text, midx,options.y+36); // draw the text
+    if (info.img) g.drawImage(info.img, midx-12,options.y+4); // draw the image
+    g.setFont("6x8:2").setFontAlign(0,1).drawString(info.text, midx,options.y+44); // draw the text
   }
 });
 ```
@@ -148,6 +148,12 @@ After calling `addInteractive` it returns the `options` parameter with the follo
 
 If your clock implements [Fast Loading](/Bangle.js+Fast+Load) you'll want to
 ensure you call `clockInfoMenu.remove();` when your clock unloads.
+
+## Multiple clock_info
+
+You can easily call `require("clock_info").addInteractive` more than once
+with different areas (see `slopeclockpp` for an example). As long as the areas
+don't overlap they can be individually focussed and modified.
 
 
 ## clock_info Add-on files
