@@ -22,24 +22,24 @@ MAX1704X.prototype.reset = function() {
 
 MAX1704X.prototype.readRegister = function(register) {
   this.i2c.writeTo({address: 0x36, stop: false}, [register]);
-  var d = new DataView(this.i2c.readFrom(0x36, 3).buffer);
-  return d.getUint16(0);
+  return new DataView(this.i2c.readFrom(0x36, 3).buffer);
 };
 
+
 MAX1704X.prototype.readICVersion = function() {
-  return this.readRegister(0x08).toString(16);
+  return this.readRegister(0x08).getUint16().toString(16);
 };
 
 MAX1704X.prototype.readPercent = function() {
-  return this.readRegister(0x04) / 256.0;
+  return this.readRegister(0x04).getUint16() / 256.0;
 };
 
 MAX1704X.prototype.readVoltage = function(callback) {
-  return this.readRegister(0x02) * 78.125 / 1000000;
+  return this.readRegister(0x02).getUint16() * 78.125 / 1000000;
 };
 
 MAX1704X.prototype.readChargeRate = function(callback) {
-  return this.readRegister(0x16) * 0.208;
+  return this.readRegister(0x16).getInt16() * 0.208;
 };
 
 exports.connect = function (_i2c) {
