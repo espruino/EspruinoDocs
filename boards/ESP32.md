@@ -4,7 +4,7 @@ Espruino on ESP32
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/ESP32. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: ESP32,Espruino,Board,PCB,Pinout,Internet,WiFi,Wireless,Radio
+* KEYWORDS: ESP32,Espruino,Board,PCB,Pinout,Internet,WiFi,Wireless,Radio,Bluetooth,BLE,Bluetooth LE
 
 **Note:** *This page documents running the Espruino firmware on the ESP32 board.
 
@@ -20,7 +20,7 @@ Contents
 
 The [ESP32](https://espressif.com/en/products/hardware/esp32/overview) is a dual core Tensilica LX6
 microcontroller with 520 KB SRAM, integrated Wifi, Bluetooth, and more.  [Espruino](https://github.com/espruino/Espruino)
-is a very light weight JavaScript interpreter that runs on the ESP32, and other microcontrollers.
+is a very lightweight JavaScript interpreter that runs on the ESP32, and other microcontrollers.
 
 This documentation is intended for those who want to run JavaScript on any ESP32 microcontrollers.
 It will describe how to flash the ESP32 with the latest firmware, connect to Wifi and get the
@@ -68,15 +68,16 @@ Supported by Espruino on the ESP32:
 * ADC
 * Serial
 * WIFI - as a client and access point
+* Bluetooth LE - BLE
 
 Not supported by Espruino on the ESP32 (yet):
 
 * No Over-The-Air (OTA) firmware updates.
-* Bluetooth and BLE
+* Bluetooth Classic
 
 ### Known Issues
 
-* Espruino Web IDE has issues with the ESP32, see [below](#espruino-web-ide).
+* Espruino Web IDE had issues with the ESP32 back in 2017, see [below](#espruino-web-ide).
 
 ---
 
@@ -224,13 +225,15 @@ Your device is flashed.
 The [Espruino Web IDE](http://www.espruino.com/Web+IDE) is a basic development environment
 that allows you to write your code and deploy it to the ESP32.  
 
-*Issue*: There is an issue with Espruino Web IDE, sometimes it will not connect.
+*Issue*: In 2017, there was an issue with Espruino Web IDE, sometimes it will not connect.
 Especially the first time you try.  The workaround is to use another tool to
 connect to the ESP32, like minicom or cutecom, see below.  Once connected using one of these tools, try again using Espruino Web IDE.
 
 Once you have connected once and enabled wifi on boot (see below), you will be
 able to connect to the ESP32 via telnet, using Espruino Web IDE, this tends to
 be quite reliable.
+
+If these instructions were still relevant for you in 2022 or later, please edit the docs to reflect that it's an ongoing issue.
 
 #### minicom / CuteCom
 
@@ -339,7 +342,7 @@ This will output something like `Web server running at http://10.42.0.119` and y
 
 ### Bluetooth
 
-Not yet implemented
+See [https://www.espruino.com/BLE+Communications](https://www.espruino.com/BLE+Communications)
 
 ## GPIO Pins
 
@@ -472,7 +475,7 @@ Please have in mind, PWM via analog always need a lowpass filter, usually a simp
 ### Analog Read / Write Example
 
 There are two ADC channels but only ADC-1 is support at the moment. The ADC-1 channel is accessible through `IO35` and `IO36`(`VP_SENSOR`).
-ADC PINs shouldn't not be connected to a voltage higher than VCC - if a higher input voltage is needed, a resistor should be added between the input and the ADC and then the real voltage could be calculated by including the resistor's voltage drop in the equation.
+ADC PINs should not be connected to a voltage higher than VCC - if a higher input voltage is needed, a resistor should be added between the input and the ADC and then the real voltage could be calculated by including the resistor's voltage drop in the equation.
 
 usage example: reading analog voltage from IO35
 
@@ -532,17 +535,16 @@ Current ESP32 modules are 4Mb.
 
 The result of all this is the following:
 
-Start    | Length | Function
---------:|-------:|:----------------------------------------
-0x000000 |    4KB | Secure Boot
-0x008000 |    4KB | Bootloader
-0x009000 |   16KB | nvs - esp-idf non-volatile storage area
-0x00d000 |    8KB | otadata - esp-idf keeps track on which the current firmware to boot
-0x010000 |  960KB | factory - the initial espruino firmware.
-0x100000 |   64KB | js_code - the saved espruino interpreter and `E.setBootCode()`
-0x200000 | 1024KB | ota_0 - area for ota updates (not yet implemented)
-0x300000 | 1024KB | 1Mb Flash Fat Filesystem
-
+|    Start | Length | Function                                                            |
+|---------:|-------:|:--------------------------------------------------------------------|
+| 0x000000 |    4KB | Secure Boot                                                         |
+| 0x008000 |    4KB | Bootloader                                                          |
+| 0x009000 |   16KB | nvs - esp-idf non-volatile storage area                             |
+| 0x00d000 |    8KB | otadata - esp-idf keeps track on which the current firmware to boot |
+| 0x010000 |  960KB | factory - the initial espruino firmware.                            |
+| 0x100000 |   64KB | js_code - the saved espruino interpreter and `E.setBootCode()`      |
+| 0x200000 | 1024KB | ota_0 - area for ota updates (not yet implemented)                  |
+| 0x300000 | 1024KB | 1Mb Flash Fat Filesystem                                            |
 
 This is defined in partitions_espruino.csv in the EspruinoBuildTools repository
 
