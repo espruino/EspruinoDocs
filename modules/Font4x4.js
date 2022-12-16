@@ -11,7 +11,7 @@ g.drawString("Hello World");
 var font = atob("DQAMDAfg2wCw0K0ADAAHkAlwUlAnIBIAAiABABJAaWAE8AtQCWAOMA2wDzCLQKWgDeAFAAGgAlAFUAUgC0CeQHpw/TBpkPlg/YD8gGkw8vCfkCHg9pDxEPTw9DB5cPpAeWD6UAWgj4BxcGFgY2DS0MPAvZAPkAQgnwAEhAEQhAAlcPUgJVAl8CdQegAXYPIQCwAbAPJQAfAyMDIQJSB0ICRwA0AXQE9AMTAhICMgUlBSQEcQBpAPAAlgAkA=");
 
 exports.add = function(graphics) {
-  graphics.prototype.setFont4x4 = function(scale) {
-    this.setFontCustom(font, 33, 4, 4|(scale<<8));
+  graphics.prototype.setFont4x4 = function() {
+    return this.setFontCustom(font, 33, 4, 4);
   }
 }

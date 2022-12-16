@@ -63,7 +63,7 @@ print('this.setFontCustom(atob('+JSON.stringify(btoa(font))+
 */
 
 exports.add = function(graphics) {
-  graphics.prototype.setFont5x7Numeric7Seg = function(scale) {
-    this.setFontCustom(atob("AAAAAABAABAgAAbQYLYAAAAGwANJksAACTJbAGAgQ2AMJMkMAbSZIYAAgQGwBtJktgDCTJbAABQA2kSGwBsJEhgDaDBAAAwkS2ANpMkAAbSJAAAAAA=="), 32, atob("BQAAAAAAAAAAAAAAAAUCAAUFBQUFBQUFBQUDAAAAAAAABQUFBQUF"), 7|(scale<<8));
+  graphics.prototype.setFont5x7Numeric7Seg = function() {
+    return this.setFontCustom(atob("AAAAAABAABAgAAbQYLYAAAAGwANJksAACTJbAGAgQ2AMJMkMAbSZIYAAgQGwBtJktgDCTJbAABQA2kSGwBsJEhgDaDBAAAwkS2ANpMkAAbSJAAAAAA=="), 32, atob("BQAAAAAAAAAAAAAAAAUCAAUFBQUFBQUFBQUDAAAAAAAABQUFBQUF"), 7);
   }
 }

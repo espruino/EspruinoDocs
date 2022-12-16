@@ -19,7 +19,7 @@ var font = atob("AAAAAPoAwADAAFhw2HDQAGSS/5JMAGCW+DzSDAxSolIMEsAAPEKBAIFCPABIMOA
 var widths = atob("BAIEBgYGBgIEBAYGAwUCBQYDBgYGBgYGBgYCAwQGBAUGBgYGBgUFBgYCBgYFBgYGBgYGBgYGBgYGBgUDBQMEBgYFBQUFBQUFBQIEBQMGBQUFBQUFBAUGBgYGBQQCBAYGBgQGBgYGBgYGBQUGBgYGBgYGBgYGBgYGBgQCAwQFBgYGAgYGBgYGBgYGBgYGBgYGBQYFBQQGBgMEBAYGBgYGBQYGBgYGBgYGBgYGBgQEBAQGBgYGBgYGBgYGBgYGBgYFBQUFBQUFBgYGBQUFBAQEBAYGBQUFBQUGBgUFBQUGBQY=");
 
 exports.add = function(graphics) {
-  graphics.prototype.setFontDennis8 = function(scale) {
-    return this.setFontCustom(font, 32, widths, 8|(scale<<8));
+  graphics.prototype.setFontDennis8 = function() {
+    return this.setFontCustom(font, 32, widths, 8);
   }
 }

@@ -16,7 +16,7 @@ var widths = atob("BQIEBgYGBwMEBAcGAwYCBwYFBgYGBgYGBgYCAwUGBQYHBgYGBgYGBgYEBgYGC
 
 
 exports.add = function(graphics) {
-  graphics.prototype.setFont8x12 = function(scale) {
-    return this.setFontCustom(font, 32, widths, 12|(scale<<8));
+  graphics.prototype.setFont8x12 = function() {
+    return this.setFontCustom(font, 32, widths, 12);
   }
 }
