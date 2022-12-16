@@ -11,7 +11,7 @@ MAX1704X.prototype.reset = function() {
   try {
     this.i2c.writeTo(0x36, [0xFE, 0x54, 0x00]);
   } catch (err) {
-    if (err.message.includes('33282')) {
+    if (err.message.indexOf('33282')>=0) {
       // we got a NACK, which is what we want
       return;
     } else {
@@ -24,7 +24,6 @@ MAX1704X.prototype.readRegister = function(register) {
   this.i2c.writeTo({address: 0x36, stop: false}, [register]);
   return new DataView(this.i2c.readFrom(0x36, 3).buffer);
 };
-
 
 MAX1704X.prototype.readICVersion = function() {
   return this.readRegister(0x08).getUint16().toString(16);
