@@ -8,7 +8,7 @@ var font = atob("AAAAAAAAAAAB/MAAAJAAcAAAABIADgAAAAACAAngB4AeeAHgB5AAQAAAAHEAREA
 var widths = atob("AwIGCAgICAMFBQYIAwYDBwcFBgYHBgYGBgYDAwYHBgcHBgYGBgYGBgYEBgYGBgYGBgYGBgYGBggGBgYEBwQGBwQGBgYGBgYHBgYGBgYGBgYGBgYGBgYGBgYGBgQCBAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAHCAYGBgAGBgYGAAYGBQYABgMGBgQABgYHBgAGBgYGBgYGBgYGBgYGBgYEBAYGBgYGBgYGAAYGBgYGBgYHBgYGBgYGBgYGBgYGBgYGBwcGBgYGBgYABgYGBgYGBg==");
 
 exports.add = function(graphics) {
-  graphics.prototype.setFontHaxorNarrow7x17 = function() {
-    this.setFontCustom(font, 32, widths, 17);
+  graphics.prototype.setFontHaxorNarrow7x17 = function(scale) {
+    return this.setFontCustom(font, 32, widths, 17|(scale<<8));
   }
 }

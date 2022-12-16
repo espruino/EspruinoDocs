@@ -50,7 +50,7 @@ function drawCh(g,n,x,y) {
  g.drawImage(Graphics.createImage(b),x,y);
 }
 
-var gr = Graphics.createArrayBuffer(Ht,E.sum(widths),1,{msb:true}); 
+var gr = Graphics.createArrayBuffer(Ht,E.sum(widths),1,{msb:true});
 gr.setRotation(3,1);
 var y = widths[0]; // space & full stop
 for (var i=0;i<digits.length;i++) {
@@ -70,7 +70,7 @@ print('this.setFontCustom(atob('+JSON.stringify(btoa(font))+
      '), '+Ht+');');
 */
 exports.add = function(graphics) {
-  graphics.prototype.setFont7x11Numeric7Seg = function() {
-    this.setFontCustom(atob("AAAAAAAAAAAAAAAEAIAQAgAAAAAIAHvQBgDAGAL3gAAAAAAAAAAHvAAA9CGEMIYQvAAAACEMIYQwhe8AB4AIAQAgBA94ADwIQwhhDCEDwAHvQhhDCGEIHgAAAgBACAEAHvAAe9CGEMIYQveAA8CEMIYQwhe8AAABjDGAAAA96EEIIQQge8AB7wIQQghBCB4AD3oAwBgDAEAAAAPAhBCCEEL3gAPehDCGEMIQAAAe9CCEEIIQAAAA"), 32, atob("BwAAAAAAAAAAAAAAAAcCAAcHBwcHBwcHBwcFAAAAAAAABwcHBwcH"), 11);
+  graphics.prototype.setFont7x11Numeric7Seg = function(scale) {
+    return this.setFontCustom(atob("AAAAAAAAAAAAAAAEAIAQAgAAAAAIAHvQBgDAGAL3gAAAAAAAAAAHvAAA9CGEMIYQvAAAACEMIYQwhe8AB4AIAQAgBA94ADwIQwhhDCEDwAHvQhhDCGEIHgAAAgBACAEAHvAAe9CGEMIYQveAA8CEMIYQwhe8AAABjDGAAAA96EEIIQQge8AB7wIQQghBCB4AD3oAwBgDAEAAAAPAhBCCEEL3gAPehDCGEMIQAAAe9CCEEIIQAAAA"), 32, atob("BwAAAAAAAAAAAAAAAAcCAAcHBwcHBwcHBwcFAAAAAAAABwcHBwcH"), 11|(scale<<8));
   }
 }

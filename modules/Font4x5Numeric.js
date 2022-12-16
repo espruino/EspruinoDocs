@@ -50,7 +50,7 @@ this.setFontCustom(font, 46, widths, 5);
 */
 
 exports.add = function(graphics) {
-  graphics.prototype.setFont4x5Numeric = function() {
-    this.setFontCustom(atob("CAZMA/H4PgvXoK1+DhPg7W4P1uCEPg/X4O1+AA=="), 46, atob("AgQEAgQEBAQEBAQE"), 5);
+  graphics.prototype.setFont4x5Numeric = function(scale) {
+    this.setFontCustom(atob("CAZMA/H4PgvXoK1+DhPg7W4P1uCEPg/X4O1+AA=="), 46, atob("AgQEAgQEBAQEBAQE"), 5|(scale<<8));
   }
 }

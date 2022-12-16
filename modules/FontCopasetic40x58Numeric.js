@@ -18,7 +18,7 @@ var widths = atob("Jg8dGiAaKBsoKA==");
 
 
 exports.add = function(graphics) {
- graphics.prototype.setFontCopasetic40x58Numeric = function() {
-   this.setFontCustom(font, 48, widths, 58);
+ graphics.prototype.setFontCopasetic40x58Numeric = function(scale) {
+   return this.setFontCustom(font, 48, widths, 58|(scale<<8));
  }
 }

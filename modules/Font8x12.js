@@ -1,7 +1,7 @@
 /* Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
-/* 
+/*
 
-Created from http://uzebox.org/wiki/index.php?title=File:Dangen_charset_8x12.png with Espruino/scripts/create_custom_font.js 
+Created from http://uzebox.org/wiki/index.php?title=File:Dangen_charset_8x12.png with Espruino/scripts/create_custom_font.js
 
 Usage:
 
@@ -16,11 +16,7 @@ var widths = atob("BQIEBgYGBwMEBAcGAwYCBwYFBgYGBgYGBgYCAwUGBQYHBgYGBgYGBgYEBgYGC
 
 
 exports.add = function(graphics) {
-  graphics.prototype.setFont8x12 = function() {
-    this.setFontCustom(font, 32, widths, 12);
+  graphics.prototype.setFont8x12 = function(scale) {
+    return this.setFontCustom(font, 32, widths, 12|(scale<<8));
   }
 }
-
-
-
-

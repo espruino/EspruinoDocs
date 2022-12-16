@@ -1,5 +1,5 @@
 /* Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. */
-/* 
+/*
 
 Created from http://uzebox.org/wiki/index.php?title=File:F8x16all.gif with http://ebfc.mattbrailsford.com/
 
@@ -15,8 +15,7 @@ var font = atob("AAAAAAAAAAAAABwAP7A/sBwAAABwAHgAAAAAAHgAcAAAAARAH/Af8ARAH/Af8AR
 var widths = atob("BQUHCAgICAQFBQgHBAgDCAgHCAgICAgICAgDBAcHBwgICAgICAgICAgFCAgICAgICAgICAcICAgIBwgFCAUICAUICAgICAcICAUHCAUICAgICAgICAgICAgICAcDBw==");
 
 exports.add = function(graphics) {
-  graphics.prototype.setFont8x16 = function() {
-    this.setFontCustom(font, 32, widths, 16);
+  graphics.prototype.setFont8x16 = function(scale) {
+    return this.setFontCustom(font, 32, widths, 16|(scale<<8));
   }
 }
-

@@ -26,7 +26,7 @@ var font = E.toString([
   0xEA,0xAF, // 9
 ]);*/
 exports.add = function(graphics) {
-  graphics.prototype.setFont4x4Numeric = function() {
-    this.setFontCustom(atob("/b+f8bvdmd/m/9279VeI/z+/6q8="), 48, 4, 4);
+  graphics.prototype.setFont4x4Numeric = function(scale) {
+    this.setFontCustom(atob("/b+f8bvdmd/m/9279VeI/z+/6q8="), 48, 4, 4|(scale<<8));
   }
 }
