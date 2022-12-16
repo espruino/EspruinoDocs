@@ -101,7 +101,7 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
     ctx.fillRect(xPos,0,fontHeight*2,fontHeight*2);
     ctx.fillStyle = "white";  
     ctx.fillText(ch, xPos + ox, fontHeight + yPos + oy);  
-    
+
     var chWidth = Math.round(ctx.measureText(ch).width);
     var img = { width:0, height:fontHeight+1, data:[] };
     if (chWidth) {
@@ -231,7 +231,7 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   if (document.getElementById("useHeatshrink").checked) {
     const fontArray = new Uint8Array(fontData);
     const compressedFont = String.fromCharCode.apply(null, heatshrink.compress(fontArray));
-    encodedFont = 
+    encodedFont =
       "E.toString(require('heatshrink').decompress(atob('" +
       btoa(compressedFont) +
       "')))";
@@ -241,15 +241,14 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   var result = document.getElementById("result");
   result.style.display = "inherit";
   result.value = `
-Graphics.prototype.setFont${fontName.replace(/[^A-Za-z0-9]/g,"")} = function(scale) {
+Graphics.prototype.setFont${fontName.replace(/[^A-Za-z0-9]/g,"")} = function() {
   // Actual height ${maxY+1-minY} (${maxY} - ${minY})
-  this.setFontCustom(
+  return this.setFontCustom(
     ${encodedFont},
     ${charMin},
     ${fixedWidth?fontWidths[0]:`atob("${btoa(String.fromCharCode.apply(null,fontWidths))}")`},
-    ${fontHeight}+(scale<<8)+(${BPP}<<16)
+    ${fontHeight}|${BPP<<16}
   );
-  return this;
 }`.trim();  
 }
 
