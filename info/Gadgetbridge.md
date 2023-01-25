@@ -185,10 +185,12 @@ Currently implemented messages are:
 * `t:"calendar", id:int, type:int, timestamp:seconds, durationInSeconds, title:string, description:string,location:string,calName:string.color:int,allDay:bool`  - Add a calendar event
 * `t:"calendar-", id:int` - remove calendar event
 * `t:"force_calendar_sync_start"` - cause Bangle.js to send a `force_calendar_sync`
+* `t:"gps", lat, lon, alt, speed, course, time, satellites, hdop, externalSource:true` - a GPS reading once GPS is turned on with  `{ t:"gps_power", status: true }`
+* `t:"is_gps_active"` - cause Bangle.js to send `{ t:"gps_power", status: bool }`
 
 Bangle.js Gadgetbridge also provides:
 
-* `t:"http",resp:"......",[id:"..."],[id:"..."]` - a response to an HTTP request (see below)
+* `t:"http",resp:"......",[id:"..."]` - a response to an HTTP request (see below)
 * `t:"http",err:"......"` - an HTTP request failed.
 
 For example:
@@ -230,6 +232,7 @@ Available message types are:
 * `t:"ver", fw1:string, fw2:string` - firmware versions - sent at connect time
 * `t:"act", hrm:int, stp:int` - activity data - heart rate, steps since last call
 * `t:"force_calendar_sync", ids:[int,int,...]` - Sends a list of Bangle's existing calendar IDs, and ask Gadgetbridge to add/remove any calendar items that are different
+* `t:"gps_power", status: bool` - Sends an update on whether Bangle.js wants GPS enabled or not
 
 Bangle.js Gadgetbridge also provides:
 
