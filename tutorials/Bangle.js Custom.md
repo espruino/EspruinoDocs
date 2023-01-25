@@ -53,7 +53,7 @@ g.setFontAlign(0,0);
 g.setFont("6x8");
 g.drawString(txt,120,120);
 `;
-        // send finished app (in addition to contents of app.json)
+        // send finished app (in addition to contents of metadata.json)
         sendCustomizedApp({
           storage:[
             {name:"myapp.app.js", url:"app.js", content:app},
