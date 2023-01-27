@@ -59,6 +59,7 @@ function closureOnline() {
     ['output_info','errors'],
     ['output_info','warnings'],
     ['warning_level','VERBOSE'],
+    ['rewrite_polyfills',false],
     ['js_code',js],
     ['js_externs',jsExterns]
    //['language','ECMASCRIPT5_STRICT'],
@@ -139,10 +140,11 @@ function closureOffline() {
   var options = [
     ['compilation_level',compilation_level],
     ['warning_level','VERBOSE'],
+    ['rewrite_polyfills',false],
     ['language_in','ECMASCRIPT_2020'],
     ['language_out','ECMASCRIPT_2015'],
-    ['jscomp_warning','undefinedVars'],
-    ['strict_mode_input','false'],
+    ['jscomp_warning','undefinedVars'],    
+    ['strict_mode_input','false'],    
     ["js", tmpPath+".js"],
     ["externs", tmpPath+".ext.js"],
     ["js_output_file", tmpPath+".out.js"]
