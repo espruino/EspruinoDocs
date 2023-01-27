@@ -25,20 +25,26 @@ While you can write any code you want in your clock face, you may soon
 decide that you want to display more than one thing, and to be able to
 cycle through what is displayed.
 
-We've already implemented this for you with the [clock_info.js module](https://github.com/espruino/BangleApps/blob/master/modules/clock_info.js)
+**We've already implemented this for you with the [clock_info.js module](https://github.com/espruino/BangleApps/tree/master/apps/clock_info)**
 
-The [clock_info.js module](https://github.com/espruino/BangleApps/blob/master/modules/clock_info.js)
+The [clock_info.js module](https://github.com/espruino/BangleApps/tree/master/apps/clock_info)
 provides a series of 'info cards' for things like battery, heart rate and altitude.
 
 Not just that, but you can install other apps (like [Sunrise Clockinfo](http://banglejs.com/apps/?id=clkinfosunrise)
-that can add other information cards, so any clock that uses clock_info.js can then display this information.
+that can add other information cards, so any clock that uses clock_info.js can then display this information. A full list is available at https://banglejs.com/apps/?q=clkinfo
 
 ## Setup
 
-To develop with the Web IDE and Bangle.js modules, you need to do a bit of setup first
-to set the include path - check out https://github.com/espruino/BangleApps/blob/master/modules/README.md
+Recently the `clock_info` module turned into an app. So all you need to do is to ensure  you install
+the [clock_info app](https://banglejs.com/apps/?id=clock_info) on your Bangle.
+
+Before that, `clock_info` was a module in [BangleApps/modules](https://github.com/espruino/BangleApps/tree/master/modules)
+and so to develop with the Web IDE you need to do a bit of setup first to set the include path - check out https://github.com/espruino/BangleApps/blob/master/modules/README.md
+That isn't needed now.
 
 ## How it works
+
+First, in your clock's `metadata.json` you'll want to add `"dependencies" : { "clock_info":"module" },` to tell the app loader that your app needs to have the `clock_info` module pre-installed.
 
 In your clock, calling `require("clock_info").load()` will return an array of the form:
 
@@ -82,7 +88,9 @@ Each item in `items` contains:
 ```JS
   {
     'text'  // the text to display for this item
-    'img'   // an optional 24x24px image to display for this item (if not supplied, text may be 2 lines separated with \n)
+    'short' // optional: a shorter text to display for this item (at most 6 characters)
+    'img'   // optional: 24x24px image to display for this item (if not supplied, text may be 2 lines separated with \n)
+    'color' // optional: a color string (like "#f00") to color the icon in compatible clocks    
     'v'     // (if hasRange==true) a numerical value
     'min','max' // (if hasRange==true) a minimum and maximum numerical value (if this were to be displayed as a guage)
   }
