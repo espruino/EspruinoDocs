@@ -99,13 +99,13 @@ exports.createFont = function(options) {
       break;
     case "alphanum":
       break;
-    default: throw new Error("Unknown export type")
+    default: throw new Error("Unknown export type");
   }
 
   var gr = Graphics.createArrayBuffer(options.height,E.sum(widths),1,{msb:true});
   gr.setRotation(3,1);
   var y = widths[0]; // space & full stop
-  var widthIdx = 0
+  var widthIdx = 0;
   for (var i=0;i<digits.length;i++) {
     widthIdx++; while (widths[widthIdx]===0)widthIdx++;
     drawCh(gr,i,y,0);
@@ -125,4 +125,3 @@ exports.createFont = function(options) {
        '), '+options.height+');');
 };
 
-setTimeout(function() {
