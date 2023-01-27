@@ -104,7 +104,7 @@ Each item in `items` contains:
 ## Using clock_info.js
 
 You can call `require("clock_info").load()` and can display the information directly - an
-example is at the bottom of the [clock_info.js module](https://github.com/espruino/BangleApps/blob/master/modules/clock_info.js).
+example is at the bottom of the [clock_info.js module](https://github.com/espruino/BangleApps/blob/master/apps/clock_info/lib.js).
 
 However we'd strongly recommend that you use the `addInteractive` function. This
 implements all the user-interaction code and leaves you to implement
