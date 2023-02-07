@@ -86,7 +86,7 @@ function check_crc16(A, B) {
 }
 
 
-function get_nrf_payload(addressData,commandData) {
+function exports.get_nrf_payload(addressData,commandData) {
   //var t = getTime();
   var data = new Uint8Array(32);
   /*var whiteningB = whitening_init(0x3f);
@@ -130,8 +130,7 @@ function get_nrf_payload(addressData,commandData) {
 to pair with a just turned on remote control */
 exports.start = function() {
   var commandData = new Uint8Array([173, 196, 189, 128, 128, 128, 0, 82]);
-  var payload = get_nrf_payload(exports.DEVICE_ADDRESS,commandData);
-  print(payload);
+  var payload = exports.get_nrf_payload(exports.DEVICE_ADDRESS,commandData);
   NRF.setAdvertising({},{showName:false,manufacturer:65280,manufacturerData:payload,interval:20});
 }
 
@@ -152,6 +151,6 @@ exports.set = function(o) {
   var commandData = new Uint8Array([125, 196, 189, 0, 0, 0, 0, 0, 0, 130]);
   commandData[3]=(o.a<<4) | o.b;
   commandData[4]=(o.c<<4) | o.d;
-  var payload = get_nrf_payload(exports.DEVICE_ADDRESS,commandData);
+  var payload = exports.get_nrf_payload(exports.DEVICE_ADDRESS,commandData);
   NRF.setAdvertising({},{showName:false,manufacturer:65280,manufacturerData:payload,interval:20});
 }
