@@ -2,7 +2,7 @@
 LEGO Power Functions Clone Remote Control (Mould King M-0006 / Kaiyu / Bandra / AKOGD / MayD / etc)
 =====================================================================
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Lego+Power+Functions+Clone+Remote+Control. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/LEGO+Power+Functions+Clone. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,Bluetooth,LEGO,Power Functions,Lego Power Functions,Mould King,MouldKing,M-0006,M0006,Kaiyu,Bandra,AKOGD,MayD
 * USES: BLE
@@ -42,7 +42,7 @@ each of which can have a value from -7 (full reverse) to 0 (off) to 7 (full forw
 Leaving a value out will set it to 0.  
 
 ```
-var lego = require("mouldking.js");
+var lego = require("mouldking");
 lego.start();
 // You must leave one second after 'start' to allow the remote to be paired
 
