@@ -86,7 +86,7 @@ function check_crc16(A, B) {
 }
 
 
-function exports.get_nrf_payload(addressData,commandData) {
+exports.get_nrf_payload = function(addressData,commandData) {
   //var t = getTime();
   var data = new Uint8Array(32);
   /*var whiteningB = whitening_init(0x3f);
@@ -124,7 +124,7 @@ function exports.get_nrf_payload(addressData,commandData) {
   //var z=getTime();print("whiten",z-t);t=z;
   /* Get actual array data address */
   return new Uint8Array(data.buffer, 15, addressData.length + commandData.length + 5);
-}
+};
 
 /** Starts advertising with the default 'hello' message. This is needed
 to pair with a just turned on remote control */
@@ -132,7 +132,7 @@ exports.start = function() {
   var commandData = new Uint8Array([173, 196, 189, 128, 128, 128, 0, 82]);
   var payload = exports.get_nrf_payload(exports.DEVICE_ADDRESS,commandData);
   NRF.setAdvertising({},{showName:false,manufacturer:65280,manufacturerData:payload,interval:20});
-}
+};
 
 /** Set the state of the outputs on the device. o is an object with {a,b,c,d}
 each of which can contain a number from -7 to 7.
@@ -153,4 +153,4 @@ exports.set = function(o) {
   commandData[4]=(o.c<<4) | o.d;
   var payload = exports.get_nrf_payload(exports.DEVICE_ADDRESS,commandData);
   NRF.setAdvertising({},{showName:false,manufacturer:65280,manufacturerData:payload,interval:20});
-}
+};
