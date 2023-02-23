@@ -128,7 +128,7 @@ Saved code will not be loaded from flash, *but will not be erased from flash eit
 Tutorials
 --------
 
-First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#puckjs)
+First, it's best to check out the [Getting Started Guide](https://www.puck-js.com/go)
 
 Tutorials using Puck.js:
 
