@@ -18,7 +18,7 @@ You'll Need
 -----------
 
 * A [Puck.js](/Puck.js)
-* A standard [Light Dependent Resistor](/LDR) (eg. GL5537)
+* A standard [Light Dependent Resistor](/LDR) (eg. GL5537) - see the end for information about other options.
 * Some double sided tape (VHB tape works great)
 
 
@@ -236,3 +236,40 @@ Notes
 * While this example doesn't do it, your current power consumption can be calculated by measuring the time between pulses - it'd be a good addition to the advertising data.
 * Web Bluetooth websites can't read advertising data (yet) so cannot display any electricity data without connecting. However another Espruino device like [Pixl.js](/Pixl.js) could do that easily.
 * The resistance of the LDR varies with the light on it. On a standard LDR like a GL5537 complete darkness has a resistance of around 2 M Ohms, so the power usage from the coin cell (against the 40k internal pullup) is very low. However the more ambient light that gets into the sensor the lower the resistance and so the lower the battery life - so it's worth trying to fit the sensor as snugly as possible.
+
+
+Do I need to use an LDR?
+-------------------------
+
+The Puck does have the ability to measure light via [`Puck.light()`](/Reference#l_Puck_light),
+and it does this using the fact the red LED makes a small voltage when exposed to
+some wavelengths of light.
+
+If you're lucky and your electricity meter's flashing LED is of a wavelength that
+will trigger the red (or green) LEDs then you could try and use some code like this:
+
+```JS
+// D5 (LED1) is used for sensing
+// D1 is used as an output which is also watched with setWatch to detect a state change
+var ll = require("NRF52LL");
+analogRead(D5);
+// set up D1 as an output
+digitalWrite(D1,0);
+// create a 'toggle' task for pin D1
+var tog = ll.gpiote(7, {type:"task",pin:D1,lo2hi:1,hi2lo:1,initialState:0});
+// compare D5 against vref/16  (vref:8 would be vref/2)
+var comp = ll.lpcomp({pin:D5,vref:1,hyst:true});
+// use a PPI to trigger the toggle event
+ll.ppiEnable(0, comp.eCross, tog.tOut);
+// Detect a change on D1
+setWatch(function() {
+  // called twice per 'flash' (for light on and off)
+  print("Light level changed");
+}, D1, {repeat:true});
+```
+
+You would then need to mount the Puck the opposite way around with the LEDs
+directly over the top of the meter's light.
+
+This is in some ways better than the LDR arrangement as there is no resistance
+draining the Puck's battery.

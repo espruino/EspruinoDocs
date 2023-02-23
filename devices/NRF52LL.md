@@ -31,7 +31,7 @@ The following are some examples:
 
 Uses GPIO and counter timer:
 
-```
+```JS
 var ll = require("NRF52LL");
 // Source of events - the button
 var btn = ll.gpiote(7, {type:"event",pin:BTN,lo2hi:1,hi2lo:1});
@@ -51,7 +51,7 @@ function getCtr() {
 
 Uses GPIO and counter timer:
 
-```
+```JS
 var ll = require("NRF52LL");
 // set up D0 and D1 as outputs
 digitalWrite(D0,0);
@@ -72,7 +72,7 @@ poke32(tmr.tStart,1);
 
 Uses low power comparator + GPIO:
 
-```
+```JS
 var ll = require("NRF52LL");
 // set up LED as an output
 digitalWrite(LED,0);
@@ -88,7 +88,7 @@ ll.ppiEnable(0, comp.eCross, tog.tOut);
 
 Uses low power comparator + counter timer:
 
-```
+```JS
 var ll = require("NRF52LL");
 // source of events - compare D31 against vref/2
 var comp = ll.lpcomp({pin:D31,vref:8});
@@ -108,11 +108,41 @@ setInterval(function() {
 }, 10000);
 ```
 
+### Use LED1 on Puck.js to sense a change in light level
+
+[LED1 in Puck.js can be a light sensor](/Puck.js#light-sensor), and we
+can use the low power comparator with this to detect a state change.
+
+To make this work we have to use one IO pin (in this case D1) so that we
+can toggle it with each change, and then watch it with `setWatch` for changes.
+
+**Note:** On the MBDT42 breakout board, LED1 isn't attached to an analog
+pin so this won't work. However LED2 **is**, so can still be used in this way.
+
+```JS
+var ll = require("NRF52LL");
+var togglePin = D1;
+analogRead(LED1);
+digitalWrite(togglePin,0);
+// create a 'toggle' task for togglePin
+var tog = ll.gpiote(7, {type:"task",pin:togglePin,lo2hi:1,hi2lo:1,initialState:0});
+// compare LED1 against 3/16 vref (vref is in 1/16 ths)
+var comp = ll.lpcomp({pin:LED1,vref:3,hyst:true});
+// use a PPI to trigger the toggle event
+ll.ppiEnable(0, comp.eCross, tog.tOut);
+
+// Detect a change on togglePin
+setWatch(function() {
+  // called twice per 'flash' (for light on and off)
+  print("Light level changed");
+}, togglePin, {repeat:true});
+```
+
 ### Make one reading from the ADC:
 
 Uses ADC.
 
-```
+```JS
 var ll = require("NRF52LL");
 var saadc = ll.saadc({
   channels : [ { // channel 0
@@ -134,7 +164,7 @@ shows you how to use it in more detail.
 
 The ADC will automatically sample at the given sample rate.
 
-```
+```JS
 var ll = require("NRF52LL");
 // Buffer to fill with data
 var buf = new Int16Array(128);
@@ -166,7 +196,7 @@ The NRF52 doesn't support using `samplerate` (as in the last example)
 with more than one channel, so you have to use another timer to
 trigger the `tSample` task.
 
-```
+```JS
 var ll = require("NRF52LL");
 // Buffer to fill with data
 var buf = new Int16Array(128);
@@ -202,7 +232,7 @@ print("Done!", buf);
 
 Uses RTC, GPIO:
 
-```
+```JS
 var ll = require("NRF52LL");
 
 // set up LED as an output
@@ -223,7 +253,7 @@ ll.ppiEnable(0, rtc.eTick, tog.tOut);
 
 Uses RTC, GPIO:
 
-```
+```JS
 var ll = require("NRF52LL");
 // Source of events - the button
 // Note: this depends on the polarity of the physical button (this assumes that 0=pressed)
@@ -251,7 +281,7 @@ Uses GPIO, counter timer:
 and 2 for the two capacitive sense pins - the remaining 3 could be used for 3 more
 capacitive sense lines.
 
-```
+```JS
 // connect one 100k resistor between PINDRV and PIN1
 // and one 100k resistor between PINDRV and PIN2
 function capSense2(PINDRV, PIN1, PIN2) {
@@ -295,10 +325,12 @@ Reference
 Interrupts
 ----------
 
-Espruino doesn't allow you to react to interrupts from these peripherals
+Espruino doesn't allow you to react to interrupts from the internal peripherals
 directly, however you can change the state of an external pin (see the
-examples above) and can then short that pin to another pin that you can
-use as an input with `setWatch`.
+examples above) and can then also use that as an input with `setWatch`.
+
+'Use LED1 on Puck.js to sense a change in light level' above is a good example
+of that.
 
 **Note:** `setWatch` uses a **GPIOTE** peripheral for each watch, starting
 with GPIOTE 0 - so be careful not to overlap them!
@@ -309,7 +341,7 @@ LPCOMP
 
 LPCOMP is a low-power comparator. You can use it as follows:
 
-```
+```JS
 var ll = require("NRF52LL");
 // Compare D31 with 8/16 of vref (half voltage)
 o = ll.lpcomp({pin:D31,vref:8});
@@ -319,5 +351,6 @@ o = ll.lpcomp({pin:D31,vref:8});
 console.log(o.sample());
 // Return an object {up,down,cross} showing how
 // the state changed since the last call
-console.log(o.compare());
+console.log(o.cross());
+// eg { up: 1, down: 0, cross: 1 }
 ```

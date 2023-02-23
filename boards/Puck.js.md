@@ -427,7 +427,36 @@ on transferring data via NFC.
 
 To get a light value you can simply call [`Puck.light()`](/Reference#l_Puck_light).
 
-This returns an (uncalibrated) value between `0` and `1`
+This returns an (uncalibrated) value between `0` and `1`.
+
+The Puck doesn't have a dedicated light sensor, but the LEDs are connected to
+analog-capable pins (`D5`=red, `D4`=green, `D3`=blue). LEDs actually generate a
+slight voltage when light is on them, and this can be read back to get a light value.
+[`Puck.light()`](/Reference#l_Puck_light) used the red LED (`D5`) for this.
+
+While `Puck.light()` requires you to poll, it is possible to use the [nRF52's
+low power comparator](/NRF52LL) on the LED's pin to allow the Puck to go to sleep and
+wake up when there's a change in light:
+
+```JS
+// D5 (LED1) is used for sensing
+// D1 is used as an output which is also watched with setWatch to detect a state change
+var ll = require("NRF52LL");
+analogRead(D5);
+// set up D1 as an output
+digitalWrite(D1,0);
+// create a 'toggle' task for pin D1
+var tog = ll.gpiote(7, {type:"task",pin:D1,lo2hi:1,hi2lo:1,initialState:0});
+// compare D5 against vref/16  (vref:8 would be vref/2)
+var comp = ll.lpcomp({pin:D5,vref:1,hyst:true});
+// use a PPI to trigger the toggle event
+ll.ppiEnable(0, comp.eCross, tog.tOut);
+// Detect a change on D1
+setWatch(function() {
+  print("Light level changed");
+}, D1, {repeat:true});
+```
+
 
 ### Bluetooth
 
