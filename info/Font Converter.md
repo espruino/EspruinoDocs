@@ -74,7 +74,9 @@ How it works:
 <span style="display:none;" id="fontTest" >This is a test of the font</span><br/>
 <canvas width="256" height="256" id="fontcanvas" style="display:none"></canvas>
 <textarea id="result" style="width:100%;display:none" rows="16"></textarea>
+<p id="fontPreviewP">
 <canvas id="fontPreview" style="display:none;border:1px solid black;width:100%;image-rendering: pixelated;"></canvas>
+</p>
 <script src="/js/heatshrink.js"></script>
 <script>
 var fontRanges = {
@@ -197,7 +199,7 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
         //if (ch=="X".charCodeAt()) console.log(x,y,c);
         s += " ,/#"[c>>(BPP-2)];
         var n = (x+(y*fontHeight))*4;
-        var prevCol = 255 - (c << (8-BPP));
+        var prevCol = 255 - ((BPP==1) ? c*255 : (c << (8-BPP)));
         prevImg.data[n] = prevImg.data[n+1] = prevImg.data[n+2] = prevCol;
         // add bit data
         bitData = (bitData<<BPP) | c;
@@ -250,6 +252,8 @@ Graphics.prototype.setFont${fontName.replace(/[^A-Za-z0-9]/g,"")} = function() {
     ${fontHeight}|${BPP<<16}
   );
 }`.trim();  
+  // resize the font preview box
+  onWindowResize();
 }
 
 function onChangeFontFile() {
@@ -380,4 +384,14 @@ document.getElementById("fontForm").addEventListener('submit', function(e) {
   e.preventDefault();
   getFontLinkAndName(loadFontAndCalculate);
 });
+
+function onWindowResize() {
+  var w = document.getElementById("fontPreviewP").offsetWidth;
+  var preview = document.getElementById("fontPreview");
+  var cw = preview.width;  
+  if (cw > w) preview.style.width="100%";
+  else preview.style.width = Math.max(cw,Math.floor(w/cw)*cw)+"px";
+}
+
+window.addEventListener("resize", onWindowResize);
 </script>
