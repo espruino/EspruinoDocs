@@ -14,14 +14,14 @@ which both have different screen sizes and numbers of buttons.
 
 Rather than requiring lots of fiddling and separate positions for each device,
 you can use the [Layout library](https://github.com/espruino/BangleApps/blob/master/modules/Layout.js)
-to automatically place everything on the screen in the right place.
+to automatically place everything on the screen.
 
 Simple Layout
 --------------
 
 By default, Layout centers everything on the screen. Try pasting in this code - a basic 'Hello world':
 
-```
+```JS
 var Layout = require("Layout");
 var layout = new Layout( {
   type:"txt", font:"6x8", label:"Hello World"
@@ -36,7 +36,7 @@ If you upload, you'll see `Hello World` in the middle of the screen:
 
 Let's say we want to make a simple clock - so the time, followed by a line for the date. We need vertical alignment, so we'll start with a block of type `v`, containing an array of children in `c`:
 
-```
+```JS
 var Layout = require("Layout");
 var layout = new Layout( {
   type:"v", c: [
@@ -54,6 +54,38 @@ The font can be specified with a percentage, in which case it's made into a Vect
 
 We also specified an `id`, which makes the item available directly from `layout`, eg `layout.time`. To update the time, we can then change `layout.time.label` and redraw.
 
+
+Debugging
+----------
+
+Sometimes it is useful to be able to check how big an area `Layout` has allocated for certain elements, as this will determine the size of the area that gets cleared if you choose to render just a single element.
+
+For this you can use `layout.debug()` which will draw different color boxes around each element:
+
+```JS
+var Layout = require("Layout");
+var layout = new Layout( {
+  type:"v", c: [
+    {type:"h", c: [
+      {type:"txt", font:"12x20:2", label:"One", pad:4 },
+      {type:"txt", font:"12x20:2", label:"Two", pad:4 }
+    ]},
+    {type:"txt", font:"12x20:2", label:"Three", fillx:1 },
+    {type:"h", c: [
+      {type:"txt", font:"12x20:2", label:"4", fillx:1 },
+      {type:"txt", font:"12x20:2", label:"5", fillx:2 }
+    ]},
+  ]
+});
+g.clear();
+layout.render();
+layout.debug();
+```
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALAAAACwCAYAAACvt+ReAAAAAXNSR0IArs4c6QAACKhJREFUeF7tndt2o0oMBc3/f7RnOR47CQ5ot/om0ZWH83BQgygVcnMZ2O632/3GHwSSEti+BL7jcNL6rZ32tt0QeG0Fcu89Aueu3/LZI/DyCuQGgMC567d89gi8vAK5ASBw7votnz0CL69AbgAInLt+y2ePwMsrkBsAAueu3/LZI/DyCuQGgMC567d89gi8vAK5ASBw7votnz0CL69AbgAInLt+y2ePwMsrkBsAAueu3/LZI/DyCuQGgMC567d89gi8vAK5ASBw7votnz0CL69AbgC1Am+3LTcAsg9B4O59t04LgXklypEDezIc7H+RelBB4BB9ZJ8EAitlCSQwvfhZsFenPRIYTj85IbBymA+NQWAN95NTWIG3rWzOd7/MCwbPBS7EYrqQlxsCm8WdE4DAGvegAu87r9UhSuM1ODOj6qYQ1+NxVAsEnmnpybYRWCtMMIH3czur8+538jqdB4ER+HFxO+1JHQIjMAK/Hch7IFsaM4WwCE1aTgfWwC8icOn15I8buuJUpHQ7x51xjsC15xDq+NacwtzI6HUSVwoMgZ8ESqceCLy78dYKoArWe1WjdP12/DU7sL3fvytgxy86hVAPDBvg/0dKdj8d1vrt9SLw1zMOJlcEls4VjkDagM9Xfzz+WgL35rTcHNjqkOpUondhPr/geyR26U/v3wdWr/3ptd7XY6cIbPRhOrD0Q3X4k4/AGr/hAHsXhg5snWMwB5YODTqwJdL58t4HOlMIphBfBCzRvMutcVYXsU52EbiRwFYhrOXfJ5cxr0JYIs76pUJgBKYD38TnBT4uUd229yspRt1KjnIZ7fi4oQP/ZMMUwryj47vhYP2kWlMGBNYIITACS6ZYB6R3uTXOSg6BEdhyhDkwc+Dyxw+ZQkjH1cnlPW5kSAR7XR5CYAl/HoFft05L50xWvLXcwmiNt5Yfrd+a20W7lWztZ+3yjytU5tQvWAdG4NdL+651Ge0lpiX4ZQQ+2mGrUx5d3y0FVw7yOWK/HSvf1/LPvOcI7OW+30/rOnspJ+vfDoa5E7f/yWy1owhc9jrWUu4I/CZQBlrtcPni6jpwvv31Zhx0DuzdneuMQ2CtlgiscRoehcAacgTWOA2PQmANOQJrnIZHIbCGHIE1TsOjEFhDjsAap+FRCKwhR2CN0/AoBNaQhxNYS3udKD50qNQ60J04Jd2VYhBYqfZ0gZUkiYHAGYFp30qmLBCYSqD2a/VTk2fjEHgJvPEcDjIkJHDfbreHu/ev/7zf8DB+T2ofAdxn/HoGtfZRzPEk2KJKYHu8kwSBVVzERSMQSmALjreTesdZ+bB8PgEEnl8DMqgggMAV8Bg6nwACz68BGVQQQOAKeAydTwCB59eADCoILClwKS/vuypKr2ur27Hyt97p8BrfKj8rn57LEVigq4q1j2slSKv17He113oFpM1ClhTY26EsQVvf+Su9fq3Gq3FHnVrl18zSkxUh8Bkc48V0vd942Uu0XusdIezHr0ikW8kWgFLwrTqIKuo+f2+n8u6ntb+91mvVredyOrBAF4GfkGoPAAF1cQgCC8hKBfZ2XquDCqmeilYrYO14Nf+SOAQWaCEwHVjQxA7xdgDvOKsj1q73aI9r16secKW/FLV52RUuj6ADC8x6CYHAAnwjBIEFhrMFFlI8DTm6Pt1qvbXrqRmPwAI9BP4bUukUREBdHILAArLZArcSJeIcVsB/GoLAAkEEFiBNCkFgATwCC5AmhSCwAB6BBUiTQhBYAI/AAqRJIQgsgEdgAdKkEAQWwI8W+JWS96qBNc5afoTEO05A7A5BYAEdAj8hIbAgy1mIF6B3nNUJa9er4thvRx1nXT/utV41vxZxdGCB4qwOfHQACSl/hSCwSoo4CEwikKoDT2LEZgMTQODAxSE1mwAC24yICEwAgQMXh9RsAghsMyIiMIEPgQPnSmoQ+JPA+xsZtzufKcKRhAT4TlzCopHyNwG+E4cNmQnsPrOVeVdqcuej3DX0Zo39+kj47+/EPVKJMxce88DM81vpv//++n+zynS8Xe8DOUdrtJ6fiEXgcQ0iqMBHhekD+DoC9+ETS9sfk18EfsJA4KiKnucVsANbP4l9OgwCI3AjAghcBnLMOUJZTuOiA3XguQ+N04HHSddySwj8nyYCt9Rq3LoCCGz9BFrL28BC4DYcR68FgenAo51rur2JAqudVY2r40IHruM3azQC04FnuddkuxMELu2opfE+LtfpwKX73+e6emkW3ngEvlwHLlUBgUVi3k7qHSemlV7gsv38jh7D1ZudOm5gB/YC845TETzj8k4hyvYTgYt51QpYO15LeD2BX1zG8NWqUB41oAPXAqodr0FB4BenXHNiBF52DkwH1lpb9Ttl6cAiaGfYGL7O5MxhdGA68PaYPn3/MYXYHTW1R3jtePMgXvQqBFMIzYyPKYQ47DCsT4fgJI6TuAPlrH9hUSo0ApcSO48f8wvXNufvtQ2YA9emPgZw3g5cy6d2fG1968YjcPqTuFoBa8fXCVg7GoHTC+w9Gcst7nuv474XwlsY3zGddwrh5YTAPlOKR40BnV/gI5Et4H1Oiq2ttlrOFOIyUwgEfrwj7f56xV2cl/u1OlaNi0lpX+43hk/UrSTowGPQXWcKMYZXlK0g8OWmEFHUGpMHAiPwGNM6bQWBEbiTWmNWeyjwmM3H2gqfGIhVDy2bjze0a8OIgkAcAnwnLk4tyMRDgO/EeagxJgwBBA5TChLxEEBgDzXGhCGAwGFKQSIeAgjsocaYMAQQOEwpSMRDAIE91BgThgAChykFiXgIILCHGmPCEEDgMKUgEQ8BBPZQY0wYAggcphQk4iGAwB5qjAlDAIHDlIJEPAQQ2EONMWEIIHCYUpCIhwACe6gxJgwBBA5TChLxEEBgDzXGhCGAwGFKQSIeAgjsocaYMAQQOEwpSMRDAIE91BgThsBb4DAZkQgEygj8AzwcXefSCViMAAAAAElFTkSuQmCC)
+
+
+
 Updating the screen
 --------------------
 
@@ -63,14 +95,21 @@ you can then call `layout.render()` when you want to redraw.
 
 `Layout` will then be smart enough to redraw *only* the parts of the clock that have changed.
 
-```
+**Note:** `Layout` positions everything based on the contents that are in the text areas
+when `.update()` **or** the first `.render()` is called (see **Debugging** above). As such you should pre-populate
+`label` with the maximum size string you expect to be in it (or use `fillx:1` - see **Layout / Positioning** below) before you call `.render()`
+the first time - or to avoid flicker you can just call `.update()` which will work out the positions
+of everything without drawing anything to the screen.
+
+```JS
 var Layout = require("Layout");
 var layout = new Layout( {
   type:"v", c: [
-    {type:"txt", font:"20%", label:"12:00", id:"time" },
+    {type:"txt", font:"20%", label:"12:00", id:"time" }, // initial (maximum size) values
     {type:"txt", font:"6x8", label:"The Date", id:"date" }
   ]
 }, {lazy:true});
+layout.update(); // work out positions
 
 // timeout used to update every minute
 var drawTimeout;
@@ -101,16 +140,16 @@ update the text, and then call `layout.render(layout.time)` to draw again.
 
 This can be faster, but is also more fiddly and error-prone.
 
-```
+```JS
 var Layout = require("Layout");
 var layout = new Layout( {
   type:"v", c: [
-    {type:"txt", font:"20%", label:"12:00", id:"time" },
+    {type:"txt", font:"20%", label:"12:00", id:"time" }, // initial (maximum size) values
     {type:"txt", font:"6x8", label:"The Date", id:"date" }
   ]
 });
 g.clear();
-layout.render();
+layout.render(); // first call to layout.render() works out positions and draws
 
 function draw() {
   var d = new Date();
@@ -154,7 +193,7 @@ button *or* onscreen buttons depending on how many buttons have been requested.
 
 For example this code will display 3 buttons:
 
-```
+```JS
 var Layout = require("Layout");
 var layout = new Layout( {
   type:"v", c: [
@@ -171,7 +210,7 @@ function setLabel(x) {
   layout.render();
 }
 g.clear();
-layout.render();
+layout.render(); // first call to layout.render() works out positions and draws
 ```
 
 On Bangle.js 1 this'll just put 3 labels by the side of the physical buttons and will make them call the callback functions when they are pressed:
@@ -184,7 +223,7 @@ On Bangle.js 2, if there's one button it'll use the 'hard' button with a label (
 
 You can also do touchscreen buttons on Bangle.js 2 as well just by adding a `btn`:
 
-```
+```JS
 var Layout = require("Layout");
 var layout = new Layout( {
   type:"v", c: [
@@ -201,7 +240,7 @@ function setLabel(x) {
   layout.render();
 }
 g.clear();
-layout.render();
+layout.render(); // first call to layout.render() works out positions and draws
 ```
 
 ![](data:image/png;base64,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)
@@ -219,7 +258,7 @@ or as the image string itself.
 
 As function:
 
-```
+```JS
 var Layout = require("Layout");
 var layout = new Layout( {
   type:"h", c: [
@@ -230,12 +269,12 @@ var layout = new Layout( {
 });
 
 g.clear();
-layout.render();
+layout.render(); // first call to layout.render() works out positions and draws
 ```
 
 As image string:
 
-```
+```JS
 var Layout = require("Layout");
 var layout = new Layout( {
   type:"h", c: [
@@ -245,7 +284,7 @@ var layout = new Layout( {
 });
 
 g.clear();
-layout.render();
+layout.render(); // first call to layout.render() works out positions and draws
 ```
 
 ![](data:image/png;base64,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)
@@ -257,7 +296,7 @@ Sometimes something might be too complex or fiddly to lay out with `Layout`,
 and in these cases you can use the `custom` type, which will call a function
 for rendering of that specific field.
 
-```
+```JS
 // Some data to graph
 var data = new Array(16);
 data.fill(0);
@@ -284,12 +323,12 @@ var layout = new Layout( {
 });
 
 g.clear();
-layout.render();
+layout.render(); // first call to layout.render() works out positions and draws
 ```
 
 ![](data:image/png;base64,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)
 
-Layout / positioning
+Layout / Positioning
 ---------------------
 
 By default all items are laid out in the center of the screen (and
