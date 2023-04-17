@@ -4,6 +4,11 @@
 
 Usage:
 
+* abcdef for main figure of 8
+* hij for extra (for W/M/etc)
+* x for colon
+* o for decimal point
+
 require("sevenseg_font_tools").createFont({
   img : `
  aaaa jjjj
