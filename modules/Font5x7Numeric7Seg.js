@@ -5,21 +5,21 @@ require("sevenseg_font_tools").createFont({
   img : `
  aa
 f  b
-fx b
+F  b
  gg
-ex c
+E  c
 e  c
 odd`,
-  width : 6, // width +1 for empty column
+  width : 5, // width +1 for empty column
   colonWidth : 2, // width of colon
-  doubleWidth : 6, // width for double-size (eg 'W' and 'M')
-  height : 9,
+  doubleWidth : 5, // width for double-size (eg 'W' and 'M')
+  height : 7,
   export : "hex"
 });
 */
 
 exports.add = function(graphics) {
   graphics.prototype.setFont5x7Numeric7Seg = function() {
-    return this.setFontCustom(atob("DEkkjAAAAAAgEAAAAAAgAbEEgjYAAAAAAADYAAADEkkjAAAAAEkkjYAAAYAgEDYAAAYEkkgYAAAbEkkgYAAAAEAgDYAAAbEkkjYAAAYEkkjYAAAABQbEgkDYAAAbAkEgYAAAbEEggAAAADAkEjYAAAbEkkgAAAAbEgkAAAAA"), 32, atob("BgAAAAAAAAAAAAAAAAYCAAYGBgYGBgYGBgYCAAAAAAAABgYGBgYG"), 9);
+    return this.setFontCustom(atob("DSZLAAAECAAACAbQYLYAAAAGwANJksAACTJbAGAgQ2AMJMkMAbSZIYAAgQGwBtJktgDCTJbACgBtIkNgDYSJDAG0GCAABhIlsAbSZIAA2kSAAAA="), 32, atob("BQAAAAAAAAAAAAAAAAUCAAUFBQUFBQUFBQUCAAAAAAAABQUFBQUF"), 7);
   }
 }

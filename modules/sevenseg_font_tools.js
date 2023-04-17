@@ -6,7 +6,7 @@ Usage:
 
 * abcdef for main figure of 8
 * hij for extra (for W/M/etc)
-* x for colon
+* x for colon (or F or E)
 * o for decimal point
 
 require("sevenseg_font_tools").createFont({
@@ -87,9 +87,18 @@ exports.createFont = function(options) {
   function drawCh(g,n,x,y) {
     var b = options.img;
     var d = digits[n];
-    allchars.split("").forEach(ch=> {
+    function mapCh(ch,chTo) {
+      if (ch=="f") ch="[fF]";
+      if (ch=="e") ch="[eE]";
+      if (ch=="x") ch="[EFx]";
       var r = new RegExp(ch,"g");
-      b = b.replace(r,(d.includes(ch))?"#":" ");
+      b = b.replace(r,chTo);
+    }
+    d.split("").forEach(ch=> {
+      mapCh(ch,"#");
+    });
+    allchars.split("").forEach(ch=> {
+      mapCh(ch," ");
     });
     print(b);
     g.drawImage(Graphics.createImage(b),x,y);
@@ -113,6 +122,7 @@ exports.createFont = function(options) {
   var widthIdx = 0;
   for (var i=0;i<digits.length;i++) {
     widthIdx++; while (widths[widthIdx]===0)widthIdx++;
+    if (!widths[widthIdx]) continue;
     drawCh(gr,i,y,0);
     print(widths[widthIdx]);
     y += widths[widthIdx];
@@ -129,4 +139,3 @@ exports.createFont = function(options) {
        '), 32, atob('+JSON.stringify(btoa(widths))+
        '), '+options.height+');');
 };
-
