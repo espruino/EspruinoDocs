@@ -31,7 +31,7 @@ How to set up
 * Now ensure you disconnect your computer from Bangle.js
 * Start the Gadgetbridge app and click the blue `+` in the bottom right
 * Choose your Bangle.js device from the list
-* Right now we'd suggest choosing `Don't pair` when prompted in order to get the most reliable connection
+* You'll be prompted on whether you'd like to Pair the Bangle or not. Pairing will use an encrypted connection, and it's been reported that with enabled on modern Android versions, Gadgetbridge auto-connects to Bangle.js more reliably.
 * Everything should now be working. From the menu in the top-left of the Gadgetbridge Android app you can choose `Debug` and can test out notifications/etc
 
 ### Extra Setup
