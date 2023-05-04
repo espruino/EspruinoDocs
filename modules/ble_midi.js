@@ -3,6 +3,7 @@
 var midi = require("ble_midi");
 midi.init();
 
+midi.on('midi', console.log);
 midi.send(channel, controller, value);
 */
 
@@ -14,7 +15,8 @@ exports.init = function() {
         readable: true,
         writable: true,
         notify: true,
-        value: [0x80, 0x80, 0x00, 0x00, 0x00]
+        value: [0x80, 0x80, 0x00, 0x00, 0x00],
+        onWrite: function(evt) { exports.emit('midi', evt.data); }
       }
     }
   });
