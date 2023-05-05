@@ -30,7 +30,7 @@ Features
 * 256kB RAM 1024kB on-chip flash, 8MB external flash (GD25Q64C/E)
 * 1.3 inch 176x176 always-on 3 bit colour LCD display (LPM013M126)
 * Full touchscreen
-* GPS/Glonass receiver (AT6558)
+* GPS/Glonass receiver (AT6558 / AT6558R)
 * Heart rate monitor (Vcare VC31 / VC31B)
 * 3 Axis Accelerometer (Kionix KX023)
 * 3 Axis Magnetometer
@@ -231,7 +231,8 @@ Power Consumption
 * Compass on, 1.25Hz (`Bangle.setPollInterval(800)`) - 0.9mA (+0.6mA)
 * Heart rate monitor on - 1.0mA (+0.7mA) (KickStarter version = ~1.5mA)
 * 100% CPU usage running JavaScript - 4mA (+3mA)
-* GPS on - 26mA (+25mA)
+* GPS on - 26mA (+25mA) 
+* GPS on (set to GPS only) - 20mA (+19mA) 
 * LCD touchscreen enabled (unlocked) - 2.8mA (+2.5mA)
 * LCD backlight on - 17mA (+16mA)
 * Turned off (Bangle.off - no RTC) - 0.02mA
@@ -534,6 +535,78 @@ detailed information from the GPS.
 
 See [the reference](https://banglejs.com/reference#l_Bangle_GPS) for
 more information.
+
+#### Advanced GPS
+
+On startup the GPS reports information about itself - this can be viewed with the following (assuming GPS was off before):
+
+```JS
+Bangle.setGPSPower(1);
+Bangle.on('GPS-raw',print);
+setTimeout(function() {
+  Bangle.removeAllListeners('GPS-raw');
+}, 1000);
+```
+
+The first few batches of Bangle.js devices report the following data upon startup, using `AT6558` with `V5.1.0.0` firmware:
+
+```
+$GPTXT,01,01,02,MA=CASIC*27 false                   # MA = Manufacturer
+$GPTXT,01,01,02,IC=AT6558-5N-32-1C510800*48 false   # IC = Chip
+$GPTXT,01,01,02,SW=URANUS5,V5.1.0.0*1F false        # SW = Firmware version
+$GPTXT,01,01,02,TB=2018-04-18,10:28:16*40 false     # TB = Firmware compile date
+$GPTXT,01,01,02,MO=GB*77 false                      # MO = working mode
+```
+
+Newer ones use a `AT6558R` with `V5.3.0.0` firmware.
+
+```
+$GPTXT,01,01,02,MA=CASIC*27 false
+$GPTXT,01,01,02,IC=AT6558R-5N-32-1C580901*13 false
+$GPTXT,01,01,02,SW=URANUS5,V5.3.0.0*1D false
+$GPTXT,01,01,02,TB=2020-03-26,13:25:12*4B false
+$GPTXT,01,01,02,MO=GR*67 false                     
+```
+
+The receiver can be configured with `$PCAS` commands. It's hard to find decent documentation
+on these - the best we have found is [a Chinese Language datasheet here](https://www.icofchina.com/d/file/xiazai/2020-09-22/20f1b42b3a11ac52089caf3603b43fb5.pdf).
+
+You need to calculate a checksum when sending, which can be done with the following:
+
+```JS
+function CASIC_CMD(cmd) {
+  var cs = 0;
+  for (var i=1;i<cmd.length;i++)
+    cs = cs ^ cmd.charCodeAt(i);
+  Serial1.println(cmd+"*"+cs.toString(16).toUpperCase().padStart(2, '0'));
+}
+```
+
+Here are some example commands that work;
+
+
+```JS
+CASIC_CMD("$PCAS03,1,0,0,1,0,0,0,0"); // send only 'GGA+GSV' NMEA data (minimum for Bangle.js GPS event)
+// $PCAS03,GGA,GLL,GSA,GSV,RMC,VTG,ZDA,ANT,DHV,LPS...
+CASIC_CMD("$PCAS03,1,0,0,1,1,0,0,0"); // send the NMEA packets Bangle.js expects
+CASIC_CMD("$PCAS04,1"); // Set to GPS-only mode
+/*
+1=GPS
+2=BDS
+3=GPS+BDS
+4=GLONASS
+5=GPS+GLONASS
+6=BDS+GLONASS
+7=GPS+BDS+GLONASS
+*/
+CASIC_CMD("$PCAS02,500"); // Change output speed from default 1000ms to 500ms
+// The valid range is 100->1000ms, but to get below 500ms you must disable un-needed packets with PCAS03
+
+CASIC_CMD("$PCAS00"); // Save all changes to flash memory (be careful!)
+```
+
+The receiver also accepts a binary protocol that begins with the characters `"\xBA\xCA"`, but you'll need to consult the datasheet for more information on that.
+
 
 
 Hardware SWD
