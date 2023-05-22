@@ -32,7 +32,7 @@ exports.connect = function (columns, rows, callback) {
       var v = digitalRead(columns);
       for (var j in columns)
         if (v & (1<<j))
-          press = j+i*columns.length;
+          press = (0|j)+i*columns.length;
     }
     // reset state
     digitalWrite(rows, 0xFFFFFFFF);
