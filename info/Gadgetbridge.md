@@ -187,6 +187,8 @@ Currently implemented messages are:
 * `t:"force_calendar_sync_start"` - cause Bangle.js to send a `force_calendar_sync`
 * `t:"gps", lat, lon, alt, speed, course, time, satellites, hdop, externalSource:true` - a GPS reading once GPS is turned on with  `{ t:"gps_power", status: true }`
 * `t:"is_gps_active"` - cause Bangle.js to send `{ t:"gps_power", status: bool }`
+* `t:"nav",instr:"High St towards Null St",distance:966,action:"continue",eta:"08:39"` - Navigation (as of Play Store app 0.74.0)
+* `t:"nav"` - Navigation stopped
 
 Bangle.js Gadgetbridge also provides:
 
@@ -208,7 +210,7 @@ GB({"t":"notify","id":1,"src":"Maps","title":"0 yd - High St","body":"Campton - 
 GB({"t":"musicstate","state":"play","position":0,"shuffle":1,"repeat":1})
 GB({"t":"musicinfo","artist":"My Artist","album":"My Album","track":"Track One","dur":241,"c":2,"n":2})
 // Call coming in 
-GB({"t":"call","cmd":"accept","name":"name","number":"+441234123123"})
+GB({"t":"call","cmd":"incoming","name":"name","number":"+441234123123"})
 // Set a single alarm, 6:30am, every day of the week
 GB({"t":"alarm", "d":[{"h":"6","m":"30:","rep":127}]})
 ```
@@ -269,6 +271,21 @@ GB({"t":"notify","id":1575479849,"src":"Hangouts","title":"A Name","body":"messa
 ```
 
 If there are any errors shown you'll be able to see them and use them to debug what is happening.
+
+
+### Remote Debugging
+
+You can also connect the Web IDE to Bangle.js *through your phone running Gadgetbridge*.
+
+From Gadgetbridge, start the App Loader, then go to `More...` and click `Web IDE Remote`.
+
+You'll see a UUID shown - copy this and 'share' it with yourself, so you can then go to
+https://www.espruino.com/ide/ on your desktop, go to `Settings`, `Communications`, and paste it into the 
+box for `Remote Connection Bridge Peer ID`. 
+
+Refresh the Web IDE page and (as long as the App Loader stays open in Gadgetbridge after `Web IDE Remote` has been pressed)
+you'll be able to connect via the Web IDE and see what Bangle.js is responding with as notifications/etc arrive.
+
 
 
 Building Gadgetbridge
