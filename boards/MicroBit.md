@@ -52,12 +52,12 @@ If you want the full experience, please consider buying [an official Espruino Bo
 Flashing Espruino
 ------------------
 
-<a name="firmware-updates"></a>There is a build of Espruino designed specifically for the micro:bit. Releases are available from the [Download page](/Download#microbit) - however you may also download 'cutting edge' builds [from here](http://www.espruino.com/binaries/travis/master/) - these are updated every time something changes in Espruino's source code, so may occasionally not work.
+<a name="firmware-updates"></a>There is a build of Espruino designed specifically for the micro:bit. Releases are available from the [Download page](/Download) for [micro:bit 1](/Download#microbit1) or [micro:bit 2](/Download#microbit2) - however you may also download 'cutting edge' builds [from here](http://www.espruino.com/binaries/travis/master/) - these are updated every time something changes in Espruino's source code, so may occasionally not work.
 
 To flash onto your micro:bit:
 
 * Plug it into USB. A drive called `MICROBIT` should appear
-* Download the microbit `.hex` file for Espruino (ensuring that you have the `microbit1` or `microbit2` file depending on your device), and save it directly into the root of that drive
+* [Download](/Download) the microbit `.hex` file for Espruino (ensuring that you have the `microbit1` or `microbit2` file depending on your device), and save it directly into the root of that drive
 * The yellow LED on the micro:bit will blink quickly for a few seconds, and will then stop.
 * The Espruino firmware is now installed!
 
