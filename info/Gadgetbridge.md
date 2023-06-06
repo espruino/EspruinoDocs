@@ -177,7 +177,7 @@ Currently implemented messages are:
 * `t:"alarm", d:[{h:int,m:int,rep:int},...]`  - set alarms (rep=binary mask of weekdays)
 * `t:"find", n:bool`  - findDevice
 * `t:"vibrate", n:int`  - vibrate
-* `t:"weather", temp,hum,txt,wind,loc`  - weather report
+* `t:"weather", temp,hi,lo,hum,rain,uv,code,txt,wind,wdir,loc`  - weather report _(current temp, days highest temp, days lowest temp, current humidity, rain/precip probability, UV Index, current condition code, current condition text, wind speed, wind direction)_
 * `t:"musicstate", state:"play/pause",position,shuffle,repeat` - music play/pause/etc
 * `t:"musicinfo", artist,album,track,dur,c(track count),n(track num)` - currently playing music track
 * `t:"call", cmd:"accept/incoming/outgoing/reject/start/end", name: "name", number: "+491234"` - call
