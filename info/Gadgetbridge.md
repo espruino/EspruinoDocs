@@ -127,7 +127,7 @@ Bluetooth.println(JSON.stringify({t:"intent", target:"activity", flags:["FLAG_AC
 
 If the waking intent doesn't work then try sending it twice in a row. If that doesn't do it, make sure to add the Bangle.js as a trusted device in android settings for it to be able to bypass the lock screen. If it still doesn't work, try [re-adding the Bangle.js via Gadgetbridge with "CompanionDevice Pairing" activated](https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Companion-Device-pairing).
 
-The following type of information can be supplied for intents: ```target```, ```action```, ```flags```, ```categories```, ```package```, ```class```, ```mimetype```, ```data``` and ```extra```. Values to pass with the ```target```-key are ```"broadcastreceiver"```, ```"activity"```, ```"service"``` or ```"foregroundservice"``` (falls back to ```"service"``` if below Android 8.0). Intents will default to being broadcast if no target is specified. To accommodate the different Gadgetbridge versions a special package-value, ```"gadgetbridge"```, can be supplied with the ```package```-key.
+The following type of information can be supplied for intents: `target`, `action`, `flags`, `categories`, `package`, `class`, `mimetype`, `data` and `extra`. Values to pass with the `target`-key are `"broadcastreceiver"`, `"activity"`, `"service"` or `"foregroundservice"` (falls back to `"service"` if below Android 8.0). Intents will default to being broadcast if no target is specified. To accommodate the different Gadgetbridge versions a special package-value, `"gadgetbridge"`, can be supplied with the `package`-key.
 
 Template for initiating an intent from a Bangle.js app:
 
@@ -241,7 +241,7 @@ Bangle.js Gadgetbridge also provides:
 * `t:"htt­p", url:"https://pur3.co.uk/hello.txt"[,xpath:"­/html/body/p/div[3]/a"][,id:"..."]` - make an HTTPS request (HTTP not supported right now). 
   * If `xpath` is supplied, the document is loaded as XML (not all HTML is XML!), the xpath is applied and the result returned instead
   * If `id` is supplied (as a string), the response returns the same `id` (so multiple HTTP requests can be in flight at once)
-* `t:"intent", action:"...", extra:{key1:"..."}` - sends an Android Intent (which can be used to send data to other apps like Tasker)
+* `t:"intent", target:"...", action:"...", flags:["flag1", "flag2",...], categories:["category1","category2",...], package:"...", class:"...", mimetype:"...", data:"...", extra:{someKey:"someValueOrString", anotherKey:"anotherValueOrString",...` - sends an Android Intent (which can be used to send data to other apps like Tasker)
 
 For example:
 
