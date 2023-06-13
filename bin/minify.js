@@ -174,6 +174,8 @@ function codeMinified(minified) {
   if (!advancedOptimisation) {
     minified = unwrapSelfInvocation( minified );
   }
+  // replace unicode-style \u00## string escapes with \x## - shorter, and in Espruino even if unicode is enabled we treat them as bytes
+  minified = minified.replace(/\\u00([0-9a-f][0-9a-f])/g, "\\x$1");
   console.log("Complete!");
   fs.writeFileSync(fileOut, minified);
 }
