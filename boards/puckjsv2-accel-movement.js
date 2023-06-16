@@ -32,7 +32,10 @@ exports.on = function(options) {
   Puck.accelWr(0x5C,E.clip(options.duration,0,15)||0x02); // WAKE_UP_DUR - very low duration
   Puck.accelWr(0x5B,E.clip(options.threshold,0,63)||0x02); // WAKE_UP_THS - low threshold
   Puck.accelWr(0x5E,0x20);  // MD1_CFG wakeup on INT1
-  Puck.on('accel', accelHandler, {first:true}/* only works on 2v19+ */);
+  if (Puck.prependListener)
+    Puck.prependListener('accel', accelHandler);// prependListener only works on 2v19+ 
+  else
+    Puck.on('accel', accelHandler);// fall back to adding it normally
 };
 
 /** Turn accelerometer off */
