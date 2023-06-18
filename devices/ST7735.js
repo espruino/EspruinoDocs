@@ -100,7 +100,7 @@ exports.connect = function(options, callback) {
     spi.write(0x2B,dc);
     spi.write(0,pady,0,LCD_HEIGHT+pady-1);
     spi.write(0x2C,dc);
-    var lines = 16; // size of buffer to use for un-paletting
+    var lines = 8; // size of buffer to use for un-paletting
     var a = new Uint16Array(LCD_WIDTH*lines);
     for (var y=0;y<LCD_HEIGHT;y+=lines) {
       E.mapInPlace(new Uint8Array(g.buffer, y*LCD_WIDTH*bits/8, a.length), a, palette, bits);
