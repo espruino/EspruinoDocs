@@ -44,9 +44,9 @@ Features
 |-----------|------------|------------|------------|
 | 0.1" GPIO |  8         | 7          | 7          |
 | SMD  GPIO |  9         | 2          | 2          |
-| Magnetometer | MAG3110 | [LIS3MDLTR](/files/LIS3MDL.pdf)  | [MMC5603NJ](/files/MMC5603NJ.pdf)  |
-| Accelerometer | No     | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) |
-| Gyro          | No     | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) | [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf) |
+| Magnetometer | MAG3110 | [LIS3MDLTR](/datasheets/LIS3MDL.pdf)  | [MMC5603NJ](/datasheets/MMC5603NJ.pdf)  |
+| Accelerometer | No     | [LSM6DS3TR-C](/datasheets/LSM6DS3TR-C.pdf) | [LSM6DS3TR-C](/datasheets/LSM6DS3TR-C.pdf) |
+| Gyro          | No     | [LSM6DS3TR-C](/datasheets/LSM6DS3TR-C.pdf) | [LSM6DS3TR-C](/datasheets/LSM6DS3TR-C.pdf) |
 | Temperature Sensor | nRF52 (uncalibrated) | PCT2075TP (calibrated)  | PCT2075TP (calibrated)  |
 | MOSFET Output | No     | 1x         | 1x         |
 
@@ -76,8 +76,8 @@ and PCB to keep it turned off. To turn it on, you need to:
 * Push the battery back in, with the `+` side of the battery (with the writing on)
 facing away from the Puck.js PCB:
 
-![Puck.js PCB and battery rear view](Puckjs/battery.jpg)  
-![Puck.js PCB and battery front view](Puckjs/battery2.jpg)  
+![Puck.js PCB and battery rear view](Puckjs/battery.jpg)
+![Puck.js PCB and battery front view](Puckjs/battery2.jpg)
 
 * As the battery is inserted the red LED should flash once, very briefly.
 * If the green LED lights or red stays lit, it is because you have accidentally
@@ -87,7 +87,7 @@ again, making sure the button next to the battery connector isn't pressed.
   and the button (next to the battery) should be positioned as far away from
   the 'step' in the case as possible:
 
-![Positioning in case](Puckjs/ledge.jpg)  
+![Positioning in case](Puckjs/ledge.jpg)
 
 **Note: Do not re-fit the PCB upside-down or force it into the case.** If
 positioned correctly it should slide in. Forcing the PCB or fitting it
@@ -263,11 +263,11 @@ we'd recommend using the new `Puck.on('field'` event.
 
 For more advanced usage you can also use [`Puck.magWr(reg,data)`](/Reference#l_Puck_magWr)
 and [`Puck.magRd(reg)`](/Reference#l_Puck_magRd) to configure the accelerometer
-chip exactly as required (using the [datasheet](/files/LIS3MDL.pdf))..
+chip exactly as required (using the [datasheet](/datasheets/LIS3MDL.pdf))..
 
 ### Accelerometer/Gyro
 
-**Puck.js v2.0 / v2.1 only** Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/files/LSM6DS3TR-C.pdf))
+**Puck.js v2.0 / v2.1 only** Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/datasheets/LSM6DS3TR-C.pdf))
 
 You can use [`Puck.accel()`](/Reference#l_Puck_accel) to return one accelerometer/gyro
 reading, for example:
@@ -311,7 +311,7 @@ Puck.on('accel',function(a) {
   idleTimeout = setTimeout(function() {
     idleTimeout = undefined;
     LED.reset();
-  },500);  
+  },500);
 });
 // turn off with require("puckjsv2-accel-movement").off();
 ```
@@ -380,7 +380,7 @@ Puck.on('accel',function(a) {
 
 **Puck.js v2 / v2.1 only** For more advanced usage you can also use [`Puck.accelWr(reg,data)`](/Reference#l_Puck_accelWr)
 and [`Puck.accelRd(reg)`](/Reference#l_Puck_accelRd) to configure the accelerometer
-chip exactly as required (using the [datasheet](/files/LSM6DS3TR-C.pdf)). ST has
+chip exactly as required (using the [datasheet](/datasheets/LSM6DS3TR-C.pdf)). ST has
 an [app note](https://www.st.com/resource/en/application_note/dm00472670-lsm6ds3trc-alwayson-3d-accelerometer-and-3d-gyroscope-stmicroelectronics.pdf)
 on possible configurations.
 
@@ -548,7 +548,7 @@ for advertising, but values are roughly:
 * Advertising, 375ms 0dBm (nonconnectable, nonscannable), watching the button - 27uA
   * `NRF.setAdvertising({},{connectable:false, scannable:false}); setWatch(..., BTN1);`
 * Advertising, 2000ms 0dBm (nonconnectable, nonscannable) - under 10uA
-  * `NRF.setAdvertising({},{connectable:false, scannable:false, interval:2000});`  
+  * `NRF.setAdvertising({},{connectable:false, scannable:false, interval:2000});`
 * Advertising, 375ms 0dBm (connectable) - **default** - 40uA
 * Advertising, magnetometer reading 0.63 Hz (`Puck.magOn()`) - 60uA
 * Advertising, magnetometer reading 10 Hz - 200uA

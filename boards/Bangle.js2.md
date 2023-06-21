@@ -29,7 +29,8 @@ Features
 * Nordic 64MHz nRF52840 ARM Cortex-M4 processor with Bluetooth LE
 * 256kB RAM 1024kB on-chip flash, 8MB external flash (GD25Q64C/E)
 * 1.3 inch 176x176 always-on 3 bit colour LCD display (LPM013M126)
-* Full touchscreen
+* Full touchscreen (Hynitron CST816S)
+* Single button on side of watch
 * GPS/Glonass receiver (AT6558 / AT6558R)
 * Heart rate monitor (Vcare VC31 / VC31B)
 * 3 Axis Accelerometer (Kionix KX023)
@@ -49,11 +50,12 @@ There are a few things to know that'll help you get started quickly:
 * Long-pressing the button (~2 seconds) will take you back to the default clock app
 * When the lock symbol is displayed in the top left hand corner, the touchscreen is not active. Unlocking can be configured in several ways via the settings app, but by default pressing the button will unlock the Bangle and allow you to use the touchscreen.
 * In the default [App Launcher](https://github.com/espruino/BangleApps/wiki#glossary) (which you get to by pressing the button while on the clock), drag the screen to scroll through apps, and tap the icon you want to launch
-* **In text menus, you don't need to tap on the text line to select it.** Instead, drag your finger up and down to change the selected entry, and then **tap anywhere** to select.
+* In text menus, drag up/down to scroll and tap to select
+* In numeric menus, drag up/down to change the number and tap to accept
 
 This video shows you how to get started using the menu and App Loader:
 
-[[http://youtu.be/EfwjPPZNKJc]]
+[[http://youtu.be/aoNray1iuBM]]
 
 Please check out [The Bangle.js Wiki](https://github.com/espruino/BangleApps/wiki) for more hints and common questions.
 
@@ -193,6 +195,7 @@ Upon release, specific Bangle.js 2 tutorials will be added here.
 * To get your computer connected, check out the [Espruino Getting Started Guide](/Quick+Start+BLE#banglejs)
 * To get started with development see the [Bangle.js Development page](/Bangle.js+Development)
 * There is more technical information below about using the [LCD](#lcd) and [onboard peripherals](#onboard)
+* For information about the internals and pinout, [the Bangle.js 2 technical information page](/Bangle.js2+Technical)
 
 Tutorials using Bangle.js:
 
@@ -213,7 +216,7 @@ to find what you want.
 Information
 -----------
 
-* For detailed technical information about Bangle.js 2, check out [the Hackaday project page](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch)
+* For detailed technical information about Bangle.js 2, check out [the Bangle.js 2 technical information page](/Bangle.js2+Technical)
 * The Espruino board file for Bangle.js [can be found here](https://github.com/espruino/Espruino/blob/master/boards/BANGLEJS2.py) and contains pinouts and other configuration info
 * There's a [Bangle.js 2 API reference here](https://espruino.com/ReferenceBANGLEJS2)
 * Links to [CE/RED report](/files/Bangle.js2-RED.pdf) and [FCC ID 2AKUO-10](/files/Bangle.js2-FCC.pdf) Certifications
@@ -231,8 +234,8 @@ Power Consumption
 * Compass on, 1.25Hz (`Bangle.setPollInterval(800)`) - 0.9mA (+0.6mA)
 * Heart rate monitor on - 1.0mA (+0.7mA) (KickStarter version = ~1.5mA)
 * 100% CPU usage running JavaScript - 4mA (+3mA)
-* GPS on - 26mA (+25mA) 
-* GPS on (set to GPS only) - 20mA (+19mA) 
+* GPS on - 26mA (+25mA)
+* GPS on (set to GPS only) - 20mA (+19mA)
 * LCD touchscreen enabled (unlocked) - 2.8mA (+2.5mA)
 * LCD backlight on - 17mA (+16mA)
 * Turned off (Bangle.off - no RTC) - 0.02mA
@@ -538,75 +541,7 @@ more information.
 
 #### Advanced GPS
 
-On startup the GPS reports information about itself - this can be viewed with the following (assuming GPS was off before):
-
-```JS
-Bangle.setGPSPower(1);
-Bangle.on('GPS-raw',print);
-setTimeout(function() {
-  Bangle.removeAllListeners('GPS-raw');
-}, 1000);
-```
-
-The first few batches of Bangle.js devices report the following data upon startup, using `AT6558` with `V5.1.0.0` firmware:
-
-```
-$GPTXT,01,01,02,MA=CASIC*27 false                   # MA = Manufacturer
-$GPTXT,01,01,02,IC=AT6558-5N-32-1C510800*48 false   # IC = Chip
-$GPTXT,01,01,02,SW=URANUS5,V5.1.0.0*1F false        # SW = Firmware version
-$GPTXT,01,01,02,TB=2018-04-18,10:28:16*40 false     # TB = Firmware compile date
-$GPTXT,01,01,02,MO=GB*77 false                      # MO = working mode
-```
-
-Newer ones use a `AT6558R` with `V5.3.0.0` firmware.
-
-```
-$GPTXT,01,01,02,MA=CASIC*27 false
-$GPTXT,01,01,02,IC=AT6558R-5N-32-1C580901*13 false
-$GPTXT,01,01,02,SW=URANUS5,V5.3.0.0*1D false
-$GPTXT,01,01,02,TB=2020-03-26,13:25:12*4B false
-$GPTXT,01,01,02,MO=GR*67 false                     
-```
-
-The receiver can be configured with `$PCAS` commands. It's hard to find decent documentation
-on these - the best we have found is [a Chinese Language datasheet here](https://www.icofchina.com/d/file/xiazai/2020-09-22/20f1b42b3a11ac52089caf3603b43fb5.pdf).
-
-You need to calculate a checksum when sending, which can be done with the following:
-
-```JS
-function CASIC_CMD(cmd) {
-  var cs = 0;
-  for (var i=1;i<cmd.length;i++)
-    cs = cs ^ cmd.charCodeAt(i);
-  Serial1.println(cmd+"*"+cs.toString(16).toUpperCase().padStart(2, '0'));
-}
-```
-
-Here are some example commands that work;
-
-
-```JS
-CASIC_CMD("$PCAS03,1,0,0,1,0,0,0,0"); // send only 'GGA+GSV' NMEA data (minimum for Bangle.js GPS event)
-// $PCAS03,GGA,GLL,GSA,GSV,RMC,VTG,ZDA,ANT,DHV,LPS...
-CASIC_CMD("$PCAS03,1,0,0,1,1,0,0,0"); // send the NMEA packets Bangle.js expects
-CASIC_CMD("$PCAS04,1"); // Set to GPS-only mode
-/*
-1=GPS
-2=BDS
-3=GPS+BDS
-4=GLONASS
-5=GPS+GLONASS
-6=BDS+GLONASS
-7=GPS+BDS+GLONASS
-*/
-CASIC_CMD("$PCAS02,500"); // Change output speed from default 1000ms to 500ms
-// The valid range is 100->1000ms, but to get below 500ms you must disable un-needed packets with PCAS03
-
-CASIC_CMD("$PCAS00"); // Save all changes to flash memory (be careful!)
-```
-
-The receiver also accepts a binary protocol that begins with the characters `"\xBA\xCA"`, but you'll need to consult the datasheet for more information on that.
-
+For more information GPS commands see the [Technical Information Page](/Bangle.js2+Technical#gps)
 
 
 Hardware SWD
@@ -616,21 +551,7 @@ Bangle.js 2 has the hardware SWD pin brought out on the back of the watch along 
 
 ![](Banglejs2/SWD.jpg)
 
-This can be connected to an SWD programmer. We'd recommend using an [nRF52 DK](https://www.nordicsemi.com/Products/Development-hardware/nrf52-dk) (or nRF52840DK).
-When using the nRF52DK you'll need to short the `GND DETECT` pin to `GND` and short the `VTG` pin to `VDD` to tell it you're programming the Bangle.js and not the on-board nRF52. See the example schematic below.
-
-![](Banglejs2/nRF52DK_schematic.png)
-
-The easiest way to connect to these is to use the provided USB charge cable and to wire up a USB type A socket:
-
-| Pin # | Connect |
-|-------|---------|
-| 1     | 5v (not required) |
-| 2     | SWDIO   |
-| 3     | SWDCLK  |
-| 4     | GND     |
-
-Be sure to fully remove the tape and adheisive covering the SWDIO and SWDCLK pins.
+For more information see the [Technical Information Page](/Bangle.js2+Technical#swd)
 
 
 Firmware Updates

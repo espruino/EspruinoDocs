@@ -21,7 +21,7 @@ You can wire this up as follows:
 Rp selection guide: 4.7Kohm for a short I²C bus length (less than 10cm), and 10Kohm for less than 5cm I²C bus.
 
 
-Restore Sensor Characteristics 
+Restore Sensor Characteristics
 ------------------------------
 
 The influence of a strong magnetic field (more than 5.5 gausses) could change the sensor characteristics. It is possible to restore the original sensor characteristics with a strong restoring magnetic field which can be generated internally by the sensor. The following command will do this. It's not necessary to execute this command on every reboot but should be done occasionally.
@@ -64,12 +64,12 @@ startMeasuring();
 After calling the dumped command the sensor is calibrated. The sensor does not remember the min and max values. So you have to call the method calibrate() every time on program startup:
 
 Now you should place the last output to , e.g. mmc.calibrate(1925, 2151, 1919, 2147 );
- 
+
 ```JavaScript
 I2C3.setup( { scl: A8, sda: B4 } );
 var mmc = require("MMC212x").connect( I2C3 );
 mmc.calibrate(1925, 2151, 1919, 2147 ); // call on every startup
-``` 
+```
 
 
 Read raw magnetic sensor values
@@ -126,10 +126,10 @@ There are four types which only differ by their I²C addresses:
 I2C3.setup( { scl: A8, sda: B4 } );
 
 var mmc = require("MMC212x").connect( I2C3 ); // MMC2120MG, default, use address 0x30
-var mmc = require("MMC212x").connect( I2C3, 0x30 ); // MMC2120MG 
-var mmc = require("MMC212x").connect( I2C3, 0x32 ); // MMC2121MG 
-var mmc = require("MMC212x").connect( I2C3, 0x34 ); // MMC2122MG 
-var mmc = require("MMC212x").connect( I2C3, 0x36 ); // MMC2123MG 
+var mmc = require("MMC212x").connect( I2C3, 0x30 ); // MMC2120MG
+var mmc = require("MMC212x").connect( I2C3, 0x32 ); // MMC2121MG
+var mmc = require("MMC212x").connect( I2C3, 0x34 ); // MMC2122MG
+var mmc = require("MMC212x").connect( I2C3, 0x36 ); // MMC2123MG
 ```
 
 
@@ -141,7 +141,7 @@ Buying
 
 Links
 -----
-* [Datasheet from Memsic](files/MMC212xMG.pdf)
+* [Datasheet from Memsic](/datasheets/MMC212xMG.pdf)
 * [Datasheet from Pollin](http://www.pollin.de/shop/downloads/D810164D.PDF)
 * [Breakout HDMM01 (in German)](http://www.pollin.de/shop/downloads/D810164B.PDF)
 
