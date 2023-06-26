@@ -182,6 +182,7 @@ Currently implemented messages are:
 * `t:"musicinfo", artist,album,track,dur,c(track count),n(track num)` - currently playing music track
 * `t:"call", cmd:"accept/incoming/outgoing/reject/start/end", name: "name", number: "+491234"` - call
 * `t:"act", hrm:bool, stp:bool, int:int`  - Enable realtime step counting, realtime heart rate. 'int' is the report interval in seconds
+* `t:"actlast", time:int`  - The timestamp (seconds since 1970) of the last activity sample received - Bangle.js can then send any data Gadgetbridge might have missed 
 * `t:"calendar", id:int, type:int, timestamp:seconds, durationInSeconds, title:string, description:string,location:string,calName:string.color:int,allDay:bool`  - Add a calendar event
 * `t:"calendar-", id:int` - remove calendar event
 * `t:"force_calendar_sync_start"` - cause Bangle.js to send a `force_calendar_sync`
@@ -232,7 +233,8 @@ Available message types are:
 * `t:"notify", id:int, n:"DISMISS,DISMISS_ALL/OPEN/MUTE/REPLY", `
   * if `REPLY` can use `tel:string(optional), msg:string`
 * `t:"ver", fw1:string, fw2:string` - firmware versions - sent at connect time
-* `t:"act", hrm:int, stp:int` - activity data - heart rate, steps since last call
+* `t:"act", hrm:int, stp:int, time:int` - activity data - heart rate, steps since last call 
+  * `time` is optional, seconds since 1970. If not specified the current time is used
 * `t:"force_calendar_sync", ids:[int,int,...]` - Sends a list of Bangle's existing calendar IDs, and ask Gadgetbridge to add/remove any calendar items that are different
 * `t:"gps_power", status: bool` - Sends an update on whether Bangle.js wants GPS enabled or not
 
