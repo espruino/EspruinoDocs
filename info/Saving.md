@@ -38,6 +38,7 @@ When Espruino starts up, it does a few things:
 
 * If `BTN1` is pressed or if it reset because of a call to `reset()`, it sets `hasBeenReset` to `true`.
 * If `hasBeenReset` wasn't set, it looks for a compressed image (`.varimg` [in Storage](https://www.espruino.com/Reference#Storage)) of the interpreter's state that was saved with `save()`. If it exists it unpacks it into RAM.
+* (2v19 and later) If this is the first boot right after power on, executes `.bootPowerOn` [from Storage](https://www.espruino.com/Reference#Storage). (On [Bangle.js](/Bangle.js) this is *not* executed if `BTN1` is held down, but all other devices execute them each time)
 * (2v00 and later) Looks for files [in Storage](https://www.espruino.com/Reference#Storage) named `.boot0`, `.boot1`, `.boot2` and `.boot3` and executes them in sequence. (On [Bangle.js](/Bangle.js) these are *not* executed if `BTN1` is held down, but all other devices execute them each time)
 * Looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootrst` and executes it if it exists (see [Save on Send](#save-on-send) below)
 * If `hasBeenReset` **wasn't** set and `.bootrst` wasn't found in the last step, it looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootcde` and executes it (see [Save on Send](#save-on-send) below)
