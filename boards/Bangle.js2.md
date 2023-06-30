@@ -217,6 +217,7 @@ Information
 -----------
 
 * For detailed technical information about Bangle.js 2, check out [the Bangle.js 2 technical information page](/Bangle.js2+Technical)
+* CAD files for the Bangle.js 2 stand, as well as an STL of the watch body [is available here](https://github.com/espruino/EspruinoBoard/blob/master/Bangle.js2)
 * The Espruino board file for Bangle.js [can be found here](https://github.com/espruino/Espruino/blob/master/boards/BANGLEJS2.py) and contains pinouts and other configuration info
 * There's a [Bangle.js 2 API reference here](https://espruino.com/ReferenceBANGLEJS2)
 * Links to [CE/RED report](/files/Bangle.js2-RED.pdf) and [FCC ID 2AKUO-10](/files/Bangle.js2-FCC.pdf) Certifications

@@ -209,7 +209,7 @@ Android 5 (Lollipop) devices can use [Chromium installed over ADB to a developer
 Apple's built-in web browser does not support Web Bluetooth. Instead you'll
 need to install a Web Browser that does support Web Bluetooth:
 
-* [WebBLE app](https://apps.apple.com/us/app/webble/id1193531073) (recommended) - $1.99
+* [WebBLE](https://apps.apple.com/us/app/webble/id1193531073) (recommended) - $1.99
 * [Bluefy](https://apps.apple.com/us/app/bluefy-web-ble-browser/id1492822055) - free
 * [Connect Browser](https://apps.apple.com/us/app/connect-browser/id1543475842) - free
 * [Web Browser Connect](https://apps.apple.com/us/app/web-browser-connect/id1469354266) - free

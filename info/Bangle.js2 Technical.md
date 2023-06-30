@@ -54,11 +54,14 @@ all `Bangle.*` functions and pretty much all Bangle.js functionality.
 * [`BANGLEJS2.py`](https://github.com/espruino/Espruino/blob/master/boards/BANGLEJS2.py) describes the build
   * The `SPIFLASH` device causes `SPIFLASH_BASE` to be defined, which enables external SPI flash memory support in [`jshardware.c`](https://github.com/espruino/Espruino/blob/master/targets/nrf5x/jshardware.c)
 
-
 Hardware
 --------
 
+The watch body is made of ABS plastic, with the LCD+touchscreen assembly glued to the front.
+
 Want to get inside? Check out the [Bangle.js 2 Disassembly page](/Bangle.js2+Disassembly)
+
+There are CAD files for the Bangle.js 2 stand, as well as an STL of the watch body [available here](https://github.com/espruino/EspruinoBoard/blob/master/Bangle.js2)
 
 PCB
 ---
