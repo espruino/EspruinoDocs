@@ -1,4 +1,4 @@
-/* Copyright (c) 2018 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
+/* Copyright (c) 2023 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 /* Simple graph library - http://www.espruino.com/graph */
 exports.drawAxes = function(g, data, options) {
   var px = options.padx||0;
@@ -97,8 +97,8 @@ exports.drawBar = function(g, data, options) {
   // Draw actual data
   for (var i in data) {
     g.fillRect(
-      o.getx(i-0.5)+1, o.gety(data[i]),
-      o.getx(i+0.5)-1, o.gety(0));
+      o.getx(+i-0.5)+1, o.gety(data[i]),
+      o.getx(+i+0.5)-1, o.gety(0));
   }
   // return info that can be used for plotting extra things on the chart
   return o;
