@@ -134,8 +134,8 @@ command assumes that esptool is available in a subdirectory of the parent
 directory. Adjust the COM port, if you don't have the ESP on COM12. 460800
 baud worked just fine for me, writing at ~260kbit/s instead of ~80kbit/s.
 ```
->python "../esptool/esptool.py" --port COM12 --baud 115200 write_flash \
-  --flash_freq 80m --flash_mode qio --flash_size 32m \
+>python "../esptool/esptool.py" --port COM12 --baud 115200 \
+  write_flash --flash_freq 80m --flash_mode qio --flash_size 32m \
   0x0000 boot_v1.6.bin 0x1000 espruino_esp8266_user1.bin \
   0x3FC000 esp_init_data_default.bin 0x3FE000 blank.bin
 Connecting...
