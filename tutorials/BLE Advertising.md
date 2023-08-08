@@ -99,7 +99,7 @@ Chrome / Edge / Web Bluetooth
 On Chrome based browsers, it is possible to scan for advertisements. You can either use [`navigator.bluetooth.requestLEScan`](https://googlechrome.github.io/samples/web-bluetooth/scan.html) to scan for all devices,
 or [`device.watchAdvertisements()`](https://googlechrome.github.io/samples/web-bluetooth/watch-advertisements.html) to scan for devices one by one.
 
-However as of August 2021, this functionality only appears to be implemented enough to be useful on Chrome for Android.
+However as of August 2023, this functionality only appears to be implemented enough to be useful on Chrome for Android, and it is only enabled behind a flag in `chrome://flags`.
 
 
 Node.js
@@ -282,7 +282,7 @@ devices = [
 # Whatever the last data was
 lastAdvertising = {}
 
-# Gets the actual scanning data  
+# Gets the actual scanning data
 class ScanDelegate(DefaultDelegate):
   def __init__(self):
     DefaultDelegate.__init__(self)
@@ -347,6 +347,7 @@ Android
 --------
 
 Android has [good documentation on Bluetooth LE](https://developer.android.com/guide/topics/connectivity/bluetooth-le.html),
-just check out the section titled "Finding BLE Devices".
+just check out the section titled [Finding BLE Devices](https://developer.android.com/guide/topics/connectivity/bluetooth/find-ble-devices)
+to see an example of scanning for Advertisements.
 
 There's also [an example application](https://github.com/googlesamples/android-BluetoothAdvertisements).
