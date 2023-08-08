@@ -214,6 +214,11 @@ GB({"t":"musicinfo","artist":"My Artist","album":"My Album","track":"Track One",
 GB({"t":"call","cmd":"incoming","name":"name","number":"+441234123123"})
 // Set a single alarm, 6:30am, every day of the week
 GB({"t":"alarm", "d":[{"h":"6","m":"30:","rep":127}]})
+// Send a GPS location
+GB({"t":"gps","lat":51.509865,"lon":-0.118092,"alt":42,"speed":0,"course":123,"time":1684413470805,"satellites":11,"hdop":10.720000267028809,"externalSource":true,"gpsSource":"GPS"})
+// Send a navigation message
+GB({"t":"nav","instr":"High St towards Tollgate Rd","distance":"966yd","action":"continue","eta":"08:39"})
+
 ```
 
 ### Messages from Bangle.js to Phone
@@ -240,7 +245,7 @@ Available message types are:
 
 Bangle.js Gadgetbridge also provides:
 
-* `t:"htt­p", url:"https://pur3.co.uk/hello.txt"[,xpath:"­/html/body/p/div[3]/a"][,id:"..."]` - make an HTTPS request (HTTP not supported right now). 
+* `t:"http", url:"https://pur3.co.uk/hello.txt"[,xpath:"­/html/body/p/div[3]/a"][,id:"..."]` - make an HTTPS request (HTTP not supported right now). 
   * If `xpath` is supplied, the document is loaded as XML (not all HTML is XML!), the xpath is applied and the result returned instead
   * If `id` is supplied (as a string), the response returns the same `id` (so multiple HTTP requests can be in flight at once)
 * `t:"intent", target:"...", action:"...", flags:["flag1", "flag2",...], categories:["category1","category2",...], package:"...", class:"...", mimetype:"...", data:"...", extra:{someKey:"someValueOrString", anotherKey:"anotherValueOrString",...` - sends an Android Intent (which can be used to send data to other apps like Tasker)
