@@ -252,7 +252,7 @@ myArray.forEach(digitalWrite.bind(null,[A0,A1,A2,A3]));
 ```
 
 If you need to go really fast you can also tag specific functions as `"ram"` or
-even JIT compile them (see the very top of this page) and then use them
+even [JIT compile them](/JIT) (see the very top of this page) and then use them
 with `forEach`/`map`/etc.
 
 **Note:** Espruino contains some extra functions like `E.sum` and `E.variance` to
@@ -261,14 +261,14 @@ to try and use these if possible.
 
 
 
-EVERY DATATYPE IN ESPRUINO IS BASED ON A SINGLE STORAGE UNIT (12-16 BYTES)
+EVERY DATATYPE IN ESPRUINO IS BASED ON A SINGLE STORAGE UNIT (10-16 BYTES)
 --------------------------------------------------------------------------
 
 The actual size of storage unit (referred to as `JsVar` internally) depends on how many vars your device needs to be able to address. You can check `process.memory().blocksize` to find out the actual size.
 
-This makes allocation and deallocation very fast for Espruino and avoids memory fragmentation. However, if you allocate a single boolean it will still take up one storage unit (12-16 bytes) of memory.
+This makes allocation and deallocation very fast for Espruino and avoids memory fragmentation. However, if you allocate a single boolean it will still take up one storage unit (10-16 bytes) of memory.
 
-This may seem inefficient, but if you compare this with a naive malloc/free implementation you'll realise that it saves a significant amount of RAM.
+This may seem inefficient, but if you compare this with a naive malloc/free implementation you'll realise that it saves a significant amount of RAM since malloc/free will always require 4 bytes per allocation to store the size of the allocated area.
 
 
 ARRAYS AND OBJECTS USE TWO STORAGE UNITS PER ELEMENT (ONE FOR THE KEY, AND ONE FOR THE VALUE)
@@ -281,7 +281,7 @@ If the name (index) of an element is a string that is greater than 10 characters
 **There are a few cases when both key and value can be packed into an array.** These are:
 
 * An integer index with a boolean value
-* An integer index with an integer value between -32768 and 32767 (on parts with 12 byte storage units, the range of allowable values may be less)
+* An integer index with an integer value between -32768 and 32767 (on parts with <16 byte storage units, the range of allowable values may be less)
 * A short (4 chars or less) string index with an integer value between -32768 and 32767, eg `{ boom : 123 }`
 
 You can check how many storage units a data structure is using up with [`E.getSizeOf(...)`](http://www.espruino.com/Reference#l_E_getSizeOf)
@@ -305,11 +305,12 @@ are absolutely sure you have to.
 However, once allocated a Flat String is very efficient for large amounts of
 data and allows for very fast accesses.
 
-If you want to create a Flat String, use [E.toString](http://www.espruino.com/Reference#l_E_toString),
-but be aware that you'll probably need a Typed Array (see below) to write to it.
+If you want to create a Flat String, use [`E.toFlatString`](http://www.espruino.com/Reference#l_E_toFlatString),
+but be aware that you'll probably need a Typed Array (see below) to write to it. In firmwares before 2v18
+[`E.toString`](http://www.espruino.com/Reference#l_E_toString) has to be used instead of `E.toFlatString`.
 
 Once allocated, you can use `E.getAddressOf(v, true)` to get the actual
-physical address in memory of the Flat String's data (which can be used for DMA/etc).
+physical address in memory of the Flat String's data (which can be used for DMA, [Inline C](/InlineC) or (Assembly Code](/Assembler) ).
 
 
 Functions and pretokenisation
@@ -330,11 +331,11 @@ function foobar() {
 ```
 
 Turns into something like  `#foobar(){#(#.x==#)##Error("Hello");##;}` where
-`#` is a special token representing that reserved word. This saves a lot of
+`#` is a special non-ASCII (>127) token representing that reserved word. This saves a lot of
 memory and also speeds up execution by 10-20%. However it does remove line
 numbers from stack traces and so makes debugging harder.
 
-If you're using a device with external flash (like Bangle.js) then  `"ram"`
+If you're using a device with external flash (like [Bangle.js](/Bangle.js2)) then  `"ram"`
 (but not `E.setFlags({pretokenise:1})`) will ensure that your function is loaded
 into RAM rather than being executed from flash.
 
@@ -464,8 +465,20 @@ Strings *are just as fast to iterate over* - it's just random access that is
 slower.
 
 
-NATIVE STRINGS ARE GREAT, IF YOU JUST NEED TO READ
---------------------------------------------------
+STORAGE IS GREAT IF YOU JUST NEED TO READ
+------------------------------------------
+
+If you want a big blob of data that you can read from, consider writing
+it to [`Storage`](http://www.espruino.com/Reference#Storage) (the IDE can
+even upload files directly). This puts the data in Flash memory.
+
+When you access a file with [`require('Storage').read(...)`](http://www.espruino.com/Reference#l_Storage_read)
+you get a 'Native String' (or in Bangle.js's case a 'Flash String') that points directly to the
+data without requiring it to be loaded into RAM.
+
+
+NATIVE STRINGS ARE GOOD FOR LOW LEVEL ACCESS
+---------------------------------------------
 
 A Native String (created with [`E.memoryArea`](http://www.espruino.com/Reference#l_E_memoryArea))
 is a String that is just a pointer to an area of memory. On most devices there
@@ -474,9 +487,7 @@ if you have data in Flash memory then it can be extremely useful as a way to
 access data without taking up any RAM.
 
 While you can use `E.memoryArea` directly, you can also use [the `Storage` library](http://www.espruino.com/Reference#Storage)
-to write data to Flash memory using a simple file system. When retrieving data
-with [`require('Storage').read(...)`](http://www.espruino.com/Reference#l_Storage_read)
-the returned data will be a Native String.
+to write data to Flash memory (see above).
 
 If you [save your code with Save on Send](/Saving) then any functions that are
 defined will also have their contents stored in a Native String pointing directly
