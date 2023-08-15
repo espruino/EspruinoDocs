@@ -20,14 +20,16 @@ While final code is not as optimised as the [Online Compiler](/Compilation), JIT
 
 **The JIT compiler is BETA and under heavy development.** It only intended for small sections of code, and JITed code may cause crashes and instability. See [here for information on the current state of development](https://github.com/espruino/Espruino/blob/master/README_JIT.md)
 
-**Note:** The JIT compiler is only enabled for bluetooth-capable [official Espruino boards](/Order), although it may be rolled out to STM32-based boards like the [[Pico]] at a later date. It won't work on devices like ESP8266 or ESP32.
+If you tag a function as JIT and it cannot be compiled, the compiler will display an error but your function will be kept and executed as plain JavaScript.
+
+**Note:** The JIT compiler is enabled for official boards (except the Espruino Original where there isn't enough Flash memory). It won't work on devices like ESP8266 or ESP32 that don't use ARM architecture.
 
 How do I use it?
 ---------------
 
 Simply get your function working as you want it to, and then add the string `"jit";` to the very front of it:
 
-```
+```JS
 function foo(a,b) {
   "jit";
   return a*53 + b*2;
@@ -38,7 +40,7 @@ foo(2,3);
 
 You can also include loops - for instance here we're rendering the Mandelbrot fractal:
 
-```
+```JS
 function f() {
   "jit";
   var Xr = 0;
@@ -63,7 +65,7 @@ for (y=0;y<64;y++) {
 
 or you can use JIT code to speed up your IO:
 
-```
+```JS
 function f(pin, val) {
   "jit";
   digitalWrite(pin, (val>>7)&1);
@@ -77,6 +79,39 @@ function f(pin, val) {
 }
 ```
 
+You can also use JIT to speed up processing of arrays. For example if you wanted
+to implement some form of CRC check (Espruino does have CRC32 built in):
+
+```JS
+var array = new Uint8Array(...);
+
+// Normal calculation using non-JIT function
+array.reduce((a,b) => (a<<1)^(a>>>31)^b);
+
+// Using JIT - 50% faster
+function jitReducer(a,b) {"jit";return (a<<1)^(a>>>31)^b;}
+array.reduce(jitReducer);
+```
+
+
+
+Using JIT from your code
+-------------------------
+
+Because JIT runs on the processor, you can create functions on demand
+and then JIT compile them on the fly:
+
+```JS
+function getFastAdd(arr) {
+  return eval(`(function() { "jit" return ${arr.join("+")};})`);
+}
+
+var a=1,b=2;
+var fn = getFastAdd([42,a,b]);
+fn(); // 45
+```
+
+
 Performance Notes
 ---------------
 
@@ -85,6 +120,7 @@ See [here for information on the current state of development](https://github.co
 * All variables that are accessed are searched for at the start of the JITed function
   * So if you use `digitalWrite` multiple times, you're only actually searching for it once
   * As a result using `pin.write(X)` may be slower than `digitalWrite(pin, X)` because for each call `write` is searched for on `pin`
+  * JIT does not yet fold constant arithmetic (`1+2 -> 3`)
 
 
 Can I help?
