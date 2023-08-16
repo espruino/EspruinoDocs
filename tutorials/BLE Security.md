@@ -199,3 +199,12 @@ enter a passkey using the `BluetoothDevice.passkeyRequest` event and
 `BluetoothDevice.sendPasskey` method (as long as `NRF.setSecurity`
 contains `keyboard:1`). This isn't implemented for peripheral mode yet.
 
+## Disabling bonding of new devices
+
+As of Espruino 2v19, once you have a device paired with `NRF.setSecurity({mitm:1, ...});` above,
+you can use `pair:false` to disallow new devices from pairing, which will effectively whitelist
+connections to the device to just those devices that have paired in the past.
+
+```JS
+NRF.setSecurity({pair:0,mitm:1});
+```
