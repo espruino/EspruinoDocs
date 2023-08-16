@@ -162,7 +162,13 @@ Information
 * [3D Case design files](https://github.com/espruino/EspruinoBoard/tree/master/Puck.js/case)
 * [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
 * [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
-* [CE certification](/files/Puck.js-CE.pdf)
+
+Certifications:
+
+* Puck.js 1/2 [CE certification](/files/Puck.js-CE.pdf)
+* Puck.js 1/2 radio module has certifications for [FCC (USA), CE(EU), TELEC (Japan), SRRC (China), IC (Canada), NCC (Taiwan) and KC (South Korea)](/datasheets/MDBT42Q-E.pdf)
+* Puck.js Lite [CE certification](/files/Puck.js-Lite-CE.pdf) and [RoHS](/files/Puck.js-Lite-RoHS.pdf)
+* Puck.js Lite [FCC certification](/files/Puck.js-Lite-FCC.pdf)
 
 
 <a name="onboard"></a>On-board LEDs, Button and GPIO

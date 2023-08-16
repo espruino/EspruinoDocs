@@ -178,6 +178,10 @@ Information
 * [3D model of Pixl.js in STL](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.stl) or [OpenSCAD](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.scad)
 * [SVG Vector drawing of Pixl.js with laser-cut case](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.svg)
 
+Certifications:
+
+* Pixl.js's radio module has certifications for [FCC (USA), CE(EU), TELEC (Japan), SRRC (China), IC (Canada), NCC (Taiwan) and KC (South Korea)](/datasheets/MDBT42Q-E.pdf)
+
 <a name="lcd"></a>LCD Screen
 ---------------------------------
 
