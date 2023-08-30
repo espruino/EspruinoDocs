@@ -15,13 +15,13 @@ Real Time Clock (RTC) and don't draw much power when idle.
 
 At its most simple, all you need to do is have some code that looks like this:
 
-```
+```JS
 function getData() {
   var data = readMyData();
   storeMyData(data);
 }
 
-setInterval(getData, 60*1000); // every minute  
+setInterval(getData, 60*1000); // every minute
 ```
 
 Reading Data
@@ -71,7 +71,7 @@ a few options here. If you want to skip this and just want something that works,
 The simplest (but most inefficient) option is just to store data in a
 JavaScript array, for instance:
 
-```
+```JS
 var log = [];
 
 function storeMyData(data) {
@@ -85,7 +85,7 @@ is used.
 
 You can work around this by restricting the size of the array, for example:
 
-```
+```JS
 function storeMyData(data) {
   // ensure there are less than 500 elements in the array
   while (log.length >= 500) log.shift();
@@ -109,7 +109,7 @@ you can store it in a much more compact form.
 For instance, if we know that each reading is a number then we can use a
 fixed size 32 bit floating point buffer for it:
 
-```
+```JS
 var log = new Float32Array(1000);
 var logIndex = 0;
 
@@ -135,7 +135,7 @@ means that when you come to output the data you'll need to work backwards from
 However if you *do* want to rotate data in the buffer itself, you can do it
 efficiently using the `.set` method on the array:
 
-```
+```JS
 function storeMyData(data) {
   // shift elements backwards - note the 4, because a Float32 is 4 bytes
   log.set(new Float32Array(log.buffer, 4 /*bytes*/));
@@ -175,7 +175,7 @@ var o = indexToRead*EVENT_SIZE;
 var event = {
   time : new Date(log.getUint32(o+0)*1000),
   temp : log.getInt8(o+4)
-};     
+};
 ```
 
 ### Flash memory
@@ -183,19 +183,41 @@ var event = {
 So far we've only written to RAM, however some Espruino boards have
 areas of flash memory that you can use to store nonvolatile data.
 
-You can also use [`require("Flash")`](/Reference#Flash) to write bytes straight
-to flash - but this is pretty advanced and requires you to deal with pages
-and page erasure.
-
 On Espruino 1v97 and above there is the [`Storage` module](/Reference#Storage)
 which implements a simple filesystem in the area of flash memory that is also
-used to save your program code.
+used to save your program code. The Storage module implements wear levelling and deals
+with flash page boundaries and pages for you, so is much easier to use than
+accessing flash memory directly.
 
-The Storage module implements wear levelling and deals with flash page boundaries
-and pages for you, so is much easier to use. The example below will write text
-into a log file, and will alternate between `log1` and `log2` as needed:
+Espruino 2v05 and later have `require("Storage").open` which allows you
+to append to a file in the storage area, as well as read back line by line.
+This is what we'd recommend you use if you just want to write text (it doesn't support
+writing char code 255 so can't be used for binary data):
 
+```JS
+var f = require("Storage").open("log","a");
+
+// Write some data
+setInterval(function() {
+  f.write(getTime()+","+E.getTemperature()+"\n");
+}, 1000);
+
+function getData(callback) {
+  var f = require("Storage").open("log","r")
+  var l = f.readLine();
+  while (l!==undefined) {
+    callback(l);
+    l = f.readLine();
+  }
+}
+// Get data with: getData(print);
 ```
+
+However, you can also use the [`Storage` module](/Reference#Storage) at a lower level,
+allocating a fixed-size file (which starts of as all char code 255) and writing to it.
+The example below will write text into a log file, and will alternate between `log1` and `log2` as needed:
+
+```JS
 var storage = require("Storage");
 var FILESIZE = 2048;
 var file = {
@@ -203,12 +225,16 @@ var file = {
   offset : FILESIZE, // force a new file to be generated at first
 };
 
+function getOtherFilename() {
+  return file.name=="log1"?"log2":"log1";
+}
+
 // Add new data to a log file or switch log files
 function saveData(txt) {
   var l = txt.length;
   if (file.offset+l>FILESIZE) {
     // need a new file...
-    file.name = file.name=="log2"?"log1":"log2";
+    file.name = getOtherFilename();
     // write data to file - this will overwrite the last one
     storage.write(file.name,txt,0,FILESIZE);
     file.offset = l;
@@ -229,28 +255,39 @@ setInterval(function() {
 // storage.read("log1");
 ```
 
-Espruino 2v05 and later also have `require("Storage").open` which allows you
-to open a Storage file for appending and vastly simplifies the process. This
-is what we'd now recommend you use:
+It's also possible to write binary data using this method which allows you to store data
+much more compactly than text, you just have to decode it afterwards. For example in the
+example above you could instead do the following:
 
-```
-var f = require("Storage").open("log","a");
-
-// Write some data
+```JS
+// Write some data as binary
 setInterval(function() {
-  f.write(getTime()+","+E.getTemperature()+"\n");
+  var buf = new ArrayBuffer(5); // 5 = record size
+  var d = new DataView(buf);
+  d.setUint32(0, Math.round(getTime()));
+  d.setInt8(4, Math.round(E.getTemperature()));
+  saveData(buf);
 }, 1000);
 
-function getData(callback) {
-  var f = require("Storage").open("log","r")  
-  var l = f.readLine();
-  while (l!==undefined) {
-    callback(l);
-    l = f.readLine();
+// Read the data
+function getData() {
+  var buf = E.toArrayBuffer(storage.read("log1"));
+  var d = new DataView(buf);
+  for (var i=0;i<buf.length;i+=5) { // 5 = record size
+    if (d.getUint32(i+0)==0xFFFFFFFF)
+      break; // time is all 0xFF, it's not been written yet
+    print({
+      time : d.getUint32(i+0),
+      temp : d.getInt8(i+4)
+    });
   }
 }
-// Get data with: getData(print);
 ```
+
+**NOTE:** You can also use [`require("Flash")`](/Reference#Flash) to write bytes straight
+to flash - but this is pretty advanced and requires you to deal with pages
+and page erasure.
+
 
 ### External Flash/EEPROM Memory
 
@@ -293,7 +330,7 @@ one step at a time.
 
 Something like this would work:
 
-```
+```JS
 function getData() {
   for (var i=0;i<log.length;i++)
     console.log(i+","+log[i]);
@@ -314,7 +351,7 @@ Simply copy and paste the following code in to the right hand side of the ide,
 turn on `Set Current Time` in the Web IDE Communication Settings, and click
 `Upload`.
 
-```
+```JS
 var log = new Float32Array(100); // our logged data
 var logIndex = 0; // index of last logged data item
 var timePeriod = 60*1000; // every minute
@@ -468,3 +505,5 @@ button.addEventListener("click", function() {
   });
 });
 ```
+
+**Want to do this automatically as soon as the devices are ready or in range?** Check out the [Automatic Data Download](/Auto+Data+Download) page.

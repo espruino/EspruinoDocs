@@ -204,9 +204,18 @@ We've also made the [UART.js](/UART.js) Library to provide a consistent API for 
 
 ### Node.js / JavaScript
 
-Run `npm install @abandonware/noble`, then:
+On Node.js, [`noble`](https://www.npmjs.com/package/noble) appears to be the accepted way of getting Bluetooth LE
+access. **However, it is unmaintained!** As a result, there are other versions that you should use instead:
 
-```
+* `@abandonware/noble` is a version of `noble` with some fixes applied that ensures it builds - this works fine on Linux
+* **Mac OS Mojave has [broken BLE support in noble](https://github.com/noble/noble/issues/834)** so you may want to use the [noble-mac](https://github.com/Timeular/noble-mac) library instead.
+* `noble` needs direct access to the bluetooth device on Windows, which is [difficult to accomplish](https://github.com/noble/noble#windows) and not recommended, so [`noble-uwp`](https://www.npmjs.com/package/noble-uwp) or [`noble-winrt`](https://www.npmjs.com/package/noble-winrt) use Windows' own bluetooth driver, which will work a lot better on Windows 10 and later.
+* If you do need to use `noble` on Windows for some reason, it's possible to install an extra [USB Bluetooth LE dongle](http://www.espruino.com/Puck.js+Quick+Start#requirements)**
+that Windows doesn't have a Bluetooth driver installed for and configure it with Zadig. This will allow you to keep you existing Bluetooth working.
+
+Assuming we're on Linux you can run `npm install @abandonware/noble`, then use this code, otherwise you'll have to change the `require(...)` line to pull in the correct module:
+
+```JS
 /* On Linux, BLE normally needs admin right to be able to access BLE
  *
  * sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
@@ -229,7 +238,7 @@ noble.on('stateChange', function(state) {
 
 var foundDevice = false;
 noble.on('discover', function(dev) {
-  if (foundDevice) return; 
+  if (foundDevice) return;
   console.log("Found device: ",dev.address);
   if (dev.address != ADDRESS) return;
   noble.stopScanning();
@@ -294,7 +303,7 @@ function connect(dev, callback) {
   });
 };
 
-function write(data, callback) {  
+function write(data, callback) {
   function writeAgain() {
     if (!data.length) return callback();
     var d = data.substr(0,20);
@@ -302,6 +311,7 @@ function write(data, callback) {
     var buf = Buffer.alloc(d.length);
     for (var i = 0; i < buf.length; i++)
       buf.writeUInt8(d.charCodeAt(i), i);
+    console.log("BT> Write "+JSON.stringify(buf.toString("binary")));
     txCharacteristic.write(buf, false, writeAgain);
   }
   writeAgain();
@@ -311,18 +321,6 @@ function disconnect() {
   btDevice.disconnect();
 }
 ```
-
-**Note:**
-
-* **Mac OS Mojave currently has [broken BLE support in noble](https://github.com/noble/noble/issues/834)**
-so you may want to use the [noble-mac](https://github.com/Timeular/noble-mac)
-library instead.
-* **Windows 10 users may want to use** [noble-uwp](https://github.com/jasongin/noble-uwp)
-instead of noble to get out-of-the-box Bluetooth support.
-* **Windows support requires a [USB Bluetooth LE dongle](http://www.espruino.com/Puck.js+Quick+Start#requirements)**
-that Windows doesn't have a Bluetooth driver installed for. This means you don't have to be using
-Windows 10, but if you do have Windows 10 and Bluetooth LE is working, you'll
-want to plug in *an additional USB BLE dongle!*.
 
 ### Python
 
@@ -335,7 +333,7 @@ There are a few different Bluetooth LE packages for Python.
 
 You need to run `pip install bleak`, and you can then do:
 
-```
+```Python
 import asyncio
 import array
 from bleak import discover
@@ -380,7 +378,7 @@ loop.run_until_complete(run(address, loop))
 
 You need to run `pip install bluepy`, and you can then do:
 
-```
+```Python
 # USAGE:
 # python bluepy_uart.py ff:a0:c7:07:8c:29
 
@@ -571,13 +569,13 @@ handle: 0x0010, uuid: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
 handle: 0x0011, uuid: 00002800-0000-1000-8000-00805f9b34fb
 handle: 0x0012, uuid: 00002803-0000-1000-8000-00805f9b34fb
 handle: 0x0013, uuid: 35ac0002-18b0-e8b7-3feb-62cec301da00
-[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 01  
+[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 01
 # <----------- LED1 turns on
 Characteristic value was written successfully
-[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 02  
+[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 02
 # <----------- LED2 turns on
 Characteristic value was written successfully
-[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 02  
+[F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 02
 # <----------- both LEDS turns on
 Characteristic value was written successfully
 [F5:3E:A0:62:C7:74][LE]> char-write-req 0x0013 00
