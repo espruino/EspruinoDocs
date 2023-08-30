@@ -26,7 +26,7 @@ Contents
 Features
 --------
 
-* IP68 Waterproof: up to 10m underwater
+* IP68 Waterproof (everyday use, **not swimming or baths**)
 * Nordic 64MHz nRF52832 ARM Cortex-M4 processor with Bluetooth LE
 * 64kB RAM 512kB on-chip flash, 4MB external flash
 * 1.3 inch 240x240 16 bit LCD display with 2 zone touch
