@@ -49,18 +49,9 @@ To connect it up, you will need to add 3 wires to the shield (mirroring the
  ----------------------------------
 ```
 
-The easiest method is to remove the `ICSP` header completely 
-
-![WIZnet W5100 Ethernet shield remove header](arduino-w5100/remove-header.jpg)
-
-and add wires on the underside of the board.
+The easiest method is to remove the `ICSP` header completely and add wires on the underside of the board:
 
 ![WIZnet W5100 Ethernet shield add wires](arduino-w5100/add-wires.jpg)
-
-Now attach Pixl to shield
-
-![Pixl attacched to WIZnet W5100 Ethernet shield](arduino-w5100/Pixl-adruion-w5100.jpg)
-
 
 ## Pinout
 
