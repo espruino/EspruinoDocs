@@ -58,7 +58,7 @@ true              : connected and ready
 
 // -----------------------------------------------------------------------------------
 var netCallbacks = {
-  create : function(host, port, type) {
+  create : function(host, port, type, options) {
     //console.log("CREATE ",arguments);
     if (!at) return -1; // disconnected
     /* Create a socket and return its index, host is a string, port is an integer.
@@ -67,7 +67,7 @@ var netCallbacks = {
       var sckt = MAXSOCKETS;
       socks[sckt] = "Wait";
       sockData[sckt] = "";
-      at.cmd("AT+CIPSERVER=1,"+port+"\r\n", 10000, function(d) {
+      at.cmd(`AT+CIPSERVER=1,${port}\r\n`, 10000, function(d) {
         if (d=="OK") {
           socks[sckt] = true;
         } else {
@@ -85,13 +85,20 @@ var netCallbacks = {
       sockData[sckt] = "";
       socks[sckt] = "Wait";
       var cmd;
-      if (type==2) {
+      if (type&3==2) {
         // If there's a port specified, make a server now - otherwise reserve the socket and do it later
-        if (port) cmd = 'AT+CIPSTART='+sckt+',"UDP","255.255.255.255",'+port+','+port+',2\r\n';
+        if (port) cmd = `AT+CIPSTART=${sckt},"UDP","255.255.255.255",${port},${port},2\r\n`;
         else socks[sckt] = "UDP";
         sockUDP[sckt] = true;
       } else {
-        cmd = 'AT+CIPSTART='+sckt+',"TCP",'+JSON.stringify(host)+','+port+'\r\n';
+        let socktype = "TCP";
+        if (options&&options.protocol=="https:") {
+	  // This is a hack until https://github.com/espruino/Espruino/issues/2410 is fixed
+          socktype = "SSL";
+          if (port==80) port = 443;
+        }
+        cmd = `AT+CIPSTART=${sckt},"${socktype}",${JSON.stringify(host)},${port}\r\n`;
+        //console.log(cmd);
         delete sockUDP[sckt];
       }
       if (cmd) at.cmd(cmd,10000,function cb(d) {
@@ -177,8 +184,7 @@ var netCallbacks = {
       returnVal = 8+d.len;
     }
 
-    var cmd = 'AT+CIPSEND='+sckt+','+data.length+extra+'\r\n';
-    at.cmd(cmd, 2000, function cb(d) {
+    at.cmd(`AT+CIPSEND=${sckt},${data.length+extra}\r\n`, 2000, function cb(d) {
       //console.log("SEND "+JSON.stringify(d));
       if (d=="OK") {
         at.register('> ', function(l) {
@@ -268,24 +274,27 @@ var wifiFuncs = {
   // initialise the ESP8266
   "init" : function(callback) {
     at.cmd("ATE0\r\n",1000,function cb(d) { // turn off echo
-      if (d=="ATE0") return cb;
+      //console.log(">>>>>"+JSON.stringify(d));
+      if (d=="ATE0" || d=="") return cb;
       if (d=="OK") {
         at.cmd("AT+CIPMUX=1\r\n",1000,function(d) { // turn on multiple sockets
           if (d!="OK") callback("CIPMUX failed: "+(d?d:"Timeout"));
           else at.cmd("AT+CIPDINFO=1\r\n",1000, function() { // enable IP Info in +IPD
-            callback(null); // we don't care if this succeeds or not
+            at.cmd("AT+CIPSSLSIZE=4096\r\n",1000, function() { // set SSL buffer size
+              callback(null); // we don't care if this succeeds or not
+            });
           });
         });
-      }
-      else callback("ATE0 failed: "+(d?d:"Timeout"));
+      } else callback("ATE0 failed: "+(d?d:"Timeout"));
     });
   },
   "reset" : function(callback) {
+    //console.log("AT+RST");
     at.cmd("\r\nAT+RST\r\n", 10000, function cb(d) {
       //console.log(">>>>>"+JSON.stringify(d));
       // 'ready' for 0.25, 'Ready.' for 0.50
-      if (d=="ready" || d=="Ready.") setTimeout(function() { wifiFuncs.init(callback); }, 1000);
-      else if (d===undefined) callback("No 'ready' after AT+RST");
+      if (d===undefined) callback("No 'ready' after AT+RST");
+      else if (d=="ready" || d=="Ready.") setTimeout(function() { wifiFuncs.init(callback); }, 1000);
       else return cb;
     });
   },
@@ -377,8 +386,13 @@ var wifiFuncs = {
 exports.connect = function(usart, connectedCallback) {
   wifiFuncs.at = at = require("AT").connect(usart);
   require("NetworkJS").create(netCallbacks);
-
   at.register("+IPD", ipdHandler);
+  at.register("+CW", line => { // handle +CWJAP/etc
+    var end = line.indexOf("\n");
+    if (end<0) return line;
+    print("+CW", line);
+    return line.substr(end+1);
+  });
   at.registerLine("0,CONNECT", sckOpen);
   at.registerLine("1,CONNECT", sckOpen);
   at.registerLine("2,CONNECT", sckOpen);
