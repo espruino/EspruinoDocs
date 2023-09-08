@@ -240,6 +240,7 @@ function sckOpen(ln) {
     });
   }
 }
+
 function sckClosed(ln) {
   //console.log("CLOSED", JSON.stringify(ln));
   socks[ln[0]] = sockData[ln[0]]!="" ? "DataClose" : undefined;
