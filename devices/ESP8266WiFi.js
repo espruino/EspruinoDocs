@@ -9,7 +9,7 @@ For EspressIF ESP8266 firmware 0.25
 Serial2.setup(115200, { rx: A3, tx : A2 });
 
 console.log("Connecting to ESP8266");
-var wifi = require("ESP8266").connect(Serial2, function() {
+var wifi = require("ESP8266WiFi").connect(Serial2, function() {
   console.log("Connecting to WiFi");
   wifi.connect("SSID","key", function() {
     console.log("Connected");
@@ -22,14 +22,19 @@ var wifi = require("ESP8266").connect(Serial2, function() {
   });
 });
 ```
+
+
+// TODO: AT+UART_CUR=115200,8,1,0,2 can enable flow control - add as a function with WIFI_SERIAL.setup(115200, { rx: .., tx : .., cts : WIFI_CTS });
+
 */
+
+var ENCR_FLAGS = ["open","wep","wpa_psk","wpa2_psk","wpa_wpa2_psk"];
 
 var at;
 var socks = [];
 var sockUDP = [];
 var sockData = ["","","","",""];
 var MAXSOCKETS = 5;
-var ENCR_FLAGS = ["open","wep","wpa_psk","wpa2_psk","wpa_wpa2_psk"];
 
 function udpToIPAndPort(data) {
   return {
@@ -90,7 +95,10 @@ var netCallbacks = {
         delete sockUDP[sckt];
       }
       if (cmd) at.cmd(cmd,10000,function cb(d) {
-        if (d!="OK") socks[sckt] = -6; // SOCKET_ERR_NOT_FOUND
+        //console.log("CIPSTART "+JSON.stringify(d));
+        if (d=="ALREADY CONNECTED") return cb; // we're expecting an ERROR too
+        // x,CONNECT should have been received between times. If it hasn't appeared, it's an error.
+        if (d!="OK" || socks[sckt]!==true) socks[sckt] = -6; // SOCKET_ERR_NOT_FOUND
       });
     }
     return sckt;
@@ -170,7 +178,7 @@ var netCallbacks = {
     }
 
     var cmd = 'AT+CIPSEND='+sckt+','+data.length+extra+'\r\n';
-    at.cmd(cmd, 10000, function cb(d) {
+    at.cmd(cmd, 2000, function cb(d) {
       //console.log("SEND "+JSON.stringify(d));
       if (d=="OK") {
         at.register('> ', function(l) {
@@ -191,7 +199,7 @@ var netCallbacks = {
         at.unregister('> ');
         return;
       }
-      return cb
+      return cb;
     });
     // if we obey the above, we shouldn't get the 'busy p...' prompt
     socks[sckt]="Wait"; // wait for data to be sent
@@ -226,6 +234,29 @@ function ipdHandler(line) {
 }
 // -----------------------------------------------------------------------------------
 
+function sckOpen(ln) {
+  var sckt = ln[0];
+  //console.log("SCKOPEN", JSON.stringify(ln),"current",JSON.stringify(socks[sckt]));
+  if (socks[sckt]===undefined && socks[MAXSOCKETS]) {
+    // if we have a server and the socket randomly opens, it's a new connection
+    socks[sckt] = "Accept";
+  } else if (socks[sckt]=="Wait") {
+    // everything's good - we're connected
+    socks[sckt] = true;
+  } else {
+    // Otherwise we had an error - timeout? but it's now open. Close it.
+    at.cmd('AT+CIPCLOSE='+sckt+'\r\n',1000, function() {
+      socks[sckt] = undefined;
+    });
+  }
+}
+
+function sckClosed(ln) {
+  //console.log("CLOSED", JSON.stringify(ln));
+  socks[ln[0]] = sockData[ln[0]]!="" ? "DataClose" : undefined;
+}
+
+
 var wifiFuncs = {
     ipdHandler:ipdHandler,
   "debug" : function() {
@@ -241,7 +272,7 @@ var wifiFuncs = {
       if (d=="OK") {
         at.cmd("AT+CIPMUX=1\r\n",1000,function(d) { // turn on multiple sockets
           if (d!="OK") callback("CIPMUX failed: "+(d?d:"Timeout"));
-          else at.cmd("AT+CIPDINFO=1\r\n",1000, function() { // Turn on UDP transmitter info
+          else at.cmd("AT+CIPDINFO=1\r\n",1000, function() { // enable IP Info in +IPD
             callback(null); // we don't care if this succeeds or not
           });
         });
@@ -341,14 +372,7 @@ var wifiFuncs = {
   }
 };
 
-function sckOpen(ln) {
-  //console.log("CONNECT", JSON.stringify(ln));
-  socks[ln[0]] = socks[ln[0]]=="Wait" ? true : "Accept";
-}
-function sckClosed(ln) {
-  //console.log("CLOSED", JSON.stringify(ln));
-  socks[ln[0]] = sockData[ln[0]]!="" ? "DataClose" : undefined;
-}
+
 
 exports.connect = function(usart, connectedCallback) {
   wifiFuncs.at = at = require("AT").connect(usart);
