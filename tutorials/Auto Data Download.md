@@ -108,7 +108,7 @@ PC Code
 
 We're going to use the Node.js code from https://www.espruino.com/Interfacing#node-js-javascript as a base for this. Please check the notes there about installing the correct version of `noble`.
 
-This code will scan for bluetooth devices that advertise Espruino's 0x0590 bluetooth ID, and if the data associated with that is nonzero then they will be connected to, and the data downloaded to a file called `Device_ad:dr:es:ss:00.txt`
+This code will scan for bluetooth devices that advertise Espruino's 0x0590 bluetooth ID, and if the data associated with that is nonzero then they will be connected to, and the data downloaded to a file called `Device_[macaddresss].txt`
 
 
 ```JS
@@ -240,7 +240,7 @@ function write(data, callback) {
 
 // Write the data to a file...
 function saveDeviceData(deviceAddress, data) {
-  require("fs").writeFileSync("Device_"+deviceAddress.replace(/ \.\\\//g,"")+".txt", data);
+  require("fs").writeFileSync("Device_"+deviceAddress.replace(/:/g,"").replace(/ \.\\\//g,"")+".txt", data);
 }
 ```
 
