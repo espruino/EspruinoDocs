@@ -72,6 +72,10 @@ Below are shots of the Bangle.js 2 PCB:
 
 ![](Bangle.js2 Technical/PCB_back.jpg)
 
+The components on the PCB are marked here:
+
+![](Bangle.js2 Technical/PCB_parts.png)
+
 SWD
 ---
 
