@@ -7,10 +7,10 @@ Gadgetbridge for Android
 * KEYWORDS: Gadgetbridge,Gadget bridge,Android,Notifications
 * USES: Bangle.js
 
-[Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health 
+[Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health
 monitoring without the need for a proprietary application or web service. We have a modified
-[`Bangle.js Gadgetbridge`](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) app on the 
-[Google Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) 
+[`Bangle.js Gadgetbridge`](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) app on the
+[Google Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs)
 or [F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs/) (see [below](#bangle-js-gadgetbridge-app))
 
 *If you like Gadgetbridge, [please consider donating](https://liberapay.com/Gadgetbridge/donate)
@@ -51,7 +51,7 @@ By default, some features are disabled in Gadgetbridge and you may well want to 
   * `Allow Internet Access` enables HTTP requests from Bangle.js apps (see below)
   * `Allow Intents` enables Bangle.js apps to interact with Android apps
   * `Sync Calendar Events` allows Gadgetbridge to send info on your Calendar events to Bangle.js, to be viewed with the `Agenda` app.
-  
+
 On some phones, even though Gadgetbriddge requests permissions, they may not have been granted by default:
 
 * Go to `Android Settings` on your Android Device
@@ -67,11 +67,11 @@ We have a version of Gadgetbridge for Bangle.js that allows Internet Access (nor
 
   * [the Google Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) - recommended
   * [F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs)
-  
+
 The Bangle.js Gadgetbridge app is built [from the same source code](https://codeberg.org/Freeyourgadget/Gadgetbridge) as
 the normal Gadgetbridge, however the `Bangle.js Gadgetbridge` app requires extra internet permissions to install and so can
 provide extra features:
-  
+
 ### HTTP requests
 
 **Must be enabled first** by clicking the gear icon next to the Bangle.js you're connected to in Gadgetbridge, and then enabling `Allow Internet Access`
@@ -156,7 +156,7 @@ Variable: Number, Configure on Import, NOT structured, Value set, Nothing Export
 
 ### Weather
 
-You can also get weather from Gadgetbridge. Install the [Weather Widget](https://banglejs.com/apps/#weather) and check out the `Read more...` link on the app page for more information. An additional app is required to forward the current weather into Gadgetbridge.
+You can also get weather from Gadgetbridge. Install the [Weather Widget](https://banglejs.com/apps/?id=weather) and check out the [`Read more...` link on the app page](https://banglejs.com/apps/?id=weather&readme) for more information on the setup required. An additional app is required to forward the current weather into Gadgetbridge.
 
 If you're using the Play Store 'Bangle.js Gadgetbridge' app, you need to set the package name to `com.espruino.gadgetbridge.banglejs`
 
@@ -206,13 +206,13 @@ GB({"t":"notify","id":1575479849,"src":"Hangouts","title":"A Name","body":"messa
 // message changed
 GB({"t":"notify~","id":1575479849,"body":"this changed"})
 // remove message
-GB({"t":"notify-","id":1575479849}); 
+GB({"t":"notify-","id":1575479849});
 // maps navigation
 GB({"t":"notify","id":1,"src":"Maps","title":"0 yd - High St","body":"Campton - 11:48 ETA","img":"Y2MBAA....AAAAAAAAAAAAAA="})
 // music
 GB({"t":"musicstate","state":"play","position":0,"shuffle":1,"repeat":1})
 GB({"t":"musicinfo","artist":"My Artist","album":"My Album","track":"Track One","dur":241,"c":2,"n":2})
-// Call coming in 
+// Call coming in
 GB({"t":"call","cmd":"incoming","name":"name","number":"+441234123123"})
 // Set a single alarm, 6:30am, every day of the week
 GB({"t":"alarm", "d":[{"h":"6","m":"30:","rep":127}]})
@@ -248,7 +248,7 @@ Available message types are:
 
 Bangle.js Gadgetbridge also provides:
 
-* `t:"http", url:"https://pur3.co.uk/hello.txt"[,xpath:"­/html/body/p/div[3]/a"][,id:"..."]` - make an HTTPS request (HTTP not supported right now). 
+* `t:"http", url:"https://pur3.co.uk/hello.txt"[,xpath:"­/html/body/p/div[3]/a"][,id:"..."]` - make an HTTPS request (HTTP not supported right now).
   * If `xpath` is supplied, the document is loaded as XML (not all HTML is XML!), the xpath is applied and the result returned instead
   * If `id` is supplied (as a string), the response returns the same `id` (so multiple HTTP requests can be in flight at once)
 * `t:"intent", target:"...", action:"...", flags:["flag1", "flag2",...], categories:["category1","category2",...], package:"...", class:"...", mimetype:"...", data:"...", extra:{someKey:"someValueOrString", anotherKey:"anotherValueOrString",...` - sends an Android Intent (which can be used to send data to other apps like Tasker)
@@ -273,7 +273,7 @@ There's a [Gadgetbridge Debug](https://banglejs.com/apps/#gbdebug) app you can i
 will show you the data that is being received from Gadgetbridge. See `Read more...` next to the app for
 more information.
 
-Once you know the command that caused the problem you can then disconnect Gadgetbridge, connect with the 
+Once you know the command that caused the problem you can then disconnect Gadgetbridge, connect with the
 Web IDE and issue that command by pasting it into the left-hand side of the IDE - for example:
 
 ```
@@ -290,8 +290,8 @@ You can also connect the Web IDE to Bangle.js *through your phone running Gadget
 From Gadgetbridge, start the App Loader, then go to `More...` and click `Web IDE Remote`.
 
 You'll see a UUID shown - copy this and 'share' it with yourself, so you can then go to
-https://www.espruino.com/ide/ on your desktop, go to `Settings`, `Communications`, and paste it into the 
-box for `Remote Connection Bridge Peer ID`. 
+https://www.espruino.com/ide/ on your desktop, go to `Settings`, `Communications`, and paste it into the
+box for `Remote Connection Bridge Peer ID`.
 
 Refresh the Web IDE page and (as long as the App Loader stays open in Gadgetbridge after `Web IDE Remote` has been pressed)
 you'll be able to connect via the Web IDE and see what Bangle.js is responding with as notifications/etc arrive.
