@@ -26,7 +26,7 @@ is as simple as calling `NRF.setServices` with the HID report
 provided by the module. You can then use the `.tap` method to
 send a key tap, or can use `NRF.sendHIDReport` directly.
 
-```
+```JS
 var kb = require("ble_hid_keyboard");
 NRF.setServices(undefined, { hid : kb.report });
 
@@ -40,7 +40,42 @@ function btnPressed() {
 
 // trigger btnPressed whenever the button is pressed
 setWatch(btnPressed, BTN, {edge:"rising",repeat:true,debounce:50});
+
+// Add 'appearance' to advertising for Windows 11
+NRF.setAdvertising([
+  {}, // include original Advertising packet
+  [   // second packet containing 'appearance'
+    2, 1, 6,  // standard Bluetooth flags
+    3,3,0x12,0x18, // HID Service
+    3,0x19,0xc1,0x03 // Appearance: Keyboard
+        // 0xc2,0x03 : 0x03C2 Mouse
+        // 0xc3,0x03 : 0x03C3 Joystick
+  ]
+]);
 ```
+
+**As of around Sept 2023, Windows 11 has started filtering out any
+Bluetooth LE device that does not include an `Appearance` element in its Bluetooth LE
+advertisement.** To date, iOS, Android, Linux, Mac OS, Windows 10 all do not require it.
+
+To allow pairing under Windows 11 you'll have to add a Bluetooth Appearance (`0x19`) to the
+advertisement, using this code:
+
+```JS
+NRF.setAdvertising([
+  {}, // include original Advertising packet
+  [   // second packet containing 'appearance'
+    2, 1, 6,  // standard Bluetooth flags
+    3,3,0x12,0x18, // HID Service
+    3,0x19,0xc1,0x03 // Appearance: 0x03C1 Keyboard
+        // 0xc2,0x03 : 0x03C2 Mouse
+        // 0xc3,0x03 : 0x03C3 Joystick
+  ]
+]);
+```
+
+Valid appearance numbers can be found at https://btprodspecificationrefs.blob.core.windows.net/assigned-numbers/Assigned%20Number%20Types/Assigned_Numbers.pdf
+under `2.6.3 Appearance Sub-category values`
 
 ### LEDs
 
@@ -55,7 +90,7 @@ is sent to Espruino and is provided via the [`NRF.on('HID', ...)` event](http://
 
 For instance the following will light LED1 and LED2 depending on Num Lock and Caps Lock:
 
-```
+```JS
 NRF.on('HID', function(v) {
   LED1.write(v&1);  
   LED2.write(v&2);
