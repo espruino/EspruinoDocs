@@ -38,7 +38,7 @@ Features
 * Air Pressure/Temperature sensor (Bosch BMP280 / [Goertek SPL06](/datasheets/SPL06.pdf))
 * Vibration motor
 * SWD program/debug pins on rear of watch
-* 200mAh battery, 4 weeks standby time
+* 175mAh battery (XK302627,  3 x 26 x 27mm), 4 weeks standby time
 * 36mm x 43mm x 12mm watch body, with standard 20mm watch straps
 
 Software

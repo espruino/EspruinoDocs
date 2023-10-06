@@ -37,7 +37,7 @@ Features
 * 3 Axis Magnetometer
 * Air Pressure/Temperature sensor (Bosch BMP280 / Goertek SPL06)
 * Vibration motor
-* 200mAh battery, 4 weeks standby time
+* 175mAh battery, 4 weeks standby time
 * 36mm x 43mm x 12mm watch body, with standard 20mm watch straps
 
 Quick Usage Notes
@@ -141,10 +141,35 @@ which case you need to wait for 30 seconds for the watch to
 automatically exit.
 
 
+Recovery menu
+----------------
+
+On 2v19 firmware and later, if something has gone wrong you can enter a `Recovery` menu:
+
+* Hold the button down. After around 6 seconds the screen goes blank and displays some pixellated text
+* Keep pressing the button while `====` goes across the screen
+* Keep holding the button while Bangle.js boots
+* You should now have the Bangle.js logo, version, and MAC address on screen, and you can release the button
+* You'll get to a `Recovery` screen with a few options:
+  * `Clean Boot` - Start up Bangle.js without running any of the code on the watch 
+  * `Reboot` - reboot the watch
+  * `Turn off` - turn off the watch
+  * `Factory Reset` - wipe all data and settings from the watch and return it to the state that it came from the factory
+  * `Exit` - exit the menu and boot normally
+  * `Attempt Compact` - try compacting storage to free space - this may take a few minutes
+  * `Rewrite Bootloader` - if the bootloader got corrupted (any settings you made on the watch are not taking effect) then re-writing it can help
+
+
 Resetting without loading any code
 -----------------------------------
 
 If you uploaded some code that runs at startup and breaks Bangle.js you may need to do this.
+
+### 2v19 firmware
+
+Start the `Recovery` menu (see above) by holding the button at boot time, then choose `Clean Boot`
+
+### pre-2v19 firmware
 
 It won’t delete anything, so unless you fix/remove the broken code (see "Deleting all Code") Bangle.js will remain broken next time it restarts.
 
@@ -160,25 +185,31 @@ Deleting all code
 You can do this either while your watch is in its normal state, or
 if you have reset it without loading any code (above).
 
-### Either
+### 2v19 firmware
+
+Start the `Recovery` menu (see above) by holding the button at boot time, then choose `Factory Reset`
+
+### pre-2v19 firmware
+
+#### Either
 
 * Go to https://banglejs.com/apps
 * Click `More... -> Install default apps`
 
 This will erase everything and install just the default apps.
 
-### Or
+#### Or
 
 * Go to https://banglejs.com/apps
 * Go to `More... -> Remove All Apps`
-* Re-install `Bootloader` and a `Clock` from `Library`
+* Re-install `Bootloader` and a `Clock` from `Library` (this is all you need, but other apps are usually installed by default too)
 
 
 Deleting apps
 -------------
 
-* If you can access the menus on your device and the `App Manager` app is installed, you can delete apps using the `App Manager`
 * You can go to https://banglejs.com/apps and click `Connect`. Under `My Apps` your installed apps are listed, and you can click the 'Bin' icon next to them to remove them
+* If you can access the menus on your device and the `App Manager` app is installed, you can delete apps using the `App Manager`
 * If you hit any issues with installed apps and can't access the menus on your device, then follow the instructions above for "Resetting without loading any code" above.
 
 

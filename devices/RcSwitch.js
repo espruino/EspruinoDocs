@@ -87,12 +87,21 @@ RcSwitch.prototype.send = function (value, length) {
     }
   }
   signal.push(this._protocol.pulseLength * this._protocol.syncFactor.high);
-  signal.push(this._protocol.pulseLength * this._protocol.syncFactor.low);
-
-  for (var nRepeat = 0; nRepeat < this._repeat; nRepeat++) {
-    digitalPulse(this._pin, this._protocol.invertedSignal ? 0 : 1, signal);
+  var nRepeat = this._repeat;
+  var polarity = this._protocol.invertedSignal ? 0 : 1;
+  // work out how long this signal should last (including padding at the end)
+  var interval = E.sum(signal) + (this._protocol.pulseLength * this._protocol.syncFactor.low);
+  var pin = this._pin;
+  
+  function sendSignal() {
+    nRepeat--;
+    digitalPulse(pin, polarity, signal);
+    if (nRepeat>=0) 
+      setTimeout(sendSignal, interval);
   }
+  sendSignal();
 };
+
 
 /**
 * @param sCodeWord a tristate code word consisting of the letter 0, 1, F
