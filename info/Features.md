@@ -137,21 +137,66 @@ List of ES6 features from http://es6-features.org:
 | Internationalization & Localization | - |
 
 
-ES7/ES8
--------
+ES7/ES8 (2016/2017)
+--------------------
 
 | ES7 Feature | Implementation Status |
 |-------------|----------------------|
-| Array.prototype.includes | `2v05` `Official` |
-| String.prototype.padStart/End | `2v08` `Official` |
-| Exponentiation Operator | - |
+| `Array.prototype.includes` | `2v05` `Official` |
+| `String.prototype.padStart/End` | `2v08` `Official` |
+| Exponentiation Operator (`**`) | - |
+| Exponentiation Assignment (`**=`) | - |
 | Async functions | - |
 | Async generators | - |
-| Object.getOwnPropertyDescriptors | - |
-| Object.values/entries | `2v14` |
+| `Object.getOwnPropertyDescriptors` | `2v17` |
+| `Object.values`/`Object.entries` | `2v14` |
 | Typed Objects | - |
 | Trailing commas in function syntax | - |
 | Object rest/spread properties | - |
+
+
+ES9/ES10 (2018/2019)
+-----------
+
+| ES9/ES10 Feature | Implementation Status |
+|-------------|----------------------|
+| Asynchronous Iteration | - |
+| `Promise.finally` | - |
+| Object Rest Properties | - |
+| New `RegExp` Features | - |
+| `String.trimStart()` | - |
+| `String.trimEnd()` | - |
+| `Object.fromEntries` | `2v17` |
+| Optional catch binding | `2v20` |
+| `Array.flat()` | - |
+| `Array.flatMap()` | - |
+| Revised `Array.sort()` | No - uses quicksort |
+| Revised `JSON.stringify()` | UTF8-enabled builds |
+| Separator symbols allowed in string literals | UTF8-enabled builds |
+
+
+ES2020
+-------
+
+| ES2020 Feature | Implementation Status |
+|-------------|----------------------|
+| `BigInt` | - |
+| `String.matchAll()` | - |
+| The Nullish Coalescing Operator (`??`) |  `2v14` |
+| The Optional Chaining Operator (`?.`) | [PR](https://github.com/espruino/Espruino/pull/2221) |
+| Logical AND Assignment Operator (`&&=`) | - |
+| Logical OR Assignment (`||=`) | - |
+| Nullish Coalescing Assignment (`??=`) | - |
+| `Promise allSettled()` | - |
+| Dynamic Import | - |
+
+
+ES2021
+--------
+
+| `Promise.any()` | - |
+| `String.replaceAll()` | - |
+| Numeric Separators (`_`) | `2v14` |
 
 
 Regular Expressions
