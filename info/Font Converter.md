@@ -101,20 +101,20 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
     var yPos = Math.round(fontHeight*0.5);
     ctx.fillStyle = "black";
     ctx.fillRect(xPos,0,fontHeight*2,fontHeight*2);
-    ctx.fillStyle = "white";  
-    ctx.fillText(ch, xPos + ox, fontHeight + yPos + oy);  
+    ctx.fillStyle = "white";
+    ctx.fillText(ch, xPos + ox, fontHeight + yPos + oy);
 
     var chWidth = Math.round(ctx.measureText(ch).width);
     var img = { width:0, height:fontHeight+1, data:[] };
     if (chWidth) {
-      var yOffset = 0;  
+      var yOffset = 0;
       // sometimes fonts are too high up - if so, nudge them down
       do {
         img = ctx.getImageData(xPos,yPos+yOffset-1,chWidth,1);
         var allClear = true;
         for (var i=0;i<img.data.length;i+=4)
           if (img.data[i]) allClear = false;
-        if (!allClear) yOffset--;          
+        if (!allClear) yOffset--;
       } while(!allClear && yOffset>-fontHeight);
       // Sometimes, fonts drop below the bottom of their
       // font box. In this case, we nudge them up by a pixel or two
@@ -123,7 +123,7 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
         var allClear = true;
         for (var i=0;i<img.data.length;i+=4)
           if (img.data[i]) allClear = false;
-        if (!allClear) yOffset++;          
+        if (!allClear) yOffset++;
       } while(!allClear && yOffset<fontHeight);
       if (yOffset>0) console.log("Nudging character "+JSON.stringify(ch)+" up by "+yOffset+" pixels to it fits");
       if (yOffset<0) console.log("Nudging character "+JSON.stringify(ch)+" down by "+(-yOffset)+" pixels to it fits");
@@ -186,7 +186,7 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
         var idx = (x + y*img.width)*4;
         // get greyscale
         var c = (img.data[idx]+img.data[idx+1]+img.data[idx+2]) / 3;
-        if (c>maxCol)maxCol=c;          
+        if (c>maxCol)maxCol=c;
         // shift down to BPP with rounding
         c = (c + (127>>BPP)) >> (8-BPP);
         if (c>=(1<<BPP)) c = (1<<BPP)-1;
@@ -212,7 +212,7 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
       }
       //console.log(s);
     }
-    prevCtx.putImageData( prevImg, (ch&15)*fontHeight, (ch>>4)*fontHeight );     
+    prevCtx.putImageData( prevImg, (ch&15)*fontHeight, (ch>>4)*fontHeight );
   }
   // draw grid lines
   prevCtx.strokeStyle = "red";
@@ -251,7 +251,7 @@ Graphics.prototype.setFont${fontName.replace(/[^A-Za-z0-9]/g,"")} = function() {
     ${fixedWidth?fontWidths[0]:`atob("${btoa(String.fromCharCode.apply(null,fontWidths))}")`},
     ${fontHeight}|${BPP<<16}
   );
-}`.trim();  
+}`.trim();
   // resize the font preview box
   onWindowResize();
 }
@@ -314,7 +314,7 @@ function getFontLinkAndName(callback) {
       if (fontName===undefined) {
         m = fontLink.match(/([^/]*)\.otf/);
         if (m!==null)
-          fontName = decodeURI(m[1]);      
+          fontName = decodeURI(m[1]);
       }
       if (fontName===undefined) {
         alert("Unable to work out font family from link");
@@ -388,7 +388,7 @@ document.getElementById("fontForm").addEventListener('submit', function(e) {
 function onWindowResize() {
   var w = document.getElementById("fontPreviewP").offsetWidth;
   var preview = document.getElementById("fontPreview");
-  var cw = preview.width;  
+  var cw = preview.width;
   if (cw > w) preview.style.width="100%";
   else preview.style.width = Math.max(cw,Math.floor(w/cw)*cw)+"px";
 }
