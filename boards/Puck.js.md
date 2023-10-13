@@ -57,7 +57,7 @@ Accessories
 -----------
 
 You can also buy kits of different color cases for Puck.js from the
-[Espruino Shop](https://shop.espruino.com/puckjs-accessories) or [our Tindie store](https://www.tindie.com/stores/gfwilliams/)
+[Espruino Shop](https://shop.espruino.com/puckjs-accessories).
 
 [![Black cases](Puckjs/col1.jpg)](https://shop.espruino.com/puckjs-cover-black)
 [![Color case kit](Puckjs/col5.jpg)](https://shop.espruino.com/puckjs-cover-selection)
