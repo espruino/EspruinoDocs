@@ -188,9 +188,9 @@ Unlike Bangle.js 1, all IO is connected direct to the nRF52840 - there's no need
 |  1  |  32876 oscillator  |  |
 |  2  |  PRESSURE_SCL  |  |
 |  3  |  Battery voltage analog GND-[1M]-D3-[3M]-VBATT  |  |
-|  5  |  Memlcd_CS (active high)  |  out  |
-|  6  |  Memlcd_EXTCOMIN | Needs to be toggled at 5ms or 250ms in sleep all the time  |
-|  7  |  memlcd_DISP 1=disp on, 0=disp off  |  out, pulsed high |
+|  5  |  MEMLCD_CS (active high)  |  out  |
+|  6  |  MEMLCD_EXTCOMIN | Needs to be toggled at 5ms or 250ms in sleep all the time  |
+|  7  |  MEMLCD_DISP 1=disp on, 0=disp off  |  out, pulsed high |
 |  8  |  Backlight  |  out |
 |  13 (0x0d)  |  Flash_MISO  |  input  |
 |  14 (0x0e)  |  Flash_CS  |  out  |
@@ -203,8 +203,8 @@ Unlike Bangle.js 1, all IO is connected direct to the nRF52840 - there's no need
 |  23 (0x17)  |  Charge port  |  in_pullup  |
 |  24 (0x18)  |  HRM_SDA  |     |
 |  25 (0x19)  |  Charging complete  |    |
-|  26 (0x1a)  |  memlcd_SCK  |    |
-|  27 (0x1b)  |  memlcd_MOSI  |    |
+|  26 (0x1a)  |  MEMLCD_SCK  |    |
+|  27 (0x1b)  |  MEMLCD_MOSI  |    |
 |  29 (0x1d)  |  GPS power, active=1  |  out  |
 |  30 (0x1e)  |  GPS TXD  |    |
 |  31 (0x1f)  |  GPS RXD  |    |
@@ -216,9 +216,13 @@ Unlike Bangle.js 1, all IO is connected direct to the nRF52840 - there's no need
 |  37 (0x25)  |  ACCEL_SDA  |    |
 |  38 (0x26)  |  ACCEL_SCL  |    |
 |  39 (0x27)  |  ACCEL_INT  |  input  |
+|  42 (0x2a)  |  UARX  |  unused debug pin  |
+|  43 (0x2b)  |  UATX  |  unused debug pin  |
 |  44 (0x2c)  |  COMPASS_SDA  |    |
 |  45 (0x2d)  |  COMPASS_SCL  |    |
 |  47 (0x2f)  |  PRESSURE_SDA  |    |
+
+To access these pins from Espruino, all you need to do is add `D` to the pin number. For example to read the analog battery voltage (pin 3), use the command `analogRead(D3)`. 
 
 ## I2C
 
@@ -229,3 +233,18 @@ Bangle.js 2 has the following I2C devices. These are connected via their own pin
 * HRM - VCare VC31, I2C 0x66(0x33)
 * ACCEL - Kionix KX022, I2C 0x3C(0x1E)
 * COMPASS - I2C 0x18(0x0C)
+
+## Unused pins (adding hardware)
+
+Most of the pins on the nRF52 chip in Bangle.js 2 are either used or not connected. However there are two exceptions - `UARX` (`D42` in Espruino) and `UATX` (`D43` in Espruino). These pins
+are not connected to any hardware, but are available as test points so can be connected to whatever you want. They are accessible on the rear of the Bangle.js PCB, under the battery:
+
+![](Bangle.js2 Technical/PCB_uart.jpg)
+
+There are also test pads for the touchscreen I2C `TOUCH_SDA` and `TOUCH_SCL` lines (see `GPIO` table above) that could be used to connect other I2C devices.
+
+**Note:** The battery is attached to the back of the Bangle.js PCB with double-sided sticky tape. Take care when removing it, as it's almost impossible to remove the battery without bending it slightly.
+
+If you wish to add your own hardware to Bangle.js, we'd suggest sourcing and fitting a smaller battery, which would then leave room in the rear of the case for your circuitry.
+
+
