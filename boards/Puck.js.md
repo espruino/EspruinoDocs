@@ -584,7 +584,21 @@ Firmware Updates
 
 **Note:** On Puck.js v2 **do not install firmwares 2v04 and earlier**. See 'recovery after 2v04 installation' below.
 
-Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
+Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions on Flashing.
+
+### Normal and Minimal Firmwares
+
+We provide two distinct firmwares for Puck.js devices:
+
+| Filename                           | Espruino | BLE | NFC | Neopixel | JIT | Graphics | HTTP | Crypto | Flash Storage |
+|------------------------------------|----------|-----|-----|----------|-----|----------|------|--------|---------------|
+| `espruino_2vxx_puckjs.zip`         |   X      |  X  |  X  |    X     |  X  |   X      |   X  |   X    |   40kb        |
+| `espruino_2vxx_puckjs_minimal.zip` |   X      |  X  |  X  |    X     |     |          |      |        |   96kb        |
+
+Puck.js come pre-installed with the first (normal) firmware, but if you don't need the extra features like Graphics
+and HTTP (which you're unlikely to use unless you are soldering external hardware on to the Puck) then you can install
+the minimal build. This removes those features and makes the saved flash memory space available to you via the
+[`Storage` module](https://www.espruino.com/Reference#Storage), which you can then use for (for example) [data logging](https://www.espruino.com/Data+Collection#flash-memory).
 
 
 Troubleshooting
