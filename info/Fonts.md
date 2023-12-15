@@ -118,7 +118,8 @@ Current modules are:
 | ![](FontTeletext10x18Mode7.js) | [[FontTeletext10x18Mode7.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, UK character set, with interpolated pixels as intended |
 | ![](FontTeletext5x9Ascii.js) | [[FontTeletext5x9Ascii.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, 7-bit ASCII, with original structural pixels only |
 | ![](FontTeletext5x9Mode7.js) | [[FontTeletext5x9Mode7.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, UK character set, with original structural pixels only |
-
+| ![](FontVGA8.js) | [[FontVGA8.js]] | Fixed width 8x8 PC VGA-style font |
+| ![](FontVGA16.js) | [[FontVGA16.js]] | Fixed width 8x16 PC VGA-style font |
 
 Use these as follows:
 
@@ -225,7 +226,7 @@ Graphics.prototype.drawStringDbl = (txt,px,py,h)=>{
   g2.drawString(txt);
   var img = {width:w*2,height:1,transparent:0,buffer:new ArrayBuffer(c)};
   var a = new Uint8Array(img.buffer);
-  for (var y=0;y<h;y++) {    
+  for (var y=0;y<h;y++) {
     a.set(new Uint8Array(g2.buffer,32*y,c));
     this.drawImage(img,px,py+y*2);
     this.drawImage(img,px,py+1+y*2);
