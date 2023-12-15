@@ -20,7 +20,7 @@ cd ../Espruino
 
 for BOARDNAME in PICO_R1_3 ESPRUINOBOARD ESP8266_BOARD MICROBIT2 ESPRUINOWIFI PUCKJS PIXLJS ESP32 WIO_LTE MDBT42Q THINGY52 NRF52832DK STM32L496GDISCOVERY RAK8211 RAK8212 RAK5010
 do
-  python scripts/build_board_docs.py $BOARDNAME pinout
+  python scripts/build_board_docs.py $BOARDNAME pinout  || exit 1
   mv boards/$BOARDNAME.html $DIR/html/boards
   cp boards/img/$BOARDNAME.* $WEBSITE/www/img
   cp boards/img/$BOARDNAME.* $DIR/html/img
