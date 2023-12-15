@@ -188,7 +188,7 @@ Currently implemented messages are:
 * `t:"calendar", id:int, type:int, timestamp:seconds, durationInSeconds, title:string, description:string,location:string,calName:string.color:int,allDay:bool`  - Add a calendar event
 * `t:"calendar-", id:int` - remove calendar event
 * `t:"force_calendar_sync_start"` - cause Bangle.js to send a `force_calendar_sync`
-* `t:"gps", lat, lon, alt, speed, course, time, satellites, hdop, externalSource:true` - a GPS reading once GPS is turned on with  `{ t:"gps_power", status: true }`
+* `t:"gps", lat, lon, alt, speed/*kph*/, course, time, satellites, hdop, externalSource:true` - a GPS reading once GPS is turned on with  `{ t:"gps_power", status: true }`
 * `t:"is_gps_active"` - cause Bangle.js to send `{ t:"gps_power", status: bool }`
 * `t:"nav",instr:"High St towards Null St",distance:966,action:"continue",eta:"08:39"` - Navigation (as of Play Store app 0.74.0)
 * `t:"nav"` - Navigation stopped
