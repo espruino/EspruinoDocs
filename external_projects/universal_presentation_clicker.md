@@ -9,6 +9,6 @@ Turning an Espruino Puck.js Into a Universal Presentation Clicker
 
 Espruino boards are unique, because they're programmed with JavaScript. Parasquid used one to build a universal presentation clicker.
 
-![](ble_duplo_train.jpg)
+![](universal_presentation_clicker.jpg)
 
 [See the full project on Hackster.io](https://www.hackster.io/news/turning-an-espruino-puck-js-into-a-universal-presentation-clicker-4921dacc0bb6)
