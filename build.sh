@@ -28,7 +28,7 @@ done
 cp boards/img/PUCKJS_2.jpg $DIR/html/img
 cp boards/img/PUCKJS_LITE.jpg $DIR/html/img
 # Now do a full build_docs - this will update function_keywords.js that build.js needs
-python2.7 scripts/build_docs.py
+python scripts/build_docs.py
 
 cd $DIR
 
