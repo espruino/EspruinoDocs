@@ -2,7 +2,7 @@
 /* Creates a URL-encoded preview image of an Espruino bitmap font */
 
 global.atob = function(a) {
-    return new Buffer(a, 'base64').toString('binary');
+    return Buffer.from(a, 'base64').toString('binary');
 };
 
 function getFontPreview(path) {
@@ -152,7 +152,7 @@ function getFontPreview(path) {
     console.log(s);
   }*/
   // Output URL encoded
-  return "data:image/bmp;base64,"+new Buffer(imgData).toString('base64');
+  return "data:image/bmp;base64,"+ Buffer.from(imgData).toString('base64');
 }
 
 //console.log(getFontPreview("../modules/FontDennis8.js"));
