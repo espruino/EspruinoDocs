@@ -9,11 +9,23 @@
  */
 
 
+/**
+ * Represents an SSD16xx Display Driver with Controller.
+ * Informations:
+ * <ul>
+ * <li>This controller is designed to work with many different controllers in the SSD16__ series.</li>
+ * <li>Works only with SPI 4-wire mode with using a D/C (data/command) pin.</li>
+ * <li>If you provide the BS1 pin the module will handle the correct SPI mode setting.</li>
+ * <li>For some future-proof you can set up the clearScreenTimeOut and hardwareResetTimeOut.</li>
+ * </ul>
+ * @constructor
+ * @param config - configuration with displayParams, SPI and additional pins.
+ */
 function SSD16xx(config){
   this.display = config.display;
   
   this.spi        = config.spi;
-  this.bsPin      = config.bsPin; //Used to force this into 8 bit spi mode
+  this.bsPin      = config.bsPin;
   this.csPin      = config.csPin;
   this.dcPin      = config.dcPin;
   this.busyPin    = config.busyPin;
@@ -26,7 +38,8 @@ function SSD16xx(config){
   
   this.g          = {bw: this.grfxBlackWhite(), 
                      flip:this.flip.bind(this), 
-                     clear:this.clear.bind(this)};
+                     clear:this.clear.bind(this),
+                     setRotation:this.setRotation.bind(this)};
   if(this.display.coloredDisplay){
     this.g.cw = this.grfxColorWhite();
   }
@@ -40,25 +53,36 @@ function SSD16xx(config){
   }
 }
 
-
+/**
+ * Power on the display, using the provided powerPin.
+ */
 SSD16xx.prototype.on = function() {
   if(this.powerPin) {
     digitalWrite(this.powerPin, 1);
   }
 };
 
-
+/**
+ * Power off the display, using the provided powerPin.
+ */
 SSD16xx.prototype.off = function() {
   if(this.powerPin) {
     digitalWrite(this.powerPin, 0);
   }
 };
 
+/**
+ * Enters deep sleep and needs a hwReset to enable it again
+ */
 SSD16xx.prototype.sleep = function() {
   this.scd(0x10, 0x0);
   this.unInit     = true;
 };
 
+/**
+ * Use resetPin to make a hardware reset.
+ * @param {Function} callback - callback function
+ */
 SSD16xx.prototype.hwReset = function() {
   return new Promise((resolve)=>{
     digitalWrite(this.resetPin, 0);
@@ -69,39 +93,56 @@ SSD16xx.prototype.hwReset = function() {
   });
 };
 
+/**
+ * Send command to the controller.
+ * @param command - the command int
+ */
 SSD16xx.prototype.sc = function(command) {
   digitalWrite(this.dcPin, 0);
   this.spi.write(command, this.csPin);
 };
 
-
+/**
+ * Send data to the controller.
+ * @param data - the data
+ */
 SSD16xx.prototype.sd = function(data) {
   digitalWrite(this.dcPin, 1);
   this.spi.write(data, this.csPin);
   digitalWrite(this.dcPin, 0);
 };
 
+/**
+ * Send command and data to the controller.
+ * @param command - the command
+ * @param data - the data
+ */
 SSD16xx.prototype.scd = function(command, data) {
   this.sc(command);
   this.sd(data);
 };
 
+/**
+ * Does hardware reset and then does a software reset.
+ * @param {Function} callback - callback function
+ */
 SSD16xx.prototype.fullReset = function() {
-  return new Promise((resolve)=>{
-    digitalWrite(this.resetPin, 0);
-    digitalWrite(this.resetPin, 1);
-    setTimeout(()=>{
+  return this.hwReset().then(()=>{
+    return new Promise((resolve)=>{
       this.sc(0x12);
       this.partialTran=false;
       this.partial    = false;
       this.unInit     = true;
       setTimeout(resolve,this.hwResetTimeOut);
-    },this.hwResetTimeOut);
+    });
   });
 };
 
 
-//when the busy pin is high no command will work
+/**
+ * Send a cmd and optional data.  Then waits for the device to be ready
+ * @param {Function} callback - callback function
+ */
 SSD16xx.prototype.waitCmd = function(command, data){
   return new Promise((resolve)=>{
     console.log("sending a busy command!");
@@ -119,12 +160,26 @@ SSD16xx.prototype.waitCmd = function(command, data){
 };
 
 
-
+/**
+ * Sends the refresh dispaly command and then waits
+ */
 SSD16xx.prototype.refreshDisplay = function(command){
   return this.waitCmd(0x20);
 };
 
 
+/**
+ * Initialize display.
+ * If set it uses the provided bs1Pin to configure the SPI mode between to use 4 lines.
+ * Initializing sequence:
+ * <ol>
+ * <li>Exit deep sleep mode</li>
+ * <li>Set region of the display to full and increment in positive both in Y and X</li>
+ * <li>[optional] LUT init</li>
+ * </ol>
+ * @param {Object} options - provided options, useBs1Pin and clearScreenColor
+ * @param {Function} callback - callback function
+ */
 SSD16xx.prototype.init = function() {
   return new Promise((resolve)=>{
     if(this.bsPin) {
@@ -144,6 +199,10 @@ SSD16xx.prototype.init = function() {
   });
 };
 
+/**
+ * Sets a partial region of the display.
+ * @param {Function} x,y w=width and h=height
+ */
 SSD16xx.prototype.setPartialRegion = function(x,y,w,h)
 {
    this.scd(0x44, [(x/8), ((x + w - 1)/8)] );
@@ -152,6 +211,9 @@ SSD16xx.prototype.setPartialRegion = function(x,y,w,h)
    this.scd(0x4F,[y%256, y/256]);
 };
 
+/**
+ * Sets display to do full refreshes
+ */
 SSD16xx.prototype.setFullRefresh = function(){
   if(this.display.lutRegisterData){
     this.scd(0x32,this.display.lutRegisterData);
@@ -159,12 +221,16 @@ SSD16xx.prototype.setFullRefresh = function(){
   this.scd(0x22, 0xF7);
   this.partialTran = true;
   this.partial     = false;
-}
+};
 
+/**
+ * SetFastRefresh - is used make the device refresh the display in only the changed pixels.  
+ * This will increase the displays refresh rate, but might cause burn into the display.
+ * So its recommended to do a (setFullRefresh) to fully reset the display pixels.  But if you do this.
+ * You'll have to use this SetFastRefresh to make the display only refresh partiaily.  
+ */
 SSD16xx.prototype.setFastRefresh = function() {
-  const WF_PARTIAL = new Uint8Array([ 0x0,0x40,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80,0x80,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x40,0x40,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0, 0x0,0x80,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0, 0xF,0x0,0x0,0x0,0x0,0x0,0x1,0x1,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x22,0x22,0x22,0x22,0x22,0x22,0x0,0x0,0x0
-    ]);
-  
+  const WF_PARTIAL = E.toUint8Array(atob('AEAAAAAAAAAAAAAAgIAAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIiIiIiIiAAAA'));
   return new Promise((resolve)=>{
     this.waitCmd(0x32, WF_PARTIAL).then(()=>{
       this.scd(0x3F, 0x02);
@@ -184,6 +250,10 @@ SSD16xx.prototype.setFastRefresh = function() {
   });
 };
 
+
+/**
+ * flip - Sets up to wrights the full buffer to the display and then waits for a refresh. 
+ */
 SSD16xx.prototype.flip = function() {
     if(this.unInit == true){
       return this.init().then(()=>{
@@ -213,22 +283,35 @@ SSD16xx.prototype.flip = function() {
 
 
 
-
+/**
+ * Clear the buffer based on a specific color. 
+ * @param {clearColor} - The color will be in byte size.  So properly duplicate bit colors to a byte.  
+ */
 SSD16xx.prototype.clear = function(clearColor){
   this.g.bw.clear(clearColor);
   if(this.display.coloredDisplay){
     this.g.cw.clear(clearColor);
   }
-  
+};
+
+/**
+ * Rotates the buffer
+ * @param {rotation} - Rotation in 0-3 with each being a 90 degree rotation.    
+ */
+SSD16xx.prototype.setRotation = function(rotation){
+  this.g.bw.setRotation(rotation);
+  if(this.display.coloredDisplay){
+    this.g.cw.setRotation(rotation);
+  }
 };
 
 
 
 /**
+ * Black and white display buffer.  
  * Creates the Graphics object with Graphics.createArrayBuffer(...).
  * Sets the display x size, y size, bits per pixel and msb:true.
  * Provides a clear function to fill in-memory buffer with one color for each pixel.
- * Provides a flip function to flush in-memory buffer to display buffer.
  */
 SSD16xx.prototype.grfxBlackWhite  = function(){
   var g = Graphics.createArrayBuffer(
@@ -243,6 +326,12 @@ SSD16xx.prototype.grfxBlackWhite  = function(){
   return g;
 };
 
+/**
+ * Red or yellow display buffer for screen that support it.  a
+ * Creates the Graphics object with Graphics.createArrayBuffer(...).
+ * Sets the display x size, y size, bits per pixel and msb:true.
+ * Provides a clear function to fill in-memory buffer with one color for each pixel.
+ */
 SSD16xx.prototype.grfxColorWhite  = function(){
   var g = Graphics.createArrayBuffer(
             this.display.displaySizeX,
@@ -257,7 +346,8 @@ SSD16xx.prototype.grfxColorWhite  = function(){
 };
 
 
-
+/* Export the module.
+ */
 exports.connect = function (options) {
-  return SSD16xx(options);
+  return new SSD16xx(options);
 };

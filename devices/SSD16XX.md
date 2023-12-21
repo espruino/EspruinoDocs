@@ -8,17 +8,17 @@ SSD16XX e-Paper display driver
 
 ![GDEH0154D67](SSD16XX/GDEH0154D67.png)
 
-E-ink display with a display driver of SSD16XX (Ex - SSD1608) are a family of similiar controller set with different propertys.  Some with color options or with the ability to do partial refreshes.  
+E-ink display with a display driver of SSD16XX (Ex - SSD1681) are a family of similar controller set with different properties.  Some with color options or with the ability to do partial refreshes.  
 
-Tested
-* SSD1608 (w)
+Tested with
+* SSD1681 (W)(C)
 
 Functionality is provided by the [[SSD16XX.js]] module, using the [Graphics](http://www.espruino.com/Graphics) library.
 
 Notes
 -------
 
-* The display can be read perfectly in harsh sunlight, but has no backlighting.
+* The display can be read perfectly in harsh sunlight, but has no back lighting.
 * E-paper displays are not known for fast refresh cycles.
 * E-paper displays need only power for updating the display, not for keeping it up.
 
@@ -27,7 +27,7 @@ Wiring Up
 
 The bare display and controller module needs to be connected with a 24pin FPC connector with 0.5mm pitch and an additional driving circuit. There are rather huge and expensive ready to use development boards available from the display manufacturer. You can even try to build the minimum circuit yourself, e.g. like [Jaroslav Sýkora](http://www.jsykora.info/2014/05/attempt-at-soldering-an-fpc-connector-with-0-5mm-pitch-and-a-prototyping-pcb-design/) did.
 
-The following infos apply only to the connection between SSD1606 and a microcontroller, ignoring the driving circuit.
+The following infos apply only to the connection between a common display and a microcontroller, ignoring the driving circuit.
 
 ### Pin overview
 
@@ -70,7 +70,8 @@ Software
 ### Example
 
 ```
-var screen = require("SSD16xx");
+//Example using a Nordict NRF52840DK 
+var screen = require("SSD16XX");
 
 var sck  = D47;
 var mosi = D45;
@@ -113,6 +114,9 @@ screen.fullReset().then(() => {
   screen.g.cw.setColor(1).drawString("2",75,50);
   console.log("[drawing a two]");
   return screen.g.flip();
+}).then(()=>{
+  console.log("done");
+  screen.sleep();
 })
 
 ```
@@ -129,6 +133,10 @@ You can rotate the display with  ```display.g.setRotation(1);```.
 
 It might be possible to work around this with fiddling around with the gate scanning mechanism (see specification).
 Right now this seems to be the easiest solution.
+
+### Fast refresh rate.
+
+When you enable ```display.setFastRefresh()``` the display will only change the changed pixels.  Instead of going through then entire refresh cycle.  This will increase the displays refresh rate, but might cause burn into the display.  So its recommended to do a ```setFullRefresh``` to fully reset the display pixels.  But if you do this. You'll have to use this ```SetFastRefresh``` to make the display only refresh partially.  
 
 ### Colors
 
@@ -153,14 +161,9 @@ Per default all pixels in this buffer have their color set to ```0```. For the S
 |white/black | decimal ```0```, or hexadecimal ```0x00```   | decimal ```0``` or hexadecimal ```0x00``` |
 
 #### Pixel Colors under the hood
+The way color is handle is with black and white is with a single buffer, but to have color it requires 2 buffers.  One for black and white and one that either enables or disables the given (red/yellow) color in that given pixel.  Its structured this way because thats how hardware registers hold the data.  
 
-The display works with an internal ram which maps 1 Byte to 4 Pixels.
-
-|Pixel 1|Pixel 2|Pixel 3|Pixel 4|
-|-------|-------|-------|-------|
-|Bit 7-6|Bit 5-4|Bit 3-2|Bit 1-0|
-
-This reverse order of pixels to concrete bits is taken care of by the module with a suitable Graphics configuration.
+The reverse order of pixels to concrete bits is taken care of by the module with a suitable Graphics configuration.
 
 ```
 Graphics.createArrayBuffer(
@@ -194,7 +197,7 @@ The module can set the SPI wire mode independently for you, just provide the ```
 Example with provided ```BS1``` pin:
 
 ```
-  var display = require('SSD1606').connect({
+  var display = require('SSD16XX').connect({
     // other configurations
     dcPin      : a Espruino GPIO pin,
     bs1Pin     : a Espruino GPIO pin
@@ -204,7 +207,7 @@ Example with provided ```BS1``` pin:
 Example without provided ```BS1``` pin, ```D/C``` pin is still needed:
 
 ```
-  var display = require('SSD1606').connect({
+  var display = require('SSD16XX').connect({
     // other configurations
     dcPin      : a Espruino GPIO pin
   });
@@ -225,24 +228,14 @@ If you want to use another display, you can provide its configuration with:
       lutRegisterData   : new Uint8Array(),
       coloredDisplay    : boolean
     },
-    ... other configrations
-  });
-```
-
-### Optional Configurations
-
-Different displays might need different times for refreshing the display and for the hardware reset. You can overwrite the defaults (right now 100ms each).
-
-```
-  var display = require('SSD1606').connect({
-    ... the other config
-    clearScreenTimeOut: time in ms,
-    hardwareResetTimeOut: time in ms
+    ... other configurations
   });
 ```
 
 
-Developing notes - helpfull resources
+
+
+Developing notes - helpful resources
 -----
 * [How e-ink displays work](https://www.youtube.com/watch?v=MsbiO8EAsGw)
 * [code inspired](https://www.espruino.com/SSD1606)
