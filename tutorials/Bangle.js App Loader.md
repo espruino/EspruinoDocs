@@ -217,3 +217,6 @@ More Info
 There are a more [Bangle.js tutorials](/Bangle.js#tutorials) on making apps.
 
 For a reference of the format of apps and the JSON, check out [the Bangle.js App Loader's README file](https://github.com/espruino/BangleApps)
+
+Maintainers of the [espruino/BangleApps](https://github.com/espruino/BangleApps/) repository uses the [App Contribution](https://github.com/espruino/BangleApps/wiki/App-Contribution)
+checklist as an aid when reviewing pull requests.
