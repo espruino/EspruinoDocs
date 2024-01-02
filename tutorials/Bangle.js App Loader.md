@@ -60,6 +60,11 @@ folder.
 
 An example of what the folder might look like is in: https://github.com/espruino/BangleApps/tree/master/apps/_example_app
 
+**Note:** If you just want to add a feature to an existing app, please consider
+modifying that app (see `Making Changes` below) rather than copying the app to
+a new one and making your change. Almost identical copies of the same app mean that if a bug
+is discovered in one app, someone has to manually copy the fixes over to each copy.
+
 Experienced Git developers will know about cloning a repository to their
 local computer, but I'll assume you don't know/want to do that, so we'll
 do everything online.
@@ -87,7 +92,7 @@ Now we need to upload the icon in a form that Bangle.js understands
 * Go to http://www.espruino.com/Image+Converter
 * Click `Choose File` and upload the `app.png` file
 * Check `Use Compression` and `Transparency`
-* Change `Colors` to `4 bit Mac Palette` and check the preview image. If it doesn't look good choose `8 bit Web Palette` instead (but if you can avoid this it's preferable as it uses twice as much memory!)
+* If your image is in color, change  `Colors` to `3 bit RGB` and check the preview image. If it doesn't look good choose `Optimal 2/3/4 bit` instead - the higher the number the more colors but the more space the image takes up.
 * Under `Output As` choose `Image String`
 * Now you'll see some text like `var img = E.toArrayBuffer(atob("..."))`. Highlight and copy just the `E.toArrayBuffer(atob("..."))` part - **do not** copy `var img =`
 * Go back to GitHub and the `BangleApps/apps/timer` and create a new file called `app-icon.js` with the `E.toArrayBuffer(atob("..."))` code you just copied in it, and click `Commit new file`
@@ -131,7 +136,7 @@ Using your new App
 
 * Go back to your personally hosted BangleApps repo at https://your_user_name.github.io/BangleApps/
 * You'll see an app called `My Timer App` - click the Upload button next to it
-* You can now press **BTN3** on your Bangle.js, open the Launcher, and see your app in there!
+* You can now press the button on your Bangle.js, open the Launcher, and see your app in there!
 
 **Note:** If the App Loader doesn't work, it's almost certainly because of an error
 in the `metadata.json` file that was changed earlier.
@@ -218,5 +223,5 @@ There are a more [Bangle.js tutorials](/Bangle.js#tutorials) on making apps.
 
 For a reference of the format of apps and the JSON, check out [the Bangle.js App Loader's README file](https://github.com/espruino/BangleApps)
 
-Maintainers of the [espruino/BangleApps](https://github.com/espruino/BangleApps/) repository uses the [App Contribution](https://github.com/espruino/BangleApps/wiki/App-Contribution)
+Maintainers of the [espruino/BangleApps](https://github.com/espruino/BangleApps/) repository use the [App Contribution](https://github.com/espruino/BangleApps/wiki/App-Contribution)
 checklist as an aid when reviewing pull requests.
