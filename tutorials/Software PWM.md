@@ -10,7 +10,11 @@ Understanding PWM and Implementing it Yourself
 
 Introduction
 -----------
-PWM or Pulse-Width modulation is an important concept in electronics where you mimic a lower voltage by quickly turning on and off the power to a pin. In this tutorial we'll discuss how PWM works and see how you can implement PWM yourself. This will help you to understand how the `analogWrite()` works on those pins that support PWM.
+
+PWM or Pulse-Width modulation is an important concept in electronics where you mimic a lower voltage by quickly turning on and off the power to a pin. In this tutorial we'll discuss how PWM works and see how you can implement PWM yourself. This will help you to understand how the [`analogWrite` function](https://www.espruino.com/Reference#l__global_analogWrite) works on those pins that support PWM.
+
+**Note:** This tutorial is for educational purposes. You should always use the [`analogWrite` function](https://www.espruino.com/Reference#l__global_analogWrite)
+when you want PWM as it's a lot more efficient, accurate and faster than attempting to implement it yourself.
 
 
 Wiring Up
@@ -52,7 +56,7 @@ You can see that each period we turn the LED on for 20% of the time and turn it 
 
 To fool our senses, we probably need to increase the Hz even more. For example, our eyes are not able to see that the light is blinking at 50Hz. In that case the light will just appear as if it is only on with 20% of the power. **This is exactly what we want**. By quickly alternating between on and off, we have fooled our senses into thinking that the light is dimmer than normal.
 
-As before, you can try this out on your Espruino for yourself. 
+As before, you can try this out on your Espruino for yourself.
 
 ```
 var interval;
@@ -81,4 +85,4 @@ Also try varying the parameters. You'll see that increasing the Hz will not do a
 clearInterval(interval); LED1.reset();
 ```
 
-Now you understand how PWM works, and you can specify the Hz for yourself as an option when using `analogWrite`. 
+Now you understand how PWM works, and you can specify the Hz for yourself as an option when using `analogWrite`.
