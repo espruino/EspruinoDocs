@@ -173,7 +173,7 @@ Objects are of the form:
 For instance this is a `8x8` pixel, 1 bit smiley face
 where any pixel that is `0` is treated as transparent:
 
-```
+```JS
 var img = {
   width : 8, height : 8, bpp : 1,
   transparent : 0,
@@ -199,6 +199,26 @@ You can also specify the image as a string or arraybuffer, in the following form
 * For transparent: `[width, height, bpp|128, transparent col, pixel data...]`
 * For transparent with 16 bit palette: `[width, height, bpp|64|128, transparent col, col0_lo, col0_hi, col1_lo, col1_hi, ..., pixel data...]`
 
+### Multiple frames
+
+An image can contain multiple frames of the same size (eg for an animation). To do this just ensure that the image bitmap contains all the frames one after the other, then specify
+the frame when drawing with [`Graphics.drawImage`](/Reference#l_Graphics_drawImage): `g.drawImage(img, x, y, { frame : n });`.
+
+To generate an image like this, the easiest way is to use the [Image Converter](https://www.espruino.com/Image+Converter) with the images tiled vertically one after the other, and then change the width. As an example, if you want to store 10, 64x64px images:
+
+* Arrange all images vertically into one bitmap, 64x640px
+* Load this into the image converter, choose `Image Object` as the output, and convert
+* Change the `height` field in the output from `640` to `64`
+
+It is also possible to create an image with frames in an image string, but you would have to modify the height in the image string (second byte):
+
+```JS
+var tmp = atob("......"); // decode the image
+E.toArrayBuffer(tmp)[1]=64; // or whatever you image height is
+print(btoa(tmp)); // re-encode as base64
+```
+
+**Note:** For this to work, each frame of the image must contain a multiple of 8 bits - eg. `(width * height * bpp) & 7 == 0`.
 
 ### Creating images
 
