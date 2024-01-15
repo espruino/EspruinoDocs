@@ -10,7 +10,7 @@ Espruino has a built-in graphics library, exposed via the [Graphics](/Reference#
 
 On most boards (without built in displays) you can create your own instance(s) of the Graphics class using a module that is designed to interface to a display (see 'Graphics Drivers' below), or you can manually create you own using one of the `Graphics.createXYZ` functions.
 
-On the few boards that do contain LCDs, there is a predefined variable called 'LCD' (which is an instance of the Graphics Object).
+On the few boards that do contain LCDs, there is a predefined variable called `g` (which is an instance of the Graphics Object).
 
 **Note:** All coordinates in the Graphics library treat 0,0 as the top left corner of the display. However you can rotate or mirror what you draw using the [Graphics.setRotation](/Reference#l_Graphics_setRotation) method.
 
