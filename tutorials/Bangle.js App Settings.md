@@ -107,11 +107,13 @@ following:
     "< Back" : () => back(),
     'On or off?': {
       value: !!settings.onoroff,  // !! converts undefined to false
-      format: v => v?"On":"Off",
       onchange: v => {
         settings.onoroff = v;
         writeSettings();
       }
+      // format: ... may be specified as a function which converts the value to a string
+      // if the value is a boolean, showMenu() will convert this automatically, which
+      // keeps settings menus consistent
     },
     'How Many?': {
       value: 0|settings.howmany,  // 0| converts undefined to 0
@@ -149,7 +151,6 @@ This is great for testing, however to create a settings app, you must remove the
     "< Back" : () => back(),
     'On or off?': {
       value: !!settings.onoroff,  // !! converts undefined to false
-      format: v => v?"On":"Off",
       onchange: v => {
         settings.onoroff = v;
         writeSettings();
