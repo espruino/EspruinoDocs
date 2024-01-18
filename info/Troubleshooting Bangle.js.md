@@ -4,7 +4,7 @@ Bangle.js Troubleshooting
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Troubleshooting+Bangle.js. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Troubleshooting,Trouble,Problems,Help,Broken,Not Working
+* KEYWORDS: Troubleshooting,Trouble,Problems,Help,Broken,Not Working,bank0,bank0 invalid
 
 What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Bangle.js Forum](http://forum.espruino.com/microcosms/1424/).
 
@@ -102,3 +102,9 @@ An app is a piece of code which is launched manually or triggered by another app
 Clock is a specific app which is launched at startup. The clock app could be selected in settings menu.
 
 A widget is a piece of code which could run in background like a pedometer. Several widgets can run at the same time in addition to an app.
+
+### I did a firmware update and now Bangle.js hangs showing `BANK0 INVALID`
+
+This means that the firmware update has failed and the Bangle's firmware is broken.
+
+It's easy enough to fix though - the bootloader still works, so just follow the instructions on https://www.espruino.com/Firmware+Update#nrf52 to perform a DFU update.
