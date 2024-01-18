@@ -5,13 +5,15 @@ function VT100(g, options) {
   this.g = g;
   this.charW = options.charWidth || 4;
   this.charH = options.charHeight || 8;
-  this.x = 0;
+  this.x = 0; // cursor position
   this.y = 0;
-  this.ox = 0|options.marginLeft;
+  this.ox = 0|options.marginLeft; // offset position
   this.oy = 0|options.marginTop;
   // console height in lines
   this.consoleHeight = 0|((g.getHeight()-(this.oy+(0|options.marginBottom))) / this.charH);
   this.controlChars = "";
+  this.fgCol = "#fff";
+  this.bgCol = "#000";
 }
 /// Draw an underline under the current character
 VT100.prototype.drawCursor = function() {
@@ -36,7 +38,7 @@ VT100.prototype.scrollDown = function() {
 VT100.prototype.char = function(ch) {
   var chn = ch.charCodeAt(0);
   // clear cursor
-  this.g.setColor(0);
+  this.g.setColor(this.bgCol);
   this.drawCursor();
 
   if (this.controlChars.length===0) { 
@@ -55,7 +57,7 @@ VT100.prototype.char = function(ch) {
       // Else actually add character
       this.g.fillRect(this.ox+this.x*this.charW, this.oy+this.y*this.charH, 
                  this.ox+(this.x+1)*this.charW-1, this.oy+(this.y+1)*this.charH-1);
-      this.g.setColor(1,1,1);        
+      this.g.setColor(this.fgCol);
       this.g.drawString(ch, this.ox+this.x*this.charW, this.oy+this.y*this.charH);
       this.x++;
     }
@@ -89,7 +91,7 @@ VT100.prototype.char = function(ch) {
     }
   } else this.controlChars = [];
   // draw cursor
-  this.g.setColor(1,1,1);
+  this.g.setColor(this.fgCol);
   this.drawCursor();
 };
 
@@ -102,6 +104,12 @@ VT100.prototype.char = function(ch) {
     marginLeft -> left margin (we have no right margin)
     marginTop -> top margin 
     marginBottom -> bottom margin
+    
+After setting up, you can also set:
+
+term.fgCol -> Foreground color
+term.bgCol -> Background color
+    
 */
 exports.connect = function(g, options) {
   return new VT100(g, options);
