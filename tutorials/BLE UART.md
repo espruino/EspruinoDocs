@@ -4,15 +4,33 @@ Bluetooth LE UARTs (NUS)
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/BLE+UART. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Module,Modules,BLE,Bluetooth,NUS,Nordic UART,UART
+* KEYWORDS: Module,Modules,BLE,Bluetooth,NUS,Nordic UART,UART,6e400001-b5a3-f393-e0a9-e50e24dcca9e,Bluetooth UART
 * USES: Puck.js,BLE,Only BLE
 
 By default, Bluetooth LE Espruino devices like [Puck.js](/Puck.js) present a
-`Nordic UART` service that provides serial port-like access to the Espruino 
+`Nordic UART` service (`6e400001-b5a3-f393-e0a9-e50e24dcca9e`) that provides serial port-like access to the Espruino
 REPL. You can disable it with [NRF.setServices({},{uart:false})](/Reference#l_NRF_setServices) if needed.
 
 The `puck.js` helper script allows you to access this UART from a Web Browser with
-Web Bluetooth - see [the Web Bluetooth Guide](/Puck.js Web Bluetooth)
+Web Bluetooth - see [the Web Bluetooth Guide](/Puck.js Web Bluetooth), but this
+page shows how you can access the
+
+Finding Devices
+---------------
+
+Nordic UART devices often advertise the Nordic UART Service UUID `6e400001-b5a3-f393-e0a9-e50e24dcca9e`
+but they may not. Espruino devices advertise the UUID but in a Scan Response packet, so active scanning
+is required, and in devices with heavy Bluetooth traffic it might take a while to receive it.
+
+If you know the device you want to connect to by some other method (eg it's name or MAC address) then
+it may be best to connect using that (we use the name in the examples below), but if you wish to find
+all devices advertising that Nordic UART service then you can use the following:
+
+```JS
+NRF.findDevices(function(devices) {
+  print(devices);
+}, { filters: [{ services: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e'] }], timeout: 2000, active:true });
+```
 
 Writing
 -------
@@ -22,7 +40,7 @@ you can use the [[ble_simple_uart.js]] module to send data.
 
 Just use as follows:
 
-```
+```JS
 NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device) {
   require("ble_simple_uart").write(device, "digitalPulse(LED3,1,1000)\n", function() {
     print('Done!');
@@ -33,7 +51,7 @@ NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device
 `require("ble_simple_uart").write` also returns a promise, which can be used
 with `.then`:
 
-```
+```JS
 NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device) {
   return require("ble_simple_uart").write(device, "digitalPulse(LED3,1,1000)\n");
 }).then(function() {
@@ -55,7 +73,7 @@ We've provided a utility function called `eval` that will evaluate an
 expression on the remote device, transfer it back as JSON, and then
 parse it:
 
-```
+```JS
 var uart;
 NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device) {
   return require("ble_uart").connect(device);
@@ -65,7 +83,7 @@ NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device
   // to be sent - otherwise it may interfere with the result from
   // eval
   return new Promise(function(r) { setTimeout(r, 500); });
-}).then(function() {  
+}).then(function() {
   return uart.eval('E.getTemperature()');
 }).then(function(data) {
   print("Got temperature "+data);
@@ -75,7 +93,7 @@ NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device
 
 However you can also use `on('data'` and `write` as you need to:
 
-```
+```JS
 NRF.requestDevice({ filters: [{ namePrefix: 'Puck.js' }] }).then(function(device) {
   return require("ble_uart").connect(device);
 }).then(function(uart) {
