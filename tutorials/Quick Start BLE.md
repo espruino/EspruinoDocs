@@ -145,7 +145,7 @@ Using the Espruino IDE
 
 If your computer supports it, Web Bluetooth is the easiest way to get started with Espruino.
 
-You'll need an up to date chromium browser such as [Google Chrome](https://www.google.com/chrome/browser/desktop/), [Ungoogled Chromium](https://ungoogled-software.github.io/ungoogled-chromium-binaries), [Edge](https://www.microsoft.com/en-us/edge) or [Opera](https://www.opera.com) (Brave will not work). Operating System support varies so for platform specific instructions see below:
+You'll need an up to date Chromium browser such as [Google Chrome](https://www.google.com/chrome/browser/desktop/), [Ungoogled Chromium](https://ungoogled-software.github.io/ungoogled-chromium-binaries), [Edge](https://www.microsoft.com/en-us/edge) or [Opera](https://www.opera.com) (Brave will not work). Operating System support varies so for platform specific instructions see below:
 
 
 #### Mac OS
