@@ -98,7 +98,7 @@ Requirements
 For Bluetooth LE you need a Bluetooth 4.0-capable adaptor in your computer (Bluetooth versions before 4.0 won't work). Pretty much all new computers come with Bluetooth 4, but you *may* need to get an external Bluetooth LE dongle if your computer:
 
 * Is an Apple Mac made before 2012
-* Is an older Windows or Linux device that predates Bluetooth 4.0
+* Is an older Windows or Linux device that predates Bluetooth 4.0 or Windows 10
 * Is a Desktop PC - it may not have any wireless support *at all*
 
 If your computer doesn't have Bluetooth LE then Bluetooth LE USB adaptors and small, cheap (~$10), and easily available. There are two main types of USB Bluetooth Adaptor available:
@@ -174,7 +174,7 @@ Windows 10 fully supports Web Bluetooth, as long as you have an up to date
 version of [Google Chrome](https://www.google.com/chrome/browser/desktop/) (v70 or above) and your PC has a Bluetooth LE
 radio (all new Laptops will).
 
-For those not wanting to use google chrome, you can use another chromium based browser such as [Cromite](https://github.com/uazo/cromite) or [ungoogled chromium](https://ungoogled-software.github.io/ungoogled-chromium-binaries/) (Brave will not work)
+For those not wanting to use Google Chrome, you can use another Chromium based browser such as [Cromite](https://github.com/uazo/cromite) or [Ungoogled Chromium](https://ungoogled-software.github.io/ungoogled-chromium-binaries/) (Brave will not work)
 
 If you do not have Windows 10, you need to [install the Espruino Native IDE application](#with-an-application) instead,
 as this is able to access the Bluetooth adaptor directly.
@@ -204,7 +204,7 @@ All Chromebooks with Bluetooth should support Web Bluetooth.
 
 Android 6 (Marshmallow) or later are supported out of the box. You can use a Chromium based browser such as [Google Chrome](https://play.google.com/store/apps/details?id=com.android.chrome) or [Cromite](https://github.com/uazo/cromite)
 
-You also can download the bangle.js app From [F-droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs/) or [The Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs)
+For the Gadget Bridge mobile app see [this page](https://www.espruino.com/Gadgetbridge)
 
 Android 5 (Lollipop) devices can use [Chromium installed over ADB to a developer mode device](https://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop).
 
