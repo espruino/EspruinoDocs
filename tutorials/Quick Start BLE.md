@@ -98,7 +98,7 @@ Requirements
 For Bluetooth LE you need a Bluetooth 4.0-capable adaptor in your computer (Bluetooth versions before 4.0 won't work). Pretty much all new computers come with Bluetooth 4, but you *may* need to get an external Bluetooth LE dongle if your computer:
 
 * Is an Apple Mac made before 2012
-* Is an older Windows or Linux device that predates Bluetooth 4.0 or Windows 10
+* Is a Windows PC with a Windows version before 10
 * Is a Desktop PC - it may not have any wireless support *at all*
 
 If your computer doesn't have Bluetooth LE then Bluetooth LE USB adaptors and small, cheap (~$10), and easily available. There are two main types of USB Bluetooth Adaptor available:
@@ -192,7 +192,7 @@ To enable it:
 
 Other potential issues:
 
-* Most [Flatpaks](https://flatpak.org/) don't work out of the box as Bluetooth priviledges aren't always turned on. You can change them using [flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal)
+* Most [Flatpaks](https://flatpak.org/) don't work out of the box as Bluetooth priviledges aren't always turned on. You can change them using [flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal) or can just install a native package for your OS.
 * BlueZ 5.41+ required (5.43 is more stable) - you can check by typing `bluetoothd --version`. Pretty much every Linux distribution from the past 5 years is now up to date, but if yours isn't there are some [Bluez installation instructions here](/Web Bluetooth On Linux)
 * Some Chromium based browsers such as Brave disable Bluetooth functionality. If you run into issues with a specific browser try an alternative browser from the list above.
 
@@ -204,7 +204,7 @@ All Chromebooks with Bluetooth should support Web Bluetooth.
 
 Android 6 (Marshmallow) or later are supported out of the box. You can use a Chromium based browser such as [Google Chrome](https://play.google.com/store/apps/details?id=com.android.chrome) or [Cromite](https://github.com/uazo/cromite)
 
-For the Gadget Bridge mobile app see [this page](https://www.espruino.com/Gadgetbridge)
+You can also use the [Bangle.js Gadgetbridge app](https://www.espruino.com/Gadgetbridge) to provide app loader functionality for your [Bangle.js](/Bangle.js2) (but not yet Web IDE).
 
 Android 5 (Lollipop) devices can use [Chromium installed over ADB to a developer mode device](https://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop).
 
