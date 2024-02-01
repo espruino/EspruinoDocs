@@ -4,10 +4,15 @@ BTHome Library
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/BTHome. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Module,Modules,BTHome,Bluetooth,BLE,BT Home,Home Assistant,HomeAssistant
+* KEYWORDS: Module,Modules,BTHome,Bluetooth,BLE,BT Home,Home Assistant,HomeAssistant,esphome
 * USES: BLE,Only BLE
 
 [BTHome](https://bthome.io/) is an energy efficient but flexible BLE format for devices to broadcast their sensor data and button presses. It is supported by popular home automation platforms, like [Home Assistant](https://www.home-assistant.io/), out of the box.
+
+BTHome devices advertise data in a specific format, which is then received by either [Home Assistant](https://www.home-assistant.io/) directly,
+[ESPHome](https://esphome.io/components/esp32_ble_tracker) or [Shelly](https://www.shelly.com/) devices (which act as bridges).
+
+Once configured, any new BTHome-advertising device found will magically appear in `http://homeassistant/config/integrations/dashboard` where it can be used alongside all your other devices.
 
 
 Usage
@@ -42,12 +47,11 @@ updateAdvertising();
 setInterval(updateAdvertising, 10000);
 ```
 
-Events are also supported - see below.
+See below for information on events and a list of allowable device types.
 
-See below for a list of allowable device types.
-
-`getAdvertisement` adds a BTHome packet ID, which ensures that the data sent by the
-device will only be
+`getAdvertisement` adds an incrementing BTHome packet ID, which ensures that the data sent by the
+device will only be treated as a 'new' packet the next time `getAdvertisement` is called. This
+stops duplicate events and other data flooding your Home Assistant instance.
 
 **Note:** No size checking is performed, so if you advertise too much data,
 Espruino will start to remove characters from the device name to make room
