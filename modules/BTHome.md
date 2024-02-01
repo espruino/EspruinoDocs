@@ -27,14 +27,22 @@ function updateAdvertising() {
       type : "temperature",
       v : E.getTemperature()
     }
-  ]), { name : "Sensor1" });
+  ]), {
+    name : "Sensor",
+    // not being connectable/scannable saves power (but you'll need to reboot to connect again with the IDE!)
+    //connectable : false, scannable : false,
+  });
 }
 
+// Enable highest power advertising (on nRF52)
+NRF.setTxPower(4);
 // Update advertising now
 updateAdvertising();
 // Update advertising every 10 seconds...
 setInterval(updateAdvertising, 10000);
 ```
+
+Events are also supported - see below.
 
 See below for a list of allowable device types.
 
@@ -89,12 +97,18 @@ require("BTHome").getAdvertisement([
 ```
 
 Each time you update the advertising, the packet ID will increase, and another event will be sent to Home Assistant. As such we'd recommend that
-you make sure you clear the event flag after updating the advertisement. For example:
+you make sure you clear the event flag after updating the advertisement.
+
+**Note:** Most BTHome scanners won't spend 100% of the time scanning - ESPHome scans for only 30ms out of 320ms by default ([see here](https://esphome.io/components/esp32_ble_tracker.html#configuration-variables)).
+To ensure you get events reported quickly and reliably it can be a good idea to increase the advertising interval when you have an event to report, and then to lower the interval again after to save power.
+
+For example, to report a button event, as well as battery and temperature:
 
 ```JS
-var buttonState = false;
+var slowTimeout; //< After 60s we revert to slow advertising
 
-function updateAdvertising() {
+// Update the data we're advertising here
+function updateAdvertising(buttonState) {
   NRF.setAdvertising(require("BTHome").getAdvertisement([
     {
       type : "battery",
@@ -108,22 +122,34 @@ function updateAdvertising() {
       type: "button_event",
       v: buttonState ? "press" : "none"
     },
-  ]), { name : "Sensor1" });
-  // ensure that subsequent updates show button is not pressed
-  buttonState = false;
+  ]), {
+    name : "Sensor",
+    interval: buttonState?20:2000, // fast when we have a button press, slow otherwise
+    // not being connectable/scannable saves power (but you'll need to reboot to connect again with the IDE!)
+    //connectable : false, scannable : false,
+  });
+  /* After 60s, call updateAdvertising again to update battery/temp
+  and to ensure we're advertising slowly */
+  if (slowTimeout) clearTimeout(slowTimeout);
+  slowTimeout = setTimeout(function() {
+    slowTimeout = undefined;
+    updateAdvertising(false /* no button pressed */);
+  }, 60000);
 }
-
-// Update advertising now
-updateAdvertising();
-// Update advertising every 10 seconds...
-setInterval(updateAdvertising, 10000);
 
 // When a button is pressed, update advertising with the event
 setWatch(function() {
-  buttonState = true;
-  updateAdvertising();
+  updateAdvertising(true /* button pressed */);
 }, BTN, {edge:"rising", repeat:true})
+
+// Update advertising now
+updateAdvertising();
+
+// Enable highest power advertising (4 on nRF52, 8 on nRF52840)
+NRF.setTxPower(4);
 ```
+
+**You can load this example straight onto your device with [the Espruino App Loader](https://espruino.github.io/EspruinoApps/?q=bthome)**
 
 ### Booleans
 
