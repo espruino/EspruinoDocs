@@ -485,7 +485,7 @@ different. For best accuracy, work out each Puck.js's temperature offset by call
 ### Battery level
 
 Battery level (based on a normal CR2032 battery) can be accessed with
-[`Puck.getBatteryPercentage()`](/Reference#l_Puck_getBatteryPercentage).
+[`E.getBattery()`](/Reference#l_E_getBattery).
 You can also get the battery voltage using [`NRF.getBattery()`](/Reference#l_NRF_getBattery).
 
 ### Capacitive sense

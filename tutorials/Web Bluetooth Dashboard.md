@@ -31,7 +31,7 @@ to set up your own HTTPS webpage, then put the following in it:
  <body style="width:620px;height:450px">
   <link href="https://espruino.github.io/TinyDash/tinydash.css" rel="stylesheet">
   <script src="https://espruino.github.io/TinyDash/tinydash.js"></script>
-  <script src="https://www.puck-js.com/puck.js"></script>  
+  <script src="https://www.puck-js.com/puck.js"></script>
   <script>
   var elements = {
     heading : TD.label({x:10,y:10,width:190,height:50,label:"My Dashboard"})
@@ -94,11 +94,11 @@ Now, disconnect and update the Web Bluetooth page with what's below
  <body style="width:620px;height:450px">
   <link href="https://espruino.github.io/TinyDash/tinydash.css" rel="stylesheet">
   <script src="https://espruino.github.io/TinyDash/tinydash.js"></script>
-  <script src="https://www.puck-js.com/puck.js"></script>  
+  <script src="https://www.puck-js.com/puck.js"></script>
   <script>
   function connectDevice() {
     // connect, and ask for the battery percentage
-    Puck.eval("{bat:Puck.getBatteryPercentage()}", function(d,err) {
+    Puck.eval("{bat:E.getBattery()}", function(d,err) {
       if (!d) {
         alert("Web Bluetooth connection failed!\n"+(err||""));
         return;
@@ -114,7 +114,7 @@ Now, disconnect and update the Web Bluetooth page with what's below
       });
     });
   }
-  // Set up the controls we see on the screen    
+  // Set up the controls we see on the screen
   var elements = {
     heading : TD.label({x:10,y:10,width:190,height:50,label:"My Dashboard"}),
     bat : TD.gauge({x:10,y:70,width:190,height:220,label:"Battery Level",value:0,min:0,max:100}),
@@ -170,7 +170,7 @@ so more information can be transferred at once if needed.
  <body style="width:210px;height:450px">
   <link href="https://espruino.github.io/TinyDash/tinydash.css" rel="stylesheet">
   <script src="https://espruino.github.io/TinyDash/tinydash.js"></script>
-  <script src="https://www.puck-js.com/puck.js"></script>  
+  <script src="https://www.puck-js.com/puck.js"></script>
   <script>
   // Called when we get a line of data - updates the light color
   function onLine(line) {
@@ -218,7 +218,7 @@ so more information can be transferred at once if needed.
       });
 
   }
-  // Set up the controls we see on the screen    
+  // Set up the controls we see on the screen
   var elements = {
     heading : TD.label({x:10,y:10,width:190,height:50,label:"My Dashboard"}),
     light : TD.gauge({x:10,y:70,width:190,height:220,label:"Light",value:0,min:0,max:100}),

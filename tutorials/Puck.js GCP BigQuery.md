@@ -127,7 +127,7 @@ Flash the Code to Puck.js
 * Testing the Code in [Espruino Web IDE](https://www.espruino.com/ide/)
     * ![window](Puck.js GCP BigQuery/puck-flash.png)
     * Check that the code is running by reading the console log output. Make surethat temperature data is coming across. Sometimes temperature data doesn't advertise if the temperature hasn't changed. If you want to test the temperature advertisement, warm up or cool down the puck temp sensor by transferring heat with your hand.
-* Start Advertising!    
+* Start Advertising!
     * To get the data to stop showing up in the console & start advertising, take the battey out & put it back in. As long as the code was uploaded to the device's flash, it'll start advertising when the battery is put back in. The temperature data won't start sending over until one minute has gone by. Then it'll advertise the temp every minute.
 
 ```
@@ -155,9 +155,9 @@ setInterval(function () {
             // - /ble/advertise/c3:5a:61:d8:02:05/battery
             // - "180f": "Battery Service",
             // 180f => {"battery":100}
-            console.log("battery : " + [Puck.getBatteryPercentage()]);
+            console.log("battery : " + [E.getBattery()]);
             NRF.setAdvertising({
-                0x180F : [Puck.getBatteryPercentage()]
+                0x180F : [E.getBattery()]
             });
         }
     },5000);
@@ -233,7 +233,7 @@ Puck.on('accel',function(a) {
                 0x182e: [0],
             });
         }
-    },500);  
+    },500);
 });
 
 //Magnetic Field Sensor

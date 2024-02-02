@@ -115,7 +115,7 @@ Flash the Code to Puck.js
 * Testing the Code in [Espruino Web IDE](https://www.espruino.com/ide/)
     * ![window](Puck.js AWS IOT/puck-flash.png)
     * Check that the code is running by reading the console log output. Make surethat temperature data is coming across. Sometimes temperature data doesn't advertise if the temperature hasn't changed. If you want to test the temperature advertisement, warm up or cool down the puck temp sensor by transferring heat with your hand.
-* Start Advertising!    
+* Start Advertising!
     * To get the data to stop showing up in the console & start advertising, take the battey out & put it back in. As long as the code was uploaded to the device's flash, it'll start advertising when the battery is put back in. The temperature data won't start sending over until one minute has gone by. Then it'll advertise the temp every minute.
 
 ```
@@ -143,9 +143,9 @@ setInterval(function () {
             // - /ble/advertise/c3:5a:61:d8:02:05/battery
             // - "180f": "Battery Service",
             // 180f => {"battery":100}
-            console.log("battery : " + [Puck.getBatteryPercentage()]);
+            console.log("battery : " + [E.getBattery()]);
             NRF.setAdvertising({
-                0x180F : [Puck.getBatteryPercentage()]
+                0x180F : [E.getBattery()]
             });
         }
     },5000);
@@ -221,7 +221,7 @@ Puck.on('accel',function(a) {
                 0x182e: [0],
             });
         }
-    },500);  
+    },500);
 });
 
 //Magnetic Field Sensor
@@ -289,7 +289,7 @@ Setting up AWS IOT Core & SNS Topic/Subscription
         * ![window](Puck.js AWS IOT/iot-core-create-rule4-sns-topic.png)
     * Go back to the other page & find the topic you just created (may need to click refresh). Create & name a new rule. Click Next.
         * ![window](Puck.js AWS IOT/iot-core-create-rule5.png)
-    * Now we have a SNS topic being published to, we need to create a SNS subscription that sends an email to yout email address.  
+    * Now we have a SNS topic being published to, we need to create a SNS subscription that sends an email to yout email address.
         * ![window](Puck.js AWS IOT/iot-core-create-rule6-sns-subscription.png)
 
 Setting up NodeRed
@@ -307,7 +307,7 @@ Setting up NodeRed
 
 ```
 var message_object = {};
-if (msg.payload["data"][0] === 0) {    
+if (msg.payload["data"][0] === 0) {
     message_object["WARNING"] = "Survailence Turned Off";
     message_object["sensor"] = "button";
     msg.payload = message_object;
@@ -326,7 +326,7 @@ else {
 
 ```
 var message_object = {};
-if (msg.payload["data"][0] === 0) {    
+if (msg.payload["data"][0] === 0) {
     message_object["WARNING"] = "Door Ajar - Home Not Secure!";
     msg.payload = message_object;
     return msg;
@@ -344,7 +344,7 @@ else {
 
 ```
 var message_object = {};
-if (msg.payload["data"][0] === 1) {    
+if (msg.payload["data"][0] === 1) {
     message_object["WARNING"] = "Door in Motion - Home Not Secure!";
     message_object["sensor"] = "motion";
     msg.payload = message_object;

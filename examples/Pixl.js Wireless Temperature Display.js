@@ -28,7 +28,7 @@ scans for 1 second every minute).
 function updateBT() {
   NRF.setAdvertising({}, {
     manufacturer: 0x590,
-    manufacturerData: [Puck.getBatteryPercentage(), E.getTemperature()]
+    manufacturerData: [E.getBattery(), E.getTemperature()]
   });
 }
 
