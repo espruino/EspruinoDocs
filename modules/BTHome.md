@@ -124,11 +124,11 @@ function updateAdvertising(buttonState) {
     },
     {
       type: "button_event",
-      v: buttonState ? "press" : "none"
+      v: buttonState
     },
   ]), {
     name : "Sensor",
-    interval: buttonState?20:2000, // fast when we have a button press, slow otherwise
+    interval: (buttonState!="none")?20:2000, // fast when we have a button press, slow otherwise
     // not being connectable/scannable saves power (but you'll need to reboot to connect again with the IDE!)
     //connectable : false, scannable : false,
   });
@@ -137,17 +137,18 @@ function updateAdvertising(buttonState) {
   if (slowTimeout) clearTimeout(slowTimeout);
   slowTimeout = setTimeout(function() {
     slowTimeout = undefined;
-    updateAdvertising(false /* no button pressed */);
+    updateAdvertising("none" /* no button pressed */);
   }, 60000);
 }
 
 // When a button is pressed, update advertising with the event
-setWatch(function() {
-  updateAdvertising(true /* button pressed */);
-}, BTN, {edge:"rising", repeat:true})
+setWatch(function(e) {
+  var buttonState = ((e.time - e.lastTime) > 0.5) ? "long_press" : "press";
+  updateAdvertising(buttonState);
+}, BTN, {edge:"falling", repeat:true})
 
 // Update advertising now
-updateAdvertising();
+updateAdvertising("none");
 
 // Enable highest power advertising (4 on nRF52, 8 on nRF52840)
 NRF.setTxPower(4);
