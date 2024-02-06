@@ -8,10 +8,7 @@ Espruino WiFi
 
 ![Espruino WiFi](WiFi/angled.jpg)
 
-<span style="color:red">**The Espruino WiFi board is now discontinued. We will be releasing a new WiFi + Bluetooth board in 2022**</span>
-
-**Espruino WiFi is a tiny USB and WiFi-enabled microcontroller that
-can be programmed in JavaScript**
+**Espruino WiFi is a tiny USB and WiFi-enabled microcontroller that can be programmed in JavaScript**
 
 Just plug it into your computer and get started in seconds with the
 [Web IDE](/ide) - no software installation needed!
@@ -41,6 +38,9 @@ Features
 * On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 5v (please see notes under [pinout](#pinout) below)
 * Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
 * 500mA polyfuse on board
+
+**Note:** We did mark the Espruino WiFi as discontinued during the pandemic because of the component shortage, but as parts
+have become available we have started producing it again.
 
 Pinout
 ------
@@ -288,7 +288,7 @@ digitalWrite(A14, 1); // turn on wifi
 setTimeout(_=>{
   Serial2.setup(115200, { rx: A3, tx : A2 });
   Serial2.print("AT+GMR\r\n");
-}, 1000);  
+}, 1000);
 ```
 
 After a few seconds it should report something like:
