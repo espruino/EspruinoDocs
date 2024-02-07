@@ -209,10 +209,18 @@ end of the `NRF.setAdvertising` call to override that.
 References
 ----------
 
-There's an [app for Bangle.js](https://banglejs.com/apps/?q=bthome) which will make your [Bangle.js watch](https://www.espruino.com/Bangle.js2)
-advertise the current temperature and air pressure.
+There are:
 
-Mentioned on the forum in:
+* [Pre-made Bangle.js apps](https://banglejs.com/apps/?q=bthome) which will make your [Bangle.js watch](/Bangle.js2)
+appear in BTHome
+* [Pre-made Puck.js apps](https://espruino.github.io/EspruinoApps/?q=bthome) which will make your [Puck.js](/Puck.js)
+appear in BTHome
+
+Some tutorials use BTHome:
+
+* APPEND_USES: BTHome
+
+It's also mentioned on the forum in:
 
 * [Integration with Home Assistant](https://forum.espruino.com/conversations/361380/)
 * [Home Assistant / EspHome/ BTHome / Bluetooth Proxies](https://forum.espruino.com/conversations/382301/)
