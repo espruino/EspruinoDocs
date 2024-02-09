@@ -318,9 +318,14 @@ Functions and pretokenisation
 
 Normally if you upload code to RAM, function code is uploaded there as-is.
 
-If you use the `E.setFlags({pretokenise:1})` command (for all functions) or add
- `"ram"` at the top of a single function, Espruino will automatically minify your
- function code on upload. For example:
+If you:
+
+* Use the `E.setFlags({pretokenise:1})` command (for all functions)
+* Add `"ram"` at the top of a single function
+* Upload to flash from the [IDE](https://www.espruino.com/ide/) with `Settings->Minification->Pretokenise` enabled
+* Upload from [the Bangle.js App Loader](https://banglejs.com/apps/) with Pretokenisation enabled
+
+Espruino will automatically minify your function when it parses it. For example:
 
 ```
 function foobar() {
@@ -330,14 +335,21 @@ function foobar() {
 }
 ```
 
-Turns into something like  `#foobar(){#(#.x==#)##Error("Hello");##;}` where
+Turns into something like  `#foobar(){#(#.x==#)##Error(##Hello);##;}` where
 `#` is a special non-ASCII (>127) token representing that reserved word. This saves a lot of
 memory and also speeds up execution by 10-20%. However it does remove line
 numbers from stack traces and so makes debugging harder.
 
-If you're using a device with external flash (like [Bangle.js](/Bangle.js2)) then  `"ram"`
+In firmware 2v21 and later Strings (and `atob("....")` expressions) are parsed, evaluated and
+stored as raw data when pretokenisation is enabled. This makes bigger strings extremely fast
+to parse and also means that if defining a string in pretokenised code saved to flash, the String
+itself will not be loaded into RAM but only referenced, and loaded from Flash on demand.
+
+**Note:** If you're using a device with external flash (like [Bangle.js](/Bangle.js2)) then  `"ram"`
 (but not `E.setFlags({pretokenise:1})`) will ensure that your function is loaded
 into RAM rather than being executed from flash.
+
+
 
 
 Functions in Flash

@@ -60,11 +60,20 @@ These is also the same coding style used for [the firmware's C code](https://git
 Other Suggestions
 -----------------
 
-* If using big blobs of data *and saving your code to Flash*, [define them in functions](/Performance#functions-in-flash):
+* If you need to store big blobs of data in your code, store them as Base64 Strings (you can encode with `btoa`, or the [Image](/Image+Converter), [File](/File+Converter) or [Font](/Font+Converter) Converters do this automatically) *and save your code to Flash with Pretokenisation enabled*.
+
+When pretokenisation is enabled (in 2v21 and later), strings will be stored as raw data and only referenced (so that their contents are loaded from flash on demand). This is very fast and memory efficient.
 
 ```JS
-// uses RAM
+// - Very efficient in 2v21 with pretokenisation enabled - string is referenced
+// in flash and only read when needed.
+// - Uses RAM in 2v20 and earlier (or without pretokenisation)
 const mydata = atob("GBgCAAAAAAAAAAQA....AAAAAAAAAAAAA");
+// mydata is a string
+
+const myarray = new Uint8Array(E.toArrayBuffer(atob("SGVsbG8gd29ybGQ=")));
+// 2v21+ myarray is a read-only Uint8Array that references the data in Flash memory
+// pre-2v21 it's a normal Uint8Array in RAM
 
 // doesn't use RAM until called
 function getMyData() {
@@ -102,6 +111,9 @@ draw("foo",{
   isUpsideDown:true
 })
 ```
+
+* Before version 2v21, if you're using big blobs of data *and saving your code to Flash* it's best to [define them in functions](/Performance#functions-in-flash) so they're only allocated when the function is called. However in 2v21 and later, when uploading code that's pretokenised strings will be stored as raw data and only referenced (so that their contents are loaded from flash on demand).
+
 
 Why?
 ----
