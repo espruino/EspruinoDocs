@@ -15,8 +15,11 @@ Normally an app can do whatever it wants because everything gets totally reset
 afterwards and reloaded - but this process can take 200ms or more, so if it
 can be avoided your Bangle will run faster.
 
-Some clocks (like [Anton](https://banglejs.com/apps/?id=antonclk)) implement this,
+Some clocks (like [Anton](https://banglejs.com/apps/?id=antonclk)) implement fast loading,
 and you can implement it in your own apps too, as long as your app uses widgets.
+
+**Summary:** You need to add a `remove` handler to the `Bangle.setUI` call, and when
+called this should un-allocate anything you've allocated.
 
 **We're recommending you only use this on Clocks and Launchers right now** - the
 potential improvement for apps is small (as it only affects loading the next app
@@ -76,26 +79,28 @@ Bangle.drawWidgets();
 
 ## Testing
 
-The first thing we need to do is to be able to test how much memory our clock uses.
+The first thing we need is a way to check for memory leaks - for this we're going to run the app and measure how much memory it uses.
 
-* Copy the above file into the IDE, and set it to save to s Storage File called `myclock.app.js` by clicking the down-arrow below the upload icon in the IDE.
+* Copy the above file into the IDE, and set it to save to a Storage File called `myclock.app.js` by clicking the down-arrow below the upload icon in the IDE.
+* After upload, the clock app should be running
 * Now type `reset()` in the left-hand side - this will reset Bangle.js without loading any app
 * Now type `Bangle.loadWidgets();Bangle.drawWidgets();` - this will load the widgets (because we want to include these in our 'before' memory measurement)
 * Now type `process.memory().usage` - this shows us how much memory is used by *just* the widgets. In my case it's 465 - yours will be different.
 * Now, we'll load our app with `eval(require("Storage").read("myclock.app.js"))`
 * We can now run `process.memory().usage` again and see how much memory is being used now the app is loaded - it's 609 in my case
+* Now type `Bangle.setUI()` - when unloading is working, this should unload your app and `process.memory().usage` should report *almost the same number* (see `Other Sources of Memory Use` below) that you had from just after you called `Bangle.loadWidgets();` (in my case 465)
 
-When unloading is working, you should be able to type `Bangle.setUI()` in the left-hand side,
-and then `process.memory().usage`, and you should see the *same number that you had from just after you called `Bangle.loadWidgets();` (in my case 465)
+**When you don't have any memory leaks, you should be able to call `eval(require("Storage").read("myclock.app.js"))` and then `Bangle.setUI()` again, and `process.memory().usage` will report the same value (in this case 465)**
 
-**Note:** this may not be entirely true (see below)
+**Note:** As-is, the code above can be run multiple times and *it doesn't appear to use extra memory after the first run* because it has a global called `drawTimeout` containing the interval. However as-is, the timeout in `drawTimeout` will still be active and trying to redraw every minute. This is why we check memory use against a reset device with widgets rather than just seeing whether memory use increases each time the clock is run.
 
 Ok, so now it's time to get started making sure memory is freed.
+
 
 ## 1. `Bangle.setUI({ ..., remove })`
 
 The first step is to add a `remove` handler to setUI - this shows that your app
-supports unloading, and this handler should remove anything that got allocated
+supports unloading, and when called, this handler should remove anything that got allocated
 or any timers that got started.
 
 First, replace `Bangle.setUI("clock");` with:
@@ -106,17 +111,18 @@ Bangle.setUI({mode:"clock", remove:function() {
 }});
 ```
 
-This code removes the timeout added by `queueDraw` which makes your
-clock redraw. Your clock will have something similar.
+This code removes the `drawTimeout` timeout added by `queueDraw` which makes your
+clock redraw. Your clock will have something similar that'll need to be cleared too.
+
 
 ## 2. Scoping
 
-Right now, everything that is defined is in the global scope, which is
+Right now, everything is defined in the global scope, which is
 great for debugging. However, it means that `drawTimeout`, `queueDraw`, etc
-will all stay allocated.
+will all stay allocated after the clock is unloaded.
 
 We want to define them in their own scope, so that when `drawTimeout` is removed
-everything is de-allcoated.
+everything is de-allocated automatically.
 
 The classic way to do this is to wrap everything in a function `(function() { ... })()`
 but this has the downside that when loading your app the function has to be parsed
@@ -179,7 +185,7 @@ So now our code looks like this:
 
 ## Event Handlers
 
-For some apps/clock faces, you may add event handlers - usually these
+For some apps/clock faces (not this one), you may add event handlers - usually these
 will take the form `Bangle.on('event', handler` - for example in the
 Clock examples we use `Bangle.on('lcdPower'` to detect if the LCD is
 turned on for Bangle.js 1:
@@ -246,18 +252,24 @@ clockInfoMenu.remove();
 Or if your app used the [`widget_utils.js`](/Bangle.js+Hideable+Widgets) module
 to hide widgets (or make them swipeable) it must use `.show()` to show them again.
 
+Libraries also stay in memory once used, but this is not a problem. For instance if
+your clock uses `require("locale")` that library will stay in RAM but will not cause
+any problems. See `Other Sources of Memory Use` below for more info.
+
+
 ## Bangle.js state
 
 You may also have configured something in Bangle.js - for example:
 
-* Turning hardware on (like the heart rate monitor)
+* Turning hardware on (like the heart rate monitor with `Bangle.setHRMPower(...)`)
 * Setting the Theme to something other than the system theme
 
-And you'll have to reset these to what they were when your app was loaded.
+And you'll need to reset these to what they were when your app was loaded to avoid unexpected behaviour.
+
 
 ## Changes to global variables
 
-Your app might also have added to a global variable. For example if your
+Your app might also have added a field to a global variable. For example if your
 clock face uses a custom font, it may have code like this:
 
 ```JS
@@ -273,9 +285,10 @@ In that case you'll have to add:
 delete Graphics.prototype.setFontAnton;
 ```
 
+
 ## Testing Afterwards
 
-Ok, now it's time to test:
+After these changes it's time to test:
 
 Type `reset()` to reset the Bangle's state.
 
@@ -287,7 +300,7 @@ process.memory().usage
 eval(require("Storage").read("myclock.app.js"))
 process.memory().usage
 Bangle.setUI()
-process.memory().usage
+eval(require("Storage").read("myclock.app.js"))
 ```
 
 You should get something along the lines of:
@@ -304,17 +317,11 @@ You should get something along the lines of:
 * 619 : after the app was loaded
 * 565 : when the app was unloaded
 
-They're not the same! So what's wrong?
+565 is still more than 465, but this often isn't a problem in itself (see `Other Sources of Memory Use` below).
 
-Well, if modules are loaded into memory then they will stay loaded, and
-we're using `require("locale")`, which is using memory. We don't actually
-care about 'losing' this memory, but we just need to check we're not
-leaking memory anywhere else.
+**The important thing is that subsequent runs of the clock do not increase this further**
 
-We can get an idea of how much memory modules are using with `E.getSizeOf(global["\xff"].modules)`
-(although this may not be accurate if the modules reference user code).
-
-But the best way to check is just to re-load and free your app again:
+To do this, just run the same commands again to load and unload the clock:
 
 ```JS
 eval(require("Storage").read("myclock.app.js"))
@@ -337,6 +344,40 @@ The same figures as before - showing that we're not leaking memory!
 Now that's done, your clock is good to publish. You'll notice that now,
 when you press the button to enter the Launcher, there is no `Loading...`
 popup and the Launcher will be loaded much more quickly!
+
+
+## Quick memory leak test
+
+The code above helps you step through and see the memory usage at different points,
+but all we really care about is whether memory usage keeps going up each time
+the clock is loaded.
+
+Doing a quick check for this is pretty easy:
+
+* Ensure the clock you're testing is the only one on the Bangle (or the default one)
+* Make sure the Launcher app supports fast load too (the default launcher does)
+* Press the button once to go to the launcher, and again to go back to your clock
+* In the IDE, run `process.memory().usage` and remember the number
+* Now press the button on the bangle several more times - it'll flip between the launcher
+and clock again and again. Stop when the clock is showing
+* Run `process.memory().usage` again - the number should be the same as before!
+
+
+## Other Sources of Memory Use
+
+Even without any memory leaks your app's memory usage is unlikely to return to the
+exact same number that it did before your app was loaded. This isn't a big problem -
+the main thing is that after subsequent runs your memory usage doesn't keep rising (see above).
+
+Reasons for extra memory use:
+
+* If you have used any library (eg `require("locale")`), the library itself will remain
+loaded in Bangle.js's RAM and will result in a few extra variables being allocated even
+when your application as been unloaded. Subsequent runs won't cause the library to use more memory.
+You can get an idea of how much memory modules are using with `E.getSizeOf(global["\xff"].modules)`.
+* If you access any field on a built-in global (for instance `console.log` or even `process.memory().usage`!)
+then Espruino has to save that global (eg `console`) into RAM. This will only happen once
+per global, and subsequent runs of your app will not increase memory use.
 
 
 ## Taking Advantage of Fast Loading
