@@ -4,7 +4,7 @@ Automatic Data Download
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Auto+Data+Download. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Reset,Button,Load,Timeout,Reload,Reboot,Long press
+* KEYWORDS: Data,Automatic,Auto,Auto Download,Download,Upload,Node.js,Node,Storage,Sync,Synchronize,Data Storage,Data Download,Bluetooth Download
 * USES: BLE,Only BLE
 
 If you've deployed sensors with Bluetooth Espruino boards (see [Data Collection](/Data+Collection)), you might like a way to retrieve data from those devices automatically.
