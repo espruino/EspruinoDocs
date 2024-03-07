@@ -13,10 +13,12 @@ Jolt.js
 
 **Just got your Jolt.js? [Take a look here!](/Quick+Start+BLE#joltjs)**
 
+
 Contents
 --------
 
 * APPEND_TOC
+
 
 Features
 --------
@@ -40,10 +42,50 @@ Jolt.js can be powered in multiple ways:
 
 * **USB-C** - USB-C can power your Jolt.js from 5v, with a 1A self-resettable fuse (via a diode)
   * This can be disabled by cutting the `USB +` solder jumper on the rear of Jolt.js
-* **LiPo battery** - You can plug a single cell (3.7v) LiPo battery into the JST PH connector on the board. It will power the board via a diode, and will be charged with a LiPo charge circuit (at 80mA) when USB power is applied (at this point Jolt.js will be powered via USB)
-  * You can short the `LiPo +` solder jumper to short the diode and avoid the associated voltage drop. **Once done you can't then use USB unless you cut `USB+`** as it will apply USB voltage across the battery
-  * You can cut the `LiPo Chg` solder jumper to disable the LiPo charge circuit, which allows you to use non-LiPo (or multi-LiPo) batteries up to 18v
-* **Terminal Block** - you can attach 2.7 -> 18v directly to the screw terminals on Jolt.js
+* **LiPo battery** - You can plug a single cell (3.7v) LiPo battery into the JST PH connector on the board. It will power the board via a diode (rated 3A, ~0.35v drop), and will be charged with a LiPo charge circuit (at 100mA) when USB power is applied (at this point Jolt.js will be powered via USB). See `Solder Jumpers` below for more info on configuring for different battery situations.
+* **Terminal Block** - you can attach 2.7 -> 18v directly to the screw terminals on Jolt.js (which are connected directly to the motor driver)
+
+| USB | LiPo | Terminals | Voltage |   |
+|-----|------|-----------|---------|---|
+|  Y  |      |           | 4.65v   | USB 5v minus 0.35v diode voltage drop |
+|     |  Y   |           | ~3.3v   | LiPo voltage minus 0.35v diode voltage drop |
+|  Y  |  Y   |           | 4.65v   | USB 5v minus 0.35v diode voltage drop, LiPo charged @ 100mA |
+|  -  |  -   | Y         | ----    | Terminals power motor drivers directly. **Note:** if USB/LiPo is connected and voltage is higher, they will be used |
+
+As mentioned above, you can change the behaviour by modifying the solder jumpers on the rear of the board:
+
+### Solder Jumpers
+
+On the rear of Jolt.js are some pads which can be cut/soldered to change how it can be powered.
+
+**Note:** these pads are connected to the LiPo/USB/terminals so should not be left bare.
+
+* `LiPo Pwr` (default open) - Jolt.js includes a 3A, 0.35v drop diode from the JST battery connector to the motor drivers/terminals. If you're planning
+on drawing more than 3A or you want to avoid the voltage drop, you can short this jumper which shorts out the diode.
+* `LiPo Chg` (default shorted) - Jolt.js includes a 100mA LiPo battery charger which charges a battery on the JST connector. If you don't want charging or are planning on using a multi-cell or non-LiPo battery, cut this jumper so that the battery won't be charged and the charge circuit won't be broken if the voltage is too high.
+* `USB Pwr` (default shorted) - Jolt.js includes a 3A, 0.35v drop diode from the USB connection (plus a 1A self-resetting fuse) to the motor drivers/terminals. If you're connecting a <4.6v battery to
+the termnals, or you've shorted `LiPo Pwr` then you can cut this jumper to disconnect the diode and stop USB power being used for anything other than LiPo Charging (if `LiPo Chrg` is shorted)
+
+| LiPo Pwr | LiPo Chg | USB Pwr | Notes |
+|----------|----------|---------|-------|
+| OPEN     | SHORT    | SHORT   | **Default** 3.7v LiPo on JST only, with charge (but 0.35v voltage drop). Uses USB voltage when USB connected. |
+| OPEN     | SHORT    | OPEN    | 3.7v LiPo on JST only, with charge (but 0.35v voltage drop). USB only charges battery, but doesn't power Jolt.js |
+| SHORT    | SHORT    | SHORT   | 3.7v LiPo on JST only, high power, no voltage drop. **Do NOT USE USB with battery connected** |
+| SHORT    | SHORT    | OPEN    | 3.7v LiPo on JST only, with USB charge (but not using USB voltage) |
+| OPEN     | OPEN     | SHORT   | 3->18v battery on JST (but 0.35v voltage drop). Uses USB voltage when USB connected if battery <4.6v |
+| SHORT    | OPEN     | SHORT   | 3->18v battery on JST, no voltage drop. **Do NOT USE USB with battery connected if battery <4.6v** |
+| OPEN     | OPEN     | OPEN    | 3->18v battery on JST (but 0.35v voltage drop). USB power unused. |
+| SHORT    | SHORT    | SHORT   | **DO NOT DO THIS** - could break charge circuit |
+
+**Note:** By `JST` we mean the JST PH LiPo connector on the rear edge of the board, not the terminal block
+
+## Reverse Voltage Protection
+
+Jolt.js **does not have reverse voltage protection** - always check the polarity when you're powering Jolt.js. Wiring Jolt.js up to a battery backwards will void the warranty!
+
+* There is a 3A diode across the terminal block inputs, so there is some minimal protection if Jolt.js is wired in reverse *for a very short time* to low current voltage sources. However if you attach it to a car battery backwards it'll be destroyed instantly.
+* Similarly the JST battery connector has a diode from it (unless `LiPo Pwr` is shorted), but wiring a battery up to the JST connector in reverse will likely destroy the battery charge circuit.
+
 
 Power Consumption
 -----------------
@@ -141,6 +183,19 @@ setTimeout(function() {
 
 The argument to [`Jolt.setDriverMode`](https://www.espruino.com/Reference#l_Jolt_setDriverMode) can be one of several different values (see [the reference](https://www.espruino.com/Reference#l_Jolt_setDriverMode))
 but the most useful values are `true` (enable in the default mode where all pins are pulled either high or low) or `false` (disables, making all pins open circuit).
+
+### Stepper Motors
+
+Jolt.js contains a module for easy control of stepper motor. For instance you can wire a 5 wire stepper motor between `GND` and `H0`..`H3`, you can use the following code:
+
+```JS
+Jolt.setDriverMode(0,true); // enables H0..H3
+var s = new Stepper({pins : [H0,H1,H2,H3], freq : 100 });
+// step 1000 steps...
+s.moveTo(1000, {turnOff:true}).then(() => {
+  print("Done!");
+});
+```
 
 Analog Inputs
 -------------
