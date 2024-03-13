@@ -90,16 +90,18 @@ Each item in `items` contains:
     'text'  // the text to display for this item
     'short' // optional: a shorter text to display for this item (at most 6 characters)
     'img'   // optional: 24x24px image to display for this item (if not supplied, text may be 2 lines separated with \n)
-    'color' // optional: a color string (like "#f00") to color the icon in compatible clocks    
+    'color' // optional: a color string (like "#f00") to color the icon in compatible clocks
     'v'     // (if hasRange==true) a numerical value
     'min','max' // (if hasRange==true) a minimum and maximum numerical value (if this were to be displayed as a guage)
   }
-```  
+```
 
-* `item.show` : called when item should be shown. Enables updates. Call BEFORE 'get'
-* `item.hide` : called when item should be hidden. Disables updates.
+* `item.show` : called when item should be shown. Enables updates. Call BEFORE 'get'. Passed the clockinfo options (same as what's returned from `addInteractive`).
+* `item.hide` : called when item should be hidden. Disables updates. Passed the clockinfo options.
 * `.on('redraw', ...)` : event that is called when 'get' should be called again (only after 'item.show')
 * `item.run` : (optional) called if the info screen is tapped - can perform some action. Return true if the caller should feedback the user.
+* `item.focus` : called when the item is focussed (the user has tapped on it). Passed the clockinfo options.
+* `item.blur` : called when the item is unfocussed (the user has tapped elsewhere, the screen has locked, etc). Passed the clockinfo options.
 
 ## Using clock_info.js
 
@@ -183,6 +185,8 @@ You can create a storage file called `example.clkinfo.js` and populate it with t
         show : function() {},
         hide : function() {},
         // run : function() {} optional (called when tapped)
+        // focus : function() {} optional (called when focussed)
+        // blur : function() {} optional (called when unfocussed)
       }
     ]
   };
@@ -235,9 +239,9 @@ you can add the following:
 ```
 
 **Note:** the mix of `function` and arrow functions (`() => {}`) is very
-intentional here. `show/hide/run` need to access `this` (which points to
-  the object they are a member of), but when using `setInterval` arrow
-  functions must be used so `this` is preserved when they are called.
+intentional here. `show/hide/run/focus/blur` need to access `this` (which
+points to the object they are a member of), but when using `setInterval` arrow
+functions must be used so `this` is preserved when they are called.
 
 To add this to the app loader, simply create a new app with this as the
 only file (ideally with a name starting with `clkinfo`). Then
