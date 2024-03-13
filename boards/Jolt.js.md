@@ -29,6 +29,7 @@ Features
 * 8x high power 1A H-bridge outputs on screw terminal block
 * 4x Qwiic/Stemma connectors (2x analog capable with 500mA FET, 2x with 4x GPIO)
 * 2.7v to 18v input range
+* Ultra low power (down to 0.004mA) when idle
 * USB-C with USB Serial support
 * 1x 3mm mounting hole
 * 1x Button
@@ -151,6 +152,13 @@ Pinout
 **Note:** Jolt.js has one available I2C, SPI and USART (and infinite software SPI and I2C).
 Unlike other Espruino boards, these peripherals can be used on *any* pin.
 
+Terminal Block
+--------------
+
+Jolt.js comes with a 10 pin screw terminal block on one side. On it are the high power motor driver outputs, as well as screw terminals for `GND` and whatever voltage it is being powered from.
+
+**From the factory, the terminal blocks are closed.** Even though there appears to be a hole, to insert a wire you must unscrew the terminals, insert the wire *above* the blade in the terminal block, and then screw the terminal block back up.
+
 Information
 -----------
 
@@ -169,7 +177,7 @@ Certifications:
 
 Jolt.js has 8 powered outputs, divided between two motor drivers (`H0/H1/H2/H3` are on driver 0,`H4/H5/H6/H7` are on driver 1);
 
-When enabled, the motor drivers each draw around 2.7mA, so they are disabled by default (and all outputs are then open circuit).
+When enabled, the motor drivers each draw around 2.7mA, so they are disabled by default and all outputs are then *mostly* (~2.5 kOhm to GND) open circuit.
 
 To enable a motor driver, use [`Jolt.setDriverMode(driverNumber,mode)`](https://www.espruino.com/Reference#l_Jolt_setDriverMode), and then set the pin to the value you want. For example:
 
@@ -196,6 +204,58 @@ s.moveTo(1000, {turnOff:true}).then(() => {
   print("Done!");
 });
 ```
+
+### RGB LED strip
+
+Jolt.js can easily drive RGB strip where there are separate wires for red, green and blue.
+
+This LED strip is often 'common-anode', meaning there might be a 12v wire, then R, G and B wires
+which need to be pulled down to ground to turn the LEDs on.
+
+While you can connect the 12v wire direct to the `+` pin on the terminal block, when the motor
+driver is off there is a small (2.5kOhm to GND) resistance on the motor driver pins which can
+cause the LEDs to light slightly (as well as some extra power draw).
+
+To avoid this we'd recommend connecting the 12v wire to the motor drivers as well, so that everything
+can be turned off at the same time.
+
+```JS
+Jolt.setDriverMode(0,true);
+H3.set(); // enable LEDs
+function timer() {
+  var c = E.HSBtoRGB(getTime()/3,1,1,true);
+  analogWrite(H0, 1-(c[0]/256));
+  analogWrite(H1, 1-(c[1]/256));
+  analogWrite(H2, 1-(c[2]/256));
+}
+setInterval(timer,20);
+```
+
+### Individually Addressable LEDs
+
+Espruino supports sending the signals needed for [WS2811/WS2812/WS2812B/APA104/APA106/SK6812 Individually Addressable LEDs](/WS2811)
+(collectively called Neopixels by Adafruit) using the [Neopixel library](https://www.espruino.com/Reference#neopixel).
+
+For some types of LED, the 3.3v signals from the Qwiic connectors are not high
+enough voltage to reliably drive the strip directly, but on Jolt.js you can
+just use the motor drivers to get the required voltage.
+
+Even when off, the LEDs can draw a significant amount of power (up to 1mA per LED) so if you're planning
+on having the LEDs off for any period of time and running off a battery, consider connecting the 5v supply
+wire to Jolt.js's motor drivers *as well as the data wire*. You can then turn off the LEDs completely
+and go back to drawing microamps.
+
+For example if you connect 5v to `H0` and the data line to `H1`:
+
+```JS
+Jolt.setDriverMode(0,true);
+H0.set(); // turn on the LEDs
+var rgb = new Uint24Array(20); // for 20 LEDs
+for (var i in rgb)
+  rgb[i] = E.HSBtoRGB(i/10,1,1,24); // fill with rainbow colours
+require("neopixel").write(H1, rgb); // send to the LEDs
+```
+
 
 Analog Inputs
 -------------
