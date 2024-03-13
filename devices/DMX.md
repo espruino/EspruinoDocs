@@ -17,7 +17,7 @@ DMX protocol uses the same logic levels as RS-485. You can get DMX shields for A
 
 ## DMX Receive
 
-Simply wire the receive wire from your level converter up to a pin on your Espruino that has a USART_RX peripheral (check the reference page for your board). If you're using a level converter with a 5v output make sure you're connecting to a 5v-capable pin (one that doesn't have `3.3v` by it in the pinout diagram). If you were wiring to the Espruino Pico you could use Pin `B7` (but watch out for [the console swapping to Serial when USB is disconnected](www.espruino.com/Troubleshooting#espruino-works-when-connected-to-a-computer-but-stops-when-powered-from-something-else)).
+Simply wire the receive wire from your level converter up to a pin on your Espruino that has a USART_RX peripheral (check the reference page for your board). If you're using a level converter with a 5v output make sure you're connecting to a 5v-capable pin (one that doesn't have `3.3v` by it in the pinout diagram). If you were wiring to the Espruino Pico you could use Pin `B7` (but watch out for [the console swapping to Serial when USB is disconnected](https://www.espruino.com/Troubleshooting#espruino-works-when-connected-to-a-computer-but-stops-when-powered-from-something-else)).
 
 Software
 --------

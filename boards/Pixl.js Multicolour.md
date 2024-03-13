@@ -87,7 +87,7 @@ they disable the ability to connect to them. To connect, you must do one of:
   will start your badge without loading any of the badge code.
 
 You can then use the Chrome web Browser on any Windows 10 or Mac OS device
-and go to [https://www.espruino.com/ide](espruino.com/ide) and you can connect.
+and go to [https://www.espruino.com/ide](https://www.espruino.com/ide) and you can connect.
 You're looking for a device called `Pixl abcd` where `abcd` are the last 4
 characters of the MAC address shown on the Badge's screen.
 
