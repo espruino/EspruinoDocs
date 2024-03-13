@@ -135,7 +135,7 @@ STM32
 
 These updates are done using a Serial-over-USB connection:
 
-We'd strongly recommend that you use the [Web IDE](espruino.com/ide) which has a flasher (and firmware download) built-in. Downloading up to date firmware is as easy as clicking the `Settings` button (top right), then `Flasher`, then `Flash Firmware`. To flash a 'cutting edge' or older binary, simply:
+We'd strongly recommend that you use the [Web IDE](https://www.espruino.com/ide/) which has a flasher (and firmware download) built-in. Downloading up to date firmware is as easy as clicking the `Settings` button (top right), then `Flasher`, then `Flash Firmware`. To flash a 'cutting edge' or older binary, simply:
 
 * Find the `.bin` file that you wish to flash online, right-click on it and `Copy Link Address`.
 * Click the `Settings` button in the IDE, then `Flasher`.
