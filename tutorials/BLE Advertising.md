@@ -251,21 +251,76 @@ is needed when something happens on Puck.js.
 Python
 ------
 
-You can do exactly the same in Python with the [`bluepy` library](http://ianharvey.github.io/bluepy-doc/)
-on Linux (including Raspberry Pi). `bluepy` doesn't appear to support Windows
+Python has two main Bluetooth libraries you can use:
+
+### Bleak
+
+[`bleak`](https://github.com/hbldh/bleak) appears to be the most well supported Python
+Bluetooth LE implementation at the moment.
+
+All you need is `python` and `pip` (the package manager) installed
+and you can run `pip install bleak` to get the latest version.
+
+```Python
+#!python3
+# Scans for and outputs BLE advertising containing manufacturer data 0x0590
+# needs: `pip install bleak`
+import asyncio
+import array
+from bleak import BleakScanner
+from bleak import BleakClient
+
+async def main():
+    stop_event = asyncio.Event()
+
+    def callback(device, advertising_data):
+        # print(advertising_data)  # debug
+        if advertising_data.manufacturer_data and (0x0590 in advertising_data.manufacturer_data):
+          d = advertising_data.manufacturer_data[0x0590]
+          print("Found Espruino Manufacturer data", device)
+          if advertising_data.local_name:
+            print("  Name: ", advertising_data.local_name);
+          print("  Data: ", ", ".join(hex(b) for b in d))
+          # You could call stop_event.set() here if you found the device you want
+          # and scanning will be stopped
+        pass
+
+    async with BleakScanner(callback) as scanner:
+        await stop_event.wait()
+
+# Start scanning
+asyncio.run(main())
+```
+
+* Then run the Python file. Administrator priviledges are not needed:
+
+```
+python advertising_python.py
+```
+
+And you'll get something like the following:
+
+```
+Found Espruino Manufacturer data DD:7D:DE:06:87:2F: Puck.js 872f
+  Name:  Puck.js 872f
+  Data:  0x8
+Found Espruino Manufacturer data DD:7D:DE:06:87:2F: Puck.js 872f
+  Name:  Puck.js 872f
+  Data:  0x8
+...
+```
+
+### Bluepy
+
+You can also use the [`bluepy`](http://ianharvey.github.io/bluepy-doc/) library
+on Linux (including Raspberry Pi), but `bluepy` doesn't appear to support Windows
 or Mac OS at the moment.
 
-* Linux pretty much always comes with Python installed
-* First install the `bluepy` library:
-
-```
-sudo apt-get install python-pip libglib2.0-dev
-sudo pip install bluepy
-```
+Just install it with `pip install bluepy`
 
 Then we use the following code - the handling of advertising data
 is basically the same as Node.js, except in this case the service
-type (`ffff`) is in the same `value` variable as the actual data.
+type (`9005`) is in the same `value` variable as the actual data.
 
 * Add the following code to `advertising_python.py`:
 
