@@ -621,7 +621,7 @@ setTimeout(function() { NRF.restart(function(){
 poke32(0x4001e504,2);while(!peek32(0x4001e400)); // enable flash erase
 poke32(0x4001e514,1);while(!peek32(0x4001e400)); // erase whole uicr
 poke32(0x4001e504,1);while(!peek32(0x4001e400)); // enable flash writing
-poke32(0x10001014,0x7A000);while(!peek32(0x4001e400)); // set bootloader
+poke32(0x10001014,0x78000);while(!peek32(0x4001e400)); // set bootloader address
 poke32(0x10001018,0x7E000);while(!peek32(0x4001e400)); // set mbr settings
 poke32(0x1000120c,0xfffffffe);while(!peek32(0x4001e400)); // NFC pins as GPIO
 poke32(0x4001e504, 0);while(!peek32(0x4001e400)); // disable flash writing
