@@ -35,6 +35,7 @@ Features
 * 1x Button
 * PCB Dimensions: 37.2mm x 36mm
 
+
 ⚠️WARNING⚠️
 ---------
 
@@ -44,9 +45,11 @@ If these higher voltages are wired up wrong they can cause sparks, get hot, and 
 While we have tried to make Jolt.js as hardy as possible, there are limits to how tough we can
 make it while also allowing it to run off a wide voltage range with a low power consumption.
 
-* Wiring a battery backwards to Jolt.js's terminals will destroy it instantly.
-* Powering Jolt.js with more than 18v will destroy it instantly (18v power tool batteries are more than 18v)
+* Wiring a battery backwards to Jolt.js's terminals will destroy it.
+* Powering Jolt.js with more than 18v will destroy it (18v power tool batteries are more than 18v)
 * The Qwiic connectors are only designed for 3.3v, so connections to these should be kept separate from the Terminal block.
+
+**We cannot offer warranty for a Jolt.js that has been wired up backwards or powered with too high a voltage**
 
 We'd recommend some safety precautions:
 
@@ -175,7 +178,7 @@ Pinout
 * APPEND_PINOUT: JOLTJS
 
 **Note:** Jolt.js has one available I2C, SPI and USART (and infinite software SPI and I2C).
-Unlike other Espruino boards, these peripherals can be used on *any* pin.
+Unlike STM32-based Espruino boards, these peripherals can be used on *any* pin.
 
 Terminal Block
 --------------

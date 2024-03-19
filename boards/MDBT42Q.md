@@ -152,7 +152,7 @@ Pinout
 * APPEND_PINOUT: MDBT42Q
 
 **Note:** The nRF52 port has one available I2C, SPI and USART (and infinite software SPI and I2C).
-Unlike other Espruino boards, these peripherals can be used on *any* pin.
+Unlike STM32-based Espruino boards, these peripherals can be used on *any* pin.
 
 The bare MDBT42Q module must be powered with a voltage between 1.7v and 3.6v. **You can
 not connect a LiPo battery to it without a voltage regulator**. However the breakout board

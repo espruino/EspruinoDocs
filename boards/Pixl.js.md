@@ -139,7 +139,7 @@ Pinout
 Pins on the Arduino header are accessed via the built-in variables `D0`..`D13` and `A0`..`A5`.
 
 **Note:** Pixl.js has one available I2C, SPI and USART (and infinite software SPI and I2C).
-Unlike other Espruino boards, these peripherals can be used on *any* pin.
+Unlike STM32-based Espruino boards, these peripherals can be used on *any* pin.
 
 
 <a name="arduino"></a>Arduino Shields

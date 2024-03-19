@@ -148,7 +148,7 @@ Pinout
 * APPEND_PINOUT: PUCKJS
 
 **Note:** Puck.js has one available I2C, SPI and USART (and infinite software SPI and I2C).
-Unlike other Espruino boards, these peripherals can be used on *any* pin.
+Unlike STM32-based Espruino boards, these peripherals can be used on *any* pin.
 
 
 Information
