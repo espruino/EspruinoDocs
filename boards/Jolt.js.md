@@ -35,16 +35,39 @@ Features
 * 1x Button
 * PCB Dimensions: 37.2mm x 36mm
 
+⚠️WARNING⚠️
+---------
+
+Jolt.js allows you to power things at much higher voltages and currents than normal microcontrollers.
+If these higher voltages are wired up wrong they can cause sparks, get hot, and will cause electrical damage.
+
+While we have tried to make Jolt.js as hardy as possible, there are limits to how tough we can
+make it while also allowing it to run off a wide voltage range with a low power consumption.
+
+* Wiring a battery backwards to Jolt.js's terminals will destroy it instantly.
+* Powering Jolt.js with more than 18v will destroy it instantly (18v power tool batteries are more than 18v)
+* The Qwiic connectors are only designed for 3.3v, so connections to these should be kept separate from the Terminal block.
+
+We'd recommend some safety precautions:
+
+* If powering with a battery via the terminal block, add a sensibly sized fuse (ideally 5A maximum).
+* Measure the voltage on unknown batteries with a volt meter before you use them with Jolt.js, and ensure they're under 18v **and** the correct polarity.
+* See `Powering Jolt.js` below before you attempt to power Jolt.js from anything other than USB or a 3.7v LiPo battery on the JST connector
+* When developing with Jolt.js, **communicate via Bluetooth wherever possible**. While Jolt.js can do USB, ensuring your expensive PC isn't physically connected is a great idea just in case there are any loose wires or ground loops.
+
+
 
 <a name="powering"></a>Powering Jolt.js
 ---------------------------------
+
+**⚠️WARNING⚠️ Jolt.js is rated for 18v maximum voltage**. Higher than 18v will cause damage. '18v' power tool batteries can be up to 21v when charged and are not suitable.
 
 Jolt.js can be powered in multiple ways:
 
 * **USB-C** - USB-C can power your Jolt.js from 5v, with a 1A self-resettable fuse (via a diode)
   * This can be disabled by cutting the `USB +` solder jumper on the rear of Jolt.js
 * **LiPo battery** - You can plug a single cell (3.7v) LiPo battery into the JST PH connector on the board. It will power the board via a diode (rated 3A, ~0.35v drop), and will be charged with a LiPo charge circuit (at 100mA) when USB power is applied (at this point Jolt.js will be powered via USB). See `Solder Jumpers` below for more info on configuring for different battery situations.
-* **Terminal Block** - you can attach 2.7 -> 18v directly to the screw terminals on Jolt.js (which are connected directly to the motor driver)
+* **Terminal Block** - you can attach 2.7 -> 18v directly to the screw terminals on Jolt.js (which are connected directly to the motor driver). We would strongly recommend you attach a fuse between Jolt.js and your battery with a trip current of not much more than you expect to draw from it (eg 5A).
 
 | USB | LiPo | Terminals | Voltage |   |
 |-----|------|-----------|---------|---|
@@ -67,6 +90,8 @@ on drawing more than 3A or you want to avoid the voltage drop, you can short thi
 * `USB Pwr` (default shorted) - Jolt.js includes a 3A, 0.35v drop diode from the USB connection (plus a 1A self-resetting fuse) to the motor drivers/terminals. If you're connecting a <4.6v battery to
 the termnals, or you've shorted `LiPo Pwr` then you can cut this jumper to disconnect the diode and stop USB power being used for anything other than LiPo Charging (if `LiPo Chrg` is shorted)
 
+To 'open' a shorted solder pad, you need to cut inbetween the two gold pads. ⚠️ Always check with a multimeter to ensure that the two pads really are disconnected if you need them open.
+
 | LiPo Pwr | LiPo Chg | USB Pwr | Notes |
 |----------|----------|---------|-------|
 | OPEN     | SHORT    | SHORT   | **Default** 3.7v LiPo on JST only, with charge (but 0.35v voltage drop). Uses USB voltage when USB connected. |
@@ -78,13 +103,13 @@ the termnals, or you've shorted `LiPo Pwr` then you can cut this jumper to disco
 | OPEN     | OPEN     | OPEN    | 3->18v battery on JST (but 0.35v voltage drop). USB power unused. |
 | SHORT    | SHORT    | SHORT   | **DO NOT DO THIS** - could break charge circuit |
 
-**Note:** By `JST` we mean the JST PH LiPo connector on the rear edge of the board, not the terminal block
+**Note:** By `JST` we mean the JST PH LiPo connector on the rear edge of the board, not the terminal block.
 
 ## Reverse Voltage Protection
 
 Jolt.js **does not have reverse voltage protection** - always check the polarity when you're powering Jolt.js. Wiring Jolt.js up to a battery backwards will void the warranty!
 
-* There is a 3A diode across the terminal block inputs, so there is some minimal protection if Jolt.js is wired in reverse *for a very short time* to low current voltage sources. However if you attach it to a car battery backwards it'll be destroyed instantly.
+* There is a 3A diode across the terminal block inputs, so there is minimal protection if Jolt.js is wired in reverse *for a very short time* to low current voltage sources. However if you attach Jolt.js to a car battery backwards it'll be destroyed instantly.
 * Similarly the JST battery connector has a diode from it (unless `LiPo Pwr` is shorted), but wiring a battery up to the JST connector in reverse will likely destroy the battery charge circuit.
 
 
@@ -175,9 +200,9 @@ Certifications:
 <a name="motor"></a>Motor Drivers
 ----------------------------------
 
-Jolt.js has 8 powered outputs, divided between two motor drivers (`H0/H1/H2/H3` are on driver 0,`H4/H5/H6/H7` are on driver 1);
+Jolt.js has 8 powered outputs, divided between two motor drivers (`H0/H1/H2/H3` are on driver 0,`H4/H5/H6/H7` are on driver 1). Each output can supply 1A.
 
-When enabled, the motor drivers each draw around 2.7mA, so they are disabled by default and all outputs are then *mostly* (~2.5 kOhm to GND) open circuit.
+When enabled, the 2 motor drivers each draw around 2.7mA, so they are disabled by default and all outputs are then *mostly* (~2.5 kOhm to `GND`) open circuit, but are clamped with internal diodes between `GND` and `+V` on the terminal block.
 
 To enable a motor driver, use [`Jolt.setDriverMode(driverNumber,mode)`](https://www.espruino.com/Reference#l_Jolt_setDriverMode), and then set the pin to the value you want. For example:
 
@@ -187,14 +212,38 @@ H0.set(); // H0 now outputs a high voltage
 setTimeout(function() {
   Jolt.setDriverMode(0,false); // disables H0..H3
 }, 1000);
+
+Jolt.setDriverMode(1,true); // enables H4..H7
+H4.set(); // H4 now outputs a high voltage
+setTimeout(function() {
+  Jolt.setDriverMode(0,false); // disables H4..H7
+}, 1000);
 ```
 
 The argument to [`Jolt.setDriverMode`](https://www.espruino.com/Reference#l_Jolt_setDriverMode) can be one of several different values (see [the reference](https://www.espruino.com/Reference#l_Jolt_setDriverMode))
 but the most useful values are `true` (enable in the default mode where all pins are pulled either high or low) or `false` (disables, making all pins open circuit).
 
+### Drive Current
+
+The motor drivers can supply 1A per output, however they will cut out to protect themselves if they detect too much current flowing or that they are getting too hot.
+
+When this happens with something physical like a motor you may hear a high-pitched whine as the motor driver turns itself on and off repeatedly.
+
+You may well find that a motor that refuses to run at a high voltage (with a whine) will run perfectly fine at a lower voltage as the current required is then low enough.
+
+If you need to control a larger load, consider using Jolt.js to power a relay which then powers your load. Automotive relays are commonly available, will supply large amounts of current, and can easily be connected to Jolt.js's powered outputs.
+
+**Note:** If you attach an ammeter right across an output it won't read 1A, as the motor driver will detect a current draw higher than 1A and will turn off immediately.
+
+### Wiring up loads
+
+Where possible, loads should be connected between `GND` and the motor driver. This ensures that when the motor driver is off, the ~2.5kOhm internal resistance of the motor driver is not causing excess power draw.
+
+If you do have to attach loads between `+V` and the motor driver, consider powering the positive side of the load from one of the motor driver outputs too so you can turn it off when you don't need it.
+
 ### Stepper Motors
 
-Jolt.js contains a module for easy control of stepper motor. For instance you can wire a 5 wire stepper motor between `GND` and `H0`..`H3`, you can use the following code:
+Jolt.js contains [a `Stepper` class](https://www.espruino.com/Reference#Stepper) for easy control of stepper motors. For instance you can wire a 5 wire stepper motor between `GND` and `H0`..`H3`, you can use the following code:
 
 ```JS
 Jolt.setDriverMode(0,true); // enables H0..H3
@@ -212,8 +261,8 @@ Jolt.js can easily drive RGB strip where there are separate wires for red, green
 This LED strip is often 'common-anode', meaning there might be a 12v wire, then R, G and B wires
 which need to be pulled down to ground to turn the LEDs on.
 
-While you can connect the 12v wire direct to the `+` pin on the terminal block, when the motor
-driver is off there is a small (2.5kOhm to GND) resistance on the motor driver pins which can
+While you can connect the 12v wire direct to the `+V` pin on the terminal block, when the motor
+driver is off there is a small (2.5kOhm to `GND`) resistance on the motor driver pins which can
 cause the LEDs to light slightly (as well as some extra power draw).
 
 To avoid this we'd recommend connecting the 12v wire to the motor drivers as well, so that everything
@@ -262,9 +311,10 @@ Analog Inputs
 
 Jolt.js has 8 analog inputs in total:
 
-* 2 are on Qwiic connector `Q0` `SDA`/`SCL` pins
-* 2 are on Qwiic connector `Q1` `SDA`/`SCL` pins
-* 4 are connected via potential dividers to motor driver pins `H0`, `H2`, `H4` and `H6`. These can be used without the motor driver enabled.
+* 2 are on Qwiic connector `Q0` `SDA`/`SCL` pins (returning a value of 0..1 for 0 -> 3.3v)
+* 2 are on Qwiic connector `Q1` `SDA`/`SCL` pins (returning a value of 0..1 for 0 -> 3.3v)
+* 4 are connected via potential dividers to motor driver pins `H0`, `H2`, `H4` and `H6` (returning a value in volts). These can be used without the motor driver enabled.
+
 
 <a name="qwiic"></a>Qwiic/Stemma Connectors
 --------------------------------------------
@@ -306,6 +356,29 @@ All 4 pins are connected to Jolt.js's GPIO (including those usually used for pow
 
 `Jolt.Q2.setPower(1)` will set the GPIOs for GND and VCC such that whatever is connected to `Q2` is turned on. These contain `gnd` and `vcc` fields which reference the pins connected to GND and VCC on the Qwiic connector.
 
+### Checking battery voltage
+
+All Jolt.js's analog pins are used for GPIO so it doesn't have a built-in method of detecting the battery voltage. You have two options:
+
+* `E.getAnalogVRef()` will return the voltage on the microcontroller, which is powered by a 3.3v voltage regulator. If the voltage drops below 3.3v then you know that the power source is getting close to or has dropped below 3.3v too. For Lithium ion batteries, a voltage of 3.3v means the battery is about 90% discharged.
+* You can use the motor driver outputs that are capable of analog input (`H0`, `H2`, `H4` and `H6`) - just turn one on and measure the voltage on it (you just need to ensure it's not connected to anything that you don't want turned on!). For example:
+
+```
+function getBatteryVoltage() {
+  Jolt.setDriverMode(0,true);
+  H0.set();
+  return new Promise(resolve => {
+    setTimeout(function() {
+      let voltage = H0.analog();
+      H0.reset();
+      Jolt.setDriverMode(0,false);
+      resolve(voltage);
+    }, 50);
+  });
+}
+
+getBatteryVoltage().then(print);
+```
 
 
 <a name="onboard"></a>On-board LED and Buttons
@@ -337,11 +410,9 @@ setWatch(function() {
 
 **Note:** as of the current 2v21 firmware build, NFC functionality is not enabled in software.
 
-NFC is available on Jolt.js, however it requires you to wire up an antenna, and to solder
+NFC hardware is available on Jolt.js, however it requires you to wire up an antenna, and to solder
 tuning capacitors to the two capacitor pads on the rear of the board next to the screw hole
 such that the antenna resonates at 13.56 MHz.
-
-Once connected, NFC can be configured with [NRF.nfcURL(...)](/Reference#l_NRF_nfcURL)
 
 
 Firmware Updates
