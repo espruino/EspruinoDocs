@@ -35,7 +35,7 @@ g.drawString(dateString);
 
 It's easiest to show some examples (for the `de_DE` locale):
 
-**Note:** Some strings (eg `currencySym`) may not render
+**Note:** Some strings may not render
 correctly in the console. They may need to be rendered with
 [a 6x8 or other ISO10646-1 font](/Fonts).
 
@@ -43,10 +43,6 @@ correctly in the console. They may need to be rendered with
 // The name of the Locale
 >require("locale").name
 ="de_DE"
-
-// Symbol used for currency
->require("locale").currencySym
-="€"
 
 // Day of the week from Date (long)
 >require("locale").dow(new Date()) // or dow(new Date(), 0)
@@ -67,10 +63,6 @@ correctly in the console. They may need to be rendered with
 // Number to formatted String
 >require("locale").number(4.98)
 ="4.98"
-
-// Currency to formatted String
->require("locale").currency(4.98)
-="4.98€"
 
 // Distance/Length (in meters) to formatted String
 >require("locale").distance(150)
@@ -257,6 +249,13 @@ const menu = {
 3. Upon upload, the app is scanned for these strings, and they are replaced if they are found in the translation file in the [lang folder](https://github.com/espruino/BangleApps/blob/master/lang/).
 
 You can run `bin/language_scan.js` to get a list of all the missing translations.
+
+Currency (deprecated)
+---------------------
+
+~~`require("locale").currencySym` will return the pound character: `£`.~~
+
+~~`require("locale").currency(4.98)` will return the number formatted as a currency in pounds: `£4.98`.~~
 
 Translations (deprecated)
 -------------------------
