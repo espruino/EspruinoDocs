@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 Lars Toft Jacobsen (boxed.dk), Gordon Williams, Stephen Hart. See the file LICENSE for copying permission. */
+/* Copyright (c) 2024 Lars Toft Jacobsen (boxed.dk), Gordon Williams, Stephen Hart. See the file LICENSE for copying permission. */
 /* Simple MQTT protocol wrapper for Espruino sockets. */
 
 /** 'private' constants */
@@ -238,7 +238,9 @@ MQTT.prototype.packetHandler = function(data) {
     if (this.ctimo) clearTimeout(this.ctimo);
     this.ctimo = undefined;
     this.partData = '';
-    var returnCode = pData.charCodeAt(3);
+    // pData may not be long enough to include a reason (that's fine!), in which
+    // case in new firmwares pData.charCodeAt(3)==NaN, so we do 0|
+    var returnCode = 0|pData.charCodeAt(3);
     if (RETURN_CODES[returnCode] === 'ACCEPTED') {
       this.connected = true;
       // start pinging
