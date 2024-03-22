@@ -21,7 +21,7 @@ How to set up
 -------------
 
 * Install Bangle.js Gadgetbridge on your Android phone (see below for more info on our `Bangle.js Gadgetbridge` app). This can be:
-  * [Bangle.js Gadgetbridge from the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) - easiest for most users
+  * [Bangle.js Gadgetbridge from the Play Store](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs) - easiest for most users.
   * [Bangle.js Gadgetbridge from F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs) - not dependent on the Google Play Store
   * [Bangle.js Gadgetbridge 'nightly' builds](https://freeyourgadget.codeberg.page/fdroid/repo/) - with all the very latest changes
   * Normal [Gadgetbridge from F-Droid](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) (this doesn't provide any Internet connectivity features)
@@ -52,12 +52,16 @@ By default, some features are disabled in Gadgetbridge and you may well want to 
   * `Allow Intents` enables Bangle.js apps to interact with Android apps
   * `Sync Calendar Events` allows Gadgetbridge to send info on your Calendar events to Bangle.js, to be viewed with the `Agenda` app.
 
-On some phones, even though Gadgetbriddge requests permissions, they may not have been granted by default:
+On some phones, even though Gadgetbridge requests permissions, they may not have been granted by default:
 
 * Go to `Android Settings` on your Android Device
 * Go to `Apps` then `Permissions` then `Permissions`(again)
 * Now click `Calendar` and scroll down to `Bangle.js Gadgetbridge` and check if it is under `Allowed`. If not, click it under `Denied` and then click `Allow`
 * Now click `Location` and scroll down to `Bangle.js Gadgetbridge` and check if it is under `Allowed All the Time`. If it is, click it and then click `Allow`
+
+If you're using the [Play Store Gadgetbridge](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs), you can 
+also [sign up to be a tester](https://play.google.com/apps/testing/com.espruino.gadgetbridge.banglejs) - occasionally we will release a new 
+version for testing before rolling it out to everyone and you'll get access to that.
 
 
 Bangle.js Gadgetbridge app
