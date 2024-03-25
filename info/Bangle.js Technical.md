@@ -122,16 +122,20 @@ There's IO connected to the nRF52, plus an IO expander to provide power to some 
 | Mask | Description | Default value |
 |------|-------------|---------------|
 | 0x01 | GPS | 0 |
-| 0x02 |  | |
-| 0x04 |  | |
-| 0x08 |  | |
-| 0x10 |  | |
+| 0x02 | NC | |
+| 0x04 | NC | |
+| 0x08 | NC | |
+| 0x10 | NC | |
 | 0x20 | LCD backlight  |  1 |
 | 0x40 | LCD reset |  1 |
 | 0x80 | HRM  | 1 |
 
 [![PCB](Bangle.js Technical/PCB.jpg)](https://github.com/espruino/EspruinoDocs/raw/master/info/Bangle.js Technical/PCB.jpg)
 
+[![PCB pin markings](Bangle.js Technical/pins.jpg)](https://github.com/espruino/EspruinoDocs/raw/master/info/Bangle.js Technical/pins.jpg)
+
+Click on the pictures above for more zoomed in information. Also check out [this excellent forum post](https://forum.espruino.com/conversations/350817/#15409566)
+for even more detailed reverse engineering.
 
 SWD / Programming
 ------------------
