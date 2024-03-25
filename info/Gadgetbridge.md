@@ -189,8 +189,8 @@ Currently implemented messages are:
 * `t:"call", cmd:"accept/incoming/outgoing/reject/start/end", name: "name", number: "+491234"` - call
 * `t:"act", hrm:bool, stp:bool, int:int`  - Enable realtime step counting, realtime heart rate. 'int' is the report interval in seconds
 * `t:"actfetch", ts:long`  - The timestamp (milliseconds since 1970) of the last activity sample received - Bangle.js can then send any data Gadgetbridge might have missed. If set to 0, the Bangle will send all the data it has.
-* `t:"actTrksList", list:"a list of new non-fetched `recorder` app logs"`
-* `t:"actTrk", log:"YYYYMMDDx"  (e.g. 20240101a), lines:"four lines of the log"/"erase", cnt: "the current packet count"`
+* `t:"listRecs", id:"YYYYMMDDx"  (e.g. 20240101a)` - fetch a list of `recorder` app log id's newer than the log with the supplied id (corresponding to the latest fetched log).
+* `t:"fetchRec", id:"YYYYMMDDx"  (e.g. 20240101a)` - fetch the `recorder` app log with the supplied id.
 * `t:"calendar", id:int, type:int, timestamp:seconds, durationInSeconds, title:string, description:string,location:string,calName:string.color:int,allDay:bool`  - Add a calendar event
 * `t:"calendar-", id:int` - remove calendar event
 * `t:"force_calendar_sync_start"` - cause Bangle.js to send a `force_calendar_sync`
@@ -249,9 +249,11 @@ Available message types are:
 * `t:"act", ts:long, hrm:int, stp:int, mov:int, rt:int` - activity data - timestamp, heart rate, steps and movement intensity
   * `ts` is optional - in milliseconds since 1970. If not specified the current time is used
   * `rt` is optional - indicates whether the sample is realtime and therefore not to be stored in the database
-* `t:"listRecs", id:"YYYYMMDDx"  (e.g. 20240101a)` - fetch a list of `recorder` app log id's newer than the log with the supplied id (corresponding to the latest fetched log).
-* `t:"fetchRec", id:"YYYYMMDDx"  (e.g. 20240101a)` - fetch the `recorder` app log with the supplied id.
+* `t:"actTrksList", list:"a list of new non-fetched `recorder` app logs"`
+* `t:"actTrk", log:"YYYYMMDDx"  (e.g. 20240101a), lines:"four lines of the log"/"erase", cnt: "the current packet count"`
 * `t:"force_calendar_sync", ids:[int,int,...]` - Sends a list of Bangle's existing calendar IDs, and ask Gadgetbridge to add/remove any calendar items that are different
+* `t:"intent", target:"...", action:"...", flags:["flag1", "flag2",...], categories:["category1","category2",...], package:"...", class:"...", mimetype:"...", data:"...", extra:{someKey:"someValueOrString", anotherKey:"anotherValueOrString",...}` - sends an Android Intent (which can be used to send data to other apps like Tasker)
+* `t:"file", n:"a_filename", c:"contents as string", m:"a"/"w" (append/overWrite)`
 * `t:"gps_power", status: bool` - Sends an update on whether Bangle.js wants GPS enabled or not
 
 Bangle.js Gadgetbridge also provides:
@@ -259,7 +261,6 @@ Bangle.js Gadgetbridge also provides:
 * `t:"http", url:"https://pur3.co.uk/hello.txt"[,xpath:"­/html/body/p/div[3]/a"][,id:"..."]` - make an HTTPS request (HTTP not supported right now).
   * If `xpath` is supplied, the document is loaded as XML (not all HTML is XML!), the xpath is applied and the result returned instead
   * If `id` is supplied (as a string), the response returns the same `id` (so multiple HTTP requests can be in flight at once)
-* `t:"intent", target:"...", action:"...", flags:["flag1", "flag2",...], categories:["category1","category2",...], package:"...", class:"...", mimetype:"...", data:"...", extra:{someKey:"someValueOrString", anotherKey:"anotherValueOrString",...}` - sends an Android Intent (which can be used to send data to other apps like Tasker)
 
 For example:
 
