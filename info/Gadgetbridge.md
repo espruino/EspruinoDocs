@@ -165,6 +165,15 @@ You can also get weather from Gadgetbridge. Install the [Weather Widget](https:/
 If you're using the Play Store 'Bangle.js Gadgetbridge' app, you need to set the package name to `com.espruino.gadgetbridge.banglejs`
 
 
+### Sports Activity Sync
+
+Activities recorded with the "Recorder" app can be synced to Gadgetbridge which will store, parse and display them in the app.
+
+Activities with GPS data can be forwarded from Gadgetbridge to other apps via a GPX file. If there're no GPS coordinates logged at the beginning of the activity, the forwarded information will not include these first data points and the starting time will not be the same. To mitigate this make sure you have a GPS fix before starting to record on the watch (updated A-GPS data drastically improve the time to get a first fix).
+
+More info at https://gadgetbridge.org/basics/features/sports/ .
+
+
 How it works internally
 --------------------------
 
