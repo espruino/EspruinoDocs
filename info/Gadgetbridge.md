@@ -176,7 +176,10 @@ supplied data as the first argument.
 
 Currently implemented messages are:
 
-* `t:"notify", id:int, src,title,subject,body,sender,tel:string`  - new notification
+* `t:"notify", id:int, src,title,subject,body,sender,tel:string,reply`  - new notification
+  * `id` is a unique ID for this noticiation
+  * `src` is name of app sending notification
+  * `reply:true` is present when it's possible to send a `{t:"notify", id:int, n:"REPLY", msg:"My Reply"}` response (Gadgetbridge 0.80 and later)
 * `t:"notify-", id:int`  - delete notification
 * `t:"alarm", d:[{h:int,m:int,rep:int,on:int},...]`  - set alarms
   * rep=binary mask of weekdays
