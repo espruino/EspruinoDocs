@@ -17,7 +17,7 @@ To do this, it's best to use the right-hand side of the IDE - once uploaded you 
 Drawing the time
 ----------------
 
-Copy the following code to the right of the IDE and click Upload (![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gULCQYBpjW0xwAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAB9SURBVDjL1ZTBDsAgCEOp4f9/mR1cCFOjneMwe1KCAi9VmJkEARCRGmTWriJJQnPxttI60h4QrziNDsm9owOkjvYddr0hr6Mlo2jCfUZeYEngYcimbH94klAYj8yDd40hiPkgTVrdKpPK+P5EHx371v73Q5aenPuFWed3dAH/IFc2Q6hbuwAAAABJRU5ErkJggg==)):
+Copy the following code to the right of the IDE and click Upload ![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gULCQYBpjW0xwAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAB9SURBVDjL1ZTBDsAgCEOp4f9/mR1cCFOjneMwe1KCAi9VmJkEARCRGmTWriJJQnPxttI60h4QrziNDsm9owOkjvYddr0hr6Mlo2jCfUZeYEngYcimbH94klAYj8yDd40hiPkgTVrdKpPK+P5EHx371v73Q5aenPuFWed3dAH/IFc2Q6hbuwAAAABJRU5ErkJggg==) (first ensure the text under it says `RAM` - if not you can change it by clicking the down arrow next to it):
 
 ```JS
 function draw() {
@@ -42,9 +42,9 @@ draw();
 var secondInterval = setInterval(draw, 1000);
 ```
 
-You'll now have some tiny text in the middle of the screen, which displays the time.
+You'll now have some tiny text in the middle of the screen which displays the time.
 
-The slightly odd ` m.toString().padStart(2,0)` code zero-pads the minutes for us (so 1 minute past 12 gets written as `"12:01"` rather than `"12:1"`).
+The `m.toString().padStart(2,0)` code zero-pads the minutes for us (so 1 minute past 12 gets written as `"12:01"` rather than `"12:1"`).
 
 **Why is the code formatted like this?** Check out the [Code Style](/Code+Style)
 page for some tips and the reasoning behind it.
@@ -62,8 +62,9 @@ which can then be used with `g.setFont("7x11Numeric7Seg")`.
 ```JS
 // Load fonts
 require("Font7x11Numeric7Seg").add(Graphics);
-// position on screen
-const X = 160, Y = 140;
+// X/Y are the position of the bottom right of the HH:MM text - make it central!
+const X = g.getWidth()/2 + 45,
+      Y = g.getHeight()/2 + 20;
 
 function draw() {
   // work out how to display the current time
@@ -74,7 +75,7 @@ function draw() {
   g.reset();
   // draw the current time (4x size 7 segment)
   g.setFont("7x11Numeric7Seg",4);
-  g.setFontAlign(1,1); // align right bottom
+  g.setFontAlign(1,1); // align bottom right
   g.drawString(time, X, Y, true /*clear background*/);
   // draw the seconds (2x size 7 segment)
   g.setFont("7x11Numeric7Seg",2);
@@ -91,8 +92,9 @@ var secondInterval = setInterval(draw, 1000);
 
 ![](data:image/png;base64,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)
 
-**Note:** To avoid flicker here we're using the 4th argument to `drawString`,
-which clears the background (by default only the text itself is drawn).
+**Note:** To avoid clearing the whole area here we're using the 4th argument to `drawString`,
+which clears the background (by default only the text itself is drawn). This only works because we know
+our text will always be the same length!
 
 Finally, let's add the date. For this, we can use the `locale` library
 which means that the data will be in the correct language for each user.
@@ -114,10 +116,10 @@ Extra Clock Features
 We now have something that tells the time, but we need to add a few
 extra bits before we can make this a clock face:
 
-### BTN2 to start the launcher
+### Ensure the button starts the launcher
 
 Every clock needs to be able to start the launcher, and
-the default for this is the middle button. All you need to do
+the default for this is by a press of the middle button. All you need to do
 is add this to the end of the clock code (not in a function):
 
 ```JS
@@ -125,27 +127,20 @@ is add this to the end of the clock code (not in a function):
 Bangle.setUI("clock");
 ```
 
-**Note:** In Bangle.js firmwares before 2v08, apps used the following code to
-explicitly show the launcher when `BTN2` is pressed:
-`setWatch(Bangle.showLauncher, BTN2, { repeat: false, edge: "falling" });`. Using
-[`Bangle.setUI`](http://www.espruino.com/Reference#l_Bangle_setUI) allows users
-to install different apps which start the launcher (or other apps) with different
-functionality, independent of the clock face.
-
-
 ### Widgets
 
 Most clocks show widgets. To do this you just need to add the following
 code to the end of the clock:
 
 ```JS
+// Load and display widgets
 Bangle.loadWidgets();
 Bangle.drawWidgets();
 ```
 
 You can call `Bangle.drawWidgets()` every time the screen is cleared
 and widgets need to redraw themselves - but it's good practice to
-do that as rarely as possible to avoid flicker.
+do that as rarely as possible to avoid flicker on Bangle.js 1.
 
 In our example we only clear the screen once (at startup) so that's
 the only time we call `Bangle.drawWidgets()`
@@ -193,8 +188,9 @@ Your code should now look like this:
 ```JS
 // Load fonts
 require("Font7x11Numeric7Seg").add(Graphics);
-// position on screen
-const X = 160, Y = 140;
+// X/Y are the position of the bottom right of the HH:MM text - make it central!
+const X = g.getWidth()/2 + 45,
+      Y = g.getHeight()/2 + 20;
 
 function draw() {
   // work out how to display the current time
@@ -205,7 +201,7 @@ function draw() {
   g.reset();
   // draw the current time (4x size 7 segment)
   g.setFont("7x11Numeric7Seg",4);
-  g.setFontAlign(1,1); // align right bottom
+  g.setFontAlign(1,1); // align bottom right
   g.drawString(time, X, Y, true /*clear background*/);
   // draw the seconds (2x size 7 segment)
   g.setFont("7x11Numeric7Seg",2);
@@ -285,16 +281,17 @@ require("Storage").write("myclock.info",{
 });
 ```
 
-If you now long-press **BTN3** to get to the clock, the press
-**BTN2** to get to the menu, you can scroll down and see `My Clock`.
+If you now long-press the button on Bangle.js to get to the clock,
+then press to get to the Launcher, you can scroll down and see `My Clock`.
 If you select it, it'll execute your app!
 
 You can also go into Settings, and choose it as the default clock
 under `Select Clock`.
 
 **Note:** The [Bangle App Loader](https://banglejs.com/apps/)
-automatically generated this file - we're just doing it here
-so you can create an app without requiring the loader.
+automatically generates the `myclock.info` file for apps loaded
+from it - we're just doing it here so you can create an app
+without requiring the loader.
 
 
 Next Steps

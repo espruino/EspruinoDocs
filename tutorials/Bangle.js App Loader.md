@@ -114,6 +114,7 @@ Finally, it's time to add a description of your app. There's an example at https
   "version":"0.01",
   "description": "This is a description of my awesome timer app",
   "tags": "",
+  "supports": ["BANGLEJS2"],
   "storage": [
     {"name":"timer.app.js","url":"app.js"},
     {"name":"timer.img","url":"app-icon.js","evaluate":true}
@@ -121,8 +122,12 @@ Finally, it's time to add a description of your app. There's an example at https
 }
 ```
 
-There is more information about the format of this file on
-https://github.com/espruino/BangleApps/blob/master/README.md
+**Note:** we're assuming you're writing and app for Bangle.js here. If you're
+writing for Bangle.js 1 use `"supports": ["BANGLEJS"],` instead, or for both,
+use `"supports": ["BANGLEJS","BANGLEJS2"],`
+
+There is more information about the format of the `metadata.json` file on
+https://github.com/espruino/BangleApps/blob/master/README.md#metadatajson-format
 
 * Now click `Commit Changes` and you're done!
 
@@ -134,7 +139,7 @@ description a quick check over to make sure everything looked ok (icons, code, e
 Using your new App
 ------------------
 
-* Go back to your personally hosted BangleApps repo at https://your_user_name.github.io/BangleApps/
+* Go back to your personally hosted BangleApps repo at https://your_user_name.github.io/BangleApps/ (make sure to hit 'reload' - you may also need to wait a minute or two for GitHub to propagate your changes).
 * You'll see an app called `My Timer App` - click the Upload button next to it
 * You can now press the button on your Bangle.js, open the Launcher, and see your app in there!
 
