@@ -4,8 +4,8 @@ Testing Espruino on Bangle.js 2
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Testing+Espruino+on+Bangle.js+2. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Tutorials,Test,Espruino,Bangle.js2,Web Bluetooth,BLE
-* USES: Espruino,Bangle.js2,Web Bluetooth,BLE
+* KEYWORDS: Tutorials,Test,Espruino,Bangle.js 2
+* USES: Bangle.js2
 
 If you are making changes to Espruino itself, you need a way to quickly build and test it. This tutorial shows you how to do that on the [Bangle.js 2 watch](https://www.espruino.com/Bangle.js2).
 
