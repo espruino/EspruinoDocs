@@ -151,7 +151,7 @@ On 2v19 firmware and later, if something has gone wrong you can enter a `Recover
 * Keep holding the button while Bangle.js boots
 * You should now have the Bangle.js logo, version, and MAC address on screen, and you can release the button
 * You'll get to a `Recovery` screen with a few options:
-  * `Clean Boot` - Start up Bangle.js without running any of the code on the watch 
+  * `Clean Boot` - Start up Bangle.js without running any of the code on the watch
   * `Reboot` - reboot the watch
   * `Turn off` - turn off the watch
   * `Factory Reset` - wipe all data and settings from the watch and return it to the state that it came from the factory
@@ -230,15 +230,15 @@ Upon release, specific Bangle.js 2 tutorials will be added here.
 
 Tutorials using Bangle.js:
 
-* APPEND_USES: Bangle.js
+* APPEND_USES: Bangle.js2,Bangle.js
 
 Tutorials using Bluetooth LE:
 
-* APPEND_USES: Only BLE,-Bangle.js
+* APPEND_USES: Only BLE,-Bangle.js,-Bangle.js2
 
 Tutorials using Bluetooth LE and functionality that may not be part of Bangle.js:
 
-* APPEND_USES: BLE,-Only BLE,-Bangle.js
+* APPEND_USES: BLE,-Only BLE,-Bangle.js,-Bangle.js2
 
 There are [many more tutorials](/Tutorials) that may not be specifically for
 you device but will probably work with some tweaking. [Try searching](/Search)

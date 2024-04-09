@@ -596,14 +596,17 @@ markdownFiles.forEach(function (file) {
        var kws = match[1].toLowerCase().split(",").map(function(x){return x.trim();});
        var kw = kws[0];
        var links = [ ];
+       //console.log("============================== appendMatching "+kwName,kws);
        if (infoList[kw]!=undefined) {
          // deep copy
          var pages = {};
          // add keywords
          for (var k=0;k<kws.length;k++) {
            if (kws[k][0]!="-" && infoList[kws[k]]!=undefined) {
-             for (var attr in infoList[kws[k]])
-               pages[attr] = infoList[kws[k]][attr];
+             for (var attr in infoList[kws[k]]) {
+               let page = infoList[kws[k]][attr];
+               pages[page.path] = page; // stop duplicates
+             }
            }
          }
          // remove any keywords
