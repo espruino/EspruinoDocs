@@ -156,7 +156,7 @@ have different numbers of buttons) you need to choose the button with something 
 We're going to use [`Bangle.setUI`](http://www.espruino.com/Reference#l_Bangle_setUI) which provides an abstraction
 and makes this much easier.
 
-* So finally we'll make a button press reset the timer. Add the following just before the call to `outOfTime();` in `countDown`.
+* So finally we'll make a button press reset the timer. Add the following just after the `counterInterval = setInterval(() => Bangle.buzz(), 5000);` line in `countDown`.
 
 ```JS
 Bangle.setUI({
@@ -175,13 +175,6 @@ Your code should now look like:
 ```JS
 var counter = 30;
 var counterInterval;
-
-function outOfTime() {
-  E.showMessage("Out of Time","My Timer");
-  Bangle.buzz();
-  // again, 10 secs later
-  counterInterval = setTimeout(outOfTime, 10000);
-}
 
 function countDown() {
   counter--;
