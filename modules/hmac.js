@@ -48,3 +48,13 @@ exports.SHA1 = function(key) {
 exports.FixedSHA1 = function(key, messageSize) {
   return new FixedHMAC(key, messageSize, require('crypto').SHA1, 64, 20);
 };
+
+/// Create a basic HMAC using SHA256
+exports.SHA256 = function(key) {
+  return new exports.HMAC(key, require('crypto').SHA256, 64, 32);
+};
+
+/// FixedSHA256 is faster than SHA256, but digested message must always be the same fixed length.
+exports.FixedSHA256 = function(key, messageSize) {
+  return new FixedHMAC(key, messageSize, require('crypto').SHA256, 64, 32);
+};
