@@ -82,6 +82,7 @@ and the names have been kept as similar as possible
  * `power` - power (W?), floating point
  * `pressure` - pressure (hPa), floating point
  * `voltage` - voltage (V), floating point
+ * `CO2` - CO2 level (ppm), int
  * `text` - text string
 
 ### Events
