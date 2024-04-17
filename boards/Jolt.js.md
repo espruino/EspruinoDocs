@@ -6,7 +6,7 @@ Jolt.js
 
 * KEYWORDS: Espruino,Official Board,Jolt,Joltjs,Jolt.js,nRF52840,nRF52,Nordic,Board,PCB,Pinout,Bluetooth,BLE,Bluetooth LE,Motor driver,driver,h-bridge,hbridge,stepper
 
-<!-- FIXME ![Jolt.js](Joltjs/board.jpg) -->
+![Jolt.js](Jolt/device.jpg)
 
 **Jolt.js is a programmable Bluetooth motor driver board**
 
