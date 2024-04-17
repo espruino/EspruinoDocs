@@ -8,7 +8,7 @@ Power Consumption
 
 [Official Espruino boards](/Order) come with one of two different types of processor:
 
-* Nordic nRF52 - [[Puck.js]], [[Pixl.js]], [[MDBT42Q]] and [[Bangle.js]]
+* Nordic nRF52 - [Puck.js](/Puck.js), [Pixl.js](/Pixl.js), [[MDBT42Q]] and [Bangle.js](/Bangle.js)
 * ST STM32 - [Original Espruino](/Original), [[Pico]], and [[WiFi]]
 
 nRF52

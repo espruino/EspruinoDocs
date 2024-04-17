@@ -13,7 +13,7 @@ Turning On
 
 ### <a class="specific puckjs"></a>Puck.js
 
-[[Puck.js]] is either supplied with a separate battery, or assembled with the
+[Puck.js](/Puck.js) is either supplied with a separate battery, or assembled with the
 battery inside and a **clear plastic tab** between the battery
 and PCB to keep it turned off. To turn it on, you need to:
 
@@ -37,7 +37,7 @@ improving the software and adding new features. To get the best out of it, we'd 
 
 ### <a class="specific pixljs"></a>Pixl.js
 
-To turn on your [[Pixl.js]] you have three main options:
+To turn on your [Pixl.js](/Pixl.js) you have three main options:
 
 * Use a Micro USB cable for power (there is no USB data connection on Pixl.js)
 * Slide a CR2032 battery into the holder on the board (with `+` facing away from the PCB)
@@ -50,7 +50,7 @@ To get the best out of it, we'd recommend that you [update Pixl.js's firmware](/
 
 ### <a class="specific joltjs"></a>Jolt.js
 
-To turn on your [[Jolt.js]] you have three main options:
+To turn on your [Jolt.js](/Jolt.js) you have three main options:
 
 * Use a USB-C cable for power
 * Attach a LiPo battery to the JST battery connector on the board

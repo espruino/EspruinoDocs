@@ -195,10 +195,10 @@ Submitting your App to the main App Loader website
 
 Now you have a working app it's easy to submit it.
 
-_While we will try to accept any apps you send us, we won't be able
+**While we will try to accept any apps you send us, we won't be able
 to accept any obviously broken or non-child-friendly apps. However
 your apps will still be available on https://your_user_name.github.io/BangleApps/
-for anyone that wants to upload them_
+for anyone that wants to upload them**
 
 * In https://github.com/your_user_name/BangleApps (the main repository)
 click `Pull request` up the top right
