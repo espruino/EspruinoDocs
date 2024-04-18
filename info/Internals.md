@@ -53,8 +53,7 @@ Each block has optional links to children and siblings, which allows a tree stru
 
 What follows are the basic variable fields and offsets for 16 byte variable:
 
-| Offset | Size | Name    | STRING | STR_EXT  | NAME_STR | NAME_INT | INT  | DOUBLE  | OBJ/FUNC/ARRAY | ARRAYBUFFER | NATIVE_STR | FLAT_STR |
-| 16b    |      |         |        |          |          |          |      |         |                |             | FLASH_STR  |          |
+| Offset 16b | Size | Name    | STRING | STR_EXT  | NAME_STR | NAME_INT | INT  | DOUBLE  | OBJ<br>FUNC<br>ARRAY | ARRAYBUFFER | NATIVE_STR<br>FLASH_STR | FLAT_STR |
 |--------|------|---------|--------|----------|----------|----------|------|---------|----------------|-------------|------------|----------|
 | 0 - 3  | 4    | varData | data   | data     |  data    | data     | data | data    | nativePtr      | size        | ptr        | charLen  |
 | 4 - 5  | ?    | next    | data   | data     |  next    | next     |  -   | data    | argTypes       | format      | len        | -        |
