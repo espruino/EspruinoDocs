@@ -231,7 +231,7 @@ MQTT.prototype.packetHandler = function(data) {
     //console.log("Unsubscription succesful.");
     this.emit('unsubscribed');
   } else if (type === TYPE.PINGREQ) {
-    this.client.write(fromCharCode(TYPE.PINGRESP << 4) + "\x00");
+    this.client.write(fromCharCode(TYPE.PINGRESP << 4,0));
   } else if (type === TYPE.PINGRESP) {
     this.emit('ping_reply');
   } else if (type === TYPE.CONNACK) {
@@ -317,7 +317,7 @@ MQTT.prototype._scktClosed = function () {
 MQTT.prototype.disconnect = function () {
   if (!this.client) return;
   try {
-    this.client.write(fromCharCode(TYPE.DISCONNECT << 4) + "\x00");
+    this.client.write(fromCharCode(TYPE.DISCONNECT << 4,0));
   } catch(e) {
     return this._scktClosed();
   }
@@ -383,7 +383,7 @@ MQTT.prototype.unsubscribe = function (topic) {
 MQTT.prototype.ping = function () {
   if (!this.client) return;
   try {
-    this.client.write(fromCharCode(TYPE.PINGREQ << 4) + "\x00");
+    this.client.write(fromCharCode(TYPE.PINGREQ << 4,0));
   } catch (e) {
     this._scktClosed();
   }
