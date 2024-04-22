@@ -208,7 +208,13 @@ Jolt.js has 8 powered outputs, divided between two motor drivers (`H0/H1/H2/H3` 
 
 When enabled, the 2 motor drivers each draw around 2.7mA, so they are disabled by default and all outputs are then *mostly* (~2.5 kOhm to `GND`) open circuit, but are clamped with internal diodes between `GND` and `+V` on the terminal block.
 
-To enable a motor driver, use [`Jolt.setDriverMode(driverNumber,mode)`](https://www.espruino.com/Reference#l_Jolt_setDriverMode), and then set the pin to the value you want. For example:
+**Note:** On preproduction firmwares there is no `"auto"` mode and you must manually enable the motor drivers with  [`Jolt.setDriverMode(driverNumber,mode)`](https://www.espruino.com/Reference#l_Jolt_setDriverMode)
+
+By default, the motor drivers are in `"auto"` mode. Setting any pin in a bank (`H0/H1/H2/H3` or `H4/H5/H6/H7`) to an output will enable the entire bank. For instance `H0.set()` will enable motor driver 0
+and will set `H0` to `VCC`, but `H1`, `H2` and `H3` will then be pulled to `GND`. To disable the motor driver, `H0` must be set back to an input (using `H0.read()` is the easiest but `pinMode(H0,"input")` or `H0.mode("input")` will
+work too if you want to be explicit about setting the pin state).
+
+To enable a motor driver manually, use [`Jolt.setDriverMode(driverNumber,mode)`](https://www.espruino.com/Reference#l_Jolt_setDriverMode), and then set the pin to the value you want. For example:
 
 ```JS
 Jolt.setDriverMode(0,true); // enables H0..H3
@@ -236,6 +242,8 @@ When this happens with something physical like a motor you may hear a high-pitch
 You may well find that a motor that refuses to run at a high voltage (with a whine) will run perfectly fine at a lower voltage as the current required is then low enough.
 
 If you need to control a larger load, consider using Jolt.js to power a relay which then powers your load. Automotive relays are commonly available, will supply large amounts of current, and can easily be connected to Jolt.js's powered outputs.
+
+If you just need a *bit* more power, you can always join multiple outputs together external to Jolt.js and set them at once with `digitalWrite([H0,H1], true)`. Just ensure you don't accidentally set them to different values in software!
 
 **Note:** If you attach an ammeter right across an output it won't read 1A, as the motor driver will detect a current draw higher than 1A and will turn off immediately.
 
