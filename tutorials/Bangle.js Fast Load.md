@@ -300,7 +300,7 @@ process.memory().usage
 eval(require("Storage").read("myclock.app.js"))
 process.memory().usage
 Bangle.setUI()
-eval(require("Storage").read("myclock.app.js"))
+process.memory().usage
 ```
 
 You should get something along the lines of:
