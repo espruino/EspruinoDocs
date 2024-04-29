@@ -151,6 +151,8 @@ it on. Underneath that you'll find 4 pins, labelled as follows:
 
 You only need `GND`, `SWDID` and `SWDCLK` (VDD is not required).
 
+See [Advanced Debug](/AdvancedDebug) for more information on programming via SWD.
+
 
 Heart Rate monitor PCB
 ----------------------

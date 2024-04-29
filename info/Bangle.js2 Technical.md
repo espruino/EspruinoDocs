@@ -97,7 +97,9 @@ The easiest way to connect to these is to use the provided USB charge cable and 
 | 3     | SWDCLK  |
 | 4     | GND     |
 
-Be sure to fully remove the tape and adheisive covering the SWDIO and SWDCLK pins.
+Be sure to fully remove the tape and adhesive covering the SWDIO and SWDCLK pins.
+
+See [Advanced Debug](/AdvancedDebug) for more information on programming via SWD.
 
 GPS
 ---
@@ -222,7 +224,7 @@ Unlike Bangle.js 1, all IO is connected direct to the nRF52840 - there's no need
 |  45 (0x2d)  |  COMPASS_SCL  |    |
 |  47 (0x2f)  |  PRESSURE_SDA  |    |
 
-To access these pins from Espruino, all you need to do is add `D` to the pin number. For example to read the analog battery voltage (pin 3), use the command `analogRead(D3)`. 
+To access these pins from Espruino, all you need to do is add `D` to the pin number. For example to read the analog battery voltage (pin 3), use the command `analogRead(D3)`.
 
 ## I2C
 
