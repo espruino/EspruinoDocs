@@ -55,44 +55,56 @@ How it works:
 <div style="margin-left: 24px">
   Size : <input type="range" min="4" max="150" value="16" class="slider" style="width:500px" id="fontSize"><span id="fontSizeText">16</span><br/>
   BPP : <select id="fontBPP">
-    <option value="1" selected>1 bpp (black & white)</option>
+    <option value="1" selected>1 bpp (black &amp; white)</option>
     <option value="2">2 bpp</option>
     <option value="4">4 bpp</option>
   </select><br/>
   Range : <select id="fontRange">
-    <option value="ASCII">ASCII (32-127)</option>
-    <option value="ASCIICAPS" selected>ASCII capitals (32-127)</option>
-    <option value="ISO8859-1">ISO8859-1 / ISO Latin (32-255)</option>
-    <option value="Numeric">Numeric (46-58)</option>
+    <option value="">Loading...</option>
   </select><br/>
   Align to increase sharpness : <input type="checkbox" id="fontJitter"></input><br/>
   Use compression : <input type="checkbox" id="useHeatshrink"></input><br/>
 </div>
 </form>
-<button id="calculateFont" style="font-size: 14pt;">Go!</button><br/>
-
+<button id="calculateJSFont" style="font-size: 14pt;">Get JS</button>
+<button id="calculatePBFFont" style="font-size: 14pt;">Get PBF File</button>
+<br/>
 <span style="display:none;" id="fontTest" >This is a test of the font</span><br/>
 <canvas width="256" height="256" id="fontcanvas" style="display:none"></canvas>
 <textarea id="result" style="width:100%;display:none" rows="16"></textarea>
 <p id="fontPreviewP">
 <canvas id="fontPreview" style="display:none;border:1px solid black;width:100%;image-rendering: pixelated;"></canvas>
 </p>
-<script src="/js/heatshrink.js"></script>
+<script src="https://espruino.github.io/EspruinoWebTools/heatshrink.js"></script>
+<script src="https://espruino.github.io/EspruinoWebTools/fontconverter.js"></script>
 <script>
-var fontRanges = {
- "ASCII" : {min:32, max:127, txt:"This is a test of the font"},
- "ASCIICAPS" : {min:32, max:93, txt:"THIS IS A TEST OF THE FONT"},
- "ISO8859-1" : {min:32, max:255, txt:"This is a test of the font"},
- "Numeric" : {min:46, max:58, txt:"0.123456789:/"},
-};
+var fontRanges = fontconverter.getRanges();
+document.getElementById("fontRange").innerHTML = Object.keys(fontRanges).map(id => `<option value="${id}">${id} (${fontRanges[id].charCount} chars)</option>`).join("\n");
+
 // Each character can be moved around slightly in order to ensure the maximum
 // amount of 'solid' pixels
 var FONT_JITTER = false;
 var cssNode;
 
-function createFont(fontName, fontHeight, BPP, charMin, charMax) {
+function downloadURL(data, fileName)  {
+  const a = document.createElement('a')
+  a.href = data
+  a.download = fileName
+  document.body.appendChild(a)
+  a.style.display = 'none'
+  a.click()
+  a.remove()
+};
+
+// Called by loadFontAndCalculate when the font is actually loaded
+function createFont(fontName, fontHeight, BPP, fontRange, outputFmt) {
+  if (outputFmt=="JS" && fontRange.charCount>1500) {
+    window.alert("Can't output this font range as JS as it contains more than 1500 characters")
+    return;
+  }
+
   var canvas = document.getElementById("fontcanvas");
-  var ctx = canvas.getContext("2d");
+  var ctx = canvas.getContext("2d", { willReadFrequently: true });
   ctx.font = fontHeight+"px "+fontName;
   ctx.textBaseline = "bottom";
 
@@ -125,8 +137,8 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
           if (img.data[i]) allClear = false;
         if (!allClear) yOffset++;
       } while(!allClear && yOffset<fontHeight);
-      if (yOffset>0) console.log("Nudging character "+JSON.stringify(ch)+" up by "+yOffset+" pixels to it fits");
-      if (yOffset<0) console.log("Nudging character "+JSON.stringify(ch)+" down by "+(-yOffset)+" pixels to it fits");
+      if (yOffset>0) console.log("Nudging character "+JSON.stringify(ch)+" up by "+yOffset+" pixels so it fits");
+      if (yOffset<0) console.log("Nudging character "+JSON.stringify(ch)+" down by "+(-yOffset)+" pixels so it fits");
       // get image data
       img = ctx.getImageData(xPos,yPos+yOffset,chWidth,fontHeight);
     }
@@ -168,90 +180,84 @@ function createFont(fontName, fontHeight, BPP, charMin, charMax) {
   preview.width = fontHeight*16;
   preview.height = fontHeight*16;
   prevCtx.width = fontHeight*16;
-  prevCtx.height = fontHeight*16;
-  var prevImg = prevCtx.createImageData(fontHeight,fontHeight);
+  prevCtx.height = fontHeight*17;
+  var prevImg = prevCtx.createImageData(fontHeight, fontHeight);
 
   var fontData = [];
-  var bitData = 0, bitCount = 0;
-  var fontWidths = [];
-  var maxCol = 0, maxP = 0;
   var minY = 10000, maxY = -1;
-  for (var ch=charMin;ch<=charMax;ch++) {
-    var img = drawCh(String.fromCharCode(ch));
-    fontWidths.push(img.width);
-    prevImg.data.fill(255);
-    for (var x=0;x<img.width;x++) {
-      var s = "";
-      for (var y=0;y<img.height;y++) {
-        var idx = (x + y*img.width)*4;
-        // get greyscale
-        var c = (img.data[idx]+img.data[idx+1]+img.data[idx+2]) / 3;
-        if (c>maxCol)maxCol=c;
-        // shift down to BPP with rounding
-        c = (c + (127>>BPP)) >> (8-BPP);
-        if (c>=(1<<BPP)) c = (1<<BPP)-1;
-        // debug
-        if (c>maxP) maxP=c;
-        if (c) {
-          if (y > maxY) maxY = y;
-          if (y < minY) minY = y;
-        }
-        //if (ch=="X".charCodeAt()) console.log(x,y,c);
-        s += " ,/#"[c>>(BPP-2)];
-        var n = (x+(y*fontHeight))*4;
-        var prevCol = 255 - ((BPP==1) ? c*255 : (c << (8-BPP)));
-        prevImg.data[n] = prevImg.data[n+1] = prevImg.data[n+2] = prevCol;
-        // add bit data
-        bitData = (bitData<<BPP) | c;
-        bitCount += BPP;
-        if (bitCount>=8) {
-          fontData.push(bitData);
-          bitData = 0;
-          bitCount = 0;
+  var font = new fontconverter.Font({ bpp : BPP, range : fontRange.range, height : fontHeight } );
+  font.fmWidth = fontHeight*2;
+  font.fmHeight = fontHeight;
+  font.id = fontName.replace(/[^A-Za-z0-9]/g,"");
+  fontRange.range.forEach(range => {
+    for (var ch=range.min;ch<=range.max;ch++) {
+      let img = drawCh(String.fromCharCode(ch));
+      let imgBits = new Uint8Array(img.width*img.height);
+      prevImg.data.fill(255);
+      for (var x=0;x<img.width;x++) {
+        for (var y=0;y<img.height;y++) {
+          var idx = (x + y*img.width)*4;
+          // get greyscale
+          var c = (img.data[idx]+img.data[idx+1]+img.data[idx+2]) / 3;
+          // shift down to BPP with rounding
+          c = (c + (127>>BPP)) >> (8-BPP);
+          if (c>=(1<<BPP)) c = (1<<BPP)-1;
+          // Save
+          imgBits[x + (y*img.width)] = c;
+          // Preview image
+          var n = (x+(y*fontHeight))*4;
+          c <<= 8-BPP;
+          c |= c>>BPP;
+          c |= c>>(BPP*2);
+          c |= c>>(BPP*4);
+          var prevCol = 255 - c;
+          prevImg.data[n] = prevImg.data[n+1] = prevImg.data[n+2] = prevCol;
         }
       }
-      //console.log(s);
+      if (ch<256) // only preview the first 256
+        prevCtx.putImageData( prevImg, (ch&15)*fontHeight, (1+(ch>>4))*fontHeight );
+      // actually add the glyph
+      let glyph = font.getGlyph(ch, (x,y) => {
+        if (y<0 || y>=img.height) return 0;
+        if (x<0 || x>=img.width) return 0;
+        return imgBits[x + (y*img.width)];
+      });
+      if (ch==32) {
+        glyph.advance = img.width; // force space width to image width
+      }
+      if (glyph) font.glyphs[ch] = glyph;
     }
-    prevCtx.putImageData( prevImg, (ch&15)*fontHeight, (ch>>4)*fontHeight );
-  }
+  });
   // draw grid lines
   prevCtx.strokeStyle = "red";
   prevCtx.lineWidth = 0.1;
   for (var i=0;i<16;i++) {
-    prevCtx.moveTo(0, fontHeight*i);
-    prevCtx.lineTo(fontHeight*16, fontHeight*i);
-    prevCtx.moveTo(fontHeight*i, 0);
-    prevCtx.lineTo(fontHeight*i, fontHeight*16);
+    prevCtx.moveTo(0, fontHeight*(i+1));
+    prevCtx.lineTo(fontHeight*16, fontHeight*(i+1));
+    prevCtx.moveTo(fontHeight*i, fontHeight);
+    prevCtx.lineTo(fontHeight*i, fontHeight*17);
   }
   prevCtx.stroke();
+  // draw preview string
+  let previewBmp = font.renderString(fontRange.text);
+  prevImg = prevCtx.createImageData(previewBmp.width, previewBmp.height);
+  prevImg.data.set(new Uint8Array(previewBmp.data.buffer));
+  prevCtx.putImageData( prevImg, 0, 0 );
 
-  //console.log("Max color value = "+maxCol+", in bpp "+maxP);
-  // if all fonts are the same width...
-  var fixedWidth = fontWidths.every(w=>w==fontWidths[0]);
-
-  var encodedFont;
-  if (document.getElementById("useHeatshrink").checked) {
-    const fontArray = new Uint8Array(fontData);
-    const compressedFont = String.fromCharCode.apply(null, heatshrink.compress(fontArray));
-    encodedFont =
-      "E.toString(require('heatshrink').decompress(atob('" +
-      btoa(compressedFont) +
-      "')))";
-  } else {
-    encodedFont = "atob('" + btoa(String.fromCharCode.apply(null, fontData)) + "')";
-  }
-  var result = document.getElementById("result");
-  result.style.display = "inherit";
-  result.value = `
-Graphics.prototype.setFont${fontName.replace(/[^A-Za-z0-9]/g,"")} = function() {
-  // Actual height ${maxY+1-minY} (${maxY} - ${minY})
-  return this.setFontCustom(
-    ${encodedFont},
-    ${charMin},
-    ${fixedWidth?fontWidths[0]:`atob("${btoa(String.fromCharCode.apply(null,fontWidths))}")`},
-    ${fontHeight}|${BPP<<16}
-  );
-}`.trim();
+  //font.debugChars(); // debug to console
+  // Output result
+  if (outputFmt=="JS") {
+    var result = document.getElementById("result");
+    result.style.display = "inherit";
+    result.value = font.getJS({
+      compressed : document.getElementById("useHeatshrink").checked
+    }).trim();
+  } else if (outputFmt=="PBF") {
+    let pbfData = font.getPBF();
+    let blob = new Blob([pbfData.buffer], {type: 'application/octet-stream'});
+    let url = window.URL.createObjectURL(blob);
+    downloadURL(url, font.id+".pbf");
+  } else throw new Error("Unknown output format");
   // resize the font preview box
   onWindowResize();
 }
@@ -266,7 +272,8 @@ function onChangeFontFile() {
   }
 }
 
-function getFontLinkAndName(callback) {
+// Loads the font in, and when loaded calls loadFontAndCalculate
+function getFontLinkAndName(outputFmt) {
   var fontFile = document.getElementById('fontFile').files[0];
   if(fontFile) {
     var fontName = document.getElementById('fontFileName').value.trim();
@@ -276,7 +283,7 @@ function getFontLinkAndName(callback) {
     reader.addEventListener("load", function onLoadFontData() {
       const dataUrl = reader.result;
       console.log("fontLink: loaded data URL");
-      callback(dataUrl, fontName);
+      loadFontAndCalculate(dataUrl, fontName, outputFmt);
       reader.removeEventListener("load", onLoadFontData);
     }, false);
     reader.readAsDataURL(fontFile);
@@ -323,12 +330,13 @@ function getFontLinkAndName(callback) {
       if (fontLink.includes("#"))
         fontLink = fontLink.substr(0,fontLink.indexOf("#"));
     }
-    callback(fontLink, fontName);
+    loadFontAndCalculate(fontLink, fontName, outputFmt);
   }
 
 }
 
-function loadFontAndCalculate(fontLink, fontName) {
+// Called by getFontLinkAndName when the font is loaded
+function loadFontAndCalculate(fontLink, fontName, outputFmt) {
   console.log("URL: " + (fontLink ? fontLink.substring(0, 500) : "[none]"));
   console.log("Family: " + fontName);
   var fontHeight = parseInt(document.getElementById('fontSize').value);
@@ -339,10 +347,10 @@ function loadFontAndCalculate(fontLink, fontName) {
   FONT_JITTER = document.getElementById("fontJitter").checked;
 
   document.getElementById('fontTest').style = `font-family: '${fontName}';font-size: ${fontHeight}px`;
-  document.getElementById('fontTest').innerText = fontRange.txt;
+  document.getElementById('fontTest').innerText = fontRange.text;
 
   function callback() {
-    createFont(fontName, fontHeight, fontBPP, fontRange.min, fontRange.max);
+    createFont(fontName, fontHeight, fontBPP, fontRange, outputFmt);
   }
 
   if (fontLink=="" || (cssNode && cssNode.href == fontLink)) {
@@ -373,16 +381,20 @@ function loadFontAndCalculate(fontLink, fontName) {
   };
 }
 
-document.getElementById("calculateFont").addEventListener('click',function(e) {
+document.getElementById("calculateJSFont").addEventListener('click',function(e) {
   e.preventDefault();
-  getFontLinkAndName(loadFontAndCalculate);
+  getFontLinkAndName("JS");
+});
+document.getElementById("calculatePBFFont").addEventListener('click',function(e) {
+  e.preventDefault();
+  getFontLinkAndName("PBF");
 });
 document.getElementById('fontSize').addEventListener('mousemove',function() {
   document.getElementById('fontSizeText').innerHTML = document.getElementById('fontSize').value;
 });
-document.getElementById("fontForm").addEventListener('submit', function(e) {
+document.getElementById("fontForm").addEventListener('submit', function(e) { // when a font is actually uploaded via the file box
   e.preventDefault();
-  getFontLinkAndName(loadFontAndCalculate);
+  getFontLinkAndName("JS");
 });
 
 function onWindowResize() {
