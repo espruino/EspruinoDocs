@@ -66,8 +66,7 @@ How it works:
   Use compression : <input type="checkbox" id="useHeatshrink"></input><br/>
 </div>
 </form>
-<button id="calculateJSFont" style="font-size: 14pt;">Get JS</button>
-<button id="calculatePBFFont" style="font-size: 14pt;">Get PBF File</button>
+<button id="calculateJSFont" style="font-size: 14pt;">Get JS</button><button id="calculatePBFFont" style="font-size: 14pt;">Get PBF File</button>
 <br/>
 <span style="display:none;" id="fontTest" >This is a test of the font</span><br/>
 <canvas width="256" height="256" id="fontcanvas" style="display:none"></canvas>
