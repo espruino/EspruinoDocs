@@ -146,16 +146,10 @@ exports.lpcomp = function(opts) {
     sample : function() {
       poke32(o.tSample,1);return peek32(o.result);
     },
-    cross : function() {
-      var r = {
-        up:peek32(o.eUp),
-        down:peek32(o.eDown),
-        cross:peek32(o.eCross)
-      };
-      poke32(o.eDown, 0);
-      poke32(o.eUp, 0);
-      poke32(o.eCross, 0);
-      return r;
+    cross : function() { // eDown/eUp/eCross are right next to each other
+      var r = peek32(o.eDown,3);
+      poke32(o.eDown, [0,0,0]); 
+      return {up:r[1],down:r[0],cross:r[2]};
     }
   };
   poke32(o.tStop, 1);
@@ -177,10 +171,7 @@ exports.lpcomp = function(opts) {
   poke32(o.hyst, opts.hyst?1:0);
   poke32(o.shorts, 1); // enable ready->sample short
   poke32(o.enable, 1);
-  poke32(o.eReady, 0);
-  poke32(o.eDown, 0);
-  poke32(o.eUp, 0);
-  poke32(o.eCross, 0);
+  poke32(o.eReady, [0,0,0,0]); // eReady,eDown,eUp,eCross next to each other
   poke32(o.tStart, 1); // start sampling
   return o;
 };

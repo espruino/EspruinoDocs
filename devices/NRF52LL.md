@@ -13,7 +13,7 @@ PPI lets you connect an `event` (eg. a pin changing state) to a `task` (eg. incr
 
 Check out [the chip's reference manual](http://infocenter.nordicsemi.com/pdf/nRF52832_PS_v1.1.pdf) for more information.
 
-This library provides a low level interface to PPI and some of the nRF52's peripherals.
+This library ([[NRF52LL.js]]) provides a low level interface to PPI and some of the nRF52's peripherals.
 
 **Note:** Failure to 'shut down' peripherals when not in use could drastically increase the nRF52's power consumption.
 
