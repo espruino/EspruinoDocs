@@ -22,6 +22,6 @@ Please [take a look here](/Quick+Start+Code) for a quick walkthrough
 on how to write code for Espruino.
 
 <script>
-if (window.location.hash=="#pixljs" || window.location.hash=="#puckjs")
+if (window.location.hash=="#pixljs" || window.location.hash=="#puckjs" || window.location.hash=="#banglejs" || window.location.hash=="#joltjs")
   window.location.pathname = "/Quick+Start+BLE";
 </script>
