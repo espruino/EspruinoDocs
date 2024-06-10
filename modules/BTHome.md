@@ -77,12 +77,14 @@ and the names have been kept as similar as possible
  * `count32` - 0..0xFFFFFFFF, int
  * `current` - amps, floating point
  * `duration` - seconds, floating point
+ * `gas` - gas (m3), int (32 bit)
  * `humidity` - humidity %, int
  * `humidity16` - humidity %, floating point
  * `power` - power (W?), floating point
  * `pressure` - pressure (hPa), floating point
  * `voltage` - voltage (V), floating point
- * `CO2` - CO2 level (ppm), int
+ * `co2` - CO2 level (ppm), int
+ * `tvoc` - TVOC (volatile compounds) level (ug/m3), int
  * `text` - text string
 
 ### Events

@@ -20,12 +20,14 @@ exports.getAdvertisement = function(devices) {
     count32 : e => b32(0x3E, e.v),                      // 0..0xFFFFFFFF, int
     current : e => b16(0x3D, Math.round(e.v*1000)),     // amps, floating point
     duration : e => b16(0x42, Math.round(e.v*1000)),    // seconds, floating point
+    gas : e => b32(0x4C, e.v),                          // gas (m3), int (32 bit version)
     humidity : e => [0x2E, Math.round(e.v)],            // humidity %, int
     humidity16 : e => b16(3, Math.round(e.v*100)),      // humidity %, floating point
     power : e => b24(0x0B, Math.round(e.v*100)),        // power (W?), floating point
     pressure : e => b24(4, Math.round(e.v*100)),        // pressure (hPa), floating point
     voltage : e => b16(0x0C, Math.round(e.v*1000)),     // voltage (V), floating point
     co2 : e => b16(0x12, Math.round(e.v)),              // co2 (ppm), int, factor=1
+    tvoc : e => b16(0x13, Math.round(e.v)),             // TVOC (ug/m3), int, factor=1
     text : e => { let t = ""+e.v; return [ 0x53, t.length ].concat(t.split("").map(c=>c.charCodeAt())); }, // text string
     button_event : e => {
       const events=["none","press","double_press","triple_press","long_press","long_double_press","long_triple_press"];
@@ -76,7 +78,7 @@ exports.getAdvertisement = function(devices) {
     devices.map(dev => {
       if (dev.type in DEV) return DEV[dev.type](dev);
       if (dev.type in BOOL) return [BOOL[dev.type], dev.v?1:0];
-      throw new Error(`Unknown device type ${E.toJS(dev.id)}`);
+      throw new Error(`Unknown device type ${E.toJS(dev.type)}`);
     }));
   return {
     0xFCD2 : adv
