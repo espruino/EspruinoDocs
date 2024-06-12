@@ -47,7 +47,7 @@ BH1745.prototype.read = function() {
   };
 };
 
-// Initialise the CCS811 module with the given I2C interface (and optional address with connectI2C(i2c,{addr:...}) )
+// Initialise the BH1745 module with the given I2C interface (and optional address with connectI2C(i2c,{addr:...}) )
 exports.connectI2C = function(i2c,options) {  
   options = options||{};
   var addr = options.addr||0x38;
