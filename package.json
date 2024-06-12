@@ -8,7 +8,8 @@
     "eslintdevices": "./node_modules/.bin/eslint devices/*.js",
     "eslintmodules": "./node_modules/.bin/eslint modules/*.js",
     "eslintboards": "./node_modules/.bin/eslint boards/*.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "build_modules": "node ./bin/buildmodules.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
     "cors": "^2.8.5",
     "eslint": "^5.14.1",
     "express": "^4.13.3",
+    "fs-extra": "^11.2.0",
     "highlight.js": "^8.9.1",
     "marked": "^0.3.6",
     "tern": "^0.16.0"
