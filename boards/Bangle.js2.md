@@ -149,11 +149,11 @@ On 2v19 firmware and later, if something has gone wrong you can enter a `Recover
 * Hold the button down. After around 6 seconds the screen goes blank and displays some pixellated text
 * Keep pressing the button while `====` goes across the screen
 * Keep holding the button while Bangle.js boots
-* You should now have the Bangle.js logo, version, and MAC address on screen, and you can release the button
-* You'll get to a `Recovery` screen with a few options:
+* You'll now get to a `Recovery` menu and you can release the button. At this point the watch's Bluetooth will be enabled and you can connect with the App Loader or IDE if you need to. You can even do a Backup from the App Loader if you need to. There are a few options:
   * `Clean Boot` - Start up Bangle.js without running any of the code on the watch
   * `Reboot` - reboot the watch
   * `Turn off` - turn off the watch
+  * `Test` - run a test script. Long-press to exit.
   * `Factory Reset` - wipe all data and settings from the watch and return it to the state that it came from the factory
   * `Exit` - exit the menu and boot normally
   * `Attempt Compact` - try compacting storage to free space - this may take a few minutes
@@ -591,6 +591,9 @@ For more information see the [Technical Information Page](/Bangle.js2+Technical#
 
 Firmware Updates
 ------------------
+
+Bangle.js 2 firmware updates must be performed over Bluetooth.While there is a USB charge cable, it is for charging only and USB firmware
+updates are not possible. For wired firmware updates see `Hardware SWD` above (but this is only useful for firmware development).
 
 ### App Loader
 
