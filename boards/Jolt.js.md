@@ -8,9 +8,9 @@ Jolt.js
 
 ![Jolt.js](Jolt/device.jpg)
 
-**Jolt.js is a programmable Bluetooth motor driver board**
+* BUYFROM: £35,£26,https://shop.espruino.com/joltjs,/Order#joltjs
 
-<span style="color:red">**JOLT.JS IS NOT CURRENTLY IN PRODUCTION BUT WILL BE AVAILABLE IN JUNE 2024**</span>
+**Jolt.js is a programmable Bluetooth Motor Driver board**
 
 **Just got your Jolt.js? [Take a look here!](/Quick+Start+BLE#joltjs)**
 
@@ -47,7 +47,7 @@ While we have tried to make Jolt.js as hardy as possible, there are limits to ho
 make it while also allowing it to run off a wide voltage range with a low power consumption.
 
 * Wiring a battery backwards to Jolt.js's terminals will destroy it.
-* Powering Jolt.js with more than 18v will destroy it (18v power tool batteries are more than 18v)
+* Powering Jolt.js with more than 18v (even for a split second) will destroy it (18v power tool batteries are more than 18v)
 * The Qwiic connectors are only designed for 3.3v, so connections to these should be kept separate from the Terminal block.
 
 **We cannot offer warranty for a Jolt.js that has been wired up backwards or powered with too high a voltage**
@@ -58,7 +58,8 @@ We'd recommend some safety precautions:
 * Measure the voltage on unknown batteries with a volt meter before you use them with Jolt.js, and ensure they're under 18v **and** the correct polarity.
 * See `Powering Jolt.js` below before you attempt to power Jolt.js from anything other than USB or a 3.7v LiPo battery on the JST connector
 * When developing with Jolt.js, **communicate via Bluetooth wherever possible**. While Jolt.js can do USB, ensuring your expensive PC isn't physically connected is a great idea just in case there are any loose wires or ground loops.
-
+* **⚠️ Some switch-mode bench power supplies are very badly regulated.** While charging up the capacitors inside Jolt.js some can overshoot the selected voltage by over 60% (so 12v becomes 20v for a few milliseconds) and can destroy your Jolt.js. 
+Please use under 12v and 100mA unless you are 100% sure of the quality of your power supply.
 
 
 <a name="powering"></a>Powering Jolt.js
