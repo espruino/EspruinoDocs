@@ -4,8 +4,8 @@ nRF52 Low Level Interface Library
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/NRF52LL. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Module,nRF52,nRF5x,nRF52832,Puck.js
-* USES: Puck.js,Pixl.js,MDBT42Q,nRF52832,nRF52
+* KEYWORDS: Module,nRF52,nRF5x,nRF52832,Low Level,Hardware,Differential,SAADC,GPIOTE,LPCOMP,PPI,TIMER
+* USES: Puck.js,Pixl.js,Jolt.js,MDBT42Q,nRF52832,nRF52
 
 The nRF52 microcontroller used in [Puck.js](/Puck.js), [Pixl.js](/Pixl.js) and [MDBT42Q](/MDBT42Q) has a load of really interesting peripherals built-in, not all of which are exposed by Espruino. The microcontroller also contains something called PPI - the "Programmable Peripheral Interconnect". This allows you to 'wire' peripherals together internally.
 
@@ -140,7 +140,7 @@ setWatch(function() {
 
 ### Make one reading from the ADC:
 
-Uses ADC.
+Uses the ADC (much line `analogRead` but with more options)
 
 ```JS
 var ll = require("NRF52LL");
@@ -153,6 +153,27 @@ var saadc = ll.saadc({
   } ]
 });
 print(saadc.sample()[0]);
+saadc.stop(); // deconfigure so analogRead works again (use saadc.start() to redo)
+```
+
+### Make a differential from the ADC:
+
+Use the ADC to measure the voltage difference between D30 and D31,
+with the maximum gain and oversampling provided by the hardware.
+
+```JS
+var ll = require("NRF52LL");
+var saadc = ll.saadc({
+  channels : [ { // channel 0
+    pin:D30, npin:D31,
+    gain:4,
+    tacq:40,
+    refvdd:true,
+  } ],
+  oversample : 8
+});
+print(saadc.sample()[0]);
+saadc.stop(); // deconfigure so analogRead works again (use saadc.start() to redo)
 ```
 
 ### Read a buffer of data from the ADC
@@ -186,6 +207,7 @@ poke32(saadc.tSample,1); // start!
 while (!peek32(saadc.eEnd)); // wait until it ends
 poke32(saadc.tStop,1);
 print("Done!", buf);
+saadc.stop(); // deconfigure so analogRead works again (use saadc.start() to redo)
 ```
 
 ### Read a buffer of data from the ADC, alternating between 2 pins
@@ -203,7 +225,7 @@ var buf = new Int16Array(128);
 // ADC
 var saadc = ll.saadc({
   channels : [ {
-    pin:D31, // channel 0    
+    pin:D31, // channel 0
     gain:1/4,
     refvdd:true
   }, {
@@ -226,6 +248,7 @@ while (!peek32(saadc.eEnd)); // wait until sampling ends
 poke32(tmr.tStop,1);
 poke32(saadc.tStop,1);
 print("Done!", buf);
+saadc.stop(); // deconfigure so analogRead works again (use saadc.start() to redo)
 ```
 
 ### Use the RTC to toggle the state of a LED

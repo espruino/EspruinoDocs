@@ -206,7 +206,9 @@ exports.lpcomp = function(opts) {
     eEnd     // event when ADC has filled DMA buffer
     setDMA : function({ptr,cnt}) // set new DMA buffer
                // double-buffered so can be set again right after tStart
+    start : function() // configure ADC (called automatically when 'saadc' created)
     sample : function(cnt) // Make `cnt*channels.length` readings and return the result. resets DMA
+    stop : function() // uninitialise so that normal analogRead works
   }
 */
 exports.saadc = function(opts) {
@@ -227,6 +229,7 @@ exports.saadc = function(opts) {
       poke32(addr+0x630, 0|o.cnt);
     },
     sample : function(cnt) {
+      poke32(o.enable, 1);
       cnt = cnt||1;
       if (cnt>1 && !opts.samplerate)
         throw "Can't do >1 sample with no samplerate specified";
@@ -241,7 +244,37 @@ exports.saadc = function(opts) {
       while (!peek32(o.eEnd));
       poke32(o.tStop,1);
       o.setDMA(); // don't try and write to this buffer now we're not using it any more
+      poke32(addr+0x104, 0); // clear end flag
+      poke32(o.enable, 0);
       return buf.slice(0,cnt*opts.channels.length);
+    },
+    start : function() {
+      this.stop();
+      // config channels
+      opts.channels.forEach(function(ch, idx) {
+        var a = addr+0x510 + idx*16;
+        var v = (pulls.indexOf(ch.pinpull)) |
+          (pulls.indexOf(ch.npinpull)<<4) |
+          (gains.indexOf(ch.gain)<<8) |
+          ((!!ch.refvdd)<<12) |
+          (tacqs.indexOf(ch.tacq)<<16) |
+          ((ch.npin!==undefined)<<20) | // differential if npin is supplied
+          ((!!opts.oversample)<<24);
+        poke32(a+8, v); // options
+        poke32(a, 0|(new Pin(ch.pin).getInfo().channel+1)); // pin pos -  undefined -> 0
+        poke32(a+4, 0|((ch.npin&&new Pin(ch.npin).getInfo().channel)+1)); // pin neg - undefined -> 0
+      });
+      poke32(addr+0x5F0, (opts.resolution-8)>>1);
+      poke32(addr+0x5F4, 0|opts.oversample);
+      poke32(addr+0x5F8, opts.samplerate | ((!!opts.samplerate)<<12));
+      o.setDMA(opts.dma);
+    },
+    stop : function() {
+      poke32(o.enable, 0);
+      poke32(addr+0x5F4, 0); // disable oversample
+      // disable all ADC channels
+      for (var i=0;i<8;i++)
+        poke32(addr+0x510 + i*16, 0);
     }
   };
   var pulls = [undefined, "down","up","vcc/2"];
@@ -251,37 +284,20 @@ exports.saadc = function(opts) {
   if (!opts.channels || opts.channels.length>8) throw "Invalid channels";
   if (opts.oversample && opts.channels.length>1)throw "Can't oversample with >1 channel";
   if (opts.samplerate && opts.channels.length>1)throw "Can't use samplerate with >1 channel";
-  poke32(o.enable, 0);
-  // disable all ADC channels
-  for (var i=0;i<8;i++)
-    poke32(addr+0x510 + i*16, 0);
-  // config those specified
+  // check channel info
   opts.channels.forEach(function(ch, idx) {
-    var a = addr+0x510 + idx*16;
     if (!ch.gain) ch.gain=1;
     if (!ch.tacq) ch.tacq=3;
     if (pulls.indexOf(ch.pinpull)<0) throw "Invalid pinpull";
     if (pulls.indexOf(ch.npinpull)<0) throw "Invalid npinpull";
     if (gains.indexOf(ch.gain)<0) throw "Invalid gain";
     if (tacqs.indexOf(ch.tacq)<0) throw "Invalid tacq";
-    var v = (pulls.indexOf(ch.pinpull)) |
-      (pulls.indexOf(ch.npinpull)<<4) |
-      (gains.indexOf(ch.gain)<<8) |
-      ((!!ch.refvdd)<<12) |
-      (tacqs.indexOf(ch.tacq)<<16) |
-      ((ch.npin!==undefined)<<20) | // differential if npin is supplied
-      ((!!opts.oversample)<<24);
-    poke32(a+8, v); // options
-    poke32(a, 0|(new Pin(ch.pin).getInfo().channel+1)); // pin pos -  undefined -> 0
-    poke32(a+4, 0|((ch.npin&&new Pin(ch.npin).getInfo().channel)+1)); // pin neg - undefined -> 0
   });
-  poke32(addr+0x5F0, (opts.resolution-8)>>1);
-  poke32(addr+0x5F4, 0|opts.oversample);
-  poke32(addr+0x5F8, opts.samplerate | ((!!opts.samplerate)<<12));
-  o.setDMA(opts.dma);
-  poke32(o.enable, 1);
+  // setup 
+  o.start();
   return o;
 };
+
 
 /** Real time counter
   You should only set on ch2 as 0 and 1 are used by Espruino/Bluetooth
