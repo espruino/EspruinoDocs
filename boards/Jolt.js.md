@@ -26,14 +26,16 @@ Features
 
 * Bluetooth Low Energy
 * Espruino JavaScript interpreter pre-installed
-* nRF528402 SoC - 64MHz ARM Cortex M4, 256kB RAM, 1MB Flash
-* 8x high power 1A H-bridge outputs on screw terminal block
+* nRF52840 SoC - 64MHz ARM Cortex M4, 256kB RAM, 1MB Flash
+* 8x high power 1A H-bridge outputs on screw terminals
 * 4x Qwiic/Stemma connectors (2x analog capable with 500mA FET, 2x with 4x GPIO)
 * 2.7v to 18v input range
-* Ultra low power (down to 0.004mA) when idle
+* Ultra low power (down to 0.008mA) when idle
+* LiPo battery connector with inbuilt charger
 * USB-C with USB Serial support
 * 1x 3mm mounting hole
 * 1x Button
+* 40mm x 40mm x 12mm with protective silicone case
 * PCB Dimensions: 37.2mm x 36mm
 
 
@@ -123,7 +125,7 @@ Power Consumption
 
 All power figures below are with the LCD on:
 
-* No advertising - 0.004mA
+* No advertising - 0.008mA
 * Advertising - 0.06mA
 * Connected via BLE - 0.8mA
 * Connected via BLE (1 min inactivity, or `NRF.setConnectionInterval(200)`)- 0.05mA

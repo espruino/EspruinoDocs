@@ -50,7 +50,7 @@ Now, you need to put your device into DFU mode using the instructions below. Not
 
 #### Entering DFU mode
 
-##### MDBT42Q / Puck.js
+##### MDBT42Q / Puck.js / Jolt.js
 
 * Apply power while holding the button (or button 1 on Pixl.js) down
 * A LED will now stay lit (green on Puck.js, red on MDBT42Q)
