@@ -25,11 +25,19 @@ How do you use it?
 
 Simply call `require("locale")` in your code and use the provided object.
 
-For instance, if you want to write a date in a locale-friendly way, just use:
+For instance, if you want to show the clock in a locale-friendly way, just use:
 
 ```JS
-var myDate = new Date();
-var dateString = require("locale").date(myDate);
+let myDate = new Date();
+let clockString = require("locale").time(myDate) + " " + require("locale").meridian(myDate);
+g.drawString(clockString);
+```
+
+And for a locale-friendly date:
+
+```JS
+let myDate = new Date();
+let dateString = require("locale").date(myDate);
 g.drawString(dateString);
 ```
 
@@ -94,15 +102,27 @@ correctly in the console. They may need to be rendered with
 
 // Date to time string (long)
 >require("locale").time(new Date())
-="15:49:39"
+="03:49:39" // If user chose 12-hour clock
+="15:49:39" // If user chose 24-hour clock
 
 // Date to time string (short)
 >require("locale").time(new Date(), 1)
-="15:49"
+="03:49" // If user chose 12-hour clock
+="15:49" // If user chose 24-hour clock
 
 // Date to meridian (text describing morning/evening)
 >require("locale").meridian(new Date())
-="" // or "pm" for en_GB
+="PM" // If user chose 12-hour clock
+=""   // If user chose 24-hour clock
+
+// Date to meridian (forced)
+>require("locale").meridian(new Date(), true)
+="PM" // No matter which hour format is used
+
+// Check which hour format the watch uses
+>require("locale").is12Hours()
+=true  // If user chose 12-hour clock
+=false // If user chose 24-hour clock
 ```
 
 `date_utils` module
