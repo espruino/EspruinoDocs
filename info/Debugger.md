@@ -6,6 +6,11 @@ Espruino Debugger
 
 * KEYWORDS: Debug,Debugger,Debugging,Finding Problems
 
+This page describes the built-in debugger. You might also want to check out:
+
+* [Debugging Tips](/Debugging) for more general information on debugging code in Espruino.
+* [Advanced Debug (SWD)](/AdvancedDebug) for information on debugging and developing with the Espruino interpreter itself (using a hardware debugger)
+
 [[http://youtu.be/2ODoIpnTDA4]]
 
 As of Espruino 1v81, there is now a built-in text mode debugger, which allows you to step through your code line by line. The commands used are almost identical to those in GDB.
@@ -24,7 +29,7 @@ In these cases you can log any data that gets printed (including exceptions) to 
 var log="";
 LoopbackB.on('data',d=>log+=d);
 // On Bluetooth devices, use:
-NRF.on('disconnect', function() { LoopbackA.setConsole(); }); 
+NRF.on('disconnect', function() { LoopbackA.setConsole(); });
 ```
 
 On Bluetooth devices you can hook onto the 'disconnected' event and can call `LoopbackA.setConsole();` but on other devices you will need to do it manually (for instance in `onInit()`).
@@ -37,8 +42,8 @@ You can also just log exceptions, for example:
 
 ```
 var lastError;
-process.on('uncaughtException', function(e) { 
-  lastError=e; 
+process.on('uncaughtException', function(e) {
+  lastError=e;
   print(e,e.stack?"\n"+e.stack:"")
 });
 
@@ -102,7 +107,7 @@ When in debug mode, you'll see the current statement pointed to with an arrow. F
 1
   debugger;
   ^
-debug> 
+debug>
 ```
 
 You'll notice that `console.log(1);` was already executed, because that's above the `debugger` keyword.
@@ -155,7 +160,7 @@ debug>n
 3
 Value returned is =undefined
 =undefined
-> 
+>
 ```
 
 Or using `step`, you step inside the functions `bar` and `foo`:
