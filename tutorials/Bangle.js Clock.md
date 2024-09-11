@@ -79,7 +79,7 @@ function draw() {
   g.setFontAlign(1,1); // align bottom right
   g.setFont("7x11Numeric7Seg:4");
   g.drawString(clock, X, Y, true /*clear background*/);
-  // draw the seconds (2x size 7 segment)
+  // draw the meridian(am/pm) and seconds (2x size 7 segment)
   g.setFontAlign(-1,1); // align bottom left
   g.setFont("6x8:2");
   g.drawString(meridian, X+4, Y-26, true /*clear background*/);
@@ -208,7 +208,7 @@ function draw() {
   g.setFontAlign(1,1); // align bottom right
   g.setFont("7x11Numeric7Seg:4");
   g.drawString(clock, X, Y, true /*clear background*/);
-  // draw the seconds (2x size 7 segment)
+  // draw the meridian(am/pm) and seconds (2x size 7 segment)
   g.setFontAlign(-1,1); // align bottom left
   g.setFont("6x8:2");
   g.drawString(meridian, X+4, Y-26, true /*clear background*/);
