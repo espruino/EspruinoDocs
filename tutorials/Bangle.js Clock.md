@@ -23,8 +23,9 @@ Copy the following code to the right of the IDE and click Upload ![](data:image/
 function draw() {
   // work out how to display the current time
   var d = new Date();
-  var h = d.getHours(), m = d.getMinutes();
-  var time = h + ":" + m.toString().padStart(2,0);
+  var clock = require("locale").time(d);
+  var meridian = require("locale").meridian(d);
+  var time = clock + " " + meridian;
 
   // Reset the state of the graphics library
   g.reset();
@@ -44,7 +45,7 @@ var secondInterval = setInterval(draw, 1000);
 
 You'll now have some tiny text in the middle of the screen which displays the time.
 
-The `m.toString().padStart(2,0)` code zero-pads the minutes for us (so 1 minute past 12 gets written as `"12:01"` rather than `"12:1"`).
+The `locale` module will print the clock in different formats depending on each user's language and area.
 
 **Why is the code formatted like this?** Check out the [Code Style](/Code+Style)
 page for some tips and the reasoning behind it.
@@ -69,17 +70,21 @@ const X = g.getWidth()/2 + 45,
 function draw() {
   // work out how to display the current time
   var d = new Date();
-  var h = d.getHours(), m = d.getMinutes();
-  var time = (" "+h).substr(-2) + ":" + m.toString().padStart(2,0);
+  var clock = require("locale").time(d, 1 /*omit seconds*/);
+  var seconds = d.getSeconds().toString().padStart(2,0);
+  var meridian = require("locale").meridian(d);
   // Reset the state of the graphics library
   g.reset();
   // draw the current time (4x size 7 segment)
-  g.setFont("7x11Numeric7Seg",4);
   g.setFontAlign(1,1); // align bottom right
-  g.drawString(time, X, Y, true /*clear background*/);
+  g.setFont("7x11Numeric7Seg:4");
+  g.drawString(clock, X, Y, true /*clear background*/);
   // draw the seconds (2x size 7 segment)
-  g.setFont("7x11Numeric7Seg",2);
-  g.drawString(("0"+d.getSeconds()).substr(-2), X+30, Y, true /*clear background*/);
+  g.setFontAlign(-1,1); // align bottom left
+  g.setFont("6x8:2");
+  g.drawString(meridian, X+4, Y-26, true /*clear background*/);
+  g.setFont("7x11Numeric7Seg:2");
+  g.drawString(seconds, X+2, Y, true /*clear background*/);
 }
 
 // Clear the screen once, at startup
@@ -90,16 +95,15 @@ draw();
 var secondInterval = setInterval(draw, 1000);
 ```
 
-![](data:image/png;base64,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)
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALAAAACwAQAAAACHzNnzAAAAfklEQVR42u3UsQqAIBDG8WvpXtOpZ3C7WuoVelSnTJSbDOUgg+D7Dwq/QRFRQggh9N8kroOYk/k8eZ9GG8txdpmDsluWYSy7hd3c5zQpExmYGqzXUEaOgWws29ViPso2urGb1neZwxcsGRtsXTs1gKsnZWM9TsX47RBCCD10A8Mgq4tOgt5iAAAAAElFTkSuQmCC)
+
+The `.toString().padStart(2,0)` code zero-pads the seconds for us (so 1 second gets written as `"01"` rather than `"1"`).
 
 **Note:** To avoid clearing the whole area here we're using the 4th argument to `drawString`,
 which clears the background (by default only the text itself is drawn). This only works because we know
 our text will always be the same length!
 
-Finally, let's add the date. For this, we can use the `locale` library
-which means that the data will be in the correct language for each user.
-
-Just add the following at the bottom of the `draw` function:
+Finally, let's add the date. Just add the following at the bottom of the `draw` function:
 
 ```JS
   // draw the date, in a normal font
@@ -195,17 +199,21 @@ const X = g.getWidth()/2 + 45,
 function draw() {
   // work out how to display the current time
   var d = new Date();
-  var h = d.getHours(), m = d.getMinutes();
-  var time = (" "+h).substr(-2) + ":" + m.toString().padStart(2,0);
+  var clock = require("locale").time(d, 1 /*omit seconds*/);
+  var seconds = d.getSeconds().toString().padStart(2,0);
+  var meridian = require("locale").meridian(d);
   // Reset the state of the graphics library
   g.reset();
   // draw the current time (4x size 7 segment)
-  g.setFont("7x11Numeric7Seg",4);
   g.setFontAlign(1,1); // align bottom right
-  g.drawString(time, X, Y, true /*clear background*/);
+  g.setFont("7x11Numeric7Seg:4");
+  g.drawString(clock, X, Y, true /*clear background*/);
   // draw the seconds (2x size 7 segment)
-  g.setFont("7x11Numeric7Seg",2);
-  g.drawString(("0"+d.getSeconds()).substr(-2), X+30, Y, true /*clear background*/);
+  g.setFontAlign(-1,1); // align bottom left
+  g.setFont("6x8:2");
+  g.drawString(meridian, X+4, Y-26, true /*clear background*/);
+  g.setFont("7x11Numeric7Seg:2");
+  g.drawString(seconds, X+2, Y, true /*clear background*/);
   // draw the date, in a normal font
   g.setFont("6x8");
   g.setFontAlign(0,1); // align center bottom
