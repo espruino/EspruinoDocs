@@ -25,9 +25,7 @@ How to set up
   * [Bangle.js Gadgetbridge from F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs) - not dependent on the Google Play Store
   * [Bangle.js Gadgetbridge 'nightly' builds](https://freeyourgadget.codeberg.page/fdroid/repo/) - with all the very latest changes
   * Normal [Gadgetbridge from F-Droid](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) (this doesn't provide any Internet connectivity features)
-* On Bangle.js, install ONE OF (not both!):
-  * [Android Integration app](https://banglejs.com/apps/?id=android) - this is the new and recommended way of interfacing to Gadgetbridge, which allows you to view all notifications in a list
-  * [The Gadgetbridge Widget](https://banglejs.com/apps/?id=gbridge) - this is the old way of interfacing to Gadgetbridge - it displays just one notification at a time.
+* On Bangle.js, install the [Android Integration app](https://banglejs.com/apps/?id=android) - this is the new and recommended way of interfacing to Gadgetbridge. (The [Gadgetbridge Widget](https://banglejs.com/apps/?id=gbridge) is the old, unmaintained way of interfacing to Gadgetbridge)
 * Now ensure you disconnect your computer from Bangle.js
 * Start the Gadgetbridge app and click the blue `+` in the bottom right
 * Choose your Bangle.js device from the list
@@ -58,6 +56,8 @@ On some phones, even though Gadgetbridge requests permissions, they may not have
 * Go to `Apps` then `Permissions` then `Permissions`(again)
 * Now click `Calendar` and scroll down to `Bangle.js Gadgetbridge` and check if it is under `Allowed`. If not, click it under `Denied` and then click `Allow`
 * Now click `Location` and scroll down to `Bangle.js Gadgetbridge` and check if it is under `Allowed All the Time`. If it is, click it and then click `Allow`
+
+On some custom Android ROMS (and Xiaomi/Redmi MIUI phones) you need to grant extra permissions for 'Find My Phone' to be able to create a sound. See https://gadgetbridge.org/basics/features/find-phone/
 
 If you're using the [Play Store Gadgetbridge](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs), you can 
 also [sign up to be a tester](https://play.google.com/apps/testing/com.espruino.gadgetbridge.banglejs) - occasionally we will release a new 
