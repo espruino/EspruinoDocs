@@ -2,7 +2,7 @@
 Debugging Tips
 ===============
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Debugger. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Debugging. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Debug,Debugger,Debugging,Finding Problems
 

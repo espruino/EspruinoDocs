@@ -29,7 +29,7 @@ Disabling App Reload
 Disabling the Watchdog
 -----------------------
 
-Even if the reload button is disabled, you can perform a fill reboot by holding the button for ~10 seconds.
+Even if the reload button is disabled, you can perform a full reboot by holding the button for ~10 seconds.
 
 To disable this you need to manually kick the watchdog timer every few seconds with:
 
