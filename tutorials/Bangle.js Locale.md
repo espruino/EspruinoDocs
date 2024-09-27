@@ -254,7 +254,7 @@ Every app is automatically translated in the current language when it is install
 To make your app _translations-ready_ you must:
 
 1. Write any text in English as usual
-2. Put the `/*LANG*/` placeholder in front of any text that should be translated. Eg.:
+2. Put the `/*LANG*/` placeholder in front of any text that should be translated (which should be in English). Eg.:
 ```JS
 const menu = {
   "": { "title": /*LANG*/"Repeat Alarm" },
@@ -268,7 +268,9 @@ const menu = {
 ```
 3. Upon upload, the app is scanned for these strings, and they are replaced if they are found in the translation file in the [lang folder](https://github.com/espruino/BangleApps/blob/master/lang/).
 
-You can run `bin/language_scan.js` to get a list of all the missing translations.
+You can run `core/tools/language_scan.js` to get a list of all the missing translations, and even to automatically translate them (if given Deepl API details).
+
+**Note:** Translations that include non-ASCII characters can't be rendered without extra fonts, so have to be pre-rendered to bitmaps. See https://github.com/espruino/BangleApps/blob/master/lang/README.md for more information.
 
 Currency (deprecated)
 ---------------------
