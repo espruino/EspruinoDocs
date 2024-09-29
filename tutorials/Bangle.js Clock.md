@@ -23,9 +23,7 @@ Copy the following code to the right of the IDE and click Upload ![](data:image/
 function draw() {
   // work out how to display the current time
   var d = new Date();
-  var clock = require("locale").time(d);
-  var meridian = require("locale").meridian(d);
-  var time = clock + " " + meridian;
+  var time = require("locale").time(d);
 
   // Reset the state of the graphics library
   g.reset();
