@@ -81,4 +81,4 @@ Puck.on('mag', onMag);
 Puck.magOn();
 ```
 
-Don't want to play with code? You can upload it directly to a Puck.js with a few clicks at: https://espruino.github.io/EspruinoApps/?id=bthome_door
+* APPLOADER_APP: bthome_door

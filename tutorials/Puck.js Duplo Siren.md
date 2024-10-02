@@ -34,7 +34,8 @@ Wire up as in the video:
 Software
 --------
 
-You can also upload this [direct from the Espruino App Loader](http://www.espruino.com/apps#pucksiren)
+* APPLOADER_APP: pucksiren
+
 
 ```
 D2.reset();
@@ -88,13 +89,13 @@ function turnOff() {
 // detect movement
 require("puckjsv2-accel-movement").on();
 var idleTimeout;
-Puck.on('accel',function(a) {  
+Puck.on('accel',function(a) {
   if (idleTimeout) clearTimeout(idleTimeout);
   else turnOn();
   idleTimeout = setTimeout(function() {
     idleTimeout = undefined;
     turnOff();
-  },5000);  
+  },5000);
 });
 
 NRF.sleep();

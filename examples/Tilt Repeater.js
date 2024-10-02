@@ -28,7 +28,7 @@ Uploading
 * You will need Espruino 2v01 or later installed on your device
 * Copy the code below to the right-hand side of the IDE and click 'Upload'
 
-You can also upload this [direct from the Espruino App Loader](http://www.espruino.com/apps#tiltrepeater)
+* APPLOADER_APP: tiltrepeater
 
 Notes
 -----

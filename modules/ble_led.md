@@ -13,6 +13,7 @@ which means your device can appear in Home Assistant with the [LED BLE integrati
 
 Once configured, a device running this library will appear in `http://homeassistant/config/integrations/dashboard` where it can be used alongside all your other devices.
 
+* APPLOADER_APP: ha_led
 
 Usage
 -----

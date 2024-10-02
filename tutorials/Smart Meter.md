@@ -59,9 +59,9 @@ D1.write(0);
 pinMode(D2,"input_pullup");
 // Watch for pin changes
 setWatch(function(e) {
- counter++;
- update();
- digitalPulse(LED1,1,1); // show activity
+  counter++;
+  update();
+  digitalPulse(LED1,1,1); // show activity
 }, D2, { repeat:true, edge:"falling" });
 ```
 
@@ -70,6 +70,8 @@ Pulse Counter with BTHome/Home Assistant
 
 You can also make your Puck.js advertise in the [BTHome advertising format](/BTHome)
 which means it'll be picked up and automatically integrated into [Home Assistant](https://www.home-assistant.io/).
+
+* APPLOADER_APP: bthome_energy
 
 Just use the following code:
 
@@ -103,12 +105,12 @@ D1.write(0);
 pinMode(D2,"input_pullup");
 // Watch for pin changes
 setWatch(function(e) {
- let timeDiff = e.time - lastPulse;
- power = 3600 / timeDiff; // 1000imp/kwh -> 1000 pulses in 3600sec = 1kW
- counter++;
- update();
- lastPulse = e.time;
- digitalPulse(LED1,1,1); // show activity
+  let timeDiff = e.time - lastPulse;
+  power = 3600 / timeDiff; // 1000imp/kwh -> 1000 pulses in 3600sec = 1kW
+  counter++;
+  update();
+  lastPulse = e.time;
+  digitalPulse(LED1,1,1); // show activity
 }, D2, { repeat:true, edge:"falling" });
 update();
 ```

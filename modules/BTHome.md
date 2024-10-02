@@ -158,7 +158,7 @@ updateAdvertising("none");
 NRF.setTxPower(4);
 ```
 
-**You can load this example straight onto your device with [the Espruino App Loader](https://espruino.github.io/EspruinoApps/?q=bthome)**
+* APPLOADER_APP: bthome
 
 ### Booleans
 

@@ -18,6 +18,8 @@ Contents
 
 * APPEND_TOC
 
+* APPLOADER_APP: pixlmulticolbadge
+
 ## Quick Links
 
 - [Original Nodeconf badge pages](https://nodeconfeubadge.org)

@@ -22,6 +22,7 @@ Documentation files are written [GitHub Markdown](https://help.github.com/articl
     * APPEND_USES: part              ; Append a list of pages that have this part in their USES_PARTS list
     * APPEND_JSDOC: filename         ; Append JavaScript documentation based on the JS in the given file
     * APPEND_PINOUT: boardname       ; Append Pinout for the given board
+    * APPLOADER_APP: appname         ; Append link to the app loader at https://espruino.github.io/EspruinoApps/
     * BUYFROM: normalprice,bulkprice,link1,link2|optional_name,link3  ; Append a floating 'buy from' window
     * APPEND_TOC                     ; Append a table of contents made from H1/H2/H3 (and add them as keywords)
     * LIST_LINKS_AS_KEYWORDS         ; Add lists of links `* [...](...)` as keywords

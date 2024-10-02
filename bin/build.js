@@ -699,6 +699,12 @@ markdownFiles.forEach(function (file) {
   </div>`;
       contentLines[i] = html;
      }
+     // handle links to the app loadet
+     match = contentLines[i].match(/^\* APPLOADER_APP:(.*)/);
+     if (match!=null) {
+       var appId = match[1].trim();
+       contentLines[i] = `<p><big>&#x1f4a1;</big><b>This code can be uploaded in a few clicks with <a href="https://espruino.github.io/EspruinoApps/?id=${appId}">the Espruino App loader</a></b></p>`;
+     }
    }
 
    // Check for LIST_LINKS_AS_KEYWORDS and add any links in lists `* [...](...)
