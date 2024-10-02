@@ -5,7 +5,7 @@ DIY Smart Meter
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Smart+Meter. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Home Automation,Home,Smart Meter,Electricity Meter,power meter,energy monitor
-* USES: Puck.js,LDR,BLE,Web Bluetooth
+* USES: Puck.js,LDR,BLE,Web Bluetooth,BTHome
 
 [[http://youtu.be/_SsZ3zILFn8]]
 
@@ -65,6 +65,59 @@ setWatch(function(e) {
 }, D2, { repeat:true, edge:"falling" });
 ```
 
+Pulse Counter with BTHome/Home Assistant
+-----------------------------------------
+
+You can also make your Puck.js advertise in the [BTHome advertising format](/BTHome)
+which means it'll be picked up and automatically integrated into [Home Assistant](https://www.home-assistant.io/).
+
+Just use the following code:
+
+```JS
+var counter = 0; // number of impulses
+var power = 0; // power in watts (assuming 1000imp/kwh)
+var lastPulse = getTime();
+
+// Update BLE advertising
+function update() {
+  NRF.setAdvertising(require("BTHome").getAdvertisement([
+    {
+      type : "battery",
+      v : E.getBattery()
+    }, {
+      type : "energy",
+      v : counter/1000 // kWh, and usualy 1000 imp/kWh
+    }, {
+      type : "power",
+      v : power // kWh, and usualy 1000 imp/kWh
+    }
+  ]), {
+    name : "Electricity",
+    // not being connectable/scannable saves power (but you'll need to reboot to connect again with the IDE!)
+    //connectable : false, scannable : false,
+  });
+}
+
+// Set up pin states
+D1.write(0);
+pinMode(D2,"input_pullup");
+// Watch for pin changes
+setWatch(function(e) {
+ let timeDiff = e.time - lastPulse;
+ power = 3600 / timeDiff; // 1000imp/kwh -> 1000 pulses in 3600sec = 1kW
+ counter++;
+ update();
+ lastPulse = e.time;
+ digitalPulse(LED1,1,1); // show activity
+}, D2, { repeat:true, edge:"falling" });
+update();
+```
+
+**Note:** we calculate power here using the time between pulses, but if no
+pulse is received we don't 'zero' the power usage. We're just assuming
+that a power meter will always have some power draw and so will flash every
+so often.
+
 
 Pulse Counter and usage history
 -------------------------------
@@ -120,7 +173,7 @@ Counter.prototype.inc = function(n) {
   var d = new Date();
   var t = this.totals;
   // Totals by time period
-  t.count+=n;  
+  t.count+=n;
   t.year[d.getMonth()]+=n;
   t.week[d.getDay()]+=n;
   t.month[d.getDate()-1]+=n;
@@ -178,9 +231,9 @@ To try it, just click the `Try Me!` button in the bottom right of the code sampl
  <body style="width:620px;height:800px">
   <link href="https://espruino.github.io/TinyDash/tinydash.css" rel="stylesheet">
   <script src="https://espruino.github.io/TinyDash/tinydash.js"></script>
-  <script src="https://www.puck-js.com/puck.js"></script>  
+  <script src="https://www.puck-js.com/puck.js"></script>
   <script>
-  function connectDevice() {    
+  function connectDevice() {
     // connect, issue Ctrl-C to clear out any data that might have been left in REPL
     Puck.write("\x03", function() {
       setTimeout(function() {
@@ -211,7 +264,7 @@ To try it, just click the `Try Me!` button in the bottom right of the code sampl
       });
     });
   }
-  // Set up the controls we see on the screen    
+  // Set up the controls we see on the screen
   var elements = {
     heading : TD.label({x:10,y:10,width:190,height:50,label:"Electricity meter"}),
     total : TD.value({x:10,y:70,width:190,height:60,label:"Total Usage",value:0}),

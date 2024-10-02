@@ -20,10 +20,11 @@ exports.getAdvertisement = function(devices) {
     count32 : e => b32(0x3E, e.v),                      // 0..0xFFFFFFFF, int
     current : e => b16(0x3D, Math.round(e.v*1000)),     // amps, floating point
     duration : e => b16(0x42, Math.round(e.v*1000)),    // seconds, floating point
+    energy : e => b32(0x4D, Math.round(e.v*1000)),      // kWh, floating point
     gas : e => b32(0x4C, e.v),                          // gas (m3), int (32 bit version)
     humidity : e => [0x2E, Math.round(e.v)],            // humidity %, int
     humidity16 : e => b16(3, Math.round(e.v*100)),      // humidity %, floating point
-    power : e => b24(0x0B, Math.round(e.v*100)),        // power (W?), floating point
+    power : e => b24(0x0B, Math.round(e.v*100)),        // power (W), floating point
     pressure : e => b24(4, Math.round(e.v*100)),        // pressure (hPa), floating point
     voltage : e => b16(0x0C, Math.round(e.v*1000)),     // voltage (V), floating point
     co2 : e => b16(0x12, Math.round(e.v)),              // co2 (ppm), int, factor=1

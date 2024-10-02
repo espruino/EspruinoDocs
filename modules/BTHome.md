@@ -77,10 +77,11 @@ and the names have been kept as similar as possible
  * `count32` - 0..0xFFFFFFFF, int
  * `current` - amps, floating point
  * `duration` - seconds, floating point
+ * `energy` - kWh, floating point
  * `gas` - gas (m3), int (32 bit)
  * `humidity` - humidity %, int
  * `humidity16` - humidity %, floating point
- * `power` - power (W?), floating point
+ * `power` - power (W), floating point
  * `pressure` - pressure (hPa), floating point
  * `voltage` - voltage (V), floating point
  * `co2` - CO2 level (ppm), int
@@ -182,10 +183,22 @@ Just supply these with a single boolean value as v, for example: `{type:"door", 
  * `problem`
  * `tamper`
 
+
+Bidirectional Communication
+----------------------------
+
+At the moment, BTHome devices can only transmit data (not be connected to), however you
+can use the [LED BLE Library](ble_led) to make your device appear to be a Bluetooth Light
+which is supported by the [LED BLE integration](https://www.home-assistant.io/integrations/led_ble/) in Home Assistant.
+
+You can use both this and the `ble_led` library at the same time, just be sure to keep the advertising name beginning with
+`LEDBLE` as this is what Home Assistant uses to detect the LED lights.
+
+
 Notes
 ------
 
-At the moment, BTHome devices can only transmit data (not be connected to), so you can increase battery life
+If you don't need to be connected to, you can increase battery life
 of your device substantially by making it non-scannable and non-connectable. Note that you then won't be able
 to connect to reprogram it until you reset it!
 
