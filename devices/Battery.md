@@ -1,18 +1,17 @@
 <!--- Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-Battery
+Batteries
 =========
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Battery. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Battery,Charger,LiPo,Li-ion,Power
+* KEYWORDS: Battery,Batteries,Charger,LiPo,Li-ion,lithium,ion,polymer,Power
 
 ![Battery and Charger](Battery/olimex.jpg)
 
 If you plan to use Espruino with a battery, a small LiPo cell and charger like those above are probably the best things to use - see [below](#buying) for where to find them.
 
-* [Original Espruino boards](/Original) come with a JST PHR-2 2 Pin connector for batteries
-* Espruino [[Pico]] comes with a [place to solder](/Pico#battery) a JST connector (or normal 0.1" pins can be used instead)
-* [Pixl.js](/Pixl.js) comes with a place to solder a JST connector (or normal 0.1" pins can be used instead)
+* [Original Espruino](/Original) and [Jolt.js](/Jolt.js) boards come with a JST PHR-2 2 Pin connector for batteries
+* [[Pico]], [[MDBT42Q]] and [Pixl.js](/Pixl.js) come with a [place to solder](/Pico#battery) a JST connector (or normal 0.1" pins can be used instead)
 
 The JST connector wiring is as follows:
 
@@ -29,7 +28,7 @@ Adafruit [has a good tutorial on different kinds of Lithium Battery](https://lea
 Charging
 -------
 
-Espruino Boards do not contain a battery charger circuit (although the [original Espruino revision 1v4](/Original) has a place where a MAX1551 charger IC can be soldered).
+Espruino Boards (apart from [Jolt.js](/Jolt.js)) do not contain a battery charger circuit (although the [original Espruino revision 1v4](/Original) has a place where a MAX1551 charger IC can be soldered).
 
 While NiCd and NiMh batteries can be safely trickle charged with a resistor, Lithium Ion batteries need to be charged properly or there may be a risk of fire. If using Lithium Ion batteries we'd suggest that you use a dedicated charger board (links [below](#buying).
 
