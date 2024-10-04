@@ -327,7 +327,7 @@ function handleImages(file, contents) {
     if (tagMid>=0 && tagEnd>=0) {
       // we've found a tag - do stuff
       var imageName = contents.substring(tagMid+2, tagEnd);
-      if (imageName.substr(0,5)!="data:") {
+      if (imageName.substr(0,5)!="data:") { // it's not inline data!
         var imagePath = directory+"/"+imageName;
         if (fs.existsSync(imagePath)) {
   /*        console.log("IMAGE -----------------------------");
@@ -338,15 +338,23 @@ function handleImages(file, contents) {
           var finalImagePath = path.resolve(HTML_DIR, newPath);
           //console.log("Copying "+imagePath+" to "+finalImagePath);
           // copy gifs - so we don't break anything on optimised animations
-          if (imagePath.substr(-4)==".gif" || !PROCESS_IMAGE_RESIZE)
+          var isVideo = false;
+          if (imagePath.endsWith(".webm")) {
+            isVideo = true;
+            contents = contents.substr(0,tagStart)+`<video width="100%" controls><source src="${newPath}"></video>`+contents.substr(tagEnd+1);
+          }
+          if (imagePath.endsWith(".gif") || isVideo || !PROCESS_IMAGE_RESIZE)
             fs.createReadStream(imagePath).pipe(fs.createWriteStream(finalImagePath));
           else
             child_process.exec(`convert "${imagePath}" -resize "600x800>" +repage -strip -define png:include-chunk=none "${finalImagePath}"`);
           // now rename the image in the tag
-          contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
+          if (!isVideo)
+            contents = contents.substr(0,tagMid+2)+newPath+contents.substr(tagEnd);
         } else {
           WARNING(file+": Image '"+imagePath+"' does not exist ("+tagStart+","+tagMid+","+tagEnd+")");
         }
+      } else if (imageName.endsWith(".webm")) {
+        
       }
     }
     tagStart = contents.indexOf("![", tagStart+1);
