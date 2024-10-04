@@ -47,3 +47,8 @@ Every time the light state changes, the callback will be called with an updated 
 ```
 
 In the example above, we assume your device has red, green and blue LEDs as `LED1/2/3`, but you could wire up external LEDs, or use the `state.on` value to trigger something other than a light.
+
+Using
+-----
+
+* APPEND_USES: ble_led
