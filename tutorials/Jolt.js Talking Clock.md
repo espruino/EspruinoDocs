@@ -11,16 +11,17 @@ You can use  [Jolt.js](/Jolt.js)'s high power outputs for driving speakers. In t
 
 ![Talking Clock](Jolt.js Talking Clock.webm)
 
+**Note:** the video above shows a capacitor on the speaker, but you don't need that using the wiring below.
+
 To do the audio playback we're using the [Waveform class](/Waveform).
 
 
 You'll Need
 ------------
 
-* A [Jolt.js](/Jolt.js) with 2v24.67 or later firmware
+* A [Jolt.js](/Jolt.js) with 2v24.80 or later firmware
 * A Qwiic cable (supplied with Jolt.js)
 * A [Speaker](/Speaker) (I used a 2 inch, 8 Ohm speaker)
-* A Capacitor (anything from 1-100uF)
 * [Vibration Sensor](/Vibration) (optional)
 
 **Note:** This will work on other Espruino devices as well, you just need a method of providing enough power for a speaker (which [Jolt.js](/Jolt.js) has built in).
@@ -72,11 +73,11 @@ You can change the voice my changing the model to one of those listed on https:/
 And now we convert these to 4kHz 8 bit to play on Espruino:
 
 ```Bash
-ffmpeg -y -i 1.mp3 -acodec pcm_u8 -f u8 -ac 1 -ar 4000 1.pcm
+ffmpeg -y -i 1.mp3 -acodec pcm_u8 -f u8 -ac 1 -ar 8000 1.pcm
 # and so on...
 
 # Or in Linux/WSL/Mac to covert them all:
-for f in *.wav; do ffmpeg -y -i "$f" -acodec pcm_u8 -f u8 -ac 1 -ar 4000 "${f%.*}.pcm"; done
+for f in *.wav; do ffmpeg -y -i "$f" -acodec pcm_u8 -f u8 -ac 1 -ar 8000 "${f%.*}.pcm"; done
 ```
 
 Now you need to upload the files. Go to the Web IDE and click the `Storage` icon (looks like a Hamburger). Now click `Upload Files`
@@ -87,18 +88,8 @@ and after a few minutes you should have uploaded all your files.
 Wiring Up
 --------
 
-We're wiring our speaker between GND and Jolt.js's output, but this would
-mean that we could only apply a DC voltage on it, not AC. So instead, we're
-attaching a capacitor in series which will charge up to 50% of the voltage,
-putting AC on the speaker.
-
-* Attach the one side of the speaker to Jolt.js's `0/GND` terminal
-* Attach the other side of the speaker to your capacitor's negative terminal
-* Attach the positive terminal of your capacitor to Jolt.js's `H0` terminal
-
-**Note:** It would be possible to configure Jolt.js to output an inverse
-of the `H0` signal on `H1` with the [NRF52 Low Level library](/NRF52LL)
-but that's beyond the scope of this tutorial.
+* Attach the one side of the speaker to Jolt.js's `H0` terminal
+* Attach the other side of the speaker to Jolt.js's `H1` terminal
 
 To connect the vibration sensor and allow the sounds to play when vibration is detected,
 connect one side to the Qwiic connector `SCL` (yellow wire) and the other to `VCC` (red wire),
@@ -124,11 +115,13 @@ var speaking = false; /// Are we currently speaking?
 function spkOn() {
   speaking = true;
   analogWrite(H0, 0.5, {freq:80000});
+  analogWrite(H1, 0.5, {freq:80000});
   return new Promise(resolve => setTimeout(resolve, 100));
 }
 // Turn the speaker output off
 function spkOff() {
   H0.read(); //  make output turn into input -> turn drivers off
+  H1.read(); //  make output turn into input -> turn drivers off
   speaking = false;
 }
 // Play an array of sounds
@@ -139,9 +132,8 @@ function playSounds(arr) {
     promise = promise.then(() => new Promise(resolve => {
       // Play one sound
       var f = require("Storage").read(sound+".pcm");
-      var w = new Waveform(f.length);
-      w.buffer.set(f);
-      w.startOutput(H0,4000);
+      var w = new Waveform(E.toArrayBuffer(f));
+      w.startOutput(H0,8000,{pin_neg:H1});
       w.on("finish", () => {
         w.removeAllListeners("finish");
         resolve();

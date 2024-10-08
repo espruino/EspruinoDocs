@@ -126,9 +126,17 @@ analogWrite(A0, 0.5, {freq:40000});
 w.startOutput(A0,4000);
 ```
 
+From 2v25 onwards you can output a file directly from Storage (as long as your Storage is on-chip):
+
+```JS
+var f = require("Storage").read("sound.pcm");
+var w = new Waveform(E.toArrayBuffer(f));
+w.startOutput(H0,8000);
+```
+
 Or to output a 4kHz 8 bit unsigned sound file loaded from the SD card:
 
-```
+```JS
 var wave = require("fs").readFile("sound.raw");
 var w = new Waveform(wave.length);
 w.buffer.set(wave);
@@ -183,7 +191,7 @@ Creating Audio Files for Espruino
 
 You can simply use the command:
 
-```
+```Bash
 ffmpeg -y -i your_sound.mp3 -acodec pcm_u8 -f u8 -ac 1 -ar 4000 output.pcm
 ```
 
