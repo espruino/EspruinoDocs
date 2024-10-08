@@ -590,15 +590,19 @@ Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instr
 
 We provide two distinct firmwares for Puck.js devices:
 
-| Filename                           | Espruino | BLE | NFC | Neopixel | JIT | Graphics | HTTP | Crypto | Flash Storage |
-|------------------------------------|----------|-----|-----|----------|-----|----------|------|--------|---------------|
-| `espruino_2vxx_puckjs.zip`         |   X      |  X  |  X  |    X     |  X  |   X      |   X  |   X    |   40kb        |
-| `espruino_2vxx_puckjs_minimal.zip` |   X      |  X  |  X  |    X     |     |          |      |        |   96kb        |
+| Filename                           | Espruino | BLE | NFC | Neopixel | JIT | Graphics | HTTP/Network | Crypto | Flash Storage |
+|------------------------------------|----------|-----|-----|----------|-----|----------|--------------|--------|---------------|
+| `espruino_2vxx_puckjs.zip`         |   X      |  X  |  X  |    X     |  X  |   X      |              |   X    |   40kb        |
+| `espruino_2vxx_puckjs_minimal.zip` |   X      |  X  |  X  |    X     |     |          |              |        |   96kb        |
+| `espruino_2vxx_puckjs_network.zip` |   X      |  X  |  X  |    X     |     |          |   X          |   X    |   40kb        |
 
 Puck.js come pre-installed with the first (normal) firmware, but if you don't need the extra features like Graphics
-and HTTP (which you're unlikely to use unless you are soldering external hardware on to the Puck) then you can install
-the minimal build. This removes those features and makes the saved flash memory space available to you via the
+then you can install the minimal build. This removes those features and makes the saved flash memory space available to you via the
 [`Storage` module](https://www.espruino.com/Reference#Storage), which you can then use for (for example) [data logging](https://www.espruino.com/Data+Collection#flash-memory).
+
+To use HTTP/Networking you need to attach something like an ESP8266 to the Puck.js as well as an
+external power source, so as of 2v25 Networking features have been removed unless you use the
+`_network.zip` firmware.
 
 
 Troubleshooting
