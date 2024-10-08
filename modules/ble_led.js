@@ -66,3 +66,4 @@ exports.setup = function(updateState) {
   NRF.setAdvertising({},{name:"LEDBLE"});
   updateState(state);
 };
+
