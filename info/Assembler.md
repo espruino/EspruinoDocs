@@ -4,7 +4,7 @@ Inline Assembler
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Assembler. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Assembler,Asm,ARM,Thumb,Thumb2,Thumb-2,C code,inline C,Built-In
+* KEYWORDS: Assembler,Assembly,Native code,Asm,ARM,Thumb,Thumb2,Thumb-2,C code,inline C,Built-In,nativeCall
 
 This page shows you how you can write assembly code and have it assembled
 by the Web IDE and uploaded as a function. However there are other ways
@@ -14,7 +14,7 @@ for more information!
 The Web IDE allows you to write inline assembler in the right-hand pane.
 You can use a series of normal JS Strings:
 
-```
+```JS
 var adder = E.asm("int(int)",
 "movs    r1, #3",
 "adds    r0, r0, r1", // add two 32 bit values
@@ -24,7 +24,7 @@ var adder = E.asm("int(int)",
 Or can use JavaScripts templated strings to avoid having
 to cope with newlines:
 
-```
+```JS
 var adder = E.asm("int(int)",`
 movs    r1, #3
 adds    r0, r0, r1 // add two 32 bit values
@@ -34,7 +34,7 @@ bx  lr             // return
 
 Which can then be used like a normal function:
 
-```
+```JS
 >adder(2)
 =5
 >[1,2,3,4,5].map(adder)
@@ -85,7 +85,7 @@ Accessing Data - iterating
 
 By itself, the assembler isn't too useful. What you need is to be able to access your data. Luckily Espruino makes it pretty easy. Above, we used `Array.map` to call assembler for every element in an array - you can use this on `ArrayBuffer`s like `Uint8Array` too. This is not part of the EcmaScript 5 spec (but is in EcmaScript 6).
 
-```
+```JS
 >var a = new Uint8Array([1,2,3,4,5]);
 a.map(adder)
 =[4,5,6,7,8]
@@ -93,14 +93,14 @@ a.map(adder)
 
 However this will still return an ArrayBuffer (which will use up more RAM). If you don't want to return anything (maybe you're writing it out to GPIO (see below) ), use `forEach`:
 
-```
+```JS
 >a.forEach(adder);
 =undefined
 ```
 
 Or you can use `Array.reduce` to pass an argument between calls to the assembler, for instance to sum all the items in the array:
 
-```
+```JS
 // create and fill up array buffer
 var a = new Int16Array(100);
 for (var i in a) a[i]=i;
@@ -125,7 +125,7 @@ When Espruino allocates data in a 'flat string' (a contiguous area of
 memory) you can access it by grabbing its address with `E.getAddressOf`
 and passing it into your assembler code:
 
-```
+```JS
 // Write 1,2,3,4 into the address pointed to by the first argument
 var setData = E.asm("void(int)",`
 movw    r1, #1
@@ -160,7 +160,7 @@ Constants
 
 In ARM Thumb, you can't store full 32 bit literal values in assembler, so loading big constants is a bit harder than you'd expect. Instead of directly specifying the constant, you must define an area of memory that will contain it, and then you must reference that area (relative to the current instruction). This is even more painful because the program counter is 4 bytes ahead of current execution:
 
-```
+```JS
 var getConst = E.asm("int()", `
   ldr	r0, [pc, #0]   // 2*2 - 4 = 0
   bx lr
@@ -172,7 +172,7 @@ console.log(getConst().toString(16));
 
 In reality, you'll want to use labels and let the assembler sort this out for you:
 
-```
+```JS
 var getConst = E.asm("int()", `
   ldr	r0, my_data
   bx lr
@@ -185,7 +185,7 @@ console.log(getConst().toString(16));
 
 Even this can cause some problems. You can only access an address that is a multiple of 4 bytes *ahead of the current instruction*. If you get an error when assembling such as `Invalid number 'mylabel' - must be between 0 and 1020 and a multiple of 4` then you'll need to pad out the constants with a `nop`:
 
-```
+```JS
 var getConst = E.asm("int()",`
   ldr	r1, my_data
   mov  r0,r1        // extra instruction makes non-2 aligned
@@ -200,7 +200,7 @@ console.log(getConst().toString(16));
 
 **Note:** If you just need a small constant then you may be ok. You can use `mov` to load a value between 0 and 255:
 
-```
+```JS
 var getConst = E.asm("int()", `
   mov	r0, #254
   bx lr
@@ -209,7 +209,7 @@ var getConst = E.asm("int()", `
 
 Or you can use `movw` to load a 16 bit values (between 0 and 65535) but *movw is a double-length instruction that takes 4 bytes in total*.
 
-```
+```JS
 var getConst = E.asm("int()", `
   movw	r0, #65535
   bx lr
@@ -223,7 +223,7 @@ While ARM Thumb has a `LDR` instruction that will load from a label, there is no
 
 For example the following section of code will return a value that increments after each call:
 
-```
+```JS
 var inc = E.asm("int()",`
   adr    r1, data // Get address of 'data'
   ldr    r0, [r1] // Load the value of data into R0
@@ -253,7 +253,7 @@ GPIOA's Output data register is `0x4001080C` (which sets ALL pins on that port).
 
 So you could write the following code to give the 3 LEDs (on A13,A14 and A15) a quick pulse.
 
-```
+```JS
 digitalWrite([LED1,LED2,LED3],0); // set up the output state (easier done in JS!)
 
 var pulse = E.asm("void()",`
@@ -281,7 +281,7 @@ GPIOB's Output data register is `0x40020414` (GPIOA is `0x40020014`). Writing to
 
 So you could write the following code to give LED1 a quick pulse (it's on pin B2).
 
-```
+```JS
 digitalWrite(LED1,0); // set up the output state (easier done in JS!)
 
 var pulse = E.asm("void()",`
@@ -304,7 +304,7 @@ Loops
 
 You can do loops as follows. This example adds together all the numbers below and including the current one:
 
-```
+```JS
 var a = E.asm("int(int,int)", `
 loopStart:
   adds   r0, r0, r1
@@ -341,7 +341,7 @@ As of Espruino 1v72, `setWatch` can now call native code from within the interru
 
 For instance the following code measures the number of state changes every second on BTN:
 
-```
+```JS
 // inc function from above
 var inc = E.asm("void()",`
   adr    r1, data
@@ -404,7 +404,7 @@ You might get something like:
 
 Which you can then turn into:
 
-```
+```JS
 var ASM_BASE=process.memory().stackEndAddress;
 var ASM_BASE1=ASM_BASE+1/*thumb*/;
 [0x4a02,0xf44f,0x4360,0x6013,0x6053,0x4770,0x0810,0x4001].forEach(function(v) { poke16((ASM_BASE+=2)-2,v); });
