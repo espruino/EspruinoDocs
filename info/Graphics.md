@@ -272,7 +272,7 @@ g.drawImage(img, 10, 10, {scale:2});
 g.drawImage(img, 10, 10, {scale:1.5, rotate:Math.PI/4});
 ```
 
-If you use a single-bit image, the foreground and background colors will be used instead of the image's colours. Otherwise the color data will be copied directly so it's an idea to use a bitmap of the same bit depth as your display.
+If you use a single-bit image, the foreground and background colors will be used instead of the image's colors. Otherwise the color data will be copied directly so it's an idea to use a bitmap of the same bit depth as your display.
 
 See the reference for [`Graphics.drawImage`](/Reference#l_Graphics_drawImage) for more information...
 
