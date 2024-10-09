@@ -276,7 +276,7 @@ If you use a single-bit image, the foreground and background colors will be used
 
 See the reference for [`Graphics.drawImage`](/Reference#l_Graphics_drawImage) for more information...
 
-#### Creating an image via command-line
+### Creating an image via command-line
 
 The easiest solution is to use [our online Image Converter](/Image+Converter).
 
@@ -307,6 +307,33 @@ var img = {
   transparent : 0,
   buffer : E.toArrayBuffer(atob("AAAAAAAAeAAAf/4AH/+bAH/ABQBoAAeAaAADwHQAAf5aAfCfS/8/sUXP//1G//AdQ/wAHUAAAB1AAAAdQAAAHWAAABNgAAAeYAAAEOAAABDgAAAQ8AAAGPgAABz4AAAcfAAAnD4AP/A+B//AHz//wA///4AAP+AAABgAAAAAAAA="))
 };
+```
+
+### Decoding encoded images
+
+Sometimes you might want to turn an image that's in Espruino format back into a PNG file. The
+best way to do this is to just use Espruino.
+
+You can just write to the existing Graphics instance and dump the whole thing out to the Web IDE's console (but then you'll have to manually crop it to size):
+
+```JS
+// the image to decode
+let img = atob("GBiBAAAAAAAAAAAAAA//8B//+BgAGBgAGBgAGB//+B//+B//+B/++B/8+B/5+B8z+B+H+B/P+B//+B//+B//+A//8AAAAAAAAAAAAA==")
+// draw the image and dump it out
+g.clear(1).drawImage(img).dump();
+```
+
+Or you can create a Graphics instance of the correct size and dump that out:
+
+```JS
+// the image to decode
+let img = atob("GBiBAAAAAAAAAAAAAA//8B//+BgAGBgAGBgAGB//+B//+B//+B/++B/8+B/5+B8z+B+H+B/P+B//+B//+B//+A//8AAAAAAAAAAAAA==")
+// create a Graphics instance of the correct size
+let m = g.imageMetrics(img);
+let t = Graphics.createArrayBuffer(m.width,m.height,m.bpp,{msb:true});
+// draw to the Graphics instance and dump it to the IDE console
+t.drawImage(img).dump();
+// you can also use .asBMP/.asURL to get the contents in a variable
 ```
 
 
