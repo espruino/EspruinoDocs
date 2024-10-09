@@ -60,7 +60,8 @@ exports.getAdvertisement = function(devices) {
     power_on : 0x10,
     presence : 0x25,
     problem : 0x26,
-    tamper : 0x2B
+    tamper : 0x2B,
+    vibration : 0x2C
   };
 
   exports.packetId = (exports.packetId+1)&255;

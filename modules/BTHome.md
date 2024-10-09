@@ -182,6 +182,7 @@ Just supply these with a single boolean value as v, for example: `{type:"door", 
  * `presence`
  * `problem`
  * `tamper`
+ * `vibration`
 
 
 Bidirectional Communication
