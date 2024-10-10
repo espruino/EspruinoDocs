@@ -10,7 +10,9 @@ Jolt.js
 
 * BUYFROM: £35,£26,https://shop.espruino.com/joltjs,/Order#joltjs
 
-**Jolt.js is a programmable Bluetooth Motor Driver board**
+**Jolt.js is a programmable Bluetooth Motor Driver board**. Control powerful external devices such as lights, motors, solenoids and relays, all from a device that can run for months or years on a battery!
+
+With the Espruino JavaScript interpreter on its internal ARM microcontroller, software can be uploaded, debugged and modified wirelessly from any modern computer or phone, making development of embedded devices significantly easier. Jolt.js has 8 high power outputs, capable of 1A each, as well as 4 Qwiic connectors. It can even control and be controlled by other Bluetooth LE devices.
 
 **Just got your Jolt.js? [Take a look here!](/Quick+Start+BLE#joltjs)**
 
@@ -60,7 +62,7 @@ We'd recommend some safety precautions:
 * Measure the voltage on unknown batteries with a volt meter before you use them with Jolt.js, and ensure they're under 18v **and** the correct polarity.
 * See `Powering Jolt.js` below before you attempt to power Jolt.js from anything other than USB or a 3.7v LiPo battery on the JST connector
 * When developing with Jolt.js, **communicate via Bluetooth wherever possible**. While Jolt.js can do USB, ensuring your expensive PC isn't physically connected is a great idea just in case there are any loose wires or ground loops.
-* **⚠️ Some switch-mode bench power supplies are very badly regulated.** While charging up the capacitors inside Jolt.js some can overshoot the selected voltage by over 60% (so 12v becomes 20v for a few milliseconds) and can destroy your Jolt.js. 
+* **⚠️ Some switch-mode bench power supplies are very badly regulated.** While charging up the capacitors inside Jolt.js some can overshoot the selected voltage by over 60% (so 12v becomes 20v for a few milliseconds) and can destroy your Jolt.js.
 Please use under 12v and 100mA unless you are 100% sure of the quality of your power supply.
 
 
