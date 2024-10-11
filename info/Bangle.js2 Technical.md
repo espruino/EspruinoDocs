@@ -177,7 +177,98 @@ CASIC_CMD("$PCAS02,500"); // Change output speed from default 1000ms to 500ms
 CASIC_CMD("$PCAS00"); // Save all changes to flash memory (be careful!)
 ```
 
-The receiver also accepts a binary protocol that begins with the characters `"\xBA\xCA"`, but you'll need to consult the datasheet for more information on that.
+The receiver also accepts and returns a binary protocol that begins with the characters `"\xBA\xCA"`, but you'll need to consult the CASIC datasheet for more information on that.
+ We have an [English translated version here](/files/CASIC_en.pdf)
+
+ There's mention in some forum posts:
+
+* https://forum.espruino.com/conversations/371336/?offset=25#16332430
+* https://forum.espruino.com/conversations/371360/
+
+But working code to send/decode packets is:
+
+```JS
+// Decode CASIC binary packets
+Bangle.on("GPS-raw", d=>{
+  if (d.substr(0,2)!="\xBA\xCE") return;
+  var ab = E.toArrayBuffer(d);
+  var dv = new DataView(ab);
+  var len = dv.getUint16(2,true);
+  var pkt = {
+    classId : dv.getUint8(4),
+    messageId : dv.getUint8(5),
+    payload : new Uint8Array(ab, 4, len),
+    crc : dv.getUint32(6+len,true)
+  };
+  if (pkt.classId == 5 && pkt.messageId==0) pkt.type = "ACK-NACK";
+  if (pkt.classId == 5 && pkt.messageId==1) pkt.type = "ACK-ACK";
+  print("CASIC", pkt);
+});
+// Send a binary CASIC packet, eg: {classId:6, messageId:0, payload:[]}
+function CASIC_PKT(pkt) {
+  pkt.payload = pkt.payload || [];
+  var plen = pkt.payload.length;
+  var msg = new Uint8Array(10+pkt.payload.length);
+  msg.set([0xBA,0xCE,
+           plen, // LENGTH
+           0x00,
+           pkt.classId, // CLASS	ID
+           pkt.messageId]); // MESSAGE	ID
+  msg.set(pkt.payload, 6);
+  var dv = new DataView(msg.buffer);
+  // checksum
+  var ckSum = 0;
+	for (i = -1; i < plen; i++)
+		ckSum = 0|(ckSum+dv.getUint32( 6 + i*4,true)); // endian?
+  dv.setUint32(6+plen, ckSum, true);
+  Serial1.write(msg);
+}
+
+// Send AID_INI message, {lat,lon,alt}
+function AID_INI(pos) {
+  var msg = new Uint8Array(56);
+  var dv = new DataView(msg.buffer);
+  /*
+	double							xOrLat, yOrLon, zOrAlt;
+	double							tow; // 24
+	float							df; // 32
+	float							posAcc; // 36
+	float							tAcc; // 40
+	float							fAcc; // 44
+	unsigned int					res; // 48
+	unsigned short int				wn; // 52
+	unsigned char					timeSource; // 54
+	unsigned char					flags; // 55
+*/
+  var ms = Date.now();
+  var wk = (ms-new Date("1980-01-06T00:00:00Z")) / 604800000;
+  var wn = Math.floor(wk); // week number
+  var tow = (wk-wn) * 604800; // seconds in week
+  dv.setFloat64(0, pos.lat, true); // xOrLat
+  dv.setFloat64(8, pos.lon, true); // yOrLon
+  dv.setFloat64(16, pos.alt, true); // zOrAlt
+  dv.setFloat64(24, tow, true); // tow
+  dv.setFloat32(32, 0, true); // df
+  dv.setFloat32(36, 0, true); // posAcc
+  dv.setFloat32(40, 0, true); // tAcc
+  dv.setFloat32(44, 0, true); // fAcc
+  dv.setUint32(48, 0, true); // res
+  dv.setUint16(52, wn, true); // wn
+  dv.setUint8(54,0); // timeSource
+  dv.setUint8(55, 0x23); // flags ( lat/lon and clock valid, no drift data )
+  CASIC_PKT({classId:0x0B, messageId:0x01, payload:msg});
+}
+// Query/config UART - just query atm
+function CFG_PTR() {
+  CASIC_PKT({classId:6, messageId:0, payload:[]});
+}
+
+// Request UART config info (quick test)
+//CFG_PTR();
+// Set Auxiliary position, time
+//AID_INI({lat : 51.65, lon : -1.267, alt : 30 });
+```
+
 
 GPIO
 ----
