@@ -263,6 +263,8 @@ function CFG_PTR() {
   CASIC_PKT({classId:6, messageId:0, payload:[]});
 }
 
+// Do these a few seconds after GPS has been started
+
 // Request UART config info (quick test)
 //CFG_PTR();
 // Set Auxiliary position, time
