@@ -52,3 +52,14 @@ setInterval(function() {
 }, 2000);
 ```
 
+Manual Watchdog
+----------------
+
+From 2v25 firmware you can also disable the watchdog timer kick (which happens unless the button is pressed), so your code has to do it:
+
+```JS
+Bangle.setOptions({manualWatchdog:true}); // disable watchdog timer
+setInterval(()=>E.kickWatchdog(), 2000); // disable watchdog
+```
+
+Now, if at any point the interval that calls `E.kickWatchdog()` isn't called for ~5 seconds, the Bangle will reboot.
