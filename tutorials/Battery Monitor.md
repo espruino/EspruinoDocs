@@ -92,7 +92,7 @@ function updateAdvertising() {
   NRF.setAdvertising(require("BTHome").getAdvertisement([
     {
       type : "battery",
-      v : E.clip((volts-BAT_MIN)/(BAT_MAX-BAT_MIN),0,100)
+      v : E.clip(100*(volts-BAT_MIN)/(BAT_MAX-BAT_MIN),0,100)
     },
     {
       type : "temperature",
