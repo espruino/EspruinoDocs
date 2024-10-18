@@ -4,8 +4,8 @@ Battery Monitor
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Battery+Monitor. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Tutorials,Pixl.js,Power,Current,Voltage,Amps,Power Usage,Battery Monitor
-* USES: MDBT42Q,BLE,Only BLE,Web Bluetooth
+* KEYWORDS: Tutorials,Pixl.js,Power,Current,Voltage,Amps,Power Usage,Battery Monitor,Car Battery monitor
+* USES: MDBT42Q,BLE,Only BLE,Web Bluetooth,BTHome
 
 [[http://youtu.be/VNjZB92O88U]]
 
@@ -16,7 +16,7 @@ and display them as a graph on the PC.
 You'll need
 -----------
 
-* An [MDBT42Q](/MDBT42Q) breakout, but any bluetooth Espruino board will do (although [Puck.js](/Puck.js) would need to be self-powered as it has no voltage regulator)
+* An [MDBT42Q](/MDBT42Q) breakout, but any Bluetooth Espruino board will do (although [Puck.js](/Puck.js) would need to be self-powered as it has no voltage regulator)
 * 1x 1 Ohm high current (1W or more) resistor
 * 2x 100 kOhm Resistors
 * 1x 24 kOhm Resistor
@@ -38,7 +38,7 @@ Software
 --------
 
 We're using the [Averager Library](/Averager) here to store data in
-a format that is easy to graph.
+a format that is easy to graph:
 
 ```JS
 var Averager = require("Averager").Averager;
@@ -58,7 +58,7 @@ function onSecond() {
     a:Math.round(amps*100)/100
   };
   NRF.setAdvertising({},{
-    name:"\xF0\x9F\x9A\x98", // car emoji, https://apps.timwhitlock.info/emoji/tables/unicode
+    name:"\xF0\x9F\x9A\x98", // car emoji, see https://www.espruino.com/BLE+Emoji
     manufacturer:0x0590,
     manufacturerData:JSON.stringify(data)
   });
@@ -66,6 +66,76 @@ function onSecond() {
 setInterval(onSecond, 1000);
 NRF.setTxPower(4);
 ```
+
+It's easy to extend this with the [BTHome](/BTHome) Library to allow your
+battery level to appear in  [Home Assistant](https://www.home-assistant.io/). We've kept the `Averager` in
+so the webpage below will still work, but it's easy to remove:
+
+```JS
+var Averager = require("Averager").Averager;
+var volts, amps;
+var voltSum=0, ampSum=0, sumCount=0; // average for BTHome
+var voltAvr = new Averager({scale:1000});
+var ampAvr = new Averager({scale:1000});
+
+const BAT_MIN = 11.63, BAT_MAX= 12.64;
+
+function updateAdvertising() {
+  // work out values based on average over last minute
+  if (sumCount==0) sumCount=1;
+  var volts = voltSum / sumCount;
+  var amps = ampSum / sumCount;
+  voltSum=0;
+  ampSum=0;
+  sumCount=0;
+  // set advertising
+  NRF.setAdvertising(require("BTHome").getAdvertisement([
+    {
+      type : "battery",
+      v : E.clip((volts-BAT_MIN)/(BAT_MAX-BAT_MIN),0,100)
+    },
+    {
+      type : "temperature",
+      v : E.getTemperature()
+    },
+    {
+      type : "voltage",
+      v : volts
+    },
+    {
+      type : "current",
+      v : amps
+    },
+  ]), {
+    name:"\xF0\x9F\x9A\x98", // car emoji, https://www.espruino.com/BLE+Emoji
+    // not being connectable/scannable saves power (but you'll need to reboot to connect again with the IDE!)
+    //connectable : false, scannable : false,
+  });
+}
+
+function onSecond() {
+  amps = analogRead(D29)*3.3;
+  volts = analogRead(D31)*3.3*(100+24)/24 - amps;
+
+  voltAvr.add(volts);
+  ampAvr.add(amps);
+
+  voltSum += volts;
+  ampSum += amps;
+  sumCount++;
+
+  var data = {
+    v:Math.round(volts*100)/100,
+    a:Math.round(amps*100)/100
+  };
+}
+setInterval(onSecond, 1000);
+setInterval(updateAdvertising, 60000); // only update advertising once a minute
+updateAdvertising();
+
+NRF.setTxPower(4);
+```
+
 
 Webpage
 -------
