@@ -18,7 +18,7 @@ exports.getAdvertisement = function(devices) {
     count : e => [ 0x0F, e.v],                          // 0..255, int
     count16 : e => b16(0x3D, e.v),                      // 0..65535, int
     count32 : e => b32(0x3E, e.v),                      // 0..0xFFFFFFFF, int
-    current : e => b16(0x3D, Math.round(e.v*1000)),     // amps, floating point
+    current : e => b16(0x5D, Math.round(e.v*1000)),     // amps, floating point
     duration : e => b16(0x42, Math.round(e.v*1000)),    // seconds, floating point
     energy : e => b32(0x4D, Math.round(e.v*1000)),      // kWh, floating point
     gas : e => b32(0x4C, e.v),                          // gas (m3), int (32 bit version)
@@ -76,13 +76,11 @@ exports.getAdvertisement = function(devices) {
     /* Packet ID - by only changing this */
     0, exports.packetId,
   ];
-  adv = adv.concat.apply(adv,
-    devices.map(dev => {
+  return {
+    0xFCD2 : adv.concat.apply(adv, devices.map(dev => {
       if (dev.type in DEV) return DEV[dev.type](dev);
       if (dev.type in BOOL) return [BOOL[dev.type], dev.v?1:0];
       throw new Error(`Unknown device type ${E.toJS(dev.type)}`);
-    }));
-  return {
-    0xFCD2 : adv
+    }).sort((a,b) => a[0]-b[0]))
   };
 };
