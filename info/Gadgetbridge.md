@@ -4,7 +4,7 @@ Gadgetbridge for Android
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Gadgetbridge. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Gadgetbridge,Gadget bridge,Android,Notifications
+* KEYWORDS: Gadgetbridge,Gadget bridge,Android,Notifications,Remote Debugging,Remote Connection
 * USES: Bangle.js
 
 [Gadgetbridge](https://gadgetbridge.org/) is an Android application that allows you to use smartwatch-style notifications and health
@@ -59,8 +59,8 @@ On some phones, even though Gadgetbridge requests permissions, they may not have
 
 On some custom Android ROMS (and Xiaomi/Redmi MIUI phones) you need to grant extra permissions for 'Find My Phone' to be able to create a sound. See https://gadgetbridge.org/basics/features/find-phone/
 
-If you're using the [Play Store Gadgetbridge](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs), you can 
-also [sign up to be a tester](https://play.google.com/apps/testing/com.espruino.gadgetbridge.banglejs) - occasionally we will release a new 
+If you're using the [Play Store Gadgetbridge](https://play.google.com/store/apps/details?id=com.espruino.gadgetbridge.banglejs), you can
+also [sign up to be a tester](https://play.google.com/apps/testing/com.espruino.gadgetbridge.banglejs) - occasionally we will release a new
 version for testing before rolling it out to everyone and you'll get access to that.
 
 
@@ -85,10 +85,17 @@ On Bangle.js just do something like this to make an HTTP request:
 ```
 Bangle.http("https://pur3.co.uk/hello.txt").then(data=>{
   console.log("Got ",data);
+  // actual response is in data.resp
 });
+// Prints:
+//Got  {
+//  "t": "http",
+//  "id": "89875941444",
+//  "resp": "Hello World!\n"
+// }
 ```
 
-For more information check out the [`Android Integration`](https://banglejs.com/apps/?id=android) app's `Read more...` link.
+**For more information check out the [`Android Integration`](https://banglejs.com/apps/?id=android) app's `Read more...` link.**
 
 Right now you *must* use HTTPS (HTTP is not supported). The low-level implementation is described in `How it works internally` below.
 
