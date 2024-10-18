@@ -27,6 +27,12 @@ can use `NRF.setAdvertising({},{name:"\xF0\x9F\x9A\x98"});`
 
 ![BLE advertising](BLE Emoji.jpg)
 
+**NOTE:** The Web IDE recognises devices it can connect to in two ways: by their name,
+and by the Nordic UART service they advertise as a scan response. If you change the name
+then the IDE only has the service to work off, and in high Bluetooth traffic areas
+or if you have disabled scan response with `scannable : false,`, the IDE will be
+unable to find your device.
+
 To work out what codes to use, you have two options:
 
 ## Use a website
