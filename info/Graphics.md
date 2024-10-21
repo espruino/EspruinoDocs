@@ -25,7 +25,7 @@ draw operations won't immediately effect the display, and a method needs calling
 to copy the buffer's data onto the screen. By convention this method is usually
 called `.flip()`.
 
-### Internal Use
+### Internal (Offscreen) Use
 
 **If you don't already have a graphics object set up** then
 you can create a Graphics class which renders to an ArrayBuffer:
@@ -63,6 +63,19 @@ g.drawLine(0,0,2,2)
 //1,1
 //2,2
 ```
+
+### Dumping Graphics contents
+
+Espruino can output the contents of a Graphics instance to the Web IDE's REPL
+using [`g.dump()`](/Reference#l_Graphics_dump).
+
+For example you can just type `g.dump()` in the REPL to see what
+is in the Graphics instance `g`.
+
+Internally, [`g.dump()`](/Reference#l_Graphics_dump) works using
+[`g.asURL()`](/Reference#l_Graphics_asURL) which creates a base64
+encoded bitmap of the Graphics instance.
+
 
 Text / Fonts
 -------------
@@ -146,6 +159,11 @@ while (true) {
     Math.random()*g.getWidth(),Math.random()*g.getHeight())
 }
 ```
+
+Offscreen Graphics
+-------------------
+
+
 
 Images / Bitmaps
 ----------------

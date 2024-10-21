@@ -6,7 +6,9 @@ Bangle.js Troubleshooting
 
 * KEYWORDS: Troubleshooting,Trouble,Problems,Help,Broken,Not Working,bank0,bank0 invalid
 
-What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Bangle.js Forum](http://forum.espruino.com/microcosms/1424/).
+What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please
+[check out the Bangle.js Wiki's FAQ](https://github.com/espruino/BangleApps/wiki) and if you don't find an
+answer there, post in the [Bangle.js Forum](http://forum.espruino.com/microcosms/1424/).
 
 Please also check out the [Bluetooth specific troubleshooting page](http://www.espruino.com/Troubleshooting+BLE)
 
