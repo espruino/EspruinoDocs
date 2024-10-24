@@ -200,7 +200,7 @@ function codeMinified(minified) {
     minified = Espruino.Plugins.Pretokenise.tokenise(minified);
   }
   console.log("Complete!");
-  fs.writeFileSync(fileOut, minified);
+  fs.writeFileSync(fileOut, minified, "binary");
 }
 
 function wrapSelfInvocation( js ) {
