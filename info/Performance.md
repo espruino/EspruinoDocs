@@ -310,7 +310,7 @@ but be aware that you'll probably need a Typed Array (see below) to write to it.
 [`E.toString`](http://www.espruino.com/Reference#l_E_toString) has to be used instead of `E.toFlatString`.
 
 Once allocated, you can use `E.getAddressOf(v, true)` to get the actual
-physical address in memory of the Flat String's data (which can be used for DMA, [Inline C](/InlineC) or (Assembly Code](/Assembler) ).
+physical address in memory of the Flat String's data (which can be used for DMA, [Inline C](/InlineC) or [Assembly Code](/Assembler) ).
 
 
 Functions and pretokenisation
