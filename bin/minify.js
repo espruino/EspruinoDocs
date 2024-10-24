@@ -16,14 +16,24 @@ const child_process = require("child_process");
 
 var CLOSURE_JAR = path.join(__dirname, "..", "closure-compiler.jar");
 
-if (process.argv.length!=4 && process.argv.length!=5) {
-  console.log("USAGE: node minify.js fileIn.js fileOut.min.js [fileIn.externs]");
+var args = process.argv.slice();
+var pretokenise = args.includes("--pretokenise");
+args = args.filter(a=>!a.startsWith("--"));
+
+if (args.length!=4 && args.length!=5) {
+  console.log(`
+USAGE:
+  node minify.js [--pretokenise] fileIn.js fileOut.min.js [fileIn.externs]
+
+  Note: if --pretokenise you'll need to clone https://github.com/espruino/EspruinoTools
+     at the same level as this EspruinoDocs repo
+`.trim());
   process.exit(1);
 }
 
-var fileIn = process.argv[2];
-var fileOut = process.argv[3];
-var fileExterns = process.argv[4];
+var fileIn = args[2];
+var fileOut = args[3];
+var fileExterns = args[4];
 
 console.log("Minifying ",fileIn,"to",fileOut);
 var js = fs.readFileSync(fileIn).toString();
@@ -143,8 +153,8 @@ function closureOffline() {
     ['rewrite_polyfills',false],
     ['language_in','ECMASCRIPT_2020'],
     ['language_out','ECMASCRIPT_2015'],
-    ['jscomp_warning','undefinedVars'],    
-    ['strict_mode_input','false'],    
+    ['jscomp_warning','undefinedVars'],
+    ['strict_mode_input','false'],
     ["js", tmpPath+".js"],
     ["externs", tmpPath+".ext.js"],
     ["js_output_file", tmpPath+".out.js"]
@@ -176,6 +186,19 @@ function codeMinified(minified) {
   }
   // replace unicode-style \u00## string escapes with \x## - shorter, and in Espruino even if unicode is enabled we treat them as bytes
   minified = minified.replace(/\\u00([0-9a-f][0-9a-f])/g, "\\x$1");
+  // if pretokenising, load in Espruino utils and pretokeniser
+  if (pretokenise) {
+    console.log("Pretokenising...");
+    var Espruino = {
+      Config : { PRETOKENISE : 2 },
+      Core:{ Env : { getBoardData : () => ({}) } },
+      Plugins:{}
+    };
+    var acorn = require("acorn");
+    eval(fs.readFileSync(__dirname+"/../../EspruinoTools/core/utils.js").toString());
+    eval(fs.readFileSync(__dirname+"/../../EspruinoTools/plugins/pretokenise.js").toString());
+    minified = Espruino.Plugins.Pretokenise.tokenise(minified);
+  }
   console.log("Complete!");
   fs.writeFileSync(fileOut, minified);
 }
