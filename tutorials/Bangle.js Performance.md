@@ -30,7 +30,7 @@ Paste the following into the IDE's left-hand side:
 require("Storage").write(".boot3",`
 var __start=Date.now();
 setTimeout(function() {
-  print("APP",Date.now()-__start,"ms");
+  print("APP",0|(Date.now()-__start),"ms");
   delete __start;
 },0);
 `);
@@ -38,7 +38,7 @@ setTimeout(function() {
 
 Now change app, either with `load()`, by choosing it from the Launcher, or by uploading your app to Flash using the IDE.
 
-This will now print something like `APP 250.000 ms` which is the time taken for your app to load, *excluding* the time taken to load 'boot code'
+This will now print something like `APP 250 ms` which is the time taken for your app to load, *excluding* the time taken to load 'boot code'
 
 When you're done, paste this in the left-hand side to turn off reporting:
 
@@ -96,6 +96,59 @@ When you're done, paste this in the left-hand side to turn off reporting:
 
 ```JS
 require("Storage").writeJSON("setting.json", Object.assign(require("Storage").readJSON("setting.json",1),{bootDebug:0}));
+load();
+```
+
+### Measuring widget draw speed
+
+You can also run:
+
+```JS
+require("Storage").write("perfcheck.boot.js",`
+Bangle._loadWidgets = Bangle.loadWidgets;
+Bangle.loadWidgets = function() {
+  Bangle._loadWidgets();
+  Object.keys(WIDGETS).forEach(n=>{
+    var w = WIDGETS[n];
+    w._draw = w.draw;
+    w.draw = function() {
+      var t = Date.now();
+      w._draw(w);
+      print("Bangle.drawWidget",n,0|(Date.now()-t),"ms");
+    };
+  });
+};
+Bangle._drawWidgets = Bangle.drawWidgets;
+Bangle.drawWidgets = function() {
+  var t = Date.now();
+  print("----");
+  Bangle._drawWidgets();
+  print("Bangle.drawWidget TOTAL",0|(Date.now()-t),"ms");
+};
+`);
+load();
+```
+
+And now whenever widgets are drawn you'll see something like:
+
+```
+----
+Bangle.drawWidget lock 1 ms
+Bangle.drawWidget bluetooth 7 ms
+Bangle.drawWidget widid 8 ms
+Bangle.drawWidget alarm 1 ms
+Bangle.drawWidget recorder 1 ms
+Bangle.drawWidget messages 4 ms
+Bangle.drawWidget bat 10 ms
+Bangle.drawWidget TOTAL 61 ms
+```
+
+Which you can use to see whether there are any particularly slow widgets to draw.
+
+When you're done, paste this in the left-hand side to turn off reporting:
+
+```JS
+require("Storage").erase("perfcheck.boot.js");
 load();
 ```
 
