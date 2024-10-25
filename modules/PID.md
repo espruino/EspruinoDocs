@@ -25,6 +25,7 @@ response you'll want to call `pid.step` at a set time interval.
 For example to modulate temperature for a heater:
 
 ```JS
+const PID = require("PID");
 var pid = new PID({
   Pg : 1, // proportional gain
   Ig : 1, // integral gain

@@ -43,4 +43,4 @@ PID.prototype.step = function(err) {
   return this.out;
 };
 
-
+exports = PID;
