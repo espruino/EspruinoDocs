@@ -218,10 +218,10 @@ function CASIC_PKT(pkt) {
   var dv = new DataView(msg.buffer);
   // checksum
   var ckSum = 0;
-	for (i = -1; i < plen; i++)
-		ckSum = 0|(ckSum+dv.getUint32( 6 + i*4,true)); // endian?
+  for (i = -4; i < plen; i+=4)
+    ckSum = 0|(ckSum+dv.getUint32(6+i, true));
   dv.setUint32(6+plen, ckSum, true);
-  Serial1.write(msg);
+  return msg;
 }
 
 // Send AID_INI message, {lat,lon,alt}
@@ -256,19 +256,19 @@ function AID_INI(pos) {
   dv.setUint16(52, wn, true); // wn
   dv.setUint8(54,0); // timeSource
   dv.setUint8(55, 0x23); // flags ( lat/lon and clock valid, no drift data )
-  CASIC_PKT({classId:0x0B, messageId:0x01, payload:msg});
+  return CASIC_PKT({classId:0x0B, messageId:0x01, payload:msg});
 }
 // Query/config UART - just query atm
 function CFG_PTR() {
-  CASIC_PKT({classId:6, messageId:0, payload:[]});
+  return CASIC_PKT({classId:6, messageId:0, payload:[]});
 }
 
 // Do these a few seconds after GPS has been started
 
 // Request UART config info (quick test)
-//CFG_PTR();
+//Serial1.write(CFG_PTR());
 // Set Auxiliary position, time
-//AID_INI({lat : 51.65, lon : -1.267, alt : 30 });
+//Serial1.write(AID_INI({lat : 51.65, lon : -1.267, alt : 30 }));
 ```
 
 
