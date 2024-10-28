@@ -385,7 +385,7 @@ per global, and subsequent runs of your app will not increase memory use.
 Now that your clock uses fast loading, anything loaded *from* your app
 can be loaded quickly **as long as that app uses widgets too**
 
-Using `Bangle.setUI({mode:"clock",...})` means that he button-press
+Using `Bangle.setUI({mode:"clock",...})` means that the button-press
 will load the launcher, as will `Bangle.showLauncher()` - and these
 commands are smart enough to do a fast load.
 
