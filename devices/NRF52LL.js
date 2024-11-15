@@ -125,6 +125,8 @@ exports.timer = function(ch, opts) { // NRF_TIMER_Type
     sample() // samples the comparator and returns the result (0/1)
     cross() // return {up:bool,down:bool,cross:bool} since last cal;
   }
+
+**Note:** As of Espruino 2v25 you can set up the comparator to create a JS event with E.setComparator()
 */
 exports.lpcomp = function(opts) {
   var addr = 0x40013000;
@@ -148,7 +150,7 @@ exports.lpcomp = function(opts) {
     },
     cross : function() { // eDown/eUp/eCross are right next to each other
       var r = peek32(o.eDown,3);
-      poke32(o.eDown, [0,0,0]); 
+      poke32(o.eDown, [0,0,0]);
       return {up:r[1],down:r[0],cross:r[2]};
     }
   };
@@ -293,7 +295,7 @@ exports.saadc = function(opts) {
     if (gains.indexOf(ch.gain)<0) throw "Invalid gain";
     if (tacqs.indexOf(ch.tacq)<0) throw "Invalid tacq";
   });
-  // setup 
+  // setup
   o.start();
   return o;
 };

@@ -84,6 +84,8 @@ var comp = ll.lpcomp({pin:D31,vref:8});
 ll.ppiEnable(0, comp.eCross, tog.tOut);
 ```
 
+**Note:** As of Espruino 2v25 you can set up the comparator to create a JS event with [`E.setComparator`](https://www.espruino.com/Reference#l_E_setComparator)
+
 ### Count how many times `D31` crosses `VCC/2` in 10 seconds
 
 Uses low power comparator + counter timer:
@@ -107,6 +109,8 @@ setInterval(function() {
   print(getCtr());
 }, 10000);
 ```
+
+**Note:** As of Espruino 2v25 you can set up the comparator to create a JS event with [`E.setComparator`](https://www.espruino.com/Reference#l_E_setComparator)
 
 ### Use LED1 on Puck.js to sense a change in light level
 
@@ -137,6 +141,8 @@ setWatch(function() {
   print("Light level changed");
 }, togglePin, {repeat:true});
 ```
+
+**Note:** As of Espruino 2v25 you can set up the comparator to create a JS event with [`E.setComparator`](https://www.espruino.com/Reference#l_E_setComparator)
 
 ### Make one reading from the ADC:
 
@@ -376,4 +382,14 @@ console.log(o.sample());
 // the state changed since the last call
 console.log(o.cross());
 // eg { up: 1, down: 0, cross: 1 }
+```
+
+**Note:** As of Espruino 2v25 you can set up the comparator to create a JS event with [`E.setComparator`](https://www.espruino.com/Reference#l_E_setComparator)
+
+```JS
+E.setComparator(D31, 8/16);
+E.on("comparator", e => {
+  // e==1 -> up
+  // e==-1 -> down
+});
 ```
