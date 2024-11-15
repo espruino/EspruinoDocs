@@ -30,7 +30,7 @@ exports.getGraphics = function(g) {
   d[3] = 0;  // Normal 203.2 DPI
   d[4] = g.getWidth()>>3;
   d[5] = 0;
-  d[6] = g.getHeight()%255;
+  d[6] = g.getHeight()&255;
   d[7] = g.getHeight()>>8;
   d.set(new Uint8Array(g.buffer),8);
   d[d.length-1] = 10; // newline
