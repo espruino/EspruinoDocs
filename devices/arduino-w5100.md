@@ -10,7 +10,9 @@ Arduino Ethernet and SD card shield (WIZnet W5100)
 ![WIZnet W5100 Ethernet shield](arduino-w5100/arduino-w5100.jpg)
 
 Standard Arduino Ethernet shields use the WIZnet W5100 chip, which provides
-hardware support for TCP/IP. The W5100 is supported out of the box by [Pixl.js](/Pixl.js)
+hardware support for TCP/IP. The W5100 is supported out by [Pixl.js](/Pixl.js)
+**when the `espruino_2vxx_pixljs_wiznet.zip` firmware is installed**.
+[See here](/Pixl.js#firmware-updates) for more information.
 
 Most other offical Espruino boards have firmware with support for the
 [WIZnet W5500](/WIZnet) and will not work with the W5100 without
@@ -68,6 +70,9 @@ This board has the following connections:
 
 Software
 ---------
+
+As of Espruino 2v25, **you'll need the `espruino_2vxx_pixljs_wiznet.zip` firmware installed**.
+[See here](/Pixl.js#firmware-updates) for more information.
 
 ## Ethernet
 

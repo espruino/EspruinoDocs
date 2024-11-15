@@ -586,9 +586,9 @@ Firmware Updates
 
 Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions on Flashing.
 
-### Normal and Minimal Firmwares
+### Different Firmwares
 
-We provide two distinct firmwares for Puck.js devices:
+We provide three distinct firmwares for Puck.js devices:
 
 | Filename                           | Espruino | BLE | NFC | Neopixel | JIT | Graphics | HTTP/Network | Crypto | Flash Storage |
 |------------------------------------|----------|-----|-----|----------|-----|----------|--------------|--------|---------------|

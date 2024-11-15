@@ -399,6 +399,18 @@ Firmware Updates
 
 Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
 
+### Different Firmwares
+
+We provide two distinct firmwares for Pixl.js devices:
+
+| Filename                           | Espruino | BLE | NFC | Neopixel | JIT | HTTP/Network | WIZnet W5100 Ethernet | Flash Storage |
+|------------------------------------|----------|-----|-----|----------|-----|--------------|-----------------------|---------------|
+| `espruino_2vxx_pixljs.zip`         |   X      |  X  |  X  |    X     |  X  |   X          |                       |   36kb        |
+| `espruino_2vxx_pixljs_wiznet.zip`  |   X      |  X  |  X  |    X     |     |   X          |            X          |   36kb        |
+
+Pixl.js come pre-installed with the first (normal) firmware, but if you need support for the [WIZnet W5100 shield](/arduino-w5100]
+as of 2v25 you'll have to install the `espruino_2vxx_pixljs_wiznet.zip` firmware.
+
 
 Troubleshooting
 ---------------
