@@ -388,7 +388,7 @@ document.getElementById("calculatePBFFont").addEventListener('click',function(e)
   e.preventDefault();
   getFontLinkAndName("PBF");
 });
-document.getElementById('fontSize').addEventListener('mousemove',function() {
+document.getElementById('fontSize').addEventListener('input',function() {
   document.getElementById('fontSizeText').innerHTML = document.getElementById('fontSize').value;
 });
 document.getElementById("fontForm").addEventListener('submit', function(e) { // when a font is actually uploaded via the file box
