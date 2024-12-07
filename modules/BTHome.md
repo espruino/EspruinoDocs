@@ -83,6 +83,7 @@ and the names have been kept as similar as possible
  * `humidity16` - humidity %, floating point
  * `power` - power (W), floating point
  * `pressure` - pressure (hPa), floating point
+ * `volume` - volume (L), floating point (0 .. 6553.5)
  * `voltage` - voltage (V), floating point
  * `co2` - CO2 level (ppm), int
  * `tvoc` - TVOC (volatile compounds) level (ug/m3), int
@@ -170,6 +171,7 @@ Just supply these with a single boolean value as v, for example: `{type:"door", 
  * `connected`
  * `door`
  * `garage_door`
+ * `generic` - generic boolean
  * `boolean`
  * `heat`
  * `light`

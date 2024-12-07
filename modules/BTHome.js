@@ -15,7 +15,7 @@ exports.getAdvertisement = function(devices) {
   const DEV = {
     battery : e => [ 1, E.clip(Math.round(e.v),0,100)], // 0..100, int
     temperature : e => b16(2, Math.round(e.v*100)),     // degrees C, floating point
-    count : e => [ 0x0F, e.v],                          // 0..255, int
+    count : e => [ 0x09, e.v],                          // 0..255, int
     count16 : e => b16(0x3D, e.v),                      // 0..65535, int
     count32 : e => b32(0x3E, e.v),                      // 0..0xFFFFFFFF, int
     current : e => b16(0x5D, Math.round(e.v*1000)),     // amps, floating point
@@ -26,6 +26,7 @@ exports.getAdvertisement = function(devices) {
     humidity16 : e => b16(3, Math.round(e.v*100)),      // humidity %, floating point
     power : e => b24(0x0B, Math.round(e.v*100)),        // power (W), floating point
     pressure : e => b24(4, Math.round(e.v*100)),        // pressure (hPa), floating point
+    volume : e => b16(0x4E, Math.round(e.v*10)),        // volume (L), floating point (0 .. 6553.5)
     voltage : e => b16(0x0C, Math.round(e.v*1000)),     // voltage (V), floating point
     co2 : e => b16(0x12, Math.round(e.v)),              // co2 (ppm), int, factor=1
     tvoc : e => b16(0x13, Math.round(e.v)),             // TVOC (ug/m3), int, factor=1
@@ -43,6 +44,7 @@ exports.getAdvertisement = function(devices) {
     }
   };
   const BOOL = {
+    generic : 0x0F,
     battery_low : 0x15,
     battery_charge : 0x16,
     cold : 0x18,
