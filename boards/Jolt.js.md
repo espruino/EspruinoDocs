@@ -322,6 +322,37 @@ for (var i in rgb)
 require("neopixel").write(H1, rgb); // send to the LEDs
 ```
 
+### Using as Inputs
+
+On the terminal block, pins `H0`, `H2`, `H4` and `H6` are connected via
+potential dividers to analog inputs and so can be read with
+`analogRead(H0)` or `H0.analog()` (see below).
+
+However, when doing a digital read (eg `H0.read()`) the value that's read
+is what is on the pin connected to the motor driver, so can not be used 
+directly as an input. You can get around this by accessing the
+analog pins directly:
+
+* `H0` -> `D4`
+* `H2` -> `D5`
+* `H4` -> `D30`
+* `H6` -> `D28`
+
+However because of the potential divider, for the input to register as a logic `1` the
+voltage on it must be above 10v.
+
+To work around this Espruino 2v25 includes [E.setComparator](https://www.espruino.com/Reference#l_E_setComparator)
+which allows you to be notified when the input rises above or drops below some multiple of 1.37v.
+
+```JS
+E.setComparator(H0, 1.37); // compare with 1.37v
+E.on("comparator", e => {
+  print(e); // 1 for up, or -1 for down
+});
+```
+
+**Note:** There is only one comparator so only one pin can be monitored at once.
+
 
 Analog Inputs
 -------------
