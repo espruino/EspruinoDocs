@@ -210,15 +210,22 @@ added and make sure it looks ok.
 
 You'll see the pull request as well as yellow test saying `Some checks haven’t completed yet`.
 
-We run the `bin/sanitycheck.js` script on any submissions using [Travis CI](https://travis-ci.org/).
+We run the `bin/sanitycheck.js` script on any submissions using [GitHub actions](https://github.com/espruino/BangleApps/actions).
 This allows us to do a quick check that everything is ok. It won't detect bugs in your app
-but it will ensure that the App Loader stays working.
+but it will ensure that the App Loader stays working and attempts to find any obvious Gotchas.
 
 After a while it'll change to either a green `All checks have passed`
 or a red `Checks failed`. If checks fail then we're unlikely to be able
 to merge as-is, but you can click `Show all Checks`, `Details` and see
 what errors were found. If you correct these in your repository then
 the check status will update.
+
+**Note:** It may take a few days to weeks for us to get around to
+checking and merging your PR, and once that is done your app will
+appear on the [Development App Loader](https://github.com/espruino/BangleApps/).
+
+After that, it may take another week or so for your changes
+to make their way to the main App Loader at https://banglejs.com/apps
 
 
 More Info
