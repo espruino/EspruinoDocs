@@ -26,6 +26,7 @@ exports.getAdvertisement = function(devices) {
     humidity16 : e => b16(3, Math.round(e.v*100)),      // humidity %, floating point
     power : e => b24(0x0B, Math.round(e.v*100)),        // power (W), floating point
     pressure : e => b24(4, Math.round(e.v*100)),        // pressure (hPa), floating point
+    rotation : e => b16(0x3F, Math.round(e.v*10)),      // rotation in degrees, floating point (0.1 degree)
     volume : e => b16(0x4E, Math.round(e.v*10)),        // volume (L), floating point (0 .. 6553.5)
     voltage : e => b16(0x0C, Math.round(e.v*1000)),     // voltage (V), floating point
     co2 : e => b16(0x12, Math.round(e.v)),              // co2 (ppm), int, factor=1

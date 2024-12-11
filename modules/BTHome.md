@@ -83,6 +83,7 @@ and the names have been kept as similar as possible
  * `humidity16` - humidity %, floating point
  * `power` - power (W), floating point
  * `pressure` - pressure (hPa), floating point
+ * `rotation` - rotation in degrees, floating point (0.1 degree)
  * `volume` - volume (L), floating point (0 .. 6553.5)
  * `voltage` - voltage (V), floating point
  * `co2` - CO2 level (ppm), int
