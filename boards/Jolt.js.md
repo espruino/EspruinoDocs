@@ -170,7 +170,7 @@ Tutorials using Bluetooth LE:
 
 * APPEND_USES: Only BLE,-Jolt.js
 
-Tutorials using Bluetooth LE and functionality that may not be part of Pixl.js:
+Tutorials using Bluetooth LE and functionality that may not be part of Jolt.js:
 
 * APPEND_USES: BLE,-Only BLE,-Jolt.js
 
@@ -329,7 +329,7 @@ potential dividers to analog inputs and so can be read with
 `analogRead(H0)` or `H0.analog()` (see below).
 
 However, when doing a digital read (eg `H0.read()`) the value that's read
-is what is on the pin connected to the motor driver, so can not be used 
+is what is on the pin connected to the motor driver, so can not be used
 directly as an input. You can get around this by accessing the
 analog pins directly:
 
@@ -441,7 +441,7 @@ Jolt.js has 3 programmable LEDs, controllable via the `LED` or `LED1` (red), `LE
 
 ### Buttons
 
-There is 1 buttons on Pixl.js, accessible as `BTN` or `BTN1`.
+There is 1 button on Jolt.js, accessible as `BTN` or `BTN1`.
 
 * You can access a button's state with `digitalRead(BTN1)` or `BTN1.read()`
 (the two commands are identical).
