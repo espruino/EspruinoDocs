@@ -53,7 +53,7 @@ function updateAdvertising() {
       v : v
     },
   ]), {
-    name : "Tree", interval:1000,
+    name : "Water", interval:1000,
     // not being connectable/scannable saves power (but you'll need to reboot to connect again with the IDE!)
     //connectable : false, scannable : false,
   });
