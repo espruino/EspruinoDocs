@@ -25,6 +25,7 @@ How to set up
   * [Bangle.js Gadgetbridge from F-Droid](https://f-droid.org/en/packages/com.espruino.gadgetbridge.banglejs) - not dependent on the Google Play Store
   * [Bangle.js Gadgetbridge 'nightly' builds](https://freeyourgadget.codeberg.page/fdroid/repo/) - with all the very latest changes
   * Normal [Gadgetbridge from F-Droid](https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/) (this doesn't provide any Internet connectivity features)
+  * On alternative platforms such as [Sailfish OS](https://sailfishos-chum.github.io/apps/harbour-amazfish/), [Ubuntu Touch](https://open-store.io/app/uk.co.piggz.amazfish), or [Flatpak](https://flathub.org/apps/uk.co.piggz.amazfish), Amazfish can be used as it implements the Gadgetbridge interface.
 * On Bangle.js, install the [Android Integration app](https://banglejs.com/apps/?id=android) - this is the new and recommended way of interfacing to Gadgetbridge. (The [Gadgetbridge Widget](https://banglejs.com/apps/?id=gbridge) is the old, unmaintained way of interfacing to Gadgetbridge)
 * Now ensure you disconnect your computer from Bangle.js
 * Start the Gadgetbridge app and click the blue `+` in the bottom right
