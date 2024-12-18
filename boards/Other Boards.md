@@ -38,6 +38,7 @@ Contents
 | [**Espruino Pixl.js**](/Pixl.js)                     | nRF52832      | 64               | 2200     | £30      | N       | 1        | 1       | Y       | LCD Display, Arduino Headers, Bluetooth LE                                     |
 | [**Espruino Bangle.js**](/Bangle.js)                 | nRF52832      | 64               | 2200     | --       | N       | -        | -       | Y       | LCD Display, Bluetooth LE, Vibration, Accelerometer                            |
 | [**Espruino Bangle.js 2**](/Bangle.js2)              | nRF52840      | 64               | 12000    | £64      | N       | -        | -       | Y       | LCD Display, Bluetooth LE, Vibration, Accelerometer                            |
+| [**Espruino Jolt.js**](/Jolt.js)                     | nRF52840      | 64               | 12000    | £35      | Y       | 1        | 1       | Y       | 8x 1A Outputs, Qwiic, LiPo Charger, Bluetooth LE                               |
 | [**Espruino MDBT42Q Breakout**](/MDBT42Q)            | nRF52832      | 64               | 2200     | £17      | N       | 1        | 1       | N       | Bluetooth LE                                                                   |
 | [**Espruino MDBT42Q Module**](/MDBT42Q)              | nRF52832      | 64               | 2200     | £10      | N       | 1        | 1       | N       | Bluetooth LE, Bare Module                                                      |
 | **Third Party Boards**                               |               |                  |          |          |         |          |         |         |                                                                                |
@@ -166,13 +167,13 @@ See the [Download](/Download) page for more information - the Web IDE directly s
 *   On Mac: Download and install 'stlink', either by typing:
 
 ```
-    brew install libusb  
-    git clone https://github.com/texane/stlink.git  
-    cd stlink  
-    LIBRARY_PATH=/usr/local/lib  
-    C_INCLUDE_PATH=/usr/local/include  
-    ./autogen.sh  
-    ./configure  
+    brew install libusb
+    git clone https://github.com/texane/stlink.git
+    cd stlink
+    LIBRARY_PATH=/usr/local/lib
+    C_INCLUDE_PATH=/usr/local/include
+    ./autogen.sh
+    ./configure
     make
 ```
 
