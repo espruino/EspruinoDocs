@@ -85,7 +85,7 @@ function addItem(name) {
 Bangle.loadWidgets();
 Bangle.drawWidgets();
 Bangle.setGPSPower(1);
-```  
+```
 
 First we need to open a file, which is done with this line:
 
@@ -283,7 +283,7 @@ This does a few basic things:
 * `Util.eraseStorageFile` erases the file
 
 For more information about the available functions you can check out
-[the interface.js file](https://github.com/espruino/BangleApps/blob/master/lib/interface.js).
+[the interface.js file](https://github.com/espruino/EspruinoAppLoaderCore/blob/master/lib/interface.js).
 
 To use your new interface HTML file:
 
