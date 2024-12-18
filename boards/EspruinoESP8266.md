@@ -23,7 +23,7 @@ Quick links
 
 * [Download the latest ESP8266 firmware release](http://www.espruino.com/Download)
 * [Download 'cutting edge' ESP8266 firmwares](http://www.espruino.com/binaries/travis/master/) - these may not always work
-* [Tutorial on flashing the esp8266](ESP8266_Flashing)<a name="firmware-updates"></a>
+* [Tutorial on flashing the esp8266](ESP8266_Flashing)
 * [Espruino ESP8266 Forum](http://forum.espruino.com/microcosms/925/)
 * [Using Wifi on the ESP8266](ESP8266_WifiUsage)
 * [Gitter chat about Espruino](https://gitter.im/espruino/Espruino) (not focused on esp8266 but
@@ -36,10 +36,17 @@ Features
 * 17 GPIO pins (11 usable): 1 serial, 1 SPI, 1 I2C
 * 1 Analog input (0..1V)
 * Built-in Wifi
-* Soft Serial 
+* Soft Serial
 * Soft PWM
 * None of the GPIO are 5 volt tolerant!
 * 1600/1700 JS variables
+
+Flashing<a name="firmware-updates"></a>
+-----------------------------------------
+
+If you have a Chromium-based web browser it's possible to flash your ESP32 device direct from the browser! [Click here to flash Espruino to your board](/Espressif+Flash)
+
+Otherwise see the [Tutorial on flashing the esp8266](ESP8266_Flashing)
 
 Build Content
 -------------
@@ -199,7 +206,7 @@ analogRead(D0);
 
 ```
 
-### analogWrite implementation 
+### analogWrite implementation
 
 With the implementation of hardware timer it's possible to generate stable pwm signals by software
 
@@ -300,7 +307,7 @@ Saving code to flash
 
 With the implementation of buildin module Storge it's simple to store any type of object you can think of.
 
-Currently 16KB for 512KB ESPs and 192KB for 4MB ESPs of flash are reserved to save JS code 
+Currently 16KB for 512KB ESPs and 192KB for 4MB ESPs of flash are reserved to save JS code
 to flash using the save() function. The total JS memory is larger (22400 bytes) so if you
 filled up the JSvars you will need compression to work well. Some simple
 tests show that "it should fit" but it's certainly possible that some

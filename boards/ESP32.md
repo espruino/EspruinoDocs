@@ -85,7 +85,7 @@ Not supported by Espruino on the ESP32 (yet):
 
 ### Installing drivers
 
-Depending on the board and operating system you have, you might want to install the FTDI or Silicon Labs USB driver:
+Depending on the board and operating system you have, you might need to install the FTDI or Silicon Labs USB driver:
 
 * [FTDI](http://www.ftdichip.com/Drivers/D2XX.htm)
 * [Silicon Labs CP210x](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
@@ -94,31 +94,13 @@ Depending on the board and operating system you have, you might want to install 
 
 If your device is not already flashed, below are the instructions.  Flashing involves downloading the latest firmware to your PC and then copying via USB cable to the microcontroller.
 
-*Note:* This flashing process is being improved.  We expect to remove the
-build stage and provide the firmware as a download.
+#### Easy Online Flashing
 
-#### Building Firmware and installing the toolchain
+If you have a Chromium-based web browser it's possible to flash your ESP32 device direct from the browser! [Click here to flash Espruino to your board](/Espressif+Flash)
 
-You can get the Espruino firmare from the [Travis cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
-Get the file ending in `_esp32.bin`.
+If that fails you'll have to install it manually (see below)
 
-You can also build the Espruino firmware yourself:
-
-The following work in a bash shell environment, you will need git, and other essential build tools (e.g. on Ubuntu run `sudo apt-get install build-essential`).
-
-```sh
-# Get the Espruino source code
-git clone https://github.com/espruino/Espruino.git
-cd Espruino
-# Download and set up the toolchain ('source' is important here)
-source scripts/provision.sh ESP32
-# Clean and rebuild
-make clean && BOARD=ESP32 make
-```
-
-You will have a file called `espruino_esp32.bin`.  This is your ESP32 firmware.
-
-#### The actual flash
+#### Writing Firmware
 
 Download [esptool](https://github.com/espressif/esptool) if you haven't downloaded it already.
 
@@ -219,11 +201,33 @@ Hard resetting...
 
 Your device is flashed.
 
+#### Building Firmware and installing the toolchain
+
+You can get the Espruino firmare from the [cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
+Get the file ending in `_esp32.bin`.
+
+You can also build the Espruino firmware yourself:
+
+The following work in a bash shell environment, you will need git, and other essential build tools (e.g. on Ubuntu run `sudo apt-get install build-essential`).
+
+```sh
+# Get the Espruino source code
+git clone https://github.com/espruino/Espruino.git
+cd Espruino
+# Download and set up the toolchain ('source' is important here)
+source scripts/provision.sh ESP32
+# Clean and rebuild
+make clean && BOARD=ESP32 make
+```
+
+You will have a file called `espruino_esp32.bin`.  This is your ESP32 firmware.
+
+See https://github.com/espruino/Espruino/blob/master/README_Building.md for more information.
 
 ### Espruino Web IDE
 
 The [Espruino Web IDE](http://www.espruino.com/Web+IDE) is a basic development environment
-that allows you to write your code and deploy it to the ESP32.  
+that allows you to write your code and deploy it to the ESP32.
 
 *Issue*: In 2017, there was an issue with Espruino Web IDE, sometimes it will not connect.
 Especially the first time you try.  The workaround is to use another tool to
@@ -505,10 +509,10 @@ Implemented with the esp-idf RMT driver.
 
 ### setWatch implementation
 [These pins can be watched](https://github.com/espruino/Espruino/blob/8d193bab16a08d013dbb5689c9666b81039990a4/targets/esp32/jshardware.c#L473-L477):
- * D0 
- * D12 .. D19 
- * D21, D22 
- * D25 .. D27 
+ * D0
+ * D12 .. D19
+ * D21, D22
+ * D25 .. D27
  * D34 .. D39
 
 
@@ -579,12 +583,12 @@ fs.readFileSync('hello world.txt');
 ```
 Guru Meditation Error of type InstrFetchProhibited occurred on core  0. Exception was unhandled.
 Register dump:
-PC      : 0xffffffff  PS      : 0x00060c30  A0      : 0x8008e036  A1      : 0x3ffd54b0  
-A2      : 0x3f400148  A3      : 0x3ffb6952  A4      : 0x00000008  A5      : 0xffffffe8  
-A6      : 0xffffffa4  A7      : 0x3ffb1fa0  A8      : 0xffffffff  A9      : 0x3ffd54c0  
-A10     : 0x00000000  A11     : 0x00000002  A12     : 0x5fff0007  A13     : 0x00000000  
-A14     : 0x00000000  A15     : 0x00000000  SAR     : 0x00000000  EXCCAUSE: 0x00000014  
-EXCVADDR: 0xfffffffc  LBEG    : 0x4000c2e0  LEND    : 0x4000c2f6  LCOUNT  : 0x00000000  
+PC      : 0xffffffff  PS      : 0x00060c30  A0      : 0x8008e036  A1      : 0x3ffd54b0
+A2      : 0x3f400148  A3      : 0x3ffb6952  A4      : 0x00000008  A5      : 0xffffffe8
+A6      : 0xffffffa4  A7      : 0x3ffb1fa0  A8      : 0xffffffff  A9      : 0x3ffd54c0
+A10     : 0x00000000  A11     : 0x00000002  A12     : 0x5fff0007  A13     : 0x00000000
+A14     : 0x00000000  A15     : 0x00000000  SAR     : 0x00000000  EXCCAUSE: 0x00000014
+EXCVADDR: 0xfffffffc  LBEG    : 0x4000c2e0  LEND    : 0x4000c2f6  LCOUNT  : 0x00000000
 ```
 **Cause:** if it happens whenever wifi tries to connect then the chip is not getting enough power.
 **Solution:** use a designated power source (not the USB serial adapter), add capacitors to the power line

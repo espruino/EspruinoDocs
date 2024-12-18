@@ -8,6 +8,8 @@ This tutorial provides a little intro into getting going with the ESP8266 and Es
 using it without serial wires going forward. For reference documentation about the esp8266 port
 of Espruino, please see the [reference section](/EspruinoESP8266).
 
+**NOTE:** If you have a Chromium-based web browser it's possible to flash your ESP8266 device direct from the browser! [Click here to flash Espruino to your board](/Espressif+Flash)
+
 __WARNING__: while everything described here works, the tutorial has not been tested much.
 
 __Windows users__: Flashing instructions using esptool seem to work.
@@ -183,7 +185,7 @@ if the config doesn't match the chip for some common chips.
 Erase flash
 -----------
 
-It is important to erase the flash before upgrade to a new version to avoid undefined situations like can't load saved code or endless reboot loops..... 
+It is important to erase the flash before upgrade to a new version to avoid undefined situations like can't load saved code or endless reboot loops.....
 
 ```
 $ /path/to/esptool/esptool.py --port /dev/ttyUSB0 --baud 115200 erase_flash
