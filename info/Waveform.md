@@ -81,7 +81,17 @@ exactly one second's worth of frequency data.
 Output
 -----
 
-To output a sine wave to the DAC on A4:
+To output via PWM, and repeat for 4 seconds:
+
+```JS
+var w = new Waveform(128);
+for (var i=0;i<128;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/64)*127;
+analogWrite(A0, 0.5, {freq:80000});  // Set up PWM with freq above human hearing
+w.startOutput(A0, 4000, {repeat:true});
+setTimeout(function() { w.stop(); }, 4000);
+```
+
+Or to output a sine wave to the DAC on A4 (on the [Original Espruino](/Original) - this is the only board with a DAC:
 
 ```JS
 var w = new Waveform(256);
@@ -90,14 +100,26 @@ analogWrite(A4, 0.5);
 w.startOutput(A4, 4000);
 ```
 
-Or to output via PWM, and repeat for 4 seconds:
+You may also want to output one signal on two pins (2v25+ needed) which allows you to attach
+a speaker without any capacitor to remove DC bias. It also doubles the effective volume:
+
+| Value (8 bit) | Single output | Double + | Double - |
+|-----|----|----|----|
+| 0   |   0 | 0  | 1  |
+| 64  |0.25 | 0  | 0.5  |
+| 128 | 0.5 | 0  | 0  |
+| 192 |0.75 | 0.5| 0  |
+| 255 |   0 | 1  | 0  |
 
 ```JS
-var w = new Waveform(128);
-for (var i=0;i<128;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/64)*127;
-analogWrite(A0, 0.5, {freq:80000});  // PWM freq above human hearing
-w.startOutput(A0, 4000, {repeat:true});
-setTimeout(function() { w.stop(); }, 4000);
+// set up waveform with a sine wave
+var w = new Waveform(256);
+for (var i=0;i<256;i++) w.buffer[i] = 128+Math.sin(i*Math.PI/128)*127;
+// analog out on both channels
+analogWrite(H0, 0.5, {freq:80000});
+analogWrite(H1, 0.5, {freq:80000});
+// set up waveform on two pins
+w.startOutput(H0, 4000, { pin_neg:H1, repeat:true });
 ```
 
 You can even output synchronized waveforms on two outputs:
