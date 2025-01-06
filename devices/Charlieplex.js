@@ -10,7 +10,7 @@ g.flip();
 */
 
 exports.connect = function(pins) {
-  var g = Graphics.createArrayBuffer(pins.length,pins.length-1, 1);
+  var g = Graphics.createArrayBuffer(pins.length,pins.length-1, 1, {msb:false});
   g.interval = undefined;
   g.flip = function() {
     // precalculate a list of read/write commands which we'll then execute
@@ -35,11 +35,11 @@ exports.connect = function(pins) {
     // turn everything off after
     cmds+="digitalRead(["+pins+"])";
     // eval now, to try and reduce flicker
-    eval(cmds); 
+    eval(cmds);
 
     // Set an interval to execute the read/write commands as fast as possible
     if (g.interval) clearInterval(g.interval);
-    g.interval = setInterval(function() {eval(cmds);}, 1); 
+    g.interval = setInterval(function() {eval(cmds);}, 1);
   };
   return g;
 };

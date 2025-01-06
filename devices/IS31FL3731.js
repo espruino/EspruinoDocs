@@ -22,7 +22,7 @@ exports.connect = function(i2c) {
   w(R.PICTUREFRAME, 0); // display frame 0
   w(R.AUDIOSYNC, 0); // no audio sync
   // define graphics
-  var g = Graphics.createArrayBuffer(16,9,8);
+  var g = Graphics.createArrayBuffer(16,9,8, {msb:false});
   g.flip = function() {
     w(BANK_COMMAND, 0); // select frame 0
     for (var i=0; i<6; i++) {

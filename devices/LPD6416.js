@@ -14,7 +14,7 @@ exports.connect = function(pins) {
   var s = shiftOut.bind(null, [pins.nG,pins.nR], { clk : pins.S, repeat : 4 });
   var d = digitalWrite.bind(null, [pins.nEN,pins.L,pins.L,pins.D,pins.C,pins.B,pins.A,pins.nEN]);
   var en = pins.nEN;
-  var g = Graphics.createArrayBuffer(64,16,2);
+  var g = Graphics.createArrayBuffer(64,16,2, {msb:false});
   var u = g.buffer;
   g.scan = function() {
     en.reset();

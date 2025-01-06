@@ -11,7 +11,7 @@ Espruino usually has multiple fonts built-in.
 
 <!--
 var s = 8;
-g = Graphics.createArrayBuffer(s*16,s*16,1);
+g = Graphics.createArrayBuffer(s*16,s*16,1,{msb:false});
 g.setFontAlign(0,0);
 g.setFont("6x8");
 for (var y=0;y<16;y++)

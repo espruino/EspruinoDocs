@@ -121,7 +121,7 @@ Now you have the list of pins, you can write some JS code to scan out the displa
 ```
 const ANODES = [ D28, D19, D18, D31, D16, D30, D26, D25 ];
 const CATHODES = [ D3, D27, D14, D29, D22, D15, D20, D17 ];
-var g = Graphics.createArrayBuffer(8,8,1);
+var g = Graphics.createArrayBuffer(8,8,1, {msb:false});
 g.drawString("Hi");
 
 // Start scanning out the LED display

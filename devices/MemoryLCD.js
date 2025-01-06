@@ -1,6 +1,6 @@
 /* Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 exports.connect = function(/*=SPI*/_spi, /*=PIN*/_cs, /*=PIN*/_vcom, width, height, callback) {
-  var g = Graphics.createArrayBuffer(width,height,1);
+  var g = Graphics.createArrayBuffer(width,height,1, {msb:false});
   var spi = _spi;
   var cs = _cs;
   var vcom = _vcom;
@@ -15,7 +15,7 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_cs, /*=PIN*/_vcom, width, heig
     spi.send(0b00000000); // all normal
     digitalWrite(cs,0); // CS off
     if (callback) callback();
-  }, 10);  
+  }, 10);
   /* Note: it's recommended you toggle vcom every second, but doing it every 5
      allows Espruino to properly enter deep sleep modes */
   if (vcom) {
@@ -23,7 +23,7 @@ exports.connect = function(/*=SPI*/_spi, /*=PIN*/_cs, /*=PIN*/_vcom, width, heig
       digitalWrite(vcom, vcomstate=!vcomstate);
     }, 5000);
   }
-  
+
   g.flip = function () {
     digitalWrite(cs,1); // CS on
     spi.send([0b00000001,1]); // update, 1st row

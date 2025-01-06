@@ -1,6 +1,6 @@
 /* Copyright (c) 2014 Sam Sykes, Gordon Williams, Jonathan Richards.
    See the file LICENSE for copying permission. */
-/* 
+/*
 Module for the SH1106 OLED controller
 
 ```
@@ -8,7 +8,7 @@ function go(){
    // write some text
    g.drawString("Hello World!",2,2);
    // write to the screen
-   g.flip(); 
+   g.flip();
 }
 
 // I2C
@@ -57,7 +57,7 @@ function update(options) {
 
 exports.connect = function(i2c, callback, options) {
     update(options);
-    var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,(initCmds[4] + 1),1,{vertical_byte : true});
+    var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,(initCmds[4] + 1),1,{vertical_byte : true, msb:false});
 	var addr = 0x3C;
 	if(options && options.address) addr = options.address;
 
@@ -65,9 +65,9 @@ exports.connect = function(i2c, callback, options) {
     initCmds.forEach(function(d) {i2c.writeTo(addr, [0,d]);});
     // if there is a callback, call it now(ish)
     if (callback !== undefined) setTimeout(callback, 10);
-    
+
     // write to the screen
-    oled.flip = function() { 
+    oled.flip = function() {
         // chip only has page mode
         var page = 0xB0;
         var chunk = new Uint8Array(C.OLED_WIDTH+1);
@@ -78,9 +78,9 @@ exports.connect = function(i2c, callback, options) {
 			page++;
             chunk.set(new Uint8Array(this.buffer,p,C.OLED_WIDTH), 1);
             i2c.writeTo(addr, chunk);
-        } 
+        }
     };
-    
+
 	// set contrast, 0..255
 	oled.setContrast = function(c) { i2c.writeTo(addr, 0, 0x81, c); };
 
@@ -96,8 +96,8 @@ exports.connect = function(i2c, callback, options) {
 exports.connectSPI = function(spi, dc,  rst, callback, options) {
     update(options);
     var cs = options?options.cs:undefined;
-    var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,(initCmds[4] + 1),1,{vertical_byte : true});
-    
+    var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,(initCmds[4] + 1),1,{vertical_byte : true, msb:false});
+
     if (rst) digitalPulse(rst,0,10);
     setTimeout(function() {
         // configure the OLED
@@ -109,9 +109,9 @@ exports.connectSPI = function(spi, dc,  rst, callback, options) {
         // if there is a callback, call it now(ish)
         if (callback !== undefined) setTimeout(callback, 10);
     }, 50);
-    
+
     // write to the screen
-    oled.flip = function() { 
+    oled.flip = function() {
         //  chip only has page mode
         var page = 0xB0;
         var chunk = new Uint8Array(C.OLED_WIDTH);
@@ -126,28 +126,28 @@ exports.connectSPI = function(spi, dc,  rst, callback, options) {
         }
         if (cs) digitalWrite(cs,1);
     };
-    
+
 	// set contrast, 0..255
-	oled.setContrast = function(c) { 
+	oled.setContrast = function(c) {
 		if (cs) cs.reset();
 		spi.write(0x81,c,dc);
 		if (cs) cs.set();
 	};
 
     // set off
-    oled.off = function() { 
+    oled.off = function() {
       if (cs) cs.reset();
       spi.write(0xAE,dc);
       if (cs) cs.set();
     };
 
     // set on
-    oled.on = function() { 
+    oled.on = function() {
       if (cs) cs.reset();
       spi.write(0xAF,dc);
       if (cs) cs.set();
     };
-    
+
     // return graphics
     return oled;
 };

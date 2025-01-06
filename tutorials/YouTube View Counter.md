@@ -55,7 +55,7 @@ var VIDEO_ID = "aZ4MKhqvz2w";
 var API_KEY = "";
 
 var disp;
-var g = Graphics.createArrayBuffer(32, 8, 1);
+var g = Graphics.createArrayBuffer(32, 8, 1, {msb:false});
 g.flip = function() { disp.raw(g.buffer); };
 
 require("Font4x8Numeric").add(Graphics);

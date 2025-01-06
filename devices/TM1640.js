@@ -23,7 +23,7 @@ exports.connect = function(pins, callback) {
   var cH = pins.clk.set.bind(pins.clk);
   var dL = pins.din.reset.bind(pins.din);
   var dH = pins.din.set.bind(pins.din);
-  var g = Graphics.createArrayBuffer(8,8,1);
+  var g = Graphics.createArrayBuffer(8,8,1, {msb:false});
   var intensity = 1;
 
   var sendCommand = function(cmd) {

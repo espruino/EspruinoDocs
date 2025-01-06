@@ -77,7 +77,7 @@ function update(options) {
 
 exports.connect = function(i2c, callback, options) {
   update(options);
-  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,initCmds[4]+1,1,{vertical_byte : true});
+  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,initCmds[4]+1,1,{vertical_byte : true, msb:false});
 
   var addr = 0x3C;
   if(options) {
@@ -123,7 +123,7 @@ exports.connect = function(i2c, callback, options) {
 exports.connectSPI = function(spi, dc,  rst, callback, options) {
   update(options);
   var cs = options?options.cs:undefined;
-  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,initCmds[4]+1,1,{vertical_byte : true});
+  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH,initCmds[4]+1,1,{vertical_byte : true, msb:false});
 
   if (rst) digitalPulse(rst,0,10);
   setTimeout(function() {

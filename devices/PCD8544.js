@@ -15,7 +15,7 @@ var g = require("PCD8544").connect(SPI1,B6,B7,B8, function() {
 
  */
 exports.connect = function(/*=SPI*/spi, /*=PIN*/dc, /*=PIN*/ce, /*=PIN*/rst, callback) {
-  var LCD = Graphics.createArrayBuffer(84,48,1,{vertical_byte:true});
+  var LCD = Graphics.createArrayBuffer(84,48,1,{vertical_byte:true, msb:false});
   setTimeout(function() {
     dc.reset(); // cmd
     digitalPulse(rst, 0, 10); // pulse reset low

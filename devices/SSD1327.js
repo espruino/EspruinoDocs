@@ -15,7 +15,7 @@ function start(){
   // write some text
   g.drawString("Hello World!",2,2);
   // write to the screen
-  g.flip(); 
+  g.flip();
 }
 
 // I2C
@@ -46,7 +46,7 @@ var initCmds = new Uint8Array([
   0xBE, 0x07, // 18 COM deselect voltage level: 0.86 x Vcc
   0xD5, 0x62, // 20 Enable 2nd pre-charge
   0xB6, 0x0F, // 22 2nd Pre-charge period: 15 clks
-  0xAF,       // 24 Display on 
+  0xAF,       // 24 Display on
   0x81, 0x7F  // 26 Set Contrast to 128
   ]);
 
@@ -66,19 +66,19 @@ function update(options) {
 
 exports.connect = function(i2c, callback, options) {
   update(options);
-  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH, initCmds[C.M_RATIO_INDEX] + 1, 4);
+  var oled = Graphics.createArrayBuffer(C.OLED_WIDTH, initCmds[C.M_RATIO_INDEX] + 1, 4, {msb:false});
 
   var addr = 0x3C;
-  if (options && options.address) addr = options.address;  
-  
+  if (options && options.address) addr = options.address;
+
   // initialize the OLED
   i2c.writeTo(addr, [0].concat(initCmds));
-    
+
   // write to the screen
-  oled.flip = function() { 
+  oled.flip = function() {
     // set how the data is to be sent (whole screen)
     i2c.writeTo(addr, [0].concat(flipCmds));
-    
+
     //write buffer
     var chunk = new Uint8Array(C.OLED_CHUNK + 1);
     chunk[0] = C.OLED_CHAR;
@@ -86,9 +86,9 @@ exports.connect = function(i2c, callback, options) {
     for (var p = 0; p < this.buffer.length; p += C.OLED_CHUNK) {
       chunk.set(new Uint8Array(this.buffer, p, C.OLED_WIDTH), 1);
       i2c.writeTo(addr, chunk);
-    } 
+    }
   };
-    
+
   // set contrast, 0..255
   oled.setContrast = function(c) { i2c.writeTo(addr, 0, 0x81, c); };
 
@@ -100,7 +100,7 @@ exports.connect = function(i2c, callback, options) {
 
   // if there is a callback, call it now(ish)
   if (callback !== undefined) setTimeout(callback, 100);
-  
+
   // return graphics
   return oled;
 };

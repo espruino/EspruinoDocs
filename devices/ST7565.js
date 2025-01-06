@@ -1,5 +1,5 @@
 /* Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
-/* 
+/*
 Module for the ST7565, often used in LCD12864-style displays
 
 Just:
@@ -13,13 +13,13 @@ var g = require("ST7565").connect({spi:spi, DC:..., CS:..., RST:..., function() 
   g.drawLine(0,10,g.getWidth(),10);
   g.flip();
 });
-```  
+```
 */
 
 exports.connect = function(options, callback) {
   if (typeof options !== "object") throw "Expecting an object as first arg"
   var w = (options.width || 128);
-  var g = Graphics.createArrayBuffer(w,64,1,{vertical_byte:true});
+  var g = Graphics.createArrayBuffer(w,64,1,{vertical_byte:true, msb:false});
   var spi = options.spi;
   var CS = options.cs;
   var DC = options.dc;
@@ -42,7 +42,7 @@ exports.connect = function(options, callback) {
     if (callback) callback(g);
   }, 100);
 
-  /* set contrast to a value between 0 and 1. 
+  /* set contrast to a value between 0 and 1.
   If div is specified, it should be an integer between 0 and 7 (2 is default) */
   g.setContrast = function(c, div) {
     if (c<0) c=0;
@@ -54,10 +54,10 @@ exports.connect = function(options, callback) {
   };
 
   /* Write to the screen */
-  g.flip = function () {  
+  g.flip = function () {
     CS.reset();
-    for (var y=0;y<8;y++) {      
-      spi.write([0xB0|y/* page */,0x00/* col lower*/,0x10/* col upper*/], DC); 
+    for (var y=0;y<8;y++) {
+      spi.write([0xB0|y/* page */,0x00/* col lower*/,0x10/* col upper*/], DC);
       spi.write(new Uint8Array(this.buffer, w*y, w));
     }
     CS.set();

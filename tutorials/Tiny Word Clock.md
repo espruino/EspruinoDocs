@@ -119,7 +119,7 @@ var WORDS = {
 
 const ANODES = [D25,D26,D30,D16,D31,D18,D19,D28];
 const CATHODES = [D17,D20,D15,D22,D29,D14,D27,D3];
-var g = Graphics.createArrayBuffer(8,8,1);
+var g = Graphics.createArrayBuffer(8,8,1,{msb:false});
 // Do you need to rotate the output on the display? Use the following:
 // g.setRotation(2); // 1=90,2=180,3=270 degrees
 
@@ -182,7 +182,7 @@ function onMinute() {
   var d = new Date();
   var timeWords = timeToWords(d.getHours(),d.getMinutes(),d.getSeconds());
   // convert it to an array of words and light up the LEDs
-  outputWords(timeWords.split(" "));  
+  outputWords(timeWords.split(" "));
 }
 
 setInterval(onMinute, 60000);
