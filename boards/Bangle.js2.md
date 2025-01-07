@@ -33,7 +33,7 @@ Features
 * Single button on side of watch
 * GPS/Glonass receiver (AT6558 / AT6558R)
 * Heart rate monitor (Vcare VC31 / VC31B)
-* 3 Axis Accelerometer (Kionix KX023)
+* 3 Axis Accelerometer (Kionix KX022)
 * 3 Axis Magnetometer
 * Air Pressure/Temperature sensor (Bosch BMP280 / Goertek SPL06)
 * Vibration motor
