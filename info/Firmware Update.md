@@ -4,7 +4,7 @@ Firmware Updates
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Firmware+Update. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Firmware Update,Firmware Upgrade,Flashing,Upgrade,Update,Version
+* KEYWORDS: Firmware Update,Firmware Upgrade,Flashing,Upgrade,Update,Version,DFU,FW,Bootloader
 
 Official Espruino boards come in two main flavours, and firmware updates are
 slightly different for each flavour. See below for instructions.
