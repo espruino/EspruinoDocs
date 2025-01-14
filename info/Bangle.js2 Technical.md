@@ -29,7 +29,7 @@ Features
 * Nordic 64MHz [nRF52840](/datasheets/nRF52840_PS_v1.1.pdf) ARM Cortex-M4 processor with Bluetooth LE
 * 256kB RAM 1024kB on-chip flash, 8MB external flash ([GD25Q64C](/datasheets/GD25Q64C.pdf)/[GD25Q64E](/datasheets/GD25Q64E.pdf))
 * 1.3 inch 176x176 always-on 3 bit colour LCD display ([LPM013M126](/datasheets/LPM013M126C.pdf))
-* Full touchscreen ([Hynitron CST816S](/datasheets/CST816S.pdf))
+* Full touchscreen ([Hynitron CST816D](/datasheets/CST816D_CN.pdf))
 * Single button on side of watch
 * GPS/Glonass receiver ([AT6558 / AT6558R](#gps))
 * Heart rate monitor ([Vcare VC31 / VC31B](/datasheets/VC31B.pdf))
@@ -324,7 +324,7 @@ To access these pins from Espruino, all you need to do is add `D` to the pin num
 Bangle.js 2 has the following I2C devices. These are connected via their own pins and don't share an I2C bus - see above for the connections.
 
 * PRESSURE - BMP280, I2C 0x3C(0x1E)
-* TOUCH - Hynitron CST816S, I2C 0x2A(0x15)
+* TOUCH - Hynitron CST816D, I2C 0x2A(0x15)
 * HRM - VCare VC31, I2C 0x66(0x33)
 * ACCEL - Kionix KX022, I2C 0x3C(0x1E)
 * COMPASS - I2C 0x18(0x0C)
