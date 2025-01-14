@@ -158,15 +158,13 @@ Tutorials
 
 First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#smartibot)
 
-* APPEND_USES: Smartibot
-
 Tutorials using just Bluetooth LE:
 
-* APPEND_USES: Only BLE,-Smartibot
+* APPEND_USES: Only BLE
 
 Tutorials using Bluetooth LE and functionality that may not be part of Smartibot:
 
-* APPEND_USES: BLE,-Only BLE,-Smartibot
+* APPEND_USES: BLE,-Only BLE
 
 
 Firmware Updates

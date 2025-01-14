@@ -196,8 +196,6 @@ Jolt.js comes with a 10 pin screw terminal block on one side. On it are the high
 Information
 -----------
 
-<!-- FIXME ![Jolt.js](Joltjs/board.jpg) -->
-
 * There's an [API reference here](https://espruino.com/ReferenceJOLTJS)
 * [Circuit Diagram - coming soon]()
 * [Board Layout - coming soon]()
