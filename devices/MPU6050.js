@@ -279,7 +279,7 @@ MPU6050.prototype.getTemperature = function() {
 };
 
 
-MPU6050.prototype.setMemoryBank = function(bank, prefetchEnabled=false, userBank=false) {
+MPU6050.prototype.setMemoryBank = function(bank, prefetchEnabled, userBank) {
   bank &= 0x1F;
   if(userBank) bank |= 0x20;
   if(prefetchEnabled) bank |= 0x40;
