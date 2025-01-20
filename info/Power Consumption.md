@@ -30,6 +30,7 @@ Power usage varies slightly with the board used (based on voltage regulators and
 
 * [Puck.js Power Consumption](/Puck.js#power-consumption)
 * [Pixl.js Power Consumption](/Pixl.js#power-consumption)
+* [Jolt.js Power Consumption](/Jolt.js#power-consumption)
 * [MDBT42Q Power Consumption](/MDBT42Q#power-consumption)
 * [Bangle.js Power Consumption](/Bangle.js#power-consumption)
 * [Bangle.js 2 Power Consumption](/Bangle.js2#power-consumption)
