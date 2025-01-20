@@ -1,5 +1,4 @@
 /* Copyright (c) allObjects - See the file https://muet.mit-license.org LICENSE for copying permission. */
-// MINIFY_WHITESPACE_ONLY
 /*
 
 ----- uiSli ------------------------- 20191016
@@ -10,7 +9,7 @@
 
 ui slider module extends ui base with slider ui element.
 
-NOTE: *STILL* a HORIZONTAL slider... but it includes analysis about making it both... ;-)
+NOTE: *STILL* a HORIZONTAL slider... but it includes analysis about making it both... ;-) 
 
 --- sli - slider ui element properties - variables and methods - mixed into ui base:
 
@@ -27,11 +26,11 @@ exports = // sli (slider) ui element ('clazz' name).
       if (e[10]&&e[10](e[2],v,_,e,t)) { if (!e[0]&1) return; s="sliD"; }
       _[s](_,u,e[2],e[3],e[4],e[5],e[6],e[7],e[8],e[9],u,e[11]); } }
 
-, sliD: function(_,q,i,x,y,x2,y2,bc,fcs,v,_q,ls) { // display slider
+, sliD: function(q,q,i,x,y,x2,y2,bc,fcs,v,q,ls) { // display slider
     var _=_||this,j=ls.length,u; _.sliDu(_,u,i,x,y,x2,y2,bc,fcs,v,u,ls,1);
-    while (--j>0) _.ld(ls[j],x,y); } // extra labels
+    while (--j>0) _.dl(ls[j],x,y); } // extra labels
 
-, sliDu: function(_,q,i,x,y,x2,y2,bc,fcs,v,_q,ls,d) { // sli displ / upd
+, sliDu: function(_,q,i,x,y,x2,y2,bc,fcs,v,q,ls,d) { // sli displ / upd
     var m                                                                // <<<<<========= 'math' passed if already done
          ,l=ls[0],mn=l[4],mx=l[5],ml=l[9]||0,mt=l[10]||0,mr=l[11]||0,mb=l[12]||0 // may already be in m and passed for orientation transparency
          ,w=x2-x-5-ml-mr                                                 // <------------- calc pixRange from norm-named oriented vars
@@ -47,7 +46,7 @@ exports = // sli (slider) ui element ('clazz' name).
     if (l[0]!==u) { v=(c=l[13])?c(v,_,l):v; c=l[1]; // /. ...x and color for val adjusted val lab
       if (a=l[8]) { c=fcs[d=_.mr(w1/w)];
                                         x+=ml-w/2*a*(d-0.5);             // <-------------
-                                                             } _.ld([l[0],c,l[2],l[3],v],x,y); } }
+                                                             } _.dl([l[0],c,l[2],l[3],v],x,y); } }
 
 , sli: function(_,e,t,c) { // console.log(".sli",c,e[2],(_.ef)?_.ef[2]:"..",(_.lf)?_.lf[2]:"..",t);
     if (e===_.lf) { var v=e[9]

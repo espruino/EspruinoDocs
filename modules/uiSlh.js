@@ -1,5 +1,4 @@
 /* Copyright (c) allObjects - See the file https://muet.mit-license.org LICENSE for copying permission. */
-// MINIFY_WHITESPACE_ONLY
 /*
 
 ----- uiSli ------------------------- 20191014
@@ -29,13 +28,13 @@ exports = // sli (slider) ui element ('clazz' name).
 , sliD: function(f,c,i,x,y,x2,y2,bc,fcs,v,cb,ls) { // display slider
     var _=_||this,l=ls[0],ml=l[9]||0,mr=l[10]||0,mt=l[11]||0,mb=l[12]||0, lx=ls.length;
     _.clr(bc).dsp.fillRect(x+2+ml,y+2+mt,x2-2-mr,y2-2-mb);
-    _.sliDu(_,x,y,x2,y2,bc,fcs,v,l,l[4],l[5],ml,mr,mt,mb); while (--lx>0) _.ld(x,y,ls[lx]); }
+    _.sliDu(_,x,y,x2,y2,bc,fcs,v,l,l[4],l[5],ml,mr,mt,mb); while (--lx>0) _.dl(x,y,ls[lx]); }
 , sliDu: function(_,x,y,x2,y2,bc,fcs,v,l,mn,mx,ml,mr,mt,mb) { // update slider dsp (w/ l=l[0])
     var w=x2-x-5-ml-mr,w1=_.mr(w/(mx-mn)*(v-mn)),b=x+3+ml,a,d,c,u;
     if (w1) _.clr(fcs[0]).dsp.fillRect(b,y+3+mt,b+w1-1,y2-3-mb); // draw 'left'...
     if (w-w1) _.clr(fcs[1]).dsp.fillRect(b+w1,y+3+mt,x2-3-mr,y2-3-mb); // '...right'part...
     if (l[0]!==u) { v=(c=l[13])?c(v,_,l):v; c=l[1]; // /. ...x and color for val adjusted val lab
-      if (a=l[8]) { c=fcs[d=_.mr(w1/w)];x+=ml-w/2*a*(d-0.5); } _.ld(x,y,[l[0],c,l[2],l[3],v]); } }
+      if (a=l[8]) { c=fcs[d=_.mr(w1/w)];x+=ml-w/2*a*(d-0.5); } _.dl(x,y,[l[0],c,l[2],l[3],v]); } }
 , sli: function(_,e,t,c) { // console.log(".sli",c,e[2],(_.ef)?_.ef[2]:"..",(_.lf)?_.lf[2]:"..",t);
     if (e===_.lf) { var x=e[3],v=e[9],l=e[11][0],mn=l[4],mx=l[5],s=l[6]
       ,ml=l[9]||0,p=c||t.f&l[7],w=e[5]-x-5-ml-(l[10]||0),vw=mx-mn,wi=vw/w

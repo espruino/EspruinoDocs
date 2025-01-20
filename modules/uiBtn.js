@@ -1,5 +1,4 @@
 /* Copyright (c) allObjects - See the file https://muet.mit-license.org LICENSE for copying permission. */
-// MINIFY_WHITESPACE_ONLY
 /*
 
 ----- uiBtn ------------------------- 20191020
@@ -19,16 +18,19 @@ exports = // "btn" (plain button) ui element ('clazz' name).
 , btnC:    function (f, c, i, x, y, w,     h,     bc, fc, v, cb,  l, ca) { // constructor
 // ----------> btn e[0  1  2  3  4  5(x2)  6(y2)   7   8  9  10  11  12] - same as args
     return this.rdc([f, c, i, x, y, x+w-1, y+h-1, bc, fc, v, cb,  l, ca]); } // runtime obj
+, vs2: function(x,y,x2,y2,p) { // vertices for for chk like shapes ('beveled') corners
+    // 4 'beveled corners' = 8 corners def'd by 0 and p insetting combinations for x, y
+    return [x,y+p, x+p,y, x2-p,y, x2,y+p, x2,y2-p, x2-p,y2, x+p,y2, x,y2-p]; }
 , vs3: function(x,y,x2,y2,p,q) { // return vertices for btn like shapes ('round' corners)
     // 12 'round corners' (4x3) defined by 0, p and q insetting combinations for x and y 
-    return [ x,y+q,   x+p,y+p,   x+q,y, x2-q,y, x2-p,y+p, x2,y+q,
-            x2,y2-q, x2-p,y2-p, x2-q,y2, x+q,y2, x+p,y2-p, x,y2-q]; }
+    return [ x,y+p,   x+q,y+q,   x+p,y, x2-p,y, x2-q,y+q, x2,y+p,
+            x2,y2-p, x2-q,y2-q, x2-p,y2, x+p,y2, x+q,y2-q, x,y2-p]; }
 , btnD: function(f,c,i,x,y,x2,y2,bc,fc,v,cb,l,cd) { if (f&1) { // D(isplay) btn w/ label
-    var _=_||this,p=_.ma(0.4,((x2-x,y2-y)-11)/8),m=2; if (bc!==_.bc) {
-      _.clr(bc).dsp.fillPoly(_.vs3(x+m,y+m,x2-m,y2-m,p,p*3)); } if (fc!==bc) {
-      m=2+p*1.3; p*=0.5; _.clr(fc).dsp.fillPoly(_.vs3(x+m,y+m,x2-m,y2-m,p,p*3)); }
-    if (l) { _.ld(l,x,y); } } }
-, btn: function(_,e,t,c) { // console.log(".btn",c,e[2],(_.ef)?_.ef[2]:"..",(_.lf)?_.lf[2]:"..",t);
-    if ((c=(c&&(c=e[10]))?c:e[12])) { // is in focus untouch - else any...
-      if (c(e[2], e[9], _, e, t)) { _.d(e); } } } // ...elt and any touch event
+    var _=_||this,a=_.mi(x2-x,y2-y)+1,c=(a<16)?"vs2":"vs3"
+       ,z=_.ma(0.1,(a-11)/13),p=z*7,q=z*2.8,m=2;
+    if (bc!==_.bc) { _.dv(1,bc,x,y,x2,y2,m,c,p,q); }
+    if (fc!==bc  ) { m=3+z*1.4; p*=0.75; q*=0.6,_.dv(1,fc,x,y,x2,y2,m,c,p,q); }
+    if (l) _.dl(l,x,y); } }
+, btn: function(_,e,p) { // is in focus untouch (flip) - else any elt and touch event
+    if (p&&(p=(p=e[10])?p:e[12])&&p(e[2],e[9],_,e)) _.d(e); }
 };

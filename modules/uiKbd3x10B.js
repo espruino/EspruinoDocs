@@ -1,5 +1,4 @@
 /* Copyright (c) allObjects - See the file https://muet.mit-license.org LICENSE for copying permission. */
-// MINIFY_WHITESPACE_ONLY
 /*
 
 ----- keyboard/keypad - 3 x 10 Btns ------------------------- 20190927
@@ -36,7 +35,6 @@ Keyboard key handler calls cb callback w/ values v, k, u, e, and t parameters:
   k - keyboard object (this)
   u - ui core singleton
   e - event source (key btn)
-  t - touch object
 ```
 
 e is the key board button that has just been untouched (k: keyboard, u: ui
@@ -181,7 +179,6 @@ var kbd = require("uiKbd3x10B")
    1  k   keyboard (this sigleton)
    1  u   ui core singleton (see ui module)
    2  e   key btn that was just released (see uiBtn module)
-   3  t   touch object (see ui module)
 ```
 
 --- uiKbd3x10B - soft keyboard properties - variables and methods - mixed into ui base:
@@ -200,8 +197,8 @@ exports =  // uiKbd3x10B
 , st: ["^","^^","^^^","#^"] // for shift key status display
 , connect:   function(ui,x,  y, w, h,bc,fc,sc,mx,my,fs,tc,tx,ty,cb) {
     // parms example: ui,0,215,24,24, 7, 7,-2, 1, 1,10, 0, 2, 4,
-    var _=_||this, f = (function(id,d,u,e,t) { // key handler (key btn callback)
-          var m=_.sm, v=null, s=((_.tt=getTime() - u.tt) < _.lt);
+    var _=_||this, f = (function(id,d,u,e) { // key handler (key btn callback)
+          var m=_.sm, v=null, s=((_.tt=getTime() - u.tt) < _.lt); // short tap / touch
           if ((p="^<. ".indexOf(id))<0) { // regular keys (!^shifts && !<(cr/lf) && !. && ! b(lank))
             if (s) { // short tap
               if (m==1) { // ==1:1UC 
@@ -220,8 +217,8 @@ exports =  // uiKbd3x10B
           } else { // (p===3) (id===" ") { // b/blank: 0=l*c: b | 1=1UC: special: " | 2=*UC: b | 3=*sp: b
             if (s) { if (m == 1) { v = "\""; m = 0; } else { v = (m==2) ? "_" : " "; } // short tap
             } else { v = "bs"; } } // long touch - BackSpace
-          if (m!==_.sm) { _.sk[11][4]=_.st[_.sm=m]; _.cb(v,k,u,e,t); if (u.di) { u.d(_.sk); }
-          } else if (v !== null) { _.cb(v,k,u,e,t); }
+          if (m!==_.sm) { _.sk[11][4]=_.st[_.sm=m]; _.cb(v,k,u,e); if (u.di) { u.d(_.sk); }
+          } else if (v !== null) { _.cb(v,k,u,e); }
         }).bind(_),
         xr, yr=y-h+my, k="q1w2e3r4t5y6u7i8o9p0a@s#d$f%g^h&j~k(l)<'^ z-x+c=v<b>n!m,.? \"",
         es=ui.es, r=es.length, bw=w-mx-mx, bh=h-my-my, v=-1, i;
