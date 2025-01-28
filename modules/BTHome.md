@@ -12,7 +12,7 @@ BTHome Library
 BTHome devices advertise data in a specific format, which is then received by either [Home Assistant](https://www.home-assistant.io/) directly,
 [ESPHome](https://esphome.io/components/esp32_ble_tracker) or [Shelly](https://www.shelly.com/) devices (which act as bridges).
 
-Once configured, any new BTHome-advertising device found will magically appear in `http://homeassistant/config/integrations/dashboard` where it can be used alongside all your other devices.
+In Espruino we provide the [BTHome module](/modules/BTHome.js) which allows you to advertise most common BTHome advertising types. Once configured, any new BTHome-advertising device found will magically appear in `http://homeassistant/config/integrations/dashboard` where it can be used alongside all your other devices.
 
 
 Usage
