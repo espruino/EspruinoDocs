@@ -68,8 +68,6 @@ and the names have been kept as similar as possible
 
 ### Values
 
-
-
  * `battery` - 0..100, int
  * `temperature` - degrees C, floating point
  * `count` - 0..255, int
@@ -81,6 +79,7 @@ and the names have been kept as similar as possible
  * `gas` - gas (m3), int (32 bit)
  * `humidity` - humidity %, int
  * `humidity16` - humidity %, floating point
+ * `moisture` - moisture %, floating point
  * `power` - power (W), floating point
  * `pressure` - pressure (hPa), floating point
  * `rotation` - rotation in degrees, floating point (0.1 degree)
@@ -186,6 +185,27 @@ Just supply these with a single boolean value as v, for example: `{type:"door", 
  * `problem`
  * `tamper`
  * `vibration`
+
+
+### Custom data
+
+You may find that the BTHome module doesn't provide a data type you're interested in. In this case you can provide your own
+entry using the `type:"raw"`. In this case `v` should be an array of bytes matching what's shown in https://bthome.io/format/
+
+For example to add the boolean `plug`:
+
+```JS
+require("BTHome").getAdvertisement([
+    { // a 'raw' data
+      type : "raw",
+      v : [0x24, pluggedIn ? 1 : 0] // MUST be an array
+    },
+    { // normal decls
+      type : "temperature",
+      v : E.getTemperature()
+    },
+  ])
+```
 
 
 Bidirectional Communication
