@@ -29,7 +29,7 @@ Features
 * Nordic 64MHz nRF52840 ARM Cortex-M4 processor with Bluetooth LE
 * 256kB RAM 1024kB on-chip flash, 8MB external flash (GD25Q64C/E)
 * 1.3 inch 176x176 always-on 3 bit colour LCD display (LPM013M126)
-* Full touchscreen (Hynitron CST816S)
+* Full touchscreen (Hynitron CST816D)
 * Single button on side of watch
 * GPS/Glonass receiver (AT6558 / AT6558R)
 * Heart rate monitor (Vcare VC31 / VC31B)
