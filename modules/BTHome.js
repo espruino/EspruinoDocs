@@ -34,8 +34,8 @@ exports.getAdvertisement = function(devices) {
     text : e => { let t = ""+e.v; return [ 0x53, t.length ].concat(t.split("").map(c=>c.charCodeAt())); }, // text string
     button_event : e => {
       const events=["none","press","double_press","triple_press","long_press","long_double_press","long_triple_press"];
-      if (!events.includes(e.v, 1)) throw new Error(`Unknown event type ${E.toJS(e.v, 1)}`);
-      return [0x3A, events.indexOf(e.v, 1)];
+      if (!events.includes(e.v)) throw new Error(`Unknown event type ${E.toJS(e.v)}`);
+      return [0x3A, events.indexOf(e.v)];
     },
     dimmer_event : e => {
       var n = 0;
