@@ -203,6 +203,8 @@ To enable it:
 * Also enable `Use the new permissions backend for Web Bluetooth` (`chrome://flags/#enable-web-bluetooth-new-permissions-backend`) if it exists
 * Restart your browser
 
+You can also check out `chrome://bluetooth-internals/#adapter` to see what's happening - the `Present` item should be green (Bluetooth will still work even if not all items are green. Even if you have a built-in Bluetooth adaptor and that isn't working, you can just plug in an external Bluetooth adaptor (see the list above).
+
 Other potential issues:
 
 * Most [Flatpaks](https://flatpak.org/) don't work out of the box as Bluetooth priviledges aren't always turned on. You can change them using [flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal) or can just install a native package for your OS.
