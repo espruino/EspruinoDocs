@@ -52,7 +52,7 @@ First, check out the example widget in [`apps/_example_widget/`](https://github.
 Add `WIDGETS = {};` to the top of the code, and `Bangle.drawWidgets();` to the bottom.
 
 **Now come up with an ID for your widget**. Ideally this should start with
-`wid`, be lowercase without spaces and be less than 20 chard long. Check
+`wid`, be lowercase without spaces and be less than 20 chars long. Check
 out [the list of existing apps](https://github.com/espruino/BangleApps/tree/master/apps)
 for ideas.
 
