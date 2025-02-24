@@ -176,6 +176,23 @@ There are some good examples of testing on [the Bangle.js fast load page](/Bangl
 After you've unloaded an app, you can run `dump()` which attempts to dump the contents of RAM in a human readable form - you may be able to see some variables/functions defined there that look like they shouldn't be. It may help to uninstall all widgets first to ensure that they're not making it harder to find the real source of memory usage.
 
 
+Searching files on the device
+--------------------------------
+
+There may be cases where some code is being called and you're not sure what file/app it's being called from (especially on Bangle.js).
+
+You can override the function (see `Where was a function called?` above) but you may also just want to search all the files
+for some text. For example if `NRF.requestDevice` is being called and you're not sure where from, you could run:
+
+```JS
+require("Storage").list(undefined, {sf:false}).forEach(fn => {
+  print("..."+fn);
+   if (require("Storage").read(fn).includes("NRF.requestDevice"))
+     print(fn+" contains NRF.requestDevice");
+});
+```
+
+
 Low Level
 ----------
 
