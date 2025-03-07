@@ -267,7 +267,7 @@ Available message types are:
   * if `REPLY` can use `tel:string(optional), msg:string`
 * `t:"ver", fw:string, hw:string` - firmware and hardware versions - sent at connect time
 * `t:"act", ts:long, hrm:int, stp:int, mov:int, rt:int` - activity data - timestamp, heart rate, steps and movement intensity
-  * `act` optional (added in Gadgetbridge 0.82.1) - the current activity type, one of `UNKNOWN,NOT_WORN,DEEP_SLEEP,LIGHT_SLEEP,REM_SLEEP,ACTIVITY,RUNNING,WALKING,SWIMMING,CYCLING,EXERCISE` 
+  * `act` optional (added in Gadgetbridge 0.82.1) - the current activity type, one of `UNKNOWN,NOT_WORN,DEEP_SLEEP,LIGHT_SLEEP,REM_SLEEP,ACTIVITY,RUNNING,WALKING,SWIMMING,CYCLING,EXERCISE` from [ActivityKind.java](https://codeberg.org/Freeyourgadget/Gadgetbridge/src/branch/master/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/model/ActivityKind.java)
   * `ts` is optional - in milliseconds since 1970. If not specified the current time is used
   * `rt` is optional - indicates whether the sample is realtime and therefore not to be stored in the database
 * `t:"actTrksList", list:"a list of new non-fetched `recorder` app logs"`
