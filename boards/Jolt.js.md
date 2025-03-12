@@ -197,8 +197,8 @@ Information
 -----------
 
 * There's an [API reference here](https://espruino.com/ReferenceJOLTJS)
-* [Circuit Diagram - coming soon]()
-* [Board Layout - coming soon]()
+* Circuit Diagram - [PDF](https://github.com/espruino/EspruinoBoard/blob/master/Jolt.js/pdf/joltjs_sch.pdf), [Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Jolt.js/eagle)
+* Board Layout - [PDF](https://github.com/espruino/EspruinoBoard/blob/master/Jolt.js/pdf/joltjs_brd.pdf), [Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Jolt.js/eagle)
 
 Certifications:
 
