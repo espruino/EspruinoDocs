@@ -2,9 +2,7 @@
 QOA Library
 ==============
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page
-at https://www.espruino.com/QOA. Links, lists, videos, search, and other features will not work correctly when viewed on
-GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/QOA. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,Modules,QOA,Audio,Sound
 * USES: Waveform,Speaker
@@ -113,7 +111,7 @@ let play = function () {
     let durationSeconds = initResult.durationSeconds;
 
     // you are free to choose another buffer size,
-    // but QOA since is decoded in frames with qoa.SAMPLES_PER_FRAME samples each,
+    // but since QOA is decoded in frames with qoa.SAMPLES_PER_FRAME samples each,
     // sizing your buffer accordingly makes things slightly less complicated
     // hint: the qoa.play() function uses a different buffer size, to allow gapless looping
     let bufferSize = qoa.SAMPLES_PER_FRAME * bytesPerSample;
