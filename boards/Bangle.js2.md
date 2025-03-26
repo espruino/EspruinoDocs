@@ -165,7 +165,7 @@ Resetting without loading any code
 
 If you uploaded some code that runs at startup and breaks Bangle.js you may need to do this.
 
-### 2v19 firmware
+### 2v19 firmware (and newer)
 
 Start the `Recovery` menu (see above) by holding the button at boot time, then choose `Clean Boot`
 
@@ -185,7 +185,7 @@ Deleting all code
 You can do this either while your watch is in its normal state, or
 if you have reset it without loading any code (above).
 
-### 2v19 firmware
+### 2v19 firmware (and newer)
 
 Start the `Recovery` menu (see above) by holding the button at boot time, then choose `Factory Reset`
 
@@ -251,6 +251,7 @@ Information
 * CAD files for the Bangle.js 2 stand, as well as an STL of the watch body [is available here](https://github.com/espruino/EspruinoBoard/blob/master/Bangle.js2)
 * The Espruino board file for Bangle.js [can be found here](https://github.com/espruino/Espruino/blob/master/boards/BANGLEJS2.py) and contains pinouts and other configuration info
 * There's a [Bangle.js 2 API reference here](https://espruino.com/ReferenceBANGLEJS2)
+* Don't want to use Espruino and want to develop your app bare-metal in C? [Check out the example in the BangleJS2BareMetal repository](https://github.com/espruino/BangleJS2BareMetal)
 
 Certifications:
 

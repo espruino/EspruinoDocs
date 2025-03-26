@@ -54,6 +54,9 @@ all `Bangle.*` functions and pretty much all Bangle.js functionality.
 * [`BANGLEJS2.py`](https://github.com/espruino/Espruino/blob/master/boards/BANGLEJS2.py) describes the build
   * The `SPIFLASH` device causes `SPIFLASH_BASE` to be defined, which enables external SPI flash memory support in [`jshardware.c`](https://github.com/espruino/Espruino/blob/master/targets/nrf5x/jshardware.c)
 
+If you don't want to use Espruino and would prefer to develop your app as bare-metal in C, [check out the example in the BangleJS2BareMetal repository](https://github.com/espruino/BangleJS2BareMetal)
+
+
 Hardware
 --------
 
