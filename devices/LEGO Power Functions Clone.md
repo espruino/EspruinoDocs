@@ -94,3 +94,9 @@ But for Kaiyu you need to use UUID `49664` / `0xC200`:
 ```
 NRF.setScan(d => print(new Uint8Array(d.manufacturerData).join(",")), {filters : [{ manufacturerData:{0xC200:{}} }] });
 ```
+
+Related
+--------
+
+* [LEGO WeDo 2 module](/LEGO WeDo 2.0) is a module that allows your Espruino to control LEGO WeDo 2.0 controllers
+* [Jolt.js LEGO Control](/Jolt.js+LEGO) shows how to connect LEGO Power Functions directly to a Jolt.js
