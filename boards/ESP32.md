@@ -229,16 +229,6 @@ See https://github.com/espruino/Espruino/blob/master/README_Building.md for more
 The [Espruino Web IDE](http://www.espruino.com/Web+IDE) is a basic development environment
 that allows you to write your code and deploy it to the ESP32.
 
-*Issue*: In 2017, there was an issue with Espruino Web IDE, sometimes it will not connect.
-Especially the first time you try.  The workaround is to use another tool to
-connect to the ESP32, like minicom or cutecom, see below.  Once connected using one of these tools, try again using Espruino Web IDE.
-
-Once you have connected once and enabled wifi on boot (see below), you will be
-able to connect to the ESP32 via telnet, using Espruino Web IDE, this tends to
-be quite reliable.
-
-If these instructions were still relevant for you in 2022 or later, please edit the docs to reflect that it's an ongoing issue.
-
 #### minicom / CuteCom
 
 There are other methods to connect to your ESP32, not just Espruino Web IDE.  Two
