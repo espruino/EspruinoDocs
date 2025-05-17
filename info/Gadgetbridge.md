@@ -279,9 +279,10 @@ Available message types are:
 
 Bangle.js Gadgetbridge also provides:
 
-* `t:"http", url:"https://pur3.co.uk/hello.txt"[,xpath:"­/html/body/p/div[3]/a"][,id:"..."]` - make an HTTPS request (HTTP not supported right now).
+* `t:"http", url:"https://pur3.co.uk/hello.txt"[,xpath:"­/html/body/p/div[3]/a"][,id:"..."][,insecure:true]` - make an HTTP/HTTPS request.
   * If `xpath` is supplied, the document is loaded as XML (not all HTML is XML!), the xpath is applied and the result returned instead
   * If `id` is supplied (as a string), the response returns the same `id` (so multiple HTTP requests can be in flight at once)
+  * If `insecure` is supplied (as a boolean), TLS certificate validation is fully disabled and insecure connections are allowed - defaults to `false`
 
 For example:
 
