@@ -54,6 +54,41 @@ The font can be specified with a percentage, in which case it's made into a Vect
 
 We also specified an `id`, which makes the item available directly from `layout`, eg `layout.time`. To update the time, we can then change `layout.time.label` and redraw.
 
+Alignment
+----------
+
+You can align elements within their `h` or `v` containers with `halign` and `valign`, however within an element, text is always rendered centered.
+
+As a result, if you want to align text, you shouldn't use `fillx:1` in the text element as the element will then fill to all available space and won't align.
+
+```JS
+var layout = new Layout( {
+    type:"v", c: [{
+        type:"txt",
+        font:"20%",
+        fillx:0, // must be 0 for halign to work
+        filly:1,
+        halign:-1, // LEFT align
+        label:"Left"
+      }, {
+        type:"txt",
+        font:"20%",
+        fillx:0,
+        filly:1,
+        halign:0, // CENTER align
+        label:"Center"
+      }, {
+        type:"txt",
+        font:"20%",
+        fillx:0,
+        filly:1,
+        halign:1, // CERIGHTNTER align
+        label:"Right"},
+    ]
+});
+```
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALAAAACwCAYAAACvt+ReAAAAAXNSR0IArs4c6QAACLBJREFUeF7tneF2GysMBuP3f2jf47Q+d+ssyyeEJNhM/xYkMZrFLG6Tx/P5fH7xBwKbEngg8Kado+xvAgiMCFsTQOCt20fxCIwDWxNA4K3bR/EIjANbE0DgrdtH8QiMA1sTQOCt20fxCIwDWxNA4K3bR/EIjANbE0DgrdtH8Y+vr69//jXarv847fF4LeXPn9YajmN6Y1FjDwLbC2yR0jJ2j/ZR5bYCn8nY21UR+H7CIzD/nn9rq7cU+Gr35Qy8tY/m4m8jsPLyyRHC7MfyE7YT2COhZ+7ynfylBSIwZ+Ct1UdgBEZglYDnI7z34nas4fM87Jmrro1xNQRSdmBFoN5LmBKjdQ/smVvTFrKqBMIFniWPJ45nrgqScTUEQgW2iDPyLVoLGUeIGpkqsqYLfJRr5Ew8MucN1jO3ojnk7BMIE1iVRR03Q0Jrrj4+RlQTSBVYXezVC51HQs9ctXbG5RJAYO6Bc42bnA2BEXiyUrnhEBiBc42bnA2BEXiyUrnhUgXufdumLN3zIuaZq9TGmHwCYQK/lhIhjDemd35+i8h4ReCHwCO4LP8L+Cy+ZWf2Ctj7dtBSywgr5swlECpwaxf2SOwVuFcTAs8VLDpauMA9YY4LVOSZIfBVTUoN0U0hvk4gReB3Oa2Pb4s0swRu1WSpRcfMyCgC/GipKLLETSGAwCmYSRJFAIGjyBI3hQACp2AmSRQBBI4iS9wUAgicgpkkUQQQOIoscVMIIHAKZpJEEUDgKLLETSGAwCmYSRJFAIGjyBI3hQACp2AmSRQBBI4iS9wUAgicgpkkUQQQOIoscVMIIHAKZpJEEUDgKLLETSGAwCmYSRJFAIGjyBI3hQACp2AmSRQBBI4iS9wUAgicgpkkUQQQOIoscVMIIHAKZpJEEUDgKLLETSGAwCmYSRJFAIGjyBI3hQACp2AmSRQBBI4iS9wUAgicgpkkUQQQOIoscVMIIHAKZpJEEVhK4N/2+ytm/7DuKElWjruEwD1xPwHe5aeoI7D/0SgV2Cru3URG4I0F9sr7XvrOuzECbyrwLHl3lxiBbyiw5Zcm7rz7vlqHwBsK7P1VW6/5u4v7bhsC30TguwhpbQcCW4n9HJ96C+Hdff3LXSsCAvv7US5w1u7rkeVz7qvmmfGu2qjwmVmLd21+JW0Rbi+wcuPRk0SJccQ+M95VLKWumbW81tiLZ9PPP7pU4GgYSoOVqzhLnNnxLLcyLR28D8HKXyDdVuCZ0o3EutqtLPHO5LPM7z1QI7FW2ol/lcBHGSznRuXl0xLPe43Wy9X7++OOOrq2VSS+pcBqA6vGeQSuqvmYN/roZzkZ/xqBVSjKR7blTGkZq+xqox/5rdhnNywqqxXGlQqsNGwEUmWTLUKou6nyka9w8j6cSo7sMQj8QdzbZATOVbhc4IhdmB34XCLvw5mrppYtVeBXSSMfm9pS/h+FwAhsdUYefyVX7+1WfROe/ZB4jgUZL3E9blfNsaxNbnLiwPQduLULH9f82ZAR6WdKbGmyZezoJ1LV2hK9lFOVCKxIrK7A+1WrsntZpLSMVTgo59YWq9lrU3uSOa5MYKV5PRC9BqlnYWscy7GgF7vHIfoBtT5wvZ5k/32pwL3mXcFQxLDEnyXlqBDKV7qfPGY8oKP1Zovaylcu8LuwGc2wvKy8xyoPgqXJlrFn9Y7MH5G/xV3hsYq83xvUc7eKV6JHLeUEELi8BRTgIYDAHnrMLSeAwOUtoAAPAQT20GNuOQEELm8BBXgIILCHHnPLCSBweQsowEMAgT30mFtOAIHLW0ABHgII7KHH3HICCFzeAgrwEEBgDz3mlhNA4PIWUICHAAJ76DG3nAACl7eAAjwEENhDj7nlBBC4vAUU4CGAwB56zC0ngMDlLaAADwEE9tBjbjkBBC5vAQV4CCCwhx5zywkgcHkLKMBDAIE99JhbTgCBy1tAAR4CCOyhx9xyAghc3gIK8BBAYA895pYTQODyFlCAhwACe+gxt5wAApe3gAI8BBDYQ4+55QQQOLgF6k+ef5dh/XnjIz/R3bvkqJwjv30Jgb3d7My3CmwVOUqmq2VF5UTgYBlHwo8K/Mql7MZRMiHwSLdvOMcjsCIxAiuP+Q3FyloSAuukOULorNJGWnfIkSamLeZvIuua1PpG1s5LnEp3cNxIs0fmDJY3NC2qPgQeakfspJFmj8yJXcW/0aPqQ+DMLoq5Rpo9MkcsZ8qwqPoQeEp75gYZabZljmXscWUtWZR4Z2NG5HvXY3nR/bxz4Aw819cf0RQhPidZ5ljGvvJYZGld482I0XuYWm1B4GBhPTK2dqSrm06LwFbxZgncisMOnCzjSDqLYK0dcobAI/LOFPhKYktt7MAjFjrmWJpzlqb3PZP6gPTOqK06z/IrY3v5ztY6NOfZI+RoHlPtZ85PZr32KAKrYlSNuzpKdNePwLGPmWcH7jXv7Mih7JjeI4ny0Mw4z/fOzt/rR+A1BVbkRWAEjrV34NrqXRAC/yHR48AOHKyw+nGrnj9HrunUGqp2dM7AwRJ6wnvkkXagx+Of8jgDe7rF3B8ELAKrO+AxiRJf3d1Hx3lfCtmBF35wFMGuhOztwmr8npzK3e6Mm4XumfbjE6W7fm4hYu1XBbPuqlaZRq/zMo4kvQf4+Pd8Exfrq/sIcXaMuNqFLA/IiMTZArfW/waLwBsIbJHYInBPjjM0FQJf1YnAmwisvtBZBb56YVpJYPWIxD1wstCrpxt9IKrWhcBV5JPzHsVs3QT0biqSS5bSIbCEae9ByhXZjvJ+H7O4RttbTrX6WTcQar6scQicRXqBPBaJe184LLCc7xIQeJVOJNbRE3kXeRE4UZoVU+1243DGkB14RbOoSSaAwDIqBq5IAIFX7Ao1yQQQWEbFwBUJIPCKXaEmmQACy6gYuCIBBF6xK9QkE0BgGRUDVySAwCt2hZpkAggso2LgigQQeMWuUJNMAIFlVAxckcB/5Lw4WirSknoAAAAASUVORK5CYII=)
 
 Debugging
 ----------
