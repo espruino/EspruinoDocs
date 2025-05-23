@@ -69,7 +69,11 @@ Please use under 12v and 100mA unless you are 100% sure of the quality of your p
 <a name="powering"></a>Powering Jolt.js
 ---------------------------------
 
-**⚠️WARNING⚠️ Jolt.js is rated for 18v maximum voltage**. Higher than 18v will cause damage. '18v' power tool batteries can be up to 21v when charged and are not suitable.
+**⚠️WARNING⚠️ Jolt.js is rated for 18v maximum voltage**. Higher than 18v (even temporarily) will cause damage to the voltage regulator:
+
+* '18v' power tool batteries can be up to 21v when charged and are not suitable
+* When driving inductive loads, care must be taken so that Back EMF doesn't push the voltage rail above 18v. Jolt.js contains around 9uF of capacitance between `GND`/`V+` but if driving larger
+loads or running off 12v or above we'd recommend an additional 100uF 35v electrolytic capacitor (or greater).
 
 Jolt.js can be powered in multiple ways:
 
@@ -197,7 +201,7 @@ Information
 -----------
 
 * There's an [API reference here](https://espruino.com/ReferenceJOLTJS)
-* Circuit Diagram - [PDF](https://github.com/espruino/EspruinoBoard/blob/master/Jolt.js/pdf/joltjs_sch.pdf), [Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Jolt.js/eagle)
+* Circuit Diagram (Schematic) - [PDF](https://github.com/espruino/EspruinoBoard/blob/master/Jolt.js/pdf/joltjs_sch.pdf), [Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Jolt.js/eagle)
 * Board Layout - [PDF](https://github.com/espruino/EspruinoBoard/blob/master/Jolt.js/pdf/joltjs_brd.pdf), [Eagle CAD](https://github.com/espruino/EspruinoBoard/tree/master/Jolt.js/eagle)
 
 Certifications:
