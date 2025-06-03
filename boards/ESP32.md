@@ -33,9 +33,10 @@ should be generic enough for all boards, but you may have to adapt the instructi
 
 ### Quick links
 
-* [Download the latest ESP32 firmware release](http://www.espruino.com/Download) (From v1.92 onward)
-* [Download 'cutting edge' ESP32 firmware](http://www.espruino.com/binaries/travis/master/) - these may not always work
-* [Espruino ESP32 Forum](http://forum.espruino.com/microcosms/1086/) - Main support forum
+* [Online ESP32 Espruino Flashing tool](https://www.espruino.com/Espressif+Flash)
+* [Download the latest ESP32 firmware release](https://www.espruino.com/Download)
+* [Download 'cutting edge' ESP32 firmware](https://www.espruino.com/binaries/travis/master/) - these may not always work
+* [Espruino ESP32 Forum](https://forum.espruino.com/microcosms/1086/) - Main support forum
 * [ESP32 Forum](https://www.esp32.com)
 * [Developer chat for Espruino ESP32](https://gitter.im/espruino/esp32) - Focuses on development issues.
 
@@ -157,7 +158,7 @@ esp-idf/components/esptool_py/esptool/esptool.py    \
 If the `bootloader.bin` and `partitions_espruino.bin` files are not
 included from the same source you acquired the `espruino_esp32.bin` build,
 they should be available in the corresponding `espruino_1v92.*_esp32.tgz`
-package of the [Travis cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
+package of the [Travis cutting-edge builds](https://www.espruino.com/binaries/travis/master/).
 
 
 ###### Subsequent updates
@@ -203,7 +204,7 @@ Your device is flashed.
 
 #### Building Firmware and installing the toolchain
 
-You can get the Espruino firmare from the [cutting-edge builds](http://www.espruino.com/binaries/travis/master/).
+You can get the Espruino firmare from the [cutting-edge builds](https://www.espruino.com/binaries/travis/master/).
 Get the file ending in `_esp32.bin`.
 
 You can also build the Espruino firmware yourself:
@@ -226,7 +227,7 @@ See https://github.com/espruino/Espruino/blob/master/README_Building.md for more
 
 ### Espruino Web IDE
 
-The [Espruino Web IDE](http://www.espruino.com/Web+IDE) is a basic development environment
+The [Espruino Web IDE](https://www.espruino.com/Web+IDE) is a basic development environment
 that allows you to write your code and deploy it to the ESP32.
 
 #### minicom / CuteCom
