@@ -52,11 +52,30 @@ Espruino has a built-in line-by-line debugger that can be triggered by adding th
 Debugging when not connected
 ----------------------------
 
-Often you may encounter an issue where you device stops working after hours or days of use, where it's not practical to keep it connected to a computer.
+As of Espruino 2v27 you can call `E.setFlags({onErrorFlash:1})` which will cause the Red LED on your device (if there is one) to
+flash for 200ms whenever there is an uncaught Exception - this can help you identify whether anything unexpected is happening
+to your device.
+
+You may encounter an issue where you device stops working after hours or days of use, where it's not practical to keep it connected to a computer.
+
+### Storing Uncaught Exceptions
+
+As of Espruino 2v27 you can use `E.setFlags({onErrorSave:1})` to enable saving of uncaught exceptions to a file
+in Storage called `ERROR`. When next reloading, if that file is found Espruino will print:
+
+```
+An Uncaught Error has been saved to Storage. Please type:
+  require('Storage').read('ERROR') to view it
+  require('Storage').erase('ERROR') to clear it
+```
+
+**Note:** Out of memory errors are reported to the console but won't be saved (as there isn't enough memory!)
+
+### Storing Console messages
 
 In these cases you can log any data that gets printed (including exceptions) to a variable:
 
-```
+```JS
 var log="";
 LoopbackB.on('data',d=>log+=d);
 // On Bluetooth devices, use:
@@ -71,7 +90,7 @@ You can then connect, and call `print(log)` to see what was output while you wer
 
 You can also just log exceptions, for example:
 
-```
+```JS
 var lastError;
 process.on('uncaughtException', function(e) {
   lastError=e;
@@ -214,5 +233,7 @@ Debugging JIT Code
 The [JIT compiler](https://www.espruino.com/JIT) is still quite a recent development, and so may have issues.
 
 For debugging JIT code we'd suggest first removing the `"jit"` keyword and checking if the function works. If it does, then try removing code from the JIT function until you have a very small snippet you can reproduce the problem with. You can then either change that part of your code or ideally submit a bug report with it.
+
+`E.setFlags({jitDebug:1})` will enable debug output from the JIT compiler showing the generated assembly code. This is extremely verbose so if you're interested in debugging we'd recommend that first you reduce the code in your JIT function to the bare minimum required to reproduce your error.
 
 

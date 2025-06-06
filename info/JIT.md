@@ -123,11 +123,45 @@ See [here for information on the current state of development](https://github.co
   * JIT does not yet fold constant arithmetic (`1+2 -> 3`)
 
 
+Debugging
+-----------
+
+You can use `E.setFlags({jitDebug:1})` to enable debug output from the JIT compiler showing the generated assembly code.
+
+This is extremely verbose so if you're interested in debugging we'd recommend that first you reduce the code in your JIT function to the bare minimum required to reproduce your error.
+
+```
+>function add(a,b) { "jit";
+:  return a+b;
+:}
+      ; Function start
+     0: PUSH {r4,r5,r6,r7,lr}
+      ; ============ SCAN PHASE
+      ; Find Variable a
+     2: MOV r0 <- r15
+        ....
+      ; ============ EMIT PHASE
+      ; Reference var "a"
+    26: LDR r0,[SP,#4]
+        ....
+    6a: POP {r4,r5,r6,r7,pc}
+      ; VARS: { "a": 0, "b": 1 }
+=function (a,b) { [JIT] }
+```
+
+There are a few parts to the dump:
+
+* `SCAN PHASE` - 1st run over the code finds variables and creates the code needed to look them up at runtime
+* `EMIT PHASE` - 2nd run creates code for all the operations in the function
+* `; Function return` - Espruino adds code to tidy up and return from the function (unlocking all locked vars)
+* `; VARS: { "a": 0, "b": 1 }` - Espruino dumps the symbol table at the end of compilation in a JSON formatted object
+
+
 Can I help?
 -----------
 
 Absolutely! We're always after contributions. The actual code you need is here:
 
-* [Current JIT status](https://github.com/espruino/Espruino/blob/master/README_JIT.md)
+* [README and Current JIT status](https://github.com/espruino/Espruino/blob/master/README_JIT.md)
 * [JIT compiler](https://github.com/espruino/Espruino/blob/master/src/jsjit.c)
 * [JIT compiler code emitter](https://github.com/espruino/Espruino/blob/master/src/jsjitc.c)
