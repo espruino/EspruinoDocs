@@ -140,7 +140,7 @@ show("1   1\n"+
 You can use the Graphics library to display text and images, for example the following with scroll 'Espruino' across the display:
 
 ```
-g = Graphics.createArrayBuffer(5,5,1);
+g = Graphics.createArrayBuffer(5,5,1,{msb:false});
 g.flip = function(){show(this.buffer);};
 
 var x = 0;
