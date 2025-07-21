@@ -4,7 +4,7 @@ Interfacing to a PC
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Interfacing. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: Interfacing,PC,Computer,Connect,Control,USB,Bluetooth,Serial,CDC,BLE,Bluetooth LE,gatttool,hcitool
+* KEYWORDS: Interfacing,PC,Computer,Connect,Control,USB,Bluetooth,Serial,CDC,BLE,Bluetooth LE,gatttool,hcitool,Noble,node-ble,noble-winrt
 * USES: BLE,USB,Web Bluetooth
 
 You can use Espruino directly from your PC, Mac or Raspberry Pi to turn things on and off or measure values.
@@ -204,14 +204,18 @@ We've also made the [UART.js](/UART.js) Library to provide a consistent API for 
 
 ### Node.js / JavaScript
 
-On Node.js, [`noble`](https://www.npmjs.com/package/noble) appears to be the accepted way of getting Bluetooth LE
-access. **However, it is unmaintained!** As a result, there are other versions that you should use instead:
+On Node.js, [`noble`](https://www.npmjs.com/package/noble) has be the accepted way of getting Bluetooth LE
+access for years. **However, it is now unmaintained.** As a result, there are other versions that you should use instead
+that are code-compatible but work on different platforms:
 
-* `@abandonware/noble` is a version of `noble` with some fixes applied that ensures it builds - this works fine on Linux
-* **Mac OS Mojave has [broken BLE support in noble](https://github.com/noble/noble/issues/834)** so you may want to use the [noble-mac](https://github.com/Timeular/noble-mac) library instead.
-* `noble` needs direct access to the bluetooth device on Windows, which is [difficult to accomplish](https://github.com/noble/noble#windows) and not recommended, so [`noble-uwp`](https://www.npmjs.com/package/noble-uwp) or [`noble-winrt`](https://www.npmjs.com/package/noble-winrt) use Windows' own bluetooth driver, which will work a lot better on Windows 10 and later.
-* If you do need to use `noble` on Windows for some reason, it's possible to install an extra [USB Bluetooth LE dongle](http://www.espruino.com/Puck.js+Quick+Start#requirements)**
-that Windows doesn't have a Bluetooth driver installed for and configure it with Zadig. This will allow you to keep you existing Bluetooth working.
+* **Mac OS Mojave** has [broken BLE support in noble](https://github.com/noble/noble/issues/834) so you may want to use the [noble-mac](https://github.com/Timeular/noble-mac) library instead.
+* **Windows 10/11** `noble` needs direct access to the bluetooth device on Windows, which is [difficult to accomplish](https://github.com/noble/noble#windows) and not recommended, so
+[`noble-winrt`](https://www.npmjs.com/package/noble-winrt) or [`noble-uwp`](https://www.npmjs.com/package/noble-uwp) use Windows' own bluetooth driver which works a lot better.
+  * If you do need to use the original `noble` on Windows for some reason, it's possible to install an extra [USB Bluetooth LE dongle](http://www.espruino.com/Puck.js+Quick+Start#requirements)**
+  that Windows doesn't have a Bluetooth driver installed for and configure it with [Zadig](https://zadig.akeo.ie/). This will allow you to keep you existing Bluetooth working.
+* **Linux** [`@abandonware/noble`](https://www.npmjs.com/package/@abandonware/noble) is a version of `noble` with some fixes applied, and it normally works ok on Linux once you run the `setcap` command (see code below).
+  * [node-ble](https://www.npmjs.com/package/node-ble) is another option which uses DBUS to access Bluetooth so works alongside the OS rather than trying
+  to use Bluetooth directly. The API is different though - see https://github.com/espruino/EspruinoTools/blob/master/core/serial_node_ble.js for usage.
 
 Assuming we're on Linux you can run `npm install @abandonware/noble`, then use this code, otherwise you'll have to change the `require(...)` line to pull in the correct module:
 
@@ -221,7 +225,10 @@ Assuming we're on Linux you can run `npm install @abandonware/noble`, then use t
  * sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
  */
 
-var noble = require('@abandonware/noble');
+
+var noble = require('@abandonware/noble'); // Linux
+// var noble = require('noble-winrt'); // Windows
+// var noble = require('noble-mac'); // Mac OS
 
 var ADDRESS = "ff:a0:c7:07:8c:29";
 var COMMAND = "\x03\x10clearInterval()\n\x10setInterval(function() {LED.toggle()}, 500);\n\x10print('Hello World')\n";
@@ -253,8 +260,6 @@ noble.on('discover', function(dev) {
     });
   });
 });
-
-
 
 function connect(dev, callback) {
   btDevice = dev;
