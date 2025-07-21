@@ -96,13 +96,23 @@ You only actually need to connect pins 2,3 and 4 - but you can connect more if y
 
 SWD SWCLK and SWDIO are available via two labelled circular pads on the top of the board, by the USB connector.
 
+### Debugging STM32s
+
 Finally (if you have the [st-link tools](https://github.com/texane/stlink) installed and on your path), you can flash Espruino, with:
 
 ```Bash
-DEBUG=1 ESPRUINO_1V3=1 make flash
+RELEASE=1 BOARD=ESPRUINOBOARD make flash
 # or
-DEBUG=1 PICO_1V3=1 make flash
+RELEASE=1 BOARD=PICO_R1_3 make flash
+# or
+RELEASE=1 BOARD=ESPRUINOWIFI make flash
 ```
+
+**Note:** This will build without debug symbols or asserts and with optimisation (which is as we build firmware with normally)
+however optimisations can make it harder to debug. You can use `DEBUG=1` instead of `RELEASE=1` but Espruino is too large to fit
+in most boards with this enabled. To fix this, you need to edit the `boards/BOARDNAME.py` file, find the `libraries` section
+and then comment out any libraries you're not interested in to make room.
+
 
 You can then debug by running:
 
@@ -113,9 +123,11 @@ st-util
 in one window, and:
 
 ```Bash
-DEBUG=1 ESPRUINO_1V3=1 make gdb
+RELEASE=1 BOARD=ESPRUINOBOARD make gdb
 #or
-DEBUG=1 PICO_1V3=1 make gdb
+RELEASE=1 BOARD=PICO_1_3 make gdb
+# or
+RELEASE=1 BOARD=ESPRUINOWIFI make gdb
 ```
 
 in the other.
