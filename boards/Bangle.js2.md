@@ -11,7 +11,7 @@ Bangle.js is the successor to [Bangle.js](/Bangle.js), and is based on the
 
 [![](Banglejs2/main.jpg)](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)
 
-* BUYFROM: £64,£49,https://shop.espruino.com/banglejs2,/Order#banglejs2
+* BUYFROM: £83,£71,https://shop.espruino.com/banglejs2,/Order#banglejs2
 
 **Bangle.js 2 is an open, hackable smartwatch**
 
