@@ -27,8 +27,9 @@ Different Strap Colors
 
 ![](Bangle.js Strap/straps.jpg)
 
-We [sell three different Strap Colors](https://shop.espruino.com/banglejs-parts)
-in the Espruino Shop, so it's easy to swap to a new color if that's what you want.
+We sold three different Strap Colors in the Espruino Shop, 
+however unfortunately these are no longer manufactured and
+we are out of stock.
 
 
 Pocket Watch
