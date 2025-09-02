@@ -37,9 +37,9 @@ low voltage modification shown in https://www.espruino.com/Pyroelectric#low-volt
 
 | Pyroelectric sensor | Qwiic cable |
 |---------------------|-------------|
-| GND                 | GND/Black   |
-| OUT                 | SDA/Blue    |
-| VCC                 | VCC/Red     |
+| GND                 | GND (Black) |
+| OUT                 | SDA (Blue)  |
+| VCC                 | VCC (Red)   |
 
 
 Now plug the Qwiic cable into Q0 on the Jolt.
@@ -49,7 +49,7 @@ Now you just need to attach the Neopixel string!
 | Neopixel String  | Jolt.js                  |
 |------------------|--------------------------|
 | GND              | Terminal block `0`       |
-| DATA             | Qwiic Cable SCL (blue)   |
+| DATA             | Qwiic Cable SCL (Yellow) |
 | 5V               | Terminal block H0        |
 
 
