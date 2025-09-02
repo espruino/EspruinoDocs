@@ -74,3 +74,11 @@ It is also possible to cut down the existing strap. The first set of
 be inserted through as shown above.
 
 This will block the heart rate sensor, but it is a fast, simple solution.
+
+
+3D printed straps
+-----------------
+
+It is also possible to 3D print new straps out of TPU. There is [a forum thread with
+an example strap design](https://github.com/orgs/espruino/discussions/7693)
+
