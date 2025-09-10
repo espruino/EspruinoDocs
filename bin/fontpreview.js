@@ -85,8 +85,9 @@ function getFontPreview(path) {
 
   var SPACINGX = fontMaxWidth;
   var SPACINGY = fontHeight;
+  var ROWS = (fontOffset<32)?16:14;
   var WIDTH = Math.max(16*SPACINGX+4,testWidths[0],testWidths[1]);
-  var HEIGHT = 16*SPACINGY+4;
+  var HEIGHT = (ROWS+2)*SPACINGY+4;
   var MINIMAL = false;
   if (WIDTH > 300) {
     MINIMAL = true;
@@ -121,29 +122,31 @@ function getFontPreview(path) {
   //for (var i=0;i<HEIGHT;i++) setPixel(i,i);
   // borders
   if (!MINIMAL) {
-    for (var i=2*SPACINGY;i<=16*SPACINGY+2;i++) {
+    for (var i=2*SPACINGY;i<=(2+ROWS)*SPACINGY+2;i++) {
       setPixel(0,i);
       setPixel(16*SPACINGX+3,i);
     }
-    for (var i=0;i<16*SPACINGX+3;i++) {
-      setPixel(i,16*SPACINGY+3);
+    for (var i=0;i<=16*SPACINGX+3;i++) {
+      setPixel(i,(2+ROWS)*SPACINGY+3);
       setPixel(i,2*SPACINGY);
     }
   }
   // draw all chars in grid
-  if (!MINIMAL)
-    for (var y=2;y<16;y++)
+  if (!MINIMAL) {
+    var starty = 16-ROWS;
+    for (var y=starty;y<16;y++)
       for (var x=0;x<16;x++)
-         drawChar(x+(y*16), 2+(x*SPACINGX), 2+ (y*SPACINGY));
+         drawChar(x+(y*16), 2+(x*SPACINGX), 2+((y+2-starty)*SPACINGY));
+  }
   // draw test text
-    TESTLINES.forEach((s,y)=>{
-    if (MINIMAL && y>0) return;
-    var x=0;
-    for (var ch of s) {
-       var ch = ch.charCodeAt();
-       drawChar(ch, x, y*SPACINGY);
-       x += getCharWidth(ch);
-     }
+  TESTLINES.forEach((s,y)=>{
+  if (MINIMAL && y>0) return;
+  var x=0;
+  for (var ch of s) {
+     var ch = ch.charCodeAt();
+     drawChar(ch, x, y*SPACINGY);
+     x += getCharWidth(ch);
+   }
   });
   // test output
   /*for (var y=0;y<HEIGHT;y++) {
