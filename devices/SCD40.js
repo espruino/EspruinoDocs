@@ -22,43 +22,43 @@ scd.stop_periodic_measurement()
 var C = {
   I2C_ADDR : 0x62,
 
-  REQUEST_SINGLE_LOOKUP : Uint8Array([0x219d>>8,0x219d]),
-  REQUEST_SINGLE_LOOKUP_RHT : Uint8Array([0x2196>>8,0x2196]),
-  START_MEASUREMENTS : Uint8Array([0x21b1>>8,0x21b1]),
-  START_LOW_POWER_MEASUREMENTS : Uint8Array([0x21ac>>8,0x21ac]),
-  STOP_MEASUREMENTS : Uint8Array([0x3f86>>8,0x3f86]),
-  IS_DATA_READY : Uint8Array([0xe4b8>>8,0xe4b8]),
-  READ_DATA : Uint8Array([0xec05>>8,0xec05]),
+  REQUEST_SINGLE_LOOKUP : [0x219d>>8,0x219d],
+  REQUEST_SINGLE_LOOKUP_RHT : [0x2196>>8,0x2196],
+  START_MEASUREMENTS : [0x21b1>>8,0x21b1],
+  START_LOW_POWER_MEASUREMENTS : [0x21ac>>8,0x21ac],
+  STOP_MEASUREMENTS : [0x3f86>>8,0x3f86],
+  IS_DATA_READY : [0xe4b8>>8,0xe4b8],
+  READ_DATA : [0xec05>>8,0xec05],
 
   PERFORM_FORCED_RECALIBARTION : 0x362f,
-  GET_AUTOMATIC_SELF_CALIBRATION_ENABLED : Uint8Array([0x2313>>8,0x2313]),
+  GET_AUTOMATIC_SELF_CALIBRATION_ENABLED : [0x2313>>8,0x2313],
   SET_AUTOMATIC_SELF_CALIBRATION_ENABLED : 0x2416,
-  GET_AUTOMATIC_SELF_CALIBRATION_TARGET : Uint8Array([0x233f>>8,0x233f]),
+  GET_AUTOMATIC_SELF_CALIBRATION_TARGET : [0x233f>>8,0x233f],
   SET_AUTOMATIC_SELF_CALIBRATION_TARGET : 0x243a,
 
-  GET_TEMP_OFFSET : Uint8Array([0x2318>>8,0x2318]),
+  GET_TEMP_OFFSET : [0x2318>>8,0x2318],
   SET_TEMP_OFFSET : 0x241d,
-  GET_SENSOR_ALTITUDE : Uint8Array([0x2322>>8,0x2322]),
+  GET_SENSOR_ALTITUDE : [0x2322>>8,0x2322],
   SET_SENSOR_ALTITUDE : 0x2427,
-  GET_AMBIENT_PRESSURE : Uint8Array([0xe000>>8,0xe000]),
+  GET_AMBIENT_PRESSURE : [0xe000>>8,0xe000],
   SET_AMBIENT_PRESSURE : 0xe000,
 
-  PERSIST_SETTINGS : Uint8Array([0x3615>>8,0x3615]),
-  GET_SERIAL_NUMBER : Uint8Array([0x3682>>8,0x3682]),
-  PERfORM_SELF_TEST : Uint8Array([0x3639>>8,0x3639]),
-  FACTORY_RESET : Uint8Array([0x3632>>8,0x3632]),
-  RE_INIT : Uint8Array([0x3646>>8,0x3646]),
+  PERSIST_SETTINGS : [0x3615>>8,0x3615],
+  GET_SERIAL_NUMBER : [0x3682>>8,0x3682],
+  PERfORM_SELF_TEST : [0x3639>>8,0x3639],
+  FACTORY_RESET : [0x3632>>8,0x3632],
+  RE_INIT : [0x3646>>8,0x3646],
 
   /** Chip identifier */
-  CHIP_GET_VARIANT : Uint8Array([0x202f>>8,0x202f]),
+  CHIP_GET_VARIANT : [0x202f>>8,0x202f],
   CHIP_VARIANT : [0x0441,0x1440,0x5441],//scd40,scd41,scd43
 
-  POWER_DOWN : Uint8Array([0x36e0>>8,0x36e0]),
-  WAKE_UP : Uint8Array([0x36f6>>8,0x36f6]),
+  POWER_DOWN : [0x36e0>>8,0x36e0],
+  WAKE_UP : [0x36f6>>8,0x36f6],
 
-  GET_CALIBRATION_INITIAL_PERIOD : Uint8Array([0x2340>>8,0x2340]),
+  GET_CALIBRATION_INITIAL_PERIOD : [0x2340>>8,0x2340],
   SET_CALIBRATION_INITIAL_PERIOD : 0x2445,
-  GET_CALIBRATION_STANDARD_PERIOD : Uint8Array([0x234b>>8,0x234b]),
+  GET_CALIBRATION_STANDARD_PERIOD : [0x234b>>8,0x234b],
   SET_CALIBRATION_STANDARD_PERIOD : 0x244e
 };
 
@@ -76,15 +76,15 @@ function SCD40(options,read,simpleRead,write) {
   }
   this.crc = function(data) {
     "jit";
-    bytes = Uint8Array([data>>8,data]);
-    var crc = 0xff;
-    for (j=0; j<2; ++j){
+    bytes=[data>>8,data];
+    var crc=0xff;
+    for (j=0;j<2;++j){
       crc ^= (bytes[j]);
-      for (var i = 8; i >0; i--) {
+      for (var i=8;i>0;i--) {
         if (crc & 0x80)  {
-          crc = (crc <<1) ^ 0x31;
+          crc=(crc<<1) ^ 0x31;
         } else {
-          crc = (crc << 1);
+          crc=(crc<<1);
         }
       }
     }
