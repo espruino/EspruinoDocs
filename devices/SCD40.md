@@ -46,3 +46,13 @@ To make a continous measurements
 The other calls as defined in the datasheet have all been set up in the module.
 
 The module also contains a commented out version of the C code to calculate the crc-8 checksum used for these chips. It runs in around 1.2 ms on the pico, where as the Javascript version takes around 4.5 ms. If performance is an issue this can be used instead.
+
+  Reference
+  ---------
+
+  * APPEND_JSDOC: MOD123.js
+
+  Using
+  -----
+
+  * APPEND_USES: MOD123
