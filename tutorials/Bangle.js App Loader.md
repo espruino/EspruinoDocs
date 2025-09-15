@@ -112,6 +112,7 @@ Finally, it's time to add a description of your app. There's an example at https
   "shortName":"My Timer",
   "icon": "app.png",
   "version":"0.01",
+  "author":"github_username",
   "description": "This is a description of my awesome timer app",
   "tags": "",
   "supports": ["BANGLEJS2"],
