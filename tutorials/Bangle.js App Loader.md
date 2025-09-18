@@ -82,12 +82,11 @@ E.showMessage("My\nSimple\nApp","My App")
 * Now click the `Commit new file` button
 * The window will now be in the `BangleApps/apps/timer` folder, and
 we now want to add the app icon.
-* In [Bangle.js First App](/Bangle.js+First+App) we downloaded a 48px icon
-as a `PNG` file, so let's use that.
-* Rename the file on your computer to `app.js` (GitHub doesn't provide a way to rename files)
+* In [Bangle.js First App](/Bangle.js+First+App) we downloaded a 48px icon as a `PNG` file, so let's use that.
+* Rename the file on your computer to `app.png` (GitHub doesn't provide a way to rename files)
 * Click `Upload files` in GitHub's `BangleApps/apps/timer` folder, upload the file, and click `Commit Changes`
 
-Now we need to upload the icon in a form that Bangle.js understands
+Now we need to upload the icon in a form that Bangle.js understands...
 
 * Go to http://www.espruino.com/Image+Converter
 * Click `Choose File` and upload the `app.png` file
@@ -96,6 +95,8 @@ Now we need to upload the icon in a form that Bangle.js understands
 * Under `Output As` choose `Image String`
 * Now you'll see some text like `var img = E.toArrayBuffer(atob("..."))`. Highlight and copy just the `E.toArrayBuffer(atob("..."))` part - **do not** copy `var img =`
 * Go back to GitHub and the `BangleApps/apps/timer` and create a new file called `app-icon.js` with the `E.toArrayBuffer(atob("..."))` code you just copied in it, and click `Commit new file`
+
+**Note:** you can test the icon by pasting `require("Storage").write("timer.img", ..js_code_from_image_converter...)` into the left-hand side of the IDE.
 
 At this point you could add a ChangeLog file so others can see what changed if
 you release multiple versions of your app, but we're going to skip that for now.
