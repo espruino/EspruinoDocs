@@ -2,6 +2,8 @@
 SCD40
 =====================
 
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/SCD40. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+
 * KEYWORDS: Module,SCD40,SCD41,SCD43,Temperature,Humidity,C02
 
 This module should work with Sensirons SDC40, SCD41 and SCD43 sensors, although it has only been tested on the SDC40. Use the [SCD40](/modules/SCD40.js) ([About Modules](/Modules)) module for it.

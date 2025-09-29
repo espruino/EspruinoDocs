@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 /*
 Minify Espruino Modules
 -----------------------
