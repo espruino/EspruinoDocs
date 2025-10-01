@@ -34,6 +34,7 @@ function updateAdvertising() {
     }
   ]), {
     name : "Sensor",
+    manufacturer : false, ///< turn off manufacturer data advertising (enabled by default in 2v26, interferes with BTHome)
     // not being connectable/scannable saves power (but you'll need to reboot to connect again with the IDE!)
     //connectable : false, scannable : false,
   });
@@ -134,6 +135,7 @@ function updateAdvertising(buttonState) {
   ]), {
     name : "Sensor",
     interval: (buttonState!="none")?20:2000, // fast when we have a button press, slow otherwise
+    manufacturer : false, ///< turn off manufacturer data advertising (enabled by default in 2v26, interferes with BTHome)
     // not being connectable/scannable saves power (but you'll need to reboot to connect again with the IDE!)
     //connectable : false, scannable : false,
   });
@@ -237,7 +239,7 @@ NRF.setAdvertising(require("BTHome").getAdvertisement([
     type : "temperature",
     v : E.getTemperature()
   }
-]), { name : "Sensor1", scannable: false, connectable: false, interval: 600 });
+]), { name : "Sensor1", manufacturer : false, scannable: false, connectable: false, interval: 600 });
 NRF.setTxPower(4); // NRF52840 devices like Bangle.js 2 can use 8!
 ```
 
