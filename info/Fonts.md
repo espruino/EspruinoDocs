@@ -175,7 +175,7 @@ You'll need a string containing a column-first, most significant bit first, 1 bi
 * We now have a [Font Converter page](/Font Converter) that allows you to create fonts for Espruino based on a Web Font.
 * There [is a library to handle font conversion for Espruino](https://github.com/espruino/EspruinoWebTools/blob/master/fontconverter.js) and you can see a usage example in the [JS file used to make Espruino's built-in fonts](https://github.com/espruino/Espruino/blob/master/libs/graphics/font/fontconverter.js)
 * We have [a module for Espruino called sevenseg_font_tools](modules/sevenseg_font_tools.js) which allows you to easily create custom seven segment fonts (documentation is at the start of the file)
-* Matt Brailsford has also made an excellent [online font converter](http://ebfc.mattbrailsford.com/) specifically for creating fonts for Espruino. 
+* Matt Brailsford also made an excellent [Bitmap Font Converter](/Bitmap Font Converter) specifically for creating fonts for Espruino.
 
 
 Font Widths
