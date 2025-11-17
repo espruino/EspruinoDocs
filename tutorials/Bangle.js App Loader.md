@@ -37,6 +37,7 @@ your own copy of the repository.
 * Click `Settings` up the top right of the repository page
 * On the left panel, select `Pages`
 * Under `Source`, choose `master branch`
+* In the drop-down menu for the path, ensure `/ (root)` is chosen
 * Now click `Save`
 * The page will refresh and under `GitHub Pages` it'll then say:
 
