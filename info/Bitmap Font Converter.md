@@ -43,6 +43,10 @@ body #form button { cursor: pointer; }
         <td><input type="number" id="txtCharHeight"></td>
       </tr>
       <tr>
+        <td><label for="txtCharSpacing">Character spacing</label></td>
+        <td><input type="number" id="txtCharSpacing" value="1"></td>
+      </tr>
+      <tr>
         <td><label for="chkFixedWidth">Fixed width</label></td>
         <td><input type="checkbox" id="chkFixedWidth"></td>
       </tr>
@@ -58,7 +62,7 @@ body #form button { cursor: pointer; }
     <p>This tool converts a bitmap image of a font into JavaScript code that can be used with Espruino. It was developed by <a href="https://mattbrailsford.dev">Matt Brailsford</a> and was originally available at ebfc.mattbrailsford.com.</p>
     <p>The image you supply should contain characters arranged in a grid, in <a href="https://en.wikipedia.org/wiki/ASCII#Character_set">ASCII order</a> and then all you need to do is enter the first character, and the width/height of each cell in the grid.</p>
     <p>For example you could upload <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAGAQMAAACl02/6AAAAwnpUWHRSYXcgcHJvZmlsZSB0eXBlIGV4aWYAAHjabVDbDcMgDPxnio7gF2DGIU0qdYOOX4OdKrQ9icP40PmRjtfzkW4DhJIkVy2tFDBIk0bdAgVHn4wgkyf4Hhqu+QQlBLIUj5/+1MjjmcePgV/donwx0qiA2yo0CX/9MqLobHQ04j2MWhgxuYBh0H0sKE3rdYTtgBXqJw0SXdv+eVfb3p6tDhMdjAzGzMUb4HFy4m4CTq720WNiMWZuYWYL+benE+kNLZNZSaf5ijUAAAGEaUNDUElDQyBwcm9maWxlAAB4nH2RPUjDUBSFT1OlohURC4o4ZKhOdqkijrUKRagQaoVWHUxe+gdNGpIUF0fBteDgz2LVwcVZVwdXQRD8AXEXnBRdpMT7kkKLWB9c3sd57xzuuw8Q6mWmWV0xQNNtM5WIi5nsqhh4RR8GqYYRlZllzElSEh3X1z18fL+L8KzO9/5c/WrOYoBPJI4xw7SJN4hnNm2D8z5xiBVllficeNKkBokfua54/Ma54LLAM0NmOjVPHCIWC22stDErmhrxNHFY1XTKFzIeq5y3OGvlKmv2yV8YzOkry1ynGkMCi1iCBBEKqiihDBsR2nVSLKToPN7BP+r6JXIp5CqBkWMBFWiQXT/4H/yerZWfinpJwTjQ/eI4H+NAYBdo1Bzn+9hxGieA/xm40lv+Sh2Y/SS91tLCR8DANnBx3dKUPeByBxh5MmRTdiU/lZDPA+9n9E1ZYOgW6F3z5tY8x+kDkKZZJW+Ag0NgokDZ6x3e3dM+t3/vNOf3A7f6csJix682AAANeGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNC40LjAtRXhpdjIiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iCiAgICB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIgogICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgeG1sbnM6R0lNUD0iaHR0cDovL3d3dy5naW1wLm9yZy94bXAvIgogICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgIHhtcE1NOkRvY3VtZW50SUQ9ImdpbXA6ZG9jaWQ6Z2ltcDo1MmY4Njc5ZC1kYTg4LTQyMWYtYWE4ZC0wYjQwYjBiYjI4Y2YiCiAgIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MWNmYzU1ODUtNjI1YS00OTAzLWIyNmYtMzk0N2NkZjhiMDVhIgogICB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6MzFiMjJhZTUtNWJhMC00MzI4LTgzYzAtMTAwZmFlY2E4MzA2IgogICBkYzpGb3JtYXQ9ImltYWdlL3BuZyIKICAgR0lNUDpBUEk9IjIuMCIKICAgR0lNUDpQbGF0Zm9ybT0iTGludXgiCiAgIEdJTVA6VGltZVN0YW1wPSIxNzYzMzc4NjgxNjAyMjk3IgogICBHSU1QOlZlcnNpb249IjIuMTAuMzYiCiAgIHRpZmY6T3JpZW50YXRpb249IjEiCiAgIHhtcDpDcmVhdG9yVG9vbD0iR0lNUCAyLjEwIgogICB4bXA6TWV0YWRhdGFEYXRlPSIyMDI1OjExOjE3VDExOjI0OjM5KzAwOjAwIgogICB4bXA6TW9kaWZ5RGF0ZT0iMjAyNToxMToxN1QxMToyNDozOSswMDowMCI+CiAgIDx4bXBNTTpIaXN0b3J5PgogICAgPHJkZjpTZXE+CiAgICAgPHJkZjpsaQogICAgICBzdEV2dDphY3Rpb249InNhdmVkIgogICAgICBzdEV2dDpjaGFuZ2VkPSIvIgogICAgICBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjlmZWU0YmY5LTRkMTYtNGNkOS05ZjkzLTNjY2QzYWQ5OThiZCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iR2ltcCAyLjEwIChMaW51eCkiCiAgICAgIHN0RXZ0OndoZW49IjIwMjUtMTEtMTdUMTE6MjQ6NDErMDA6MDAiLz4KICAgIDwvcmRmOlNlcT4KICAgPC94bXBNTTpIaXN0b3J5PgogIDwvcmRmOkRlc2NyaXB0aW9uPgogPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSJ3Ij8+OarbeAAAAAZQTFRFAAAA////pdmf3QAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfpCxELGCmuFg7VAAAAQUlEQVQI1wE2AMn/AI944+wcwY4wAGZ3Xc37/XXQAFV/c6ww+43QAFd4/W/Xd3YQADd33QXXb3fQAIwQY+44744w3r8aLyNFSS0AAAAASUVORK5CYII=" style="padding:2px;border:1px solid black;"/>
-with a First char of <code>0</code>, Char width of <code>6</code> and Char height of <code>6</code> to get a font containing the digits 0-9.</p>
+with a First char of <code>0</code>, Char width of <code>6</code> and Char height of <code>6</code> to get a font containing the digits 0-9. 'Character spacing' is the space that will be added between characters.</p>
   </fieldset>
   <!-- Hidden canvas used for pixel access -->
   <canvas id="canvas" style="display:none;"></canvas>
@@ -82,6 +86,7 @@ function onConvertClick() {
   const firstCharInput = document.getElementById('txtFirstChar');
   const charWidthInput = document.getElementById('txtCharWidth');
   const charHeightInput = document.getElementById('txtCharHeight');
+  const charSpacingInput = document.getElementById('txtCharSpacing');
   const fixedWidthInput = document.getElementById('chkFixedWidth');
 
   // Validation
@@ -101,6 +106,7 @@ function onConvertClick() {
 
   const charWidth = parseInt(charWidthInput.value, 10);
   const charHeight = parseInt(charHeightInput.value, 10);
+  const charSpacing = parseInt(charSpacingInput.value, 10);
 
   if (isNaN(charWidth) || isNaN(charHeight)) {
     output.value = "[ERROR] Char Width and/or Char Height are not valid numbers";
@@ -173,7 +179,7 @@ function onConvertClick() {
             startX = 0;
             endX = Math.floor(charWidth / 2); // treat space as half-width
           } else if (endX < charWidth - 1) {
-            endX++; // if not full width, add a space after
+            endX += charSpacing; // if not full width, add a space after
           }
 
           charWidths.push(endX + 1 - startX);
