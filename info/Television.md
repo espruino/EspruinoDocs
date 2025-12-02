@@ -6,7 +6,10 @@ TV Out
 
 * KEYWORDS: Peripheral,Peripherals,TV,Television,Composite,S-Video,PAL,NTSC,VGA,DVI,HDMI,Graphics Driver
 
-Espruino provides the ability to output black and white [PAL Television](http://en.wikipedia.org/wiki/PAL) or [VGA](http://en.wikipedia.org/wiki/Video_Graphics_Array) signals via the [TV Module](http://www.espruino.com/Reference#tv). This capability is currently only available in 'official' Espruino boards.
+Espruino provides the ability to output black and white [PAL Television](http://en.wikipedia.org/wiki/PAL) or [VGA](http://en.wikipedia.org/wiki/Video_Graphics_Array) signals via the [TV Module](http://www.espruino.com/Reference#tv). This capability is currently only available in [Espruino WiFi](/WiFi) boards.
+
+**Note:** Espruino 2v28 and before had TV output on [Espruino Pico](/Pico), but while it can be built in
+it has been removed from the default build to free up Flash memory for other features.
 
 Composite (PAL)
 --------------

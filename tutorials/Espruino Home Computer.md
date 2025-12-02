@@ -14,8 +14,11 @@ Many of us learnt to program on Sinclair Spectrums, Commodore 64s, BBC Micros or
 In this tutorial you'll learn how to make your own JavaScript computer with [VGA](/Television) output in a few hours using Espruino!
 
 Also see [the Pixl.js Home Computer](/Espruino Home Computer] that uses
-[Pixl.js](/Pixl.js) as the display.  
+[Pixl.js](/Pixl.js) as the display.
 
+**Note:** Espruino 2v28 and before had TV output on [Espruino Pico](/Pico), but while it can be built in
+it has been removed from the default build to free up Flash memory for other features. You can still use [Espruino WiFi](/WiFi),
+or to use this exact Tutorial as-is, use Espruino firmware 2v28 or build your own with `TV` enabled.
 
 You'll Need
 ----------
