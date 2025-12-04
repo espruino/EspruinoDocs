@@ -108,6 +108,7 @@ function updateAdvertising() {
     },
   ]), {
     name:"\xF0\x9F\x9A\x98", // car emoji, https://www.espruino.com/BLE+Emoji
+    manufacturer : false, ///< turn off manufacturer data advertising (enabled by default in 2v26, interferes with BTHome)
     // not being connectable/scannable saves power (but you'll need to reboot to connect again with the IDE!)
     //connectable : false, scannable : false,
   });

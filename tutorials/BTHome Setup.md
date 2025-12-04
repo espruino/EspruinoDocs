@@ -18,7 +18,7 @@ This video shows you how to set up [Home Assistant](https://www.home-assistant.i
 * A Power Supply for the Raspberry Pi
 * Ethernet Connection for the Raspberry Pi (using WiFi will reduce your BLE range)
 
-## Install Home Assitant
+## Install Home Assistant
 
 Follow the steps at https://www.home-assistant.io/installation/raspberrypi
 
