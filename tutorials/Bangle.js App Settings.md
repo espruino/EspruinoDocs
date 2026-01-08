@@ -91,7 +91,7 @@ following:
 
 ```JS
 (function(back) {
-  var FILE = "myapp.json";
+  const FILE = "myapp.json";
   // Load settings
   var settings = Object.assign({
     something: 123,
@@ -100,6 +100,8 @@ following:
   function writeSettings() {
     require('Storage').writeJSON(FILE, settings);
   }
+
+  const CHOICES = ["Zero","One","Two","Three"];
 
   // Show the menu
   E.showMenu({
@@ -123,6 +125,15 @@ following:
         writeSettings();
       }
     },
+    'Choices': {
+      value: 0|settings.choice%CHOICES.length,  // converts undefined or out of range values
+      min: 0, max: CHOICES.length-1,
+      format: v => CHOICES[v],
+      onchange: v => {
+        settings.choice = v;
+        writeSettings();
+      }
+    },
   });
 })(load)
 ```
@@ -135,7 +146,7 @@ This is great for testing, however to create a settings app, you must remove the
 
 ```JS
 (function(back) {
-  var FILE = "myapp.json";
+  const FILE = "myapp.json";
   // Load settings
   var settings = Object.assign({
     something: 123,
@@ -144,6 +155,8 @@ This is great for testing, however to create a settings app, you must remove the
   function writeSettings() {
     require('Storage').writeJSON(FILE, settings);
   }
+
+  const CHOICES = ["Zero","One","Two","Three"];
 
   // Show the menu
   E.showMenu({
@@ -155,12 +168,24 @@ This is great for testing, however to create a settings app, you must remove the
         settings.onoroff = v;
         writeSettings();
       }
+      // format: ... may be specified as a function which converts the value to a string
+      // if the value is a boolean, showMenu() will convert this automatically, which
+      // keeps settings menus consistent
     },
     'How Many?': {
       value: 0|settings.howmany,  // 0| converts undefined to 0
       min: 0, max: 10,
       onchange: v => {
         settings.howmany = v;
+        writeSettings();
+      }
+    },
+    'Choices': {
+      value: 0|settings.choice%CHOICES.length,  // converts undefined or out of range values
+      min: 0, max: CHOICES.length-1,
+      format: v => CHOICES[v],
+      onchange: v => {
+        settings.choice = v;
         writeSettings();
       }
     },
