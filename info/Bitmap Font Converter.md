@@ -162,8 +162,8 @@ function onConvertClick() {
           for (let cx = 0; cx < charWidth; cx++) {
             let set = false;
             for (let cy = 0; cy < charHeight; cy++) {
-              const colBrightness = getBrightness(cx + x, cy + y);
-              if (colBrightness < 0.5) {
+              const brightness = getBrightness(cx + x, cy + y);
+              if (brightness < 0.9) {
                 set = true;
                 break;
               }
