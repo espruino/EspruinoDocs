@@ -105,6 +105,7 @@ until then (or if you need a cable next day) you can use:
 
 * [Amazon US Compatible cable](https://www.amazon.com/gp/product/B08R9GLMJD/ref=ppx_od_dt_b_asin_title_s00)
 * [Amazon DE Compatible cable](https://www.amazon.de/dp/B077RFZJ8Z/ref=cm_sw_r_apan_glt_i_6ZH025Y98QRKS0HJK3A7)
+* [Amazon JP Compatible USB-C adapter](https://www.amazon.co.jp/dp/B0G13RXWTF)
 
 
 Apps
