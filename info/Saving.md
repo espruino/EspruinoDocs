@@ -6,60 +6,75 @@ Saving code on Espruino
 
 * KEYWORDS: Built-In,Save,saving,write,flash,flashing,save(),load,non-volatile,onInit,upload,uploading,tutorials
 
-Normally when you upload code to Espruino via the IDE, it is stored in Espruino's RAM.
+Normally when you upload code to Espruino via the IDE (Upload set to `RAM`), it is stored in Espruino's RAM.
 If you reset the board or power is lost, all your code will be lost.
 
 However it's easy to save your code to flash memory and make it permanent.
 
-
 Summary
 --------
 
-On normal Espruino devices, just type `save()` on the left-hand side of the IDE and the current state of
-Espruino including all saved code will be written so that it is loaded at boot time.
+In Espruino there are two distinct ways of saving code, which you can swap between using the down-arrow
+below the Upload icon in the IDE, or under `Communications` in the `Settings` window.
 
-`save()` doesn't work on Bangle.js watches, since you wouldn't want to save the current state of the device
-(including any Widgets/etc) into flash memory.
+* **Saving source code** (`Flash`/`Storage`) - (best if using an editor) the source code is uploaded to Flash, and then Espruino is restarted and the code executed on one go after.
+* **Saving current state** (`RAM` + `save()`) - (best if building iteratively using the REPL) the code is executed as it is sent to the device. You can then
+modify the code and variables in the REPL on the left of the IDE and when you type `save()`, the *current state of the interpreter* is saved to flash memory.
 
-There are other methods of saving code that can be more efficient, or can allow you to do things like saving constants.
+There are pros and cons to each - see below:
 
-You can change methods using the down-arrow below the Upload icon in the IDE,
-or under `Communications` in the `Settings` window. See below for more
-information.
+Saving source code (`Flash`/`Storage`)
+-----------------------------------
+
+When saving to `Flash` or `Storage` in the Espruino IDE, the code is sent directly to the device's
+flash memory. When Espruino boots up, it then executes the JavaScript code from Flash.
+
+This is similar to the way you'd program a 'normal' microcontroller, and is best for bigger projects
+where you expect to keep a copy of your code on your PC and edit code in the editor rather than the REPL.
+
+If you upload the code `var t = E.getTemperature()` with the IDE set to `Flash`, `t` will be set to the
+temperature every time the device is powered on - in contrast to what happens when you use `save()` (below).
+
+There are two different options:
+
+* `Flash` - code is saved to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootcde` that is run automatically at boot (don't use this on [Bangle.js](/Bangle.js2)).
+* `Storage` - code is saved to a file name that you get to choose. You can then use
+`load(filename)` to force Espruino to reboot and load the file you've given. You may also choose
+to write to other files like `.bootrst`/`.boot0`/etc which are executed at certain times (see `Boot Process` below)
+
+### Pros
+
+* Runs all code at boot-time, so there's no need for an `onInit()` function
+* The code inside each function is kept in Flash memory, so doesn't use up
+as much RAM. This is also true for Modules if `Modules uploaded as functions`
+is enabled in the IDE (the default).
+* With 'pretokenisation' enabled, Strings and base64 text stay stored in flash
+and don't take up RAM when referenced.
+* An exact copy of the original code is stored on the device and can be loaded using the IDE
+* You can write to different files and use `load(filename)` to load different 'applications'
+
+### Cons
+
+* Your JavaScript code is stored in flash as plain text, so can easily be read out (unless minified/pretokenised)
+* If you make changes using the REPL on the left-hand side of the IDE, there is no way to save them
+* `E.setFlags({pretokenise:1})` will have no effect, since a function's code will be kept in Flash (you can still add `"ram"` as the first item in a function to force it to be loaded into RAM and pretokenised)
+* It isn't possible to run code at upload time - code only ever runs when the device powers on.
+* needs the IDE or other tools to write the code to the device
+
+### Gotchas
+
+* If you call `save()` after having saved to flash using a method below, you may
+get `Got EOF expected ..., [ERASED]` errors. These happen because there were
+function definitions in RAM that referenced code in Flash that is no longer
+there.
 
 
-Boot Process
-------------
-
-To understand how best to save data, it's best to know how Espruino
-loads saved code.
-
-When Espruino starts up, it does a few things:
-
-* If `BTN1` is pressed or if it reset because of a call to `reset()`, it sets `hasBeenReset` to `true`.
-* If `hasBeenReset` wasn't set, it looks for a compressed image (`.varimg` [in Storage](https://www.espruino.com/Reference#Storage)) of the interpreter's state that was saved with `save()`. If it exists it unpacks it into RAM.
-* (2v19 and later) If this is the first boot right after power on, executes `.bootPowerOn` [from Storage](https://www.espruino.com/Reference#Storage). (On [Bangle.js](/Bangle.js) this is *not* executed if `BTN1` is held down, but all other devices execute them each time)
-* (2v00 and later) Looks for files [in Storage](https://www.espruino.com/Reference#Storage) named `.boot0`, `.boot1`, `.boot2` and `.boot3` and executes them in sequence. (On [Bangle.js](/Bangle.js) these are *not* executed if `BTN1` is held down, but all other devices execute them each time)
-* Looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootrst` and executes it if it exists (see [Save on Send](#save-on-send) below)
-* If `hasBeenReset` **wasn't** set and `.bootrst` wasn't found in the last step, it looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootcde` and executes it (see [Save on Send](#save-on-send) below)
-
-* Initialises any previously-initialised peripherals
-* Runs any handlers registered with `E.on('init', function() { ... });`
-* Runs a function called `onInit()` if it exists.
-
-If Espruino is reset with `load()` it follows the same steps as above, with `hasBeenReset` to `false`.
-However in Espruino 2v05 and later, `load(filename)` will follow the same steps but will load the
-specified file instead of `.bootcde`/`.bootrst`.
-
-There are two main ways to save code with Espruino:
-
-
-`save()`
---------
+Saving current state (`RAM` + `save()`)
+---------------------------------
 
 If you type `save()` on the left-hand side of the IDE after your code is
-uploaded, the contents of Espruino's RAM at that point will be compressed
-and written in to flash memory.
+uploaded (IDE upload set to `RAM`), the contents of Espruino's RAM at that
+point will be compressed and written in to flash memory.
 
 This includes:
 
@@ -72,12 +87,11 @@ When power is next applied, Espruino will load the information back out of
 flash and will resume where it left off. You can think of this a bit like
 'hibernate' on a PC.
 
-This is the standard way of saving code in normal Espruino devices (**it is
-  not suitable for [Bangle.js](/Bangle.js)**), and it means that
-you can interact with your code on the left-hand side of the IDE, changing
-variables and functions, and can then save everything - including your changes.
+This means that you can interact with your code on the left-hand side of the IDE,
+changing variables and functions, and can then save everything at any point - including your changes.
+This is best for smaller projects where you plan to make a bunch of changes with the REPL while the code is running.
 
-For instance, if you upload the code `var t = E.getTemperature()` and type
+If you upload the code `var t = E.getTemperature()` and type
 `save()`, `t` will contain the temperature of the device *at the time that
 you uploaded* - **not** at the time the device started, or even the time you
 typed `save()`.
@@ -90,18 +104,16 @@ create a function called `onInit` (or add a `E.on('init', function() { ... })`
 listener) that is automatically called by the interpreter when it
 initialises.
 
-Once code is saved, you can return the interpreter to a 'clean' state
-with `reset()`. This won't clear out any of the saved data in flash, so
-if you reboot the device (or call `load()`) it will re-load your previously
-saved state. To completely clear out  saved code, run `reset()` and *then*
-run `save()` to save the clean state back into flash memory.
+**Note:** `save()` is not available for [Bangle.js](/Bangle.js2) as the Bangle
+needs to be able to run multiple different apps (so all code is saved to Storage)
 
 ### Pros
 
 * Once you have your software working, you can just `save()` and it will keep working
 * You can make changes to `save()`d code and can then type `save()` again to save your changes
-* JS code isn't stored in flash as plain text, so is harder for a malicious user to extract
+* `dump()` can output the current state of the interpreter as JavaScript (including any changes you made)
 * `E.setFlags({pretokenise:1})` will allow JavaScript code in RAM to be heavily compacted, and to execute more quickly.
+* You can use `save()` with a simple serial console (no IDE or tools required)
 
 ### Cons
 
@@ -114,80 +126,50 @@ run `save()` to save the clean state back into flash memory.
 * Unless you use  `onInit` or `E.on('init', ...)`, code won't run at boot time.
 * Since `setWatch` and `setInterval` are remembered, if you call them in `onInit` and then `save()` multiple times, you can end up with multiple copies. You can use `clearInterval()` and `clearWatch()` in `onInit` to avoid that.
 * When uploading code with an `onInit()` or `E.on('init', ...)` function the function won't be called at upload time and to test you'll have to either `save()` or call `onInit()` manually.
+* Code is executed at boot time, so code that takes a long time to execute can cause upload problems.
 
 
-Save on Send (to Flash)
-------------------------
+Controlling saved code
+-------------------------
 
-`Save on Send` is an option in the Espruino IDE. Behind the scenes it uses
-the `E.setBootCode` command to save JS code directly into Espruino's
-flash memory. When Espruino boots up, it then executes the JavaScript code.
-
-This is similar to the way you'd program a 'normal' microcontroller.
-
-For instance, if you upload the code `var t = E.getTemperature()` with
-`Save on Send` enabled, `t` will be set to the temperature every time
-the device is powered on (in contrast to what happens when you use `save()`.
-
-`Save on Send` (in the Communications section of the IDE) has three settings:
-
-* `No` - code is uploaded to RAM, but can be saved with `save()` (as above). `RAM` is displayed below the upload icon.
-* `Yes` - JavaScript code is saved to flash and loaded at boot time. `Flash` is displayed below the upload icon.
-If `reset()` is called, Espruino will remove all code from RAM and will
-not execute the saved JS code. This saves your JS code
-to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootcde`.
-* (deprecated) `Yes, execute even after reset()` - JavaScript code is saved to flash and
-loaded even after boot. `⚠Flash` is displayed below the upload icon. If `reset()` is called, Espruino will remove all
-`save()`d code from RAM, but *will still execute the JS code that you saved*. See
-the 'Both Options' section. This saves your JS code
-to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootrst`. **We've now removed
-this option from the Web IDE** as it is dangerous and is almost certainly not what is required in 99% of cases.
-If you still wish to use it, you can choose to save to Storage as `.bootrst`.
-
-To remove any code saved with `Save on Send`, simply call `E.setBootCode()` with
-no arguments.
-
-### Pros
-
-* Runs all code at boot-time, so there's no need for an `onInit()` function
-* The code inside each function is kept in Flash memory, so doesn't use up
-as much RAM. This is also true for Modules if `Modules uploaded as functions`
-is enabled in the IDE.
-
-### Cons
-
-* Your JavaScript code is stored in flash as plain text, so can easily be read out
-* If you make changes using the left-hand side of the IDE, there is no way to save them
-* `E.setFlags({pretokenise:1})` will have no effect, since a function's code will be kept in Flash (you can still add `"ram"` as the first item in a function to force it to be loaded into RAM and pretokenised)
-* It isn't possible to run code at upload time - code only ever runs when the device powers on.
-
-### Gotchas
-
-* If you turn on `Save on Send`, upload code, and then turn it off, you can be left
-with both bits of code in Espruino at the same time (see 'Both Options' below).
-* If you call `save()` after having saved to flash using a method below, you may
-get `Got EOF expected ..., [ERASED]` errors. These happen because there were
-function definitions in RAM that referenced code in Flash that is no longer
-there.
+* `reset()` will reset Espruino, will remove all code from RAM and will not execute the saved JS code.
+* `reset(1)` will reset Espruino and remove any saved code
+* `E.setBootCode()` will remove any saved code, but won't reset Espruino
+* `load()` will reset Espruino and will load any saved code
+* `load(filename)` will reset Espruino and load JS code saved to a named file in Storage
+* `dump()` will try and output the current state of the interpreter in human-readable JS, as well as the contents of `.bootcde` if it exists
 
 
 
-To Storage
------------
+Boot Process
+------------
 
-This is just like `Save on Send (to Flash)`, but on Espruino 2v05 and later
-you may call `load(filename)` to reset and load JavaScript code from a named
-file stored on Espruino.
+To understand how best to save data, it's best to know how Espruino loads saved code.
+
+When Espruino starts up, it does a few things:
+
+* If `BTN1` is pressed or if it reset because of a call to `reset()`, it sets `hasBeenReset` to `true`.
+* If `hasBeenReset` wasn't set, it looks for a compressed image (`.varimg` [in Storage](https://www.espruino.com/Reference#Storage)) of the interpreter's state that was saved with `save()`. If it exists it unpacks it into RAM.
+* (2v19 and later) If this is the first boot right after power on, executes `.bootPowerOn` [from Storage](https://www.espruino.com/Reference#Storage). (On [Bangle.js](/Bangle.js) this is *not* executed if `BTN1` is held down, but all other devices execute them each time)
+* (2v00 and later) Looks for files [in Storage](https://www.espruino.com/Reference#Storage) named `.boot0`, `.boot1`, `.boot2` and `.boot3` and executes them in sequence. (On [Bangle.js](/Bangle.js) these are *not* executed if `BTN1` is held down, but all other devices execute them each time)
+* Looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootrst` and executes it if it exists (see [Save on Send](#save-on-send) below)
+* If `hasBeenReset` **wasn't** set and `.bootrst` wasn't found in the last step, it looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootcde` and executes it (see [Save on Send](#save-on-send) below)
+* Initialises any previously-initialised peripherals
+* Runs any handlers registered with `E.on('init', function() { ... });`
+* Runs a function called `onInit()` if it exists.
+
+If Espruino is reset with `load()` it follows the same steps as above, with `hasBeenReset` to `false`.
+However in Espruino 2v05 and later, `load(filename)` will follow the same steps but will load the
+specified file instead of `.bootcde`/`.bootrst`.
 
 
 Combining options
 -----------------
 
-It is possible to combine `Save on Send` and `save()` - see [Boot Process](#boot-process)
+It is possible to combine saving code to flash and `save()` - see [Boot Process](#boot-process)
 above for more information.
 
-This allows you to write separate code with `Save on Send` that can ensure
-certain things are always done, regardless of the code saved with `save()`.
+This allows you to write separate code that can ensure certain things are always done, regardless of the code saved with `save()`.
 
 You can even add files called `.boot0`, `.boot1`, `.boot2` and `.boot3` to
 add extra code that doesn't interfere with code saved in other ways. You
