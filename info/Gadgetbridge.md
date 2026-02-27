@@ -211,7 +211,7 @@ Currently implemented messages are:
 * `t:"actfetch", ts:long`  - The timestamp (milliseconds since 1970) of the last activity sample received - Bangle.js can then send any data Gadgetbridge might have missed. If set to 0, the Bangle will send all the data it has.
 * `t:"listRecs", id:"YYYYMMDDx"  (e.g. 20240101a)` - fetch a list of `recorder` app log id's newer than the log with the supplied id (corresponding to the latest fetched log).
 * `t:"fetchRec", id:"YYYYMMDDx"  (e.g. 20240101a)` - fetch the `recorder` app log with the supplied id.
-* `t:"calendar", id:int, type:int, timestamp:seconds, durationInSeconds, title:string, description:string,location:string,calName:string.color:int,allDay:bool`  - Add a calendar event
+* `t:"calendar", id:int, type:int, timestamp:seconds, durationInSeconds, title:string, description:string, location:string, calName:string, color:int, allDay:bool` - Add a calendar event
 * `t:"calendar-", id:int` - remove calendar event
 * `t:"force_calendar_sync_start"` - cause Bangle.js to send a `force_calendar_sync`
 * `t:"gps", lat, lon, alt, speed/*kph*/, course, time, satellites, hdop, externalSource:true` - a GPS reading once GPS is turned on with  `{ t:"gps_power", status: true }`
