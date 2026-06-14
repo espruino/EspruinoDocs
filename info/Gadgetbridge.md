@@ -165,6 +165,11 @@ Target: Broadcast Receiver
 Variable: Number, Configure on Import, NOT structured, Value set, Nothing Exported, NOT Same as value
 ```
 
+If you have multiple Bangle.js connected, an optional `device` extra can be used to send code to a specific one:
+
+```
+Extra: device:00:1A:2B:3C:4D:5E
+```
 
 ### Weather
 
