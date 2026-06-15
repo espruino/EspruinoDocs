@@ -144,10 +144,10 @@ The following type of information can be supplied for intents: `target`, `action
 Template for initiating an intent from a Bangle.js app:
 
 ```
-Bluetooth.println(JSON.stringify({t:"intent", target:"", action:"", flags:["flag1", "flag2",...], categories:["category1","category2",...], package:"", class:"", mimetype:"", data:"", extra:{someKey:someValue, anotherKey:"someString",...}}));
+Bluetooth.println(JSON.stringify({t:"intent", target:"", action:"", flags:["flag1", "flag2",...], categories:["category1","category2",...], package:"", class:"", mimetype:"", data:"", extra:{someKey:valueType, anotherKey:valueType,...}}));
 ```
 
-Key/value-pairs can be omitted if they are not needed.
+Key/value-pairs can be omitted if they are not needed. `valueType` can be a boolean (`true/false`), integer, floating point, or String - and each value in `extra` can be a different type.
 
 *The main resource on android intents is the [android documentation intent reference](https://developer.android.com/reference/android/content/Intent). For inspiration search for "tasker intent" in your favourite search engine.*
 
