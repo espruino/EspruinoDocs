@@ -21,6 +21,7 @@ See the [Graphics](/Graphics) library page for more information.
 <input type="checkbox" id="compression" onchange="imageLoaded()"> Use Compression?</input><br/>
 <input type="checkbox" id="alphaToColor" onchange="imageLoaded()"> Transparency to Color</input><br/>
 <input type="checkbox" id="transparent" onchange="imageLoaded()" checked> Transparency?</input><br/>
+<input type="checkbox" id="transparentDither" onchange="imageLoaded()">Dither Transparency?</input><br/>
 <input type="checkbox" id="inverted" onchange="imageLoaded()"> Inverted?</input><br/>
 <input type="checkbox" id="autoCrop" onchange="imageLoaded()"> Crop?</input><br/>
 Diffusion: <select id="diffusion" onchange="imageLoaded()"></select><br/>
@@ -54,6 +55,7 @@ Output As: <select id="outputStyle" onchange="imageLoaded()">
     options.compression = document.getElementById("compression").checked;
     options.alphaToColor = document.getElementById("alphaToColor").checked;
     options.transparent = document.getElementById("transparent").checked;
+    options.transparentDither = document.getElementById("transparentDither").checked;
     options.inverted = document.getElementById("inverted").checked;
     options.autoCrop = document.getElementById("autoCrop").checked;
     options.brightness = 0|document.getElementById("brightness").value;
