@@ -111,6 +111,26 @@ If you release the buttons too late you'll enter bootloader mode, in
 which case you need to press `BTN1` to exit.
 
 
+Recovery menu
+----------------
+
+On 2v19 firmware and later, if something has gone wrong you can enter a `Recovery` menu:
+
+* Hold down all 3 buttons. After around 6 seconds the screen goes blank and displays some pixellated text (`DFU #V##` which if the DFU version).
+* Release BTN1 and BTN2 (stay holding the bottom right button). Keep pressing the button while Bangle.js boots
+* You'll now get to a `Recovery` menu and you can release the button. At this point the watch's Bluetooth will be enabled and you can connect with the App Loader or IDE if you need to. You can even do a Backup from the App Loader if you need to. There are a few options:
+  * `Clean Boot` - Start up Bangle.js without running any of the code on the watch
+  * `Reboot` - reboot the watch
+  * `Turn off` - turn off the watch
+  * `Delete BT Pairing` - [2v30+] delete the Bluetooth pairing info (which you can use if you're having difficulty pairing/connecting). `Soft` asks
+     the SoftDevice to delete pairing info, but `Hard` completely erases the flash area containing the info (which can help if the memory got corrupted)
+  * `Factory Reset` - wipe all data and settings from the watch and return it to the state that it came from the factory
+  * `Exit` - exit the menu and boot normally
+  * `Attempt Compact` - try compacting storage to free space - this may take a few minutes
+  * `Rewrite Bootloader` - if the bootloader got corrupted (any settings you made on the watch are not taking effect) then re-writing it can help
+
+
+
 Resetting without loading any code
 -----------------------------------
 
