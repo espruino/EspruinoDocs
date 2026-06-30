@@ -230,8 +230,7 @@ need to install a Web Browser that does support Web Bluetooth:
 
 * [WebBLE](https://apps.apple.com/us/app/webble/id1193531073) (recommended) - $1.99
 * [Bluefy](https://apps.apple.com/us/app/bluefy-web-ble-browser/id1492822055) - free
-* [Connect Browser](https://apps.apple.com/us/app/connect-browser/id1543475842) - free
-* [Web Browser Connect](https://apps.apple.com/us/app/web-browser-connect/id1469354266) - free
+* [BLE Link](https://apps.apple.com/us/app/ble-link-web-ble-browser/id6468414672) - free
 
 Once that is done you'll be able to access Web Bluetooth through any
 webpage viewed with the browser app (the app won't add Web Bluetooth to Safari).
