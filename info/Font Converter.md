@@ -241,6 +241,11 @@ function createFont(fontName, fontHeight, BPP, fontRange, outputFmt) {
   let previewBmp = font.renderString(fontRange.text);
   prevImg = prevCtx.createImageData(previewBmp.width, previewBmp.height);
   prevImg.data.set(new Uint8Array(previewBmp.data.buffer));
+  for (var i=0;i<prevImg.data.length;i+=4) { // invert
+    prevImg.data[i  ] = 255 - prevImg.data[i  ];
+    prevImg.data[i+1] = 255 - prevImg.data[i+1];
+    prevImg.data[i+2] = 255 - prevImg.data[i+2];
+  }
   prevCtx.putImageData( prevImg, 0, 0 );
 
   //font.debugChars(); // debug to console
