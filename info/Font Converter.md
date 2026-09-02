@@ -64,6 +64,7 @@ How it works:
   </select><br/>
   Align to increase sharpness : <input type="checkbox" id="fontJitter"></input><br/>
   Use compression : <input type="checkbox" id="useHeatshrink"></input><br/>
+  Vertical padding : <input type="number" id="verticalPadding" min="0" max="100" step="1" value="0"/><br/>
 </div>
 </form>
 <button id="calculateJSFont" style="font-size: 14pt;">Get JS</button><button id="calculatePBFFont" style="font-size: 14pt;">Get PBF File</button>
@@ -96,11 +97,15 @@ function downloadURL(data, fileName)  {
 };
 
 // Called by loadFontAndCalculate when the font is actually loaded
-function createFont(fontName, fontHeight, BPP, fontRange, outputFmt) {
+function createFont(fontName, fontHeight, BPP, fontRange, outputFmt, options) {
+  options = options||{};
+  options.verticalPadding = options.verticalPadding||0;
   if (outputFmt=="JS" && fontRange.charCount>1500) {
     window.alert("Can't output this font range as JS as it contains more than 1500 characters")
     return;
   }
+  
+  var fmHeight = fontHeight + options.verticalPadding*2;
 
   var canvas = document.getElementById("fontcanvas");
   var ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -111,12 +116,12 @@ function createFont(fontName, fontHeight, BPP, fontRange, outputFmt) {
     var xPos = 0;
     var yPos = Math.round(fontHeight*0.5);
     ctx.fillStyle = "black";
-    ctx.fillRect(xPos,0,fontHeight*2,fontHeight*2);
+    ctx.fillRect(xPos,0,fontHeight*2,fmHeight*2);
     ctx.fillStyle = "white";
-    ctx.fillText(ch, xPos + ox, fontHeight + yPos + oy);
+    ctx.fillText(ch, xPos + ox, fontHeight + options.verticalPadding + yPos + oy);
 
     var chWidth = Math.round(ctx.measureText(ch).width);
-    var img = { width:0, height:fontHeight+1, data:[] };
+    var img = { width:0, height:fmHeight+1, data:[] };
     if (chWidth) {
       var yOffset = 0;
       // sometimes fonts are too high up - if so, nudge them down
@@ -126,20 +131,20 @@ function createFont(fontName, fontHeight, BPP, fontRange, outputFmt) {
         for (var i=0;i<img.data.length;i+=4)
           if (img.data[i]) allClear = false;
         if (!allClear) yOffset--;
-      } while(!allClear && yOffset>-fontHeight);
+      } while(!allClear && yOffset>-fmHeight);
       // Sometimes, fonts drop below the bottom of their
       // font box. In this case, we nudge them up by a pixel or two
       if (!yOffset) do {
-        img = ctx.getImageData(xPos,fontHeight+yPos+yOffset,chWidth,1);
+        img = ctx.getImageData(xPos,fmHeight+yPos+yOffset,chWidth,1);
         var allClear = true;
         for (var i=0;i<img.data.length;i+=4)
           if (img.data[i]) allClear = false;
         if (!allClear) yOffset++;
-      } while(!allClear && yOffset<fontHeight);
+      } while(!allClear && yOffset<fmHeight);
       if (yOffset>0) console.log("Nudging character "+JSON.stringify(ch)+" up by "+yOffset+" pixels so it fits");
       if (yOffset<0) console.log("Nudging character "+JSON.stringify(ch)+" down by "+(-yOffset)+" pixels so it fits");
       // get image data
-      img = ctx.getImageData(xPos,yPos+yOffset,chWidth,fontHeight);
+      img = ctx.getImageData(xPos,yPos+yOffset,chWidth,fmHeight);
     }
     return img; // data/width/height
   }
@@ -177,16 +182,16 @@ function createFont(fontName, fontHeight, BPP, fontRange, outputFmt) {
   preview.style.display = "inherit";
   var prevCtx = preview.getContext("2d");
   preview.width = fontHeight*16;
-  preview.height = fontHeight*16;
+  preview.height = fmHeight*16;
   prevCtx.width = fontHeight*16;
-  prevCtx.height = fontHeight*17;
-  var prevImg = prevCtx.createImageData(fontHeight, fontHeight);
+  prevCtx.height = fmHeight*17;
+  var prevImg = prevCtx.createImageData(fontHeight, fmHeight);
 
   var fontData = [];
   var minY = 10000, maxY = -1;
-  var font = new fontconverter.Font({ bpp : BPP, range : fontRange.range, height : fontHeight } );
+  var font = new fontconverter.Font({ bpp : BPP, range : fontRange.range, height : fmHeight } );
   font.fmWidth = fontHeight*2;
-  font.fmHeight = fontHeight;
+  font.fmHeight = fmHeight;
   font.id = fontName.replace(/[^A-Za-z0-9]/g,"");
   fontRange.range.forEach(range => {
     for (var ch=range.min;ch<=range.max;ch++) {
@@ -214,7 +219,7 @@ function createFont(fontName, fontHeight, BPP, fontRange, outputFmt) {
         }
       }
       if (ch<256) // only preview the first 256
-        prevCtx.putImageData( prevImg, (ch&15)*fontHeight, (1+(ch>>4))*fontHeight );
+        prevCtx.putImageData( prevImg, (ch&15)*fontHeight, (1+(ch>>4))*fmHeight );
       // actually add the glyph
       let glyph = font.getGlyph(ch, (x,y) => {
         if (y<0 || y>=img.height) return 0;
@@ -231,17 +236,18 @@ function createFont(fontName, fontHeight, BPP, fontRange, outputFmt) {
   prevCtx.strokeStyle = "red";
   prevCtx.lineWidth = 0.1;
   for (var i=0;i<16;i++) {
-    prevCtx.moveTo(0, fontHeight*(i+1));
-    prevCtx.lineTo(fontHeight*16, fontHeight*(i+1));
-    prevCtx.moveTo(fontHeight*i, fontHeight);
-    prevCtx.lineTo(fontHeight*i, fontHeight*17);
+    prevCtx.moveTo(0, fmHeight*(i+1));
+    prevCtx.lineTo(fontHeight*16, fmHeight*(i+1));
+    prevCtx.moveTo(fontHeight*i, fmHeight);
+    prevCtx.lineTo(fontHeight*i, fmHeight*17);
   }
   prevCtx.stroke();
   // draw preview string
   let previewBmp = font.renderString(fontRange.text);
   prevImg = prevCtx.createImageData(previewBmp.width, previewBmp.height);
-  prevImg.data.set(new Uint8Array(previewBmp.data.buffer));
-  for (var i=0;i<prevImg.data.length;i+=4) { // invert
+  prevImg.data.set(new Uint8Array(previewBmp.data.buffer)); 
+  // invert
+  for (var i=0;i<prevImg.data.length;i+=4) {
     prevImg.data[i  ] = 255 - prevImg.data[i  ];
     prevImg.data[i+1] = 255 - prevImg.data[i+1];
     prevImg.data[i+2] = 255 - prevImg.data[i+2];
@@ -349,12 +355,13 @@ function loadFontAndCalculate(fontLink, fontName, outputFmt) {
   var fontRange = fontRanges[fontRangeName];
   if (!fontRange) throw new Error("Unknown font range");
   FONT_JITTER = document.getElementById("fontJitter").checked;
+  var fontVerticalPadding = parseInt(document.getElementById("verticalPadding").value);
 
   document.getElementById('fontTest').style = `font-family: '${fontName}';font-size: ${fontHeight}px`;
   document.getElementById('fontTest').innerText = fontRange.text;
 
   function callback() {
-    createFont(fontName, fontHeight, fontBPP, fontRange, outputFmt);
+    createFont(fontName, fontHeight, fontBPP, fontRange, outputFmt, { verticalPadding : fontVerticalPadding });
   }
 
   if (fontLink=="" || (cssNode && cssNode.href == fontLink)) {
