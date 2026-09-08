@@ -9,8 +9,9 @@ require("DMX").connectRX(pin, 6, function(data) {
 
 // `callback` is called with a UintArray(`size`)
 exports.connectRX = function(pin, size, callback) {
-  var ser = Serial.find(pin);
-  if (!ser) throw "No Serial peripheral found for pin";
+  var foundUart = Object.keys(pin.getInfo().functions).find(x=>x.startsWith("USART")); // replace deprecated Serial.find
+  var ser = Serial1;
+  if (foundUart) ser = eval("Serial"+foundUart.substr(5)); // on many non-STM32 boards, Serial can be anywhere, so use Serial1
   ser.setup(250000,{rx:pin, errors:true});
   var dmx = new Uint8Array(size);
   var dmxIdx = 0;
