@@ -131,7 +131,6 @@ process.memory = function() {};
  * @constructor
  */
 function SPI() {}
-SPI.find = function(pin) {};
 SPI.prototype.setup = function(options) {};
 SPI.prototype.send = function(data, nss_pin) {};
 SPI.prototype.write = function(data) {};
@@ -141,7 +140,6 @@ SPI.prototype.send8bit = function(data, bit0, bit1, nss_pin) {};
  * @interface
  */
 function I2C() {}
-I2C.find = function(pin) {};
 I2C.prototype.setup = function(options) {};
 I2C.prototype.writeTo = function(address, data) {};
 I2C.prototype.readFrom = function(address, quantity) {};
@@ -156,7 +154,6 @@ Waveform.prototype.stop = function() {};
  * @interface
  */
 function Serial() {}
-Serial.find = function(pin) {};
 Serial.prototype.setConsole = function() {};
 Serial.prototype.setup = function(baudrate, options) {};
 Serial.prototype.print = function(string) {};
