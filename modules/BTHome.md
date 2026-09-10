@@ -71,6 +71,7 @@ and the names have been kept as similar as possible
 
  * `battery` - 0..100, int
  * `temperature` - degrees C, floating point
+ * `illuminance` - illuminance (lx), floating point
  * `count` - 0..255, int
  * `count16` - 0..65535, int
  * `count32` - 0..0xFFFFFFFF, int
