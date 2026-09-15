@@ -274,6 +274,10 @@ var img = require("BMPLoader").load(require('fs').readFileSync("foo.bmp"));
 g.drawImage(img, 10, 10);
 ```
 
+* Use [our online SVG Converter](/SVG+Converter) to convert SVG vector images
+into `Graphics` calls that will render an image.
+
+
 **Beware:** Microcontrollers don't have much memory - even a small 128x128 pixel 8 bit image may be too big to fit in Espruino's memory!
 
 ### Rendering

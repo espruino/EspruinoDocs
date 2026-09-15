@@ -17,7 +17,7 @@ to put them directly into a Templated String.
 It's useful if:
 
 * You're [making a webserver](/Internet) and you want to encode an image in a string.
-* You want to turn a raw bitmap into something that you can send to a display (you may also want to look at the [[Image Converter]] in that case).
+* You want to turn a raw bitmap into something that you can send to a display (you may also want to look at the [[Image Converter]] or [[SVG Converter]] in that case).
 
 
 To use it just click 'Choose File'. Once the file is chosen, various string representations of it will be output in the text area below. You can then copy and paste them into your JS code.
