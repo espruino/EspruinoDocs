@@ -240,6 +240,10 @@ setTimeout(function() {
 The argument to [`Jolt.setDriverMode`](https://www.espruino.com/Reference#l_Jolt_setDriverMode) can be one of several different values (see [the reference](https://www.espruino.com/Reference#l_Jolt_setDriverMode))
 but the most useful values are `true` (enable in the default mode where all pins are pulled either high or low) or `false` (disables, making all pins open circuit).
 
+**Note:** When the motor drivers turn on (via `auto` mode or `Jolt.setDriverMode`), they apply a small 100uA, 0.5ms pulse to each output. This is a feature built into the motor
+driver called "Open Load Detection" (OLD). If any output is detected to be disconnected then the motor driver will lower the `NFAULT` pin (`D19` for driver 0, `D20` for driver 1). This
+is built into the motor driver and cannot be disabled.
+
 ### Drive Current
 
 The motor drivers can supply 1A per output, however they will cut out to protect themselves if they detect too much current flowing or that they are getting too hot.
