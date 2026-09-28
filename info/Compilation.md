@@ -76,16 +76,19 @@ function f(pin, val) {
 }
 ```
 
-If you want extremely fast IO, you can take advantage of `peek32` and `poke32` to access the registers directly - however which registers you write to depends on the chip you're running Espruino on. As of Espruino 1v81 this is a lot easier, as you can query the bit-banded address of the specific pin that you need:
+If you want extremely fast IO, you can take advantage of `peek32` and `poke32` to access the registers directly - however which registers you write to depends on the chip you're running Espruino on. As of Espruino 2v30 this is a lot easier, as you can query the address of the specific pin that you need:
 
 ```
 function toggler() {
   "compiled";
-  var pB2 = 0|B2.getInfo().out_addr;
+  var inf = B2.getInfo();
+  var sB2 = 0|inf.set_addr;
+  var cB2 = 0|inf.clr_addr;
+  var mB2 = 0|inf.mask;
   var cnt = 1000000;
   for (var i=0;i<cnt;i++) {
-    poke32(pB2, 1); // on
-    poke32(pB2, 0); // off
+    poke32(sB2, mB2); // on
+    poke32(cB2, mB2); // off
   }
 }
 
