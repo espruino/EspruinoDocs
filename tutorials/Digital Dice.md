@@ -86,8 +86,7 @@ Now, for the software! Connect your computer as described in [[Quick Start]]. Yo
 
 Now, just copy and paste the following code in, which turns your new digital dice into the purple spinner seen in the video:
 
-```
-SPI1.setup({baud:3200000, mosi:B5});
+```JS
 var FRONT_BUTTON = A1;
 
 var slowdown;
@@ -103,11 +102,11 @@ setWatch(function(e) {
   // remove any animation that may have been happening
   clearInterval();
   // set up initial values
-  speed = 20; 
+  speed = 20;
   slowdown = 1.1 + Math.random()*0.1;
   running = true;
   // start animation...
-  setInterval(function() { 
+  setInterval(function() {
     if (!running) { // if the button was released...
       speed = speed * slowdown; // slow down
       changeInterval(1,speed); // use this to slow the timer
@@ -119,7 +118,7 @@ setWatch(function(e) {
     var leds = new Uint8Array(12*3);
     leds[0+(11-pos)*3] = 255; // red
     leds[2+(11-pos)*3] = 255; // blue
-    SPI1.send4bit(leds, 0b0001, 0b0011); // send to the lights
+    require("neopixel").write(B5, leds);
   }, speed); // speed for setInterval
 }, FRONT_BUTTON, { repeat: true, edge: "rising" });
 
@@ -139,9 +138,8 @@ onInit();
 
 Or, you can paste this code in, which performs all the different functions shown in the video:
 
-```
+```JS
 clearWatch();
-SPI1.setup({baud:3200000, mosi:B5});
 var FRONT_BUTTON = A1;
 
 var hours = 3,mins = 20,secs = 0;
@@ -178,7 +176,7 @@ setWatch(function(e) {
       var minled = parseInt(mins/5);
       leds[2+(11-minled)*3] = 255; // blue
       leds[0+(11-hours)*3] = 255; // red
-      SPI1.send4bit(leds, 0b0001, 0b0011);
+      require("neopixel").write(B5, leds);
     }, 1000);
   } else if (mode == 1) { // spin
     speed = 20;
@@ -197,7 +195,7 @@ setWatch(function(e) {
       var leds = new Uint8Array(12*3);
       leds[0+(11-pos)*3] = 255; // red
       leds[2+(11-pos)*3] = 255; // blue
-      SPI1.send4bit(leds, 0b0001, 0b0011);
+      require("neopixel").write(B5, leds);
     }, speed);
   } else if (mode == 2) { // random flick between 6
     speed = 20;
@@ -215,7 +213,7 @@ setWatch(function(e) {
       leds[0+(11-pos)*3] = (r&1)?0:255; // red
       leds[1+(11-pos)*3] = (r&2)?0:255; // green
       leds[2+(11-pos)*3] = (r&4)?0:255; // blue
-      SPI1.send4bit(leds, 0b0001, 0b0011);
+      require("neopixel").write(B5, leds);
     }, speed);
   } else if (mode == 3) {
     speed = 20;
@@ -237,11 +235,11 @@ setWatch(function(e) {
       ];
       var r = parseInt(Math.random()*patterns.length);
       var leds = new Uint8Array(12*3);
-      for (i in patterns[r]) {   
+      for (i in patterns[r]) {
         leds[1+patterns[r][i]*3] = 255; // green
         leds[2+patterns[r][i]*3] = 255; // blue
       }
-      SPI1.send4bit(leds, 0b0001, 0b0011);  
+      require("neopixel").write(B5, leds);
     }, speed);
   }
 }, FRONT_BUTTON, { repeat: true, edge: "rising" });
@@ -256,7 +254,7 @@ setWatch(function(e) {
     if (mode>3) mode=0;
     print(mode);
     // all LEDs off
-    SPI1.send4bit(new Uint8Array(12*3), 0b0001, 0b0011); 
+    require("neopixel").write(B5, new Uint8Array(12*3));
   } else {
     // short press - signal for animation to slow down and stop
     running = false;

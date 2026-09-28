@@ -117,10 +117,8 @@ function onPageRequest(req,res) {
   res.end();
 }
 
-// Set up LEDs
-SPI2.setup({baud:3200000, mosi:B15});
 var leds = Graphics.createArrayBuffer(16,16,24,{zigzag:true});
-leds.flip = function() { SPI2.send4bit(leds.buffer, 0b0001, 0b0011); };
+leds.flip = function() {require("neopixel").write(B15, leds.buffer); };
 leds.clear();
 
 // Set up ethernet and our webserver

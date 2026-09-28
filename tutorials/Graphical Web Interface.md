@@ -195,12 +195,10 @@ var map = [undefined,7,6,5,4,0,1,2,3];
 
 // 8 lights, one for each window
 var rgb = new Uint8Array(3*8);
-// Setup SPI to talk to the LED lights
-SPI2.setup({baud:3200000, mosi:B15});
 
 // this writes the data to the LED lights
 function setLights() {
-  SPI2.send4bit(rgb, 0b0001, 0b0011);
+ require("neopixel").write(B15, rgb);
 }
 
 function onPageRequest(req, res) {
@@ -230,7 +228,7 @@ var wlan;
 
 function onInit() {
   wlan = require("CC3000").connect();
-  wlan.connect( "AccessPointName", "WPA2key", function (s) { 
+  wlan.connect( "AccessPointName", "WPA2key", function (s) {
     setLights();
     if (s=="dhcp") {
       console.log("My IP is "+wlan.getIP().ip);

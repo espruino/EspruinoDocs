@@ -1,4 +1,4 @@
-/* 
+/*
 LED Volume (VU) Meter
 ==================
 
@@ -30,14 +30,12 @@ The resistors are required because Audio Signals are typically between -1v and +
 */
 
 
-// Set up SPI
-SPI2.setup({baud:3200000, mosi:B15});
 // The data for the LEDs
 var rgb = new Uint8Array(75);
 // Set up the waveform we'll use to record the sound
 var w = new Waveform(64,{doubleBuffer:true});
 
-w.on("buffer", function(buf) { 
+w.on("buffer", function(buf) {
   var l = buf.length;
   // work out the 'volume'
   var v = E.variance(buf,E.sum(buf)/l)/l;
@@ -49,7 +47,7 @@ w.on("buffer", function(buf) {
     rgb[i++] = c;
   }
   // send the data to the LEDs
-  SPI2.send4bit(rgb, 0b0001, 0b0011);
+  require("neopixel").write(B15, rgb);
 });
 
 function onInit() {

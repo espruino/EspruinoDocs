@@ -22,9 +22,8 @@ Wiring Up
 var BUTTON = A1;
 var LIGHT = A0;
 pinMode(BUTTON,"input_pullup");
-SPI2.setup({baud:3200000, mosi:B15});
 var g = Graphics.createArrayBuffer(16,8,24,{zigzag:true});
-g.flip = function() { SPI2.send4bit(this.buffer, 0b0001, 0b0011); };
+g.flip = function() { require("neopixel").write(B15, this.buffer); };
 require("Font6x8").add(Graphics);
 var textPos = -16;
 var textCol = 1;

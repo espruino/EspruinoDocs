@@ -1,4 +1,4 @@
-<!--- Copyright (c) 2014 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. --> 
+<!--- Copyright (c) 2014 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
 Word Clock
 =========
 
@@ -32,7 +32,7 @@ Assembly
 
 ![Grid](Word Clock/grid.jpg)
 
-Measure and cut the card into 10 x 7 strips as above (measure them to fit the picture frame that you have), and assemble them. 
+Measure and cut the card into 10 x 7 strips as above (measure them to fit the picture frame that you have), and assemble them.
 
 We've left gaps for the WS2811 LEDs and their wires- however we used a string of LEDs. If you buy your LEDs in flat strip you won't need to cut out any large gaps.
 
@@ -65,11 +65,11 @@ And you're done! On to the software...
 Software
 --------
 
-Load the code below into Espruino, type `save()`, and you're sorted! 
+Load the code below into Espruino, type `save()`, and you're sorted!
 
 To set the time, you'll have to modify the 'h', 'm' and 's' variables (hour, minute, and second).
 
-```
+```JS
 // The indices of each word
 var words = {
   "its":[76,77,54],
@@ -95,11 +95,9 @@ var words = {
   "eleven":[46,63,24,41,2,19],
   "twelve":[45,64,23,42,1,20],
   "oclock":[44,65,22,43,0,21],
-  
+
   "pico" : [55,9,12,14]
 };
-// set up SPI
-SPI2.setup({baud:3200000, mosi:B15});
 var arr = new Uint8Array(8*11*3);
 var pos = 0;
 
@@ -145,7 +143,7 @@ function getPattern(wordList) {
 function timeToWords(h,m,s) {
   var mins = ["","_five","_ten","_quarter","_twenty","_twenty _five","_half"];
   var hours = ["", "one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve"];
-    
+
   var str = "its ";
   // the nearest 5 minutes
   var midx = Math.round(m/5);
@@ -171,7 +169,7 @@ function timeToWords(h,m,s) {
   // print it out for debugging
   console.log(h+":"+m+":"+s+"    "+str);
   return str;
-} 
+}
 
 // Very simplistic timekeeping...
 var h=5,m=59,s=0;
@@ -193,7 +191,7 @@ setInterval(function() {
   var timeWords = timeToWords(h,m,s);
   // convert it to an array of words and light up the LEDs
   getPattern(timeWords.split(" "));
-  SPI2.send4bit(arr, 0b0001, 0b0011);
+  require("neopixel").write(B15, arr);
 }, 1000);
 ```
 

@@ -41,7 +41,7 @@ Connect the [[WS2811]] lights as follows:
 | LED String | Espruino   |
 | -------    | ---------- |
 | White	     | GND        |
-| Green (DI) | B15        | 
+| Green (DI) | B15        |
 | Red        | VBAT       |
 
 
@@ -50,11 +50,9 @@ Software
 
 Just copy and paste this into the right-hand window, then click the ```Send to Espruino``` button.
 
-```
-// Set up the SPI port (for communications with the lights)
-SPI2.setup({baud:3200000, mosi:B15});
+```JS
 // stores the timeout used to turn lights off
-var timeout; 
+var timeout;
 // stores the RGB data we want to send to our lights
 var rgb = new Uint8ClampedArray(25*3); // 25 x RGB lights
 
@@ -65,7 +63,7 @@ function lightsOn() {
   for (var i in rgb)
     rgb[i] = 255;
   // send data to the lights
-  SPI2.send4bit(rgb, 0b0001, 0b0011);
+  require("neopixel").write(B15, rgb);
 }
 
 // turn lights off
@@ -75,7 +73,7 @@ function lightsOff() {
   for (var i in rgb)
     rgb[i] = 0;
   // send data to the lights
-  SPI2.send4bit(rgb, 0b0001, 0b0011);
+  require("neopixel").write(B15, rgb);
 }
 
 // When the signal from the PIR changes...
@@ -102,11 +100,9 @@ The comments in the code describe pretty clearly what it's doing, but it's a bit
 
 Copy and paste the following into the right-hand window:
 
-```
-// Set up the SPI port (for communications with the lights)
-SPI2.setup({baud:3200000, mosi:B15});
+```JS
 // stores the timeout used to turn lights off
-var timeout; 
+var timeout;
 // stores the RGB data we want to send to our lights
 var rgb = new Uint8ClampedArray(25*3); // 25 x RGB lights
 
@@ -126,7 +122,7 @@ function lightsOn() {
       rgb[i++] = (a*512)-256; // blue
     }
     // send data to the lights
-    SPI2.send4bit(rgb, 0b0001, 0b0011);
+    require("neopixel").write(B15, rgb);
   }, 50);
 }
 
@@ -137,7 +133,7 @@ function lightsOff() {
   var pos = 0;
   var interval = setInterval(function() {
     pos += 0.05;
-    if (pos>=1) clearInterval(interval); 
+    if (pos>=1) clearInterval(interval);
     // Work out colours - fade all out the same amount
     var amtr = (1-pos)*255; // red
     var amtg = (1-pos*1.5)*255; // green
@@ -148,7 +144,7 @@ function lightsOff() {
       rgb[i++] = amtb;
     }
     // send data to the lights
-    SPI2.send4bit(rgb, 0b0001, 0b0011);
+    require("neopixel").write(B15, rgb);
   }, 50);
 }
 
