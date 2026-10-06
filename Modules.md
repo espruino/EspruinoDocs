@@ -178,7 +178,7 @@ No. As long as you have used `require('module')` at least once for each module b
 
 ### Can I dynamically load (and unload) modules?
 
-Yes. By default each module that is loaded will be cached (to avoid loading modules twice). However you can call [`Modules.removeCached('modulename')`](/Reference#l_Modules_removeCached) which will remove the module from the cache and free the memory that it uses.
+Yes. By default each module that is loaded will be cached (to avoid loading modules twice). However you can run `delete E.internal.modules['modulename']` to remove the module from the cache and free the memory that it uses.
 
 ### How do I make my own modules?
 

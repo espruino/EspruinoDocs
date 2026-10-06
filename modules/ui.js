@@ -96,7 +96,7 @@ exports = // ui base / 'DOM'/ui e(lement) data & code holder, singleton, for mix
    var _=_||this, m=("string"===typeof mon)?require(mon):mon,k=t||-1,f=_.mu(k),p;
    if      (f===1) { for (p in m) if (p!=="mn") _[p]=m[p]; } // mixin props !"mn"
    else if (f===2) { m.add(Graphics); _.fnts.push("set"+n); } // add to fonts
-   else k=0;  if (k<0) { Modules.removeCached(n||m.mn); } // delete from cache
+   else k=0;  if (k<0) { delete E.internal.modules[n||m.mn]; } // delete from cache
    return _; } // from cache if t<0 by: n-ame if (for font must) present, else m.mn
 , mr:Math.round, mu:Math.abs, mf:Math.floor, mc:Math.ceil, ma:Math.max, mi:Math.min
 , ini: function() {} // (custom) init
