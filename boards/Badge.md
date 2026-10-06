@@ -42,6 +42,16 @@ the badge to deep sleep very soon after power on - so you must power on, connect
 and then type `reset()` as soon as possible to avoid the badge disconnecting itself.
 
 
+Uploading Apps
+--------------
+
+The badge can be programmed directly using the Espruino Web IDE at https://www.espruino.com/ide/
+
+However there are a bunch of pre-made apps available at https://espruino.github.io/BadgeApps/
+
+Simply go to the website, connect with the Badge turned on, and upload the app of your choice!
+
+
 Power Consumption
 -----------------
 
@@ -52,6 +62,19 @@ Power Consumption
 
 Information
 ------------
+
+### Variables
+
+`Badge.i2c` is the I2C instance used for the accelerometer and humidity sensor, but **also** the Qwiic connector
+
+`Badge.spi` is the SPI instance used for ePaper
+
+`Badge.led_rgb` is a `Uint8Array(30)` with RGB for the 10 LEDs
+
+`Badge.epaperBusy` is try when the ePaper is currently busy writing something
+
+`Badge.rev` shows the badge revision - 1.2 in production badges
+
 
 ### API Calls
 
@@ -82,9 +105,17 @@ then run `showRendering` code in order to get a screenshot.
 
 `Badge.showImageFileRendering(fn, sliceHeight, gfxCallback)` load a raw 800x480x2 image file from storage, but call `gfxCallback(gfx)` with a `Graphics` instance on the first `800 x sliceHeight` slice, return a Promise
 
+`Badge.showRaw(rawCallback)` show raw image data on the ePaper. `rawCallback(data,done)` is called. `data` should be called with 800*480*2bpp = 96000bytes (over multiple calls) and finally `done` is called at the end.
+
 `Badge.sleep()` puts the badge to sleep, waiting to restart on a button press. The button can be read with `ESP32.getWakeupPin()`
 
 `Badge.connectWiFi()` Connect to wifi using details in wifi.json ({"ssid":"--","options":{"password":"---"}},"backup_ssid":..,"backup_options":{}). Returns a promise which only completes on success (on failure an error screen is displayed)
+
+### Qwiic Connector
+
+The badge contains a Qwiic connector on the PCB. It is 3.3v, with I2C pins which can be accessed using the `Badge.i2c` interface.
+
+Note these pins are shared with the Accelerometer/Humidity sensor so must be used for 3.3v I2C and not as Generic IO pins.
 
 
 Notes on making apps
