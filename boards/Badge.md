@@ -109,7 +109,7 @@ then run `showRendering` code in order to get a screenshot.
 
 `Badge.sleep()` puts the badge to sleep, waiting to restart on a button press. The button can be read with `ESP32.getWakeupPin()`
 
-`Badge.connectWiFi()` Connect to wifi using details in wifi.json ({"ssid":"--","options":{"password":"---"}},"backup_ssid":..,"backup_options":{}). Returns a promise which only completes on success (on failure an error screen is displayed)
+`Badge.connectWiFi()` Connect to wifi using details in wifi.json ({"ssid":"--","options":{"password":"---"}},"backup_ssid":..,"backup_options":{}). Returns a promise which completes on success or rejects on failure
 
 ### Qwiic Connector
 
