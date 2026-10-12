@@ -11,16 +11,16 @@ AES-CCM: authenticated encryption, as used by Bluetooth, Zigbee, and
 produces a short tag (a *MIC*) that proves the message has not been altered and
 came from someone holding the key.
 
-**It uses whichever your firmware has.** Espruino boards come in two kinds and
-neither one is a superset of the other:
+**It uses whichever your firmware has**, with nothing to configure: the
+firmware's `AES.ccmEncrypt` and `AES.ccmDecrypt` when the build has `AES_CCM`,
+and CCM built out of `AES.encrypt` when it has only `AES`.
 
-| Board | Builds | This module |
-|---|---|---|
-| [Bangle.js 2](/Bangle.js2) | `AES_CCM` | calls `AES.ccmEncrypt` / `AES.ccmDecrypt` directly |
-| [Puck.js](/Puck.js) | `AES` | builds CCM out of `AES.encrypt` in JS |
+Both kinds are real. [Puck.js](/Puck.js) builds `AES` alone.
+[Bangle.js 2](/Bangle.js2) built `AES_CCM` alone from 2024 until October 2026 —
+so it had no `AES.encrypt` at all, and any module assuming one simply could not
+run there — and now builds both.
 
-`require("AESCCM").usingNative()` tells you which path your board took. There
-is nothing to configure.
+`require("AESCCM").usingNative()` tells you which path your board took.
 
 Usage
 -----
@@ -59,11 +59,13 @@ leak the keystream, which is the one mistake that turns this from protection
 into decoration. Typically the nonce carries a counter that only ever goes up,
 and the counter is saved across restarts.
 
-**On the JS path, each AES call costs about 75 ms** on a Puck.js. The module
-works in 32-byte pieces, because `AES.encrypt` allocates its result as one
-contiguous block and fails — returning `undefined` — when the heap has no run
-that long, which happens well before memory runs out. On the native path none
-of that applies and it is far quicker.
+**On the JS path, sealing one short packet costs about 75 ms** on a Puck.js,
+measured — and most of that is the JavaScript around the cipher rather than the
+cipher itself. The module works in 32-byte pieces, because `AES.encrypt`
+allocates its result as one contiguous block and fails — returning `undefined`
+— when the heap has no run that long, which happens well before memory runs
+out. Doing it in two large calls was twice as quick and failed under memory
+pressure. On the native path none of this applies.
 
 **Counter mode is not used**, although it would be the obvious way to make the
 keystream: this firmware ignores CTR's `iv` and always starts from a zero
