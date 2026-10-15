@@ -72,7 +72,6 @@ function parseWrite(pl, w) {
   let n;
   if (w.command) {
 
-
     if (pl.length < 2) throw err("truncated", "missing argument length");
     n = 2 + (pl[1] & 0x1F);
   } else if (w.variable) {
@@ -102,7 +101,6 @@ function decodeValue(value, w) {
     case "event": return value.length === 1 ? value[0] : value;
     case "command": {
 
-
       const rest = value.slice(1);
       return rest.length === 1 ? rest[0] : rest;
     }
@@ -119,7 +117,6 @@ function decodeValue(value, w) {
 /* Work out how a writable entry is written, once, at setup. */
 function writableSpec(e, enc, k) {
   if (e.id !== undefined) {
-
 
     if (COMMAND_IDS[e.id]) return { id:e.id, command:true, codec:"command" };
     if (!e.variable && !(e.length > 0)) throw err("writable_without_length", `entry ${k} declares id 0x${e.id.toString(16)} but no length`);
@@ -202,7 +199,6 @@ function renderServiceData(p, pid, enc, entries, now, revision) {
   for (let i = 0; i < p.ordered.length; i++) {
     const it = p.ordered[i];
 
-
     if (enc === null || (it.readInterval && now - it.lastRead < it.readInterval)) {
       objs.push({ id:it.id, value:it.value });
       continue;
@@ -281,8 +277,6 @@ function counterCharacteristic() {
     readable : true,
     writable : true,
 
-
-
     maxLen : CHALLENGE_LEN + 4 + ENC_OVERHEAD,
     value : [],
     onWrite : evt => {
@@ -290,7 +284,6 @@ function counterCharacteristic() {
         if (st.onError) st.onError(err("challenge_length", `challenge is ${evt.data.length} bytes, expected ${CHALLENGE_LEN}`));
         return;
       }
-
 
       setTimeout(() => {
       try {
@@ -302,7 +295,6 @@ function counterCharacteristic() {
         svc[SERVICE_UUID] = chr;
         NRF.updateServices(svc);
       } catch (e) {
-
 
         if (st.onError) st.onError(err("counter_report_failed", "" + e));
       }
@@ -320,8 +312,6 @@ function counterIsAhead(counter, last) {
 function noteWriteCounter(counter) {
   st.writeCounter = counter;
   if (counter >= st.writeMark) {
-
-
 
     st.writeMark = (counter + CTR_STRIDE) >>> 0;
     saveMarks();
@@ -383,12 +373,7 @@ function refreshAdvertising() {
     NRF.setAdvertising({ 0xFCD2:sd }, opts);
   } catch (e) {
 
-
-
     let small = [st.plan.info, PKT_ID, st.packetId & 255];
-
-
-
 
     if (st.key) small = sealAdvertising(small);
     NRF.setAdvertising({ 0xFCD2:small }, Object.assign({}, opts, { showName:false }));
@@ -438,20 +423,14 @@ function handleWrite(k, pl) {
   try {
     value = parseWrite(pl, w);
   } catch (e) {
+
+    if (w.readable) setTimeout(() => { guarded(() => publishRead(w)); }, 0);
     if (st.onError) st.onError(e);
     return false;
   }
   st.entries[w.entryIndex].set(decodeValue(value, w));
 
-
-
-
-
-
-
   if (w.readable) setTimeout(() => { guarded(() => publishRead(w)); }, 0);
-
-
 
   try { goFast(); }
   catch (e) { if (st.onError) st.onError(e); }  // a refused packet must not escape into onWrite
@@ -484,8 +463,6 @@ function setup(opts) {
     key : key,
     mac : key ? macBytes() : null,
 
-
-
     advCounter : key ? marks.a : 0,
     advMark : key ? marks.a + ADV_STRIDE : 0,
 
@@ -500,7 +477,6 @@ function setup(opts) {
     fastInterval : Math.max(100, checkInterval("fastInterval", opts.fastInterval || 100)),
     fastTimeout : opts.fastTimeout === undefined ? 30000 : opts.fastTimeout,
     maxWriteLength : opts.maxWriteLength || 128,
-
 
     counterReport : opts.counterReport === true && key !== null,
     whenConnected : opts.whenConnected !== false,
@@ -536,8 +512,6 @@ function setup(opts) {
 
   if (st.timer !== undefined) clearInterval(st.timer);
   st.timer = setInterval(refreshAdvertising, st.interval);
-
-
 
   if (!listening) {
     NRF.on("connect", () => guarded(goFast));
