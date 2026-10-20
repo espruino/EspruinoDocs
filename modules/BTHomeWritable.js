@@ -7,7 +7,7 @@
    BTHome has not assigned the object ID
    this uses to declare writable entries: see this module's page. */
 
-/* Module for making BTHome objects writable: the device lists, in its BTHome advertising, the object types it accepts writes for, and serves each one on its own GATT characteristic. */
+/* Module for making BTHome objects writable. */
 
 const DECL_ID = 0xFF; // declaration object, last in the packet (S2.2)
 const CHALLENGE_LEN = 8;
@@ -48,7 +48,7 @@ function encodeDeclaration(ids) {
 }
 
 /* Assemble the service data. */
-function buildServiceData(info, objs, entryIds, budget) {
+function buildServiceData(info, objs, decl, budget) {
   if (budget === undefined) budget = BUDGET;
   const b = [info];
   for (let i = 0; i < objs.length; i++) {
@@ -56,15 +56,12 @@ function buildServiceData(info, objs, entryIds, budget) {
     const v = objs[i].value;
     for (let j = 0; j < v.length; j++) b.push(v[j]);
   }
-  if (entryIds) {
-    const d = encodeDeclaration(entryIds);
-    for (let i = 0; i < d.length; i++) b.push(d[i]);
-  }
+  if (decl) for (let i = 0; i < decl.length; i++) b.push(decl[i]);
   if (b.length > budget) throw err("capacity_exceeded", `service data needs ${b.length} bytes, ${budget} available`);
   return b;
 }
 
-/* Parse a write for one entry, {id, length} or {id, variable:true}, and return its value bytes. */
+/* Parse a write for one entry and return its value bytes. */
 function parseWrite(pl, w) {
   if (!pl.length) throw err("truncated", "empty write");
 
@@ -147,7 +144,7 @@ function stableSortByObjectId(items) {
   return s;
 }
 
-/* Work out the packet and the writable entries once, at setup - not at write time: a device that discovers it does not fit while advertising is a device in the field. */
+/* Work out the packet and the writable entries once, at setup. */
 function planPacket(entries, enc, defRead, encrypted, limit) {
   if (defRead === undefined) defRead = 0;
   if (limit === undefined) limit = BUDGET;
@@ -188,6 +185,11 @@ function planPacket(entries, enc, defRead, encrypted, limit) {
 
     budget : limit - (encrypted ? ENC_OVERHEAD : 0)
   };
+  /* What the plan fixes, computed once (D-106). */
+  p.decl = writable.length ? encodeDeclaration(p.entryIds) : null;
+  p.pkt = { id:PKT_ID, value:[0] };
+  p.rev = readable ? { id:REV_ID, value:[0] } : null;
+  p.objs = stableSortByObjectId([p.pkt].concat(p.ordered).concat(p.rev ? [p.rev] : []));
   p.serviceDataLength = renderServiceData(p, 0, null, null, 0, 0).length;
   return p;
 }
@@ -195,23 +197,26 @@ function planPacket(entries, enc, defRead, encrypted, limit) {
 /* Service data for one advertisement. */
 function renderServiceData(p, pid, enc, entries, now, revision) {
   if (now === undefined) now = 0;
-  const objs = [{ id:PKT_ID, value:[pid & 255] }];
-  for (let i = 0; i < p.ordered.length; i++) {
+  p.pkt.value[0] = pid & 255;
+  if (p.rev) p.rev.value[0] = (revision || 0) & 255;
+  for (let i = 0; enc !== null && i < p.ordered.length; i++) {
     const it = p.ordered[i];
 
-    if (enc === null || (it.readInterval && now - it.lastRead < it.readInterval)) {
-      objs.push({ id:it.id, value:it.value });
-      continue;
-    }
-    const e = entries[it.entryIndex];
-    const b = enc(e, e.get());
-    if (b[0] !== it.id) throw err("layout_drift", `entry ${it.entryIndex} now encodes as 0x${b[0].toString(16)}, was 0x${it.id.toString(16)}`);
-    it.value = b.slice(1);
-    it.lastRead = now;
-    objs.push({ id:it.id, value:it.value });
+    if (!(it.readInterval && now - it.lastRead < it.readInterval)) readSensor(it, enc, entries, now);
   }
-  if (p.settingsRevision) objs.push({ id:REV_ID, value:[(revision || 0) & 255] });
-  return buildServiceData(p.info, stableSortByObjectId(objs), p.writable.length ? p.entryIds : null, p.budget);
+  return buildServiceData(p.info, p.objs, p.decl, p.budget);
+}
+
+/* Read one advertised entry and keep its bytes. */
+function readSensor(it, enc, entries, now) {
+  const e = entries[it.entryIndex];
+  const b = enc(e, e.get());
+  if (b[0] !== it.id) throw err("layout_drift", `entry ${it.entryIndex} now encodes as 0x${b[0].toString(16)}, was 0x${it.id.toString(16)}`);
+  it.lastRead = now;
+  let moved = it.value.length !== b.length - 1;
+  for (let i = 0; !moved && i < it.value.length; i++) moved = it.value[i] !== b[i + 1];
+  if (moved) it.value = b.slice(1);
+  return moved;
 }
 
 /* ===== DIVIDER: everything below owns the radio ========================== */
@@ -353,7 +358,7 @@ function openWrite(pl) {
   return out;
 }
 
-/* Encode one object via the upstream BTHome module, whose tables are local to getAdvertisement() and not exported - so the only way to reuse them rather than duplicate them is to encode a one-object advertisement and take the object back out. */
+/* Encode one object via the upstream BTHome module. */
 function encodeOne(e, v) {
   const BTHome = require("BTHome"); // lazily, so this file loads under Node
   const n = BTHome.packetId;
@@ -363,9 +368,9 @@ function encodeOne(e, v) {
 }
 
 /* Rebuild and publish sensors, settings revision and declaration. */
-function refreshAdvertising() {
+function refreshAdvertising(cached) {
   st.packetId = (st.packetId + 1) & 255;
-  let sd = renderServiceData(st.plan, st.packetId, encodeOne, st.entries, Date.now(), st.revision);
+  let sd = renderServiceData(st.plan, st.packetId, cached ? null : encodeOne, st.entries, Date.now(), st.revision);
   if (st.key) sd = sealAdvertising(sd);
 
   const opts = { interval:st.advInterval, connectable:true, discoverable:true, whenConnected:st.whenConnected, showName:st.showName };
@@ -381,7 +386,24 @@ function refreshAdvertising() {
   }
 }
 
-/* What a read of entry `w` returns: its object, sealed when encrypted (S4.3). */
+/* Re-read the advertised entries that are due. */
+function readAdvertised(now) {
+  const ord = st.plan.ordered;
+  let moved = false;
+  for (let i = 0; i < ord.length; i++) {
+    const it = ord[i];
+    if (it.readInterval && now - it.lastRead < it.readInterval) continue;
+    if (readSensor(it, encodeOne, st.entries, now)) moved = true;
+  }
+  return moved;
+}
+
+/* The periodic rebuild (D-106). */
+function tick() {
+  if (readAdvertised(Date.now())) refreshAdvertising(true);
+}
+
+/* What a read of entry `w` returns. */
 function readValue(w) {
   const e = st.entries[w.entryIndex];
   const obj = e.id !== undefined ? [w.id].concat(e.get()) : encodeOne(e, e.get());
@@ -395,16 +417,18 @@ function publishRead(w) {
   NRF.updateServices(svc);
 }
 
-/* Advertise fast while someone is plainly interacting, from connect until fastTimeout after disconnect. */
-/* Run a reaction to a connection without letting it throw into the Bluetooth stack's own callback. */
+/* Advertise fast while someone is plainly interacting. */
+/* Run a reaction to a connection without letting it throw. */
 function guarded(fn) {
   try { fn(); } catch (e) { if (st && st.onError) st.onError(e); }
 }
 
 function goFast() {
   if (st.fastTimer !== undefined) { clearTimeout(st.fastTimer); st.fastTimer = undefined; }
+  if (st.advInterval === st.fastInterval) return false;
   st.advInterval = st.fastInterval;
   refreshAdvertising();
+  return true;
 }
 
 function goIdleAfterTimeout() {
@@ -432,12 +456,12 @@ function handleWrite(k, pl) {
 
   if (w.readable) setTimeout(() => { guarded(() => publishRead(w)); }, 0);
 
-  try { goFast(); }
+  try { if (!goFast()) tick(); }
   catch (e) { if (st.onError) st.onError(e); }  // a refused packet must not escape into onWrite
   return true;
 }
 
-/* The radio clamps anything outside 20..10000 silently, which is the kind of thing that costs an afternoon. */
+/* The radio clamps anything outside 20..10000 silently. */
 function checkInterval(name, v) {
   if (v < 20 || v > 10000) throw err("interval_out_of_range", `${name} is ${v}ms; the radio accepts 20 to 10000`);
   return v;
@@ -511,7 +535,7 @@ function setup(opts) {
   refreshAdvertising();
 
   if (st.timer !== undefined) clearInterval(st.timer);
-  st.timer = setInterval(refreshAdvertising, st.interval);
+  st.timer = setInterval(tick, st.interval);
 
   if (!listening) {
     NRF.on("connect", () => guarded(goFast));
@@ -521,7 +545,7 @@ function setup(opts) {
   return exports;
 }
 
-/* Re-read every sensor and re-advertise, without waiting for the next interval. */
+/* Re-read every sensor and re-advertise now. */
 function update() { refreshAdvertising(); }
 
 /* A writable value changed without a write - a knob, a button, a schedule. */
@@ -538,7 +562,7 @@ function setAdvertisingInterval(ms) {
   const ord = st.plan.ordered;
   for (let i = 0; i < ord.length; i++) if (ord[i].inheritsInterval) ord[i].readInterval = st.interval;
   if (st.timer !== undefined) clearInterval(st.timer);
-  st.timer = setInterval(refreshAdvertising, st.interval);
+  st.timer = setInterval(tick, st.interval);
   if (st.fastTimer === undefined && st.advInterval !== st.fastInterval) {
     st.advInterval = st.interval;
     refreshAdvertising();
@@ -546,7 +570,7 @@ function setAdvertisingInterval(ms) {
   return st.interval;
 }
 
-/* Change how long the device keeps advertising fast after a disconnect, without re-running setup(). */
+/* Change how long the fast window lasts. */
 function setFastTimeout(ms) {
   if (ms < 0) throw err("fast_timeout_negative", `fastTimeout is ${ms}ms`);
   st.fastTimeout = ms;
@@ -577,6 +601,7 @@ exports.writableSpec = writableSpec;
 exports.stableSortByObjectId = stableSortByObjectId;
 exports.planPacket = planPacket;
 exports.renderServiceData = renderServiceData;
+exports.readSensor = readSensor;
 exports.handleWrite = handleWrite;
 exports.counterIsAhead = counterIsAhead;
 exports.COUNTER_WINDOW = CTR_WINDOW;

@@ -174,6 +174,19 @@ Reference
 Notes
 -----
 
+**The packet is rebuilt when something changes, not on every interval.** Each
+interval the module re-reads the advertised entries, and builds a new packet
+only if one of their encoded values has moved -- in which case the packet id
+moves with it. That is what BTHome asks for: the packet id *"should be
+increased on every change in data"*, a receiver *"should only process the
+advertisement if the packet id is different compared to the previous one"*, and
+*"this allows you to send multiple advertisements that are exactly the same"*.
+It is also much cheaper. A rebuild is 26-38 ms of the one thread on an nRF52,
+and on a device with a `bindkey` it is re-sealed with AES-CCM: rebuilding an
+identical packet every second measured at over 100 uA of idle current for
+nothing. `bw.update()` forces a rebuild, and `bw.changed()` is how a value that
+moved on its own announces itself.
+
 **A rejected write still looks delivered.** Espruino acknowledges a write
 before your handler runs, so a device that refuses one cannot say so over the
 air. `onError` is where it shows, and it is worth printing during development.
