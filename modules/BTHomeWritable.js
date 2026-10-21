@@ -224,6 +224,8 @@ function readSensor(it, enc, entries, now) {
 let st = null;
 let listening = false; // whether NRF connect/disconnect handlers are attached
 
+const READ_SLACK = 100; /* ms added to every scheduled read (D-109). */
+
 const CTR_FILE = ".bwctr"; // the persisted counter high-water marks
 const CTR_STRIDE = 64; // persist every this many accepted writes, not each one
 const CTR_WINDOW = 0x80000000; /* how far ahead a write counter may jump (S5.3). */
@@ -367,23 +369,41 @@ function encodeOne(e, v) {
   return adv[0xFCD2].slice(3);
 }
 
-/* Rebuild and publish sensors, settings revision and declaration. */
-function refreshAdvertising(cached) {
-  st.packetId = (st.packetId + 1) & 255;
-  let sd = renderServiceData(st.plan, st.packetId, cached ? null : encodeOne, st.entries, Date.now(), st.revision);
-  if (st.key) sd = sealAdvertising(sd);
+/* The advertising options. */
+function advOptions() {
+  return { interval:st.advInterval, connectable:true, discoverable:true, whenConnected:st.whenConnected, showName:st.showName };
+}
 
-  const opts = { interval:st.advInterval, connectable:true, discoverable:true, whenConnected:st.whenConnected, showName:st.showName };
+/* Hand the radio a packet, and keep the bytes it accepted (D-108). */
+function publish(sd) {
+  const opts = advOptions();
   try {
     NRF.setAdvertising({ 0xFCD2:sd }, opts);
+    st.lastSd = sd;
   } catch (e) {
 
     let small = [st.plan.info, PKT_ID, st.packetId & 255];
 
     if (st.key) small = sealAdvertising(small);
     NRF.setAdvertising({ 0xFCD2:small }, Object.assign({}, opts, { showName:false }));
+
+    st.lastSd = small;
     throw err("advertising_rejected", `the radio refused ${sd.length} bytes of service data: ${e.message}`);
   }
+}
+
+/* Rebuild and publish sensors, settings revision and declaration. */
+function refreshAdvertising(cached) {
+  st.packetId = (st.packetId + 1) & 255;
+  let sd = renderServiceData(st.plan, st.packetId, cached ? null : encodeOne, st.entries, getTime() * 1000, st.revision);
+  if (st.key) sd = sealAdvertising(sd);
+  publish(sd);
+}
+
+/* Publish the packet already on air, at whatever rate is now set (D-108). */
+function republishRate() {
+  if (st.lastSd === null) refreshAdvertising();
+  else publish(st.lastSd);
 }
 
 /* Re-read the advertised entries that are due. */
@@ -398,9 +418,46 @@ function readAdvertised(now) {
   return moved;
 }
 
+/* How long until the next advertised entry falls due, in milliseconds. */
+function nextDue(now) {
+  const ord = st.plan.ordered;
+  let wait = null;
+  for (let i = 0; i < ord.length; i++) {
+    const it = ord[i];
+    /* A clock that moved backwards leaves lastRead in the future. */
+    if (it.lastRead > now) it.lastRead = now;
+    const due = it.lastRead + (it.readInterval || st.interval) - now;
+    if (wait === null || due < wait) wait = due;
+  }
+  return wait;
+}
+
+/* Arm the read timer for the next entry that falls due, or leave none armed. */
+function schedule() {
+  if (st.timer !== undefined) { clearTimeout(st.timer); st.timer = undefined; }
+  const wait = nextDue(getTime() * 1000);
+  if (wait === null) return;
+  st.timer = setTimeout(wake, (wait > 0 ? wait : 0) + READ_SLACK);
+}
+
+/* What the timer calls, so that a wake always arms the next one. */
+function wake() {
+  try {
+    tick();
+  } catch (e) {
+
+    if (st.onError) st.onError(e);
+    st.timer = setTimeout(wake, st.interval + READ_SLACK);
+  }
+}
+
 /* The periodic rebuild (D-106). */
 function tick() {
-  if (readAdvertised(Date.now())) refreshAdvertising(true);
+  const moved = readAdvertised(getTime() * 1000);
+  if (moved) refreshAdvertising(true);
+
+  schedule();
+  return moved;
 }
 
 /* What a read of entry `w` returns. */
@@ -417,18 +474,21 @@ function publishRead(w) {
   NRF.updateServices(svc);
 }
 
-/* Advertise fast while someone is plainly interacting. */
 /* Run a reaction to a connection without letting it throw. */
 function guarded(fn) {
   try { fn(); } catch (e) { if (st && st.onError) st.onError(e); }
 }
 
+/* Advertise fast while someone is plainly interacting. */
 function goFast() {
   if (st.fastTimer !== undefined) { clearTimeout(st.fastTimer); st.fastTimer = undefined; }
   if (st.advInterval === st.fastInterval) return false;
   st.advInterval = st.fastInterval;
-  refreshAdvertising();
   return true;
+}
+
+function onConnect() {
+  if (goFast()) republishRate();
 }
 
 function goIdleAfterTimeout() {
@@ -436,7 +496,7 @@ function goIdleAfterTimeout() {
   st.fastTimer = setTimeout(() => {
     st.fastTimer = undefined;
     st.advInterval = st.interval;
-    refreshAdvertising();
+    republishRate();
   }, st.fastTimeout);
 }
 
@@ -452,12 +512,21 @@ function handleWrite(k, pl) {
     if (st.onError) st.onError(e);
     return false;
   }
-  st.entries[w.entryIndex].set(decodeValue(value, w));
+  try {
+    st.entries[w.entryIndex].set(decodeValue(value, w));
+  } catch (e) {
+    /* The device's own set() threw. */
+    if (w.readable) setTimeout(() => { guarded(() => publishRead(w)); }, 0);
+    if (st.onError) st.onError(e);
+    return false;
+  }
 
   if (w.readable) setTimeout(() => { guarded(() => publishRead(w)); }, 0);
 
-  try { if (!goFast()) tick(); }
-  catch (e) { if (st.onError) st.onError(e); }  // a refused packet must not escape into onWrite
+  try {
+    const faster = goFast();
+    if (!tick() && faster) republishRate();
+  } catch (e) { if (st.onError) st.onError(e); }  // a refused packet must not escape into onWrite
   return true;
 }
 
@@ -482,7 +551,8 @@ function setup(opts) {
   const iv = checkInterval("interval", opts.interval || 2000);
   const key = toKey(opts.bindkey);
   const marks = key ? loadMarks() : { w: 0, a: 0 };
-  st = {
+  /* The device's new state, built whole before the old one is let go. */
+  const next = {
     entries : entries,
     key : key,
     mac : key ? macBytes() : null,
@@ -505,10 +575,19 @@ function setup(opts) {
     counterReport : opts.counterReport === true && key !== null,
     whenConnected : opts.whenConnected !== false,
     onError : opts.onError || null,
+
     timer : undefined,
     fastTimer : undefined,
-    advInterval : iv
+    advInterval : iv,
+
+    lastSd : null
   };
+  /* Only now, because everything above can throw (D-114). */
+  if (st) {
+    if (st.timer !== undefined) clearTimeout(st.timer);
+    if (st.fastTimer !== undefined) clearTimeout(st.fastTimer);
+  }
+  st = next;
   /* Claim the stride now rather than when the counter reaches it. */
   if (key) saveMarks();
   if (st.plan.writable.length) {
@@ -532,21 +611,27 @@ function setup(opts) {
 
     NRF.setServices(svcs);
   }
-  refreshAdvertising();
-
-  if (st.timer !== undefined) clearInterval(st.timer);
-  st.timer = setInterval(tick, st.interval);
-
-  if (!listening) {
-    NRF.on("connect", () => guarded(goFast));
-    NRF.on("disconnect", () => guarded(goIdleAfterTimeout));
-    listening = true;
+  try {
+    refreshAdvertising();
+  } finally {
+    /* Even when the radio refused that packet. */
+    schedule();
+    if (!listening) {
+      NRF.on("connect", () => guarded(onConnect));
+      NRF.on("disconnect", () => guarded(goIdleAfterTimeout));
+      listening = true;
+    }
   }
   return exports;
 }
 
 /* Re-read every sensor and re-advertise now. */
-function update() { refreshAdvertising(); }
+function update() {
+  const ord = st.plan.ordered;
+  for (let i = 0; i < ord.length; i++) ord[i].lastRead = 0;
+  refreshAdvertising();
+  schedule();
+}
 
 /* A writable value changed without a write - a knob, a button, a schedule. */
 function changed() {
@@ -554,6 +639,7 @@ function changed() {
   st.revision = (st.revision + 1) & 255;
   st.plan.writable.forEach(w => { if (w.readable) publishRead(w); });
   refreshAdvertising();
+  schedule();
 }
 
 /* Change the advertising interval without re-running setup(). */
@@ -561,11 +647,11 @@ function setAdvertisingInterval(ms) {
   st.interval = checkInterval("interval", ms);
   const ord = st.plan.ordered;
   for (let i = 0; i < ord.length; i++) if (ord[i].inheritsInterval) ord[i].readInterval = st.interval;
-  if (st.timer !== undefined) clearInterval(st.timer);
-  st.timer = setInterval(tick, st.interval);
+
+  schedule();
   if (st.fastTimer === undefined && st.advInterval !== st.fastInterval) {
     st.advInterval = st.interval;
-    refreshAdvertising();
+    republishRate();
   }
   return st.interval;
 }
