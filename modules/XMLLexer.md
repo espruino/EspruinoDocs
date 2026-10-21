@@ -2,7 +2,7 @@
 XML/HTML Lexer
 ==========
 
-<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/JSONLexer. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
+<span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/XMLLexer. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,XML,HTML,Lexer,JS,Parser
 
@@ -20,6 +20,8 @@ This is designed to work with `.pipe`/`E.pipe`, specifically so that HTTP reques
 
 Usage
 -----
+
+You can feed XML in bit by bit:
 
 ```JS
 var XMLLexer = require("XMLLexer");
@@ -104,6 +106,62 @@ lex.write(`stop stop-color="#444D56" offset="0%"></stop>\n    </linearGradient>`
   "t": "/",
   "name": "linearGradient",
 } */
+```
+
+But the main use is parsing information retrieved from the internet. For instance the following will read the XKCD RSS feed:
+
+```JS
+var http = require("http");
+http.get("https://xkcd.com/rss.xml", function(res) {
+  //console.log("Open",res);
+  var lastTag, item;
+  var lex = new XMLLexer(function(token) {
+    //console.log("XML", token);
+    if (token.t == "<>") {
+      if (token.name=="item") item={};
+      else lastTag = token.name;
+    }
+    if (token.t == "/" && token.name=="item") {
+      console.log("Item", item);
+      item == undefined;
+    }
+    if (token.t == "c" && lastTag && item) {
+      item[lastTag] = token.txt;
+      lastTag = undefined;
+    }
+  });
+  res.pipe(lex, { chunkSize:2048, complete : function() {
+    console.log("Finished");
+  }});
+});
+```
+
+So:
+
+```XML
+<rss version="2.0">
+...
+<item>
+<title>Rejected Space Mission Profiles</title>
+<link>https://xkcd.com/3310/</link>
+<description><img src="https://imgs.xkcd.com/comics/rejected_space_mission_profiles.png" title="Although NASA agreed that Voyager 2 'seemed lonely' they decided against launching a companion orbiter mission after further measurements indicated that the spacecraft actually preferred the peace and quiet." alt="Although NASA agreed that Voyager 2 'seemed lonely' they decided against launching a companion orbiter mission after further measurements indicated that the spacecraft actually preferred the peace and quiet." /></description>
+<pubDate>Mon, 12 Oct 2026 04:00:00 -0000</pubDate>
+<guid>https://xkcd.com/3310/</guid>
+</item>
+...
+```
+
+is turned into:
+
+```
+Item {
+  "title": "Rejected Space Mission Profiles",
+  "link": "https://xkcd.com/3310/",
+  "description": "&lt;img src=\"https://imgs.xkcd.com/comics/rejected_space_mission_profiles.png\" title=\"Although NASA agreed that Voyager 2 'seemed lonely' they decided against launching a companion orbiter mission after further measurements indicated that the spacecraft actually preferred the peace and quiet.\" alt=\"Although NASA agreed that Voyager 2 'seemed lonely' they decided against launching a companion orbiter mission after further measurements indicated that the spacecraft actually preferred the peace and quiet.\" /&gt;",
+  "pubDate": "Mon, 12 Oct 2026 04:00:00 -0000",
+  "guid": "https://xkcd.com/3310/"
+ }
+...
 ```
 
 
