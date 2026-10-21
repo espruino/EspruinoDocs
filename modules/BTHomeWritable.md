@@ -174,11 +174,11 @@ Reference
 Notes
 -----
 
-**The packet is rebuilt when something changes, not on every interval.** Each
-interval the module re-reads the advertised entries, and builds a new packet
-only if one of their encoded values has moved -- in which case the packet id
-moves with it. That is what BTHome asks for: the packet id *"should be
-increased on every change in data"*, a receiver *"should only process the
+**The packet is rebuilt when something changes, not on every interval.** The
+module re-reads an advertised entry when that entry's own interval has elapsed,
+and builds a new packet only if an encoded value has moved -- in which case the
+packet id moves with it. That is what BTHome asks for: the packet id *"should
+be increased on every change in data"*, a receiver *"should only process the
 advertisement if the packet id is different compared to the previous one"*, and
 *"this allows you to send multiple advertisements that are exactly the same"*.
 It is also much cheaper. A rebuild is 26-38 ms of the one thread on an nRF52,
@@ -186,6 +186,28 @@ and on a device with a `bindkey` it is re-sealed with AES-CCM: rebuilding an
 identical packet every second measured at over 100 uA of idle current for
 nothing. `bw.update()` forces a rebuild, and `bw.changed()` is how a value that
 moved on its own announces itself.
+
+**It wakes when something falls due, and not otherwise.** There is no fixed
+timer. Each wake re-reads whatever is due, publishes if anything moved, and
+arms the next wake for the soonest entry still to come, plus 100 ms so that it
+lands past the deadline rather than just short of it -- which is less rounding
+than the fixed timer it replaces, where a 30 s entry inspected every second
+was re-read every 31. A device whose entries are all slow wakes slowly --
+`interval: 1000` with a battery at `interval: 300000` wakes once every five
+minutes, not three hundred times -- and a device that advertises nothing it has
+to read holds no timer at all. What this is worth on a current meter is honest
+to state: next to nothing. An empty wake measured under 10 us on an nRF52, and
+a module whose packet is already left alone idles within about 5 uA of one that
+is not loaded. It is the right shape, not a saving.
+
+**Changing how fast it advertises does not build a packet either.** A receiver
+connecting, the quiet window after it expiring and `bw.setAdvertisingInterval()`
+all change one field of the advertising options, so the module hands the radio
+back the bytes already on air rather than building the same ones again: the
+packet id stays where it is, and on a device with a `bindkey` so does the
+advertising counter -- which is exactly the repetition the format allows. On a
+nice!nano that takes one connect-and-disconnect cycle from two rebuilt packets
+to two repeated ones, 189 ms of the one thread down to 7 with a `bindkey`.
 
 **A rejected write still looks delivered.** Espruino acknowledges a write
 before your handler runs, so a device that refuses one cannot say so over the
