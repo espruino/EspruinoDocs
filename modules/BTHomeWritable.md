@@ -71,7 +71,9 @@ Give a writable entry a `get` as well **if its value can change without a
 write** — a knob, a physical button, a schedule. Its characteristic then
 becomes readable, the device advertises BTHome's settings revision (`0x65`),
 and you call `bw.changed()` whenever such a change happens so that receivers
-know to read it again.
+know to read it again. Call it on every change and do not rate-limit it
+yourself: a burst of calls is folded into one rebuild 250 ms later, which is
+what a button being pressed ten times in a second needs.
 
 ```JS
 setWatch(function() {
@@ -83,13 +85,18 @@ setWatch(function() {
 
 ### Types BTHome cannot encode
 
-Button events and raw objects are declared by ID instead of by name:
+Events and raw objects are declared by ID instead of by name:
 
 ```JS
-{ id:0x3A, length:1, set:v=>print("event", v) }   // fixed length
+{ id:0x3A, length:1, set:v=>print("button", v) }  // fixed length
+{ id:0x3C, length:1, set:v=>print("dimmer", v) }  // an event code, not a value
 { id:0x54, variable:true, set:b=>print(b) }       // length-prefixed
 { id:0x3B, set:op=>print("command", op) }         // command: framing is fixed
 ```
+
+Declaring one of these by name is refused with `writable_needs_id`: the module
+works out an unnamed type's encoding by probing the BTHome module with 1 and 2,
+which reads an event code or a raw object's first byte as something it is not.
 
 Their `set` receives the value bytes, the event code, or a command's opcode.
 
@@ -155,7 +162,7 @@ Reference
 | `fastTimeout` | milliseconds to keep advertising fast after a disconnect (default 30000) |
 | `whenConnected` | keep advertising during a connection (default `true`) |
 | `maxWriteLength` | largest accepted write, in bytes (default 128) |
-| `bindkey` | 16-byte AES key, as 32 hex characters or an array |
+| `bindkey` | 16-byte AES key, as 32 hex characters or an array. Anything else is refused at `setup()`: a key that is silently the wrong key has every receiver blaming a key that is not at fault |
 | `showName` | put the device name in the advertising packet (default `true`) |
 | `maxServiceData` | what your radio will really accept, in bytes. Set it and the packet is checked at `setup()` rather than at the first transmission |
 | `counterReport` | offer the counter report at `2FAA1000` (default `false`, and only with a `bindkey`) |
@@ -166,7 +173,7 @@ Reference
 | | |
 |---|---|
 | `bw.update()` | re-read every sensor and rebuild the packet now |
-| `bw.changed()` | a writable value changed by itself: bump the settings revision so receivers re-read it |
+| `bw.changed()` | a writable value changed by itself: bump the settings revision so receivers re-read it. Returns at once, and the work happens 250 ms later, once for however many calls arrive in that window |
 | `bw.setAdvertisingInterval(ms)` | change the advertising interval, in milliseconds, without re-running `setup()` |
 | `bw.setFastTimeout(ms)` | change how long the fast window lasts, in milliseconds |
 | `bw.plan()` | what `setup()` worked out: `entryIds`, the writable entries and their UUIDs |
@@ -208,6 +215,19 @@ packet id stays where it is, and on a device with a `bindkey` so does the
 advertising counter -- which is exactly the repetition the format allows. On a
 nice!nano that takes one connect-and-disconnect cycle from two rebuilt packets
 to two repeated ones, 189 ms of the one thread down to 7 with a `bindkey`.
+
+**A burst of local changes costs one rebuild.** `bw.changed()` is meant to be
+called from a `setWatch` handler, which is exactly where a burst arrives, and
+the work it asks for is the most expensive thing the module does: a `get()` and
+a seal per readable entry, then a whole packet rebuilt and re-sealed, 26 to 38
+ms of the one thread. Ten presses in a second used to stack ten of those on a
+thread already behind, which on an nRF52 reached `LOW_MEMORY` and a connection
+the device still believed in after the central was gone. So a call arms a 250 ms
+window and returns; calls inside the window are dropped, and the window ends in
+one revision bump, one publication per readable entry and one rebuild, reading
+the values then rather than when the first press came in. It is a rate limit and
+not a debounce: the window is never extended, so a knob held for a minute still
+publishes four times a second.
 
 **A rejected write still looks delivered.** Espruino acknowledges a write
 before your handler runs, so a device that refuses one cannot say so over the

@@ -124,6 +124,8 @@ function writableSpec(e, enc, k) {
   try { one = enc(e, 1); two = enc(e, 2); }
   catch (x) { throw err("unsupported_writable_type", `entry ${k} ("${e.type}") cannot be encoded (${x.message}); declare it with id and length`); }
   const s = { id:one[0], length:one.length - 1, variable:false };
+  /* Not every type can be probed this way. */
+  if (e.type === "raw" || EVENT_IDS[s.id] || COMMAND_IDS[s.id] || FORBIDDEN[s.id]) throw err("writable_needs_id", `entry ${k} ("${e.type}") needs id and length`);
   if (s.length === 1 && one[1] === 1 && two[1] === 1) { s.codec = "binary"; return s; }
   const scale = readUint(one, 1, one.length);
   if (!scale) { s.codec = "bytes"; return s; }
@@ -156,7 +158,6 @@ function planPacket(entries, enc, defRead, encrypted, limit) {
     if (hasSet) {
       const k = writable.length + 1;
       const w = writableSpec(e, enc, k);
-      if (FORBIDDEN[w.id]) throw err("forbidden_entry", `entry ${k} is 0x${w.id.toString(16)}, which S2.1 forbids`);
       w.entry = k;
       w.uuid = characteristicUuid(k);
       w.entryIndex = i;
@@ -196,14 +197,9 @@ function planPacket(entries, enc, defRead, encrypted, limit) {
 
 /* Service data for one advertisement. */
 function renderServiceData(p, pid, enc, entries, now, revision) {
-  if (now === undefined) now = 0;
   p.pkt.value[0] = pid & 255;
   if (p.rev) p.rev.value[0] = (revision || 0) & 255;
-  for (let i = 0; enc !== null && i < p.ordered.length; i++) {
-    const it = p.ordered[i];
-
-    if (!(it.readInterval && now - it.lastRead < it.readInterval)) readSensor(it, enc, entries, now);
-  }
+  if (enc !== null) readDue(p, enc, entries, now);
   return buildServiceData(p.info, p.objs, p.decl, p.budget);
 }
 
@@ -219,12 +215,26 @@ function readSensor(it, enc, entries, now) {
   return moved;
 }
 
+/* Re-read every advertised entry that is due, and say whether any bytes moved. */
+
+function readDue(p, enc, entries, now) {
+  let moved = false;
+  for (let i = 0; i < p.ordered.length; i++) {
+    const it = p.ordered[i];
+    if (it.readInterval && now - it.lastRead < it.readInterval) continue;
+    if (readSensor(it, enc, entries, now)) moved = true;
+  }
+  return moved;
+}
+
 /* ===== DIVIDER: everything below owns the radio ========================== */
 
 let st = null;
 let listening = false; // whether NRF connect/disconnect handlers are attached
 
 const READ_SLACK = 100; /* ms added to every scheduled read (D-109). */
+
+const CHANGE_HOLD = 250; /* ms that a burst of changed() calls is folded into: four announcements a second at most, a quarter of a second of notice at worst (S3.2, D-124). */
 
 const CTR_FILE = ".bwctr"; // the persisted counter high-water marks
 const CTR_STRIDE = 64; // persist every this many accepted writes, not each one
@@ -269,8 +279,9 @@ function sealAdvertising(sd) {
 /* Both counters, kept coarsely in flash. */
 function loadMarks() {
   const v = require("Storage").readJSON(CTR_FILE, true);
-  if (typeof v === "number") return { w: v, a: 0 };
-  if (v && typeof v.w === "number") return { w: v.w, a: v.a || 0 };
+
+  if (typeof v === "number") return { w: v >>> 0, a: 0 };
+  if (v && typeof v.w === "number") return { w: v.w >>> 0, a: (v.a || 0) >>> 0 };
   return { w: 0, a: 0 };
 }
 
@@ -325,9 +336,14 @@ function noteWriteCounter(counter) {
   }
 }
 
+/* Has `counter` reached `mark`, in the circular sense of S5.3? `counter >= mark` is wrong at the only moment that matters. */
+function reachedMark(counter, mark, stride) {
+  return ((counter - mark) >>> 0) < stride;
+}
+
 function noteAdvCounter(counter) {
-  if (counter >= st.advMark) {
-    st.advMark = counter + ADV_STRIDE;
+  if (reachedMark(counter, st.advMark, ADV_STRIDE)) {
+    st.advMark = (counter + ADV_STRIDE) >>> 0;
     saveMarks();
   }
 }
@@ -339,8 +355,7 @@ function openWrite(pl) {
     return null;
   }
   const n = pl.length - ENC_OVERHEAD;
-  let counter = 0;
-  for (let i = 0; i < 4; i++) counter += pl[n + i] * Math.pow(256, i);
+  const counter = readUint(pl, n, n + 4);
 
   if (!counterIsAhead(counter, st.writeCounter)) {
     if (st.onError) st.onError(err("counter_not_increasing", `write counter ${counter} is not ahead of ${st.writeCounter}`));
@@ -406,18 +421,6 @@ function republishRate() {
   else publish(st.lastSd);
 }
 
-/* Re-read the advertised entries that are due. */
-function readAdvertised(now) {
-  const ord = st.plan.ordered;
-  let moved = false;
-  for (let i = 0; i < ord.length; i++) {
-    const it = ord[i];
-    if (it.readInterval && now - it.lastRead < it.readInterval) continue;
-    if (readSensor(it, encodeOne, st.entries, now)) moved = true;
-  }
-  return moved;
-}
-
 /* How long until the next advertised entry falls due, in milliseconds. */
 function nextDue(now) {
   const ord = st.plan.ordered;
@@ -453,7 +456,7 @@ function wake() {
 
 /* The periodic rebuild (D-106). */
 function tick() {
-  const moved = readAdvertised(getTime() * 1000);
+  const moved = readDue(st.plan, encodeOne, st.entries, getTime() * 1000);
   if (moved) refreshAdvertising(true);
 
   schedule();
@@ -503,31 +506,26 @@ function goIdleAfterTimeout() {
 /* Apply a write to entry k (S4.2). */
 function handleWrite(k, pl) {
   const w = st.plan.writable[k - 1];
-  let value;
-  try {
-    value = parseWrite(pl, w);
-  } catch (e) {
 
-    if (w.readable) setTimeout(() => { guarded(() => publishRead(w)); }, 0);
-    if (st.onError) st.onError(e);
-    return false;
+  if (!w) {
+    if (st.onError) st.onError(err("entry_not_declared", `entry ${k} is not declared`));
+    return;
   }
+
+  let refused = null;
   try {
-    st.entries[w.entryIndex].set(decodeValue(value, w));
+    st.entries[w.entryIndex].set(decodeValue(parseWrite(pl, w), w));
   } catch (e) {
-    /* The device's own set() threw. */
-    if (w.readable) setTimeout(() => { guarded(() => publishRead(w)); }, 0);
-    if (st.onError) st.onError(e);
-    return false;
+    refused = e;
   }
 
   if (w.readable) setTimeout(() => { guarded(() => publishRead(w)); }, 0);
+  if (refused) { if (st.onError) st.onError(refused); return; }
 
-  try {
+  guarded(() => {
     const faster = goFast();
     if (!tick() && faster) republishRate();
-  } catch (e) { if (st.onError) st.onError(e); }  // a refused packet must not escape into onWrite
-  return true;
+  });
 }
 
 /* The radio clamps anything outside 20..10000 silently. */
@@ -539,8 +537,14 @@ function checkInterval(name, v) {
 /* "231d.." or a 16-byte array -> the key. */
 function toKey(v) {
   if (v === undefined || v === null) return null;
-  if (typeof v !== "string") return new Uint8Array(v);
+
+  if (typeof v !== "string") { const a = new Uint8Array(v); if (a.length !== 16) throw err("bindkey_length", `bindkey is ${a.length} bytes, expected 16`); return a; }
   if (v.length !== 32) throw err("bindkey_length", `bindkey is ${v.length} hex characters, expected 32`);
+  for (let i = 0; i < 32; i++) {
+    const c = v.charCodeAt(i) | 32; // folds A-F onto a-f and leaves 0-9 alone
+    if (!((c >= 48 && c <= 57) || (c >= 97 && c <= 102)))
+      throw err("bindkey_not_hex", `bindkey character ${i} ("${v[i]}") is not hexadecimal`);
+  }
   const k = new Uint8Array(16);
   for (let i = 0; i < 16; i++) k[i] = parseInt(v.substr(i * 2, 2), 16);
   return k;
@@ -557,11 +561,11 @@ function setup(opts) {
     key : key,
     mac : key ? macBytes() : null,
 
-    advCounter : key ? marks.a : 0,
-    advMark : key ? marks.a + ADV_STRIDE : 0,
+    advCounter : marks.a,
+    advMark : (marks.a + ADV_STRIDE) >>> 0,
 
-    writeCounter : key ? marks.w : 0,
-    writeMark : key ? marks.w : 0,
+    writeCounter : marks.w,
+    writeMark : marks.w,
     plan : planPacket(entries, encodeOne, iv, key !== null, opts.maxServiceData),
 
     revision : Math.floor(Math.random() * 256),
@@ -571,13 +575,13 @@ function setup(opts) {
     fastInterval : Math.max(100, checkInterval("fastInterval", opts.fastInterval || 100)),
     fastTimeout : opts.fastTimeout === undefined ? 30000 : opts.fastTimeout,
     maxWriteLength : opts.maxWriteLength || 128,
-
-    counterReport : opts.counterReport === true && key !== null,
     whenConnected : opts.whenConnected !== false,
     onError : opts.onError || null,
 
     timer : undefined,
     fastTimer : undefined,
+
+    changeTimer : undefined,
     advInterval : iv,
 
     lastSd : null
@@ -586,13 +590,15 @@ function setup(opts) {
   if (st) {
     if (st.timer !== undefined) clearTimeout(st.timer);
     if (st.fastTimer !== undefined) clearTimeout(st.fastTimer);
+    if (st.changeTimer !== undefined) clearTimeout(st.changeTimer);
   }
   st = next;
   /* Claim the stride now rather than when the counter reaches it. */
   if (key) saveMarks();
   if (st.plan.writable.length) {
     const chars = {}, svcs = {};
-    if (st.counterReport) chars[COUNTER_UUID] = counterCharacteristic();
+
+    if (opts.counterReport === true && key) chars[COUNTER_UUID] = counterCharacteristic();
     st.plan.writable.forEach(w => {
       const c = {
         writable : true,
@@ -633,13 +639,22 @@ function update() {
   schedule();
 }
 
-/* A writable value changed without a write - a knob, a button, a schedule. */
-function changed() {
-  if (!st.plan.settingsRevision) throw err("not_readable", "no writable entry has get(); nothing for a receiver to re-read");
+/* What the end of a burst of changed() calls does (D-124). */
+function publishChange() {
+
+  st.changeTimer = undefined;
   st.revision = (st.revision + 1) & 255;
   st.plan.writable.forEach(w => { if (w.readable) publishRead(w); });
   refreshAdvertising();
   schedule();
+}
+
+/* A writable value changed without a write - a knob, a button, a schedule. */
+function changed() {
+
+  if (!st.plan.settingsRevision) throw err("not_readable", "no writable entry has get(); nothing for a receiver to re-read");
+  if (st.changeTimer !== undefined) return;
+  st.changeTimer = setTimeout(() => guarded(publishChange), CHANGE_HOLD);
 }
 
 /* Change the advertising interval without re-running setup(). */
@@ -674,8 +689,6 @@ exports.plan = () => st && st.plan;
 
 /* The pure half, exported for the unit tests. */
 exports.DECLARATION_OBJECT_ID = DECL_ID;
-exports.PACKET_ID_OBJECT_ID = PKT_ID;
-exports.SETTINGS_REVISION_OBJECT_ID = REV_ID;
 exports.DEVICE_INFO_PLAIN = DEV_INFO;
 exports.DEVICE_INFO_ENCRYPTED = DEV_INFO_ENC;
 exports.SERVICE_DATA_BUDGET = BUDGET;
@@ -684,10 +697,9 @@ exports.buildServiceData = buildServiceData;
 exports.parseWrite = parseWrite;
 exports.decodeValue = decodeValue;
 exports.writableSpec = writableSpec;
-exports.stableSortByObjectId = stableSortByObjectId;
 exports.planPacket = planPacket;
 exports.renderServiceData = renderServiceData;
 exports.readSensor = readSensor;
-exports.handleWrite = handleWrite;
 exports.counterIsAhead = counterIsAhead;
+exports.reachedMark = reachedMark;
 exports.COUNTER_WINDOW = CTR_WINDOW;
