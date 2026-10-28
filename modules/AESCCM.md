@@ -59,13 +59,17 @@ leak the keystream, which is the one mistake that turns this from protection
 into decoration. Typically the nonce carries a counter that only ever goes up,
 and the counter is saved across restarts.
 
-**On the JS path, sealing one short packet costs about 75 ms** on a Puck.js,
-measured — and most of that is the JavaScript around the cipher rather than the
-cipher itself. The module works in 32-byte pieces, because `AES.encrypt`
-allocates its result as one contiguous block and fails — returning `undefined`
-— when the heap has no run that long, which happens well before memory runs
-out. Doing it in two large calls was twice as quick and failed under memory
-pressure. On the native path none of this applies.
+**On the JS path, sealing a short packet costs about 50 ms** on a Puck.js, and
+a 30-byte one about 90 ms. Under a tenth of that is the cipher: `AES.encrypt`
+of 32 bytes takes 2.1 ms in ECB and 2.4 ms in CBC, and a short frame makes one
+call of each. The rest is the JavaScript around it.
+
+The module works in 32-byte pieces, because `AES.encrypt` allocates its result
+as one contiguous block and fails — returning `undefined` — when the heap has
+no run that long, which happens well before memory runs out. Doing it in two
+large calls was twice as quick and failed under memory pressure.
+
+On the native path none of this applies.
 
 **Counter mode is not used**, although it would be the obvious way to make the
 keystream: this firmware ignores CTR's `iv` and always starts from a zero
