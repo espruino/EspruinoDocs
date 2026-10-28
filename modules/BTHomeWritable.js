@@ -26,11 +26,9 @@ const COUNTER_UUID = "2FAA1000" + UUID_TAIL; /* the counter report (D-075), off 
 const TEXT_TYPES = { text:true }; // encoded by the BTHome module with a length byte
 const EVENT_IDS = { 0x3A:true, 0x3C:true }; // button, dimmer: the value is an event code
 
-const COMMAND_IDS = { 0x3B:true };
-
 const SIGNED_IDS = { 0x02:true, 0x08:true, 0x3F:true, 0x45:true, 0x57:true, 0x58:true, 0x59:true, 0x5A:true, 0x5B:true, 0x5C:true, 0x5D:true, 0x62:true, 0x63:true };
-
-const FORBIDDEN = { 0x00:true, 0x65:true, 0xFF:true, 0xF0:true, 0xF1:true, 0xF2:true };
+/* S2.1: packet id, the declaration itself, and device information are not data, and 0x3B is BTHome's uplink command (D-151). */
+const FORBIDDEN = { 0x00:true, 0x3B:true, 0x65:true, 0xFF:true, 0xF0:true, 0xF1:true, 0xF2:true };
 
 function err(code, msg) { const e = new Error(msg); e.code = code; return e; }
 
@@ -67,11 +65,7 @@ function parseWrite(pl, w) {
 
   if (pl[0] !== w.id) throw err("objectid_mismatch", `object 0x${pl[0].toString(16)} written to entry ${w.entry}, expected 0x${w.id.toString(16)}`);
   let n;
-  if (w.command) {
-
-    if (pl.length < 2) throw err("truncated", "missing argument length");
-    n = 2 + (pl[1] & 0x1F);
-  } else if (w.variable) {
+  if (w.variable) {
     if (pl.length < 2) throw err("truncated", "missing length byte");
     n = 1 + pl[1];
   } else n = w.length;
@@ -96,11 +90,6 @@ function decodeValue(value, w) {
     }
     case "binary": return value[0] !== 0;
     case "event": return value.length === 1 ? value[0] : value;
-    case "command": {
-
-      const rest = value.slice(1);
-      return rest.length === 1 ? rest[0] : rest;
-    }
     case "number": {
       let raw = readUint(value, 0, value.length);
       const full = Math.pow(256, value.length);
@@ -114,8 +103,7 @@ function decodeValue(value, w) {
 /* Work out how a writable entry is written, once, at setup. */
 function writableSpec(e, enc, k) {
   if (e.id !== undefined) {
-
-    if (COMMAND_IDS[e.id]) return { id:e.id, command:true, codec:"command" };
+    if (FORBIDDEN[e.id]) throw err("forbidden_entry", `entry ${k} is 0x${e.id.toString(16)}, which S2.1 forbids`);
     if (!e.variable && !(e.length > 0)) throw err("writable_without_length", `entry ${k} declares id 0x${e.id.toString(16)} but no length`);
     return { id:e.id, length:e.length, variable:e.variable === true, codec:EVENT_IDS[e.id] ? "event" : "bytes" };
   }
@@ -125,7 +113,7 @@ function writableSpec(e, enc, k) {
   catch (x) { throw err("unsupported_writable_type", `entry ${k} ("${e.type}") cannot be encoded (${x.message}); declare it with id and length`); }
   const s = { id:one[0], length:one.length - 1, variable:false };
   /* Not every type can be probed this way. */
-  if (e.type === "raw" || EVENT_IDS[s.id] || COMMAND_IDS[s.id] || FORBIDDEN[s.id]) throw err("writable_needs_id", `entry ${k} ("${e.type}") needs id and length`);
+  if (e.type === "raw" || EVENT_IDS[s.id] || FORBIDDEN[s.id]) throw err("writable_needs_id", `entry ${k} ("${e.type}") needs id and length`);
   if (s.length === 1 && one[1] === 1 && two[1] === 1) { s.codec = "binary"; return s; }
   const scale = readUint(one, 1, one.length);
   if (!scale) { s.codec = "bytes"; return s; }
@@ -234,7 +222,7 @@ let listening = false; // whether NRF connect/disconnect handlers are attached
 
 const READ_SLACK = 100; /* ms added to every scheduled read (D-109). */
 
-const CHANGE_HOLD = 250; /* ms that a burst of changed() calls is folded into: four announcements a second at most, a quarter of a second of notice at worst (S3.2, D-124). */
+const CHANGE_HOLD = 250; /* ms that a burst of changed() calls is folded into (S3.2, D-124). */
 
 const CTR_FILE = ".bwctr"; // the persisted counter high-water marks
 const CTR_STRIDE = 64; // persist every this many accepted writes, not each one
@@ -299,7 +287,7 @@ function counterCharacteristic() {
     value : [],
     onWrite : evt => {
       if (evt.data.length !== CHALLENGE_LEN) {
-        if (st.onError) st.onError(err("challenge_length", `challenge is ${evt.data.length} bytes, expected ${CHALLENGE_LEN}`));
+        reject(err("challenge_length", `challenge is ${evt.data.length} bytes, expected ${CHALLENGE_LEN}`));
         return;
       }
 
@@ -350,25 +338,18 @@ function noteAdvCounter(counter) {
 
 /* Unseal a write, or return null having reported why. */
 function openWrite(pl) {
-  if (pl.length <= ENC_OVERHEAD) {
-    if (st.onError) st.onError(err("truncated", `encrypted write is ${pl.length} bytes, shorter than its own framing`));
-    return null;
-  }
+  if (pl.length <= ENC_OVERHEAD)
+    return reject(err("truncated", `encrypted write is ${pl.length} bytes, shorter than its own framing`));
   const n = pl.length - ENC_OVERHEAD;
   const counter = readUint(pl, n, n + 4);
 
-  if (!counterIsAhead(counter, st.writeCounter)) {
-    if (st.onError) st.onError(err("counter_not_increasing", `write counter ${counter} is not ahead of ${st.writeCounter}`));
-    return null;
-  }
+  if (!counterIsAhead(counter, st.writeCounter))
+    return reject(err("counter_not_increasing", `write counter ${counter} is not ahead of ${st.writeCounter}`));
   const ct = new Uint8Array(n), mic = new Uint8Array(MIC_LEN);
   for (let i = 0; i < n; i++) ct[i] = pl[i];
   for (let i = 0; i < MIC_LEN; i++) mic[i] = pl[n + 4 + i];
   const pt = require("AESCCM").decrypt(ct, st.key, nonceFor(WRITE_INFO, counter), mic);
-  if (pt === null) {
-    if (st.onError) st.onError(err("mic_mismatch", "the write did not authenticate"));
-    return null;
-  }
+  if (pt === null) return reject(err("mic_mismatch", "the write did not authenticate"));
   noteWriteCounter(counter);
   const out = [];
   for (let i = 0; i < pt.length; i++) out.push(pt[i]);
@@ -386,7 +367,7 @@ function encodeOne(e, v) {
 
 /* The advertising options. */
 function advOptions() {
-  return { interval:st.advInterval, connectable:true, discoverable:true, whenConnected:st.whenConnected, showName:st.showName };
+  return { interval:st.advInterval, connectable:true, scannable:true, discoverable:true, whenConnected:st.whenConnected, showName:st.showName };
 }
 
 /* Hand the radio a packet, and keep the bytes it accepted (D-108). */
@@ -400,10 +381,17 @@ function publish(sd) {
     let small = [st.plan.info, PKT_ID, st.packetId & 255];
 
     if (st.key) small = sealAdvertising(small);
-    NRF.setAdvertising({ 0xFCD2:small }, Object.assign({}, opts, { showName:false }));
+    let also = "";
+    try {
+      NRF.setAdvertising({ 0xFCD2:small }, Object.assign({}, opts, { showName:false }));
 
-    st.lastSd = small;
-    throw err("advertising_rejected", `the radio refused ${sd.length} bytes of service data: ${e.message}`);
+      st.lastSd = small;
+    } catch (e2) {
+      /* Both refused, so nothing is on air. */
+      st.lastSd = null;
+      also = ` -- and the ${small.length}-byte fallback too: ${e2.message}`;
+    }
+    throw err("advertising_rejected", `the radio refused ${sd.length} bytes of service data: ${e.message}${also}`);
   }
 }
 
@@ -482,6 +470,14 @@ function guarded(fn) {
   try { fn(); } catch (e) { if (st && st.onError) st.onError(e); }
 }
 
+/* Count a refused write and report it. */
+function reject(e) {
+  const c = e.code || "error";
+  st.rejects[c] = (st.rejects[c] || 0) + 1;
+  if (st.onError) st.onError(e);
+  return null;
+}
+
 /* Advertise fast while someone is plainly interacting. */
 function goFast() {
   if (st.fastTimer !== undefined) { clearTimeout(st.fastTimer); st.fastTimer = undefined; }
@@ -507,10 +503,7 @@ function goIdleAfterTimeout() {
 function handleWrite(k, pl) {
   const w = st.plan.writable[k - 1];
 
-  if (!w) {
-    if (st.onError) st.onError(err("entry_not_declared", `entry ${k} is not declared`));
-    return;
-  }
+  if (!w) return reject(err("entry_not_declared", `entry ${k} is not declared`));
 
   let refused = null;
   try {
@@ -520,7 +513,7 @@ function handleWrite(k, pl) {
   }
 
   if (w.readable) setTimeout(() => { guarded(() => publishRead(w)); }, 0);
-  if (refused) { if (st.onError) st.onError(refused); return; }
+  if (refused) return reject(refused);
 
   guarded(() => {
     const faster = goFast();
@@ -571,6 +564,8 @@ function setup(opts) {
     revision : Math.floor(Math.random() * 256),
     showName : opts.showName !== false,
     packetId : 0,
+
+    rejects : {},
     interval : iv,
     fastInterval : Math.max(100, checkInterval("fastInterval", opts.fastInterval || 100)),
     fastTimeout : opts.fastTimeout === undefined ? 30000 : opts.fastTimeout,
@@ -664,7 +659,8 @@ function setAdvertisingInterval(ms) {
   for (let i = 0; i < ord.length; i++) if (ord[i].inheritsInterval) ord[i].readInterval = st.interval;
 
   schedule();
-  if (st.fastTimer === undefined && st.advInterval !== st.fastInterval) {
+
+  if (st.fastTimer === undefined && st.advInterval !== st.interval) {
     st.advInterval = st.interval;
     republishRate();
   }
@@ -686,6 +682,7 @@ exports.setFastTimeout = setFastTimeout;
 exports.SERVICE_UUID = SERVICE_UUID;
 exports.characteristicUuid = characteristicUuid;
 exports.plan = () => st && st.plan;
+exports.rejects = () => st && st.rejects;
 
 /* The pure half, exported for the unit tests. */
 exports.DECLARATION_OBJECT_ID = DECL_ID;

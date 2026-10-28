@@ -91,12 +91,18 @@ Events and raw objects are declared by ID instead of by name:
 { id:0x3A, length:1, set:v=>print("button", v) }  // fixed length
 { id:0x3C, length:1, set:v=>print("dimmer", v) }  // an event code, not a value
 { id:0x54, variable:true, set:b=>print(b) }       // length-prefixed
-{ id:0x3B, set:op=>print("command", op) }         // command: framing is fixed
 ```
+
+BTHome's command object `0x3B` is **not** writable: the protocol excludes it,
+because BTHome gives it to a device announcing a command of its own and a
+writable one would face both ways. `setup()` refuses it with
+`forbidden_entry`, as it does the packet id and the settings revision.
 
 Declaring one of these by name is refused with `writable_needs_id`: the module
 works out an unnamed type's encoding by probing the BTHome module with 1 and 2,
 which reads an event code or a raw object's first byte as something it is not.
+A name the BTHome module cannot encode at all is a different refusal,
+`unsupported_writable_type`, so code that branches on `error.code` wants both.
 
 Their `set` receives the value bytes, the event code, or a command's opcode.
 
@@ -131,8 +137,13 @@ where it is instead of guessing.
 How much fits in one packet
 ---------------------------
 
-The BTHome service data has about **24 bytes** to spend, and **16** once
-encrypted. Against that:
+The BTHome service data has **24 bytes** of arithmetic room, and **16** once
+encrypted: 31 less the flags and the service data's own framing. **Real radios
+take less, and much less.** A Puck.js accepted 17 bytes; a nice!nano accepted 5
+to 7 with its name in the packet and 20 to 22 without, depending on its
+firmware. Plan against your own board rather than against the 24, and set
+`maxServiceData` so the packet is checked at `setup()` instead of at the first
+transmission. Against the budget:
 
 | | |
 |---|---|
@@ -156,7 +167,7 @@ Reference
 
 | Option | |
 |---|---|
-| `advertise` | the entry list, in order. Entry *k* is characteristic `2FAA000k` |
+| `advertise` | the entry list, in order. Entry *k* is characteristic `2FAA000k`, with *k* in hexadecimal on four digits: entry 10 is `2FAA000A`, entry 16 is `2FAA0010` |
 | `interval` | advertising interval in **milliseconds**, 20–10000 (default 2000). A per-entry `interval`, also in milliseconds, is how long that sensor's value may be reused before `get()` is called again; `0` reads on every packet |
 | `fastInterval` | advertising interval in milliseconds while a receiver is around, floored at 100 (the default) |
 | `fastTimeout` | milliseconds to keep advertising fast after a disconnect (default 30000) |
@@ -166,7 +177,8 @@ Reference
 | `showName` | put the device name in the advertising packet (default `true`) |
 | `maxServiceData` | what your radio will really accept, in bytes. Set it and the packet is checked at `setup()` rather than at the first transmission |
 | `counterReport` | offer the counter report at `2FAA1000` (default `false`, and only with a `bindkey`) |
-| `onError` | called with a rejected write's error, which is the only place one shows |
+| `onError` | called with a rejected write's error. Optional, and `rejects()` counts refusals whether you give one or not |
+| `signed`, per entry | force a numeric entry's signedness. The module knows which BTHome object ids are signed; if BTHome assigns a new signed id before this module learns it, `signed:true` on that entry is the way through without waiting for a release |
 
 ### Methods
 
@@ -177,6 +189,58 @@ Reference
 | `bw.setAdvertisingInterval(ms)` | change the advertising interval, in milliseconds, without re-running `setup()` |
 | `bw.setFastTimeout(ms)` | change how long the fast window lasts, in milliseconds |
 | `bw.plan()` | what `setup()` worked out: `entryIds`, the writable entries and their UUIDs |
+| `bw.rejects()` | how many writes have been refused, counted per error code: `{objectid_mismatch:2}` |
+| `bw.characteristicUuid(k)` | the characteristic UUID of entry *k*, counted from 1 |
+| `bw.SERVICE_UUID` | the GATT service the entries live under |
+
+What it costs on a coin cell
+----------------------------
+
+Measured on a **Puck.js running 2v29 at a flat 3.000 V**, with an Otii Arc Pro
+supplying the board: an idle floor of **7.35 uA**, **14.19 uC** for one
+advertising event, and **1810 uC** over **2.34 s** for one command, which is
+Home Assistant connecting, writing and leaving. Everything below is those three
+numbers and `fastTimeout`, nothing else.
+
+Days of a CR2032, read as **154 mAh**: 70% of the nominal 220, because the
+rating runs down to 2.0 V and Espruino browns out above that, a cell loses about
+1% a year sitting still, and its internal resistance climbs as it empties
+against the 5.6 mA peak of a transmit. None of the three is modelled. **The
+microamps are measured and only the days carry that allowance.**
+
+| advertising interval | never written | 1/min | 2/min | 4/min | 6/min |
+|---|---|---|---|---|---|
+| 200 ms | 82 | 45 | 32 | 26 | 22 |
+| 1 s | 298 | 56 | 32 | 26 | 22 |
+| **2 s** (the default) | **444** | **57** | **32** | 26 | 22 |
+| 5 s | 630 | 58 | 32 | 26 | 22 |
+| 10 s | 732 | 59 | 32 | 26 | 22 |
+
+![Days on a CR2032 against the advertising interval, at 1 to 200 commands a day](BTHomeWritable/puck-battery-life.png)
+
+Three things to take from it, and none of them is that a write is expensive.
+
+* **A device nobody writes to lives on its advertising interval alone**, and the
+  range is wide: 82 days at 200 ms against 732 at 10 s.
+* **One command a minute costs eight times what advertising does**, and two
+  thirds of that is not the write: it is the thirty seconds of fast advertising
+  the write leaves behind. `fastTimeout` is the lever.
+* **From two commands a minute the advertising interval stops mattering**, because
+  the fast window never closes. Every row reads the same.
+
+The figure stops at 10 s because the module does: `setup()` refuses an
+`interval` or a `fastInterval` outside 20 ms to 10 s. So **726 days, one command
+a day at 10 s, is the ceiling of everything this module can be set to do** -- a
+shade under two years, which the plot draws a line at to show that nothing
+reaches it.
+
+Your board is not this board, and the only coefficient that travels poorly is
+the floor. Measure yours with a meter and no sketch at all, then substitute it:
+
+```
+python -m tools.power_table --floor <yours> --adv-charge 14.194 \
+    --command-charge 1810 --command-seconds 2.34 --life --capacity-mah 154
+```
 
 Notes
 -----
@@ -190,7 +254,8 @@ advertisement if the packet id is different compared to the previous one"*, and
 *"this allows you to send multiple advertisements that are exactly the same"*.
 It is also much cheaper. A rebuild is 26-38 ms of the one thread on an nRF52,
 and on a device with a `bindkey` it is re-sealed with AES-CCM: rebuilding an
-identical packet every second measured at over 100 uA of idle current for
+identical packet every second measured at about 185 uA of extra idle draw on a
+nice!nano, 235 against 50 with everything else on the board unchanged, for
 nothing. `bw.update()` forces a rebuild, and `bw.changed()` is how a value that
 moved on its own announces itself.
 
@@ -232,6 +297,9 @@ publishes four times a second.
 **A rejected write still looks delivered.** Espruino acknowledges a write
 before your handler runs, so a device that refuses one cannot say so over the
 air. `onError` is where it shows, and it is worth printing during development.
+`bw.rejects()` counts them per error code whether or not you pass a handler, so
+a device already in the field still has something to show when a receiver
+starts writing nonsense to it.
 
 **One central at a time.** These boards serve a single connection, so a
 receiver's write will fail while the Web IDE is connected — including, quietly,
