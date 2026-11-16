@@ -56,7 +56,7 @@ The following table provides an overview of the hardware capabilities of each ta
 
 The ESP32 family includes several chips with different processor architectures and peripheral capabilities. The following table compares the four targets covered by this documentation.
 
-| Feature | ESP32 | ESP32-S3 | ESP32-C3 | ESP32-P4 |
+| Feature | ESP32 | ESP32S3 | ESP32C3 | ESP32P4 |
 |---|---|---|---|---|
 | CPU architecture | Xtensa LX6 | Xtensa LX7 | RISC-V | RISC-V |
 | CPU cores | 2 | 2 | 1 | 2 |
@@ -76,6 +76,7 @@ The ESP32 family includes several chips with different processor architectures a
 | Hall sensor | Yes | — | — | — |
 | External flash | Yes | Yes | Yes | Yes |
 | PSRAM | Optional | Optional | — | Supported |
+| Strapping GPIOs | GPIO0, GPIO2, GPIO5, GPIO12, GPIO15 | GPIO0, GPIO3, GPIO45, GPIO46 | GPIO2, GPIO8, GPIO9 | GPIO34, GPIO35, GPIO36, GPIO37, GPIO38|
 
 **Notes:**
 
