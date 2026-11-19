@@ -65,7 +65,7 @@ freq(0);
  
 But now, we want to play some music! We'll need the following 2 websites:
  
-* [Frequencies of Musical Notes](http://www.phy.mtu.edu/~suits/notefreqs.html)
+* [Frequencies of Musical Notes](https://plastic.audio/note-frequencies/)
 * [Childrens Songs written as characters](http://saregamapiano.blogspot.co.uk/2011/07/children-songs.html)
  
 The second website uses the letters a-g for lower pitch notes, and A-G for higher-pitch notes. We'll make a function which goes through a string of characters, one at a time, and plays the corresponding pitch note:
