@@ -6,7 +6,7 @@ class XMLLexer {
   }
   write(data) {
     this.j+=data;
-    var i = this.j.indexOf("<"),k,v;
+    var i = this.j.indexOf("<"),k,v,x;
     while (i>=0) {
       if (i) { // parse out content
         this.cb({t:"c", txt:this.j.substr(0,i)});
@@ -18,35 +18,38 @@ class XMLLexer {
       var end = this.j[1]=="/";
       var ended = this.j[i-1]=="/";
       if (ended) i--;
-      k = this.j.indexOf(" "); // first space
-      if (k<0 || k>i) k=i;
-      var tagName = this.j.substring(end?2:1,k);
-      var attrs = i>k?this.j.substring(k+1,i).trim():undefined, a={};
-      if (attrs) {
-        var x = 0;
-        while (attrs.length) {
-          var m = attrs.match(/\s*([a-zA-Z_0-9:-]+)\s*=\s*/);
-          if (!m) break;
-          k=m[1];
-          attrs = attrs.substr(m.index+m[0].length);
-          if (attrs[0]=='"') {
-            x=attrs.indexOf('"',1);
-            while(x>=0 && attrs[x-1]=='\\') x=attrs.indexOf('"',x+1);
-            if (x>0) v=JSON.parse(attrs.substring(0,x+1));
+      var tag = this.j.substring(end?2:1,i);
+      if (tag.length>1 && tag[0]=="?" && tag[tag.length-1]=="?") tag = tag.slice(0,-1); // <?xml ... ?>
+      var tagName = tag.match(/^[^\s]*/)[0], a={}, m, q;
+      var attrs = tag.substr(tagName.length).trim();
+      while (attrs.length) { // name, name=value, name="value" or name='value'
+        m = attrs.match(/[^\s=]+/);
+        if (!m || !m[0]) break;
+        k = m[0];
+        attrs = attrs.substr(m.index+k.length).trim();
+        v = "";
+        if (attrs[0]=="=") {
+          attrs = attrs.substr(1).trim();
+          q = attrs[0];
+          if (q=='"' || q=="'") {
+            x = attrs.indexOf(q,1);
+            if (x<0) x = attrs.length;
+            v = attrs.substring(1,x);
+            attrs = attrs.substr(x+1);
           } else {
-            x=attrs.indexOf(" ");
-            if (x>0) v=attrs.substr(0,x);
+            v = attrs.match(/^[^\s]*/)[0];
+            attrs = attrs.substr(v.length);
           }
-          if (x>0) attrs = attrs.substr(x+1); else attrs="";
-          a[k] = v;
+          attrs = attrs.trim();
         }
+        a[k] = v;
       }
       if (end) this.cb({t:"/", name:tagName});
       else {
         this.cb({t:"<>", name:tagName, attrs:a});
         if (ended) this.cb({t:"/", name:tagName});
       }
-      this.j = this.j.substr(i+1);
+      this.j = this.j.substr(i+(ended?2:1));
       i = this.j.indexOf("<");
     }
   }
