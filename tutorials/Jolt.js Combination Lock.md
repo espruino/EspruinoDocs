@@ -7,18 +7,18 @@ Jolt.js Combination Lock
 * KEYWORDS: Tutorials,LED,Lights,Motion
 * USES: Jolt.js,KeyPad
 
-This is a quick remix of the [KeyPad Combination Lock](/KeyPad+Combination+Lock) which uses a [Jolt.js](/Jolt.js) to drive a motor when the correct combination is entered.
+This is a quick remix of the [KeyPad Combination Lock](./KeyPad Combination Lock.md) which uses a [Jolt.js](../boards/Jolt.js.md) to drive a motor when the correct combination is entered.
 
 ![Combination Lock](Jolt.js Combination Lock.webm)
 
 You'll Need
 ------------
 
-* A [Jolt.js](/Jolt.js)
+* A [Jolt.js](../boards/Jolt.js.md)
 * 2x Qwiic cables
-* A [KeyPad](/KeyPad]
+* A [KeyPad](../devices/KeyPad.md)
 * A Central Locking Motor
-* A [Speaker](/Speaker]/Piezo (optional)
+* A [Speaker](../devices/Speaker.md) or Piezo (optional)
 
 Wiring Up
 --------

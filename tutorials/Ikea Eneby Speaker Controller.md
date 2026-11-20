@@ -25,8 +25,8 @@ What you need
 ------------
 
 * An [Ikea Eneby Speaker](https://www.ikea.com/gb/en/products/smart-home/speakers/)
-* A [MDBT42Q Breakout board](/MDBT42Q)
-* A [Puck.js](/Puck.js) if you want to use a button rather than your phone to turn the speaker on.
+* A [MDBT42Q Breakout board](../boards/MDBT42Q.md)
+* A [Puck.js](../boards/Puck.js.md) if you want to use a button rather than your phone to turn the speaker on.
 
 
 Wiring
@@ -65,7 +65,7 @@ and 2 hiding where the threaded inserts are on the rear:
 | VL+ | D16 |
 | WHITE-LED | D17 |
 
-You can use any GPIO pins on any Espruino board (including [Puck.js](/Puck.js), but `D14`-`D17` is what we've used in the code below.
+You can use any GPIO pins on any Espruino board (including [Puck.js](../boards/Puck.js.md), but `D14`-`D17` is what we've used in the code below.
 
 * Glue the module down securely, test, and re-assemble the Eneby
 
@@ -150,7 +150,7 @@ booting with the button held down but in this case it's a bit tricky to
 get inside the box! As a result it'll take 30 seconds after power on before
 you'll be able to remote-control your speaker.
 
-On the [Puck](/Puck.js) you're using to control the Eneby,
+On the [Puck](../boards/Puck.js.md) you're using to control the Eneby,
 just enter the following code:
 
 ```JS

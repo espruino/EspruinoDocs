@@ -12,7 +12,7 @@ NRF24L01+ Wireless Module
 
 The Nordic [NRF24L01+](http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P) transceiver is very popular and works well with Espruino. It is sold in very inexpensive wireless modules that interface via SPI. They can easily be obtained via [eBay](http://www.ebay.com/sch/i.html?_nkw=NRF24L01%2B) and many other places for prices as low as $2.
 
-A driver for it is available in the [[NRF24L01P.js]] module.
+A driver for it is available in the [NRF24L01P.js](NRF24L01P.js) module.
 
 Connect as follows:
 
@@ -27,9 +27,9 @@ Connect as follows:
 | 7    | MISO      | A6         | SPI MISO |
 | 8    | IRQ       | unused     | GPIO In |
 
-**Note:** These pins are suggested for the [Original Espruino Board](/Original) as they are in the middle, leaving the edges free for IO. However you can use any GPIO pins you want (with software [[SPI]] you needn't use SPI pins either).
+**Note:** These pins are suggested for the [Original Espruino Board](../boards/Original.md) as they are in the middle, leaving the edges free for IO. However you can use any GPIO pins you want (with software [SPI](../info/SPI.md) you needn't use SPI pins either).
 
-For the [[Pico]] there is [an adaptor shim available](/Shims#nrf24l01p-0-05-shim) as part of the [shim collection](/Shims#shim-collection) that makes the NRF24 a lot easier to solder!
+For the [Pico](../boards/Pico.md) there is [an adaptor shim available](../info/Shims.md#nrf24l01p-0-05-shim) as part of the [shim collection](../info/Shims.md#shim-collection) that makes the NRF24 a lot easier to solder!
 
 We'd also suggest that you add a 10nF - 100nF decoupling capacitor between GND and 3.3v. Some cheaper modules can be unrelible without this.
 
@@ -158,7 +158,7 @@ setInterval(function() {
 More Advanced Usage
 -----------------
 
-You can send individual packets using ```NRF.send(data)```, where data is an array of numbers of length ```NRF.PAYLOAD```. To receive you can use the same ```NRF.getData()``` function. For more information consult the module ([[NRF24L01P.js]]).
+You can send individual packets using ```NRF.send(data)```, where data is an array of numbers of length ```NRF.PAYLOAD```. To receive you can use the same ```NRF.getData()``` function. For more information consult the module ([NRF24L01P.js](NRF24L01P.js)).
 
 Reference
 --------------

@@ -7,13 +7,13 @@ Bluetooth LE MIDI
 * KEYWORDS: Module,Modules,BLE,Bluetooth,MIDI,Web MIDI
 * USES: Puck.js,BLE,Only BLE
 
-This is for MIDI over Bluetooth. There's also a module for [Wired MIDI](/Midi).
+This is for MIDI over Bluetooth. There's also a module for [Wired MIDI](../devices/Midi.md).
 
 Bluetooth Espruino devices like Puck.js can be programmed to appear as any type of Bluetooth LE device, and this
 includes a Bluetooth LE MIDI controller.
 
 [Joe Bowbeer](https://github.com/joebowbeer/PuckCC) and [George Mandis](https://github.com/georgemandis/puck-js-midi-clicker) did the original work on this.
-However it's now been converted into the [[ble_midi.js]] module to make it easier to use.
+However it's now been converted into the [ble_midi.js](../modules/ble_midi.js) module to make it easier to use.
 
 You can simply use the module as follows:
 

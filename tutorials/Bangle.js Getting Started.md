@@ -7,8 +7,8 @@ Bangle.js Getting Started
 * KEYWORDS: Tutorials,Bangle.js,Getting Started
 * USES: Bangle.js
 
-You may also be interested in the [Bangle.js Hardware reference](Bangle.js) and
-[Bangle.js Technical reference](Bangle.js+Technical)
+You may also be interested in the [Bangle.js Hardware reference](../boards/Bangle.js.md) and
+[Bangle.js Technical reference](../info/Bangle.js Technical.md)
 
 Contents
 --------

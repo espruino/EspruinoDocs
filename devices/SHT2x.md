@@ -6,7 +6,7 @@ Sensirion SHT20, SHT21 & SHT25 Temperature and Relative Humidity Sensor
 
 * KEYWORDS: Module,I2C,SHT20,SHT21,SHT25,sensirion,temperature,humidity
 
-Use the [SHT2x](/modules/SHT2x.js) ([About Modules](/Modules)) module for reading data from the Sensirion SHT2x series of devices.
+Use the [SHT2x](SHT2x.js) ([About Modules](../Modules.md)) module for reading data from the Sensirion SHT2x series of devices.
 
 This module communicates with the chip over I2C. It also takes care of CRC checking, and will throw an error in case of corrupt data.
 

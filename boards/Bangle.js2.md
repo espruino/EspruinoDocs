@@ -6,12 +6,12 @@ Bangle.js 2
 
 * KEYWORDS: Espruino,Official Board,nRF52832,nRF52,Nordic,Board,Bluetooth,BLE,Bluetooth LE,Graphics,Bangle.js,Bangle,Banglejs,Smartwatch,Watch
 
-Bangle.js is the successor to [Bangle.js](/Bangle.js), and is based on the
+Bangle.js is the successor to [Bangle.js](./Bangle.js.md), and is based on the
 [SMA Q3](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch).
 
 [![](Banglejs2/main.jpg)](https://www.kickstarter.com/projects/gfw/banglejs-2-the-open-smart-watch)
 
-* BUYFROM: £83,£71,https://shop.espruino.com/banglejs2,/Order#banglejs2
+* BUYFROM: £83,£71,https://shop.espruino.com/banglejs2,https://www.espruino.com/Order#banglejs2
 
 **Bangle.js 2 is an open, hackable smartwatch**
 
@@ -225,11 +225,11 @@ is different - see below under `Information`.
 
 Upon release, specific Bangle.js 2 tutorials will be added here.
 
-* For general help with Bangle.js, see the [Bangle.js Getting Started Guide](/Bangle.js+Getting+Started)
-* To get your computer connected, check out the [Espruino Getting Started Guide](/Quick+Start+BLE#banglejs)
-* To get started with development see the [Bangle.js Development page](/Bangle.js+Development)
+* For general help with Bangle.js, see the [Bangle.js Getting Started Guide](../tutorials/Bangle.js Getting Started.md)
+* To get your computer connected, check out the [Espruino Getting Started Guide](../tutorials/Quick Start BLE.md#banglejs)
+* To get started with development see the [Bangle.js Development page](../tutorials/Bangle.js Development.md)
 * There is more technical information below about using the [LCD](#lcd) and [onboard peripherals](#onboard)
-* For information about the internals and pinout, [the Bangle.js 2 technical information page](/Bangle.js2+Technical)
+* For information about the internals and pinout, [the Bangle.js 2 technical information page](../info/Bangle.js2 Technical.md)
 
 Tutorials using Bangle.js:
 
@@ -243,14 +243,14 @@ Tutorials using Bluetooth LE and functionality that may not be part of Bangle.js
 
 * APPEND_USES: BLE,-Only BLE,-Bangle.js,-Bangle.js2
 
-There are [many more tutorials](/Tutorials) that may not be specifically for
-you device but will probably work with some tweaking. [Try searching](/Search)
+There are [many more tutorials](../Tutorials.md) that may not be specifically for
+you device but will probably work with some tweaking. [Try searching](https://www.espruino.com/Search)
 to find what you want.
 
 Information
 -----------
 
-* For detailed technical information about Bangle.js 2, check out [the Bangle.js 2 technical information page](/Bangle.js2+Technical)
+* For detailed technical information about Bangle.js 2, check out [the Bangle.js 2 technical information page](../info/Bangle.js2 Technical.md)
 * CAD files for the Bangle.js 2 stand, as well as an STL of the watch body [is available here](https://github.com/espruino/EspruinoBoard/blob/master/Bangle.js2)
 * The Espruino board file for Bangle.js [can be found here](https://github.com/espruino/Espruino/blob/master/boards/BANGLEJS2.py) and contains pinouts and other configuration info
 * There's a [Bangle.js 2 API reference here](https://espruino.com/ReferenceBANGLEJS2)
@@ -258,8 +258,8 @@ Information
 
 Certifications:
 
-* Links to [CE/RED report](/files/Bangle.js2-RED.pdf) and [FCC ID 2AKUO-10](/files/Bangle.js2-FCC.pdf) Certifications
-* Links to shipping documentation: [Battery UN38.3](/files/Bangle.js2-UN38.3.pdf)
+* Links to [CE/RED report](../files/Bangle.js2-RED.pdf) and [FCC ID 2AKUO-10](../files/Bangle.js2-FCC.pdf) Certifications
+* Links to shipping documentation: [Battery UN38.3](../files/Bangle.js2-UN38.3.pdf)
 
 
 Power Consumption
@@ -299,7 +299,7 @@ connection will also be displayed on the LCD.
 ### Graphics
 
 You can output graphics on Bangle.js's display via the global variable `g`
-that is an instance of the [Graphics class](/Reference#Graphics). Unlike Bangle.js 1,
+that is an instance of the [Graphics class](https://www.espruino.com/Reference#Graphics). Unlike Bangle.js 1,
 the display is buffered so changes to the display will only take effect when you call
 `g.flip()` *or* your code finishes executing and Bangle.js returns to idle.
 
@@ -312,9 +312,9 @@ g.drawString("Hello World",30,30);
 
 ### Menus
 
-Bangle.js comes with a built-in menu library that can be accessed with the [`E.showMenu()`](/Reference#l_E_showMenu) command.
+Bangle.js comes with a built-in menu library that can be accessed with the [`E.showMenu()`](https://www.espruino.com/Reference#l_E_showMenu) command.
 
-[`E.showPrompt()`](/Reference#l_E_showPrompt) and [`E.showMessage()`](/Reference#l_E_showMessage) can also be used for simple
+[`E.showPrompt()`](https://www.espruino.com/Reference#l_E_showPrompt) and [`E.showMessage()`](https://www.espruino.com/Reference#l_E_showMessage) can also be used for simple
 prompts and full-screen messages.
 
 ```JS
@@ -580,7 +580,7 @@ more information.
 
 #### Advanced GPS
 
-For more information GPS commands see the [Technical Information Page](/Bangle.js2+Technical#gps)
+For more information GPS commands see the [Technical Information Page](../info/Bangle.js2 Technical.md#gps)
 
 
 Hardware SWD
@@ -590,7 +590,7 @@ Bangle.js 2 has the hardware SWD pin brought out on the back of the watch along 
 
 ![](Banglejs2/SWD.jpg)
 
-For more information see the [Technical Information Page](/Bangle.js2+Technical#swd)
+For more information see the [Technical Information Page](../info/Bangle.js2 Technical.md#swd)
 
 
 Firmware Updates
@@ -615,7 +615,7 @@ the `Firmware Update` page to update your bootloader.
 
 ### DFU
 
-Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
+Please see the [Firmware Update](../info/Firmware Update.md#nrf52) page for detailed instructions.
 
 
 
@@ -625,9 +625,9 @@ Troubleshooting
 Check out:
 
 * [The Bangle.js Wiki and FAQ](https://github.com/espruino/BangleApps/wiki)
-* [Bangle.js Troubleshooting](Troubleshooting+Bangle.js)
-* [Bluetooth Espruino Troubleshooting](Troubleshooting+BLE)
-* [General Espruino Troubleshooting](/Troubleshooting)
+* [Bangle.js Troubleshooting](../info/Troubleshooting Bangle.js.md)
+* [Bluetooth Espruino Troubleshooting](../info/Troubleshooting BLE.md)
+* [General Espruino Troubleshooting](../info/Troubleshooting.md)
 
 
 Other Official Espruino Boards

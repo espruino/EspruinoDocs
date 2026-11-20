@@ -18,7 +18,7 @@ You'll Need
 ----------
 
 * An Espruino Board
-* A [[Speaker]]
+* A [Speaker](../devices/Speaker.md)
 
 Wiring Up
 --------

@@ -9,13 +9,13 @@ Speaker
 ![Speaker](Speaker/speaker.jpg)
 ![Piezo Speaker](Speaker/piezo.jpg)
 
-Espruino can either output square waves using [[PWM]], or low sample rate can be output using the [[Waveform]] class.
+Espruino can either output square waves using [PWM](../info/PWM.md), or low sample rate can be output using the [Waveform](../info/Waveform.md) class.
 
-To use a speaker with Espruino you'll have to connect it to pins marked with [[PWM]] or [[DAC]].
+To use a speaker with Espruino you'll have to connect it to pins marked with [PWM](../info/PWM.md) or [DAC](../info/DAC.md).
 
 Useful sources of speakers are:
 
-* Inside old Personal Computers. They usually also come with a wire and a [[Pin Strip]] connector attached, and look like the larger speaker in the picture above.
+* Inside old Personal Computers. They usually also come with a wire and a [Pin Strip](Pin Strip.md) connector attached, and look like the larger speaker in the picture above.
 * Musical Christmas cards have a small piezoelectric speaker inside them that looks like the small gold disc above. This won't be very loud.
 * Old headphones can also be a good source
 

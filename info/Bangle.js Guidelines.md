@@ -7,9 +7,9 @@ Bangle.js Code Guidelines
 * KEYWORDS: Bangle.js,Bangle,Banglejs,app,widget,Guidelines,rules
 * USES: Bangle.js
 
-**For general information on making apps [try this page](/Bangle.js+First+App)**
+**For general information on making apps [try this page](../tutorials/Bangle.js First App.md)**
 
-This a list of suggestions and things that we'd like apps [submitted to the App Loader](Bangle.js+App+Loader)
+This a list of suggestions and things that we'd like apps [submitted to the App Loader](../tutorials/Bangle.js App Loader.md)
 to do, to make sure everything works together well.
 
 
@@ -18,12 +18,12 @@ General
 
 * If you need settings, try and use [an `myapp.settings.js` file](https://github.com/espruino/BangleApps#adding-configuration-to-the-settings-menu)
 * If you need to run code at boot time, use a file called `myapp.boot.js`
-* Try and use [the same code style](/Code+Style) as the rest of Bangle.js
+* Try and use [the same code style](./Code Style.md) as the rest of Bangle.js
 * Where possible, [store large chunks of data in functions](https://www.espruino.com/Code+Style#other-suggestions)
   as this will avoid using RAM
-* Once in the App store, [keep a `ChangeLog` file in your app's folder](/Bangle.js+App+Loader#making-changes)
+* Once in the App store, [keep a `ChangeLog` file in your app's folder](../tutorials/Bangle.js App Loader.md#making-changes)
   and increment the version whenever you submit a change to the App Loader.
-* Try and use [the `locale` module to format dates/distances/etc](/Bangle.js+Locale) in a way that is correct for multiple countries.
+* Try and use [the `locale` module to format dates/distances/etc](../tutorials/Bangle.js Locale.md) in a way that is correct for multiple countries.
 * Please don't include editor config/settings files and things that are not relevant to your application
 * Please test your app! Ideally in [your own copy of the App Loader](https://www.espruino.com/Bangle.js+App+Loader#enable-github-pages)
 

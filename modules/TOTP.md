@@ -6,7 +6,7 @@ Time-based One-time Password
 
 * KEYWORDS: Module,Crypto,TOTP,Time-based Password,OTP,One time password
 
-This [[TOTP.js]] module implements a Time-based One-time Password for Espruino.
+This [TOTP.js](TOTP.js) module implements a Time-based One-time Password for Espruino.
 
 
 How to use the module:

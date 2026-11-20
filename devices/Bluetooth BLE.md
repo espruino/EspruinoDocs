@@ -7,13 +7,13 @@ Bluetooth BLE 4.0 (HM-10)
 * KEYWORDS: Bluetooth,BLE,HM-10,HM10,iBeacon,Wireless,Radio,Transceiver
 * USES: Espruino,HM-10,Bluetooth
 
-**Note:** This page covers adding Bluetooth LE on the [Original Espruino Board](/Original).
+**Note:** This page covers adding Bluetooth LE on the [Original Espruino Board](../boards/Original.md).
 We now [sell Espruino devices](https://shop.espruino.com/ble) with Bluetooth LE capability pre-installed.
 
 Introduction
 -------------
 
-Along with (some of) the Kickstarter wireless kits the [HC-05 bluetooth module](/Bluetooth) was included to handle wireless connections. However, as some might have already noted, it does not support Bluetooth 4.0 (BLE), which makes it inaccessible from the majority of Apple devices. Also this bluetooth standard consumes more energy than necessary, so it would be nice to have a module at hand, that offers Bluetooth 4.0 (BLE) support.
+Along with (some of) the Kickstarter wireless kits the [HC-05 bluetooth module](./Bluetooth.md) was included to handle wireless connections. However, as some might have already noted, it does not support Bluetooth 4.0 (BLE), which makes it inaccessible from the majority of Apple devices. Also this bluetooth standard consumes more energy than necessary, so it would be nice to have a module at hand, that offers Bluetooth 4.0 (BLE) support.
 The HM-10 module is among the choices. It's cheap and compatible with the Espruino board. However, keep in mind that this board is by far more complex, so you might not get the results you want to see instantly without further configuration. By default the modules are configured to connect to each other, but you have to manually specify one module as master.
 
 

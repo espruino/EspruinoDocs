@@ -12,7 +12,7 @@ Library for working with the [Quite Ok Audio Format (QOA)](https://qoaformat.org
 QOA does reasonably fast lossy audio compression at 3.2 bits per sample.
 
 This library currently supports decoding QOA-encoded audio on any board that you can upload inline C to.  
-Sound can then be played back with the [[Waveform]] class.
+Sound can then be played back with the [Waveform](../info/Waveform.md) class.
 
 Encode some audio
 -----------------

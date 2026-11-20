@@ -11,11 +11,11 @@ Arduino Motor Shield
 
 This is a cheap (<4USD) motor shield for Arduino that contains two L293D driver IC, and a 74HCT595N shift register IC.
 
-**NOTE:** [Pixl.js](/Pixl.js) is a 3.3V device, and the  Arduino Motor Shield is a 5V shield. You need to connect the Vin pin to 5V pin, the jumper shown just right of the red circle. Without this the shield will have the green light shine dimly and do nothing!
+**NOTE:** [Pixl.js](../boards/Pixl.js.md) is a 3.3V device, and the  Arduino Motor Shield is a 5V shield. You need to connect the Vin pin to 5V pin, the jumper shown just right of the red circle. Without this the shield will have the green light shine dimly and do nothing!
 
 ![Vin to 5V](https://www.espruino.com/refimages/Pixljs_jst.jpg)
 
-Support is provided via the [[arduino-motorshield.js]] module.
+Support is provided via the [arduino-motorshield.js](arduino-motorshield.js) module.
 
 First, initialise the module:
 

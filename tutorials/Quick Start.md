@@ -9,16 +9,16 @@ Quick Start
 ## Which board do you have?
 
 ### Bluetooth LE
-[![Bluetooth LE Devices](Quick Start/BLE.jpg)](/Quick Start BLE)
+[![Bluetooth LE Devices](Quick Start/BLE.jpg)](./Quick Start BLE.md)
 
 ### USB
-[![USB Devices](Quick Start/USB.jpg)](/Quick Start USB)
+[![USB Devices](Quick Start/USB.jpg)](./Quick Start USB.md)
 
-For the best experience, please use one of [our official Espruino Boards](/Order).
+For the best experience, please use one of [our official Espruino Boards](https://www.espruino.com/Order).
 
 ## Already got the IDE connected?
 
-Please [take a look here](/Quick+Start+Code) for a quick walkthrough
+Please [take a look here](./Quick Start Code.md) for a quick walkthrough
 on how to write code for Espruino.
 
 <script>

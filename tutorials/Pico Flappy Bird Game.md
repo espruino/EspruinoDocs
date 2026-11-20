@@ -19,13 +19,13 @@ Check out the video above for more information!
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [Nokia 5110 LCD](/PCD8544)
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* A [Nokia 5110 LCD](../devices/PCD8544.md)
+* [Breadboard](../devices/Breadboard.md)
 
 or:
 
-* An Espruino [Pixl.js](/Pixl.js)
+* An Espruino [Pixl.js](../boards/Pixl.js.md)
 
 Software
 -------

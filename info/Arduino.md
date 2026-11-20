@@ -10,8 +10,8 @@ There are hundreds of Arduino shields available. This page links
 to some of the shields that we have successfully used with
 Espruino.
 
-If you're using [Pixl.js](/Pixl.js) check out the Pixl's
-[documentation on Shields](/Pixl.js#arduino).
+If you're using [Pixl.js](../boards/Pixl.js.md) check out the Pixl's
+[documentation on Shields](../boards/Pixl.js.md#arduino).
 
 Available modules
 -----------------

@@ -18,24 +18,24 @@ like [Nordic's PPK](https://www.nordicsemi.com/Software-and-tools/Development-To
 but it's also good to have a device that 'just works' (some multimeters can
 give unreliable results).
 
-Here we'll make one using a [Pixl.js](/Pixl.js). As built it's accurate to
+Here we'll make one using a [Pixl.js](../boards/Pixl.js.md). As built it's accurate to
 around 10uA, which is great for debugging other Espruino devices!
 
 You'll need
 -----------
 
-* A [Pixl.js](/Pixl.js) or [Pixl.js Multicolour](/Pixl.js+Multicolour)
-* A [INA226 Current/Voltage Measurement IC](/INA226)
+* A [Pixl.js](../boards/Pixl.js.md) or [Pixl.js Multicolour](../boards/Pixl.js Multicolour.md)
+* A [INA226 Current/Voltage Measurement IC](../devices/INA226.md)
 * A large capacitor (220uF or above)
 
-In the picture I'm using a [Pixl.js Multicolour](/Pixl.js+Multicolour) -
+In the picture I'm using a [Pixl.js Multicolour](../boards/Pixl.js Multicolour.md) -
 since it has a LiPo battery and charger built in it makes for a simple
 'Plug and Play' device.
 
 Wiring
 ------
 
-Connect the [INA226](/INA226) as follows:
+Connect the [INA226](../devices/INA226.md) as follows:
 
 | INA226 | |
 |--------|---|
@@ -59,10 +59,10 @@ to get an more accurate reading.
 Now, `IN-` should be connected to the voltage you intend to power the target device
 from.
 
-* If you're planning on using this with something like [Puck.js](/Puck.js) I'd
+* If you're planning on using this with something like [Puck.js](../boards/Puck.js.md) I'd
 recommend `3.3v`
 * Otherwise devices with a voltage regulator on board could use Pixl.js's `Vin`
-which is 5v, or the power from a Lithium Ion battery (built into [Pixl.js Multicolour](/Pixl.js+Multicolour)).
+which is 5v, or the power from a Lithium Ion battery (built into [Pixl.js Multicolour](../boards/Pixl.js Multicolour.md)).
 
 Personally, I have added a two-way switch to allow selection between either 3.3v
 or LiPo Power (around 4v). In this case you need to be careful to only switch
@@ -72,7 +72,7 @@ on `IN+` to discharge into the 3.3v rail.
 Ranges
 ------
 
-Most [INA226 modules](/INA226) come with a shunt of 0.1 Ohms.
+Most [INA226 modules](../devices/INA226.md) come with a shunt of 0.1 Ohms.
 
 While suitable for a lot of uses, this means the module is less good at
 measuring very low amounts of current. I have unsoldered the resistor

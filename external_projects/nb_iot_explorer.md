@@ -7,7 +7,7 @@ NB-IoT Explorer
 * KEYWORDS: NB-IoT,NBIOT,BG96
 * USES: Pixl.js,QuectelBG96
 
-How to use the [Quectel BG96](/QuectelBG96) NB-IoT modem with [Pixl.js](/Pixl.js)
+How to use the [Quectel BG96](../devices/QuectelBG96.md) NB-IoT modem with [Pixl.js](../boards/Pixl.js.md)
 
 ![](nb_iot_explorer.jpg)
 

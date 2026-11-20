@@ -7,7 +7,7 @@ Dinosaur Game
 
 ![Dinosaur](Dinosaur Game.jpg)
 
-This code creates a Dinosaur game on [Pixl.js](/Pixl.js), similar to the
+This code creates a Dinosaur game on [Pixl.js](../boards/Pixl.js.md), similar to the
 one available in the Chrome Web Browser when you're offline:
 
 * The bottom two buttons move left and right
@@ -15,7 +15,7 @@ one available in the Chrome Web Browser when you're offline:
 
 This can easily be ported to other devices by:
 
-* Making sure `g` is an instance of [[Graphics]]
+* Making sure `g` is an instance of [Graphics](../info/Graphics.md)
 * Ensuring `BTNL/R/U` are set correctly
 
 * APPLOADER_APP: trex

@@ -6,11 +6,11 @@ MCP794xx Battery-Backed I2C Real-Time Clock/Calendar with SRAM, (optional) EEPRO
 
 * KEYWORDS: Module,I2C,RTC,EEPROM,MCP79400,MCP79401,MCP79402,MCP79410,MCP79411,MCP79412
 
-This is a module that makes it easy to connect to a MCP794xx [[I2C]] real time clock / calendar.
+This is a module that makes it easy to connect to a MCP794xx [I2C](../info/I2C.md) real time clock / calendar.
 
-The MCP794xx is a family of [[I2C]] real time clocks from Microchip with 64 byte battery backed SRAM and Protected EEPROM. The MCP7941x parts also contain 128 byte EEPROM. This module makes it easy to connect this clock with an espruino board.
+The MCP794xx is a family of [I2C](../info/I2C.md) real time clocks from Microchip with 64 byte battery backed SRAM and Protected EEPROM. The MCP7941x parts also contain 128 byte EEPROM. This module makes it easy to connect this clock with an espruino board.
 
-Use the [MCP794xx](/modules/MCP794xx.js) module for it.
+Use the [MCP794xx](MCP794xx.js) module for it.
 
 Wiring Up
 ---------
@@ -37,7 +37,7 @@ var rtc = require('MCP794xx').connect(I2C1);
 rtc.enableVbat()
 
 // set the date - assuming the "Set Current Time" is set in your Espruino IDE, just uploading this code will set it up
-rtc.setDateTime(new Date()) 
+rtc.setDateTime(new Date())
 
 
 // get the date & time from the RTC, for example at boot
@@ -84,7 +84,7 @@ The MCP794x1 parts have an EUI-48, the MCP794x2 have an EUI-64 node address fact
 /// Reads the factory programmed 48 bit EUI. Only for MCP794x1
 rtc.readEUI48()
 
-// or 
+// or
 
 /// Reads the factory programmed 64 bit EUI. Only for MCP794x2
 rtc.readEUI64()
@@ -99,7 +99,7 @@ Alerts, using the MFP pin and some other things not implemented. Send a PR or ra
 
 Reference
 --------
- 
+
 * APPEND_JSDOC: MCP794xx.js
 
 

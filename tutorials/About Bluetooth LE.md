@@ -25,9 +25,9 @@ TL;DR - Super-quick summary
 
 Puck.js provides a UART (serial) connection over Bluetooth LE where you can send
 and receive characters. You can use this to control your Puck however you want
-(for example using our [`Puck.js` library for Web Bluetooth](Puck.js Web Bluetooth)).
+(for example using our [`Puck.js` library for Web Bluetooth](../tutorials/Web Bluetooth.md)).
 
-You can even use one Puck to control another [like this](Puck.js BLE UART)
+You can even use one Puck to control another [like this](../tutorials/BLE UART.md)
 
 Bluetooth LE itself is more complex - so if you want to control other devices,
 or want to control your Pucks in a more secure way, keep reading!
@@ -43,15 +43,15 @@ engaging in any two-way communication.
 By default it broadcasts its name, and the services that it implements (Nordic UART -
 we'll get to that later).
 
-Some devices, like [Eddystone Beacons](/Puck.js Eddystone) don't generally broadcast
+Some devices, like [Eddystone Beacons](Eddystone.md) don't generally broadcast
 a name, but send a URL (which can be read by your phone) and perhaps their battery level.
 
-**Note:** See [`NRF.setAdvertising(...)`](/Reference#l_NRF_setAdvertising) for examples
-of how to set up advertising on Puck.js. You can also use [`NRF.findDevices(...)`](/Reference#l_NRF_findDevices)
-and [`NRF.setScan(...)`](/Reference#l_NRF_setScan) to scan for advertising packets
+**Note:** See [`NRF.setAdvertising(...)`](https://www.espruino.com/Reference#l_NRF_setAdvertising) for examples
+of how to set up advertising on Puck.js. You can also use [`NRF.findDevices(...)`](https://www.espruino.com/Reference#l_NRF_findDevices)
+and [`NRF.setScan(...)`](https://www.espruino.com/Reference#l_NRF_setScan) to scan for advertising packets
 broadcast by other beacons.
 
-To see how to receive advertising data in your own application, [check out this tutorial](/Puck.js+Advertising).
+To see how to receive advertising data in your own application, [check out this tutorial](BLE Advertising.md).
 
 
 Connecting (Puck as Peripheral)
@@ -136,7 +136,7 @@ It's really helpful to install the `nRF Connect` app on your phone. You can then
 browse (and change) services and characteristics on different devices so you can get
 an idea what they're like.
 
-**Note:** See [`NRF.setServices(...)`](/Reference#setServices) for examples
+**Note:** See [`NRF.setServices(...)`](https://www.espruino.com/Reference#setServices) for examples
 of how to set up services and characteristics on Puck.js.
 
 
@@ -161,8 +161,8 @@ If you want to light an LED on a Puck, you can just connect and write
 be executed! This works for functions that you've previously defined too.
 
 **Note:** Exposing the JS interpreter to the world isn't remotely secure.
-You can add a password with [`E.setPassword(...)`](/Reference#l_E_setPassword),
-or can use [`NRF.setServices(...)`](/Reference#setServices) to completely
+You can add a password with [`E.setPassword(...)`](https://www.espruino.com/Reference#l_E_setPassword),
+or can use [`NRF.setServices(...)`](https://www.espruino.com/Reference#setServices) to completely
 remove it.
 
 
@@ -201,7 +201,7 @@ the functionality in Pucks works using Callbacks or [Promises](https://developer
 If you call a function it will most likely return immediately, and will
 call the function you supplied at a later date.
 
-An easy way to see what devices are around is to use [`NRF.findDevices(...)`](/Reference#l_NRF_findDevices):
+An easy way to see what devices are around is to use [`NRF.findDevices(...)`](https://www.espruino.com/Reference#l_NRF_findDevices):
 
 ```
 var devices;
@@ -233,7 +233,7 @@ as `BluetoothDevice` objects:
  ]
 ```
 
-You can then call [`BluetoothDevice.gatt.connect(...)`](/Reference#l_BluetoothRemoteGATTServer_connect)
+You can then call [`BluetoothDevice.gatt.connect(...)`](https://www.espruino.com/Reference#l_BluetoothRemoteGATTServer_connect)
 on the device that `findDevices` returned, and can then use promises to find a service, characteristic, write to it,
 and finally disconnect:
 
@@ -277,16 +277,16 @@ NRF.findDevices(function(devices) {
 There are nicer ways of doing this though - see below.
 
 **Note:** The only way to disconnect from a device is to call disconnect on the
-[`BluetoothRemoteGATTServer`](/Reference#BluetoothRemoteGATTServer) object returned
+[`BluetoothRemoteGATTServer`](https://www.espruino.com/Reference#BluetoothRemoteGATTServer) object returned
 by `NRF.connect`.
 
 
 ### Other connection methods
 
-* There's [an easy utility module](/Puck.js BLE UART) that makes the process of writing to another Puck really easy.
-* You can use [`NRF.connect(...)`](/Reference#l_NRF_connect) to connect directly
+* There's [an easy utility module](../tutorials/BLE UART.md) that makes the process of writing to another Puck really easy.
+* You can use [`NRF.connect(...)`](https://www.espruino.com/Reference#l_NRF_connect) to connect directly
 using just an address (which you can find in `id` returned from `findDevices`).
 This is useful if you always want to connect to the same device.
-* You can also use [`NRF.requestDevice`](/Reference#l_NRF_requestDevice) instead
+* You can also use [`NRF.requestDevice`](https://www.espruino.com/Reference#l_NRF_requestDevice) instead
 of `NRF.findDevice()`. It's modelled on the Web Bluetooth function [`navigator.bluetooth.requestDevice`](),
 and will allow you to connect to any device of a certain type or name.

@@ -8,11 +8,11 @@ Infrared Proximity Sensor
 
 ![Infrared Proximity Sensor](InfraredProximity/module.jpg)
 
-[TCRT5000 Datasheet](/datasheets/TCRT5000.pdf)
+[TCRT5000 Datasheet](../datasheets/TCRT5000.pdf)
 
 The Infrared Proximity Sensor is a simple reflective sensor containing an Infrared LED (blue) and an Infrared Phototransistor (black). When Infrared light from the LED starts to get reflected back to the sensor, the phototransistor starts to conduct.
 
-Using 
+Using
 -----
 
 * APPEND_USES: TRCT5000

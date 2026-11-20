@@ -7,14 +7,14 @@ Image Slideshow with ILI9341 display
 
 ![Slideshow](slideshow_ili9341.jpg)
 
-This example shows you how to use an [[ILI9341]] display
+This example shows you how to use an [ILI9341](../devices/ILI9341.md) display
 to output a series of images loaded from SD card (there's an SD card connector on the back of the display).
 
 Wiring
 ------
 
-* Put an Espruino [[Pico]] into breadboard, with the USB connector facing left
-* Place the [[ILI9341]] into the breadboard as show in the image - directly above the Pico
+* Put an Espruino [Pico](../boards/Pico.md) into breadboard, with the USB connector facing left
+* Place the [ILI9341](../devices/ILI9341.md) into the breadboard as show in the image - directly above the Pico
 * Connect the top-left pin of the LCD (labeled VCC) to 3.3v on the Pico
 * Connect the top-2nd-left pin of the LCD (labeled GND) to GND on the Pico
 * Now connect the 4 end pins on the LCD (for the SD card) as follows:

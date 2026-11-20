@@ -13,17 +13,17 @@ Introduction
 We'll add an infrared receiver so that we can receive signals from a remote control, and then we'll record and replay those same signals when a button is pressed.
 
 **Note:** If you don't have an IR receiver you may be able to find the
-'pronto hex' code for your device online. You can then [decode it with this library](/pronto).
+'pronto hex' code for your device online. You can then [decode it with this library](../modules/pronto.md).
 
 See [howstuffworks](http://electronics.howstuffworks.com/remote-control.htm) for a more complete article on how remote controls themselves work.
 
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [VS1838B Infrared Receiver](/IRReceiver)
+* An Espruino [Pico](../boards/Pico.md)
+* A [VS1838B Infrared Receiver](../devices/IRReceiver.md)
 * An Infrared LED
-* [[Breadboard]]
+* [Breadboard](../devices/Breadboard.md)
 
 Wiring Up
 --------
@@ -39,9 +39,9 @@ This is pretty simple. The IR receiver needs nothing more than 3.3v and a Pullup
 Software - Receiving
 ------------------
 
-To get started, let's use the existing [[IRReceiver]] module to try and receive some commands from an existing IR remote control.
+To get started, let's use the existing [IRReceiver](../devices/IRReceiver.md) module to try and receive some commands from an existing IR remote control.
 
-Copy and Paste the following code into the right hand side of the Web IDE and click `Send to Espruino`. It has to be the right this time, because we're using a [Module](/Modules) that needs to be automatically downloaded from the net.
+Copy and Paste the following code into the right hand side of the Web IDE and click `Send to Espruino`. It has to be the right this time, because we're using a [Module](../Modules.md) that needs to be automatically downloaded from the net.
 
 ```
 digitalWrite(B7, 0); // Set B7 to GND
@@ -89,7 +89,7 @@ require("IRReceiver").connect(B6, function(code) {
 
 If you `Send to Espruino` now, you should be able to turn LED1 on and off using the two buttons on the remote control.
 
-You could add more `if` statements to turn different things on and off. You could change `LED1` to `A8`, connect a [Relay Module](/Relays) to pin `A8`, and then turn anything on and off from your remote control.
+You could add more `if` statements to turn different things on and off. You could change `LED1` to `A8`, connect a [Relay Module](../devices/Relays.md) to pin `A8`, and then turn anything on and off from your remote control.
 
 
 Software - Transmitting
@@ -132,7 +132,7 @@ It should display something like this:
 
 This is part of the array of values that was recorded (Espruino only displays some of it so it doesn't fill up your screen). If you do want all of it you can always type `console.log(times)`.
 
-**Note:** This is a good example of how easily you can use up memory on a microcontroller. If you type `process.memory().free` you'll see how many memory blocks Espruino has free. Now press random buttons on the remote control for a few seconds and run `process.memory().free` again - it'll be a lot less. This is because Espruino is storing 64 bit floating point values, as well as an array index for each time, when realistically it only needed to store 8 bits. This is easy to work around (see the [[Performance]] page) but for now we're focussing on getting the job done, rather than doing it efficiently.
+**Note:** This is a good example of how easily you can use up memory on a microcontroller. If you type `process.memory().free` you'll see how many memory blocks Espruino has free. Now press random buttons on the remote control for a few seconds and run `process.memory().free` again - it'll be a lot less. This is because Espruino is storing 64 bit floating point values, as well as an array index for each time, when realistically it only needed to store 8 bits. This is easy to work around (see the [Performance](../info/Performance.md) page) but for now we're focussing on getting the job done, rather than doing it efficiently.
 
 So now, playing this back is really easy. You just feed the whole array into digitalPulse. To see what it might look like, try the following in the left-hand side of the IDE:
 

@@ -11,11 +11,11 @@ Espruino WiFi
 **Espruino WiFi is a tiny USB and WiFi-enabled microcontroller that can be programmed in JavaScript**
 
 Just plug it into your computer and get started in seconds with the
-[Web IDE](/ide) - no software installation needed!
+[Web IDE](https://www.espruino.com/ide) - no software installation needed!
 
-**Just got your Espruino WiFi? [Get started here!](/Quick+Start+USB)**
+**Just got your Espruino WiFi? [Get started here!](../tutorials/Quick Start USB.md)**
 
-**Note:** Espruino WiFi provides an easy, well-supported way to get on the Internet, however it's not the only way to access a WiFi network from an Espruino board. [See here](/Internet#related-pages) for more information.
+**Note:** Espruino WiFi provides an easy, well-supported way to get on the Internet, however it's not the only way to access a WiFi network from an Espruino board. [See here](../info/Internet.md#related-pages) for more information.
 
 Contents
 --------
@@ -30,7 +30,7 @@ Features
 * 2 rows of 11 0.1" pins, with 2 extra 0.1" holes
 * 21 GPIO pins : 8 Analog inputs, 20 PWM, 1 Serial, 3 SPI, 3 I2C
 * Three on-board LEDs (2x user programmable, 1x WiFi activity) and one button.
-* [STM32F411CEU6](/datasheets/STM32F411xE.pdf) 32-bit 100MHz ARM Cortex M4 CPU
+* [STM32F411CEU6](../datasheets/STM32F411xE.pdf) 32-bit 100MHz ARM Cortex M4 CPU
 * 512kb flash, 128kb RAM
 * ESP8266 WiFi (802.11 b/g/n)
 * All GPIO is 5 volt tolerant (Arduino compatible)
@@ -47,7 +47,7 @@ Pinout
 
 * APPEND_PINOUT: ESPRUINOWIFI
 
-<span style="color: red">**Note:** Unlike [Espruino Pico](/Pico) and the [original Espruino board](/Original), Espruno WiFi **doesn't** contain any
+<span style="color: red">**Note:** Unlike [Espruino Pico](./Pico.md) and the [original Espruino board](./Original.md), Espruno WiFi **doesn't** contain any
 battery switchover circuitry. The `+`/`+VUSB` pin is connected straight to **USB 5V**, and shouldn't be used to power the
 WiFi board while Micro USB is plugged in, unless it is via a diode from 5V.</span>
 
@@ -56,8 +56,8 @@ Information
 
 * [Circuit Diagram](https://github.com/espruino/EspruinoBoard/blob/master/WiFi/pdf/espruino_wifi_sch.pdf)
 * [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/WiFi/pdf/espruino_wifi_brd.pdf)
-* [STM32F411CE Datasheet](/datasheets/STM32F411xE.pdf)
-* [STM32F411CE Reference Manual](/datasheets/STM32F411xE_ref.pdf)
+* [STM32F411CE Datasheet](../datasheets/STM32F411xE.pdf)
+* [STM32F411CE Reference Manual](../datasheets/STM32F411xE_ref.pdf)
 
 
 Using WiFi
@@ -167,7 +167,7 @@ Tutorials using the Espruino WiFi Board:
 * APPEND_USES: EspruinoWiFi
 
 There aren't currently many tutorials specifically for the Espruino WiFi,
-however it can be used just like the [Espruino Pico](/Pico), which has many
+however it can be used just like the [Espruino Pico](./Pico.md), which has many
 more tutorials available:
 
 * APPEND_USES: Pico,-EspruinoWiFi
@@ -182,14 +182,14 @@ Hardware Limitations
 Troubleshooting
 -------------
 
-Please see the [[Troubleshooting]] section.
+Please see the [Troubleshooting](../info/Troubleshooting.md) section.
 
 
 Firmware Updates
 -----------------
 
 We'd **strongly** recommend that you use the Web IDE to update the firmware
-on this board - please see the [Firmware Update](/Firmware+Update#stm32) page for detailed instructions.
+on this board - please see the [Firmware Update](../info/Firmware Update.md#stm32) page for detailed instructions.
 
 If you do manage to erase all your board's flash memory you can use the
 on-chip bootloader though - see below.
@@ -261,7 +261,7 @@ LoopbackA.setConsole();
 
 * Modify `esptool.py` to change both `ESP_RAM_BLOCK` and `FLASH_WRITE_SIZE` to `0x100`
 
-* Download the [ESP8266 1.5.4 firmware](/files/ESP8266_AT_1_5_4.zip)
+* Download the [ESP8266 1.5.4 firmware](../files/ESP8266_AT_1_5_4.zip)
 (originally from [here](https://www.electrodragon.com/w/ESP8266_AT-Command_firmware))
 
 * Run the following command. You'll need to replace `/dev/ttyACM0` with

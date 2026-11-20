@@ -8,7 +8,7 @@ HopeRF RFM69 Wireless Module
 
 The HopeRF RFM69 is a transceiver module capable of operation over a wide frequency range, including the 315,433, 868 and 915MHz license-free ISM (Industry Scientific and Medical) frequency bands. ([datasheet here](http://www.hoperf.cn/upload/rf/RFM69-V1.3.pdf))
 
-A driver for it is available in the [[RFM69.js]] module.
+A driver for it is available in the [RFM69.js](RFM69.js) module.
 
 **Note:** This module is still very new, and doesn't support anywhere near all the features of the RFM69. [Contributions](https://github.com/espruino/EspruinoDocs/blob/master/devices/RFM69.js) are always appreciated!
 
@@ -33,7 +33,7 @@ Connect as follows:
 | 15 | NSS | B10 |
 | 15 | NC | GND |
 
-For the Espruino [[Pico]], there is [an adaptor shim available](/Shims#rfm69-rfm12b-0-1-adaptor) that makes connecting this module a lot easier.
+For the Espruino [Pico](../boards/Pico.md), there is [an adaptor shim available](../info/Shims.md#rfm69-rfm12b-0-1-adaptor) that makes connecting this module a lot easier.
 
 
 Software

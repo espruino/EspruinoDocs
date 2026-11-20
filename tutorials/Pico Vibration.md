@@ -15,9 +15,9 @@ We'll add a vibration detector so we can detect movements, and then find out how
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* An [SW18010P Vibration Sensor](/Vibration)
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* An [SW18010P Vibration Sensor](../devices/Vibration.md)
+* [Breadboard](../devices/Breadboard.md)
 
 Wiring Up
 --------

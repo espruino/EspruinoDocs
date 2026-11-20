@@ -7,7 +7,7 @@ BTHome Writable
 * KEYWORDS: Module,Modules,BTHome,BTHomeWritable,Bluetooth,BLE,Home Assistant,HomeAssistant,Actuator,Writable,Downlink,GATT
 * USES: BLE,Only BLE
 
-[BTHome](/BTHome) is how an Espruino device tells [Home Assistant](https://www.home-assistant.io/)
+[BTHome](./BTHome.md) is how an Espruino device tells [Home Assistant](https://www.home-assistant.io/)
 what it has measured. This module adds the other direction: Home Assistant
 writes a value **to** the device — a light, a setpoint, a line of text on a
 display — in BTHome's own object format.
@@ -121,7 +121,7 @@ bw.setup({
 });
 ```
 
-This needs the [AESCCM](/AESCCM) module, which the Web IDE will fetch for you.
+This needs the [AESCCM](./AESCCM.md) module, which the Web IDE will fetch for you.
 It uses your firmware's own `AES.ccmEncrypt` where there is one — Bangle.js 2
 builds it, Puck.js does not — and builds CCM out of `AES.encrypt` otherwise, so
 you do not have to care which board you are on.
@@ -320,5 +320,5 @@ References
 * [Ten-minute replication](https://github.com/yerpj/bthome-writable/blob/main/docs/try-it.md)
   with a Puck.js
 * [The design discussion](https://github.com/orgs/espruino/discussions/8024)
-* [BTHome](/BTHome) — the uplink module this builds on
-* [AESCCM](/AESCCM) — needed only when you set a `bindkey`
+* [BTHome](./BTHome.md) — the uplink module this builds on
+* [AESCCM](./AESCCM.md) — needed only when you set a `bindkey`

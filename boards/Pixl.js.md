@@ -8,7 +8,7 @@ Pixl.js
 
 ![Pixl.js](Pixljs/board.jpg)
 
-* BUYFROM: £30,£21.60,https://shop.espruino.com/pixljs,/Order#pixljs
+* BUYFROM: £30,£21.60,https://shop.espruino.com/pixljs,https://www.espruino.com/Order#pixljs
 
 **Pixl.js is a smart LCD with Bluetooth LE.**
 
@@ -21,7 +21,7 @@ Pixl.js's unique design allows you to use the Arduino footprint to interface
 with the huge array of existing Arduino shields, while still using the LCD
 and buttons. Add Ethernet, WiFi, Motor drivers, even GSM. No soldering required!
 
-**Just got your Pixl.js? [Take a look here!](/Quick+Start+BLE#pixljs)**
+**Just got your Pixl.js? [Take a look here!](../tutorials/Quick Start BLE.md#pixljs)**
 
 Contents
 --------
@@ -53,7 +53,7 @@ Pixl.js can be powered in multiple ways:
 
 * **Micro USB** - the Micro USB connector can easily provide power to your Pixl.js (there is no data connection)
 * **CR2032 Lithium battery** - a CR2032 battery will power Pixl.js for around 20 days with light JavaScript usage
-* **`Vin` pins** - available via the Arduino header, or the separate pin header to the side. You can supply 3v - 16v which is regulated down to 3.3v for Pixl.js. The unpopulated pins to the side are spaces to accommodate a connector for [JST PHR-2 Batteries](/Battery).
+* **`Vin` pins** - available via the Arduino header, or the separate pin header to the side. You can supply 3v - 16v which is regulated down to 3.3v for Pixl.js. The unpopulated pins to the side are spaces to accommodate a connector for [JST PHR-2 Batteries](../devices/Battery.md).
 * **CR2032 LiPo battery** - you can not use a CR2032 LiPo battery without some minor modifications as the voltage is too high. There is a small solder jumper below the CR2032 holder. Cut the existing connection and solder between the other two pads. This causes the battery to be connected via the voltage regulator. **Note:** the LiPo will then be connected directly to Vin, and you will be unable to use the USB for power (as it'll connect to LiPo to 5v).
 * **CR2032 battery backup** - the CR2032 can be used as a backup when Vin/USB power is not present. Cut the trace in the solder jumper below the CR2032 holder, and add a surface mount diode to the two pads to the right of it.
 
@@ -111,7 +111,7 @@ Once Pixl.js displays `Removed saved code from Flash` you can release it - this 
 Tutorials
 --------
 
-First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#pixljs)
+First, it's best to check out the [Getting Started Guide](../tutorials/Quick Start BLE.md#pixljs)
 
 There is more information below about using the [LCD](#lcd) and [onboard peripherals](#onboard) as well.
 
@@ -127,8 +127,8 @@ Tutorials using Bluetooth LE and functionality that may not be part of Pixl.js:
 
 * APPEND_USES: BLE,-Only BLE,-Pixl.js
 
-There are [many more tutorials](/Tutorials) that may not be specifically for
-you device but will probably work with some tweaking. [Try searching](/Search)
+There are [many more tutorials](../Tutorials.md) that may not be specifically for
+you device but will probably work with some tweaking. [Try searching](https://www.espruino.com/Search)
 to find what you want.
 
 Pinout
@@ -160,7 +160,7 @@ connector labelled `3.3 5V Vin`, and you can apply solder to:
 
 ### Shields
 
-Here are some of the [Arduino shields](Arduino) that we have tested and documented:
+Here are some of the [Arduino shields](../info/Arduino.md) that we have tested and documented:
 
 * APPEND_KEYWORD: Arduino Shield
 
@@ -173,14 +173,14 @@ Information
 * [Circuit Diagram](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_sch.pdf)
 * [Board Layout](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/pdf/pixljs_brd.pdf)
 * [Eagle CAD files](https://github.com/espruino/EspruinoBoard/tree/master/Pixl.js/eagle)
-* [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
-* [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
+* [nRF52832 Datasheet](../datasheets/nRF52832_PS_v1.0.pdf)
+* [MDBT42 Datasheet](../datasheets/MDBT42Q-E.pdf)
 * [3D model of Pixl.js in STL](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.stl) or [OpenSCAD](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.scad)
 * [SVG Vector drawing of Pixl.js with laser-cut case](https://github.com/espruino/EspruinoBoard/blob/master/Pixl.js/other/pixljs.svg)
 
 Certifications:
 
-* Pixl.js's radio module has certifications for [FCC (USA), CE(EU), TELEC (Japan), SRRC (China), IC (Canada), NCC (Taiwan) and KC (South Korea)](/datasheets/MDBT42Q-E.pdf)
+* Pixl.js's radio module has certifications for [FCC (USA), CE(EU), TELEC (Japan), SRRC (China), IC (Canada), NCC (Taiwan) and KC (South Korea)](../datasheets/MDBT42Q-E.pdf)
 
 <a name="lcd"></a>LCD Screen
 ---------------------------------
@@ -197,7 +197,7 @@ Any errors generated when there is no connection will also be displayed on the L
 ### Graphics
 
 You can output graphics on Pixl.js's display via the global variable `g`
-that is an instance of the [Graphics class](/Reference#Graphics). The display
+that is an instance of the [Graphics class](https://www.espruino.com/Reference#Graphics). The display
 is double-buffered, so when you want the changes you made to be displayed
 you need to call `g.flip()`:
 
@@ -218,7 +218,7 @@ modified by `Graphics` commands. If you're modifying the underlying buffer
 
 ### Menus
 
-Pixl.js comes with a built-in menu library that can be accessed with the [`Pixl.menu()`](/Reference#l_Pixl_menu) command.
+Pixl.js comes with a built-in menu library that can be accessed with the [`Pixl.menu()`](https://www.espruino.com/Reference#l_Pixl_menu) command.
 
 ```
 // Two variables to update
@@ -285,7 +285,7 @@ Terminal.setConsole();
 ### Power Usage
 
 When on, the LCD draws around 200uA (0.2mA). You can turn the LCD off
-to save power with [Pixl.setLCDPower(true/false)](/Reference#l_Pixl_setLCDPower)
+to save power with [Pixl.setLCDPower(true/false)](https://www.espruino.com/Reference#l_Pixl_setLCDPower)
 if you need to. When resuming, the LCD will be refreshed to display what was
 previously on the screen.
 
@@ -294,7 +294,7 @@ previously on the screen.
 When it first boots, Pixl.js animates the Pixl.js logo onto the screen. Subsequent
 calls to `reset()` display it but skip the animation. If you'd like your own splash screen,
 on Espruino firmware 2v05 and later you can
-write a 1bpp image string made using the [Image Converter](/Image+Converter) to the Storage file
+write a 1bpp image string made using the [Image Converter](../info/Image Converter.md) to the Storage file
 `.storage`, for example to display a QR code you could do:
 
 ```
@@ -338,11 +338,11 @@ setWatch(function() {
 GPIO pins are numbered `D0` to `D13` and `A0` to `A5` (matching the Arduino header). They are marked on the PCB (for `D0` to `D13`, the `D` is omitted).
 
 You can use the same `digitalWrite`/`digitalRead` commands with these that you
-did with the LEDs and buttons, but you can also use [[PWM]], [[I2C]], [[SPI]] and [[Analog]].
+did with the LEDs and buttons, but you can also use [PWM](../info/PWM.md), [I2C](../info/I2C.md), [SPI](../info/SPI.md) and [Analog](../info/Analog.md).
 
 ### NFC - Near Field Communications
 
-To set Puck.js up to redirect to a new NFC URL, just use [NRF.nfcURL(...)](/Reference#l_NRF_nfcURL):
+To set Puck.js up to redirect to a new NFC URL, just use [NRF.nfcURL(...)](https://www.espruino.com/Reference#l_NRF_nfcURL):
 
 ```JS
 NRF.nfcURL("http://espruino.com");
@@ -355,7 +355,7 @@ NRF.nfcURL();
 ```
 
 Other NFC functionality is available - check out the reference for `NRF.nfc*`
-methods and events, and see the [Web NFC](/Web+NFC) page for information
+methods and events, and see the [Web NFC](../tutorials/Web NFC.md) page for information
 on transferring data via NFC.
 
 
@@ -397,7 +397,7 @@ the UART but don't power down and power on Pixl.js, you won't get a serial port.
 Firmware Updates
 -----------------
 
-Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
+Please see the [Firmware Update](../info/Firmware Update.md#nrf52) page for detailed instructions.
 
 ### Different Firmwares
 
@@ -408,14 +408,14 @@ We provide two distinct firmwares for Pixl.js devices:
 | `espruino_2vxx_pixljs.zip`         |   X      |  X  |  X  |    X     |  X  |   X          |                       |   36kb        |
 | `espruino_2vxx_pixljs_wiznet.zip`  |   X      |  X  |  X  |    X     |     |   X          |            X          |   36kb        |
 
-Pixl.js come pre-installed with the first (normal) firmware, but if you need support for the [WIZnet W5100 shield](/arduino-w5100]
+Pixl.js come pre-installed with the first (normal) firmware, but if you need support for the [WIZnet W5100 shield](../devices/arduino-w5100.md)
 as of 2v25 you'll have to install the `espruino_2vxx_pixljs_wiznet.zip` firmware.
 
 
 Troubleshooting
 ---------------
 
-For more answers please check out the [Bluetooth Troubleshooting](Troubleshooting+BLE) or [General Troubleshooting](/Troubleshooting) pages.
+For more answers please check out the [Bluetooth Troubleshooting](../info/Troubleshooting BLE.md) or [General Troubleshooting](../info/Troubleshooting.md) pages.
 
 ### My Pixl's screen was scratched when I got it!
 

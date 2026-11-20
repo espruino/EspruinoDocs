@@ -36,7 +36,7 @@ Notes
 * Baron Brew [sell their own Espruino-based Repeater](https://tilthydrometer.com/blogs/news/extending-range-in-stainless-fermentors-with-the-tilt-repeater-1)
 so if you want an easy way to get started or just want to support them, we'd suggest you use that.
 * Baron Brew keep the latest version of this software [in their own GitHub Repository](https://github.com/baronbrew/tilt-repeater-js)
-* Scanning requires quite a lot of energy and so the repeater requires around 300uA of power on average. When running off a device like [Puck.js](/Puck.js) that
+* Scanning requires quite a lot of energy and so the repeater requires around 300uA of power on average. When running off a device like [Puck.js](../boards/Puck.js.md) that
 only has a small watch battery, it will flatten in a few weeks. We'd recommend using a rechargeable battery or an external power source instead.
 
 */

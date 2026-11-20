@@ -27,6 +27,7 @@ for (var i=2;i<process.argv.length;i++) {
     process.exit(1);
   }
 }
+var MODDED_URLS = [];
 
 var fs = require('fs');
 var path = require('path');
@@ -327,7 +328,9 @@ function handleImages(file, contents) {
     if (tagMid>=0 && tagEnd>=0) {
       // we've found a tag - do stuff
       var imageName = contents.substring(tagMid+2, tagEnd);
-      if (imageName.substr(0,5)!="data:") { // it's not inline data!
+      if (imageName.substr(0,5)!="data:" && // it's not inline data!
+          imageName.substr(0,5)!="http:" && // external link
+          imageName.substr(0,6)!="https:") {
         var imagePath = directory+"/"+imageName;
         if (fs.existsSync(imagePath)) {
   /*        console.log("IMAGE -----------------------------");
@@ -354,7 +357,7 @@ function handleImages(file, contents) {
           WARNING(file+": Image '"+imagePath+"' does not exist ("+tagStart+","+tagMid+","+tagEnd+")");
         }
       } else if (imageName.endsWith(".webm")) {
-        
+
       }
     }
     tagStart = contents.indexOf("![", tagStart+1);
@@ -423,6 +426,8 @@ markdownFiles.forEach(function (file) {
   htmlLinks[file] = htmlLink;
   knownPageLinks.push((OFFLINE?"":"/")+htmlLink);
 });
+//console.log(htmlLinks);process.exit(1);
+
 //console.log(JSON.stringify(knownPageLinks,null,2));process.exit(1);
 
 // For files that have been renamed, create placeholder files that redirect
@@ -545,13 +550,17 @@ function inferMarkdownFile(filename, fileContents) {
     });
 }
 
-function getThumbLinkHTML(a) {
+function getThumbLinkHTML(a, baseDir) {
+  var path = (baseDir==".")?"":"../";
+  if (baseDir.includes("/")) throw new Error("2 levels deep!");
   var thumb = (a.path in markdownThumbs) ? markdownThumbs[a.path] : markdownThumbs[""];
-  return `<a class="thumblink" href="${htmlLinks[a.path]}" title="${convertHTML(a.title)}"><img src="${thumb}" alt="${convertHTML(a.title)}" title="${convertHTML(a.title)}"></img><span>${convertHTML(a.title)}</span></a>`
+  return `<a class="thumblink" href="${path+a.path}" title="${convertHTML(a.title)}"><img src="${thumb}" alt="${convertHTML(a.title)}" title="${convertHTML(a.title)}"></img><span>${convertHTML(a.title)}</span></a>`
 }
 
 // -------------------------------------------------------------
-markdownFiles.forEach(function (file) {
+markdownFiles.forEach(function(file) {
+   console.log("FILE", file);
+   var baseDir = require('path').dirname(file);
    var contents = preloadedFiles[file] ? preloadedFiles[file] : fs.readFileSync(file).toString();
 
    if (file.substr(-3)==".md") {
@@ -569,15 +578,8 @@ markdownFiles.forEach(function (file) {
    }
 
    //console.log(file,contents.length);
-   // Check over images... ![Image Title](foo.png)
-   contents = handleImages(file, contents);
-
-   // replace simple links
-   contents = contents.replace(/\[\[http[s]?:\/\/youtu.be\/([a-zA-Z0-9\-_ ]+)\]\]/g,
-           '<iframe allowfullscreen="" frameborder="0" height="450" src="https://www.youtube.com/embed/$1" width="800"></iframe>'); // youtube
-   contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+).js\]\]/g,"[$1](/modules/$1.js) ([About Modules](/Modules))");
-   contents = contents.replace(/\[\[([a-zA-Z0-9_\- ]+)\]\]/g,"[$1](/$1)");
-   contents = contents.replace(/!\[\]\((Font[a-zA-Z0-9_]+\.js)\)/g, function(match, filename) {
+   // Create images for fonts
+   contents = contents.replace(/!\[\]\(\.\.\/modules\/(Font[a-zA-Z0-9_]+\.js)\)/g, function(match, filename) {
      console.log("Font Preview: "+JSON.stringify(filename));
      var js = "";
      if (filename.startsWith("Font") && filename.endsWith(".js")) {
@@ -586,8 +588,14 @@ markdownFiles.forEach(function (file) {
      }
      return "!["+filename+"]("+require("./fontpreview.js").getFontPreview("../modules/"+filename)+")"+js;
    });
-   for (var i=0;i<3;i++) // cope with multiple spaces in links (nasty!)
-     contents = contents.replace(/(\[.+\]\([^) ]+) ([^)]+\))/g,"$1+$2"); // spaces in links
+   // Check over images... ![Image Title](foo.png)
+   contents = handleImages(file, contents);
+
+   // replace simple links
+   contents = contents.replace(/\[\[http[s]?:\/\/youtu.be\/([a-zA-Z0-9\-_ ]+)\]\]/g,
+           '<iframe allowfullscreen="" frameborder="0" height="450" src="https://www.youtube.com/embed/$1" width="800"></iframe>'); // youtube
+   contents = contents.replace(/\[([^\]]*)\]\(([a-zA-Z0-9_\- ]+).js\)/g,"[$1](/modules/$2.js) ([About Modules](https://www.espruino.com/Modules))");
+
    // Hacks for 'broken' markdown parsing
    contents = contents.replace(/\n\n```([^\n]+)```\n\n/g,"\n\n```\n$1\n```\n\n"); // turn in-line code on its own into separate paragraph
    contents = contents.replace(/```([^ \n][^\n]+)```/g,"``` $1 ```"); // need spaces after ```
@@ -659,7 +667,7 @@ markdownFiles.forEach(function (file) {
          });
          // Output images
          links.forEach(function(a) {
-           contentThumbs.push(getThumbLinkHTML(a));
+           contentThumbs.push(getThumbLinkHTML(a, baseDir));
          });
          content = '<div class="thumblinklist thumblinklist-thumbnails">\n  '+contentThumbs.join("\n  ")+'\n</div>';
        } else {
@@ -740,15 +748,14 @@ markdownFiles.forEach(function (file) {
    var title = contentLines[0];
    contents = contentLines.join("\n");
 
-   // ========================================================================== Get Markdown
+    // ========================================================================== Get Markdown
    if (PROCESS_INFERENCE) inferMarkdownFile(file, contents);
    html = marked(contents).replace(/lang-JavaScript/g, 'sh_javascript');
    // ==========================================================================
 
-   // Append tutorial links
+   // Append tutorial links to html
    appendMatching("APPEND_KEYWORD", fileInfo.keywords, "");
    appendMatching("APPEND_USES", fileInfo.parts, "<p>(No tutorials are available yet)</p>");
-
 
    // Check for Pinouts
    var regex = /<ul>\n<li>APPEND_PINOUT: (.*)<\/li>\n<\/ul>/;
@@ -792,32 +799,53 @@ markdownFiles.forEach(function (file) {
      html = html.substr(0,tocIdx) + toc + html.substr(tocIdx+tocTag.length);
    }
 
-   // If compiling for offline, quick hack to modify most links to go direct
-   if (OFFLINE) // FIXME - move this into the code below, do it properly with knownPageLinks
-     html = html.replace(/(<[aA] .*href=")\/([^"#]*)/g, '$1$2.html');
-
-   // Scan all links in HTML to find possible replaced files
-   {
-     regex = /href="([^"]+)"/g;
-     var m = regex.exec(html);
-     while (m) {
-       var url = m[1];
-       var baseURL = url.replace(/#.*$/,"");
-       if (baseURL!="") {
-         if (baseURL in renamedFiles) {
-           WARNING(`${file}: ${JSON.stringify(baseURL)} was renamed to ${JSON.stringify(renamedFiles[baseURL])}`);
-         } else {
-           if (baseURL.startsWith("http:") || baseURL.startsWith("https:")) {
-             // we're ok...
-           } else { // TODO: check if we know the page link
-             /*if (knownPageLinks.indexOf(baseURL)<0)
-               WARNING(`${file}: ${JSON.stringify(baseURL)} is not found`);*/
-          }
-         }
-       }
-       m = regex.exec(html);
-     }
-   }
+  // Scan all links in HTML to find possible replaced files
+  regex = / href="([^"]+)"/g;
+  var m = regex.exec(html);
+  while (m) {
+    var url = m[1];
+    var baseURL = url.replace(/#.*$/,""), searchURL = url.substr(baseURL.length);
+    if (baseURL!="") {
+      if (baseURL in renamedFiles) {
+        WARNING(`${file}: ${JSON.stringify(baseURL)} was renamed to ${JSON.stringify(renamedFiles[baseURL])}`);
+      } else {
+        let fullURL = path.join(baseDir, baseURL);
+        if (baseURL.startsWith("http:") || baseURL.startsWith("https:")) {
+          // we're ok - but if online, let's strip off espruino.com...
+          if (baseURL.startsWith("https://www.espruino.com"))
+            fullURL = baseURL.substr("https://www.espruino.com".length);
+          else if (baseURL.startsWith("http://www.espruino.com"))
+            fullURL = baseURL.substr("http://www.espruino.com".length);
+          else
+            fullURL = baseURL; // should we check external URLs?
+        } else if (baseURL.startsWith("?") || baseURL.startsWith("'")) {
+          // workaround for JS code in CC3000.md/examples/http_file_server.js
+          fullURL = baseURL;
+        } else if (knownPageLinks.includes(baseURL)) {
+          fullURL = baseURL; // all ok
+        } else if (htmlLinks[fullURL]!==undefined) {
+          console.log("Link "+fullURL,"=>",htmlLinks[fullURL]);
+          fullURL = htmlLinks[fullURL];
+        } else if ((fullURL.startsWith("modules") && fullURL.endsWith(".js")) ||
+                   fullURL.startsWith("files/") ||
+                   fullURL.startsWith("datasheets/")) {
+          // FIXME: check if file exists?
+        } else {
+          WARNING(`${file}: ${JSON.stringify(baseURL)} (${JSON.stringify(fullURL)}) is not found:
+          ...${html.substr(m.index-40, m[0].length+80)}...`);
+        }
+        var newURL = fullURL + searchURL;
+        if (!OFFLINE && (!newURL.includes("/") ||
+                         newURL.startsWith("datasheets/") ||
+                         newURL.startsWith("files/")))
+          newURL = "/"+newURL; // ensure domain-relative paths
+        var t = url + " => " + newURL;
+        if (!MODDED_URLS.includes(t)) MODDED_URLS.push(t);
+        html = html.substr(0, m.index) + ' href="' + newURL + '"' + html.substr(m.index + m[0].length);
+      }
+    }
+    m = regex.exec(html);
+    }
 
    // work out of we have any images that might be at the top of the page
    var hasImageContent = html.indexOf("<iframe ")>=0; // do we have a video?
@@ -848,7 +876,6 @@ markdownFiles.forEach(function (file) {
 </html>
      `;
    }
-
    fs.writeFileSync(htmlFiles[file], html);
 });
 
@@ -861,6 +888,8 @@ fs.writeFileSync(refPath, JSON.stringify(urls,null,1));
 // Write out keywords
 fs.writeFileSync(KEYWORD_JS_FILE, "var keywords = "+JSON.stringify(createKeywordsJS(fileInfo.keywords),null,1)+";");
 
+console.log("====================================================== URLs");
+console.log(MODDED_URLS.join("\n"));
 console.log("====================================================== WARNINGS");
 console.log("====================================================== WARNINGS");
 console.log("====================================================== WARNINGS");
@@ -868,6 +897,7 @@ warnings.forEach(w=>console.log(w));
 console.log("====================================================== WARNINGS");
 console.log("====================================================== WARNINGS");
 console.log("====================================================== WARNINGS");
+
 
 // -----------------------------------------------------------
 // Newest tutorials
@@ -881,7 +911,7 @@ console.log("====================================================== WARNINGS");
       var thumb = getThumbLinkHTML({
         path: p,
         title: fileTitles[p]
-      });
+      }, "");
       console.log(thumb);
     });
   });*/

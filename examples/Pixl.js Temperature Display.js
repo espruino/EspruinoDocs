@@ -7,10 +7,10 @@ Pixl.js Temperature Display
 
 ![Pixl.js Temperature Display](Pixl.js Temperature Display.jpg)
 
-[Pixl.js](/Pixl.js) has an on-chip temperature sensor, and can be set up to
+[Pixl.js](../boards/Pixl.js.md) has an on-chip temperature sensor, and can be set up to
 display the temperature with tiny amount of code.
 
-Simply upload this to [Pixl.js](/Pixl.js) and it'll display the temperature
+Simply upload this to [Pixl.js](../boards/Pixl.js.md) and it'll display the temperature
 on the screen in a large font.
 
 */

@@ -7,12 +7,12 @@ Bluetooth LE UARTs (NUS)
 * KEYWORDS: Module,Modules,BLE,Bluetooth,NUS,Nordic UART,UART,6e400001-b5a3-f393-e0a9-e50e24dcca9e,Bluetooth UART
 * USES: Puck.js,BLE,Only BLE
 
-By default, Bluetooth LE Espruino devices like [Puck.js](/Puck.js) present a
+By default, Bluetooth LE Espruino devices like [Puck.js](../boards/Puck.js.md) present a
 `Nordic UART` service (`6e400001-b5a3-f393-e0a9-e50e24dcca9e`) that provides serial port-like access to the Espruino
-REPL. You can disable it with [NRF.setServices({},{uart:false})](/Reference#l_NRF_setServices) if needed.
+REPL. You can disable it with [NRF.setServices({},{uart:false})](https://www.espruino.com/Reference#l_NRF_setServices) if needed.
 
 The `puck.js` helper script allows you to access this UART from a Web Browser with
-Web Bluetooth - see [the Web Bluetooth Guide](/Puck.js Web Bluetooth), but this
+Web Bluetooth - see [the Web Bluetooth Guide](../tutorials/Web Bluetooth.md), but this
 page shows how you can access the
 
 Finding Devices
@@ -36,7 +36,7 @@ Writing
 -------
 
 If you want to connect to this UART service on one Espruino device from another Espruino device,
-you can use the [[ble_simple_uart.js]] module to send data.
+you can use the [ble_simple_uart.js](../modules/ble_simple_uart.js) module to send data.
 
 Just use as follows:
 
@@ -65,7 +65,7 @@ split it into BLE packets and send them.
 Receiving / Evaluating
 ----------------------
 
-[[ble_simple_uart.js]] just transmits. However [[ble_uart.js]] can receive
+[ble_simple_uart.js](../modules/ble_simple_uart.js) just transmits. However [ble_uart.js](../modules/ble_uart.js) can receive
 as well. To do this, it keeps the connection **open** and you must manually
 close it with `disconnect` when you're done.
 

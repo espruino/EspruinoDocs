@@ -6,7 +6,7 @@ I2C - Inter-Integrated Circuit
 
 * KEYWORDS: Peripheral,Peripherals,I2C,I squared C,IIC,Inter-Integrated Circuit,Built-In
 
-[I2C Class](/Reference#I2C) in the Reference.
+[I2C Class](https://www.espruino.com/Reference#I2C) in the Reference.
 
 Hardware I2C
 ------------
@@ -28,7 +28,7 @@ var d = I2C1.readFrom(0x52, 6);
 I2C1.writeTo(0x52, 0);
 ```
 
-See the reference for [I2C.setup](/Reference#l_I2C_setup) for more information on
+See the reference for [I2C.setup](https://www.espruino.com/Reference#l_I2C_setup) for more information on
 the arguments that can be passed in.
 
 Software I2C
@@ -49,7 +49,7 @@ var d = i2c.readFrom(0x52, 6);
 i2c.writeTo(0x52, 0);
 ```
 
-See the reference for [I2C.setup](/Reference#l_I2C_setup) for more information on
+See the reference for [I2C.setup](https://www.espruino.com/Reference#l_I2C_setup) for more information on
 the arguments that can be passed in.
 
 Speed (bit rate)
@@ -57,7 +57,7 @@ Speed (bit rate)
 
 Pretty much all I2C devices are guaranteed to support 100kBits/sec transfer
 speed for I2C, so that is the default in Espruino. However you can specify
-higher speeds with `bitrate` in [I2C.setup](/Reference#l_I2C_setup) if your
+higher speeds with `bitrate` in [I2C.setup](https://www.espruino.com/Reference#l_I2C_setup) if your
 device supports it, eg:
 
 ```

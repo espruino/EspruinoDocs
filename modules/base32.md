@@ -6,7 +6,7 @@ Base 32 Decoder
 
 * KEYWORDS: Module,Base32
 
-This [[base32.js]] module implements a Base 32 decoder.
+This [base32.js](base32.js) module implements a Base 32 decoder.
 
 How to use the module:
 

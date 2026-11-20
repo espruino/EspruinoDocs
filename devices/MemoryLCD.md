@@ -27,7 +27,7 @@ Wiring Up
 Example Software
 --------------
 
-Just use the [[MemoryLCD.js]] module as follows:
+Just use the [MemoryLCD.js](MemoryLCD.js) module as follows:
 
 ```
 SPI1.setup({ sck:B3, mosi:B5, order: "lsb", baud: 4000000 });
@@ -41,7 +41,7 @@ var g = require("MemoryLCD").connect(SPI1, B4/*SCS*/, B6/*EXTCOMIN*/, 128/*width
 });
 ```
 
-More details on how to draw are in [[Graphics]].
+More details on how to draw are in [Graphics](../info/Graphics.md).
 
 Notes
 -----

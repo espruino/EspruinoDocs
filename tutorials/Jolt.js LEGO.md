@@ -7,7 +7,7 @@ Jolt.js LEGO Control
 * KEYWORDS: Tutorials,Lego,Power Functions,LEGO PF,Motor,Blockly
 * USES: Jolt.js,Battery,Lego,Blockly
 
-[Jolt.js](/Jolt.js)'s high power outputs are great for driving LEGO motors.
+[Jolt.js](../boards/Jolt.js.md)'s high power outputs are great for driving LEGO motors.
 
 You might have an old LEGO set with motors you want to drive, or might just want to invest in some motors to power your LEGO constructions. You
 can connect these to Jolt.js and control them via JS or even the built-in Blockly graphical programming language!
@@ -33,14 +33,14 @@ your LEGO models, and is what we're using here.
 they can also be inputs. The motors and cables tend to be substantially more expensive to unless you have some already these may not be a good thing
 to invest in.
 
-**Note:** If you don't want to mess with hardware at all, we also have [the `mouldking` module](/LEGO+Power+Functions+Clone)
+**Note:** If you don't want to mess with hardware at all, we also have [the `mouldking` module](../devices/LEGO Power Functions Clone.md)
 which is able to control some kinds of Bluetooth-capable Power Functions clone hubs.
 
 
 You'll Need
 ------------
 
-* A [Jolt.js](/Jolt.js)
+* A [Jolt.js](../boards/Jolt.js.md)
 * A [LEGO Power functions extension cable](https://www.amazon.com/s?k=lego+power+functions+wire)
 
 

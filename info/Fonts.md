@@ -23,9 +23,9 @@ g.dump();
 * A vector font (scalable to any height, usually works best above 20px high)
 * Bitmap fonts (scalable 1x, 2x, 3x, etc)
   * `4x6` is built into all devices, it is 4px wide and 6px high.
-  * `6x8` is built into devices like [Bangle.js](/Bangle.js). It is a much more readable 6px wide, 8px high font that contains ISO Latin characters see [Character Sets](#character-sets)
+  * `6x8` is built into devices like [Bangle.js](../boards/Bangle.js.md). It is a much more readable 6px wide, 8px high font that contains ISO Latin characters see [Character Sets](#character-sets)
 
-These fonts are part of Espruino's built-in [[Graphics]] library.
+These fonts are part of Espruino's built-in [Graphics](Graphics.md) library.
 
 You can use `g.getFonts()` to list the available fonts.
 
@@ -37,7 +37,7 @@ The Vector font is made out of polygons, and it can be resized to any size. This
 
 **Note:** Some non-official Espruino boards don't have vector font support built-in, so all you'll have available is the bitmap font (see below).
 
-To use it, just use `Graphics.setFont("Vector",height)` where `height` is the height in pixels. Assuming you've set up [[Graphics]] as a variable called `g` you can do:
+To use it, just use `Graphics.setFont("Vector",height)` where `height` is the height in pixels. Assuming you've set up [Graphics](Graphics.md) as a variable called `g` you can do:
 
 ```
 g.clear();
@@ -96,30 +96,30 @@ Current modules are:
 
 | Font Map | Name | Description |
 |----------|------|-------------|
-| ![](Font4x4Numeric.js) | [[Font4x4Numeric.js]] | Tiny 4x4 fixed width font with no space between characters (only digits 0-9) |
-| ![](Font4x4.js) | [[Font4x4.js]] | Tiny 4x4 fixed width font by jose1711 |
-| ![](Font4x5Numeric.js) | [[Font4x5Numeric.js]] | 4x5 variable width font (only `./0123456789`) |
-| ![](Font4x5.js) | [[Font4x5.js]] | Tiny 4x5 fixed width font |
-| ![](Font4x8Numeric.js) | [[Font4x8Numeric.js]] | 4x8 fixed width font (only digits 0-9) |
-| ![](Font5x7Numeric7Seg.js) | [[Font5x7Numeric7Seg.js]] | 5x7 7 segment-style font (only `-.0123456789:ABCDEF`) |
-| ![](Font5x9Numeric7Seg.js) | [[Font5x9Numeric7Seg.js]] | 5x9 7 segment-style font (only `-.0123456789:ABCDEF`) |
-| ![](Font7x11Numeric7Seg.js) | [[Font7x11Numeric7Seg.js]] | 7x11 7 segment-style font (only `-.0123456789:ABCDEF`) |
-| ![](FontCopasetic40x58Numeric.js) | [[FontCopasetic40x58Numeric.js]] | 40x58 numeric font (only `0123456789`) by [abhigkar](https://github.com/abhigkar/bangleJs-Custom-Fonts) |
-| ![](Font6x8.js) | [[Font6x8.js]] | Variable width 8px high font |
-| ![](Font6x12.js) | [[Font6x12.js]] | Variable width 12px high font |
-| ![](Font8x12.js) | [[Font8x12.js]] | Wider variable width 12px high font |
-| ![](Font8x16.js) | [[Font8x16.js]] | Variable width 16px high font |
-| ![](FontDennis8.js) | [[FontDennis8.js]] | An 8 pixel high font by [Dennis Bemmann](https://github.com/pastaclub/espruino-font-dennis8) for non-english languages - see [Character Sets](#character-sets) |
-| ![](FontCherry6x10.js) | [[FontCherry6x10.js]] | Variable width font with most characters for non-english languages - see [Character Sets](#character-sets) (originally from https://github.com/turquoise-hexagon/cherry) |
-| ![](FontDylex7x13.js) | [[FontDylex7x13.js]] | Variable width font with most characters for non-english languages, see [Character Sets](#character-sets) (originally from https://github.com/dylex/fonts) |
-| ![](FontHaxorNarrow7x17.js) | [[FontHaxorNarrow7x17.js]] | Variable width font with most characters for non-english languages, see [Character Sets](#character-sets) (originally from https://github.com/metan-ucw/fonts) |
-| ![](FontSinclair.js) | [[FontSinclair.js]] | Fixed width 8x8 Retro Sinclair font by [Steve Anderson](https://github.com/IrregularShed), Copyright Sinclair Research, non-commercial use approved. |
-| ![](FontTeletext10x18Ascii.js) | [[FontTeletext10x18Ascii.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, 7-bit ASCII, with interpolated pixels as intended |
-| ![](FontTeletext10x18Mode7.js) | [[FontTeletext10x18Mode7.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, UK character set, with interpolated pixels as intended |
-| ![](FontTeletext5x9Ascii.js) | [[FontTeletext5x9Ascii.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, 7-bit ASCII, with original structural pixels only |
-| ![](FontTeletext5x9Mode7.js) | [[FontTeletext5x9Mode7.js]] | Fixed width Teletext / BBC Micro "MODE 7" font, UK character set, with original structural pixels only |
-| ![](FontVGA8.js) | [[FontVGA8.js]] | Fixed width 8x8 PC VGA-style font |
-| ![](FontVGA16.js) | [[FontVGA16.js]] | Fixed width 8x16 PC VGA-style font |
+| ![](../modules/Font4x4Numeric.js) | [Font4x4Numeric.js](../modules/Font4x4Numeric.js) | Tiny 4x4 fixed width font with no space between characters (only digits 0-9) |
+| ![](../modules/Font4x4.js) | [Font4x4.js](../modules/Font4x4.js) | Tiny 4x4 fixed width font by jose1711 |
+| ![](../modules/Font4x5Numeric.js) | [Font4x5Numeric.js](../modules/Font4x5Numeric.js) | 4x5 variable width font (only `./0123456789`) |
+| ![](../modules/Font4x5.js) | [Font4x5.js](../modules/Font4x5.js) | Tiny 4x5 fixed width font |
+| ![](../modules/Font4x8Numeric.js) | [Font4x8Numeric.js](../modules/Font4x8Numeric.js) | 4x8 fixed width font (only digits 0-9) |
+| ![](../modules/Font5x7Numeric7Seg.js) | [Font5x7Numeric7Seg.js](../modules/Font5x7Numeric7Seg.js) | 5x7 7 segment-style font (only `-.0123456789:ABCDEF`) |
+| ![](../modules/Font5x9Numeric7Seg.js) | [Font5x9Numeric7Seg.js](../modules/Font5x9Numeric7Seg.js) | 5x9 7 segment-style font (only `-.0123456789:ABCDEF`) |
+| ![](../modules/Font7x11Numeric7Seg.js) | [Font7x11Numeric7Seg.js](../modules/Font7x11Numeric7Seg.js) | 7x11 7 segment-style font (only `-.0123456789:ABCDEF`) |
+| ![](../modules/FontCopasetic40x58Numeric.js) | [FontCopasetic40x58Numeric.js](../modules/FontCopasetic40x58Numeric.js) | 40x58 numeric font (only `0123456789`) by [abhigkar](https://github.com/abhigkar/bangleJs-Custom-Fonts) |
+| ![](../modules/Font6x8.js) | [Font6x8.js](../modules/Font6x8.js) | Variable width 8px high font |
+| ![](../modules/Font6x12.js) | [Font6x12.js](../modules/Font6x12.js) | Variable width 12px high font |
+| ![](../modules/Font8x12.js) | [Font8x12.js](../modules/Font8x12.js) | Wider variable width 12px high font |
+| ![](../modules/Font8x16.js) | [Font8x16.js](../modules/Font8x16.js) | Variable width 16px high font |
+| ![](../modules/FontDennis8.js) | [FontDennis8.js](../modules/FontDennis8.js) | An 8 pixel high font by [Dennis Bemmann](https://github.com/pastaclub/espruino-font-dennis8) for non-english languages - see [Character Sets](#character-sets) |
+| ![](../modules/FontCherry6x10.js) | [FontCherry6x10.js](../modules/FontCherry6x10.js) | Variable width font with most characters for non-english languages - see [Character Sets](#character-sets) (originally from https://github.com/turquoise-hexagon/cherry) |
+| ![](../modules/FontDylex7x13.js) | [FontDylex7x13.js](../modules/FontDylex7x13.js) | Variable width font with most characters for non-english languages, see [Character Sets](#character-sets) (originally from https://github.com/dylex/fonts) |
+| ![](../modules/FontHaxorNarrow7x17.js) | [FontHaxorNarrow7x17.js](../modules/FontHaxorNarrow7x17.js) | Variable width font with most characters for non-english languages, see [Character Sets](#character-sets) (originally from https://github.com/metan-ucw/fonts) |
+| ![](../modules/FontSinclair.js) | [FontSinclair.js](../modules/FontSinclair.js) | Fixed width 8x8 Retro Sinclair font by [Steve Anderson](https://github.com/IrregularShed), Copyright Sinclair Research, non-commercial use approved. |
+| ![](../modules/FontTeletext10x18Ascii.js) | [FontTeletext10x18Ascii.js](../modules/FontTeletext10x18Ascii.js) | Fixed width Teletext / BBC Micro "MODE 7" font, 7-bit ASCII, with interpolated pixels as intended |
+| ![](../modules/FontTeletext10x18Mode7.js) | [FontTeletext10x18Mode7.js](../modules/FontTeletext10x18Mode7.js) | Fixed width Teletext / BBC Micro "MODE 7" font, UK character set, with interpolated pixels as intended |
+| ![](../modules/FontTeletext5x9Ascii.js) | [FontTeletext5x9Ascii.js](../modules/FontTeletext5x9Ascii.js) | Fixed width Teletext / BBC Micro "MODE 7" font, 7-bit ASCII, with original structural pixels only |
+| ![](../modules/FontTeletext5x9Mode7.js) | [FontTeletext5x9Mode7.js](../modules/FontTeletext5x9Mode7.js) | Fixed width Teletext / BBC Micro "MODE 7" font, UK character set, with original structural pixels only |
+| ![](../modules/FontVGA8.js) | [FontVGA8.js](../modules/FontVGA8.js) | Fixed width 8x8 PC VGA-style font |
+| ![](../modules/FontVGA16.js) | [FontVGA16.js](../modules/FontVGA16.js) | Fixed width 8x16 PC VGA-style font |
 
 Use these as follows:
 
@@ -137,7 +137,7 @@ g.setFont("8x12",2);
 g.drawString("Hello World!",0,20);
 ```
 
-For instance if using [[FontDennis8.js]], use `require("FontDennis8")` and `g.setFontDennis8();` or `g.setFont("Dennis8")`.
+For instance if using [FontDennis8.js](../modules/FontDennis8.js), use `require("FontDennis8")` and `g.setFontDennis8();` or `g.setFont("Dennis8")`.
 
 Character sets
 ---------------
@@ -168,14 +168,14 @@ directly to Espruino's font.
 Custom Fonts
 -----------
 
-You can also create your own fonts. To do this, see [`g.setFontCustom(...)`](/Reference#l_Graphics_setFontCustom)
+You can also create your own fonts. To do this, see [`g.setFontCustom(...)`](https://www.espruino.com/Reference#l_Graphics_setFontCustom)
 
 You'll need a string containing a column-first, most significant bit first, 1 bit per pixel bitmap containing the font bitmap. Optionally you can also have another string containing the widths of each character.
 
-* We now have a [Font Converter page](/Font Converter) that allows you to create fonts for Espruino based on a Web Font.
+* We now have a [Font Converter page](./Font Converter.md) that allows you to create fonts for Espruino based on a Web Font.
 * There [is a library to handle font conversion for Espruino](https://github.com/espruino/EspruinoWebTools/blob/master/fontconverter.js) and you can see a usage example in the [JS file used to make Espruino's built-in fonts](https://github.com/espruino/Espruino/blob/master/libs/graphics/font/fontconverter.js)
-* We have [a module for Espruino called sevenseg_font_tools](modules/sevenseg_font_tools.js) which allows you to easily create custom seven segment fonts (documentation is at the start of the file)
-* Matt Brailsford also made an excellent [Bitmap Font Converter](/Bitmap Font Converter) specifically for creating fonts for Espruino.
+* We have [a module for Espruino called sevenseg_font_tools](../modules/sevenseg_font_tools.js) which allows you to easily create custom seven segment fonts (documentation is at the start of the file)
+* Matt Brailsford also made an excellent [Bitmap Font Converter](./Bitmap Font Converter.md) specifically for creating fonts for Espruino.
 
 
 Font Widths

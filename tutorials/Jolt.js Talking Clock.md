@@ -7,31 +7,31 @@ Jolt.js Talking Clock
 * KEYWORDS: Tutorials,Sound,Voice,Clock,Talking Clock
 * USES: Jolt.js,Battery,Speaker,Vibration
 
-You can use  [Jolt.js](/Jolt.js)'s high power outputs for driving speakers. In this example we'll make a clock that will speak the time whenever it is moved. Multiple sound samples are stored (one for each number) and are then played in order.
+You can use  [Jolt.js](../boards/Jolt.js.md)'s high power outputs for driving speakers. In this example we'll make a clock that will speak the time whenever it is moved. Multiple sound samples are stored (one for each number) and are then played in order.
 
 ![Talking Clock](Jolt.js Talking Clock.webm)
 
 **Note:** the video above shows a capacitor on the speaker, but you don't need that using the wiring below.
 
-To do the audio playback we're using the [Waveform class](/Waveform).
+To do the audio playback we're using the [Waveform class](../info/Waveform.md).
 
 
 You'll Need
 ------------
 
-* A [Jolt.js](/Jolt.js) with 2v24.80 or later firmware
+* A [Jolt.js](../boards/Jolt.js.md) with 2v24.80 or later firmware
 * A Qwiic cable (supplied with Jolt.js)
-* A [Speaker](/Speaker) (I used a 2 inch, 8 Ohm speaker)
-* [Vibration Sensor](/Vibration) (optional)
+* A [Speaker](../devices/Speaker.md) (I used a 2 inch, 8 Ohm speaker)
+* [Vibration Sensor](../devices/Vibration.md) (optional)
 
-**Note:** This will work on other Espruino devices as well, you just need a method of providing enough power for a speaker (which [Jolt.js](/Jolt.js) has built in).
+**Note:** This will work on other Espruino devices as well, you just need a method of providing enough power for a speaker (which [Jolt.js](../boards/Jolt.js.md) has built in).
 
 Sounds
 ------
 
 First we need to make the sounds we'll use. We're going to make `1` to `19`, and then `20`/`30`/etc, so we can say `twelve o'clock` or `nine fourty five`.
 
-If you want to skip this, [the pre-generated files are available here](/files/Jolt.js Talking Clock.zip) - skip to the end for upload instructions.
+If you want to skip this, [the pre-generated files are available here](../files/Jolt.js Talking Clock.zip) - skip to the end for upload instructions.
 
 You'll need `ffmpeg` and `python` (with `pip` installed). We'll install a Text To Speech tool for which we'll use [Piper](https://github.com/rhasspy/piper) - type this in a terminal:
 

@@ -35,7 +35,7 @@ You need to wire up as follows:
 Software
 ---------
 
-You can use the [[VL53L1X.js]] module with the VL53L1X as follows:
+You can use the [VL53L1X.js](VL53L1X.js) module with the VL53L1X as follows:
 
 ```
 I2C2.setup({sda:B3,scl:B10});
@@ -60,7 +60,7 @@ delay between powering the VL53L1X on and using it).
 
 ### VL53L0X Compatibility
 
-The API of the module is partially compatible with the [VL53L0X module](/VL53L0X). Just
+The API of the module is partially compatible with the [VL53L0X module](./VL53L0X.md). Just
 replace `require("VL53L0X")` by `require("VL53L1X")` in your code
 and it should work. The function `performSingleMeasurement` is
 provided as an alias of `readMeasurement` in order to keep the

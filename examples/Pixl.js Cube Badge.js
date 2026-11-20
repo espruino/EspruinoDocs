@@ -7,7 +7,7 @@ Pixl.js Conference Badge - Rotating Cube
 
 ![Pixl.js Cube Badge](Pixl.js Cube Badge.jpg)
 
-This example turns [Pixl.js](/Pixl.js) into a name badge that
+This example turns [Pixl.js](../boards/Pixl.js.md) into a name badge that
 displays `Your Name` and `Espruino`, with a rotating cube to
 the right of them.
 

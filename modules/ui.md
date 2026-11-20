@@ -10,11 +10,11 @@ The framework consists of a bases module which provides the infrastructure
 for individual out of box and custom ui elements and utility extensions.
 Out of box ui elements include (for now):
 
- - [plain button](/uiBtn)
- - [check box](/uiChk)
- - [radio button](/uiRad)
- - [slider](/uiSli)
- - [input field](/uiInp)
+ - [plain button](./uiBtn.md)
+ - [check box](./uiChk.md)
+ - [radio button](./uiRad.md)
+ - [slider](./uiSli.md)
+ - [input field](./uiInp.md)
  - keyboard (soft keyboard / touch keyboard)
 
 Out of box extensions provide utility and convenience functions and

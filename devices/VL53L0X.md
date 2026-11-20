@@ -8,7 +8,7 @@ VL53L0X
 
 ![](VL53L0X/chip.jpg)
 
-The VL53L0X is an amazing laser time of flight range sensor that connects via [[I2C]]. It can be used in similar ways to  the [HC-SR04](/HC-SR04) module, but doesn't suffer from many of the HC-SR04's problems.
+The VL53L0X is an amazing laser time of flight range sensor that connects via [I2C](../info/I2C.md). It can be used in similar ways to  the [HC-SR04](./HC-SR04.md) module, but doesn't suffer from many of the HC-SR04's problems.
 
 It'll measure distances up to 2m, accurate to around 5%, and needs between 2.5 and 3.6 volts.
 
@@ -44,7 +44,7 @@ You can just connect it straight to VDD if needed.
 Software
 --------
 
-You can use the [[VL53L0X.js]] module with the VL53L0X as follows:
+You can use the [VL53L0X.js](VL53L0X.js) module with the VL53L0X as follows:
 
 ```
 I2C2.setup({sda:B3,scl:B10});

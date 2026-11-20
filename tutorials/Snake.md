@@ -10,14 +10,14 @@ Snake Game
 Introduction
 -----------
 
-We'll make a very simple [snake game](http://en.wikipedia.org/wiki/Snake_%28video_game%29) using an Espruino [[Pico]] and a Nokia LCD display.
+We'll make a very simple [snake game](http://en.wikipedia.org/wiki/Snake_%28video_game%29) using an Espruino [Pico](../boards/Pico.md) and a Nokia LCD display.
 
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [Nokia 5110 LCD](/PCD8544)
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* A [Nokia 5110 LCD](../devices/PCD8544.md)
+* [Breadboard](../devices/Breadboard.md)
 
 Wiring Up
 --------
@@ -26,15 +26,15 @@ Wiring Up
 
 Wiring this up is really simple, because the LCD draws so little power that we can power it from Espruino's GPIO lines... Simply place the Espruino Pico on the breadboard with the USB connector facing left, and then place the LCD directly above it, aligned to the right (so the pin on the Pico nearest the USB connector should not be connected to anything). See the picture for an example.
 
-**Note:** If you wanted to use a normal Espruino board, just follow the instructions on the [[PCD8544]] LCD's page, and update the LCD initialisation code below accordingly.
+**Note:** If you wanted to use a normal Espruino board, just follow the instructions on the [PCD8544](../devices/PCD8544.md) LCD's page, and update the LCD initialisation code below accordingly.
 
 Software
 -------
 
-We're going to start off using the code from the [Nokia 5110 LCD](/PCD8544) page, but with a few small tweaks:
+We're going to start off using the code from the [Nokia 5110 LCD](../devices/PCD8544.md) page, but with a few small tweaks:
 
 * We're going to manually set up the pins for the LCD's power
-* As the Pico's hardware [[SPI]] pins don't align with the LCD, we'll just use Software SPI instead (which will work on any pins).
+* As the Pico's hardware [SPI](../info/SPI.md) pins don't align with the LCD, we'll just use Software SPI instead (which will work on any pins).
 
 ```
 A5.write(0); // GND
@@ -120,7 +120,7 @@ onInit();
 ```
 
 So now, after it's sent to Espruino you see the 'snake' moving, and you can rotate it in one direction. But what about moving the other way?
-While we could wire up another [[Button]], let's just make a long press go the other way. Replace `setWatch` at the bottom of the `start` function with the following:
+While we could wire up another [Button](../devices/Button.md), let's just make a long press go the other way. Replace `setWatch` at the bottom of the `start` function with the following:
 
 ```
 setWatch(function(e) {
@@ -166,7 +166,7 @@ function onFrame() {
 }
 ```
 
-And now, we have to remember where the snake's tail was previously, so that we can remove the end of it. We'll do it by adding an array called `history` that will contain all the previous positions. This isn't a very efficient way to store the positions, so if this game were to be on a much bigger display with a longer snake then you might need to look at using something else (see the [[Performance]] page). However in this case it is good enough and makes the code much easier to understand:
+And now, we have to remember where the snake's tail was previously, so that we can remove the end of it. We'll do it by adding an array called `history` that will contain all the previous positions. This isn't a very efficient way to store the positions, so if this game were to be on a much bigger display with a longer snake then you might need to look at using something else (see the [Performance](../info/Performance.md) page). However in this case it is good enough and makes the code much easier to understand:
 
 Replace `onFrame` with the following:
 

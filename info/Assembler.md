@@ -8,7 +8,7 @@ Inline Assembler
 
 This page shows you how you can write assembly code and have it assembled
 by the Web IDE and uploaded as a function. However there are other ways
-to get your code running fast! Please check out the [Performance page](/Performance)
+to get your code running fast! Please check out the [Performance page](./Performance.md)
 for more information!
 
 The Web IDE allows you to write inline assembler in the right-hand pane.
@@ -52,7 +52,7 @@ This is handled as follows:
 
 * This only works on ARM-based microcontrollers - ARM Thumb assembler will not work on ESP8266/ESP32.
 * The assembler is only partially implemented so will only parse some opcodes at the moment. If you find something missing [please let us know!](https://github.com/espruino/EspruinoTools/issues)
-* If this is a bit hardcore for you, there are other options that allow you to write JS or C - please check out the [Performance page](/Performance) for more information!
+* If this is a bit hardcore for you, there are other options that allow you to write JS or C - please check out the [Performance page](./Performance.md) for more information!
 
 For an ARM Thumb reference, [see this link](https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf)
 
@@ -246,7 +246,7 @@ You can write directly to the hardware in order to perform IO very quickly. Howe
 
 Useful docs are:
 
-* STM32F103 reference (see [[Original]])
+* STM32F103 reference (see [Original](../boards/Original.md))
 * [STM32F1 header file](https://github.com/espruino/Espruino/blob/master/targetlibs/stm32f1/lib/stm32f10x.h) - see `GPIO_BASE` and `GPIO_TypeDef`.
 
 GPIOA's Output data register is `0x4001080C` (which sets ALL pins on that port). To set individual pins you can write to BSRR = `0x40010810` and to clear them you can write to BRR = `0x40010814`
@@ -274,7 +274,7 @@ pulse();
 
 Useful docs are:
 
-* STM32F401 reference (see [[Pico]])
+* STM32F401 reference (see [Pico](../boards/Pico.md))
 * [STM32F401 header file](https://github.com/espruino/Espruino/blob/master/targetlibs/stm32f4/lib/stm32f401xe.h) - see `GPIO_BASE` and `GPIO_TypeDef`.
 
 GPIOB's Output data register is `0x40020414` (GPIOA is `0x40020014`). Writing to that address sets ALL pins on that port. To set individual pins you can write to the lower 16 bits of BSRR = `0x40020418` and to clear them you can write to the upper 16 bits.
@@ -375,7 +375,7 @@ In order to be properly useful you'll probably want to access the current time:
 Compiling C Code
 --------------
 
-You can also inline compile C code by using the [Inline C Compiler](/InlineC).
+You can also inline compile C code by using the [Inline C Compiler](./InlineC.md).
 
 Another way to compile C code is to use the [toolchain that will compile Espruino](https://github.com/espruino/Espruino/blob/master/README.md#building):
 

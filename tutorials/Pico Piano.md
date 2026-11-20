@@ -17,10 +17,10 @@ By touching the top row of pins with a jumper wire, you'll be able to make notes
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [Speaker](/Speaker)
+* An Espruino [Pico](../boards/Pico.md)
+* A [Speaker](../devices/Speaker.md)
 * A 10,000 Ohm Resistor ( Brown, Black, Orange )
-* [[Breadboard]]
+* [Breadboard](../devices/Breadboard.md)
 * One Jumper Wire
 
 Wiring Up
@@ -36,7 +36,7 @@ Wiring Up
 Software
 -------
 
-First off, we'll copy the code from the [[Making Music]] tutorial that will play notes, changing the pin for the buzzer to match where we've plugged ours in (`B4`).
+First off, we'll copy the code from the [Making Music](Making Music.md) tutorial that will play notes, changing the pin for the buzzer to match where we've plugged ours in (`B4`).
 
 Copy and paste the following into the left hand side of the Web IDE.
 
@@ -119,7 +119,7 @@ for (var pin in notes) setupPin(pin);
 
 And now, you have a working piano! Take the floating end of the Jumper Wire and touch it against the top row of pins on Espruino Pico. When you press it against one you'll get a different pitch on the speaker. The leftmost pin is the `Bat` pin, not an input, so it won't create a noise.
 
-Espruino can play waveforms though, so we can do better than a beep. For this, we'll use a simple 'pop' sound effect. I've loaded it with [Audacity](http://audacity.sourceforge.net/), exported it as an 8 bit raw file, and then converted it to a base64 encoded string using the [[File Converter]] page.
+Espruino can play waveforms though, so we can do better than a beep. For this, we'll use a simple 'pop' sound effect. I've loaded it with [Audacity](http://audacity.sourceforge.net/), exported it as an 8 bit raw file, and then converted it to a base64 encoded string using the [File Converter](../info/File Converter.md) page.
 
 The following will load the 'ding' sound, and will play it back:
 

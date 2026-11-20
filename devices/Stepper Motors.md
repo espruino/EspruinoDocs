@@ -12,9 +12,9 @@ Stepper Motors
 **There are now code libraries available to automate the task of controlling
 a stepper motor (below).** If you're interested in seeing how a stepper motor works and controlling it from first principles, read on!
 
-* The [Stepper Motor Module](/StepperMotor) allows direct connection to a stepper
+* The [Stepper Motor Module](./StepperMotor.md) allows direct connection to a stepper
 motor via a simple motor driver IC (eg. one wire per motor coil is connected from Espruino into the driver). This works on any Espruino device.
-* The [NRF52 Stepper Motor Module](/NRF52Stepper) is designed for connecting
+* The [NRF52 Stepper Motor Module](./NRF52Stepper.md) is designed for connecting
 nRF52-based Espruino devices to a specialist stepper motor driver IC. It uses
 the nRF52 peripherals to provide glitchless stepper motor control independent
 of CPU usage.
@@ -27,7 +27,7 @@ You can't drive stepper motors (whatever the type) directly from Espruino - you'
 
 ### 4 wire (BiPolar)
 
-These motors require you to be able to connect each wire to positive voltage or ground independently. Because of this you need a [H Bridge](http://en.wikipedia.org/wiki/H-bridge) motor driver with 4 outputs, like the [[L293D]]. Something that can only pull down to ground (like the [[ULN2003]]) won't be good enough.
+These motors require you to be able to connect each wire to positive voltage or ground independently. Because of this you need a [H Bridge](http://en.wikipedia.org/wiki/H-bridge) motor driver with 4 outputs, like the [L293D](L293D.md). Something that can only pull down to ground (like the [ULN2003](ULN2003.md)) won't be good enough.
 
 We're assuming the following connections:
 
@@ -41,7 +41,7 @@ We're assuming the following connections:
 
 ### 5/6 wire (Unipolar)
 
-You connect the common wire(s) of these motors to a positive voltage and then move them by connecting the other wires to ground in the correct pattern. Because of this, you can use almost any drive chip as long as it has enough outputs. The [[ULN2003]] is a good example, but you can also use the [[L293D]] (however you won't be using its pull-up functionality).
+You connect the common wire(s) of these motors to a positive voltage and then move them by connecting the other wires to ground in the correct pattern. Because of this, you can use almost any drive chip as long as it has enough outputs. The [ULN2003](ULN2003.md) is a good example, but you can also use the [L293D](L293D.md) (however you won't be using its pull-up functionality).
 
 We're assuming the following connections:
 

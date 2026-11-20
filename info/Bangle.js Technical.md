@@ -7,9 +7,9 @@ Bangle.js Technical Information
 * KEYWORDS: Bangle.js,Bangle,Banglejs,Smartwatch,Watch,pinout,pins,io,specs,spec
 * USES: Bangle.js
 
-**For general Bangle.js information, try [the Bangle.js 1](/Bangle.js) or [the Bangle.js 2](/Bangle.js2) pages**
+**For general Bangle.js information, try [the Bangle.js 1](../boards/Bangle.js.md) or [the Bangle.js 2](../boards/Bangle.js2.md) pages**
 
-**This page contains detailed information on Bangle.js's 1's internals. [Click here for Bangle.js 2](/Bangle.js2+Technical)**. If you're
+**This page contains detailed information on Bangle.js's 1's internals. [Click here for Bangle.js 2](./Bangle.js2 Technical.md)**. If you're
 just writing JS then you should have no need for this information, but if you
 plan on modifying the Bangle.js firmware it might be of interest.
 
@@ -52,10 +52,10 @@ all `Bangle.*` functions and pretty much all Bangle.js functionality.
 Hardware
 --------
 
-Want to get inside? Check out the [Bangle.js Disassembly page](/Bangle.js+Disassembly)
+Want to get inside? Check out the [Bangle.js Disassembly page](../tutorials/Bangle.js Disassembly.md)
 
-* [KX023 accelerometer](/datasheets/KX023-1025.pdf)
-* [GMC303 3 axis compass](/datasheets/GMC303.pdf)
+* [KX023 accelerometer](../datasheets/KX023-1025.pdf)
+* [GMC303 3 axis compass](../datasheets/GMC303.pdf)
 * BD 1668 heart rate sensor (HRM) (no datasheet). All analog - op-amp comparing two wavelengths of light
 * 32 mbit flash - similar command set to [Macronix MX25](https://media.digikey.com/pdf/Data%20Sheets/Macronix/MX25U12835F.pdf)
 * 240x240 LCD with [ST7789 driver](https://www.rhydolabz.com/documents/33/ST7789.pdf) used in 8 bit parallel mode
@@ -151,7 +151,7 @@ it on. Underneath that you'll find 4 pins, labelled as follows:
 
 You only need `GND`, `SWDID` and `SWDCLK` (VDD is not required).
 
-See [Advanced Debug](/AdvancedDebug) for more information on programming via SWD.
+See [Advanced Debug](./AdvancedDebug.md) for more information on programming via SWD.
 
 
 Heart Rate monitor PCB

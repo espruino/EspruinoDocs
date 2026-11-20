@@ -6,7 +6,7 @@ RcSwitch
 
 * KEYWORDS: 433Mhz,315Mhz,433,SC5262,SC5272,HX2262,HX2272,PT2262,PT2272,EV1527,RT1527,FP1527,HS1527
 
-Module for operate 433/315Mhz devices like power outlet sockets, relays, etc. Use the [RcSwitch](/modules/RcSwitch.js) module for it.
+Module for operate 433/315Mhz devices like power outlet sockets, relays, etc. Use the [RcSwitch](RcSwitch.js) module for it.
 
 Support for sending is implemented, but receiving isn't.
 
@@ -30,7 +30,7 @@ How to use the module:
 ```javascript
   // 1 = Protocol number (1..6)
   // A0 = Pin
-  // 10 = Amount of times to repeat the code 
+  // 10 = Amount of times to repeat the code
   var sw = require("RcSwitch").connect(1, A0, 10);
   var on = false;
   function toggle() {

@@ -5,8 +5,6 @@ Puck.js Vibration Sensor
 * KEYWORDS: Vibration,Movement,Home Assistant
 * USES: Puck.js,BLE,BTHome
 
-![Puck.js Vibration Sensor](Puck.js Vibration Sensor.jpg)
-
 This advertises battery level, temperature, and whether the Puck is moving or not in a [BTHome (https://bthome.io/)](https://bthome.io/) compatible format, which can then be used in https://www.home-assistant.io/
 
 This is based on https://www.espruino.com/BTHome and https://www.espruino.com/Puck.js#accelerometer-gyro

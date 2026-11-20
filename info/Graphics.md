@@ -6,13 +6,13 @@ Graphics Library
 
 * KEYWORDS: Graphics,LCD,Draw,Line,Fill,Color,Circle,Image,drawImage,Built-In
 
-Espruino has a built-in graphics library, exposed via the [Graphics](/Reference#Graphics) class.
+Espruino has a built-in graphics library, exposed via the [Graphics](https://www.espruino.com/Reference#Graphics) class.
 
 On most boards (without built in displays) you can create your own instance(s) of the Graphics class using a module that is designed to interface to a display (see 'Graphics Drivers' below), or you can manually create you own using one of the `Graphics.createXYZ` functions.
 
 On the few boards that do contain LCDs, there is a predefined variable called `g` (which is an instance of the Graphics Object).
 
-**Note:** All coordinates in the Graphics library treat 0,0 as the top left corner of the display. However you can rotate or mirror what you draw using the [Graphics.setRotation](/Reference#l_Graphics_setRotation) method.
+**Note:** All coordinates in the Graphics library treat 0,0 as the top left corner of the display. However you can rotate or mirror what you draw using the [Graphics.setRotation](https://www.espruino.com/Reference#l_Graphics_setRotation) method.
 
 ### Graphics Drivers
 
@@ -49,7 +49,7 @@ g.print();
 // 0,0,0,0,0,0,0,0
 ```
 
-See the [`Graphics.createArrayBuffer`](/Reference#l_Graphics_createArrayBuffer)
+See the [`Graphics.createArrayBuffer`](https://www.espruino.com/Reference#l_Graphics_createArrayBuffer)
 reference for more information on possible arguments that can be used.
 
 Or you can create a Graphics instance which calls your function whenever a pixel needs to be drawn:
@@ -67,13 +67,13 @@ g.drawLine(0,0,2,2)
 ### Dumping Graphics contents
 
 Espruino can output the contents of a Graphics instance to the Web IDE's REPL
-using [`g.dump()`](/Reference#l_Graphics_dump).
+using [`g.dump()`](https://www.espruino.com/Reference#l_Graphics_dump).
 
 For example you can just type `g.dump()` in the REPL to see what
 is in the Graphics instance `g`.
 
-Internally, [`g.dump()`](/Reference#l_Graphics_dump) works using
-[`g.asURL()`](/Reference#l_Graphics_asURL) which creates a base64
+Internally, [`g.dump()`](https://www.espruino.com/Reference#l_Graphics_dump) works using
+[`g.asURL()`](https://www.espruino.com/Reference#l_Graphics_asURL) which creates a base64
 encoded bitmap of the Graphics instance.
 
 
@@ -110,7 +110,7 @@ You can then switch back to the bitmap font using:
 g.setFontBitmap();
 ```
 
-**You can also use custom Bitmap Fonts**. For more information, see [[Fonts]]
+**You can also use custom Bitmap Fonts**. For more information, see [Fonts](Fonts.md)
 
 
 Circles
@@ -168,7 +168,7 @@ Offscreen Graphics
 Images / Bitmaps
 ----------------
 
-Espruino has a function called [`Graphics.drawImage`](/Reference#l_Graphics_drawImage)
+Espruino has a function called [`Graphics.drawImage`](https://www.espruino.com/Reference#l_Graphics_drawImage)
 which can be used to draw images.
 
 Images are either a special kind of object or a String.
@@ -220,7 +220,7 @@ You can also specify the image as a string or arraybuffer, in the following form
 ### Multiple frames
 
 An image can contain multiple frames of the same size (eg for an animation). To do this just ensure that the image bitmap contains all the frames one after the other, then specify
-the frame when drawing with [`Graphics.drawImage`](/Reference#l_Graphics_drawImage): `g.drawImage(img, x, y, { frame : n });`.
+the frame when drawing with [`Graphics.drawImage`](https://www.espruino.com/Reference#l_Graphics_drawImage): `g.drawImage(img, x, y, { frame : n });`.
 
 To generate an image like this, the easiest way is to use the [Image Converter](https://www.espruino.com/Image+Converter) with the images tiled vertically one after the other, and then change the width. As an example, if you want to store 10, 64x64px images:
 
@@ -264,17 +264,17 @@ create these images from an existing Graphics instance.
 * Upload images to your board's storage (and convert at the same time) with the
 Web IDE's `Storage` button.
 
-* Use [our online Image Converter](/Image+Converter) to convert an image
+* Use [our online Image Converter](./Image Converter.md) to convert an image
 into Base64-encoded JavaScript that can be pasted into your code.
 
-* Load bitmaps directly (eg. from an SD card) with the [[BMPLoader]] module:
+* Load bitmaps directly (eg. from an SD card) with the [BMPLoader](../modules/BMPLoader.md) module:
 
 ```
 var img = require("BMPLoader").load(require('fs').readFileSync("foo.bmp"));
 g.drawImage(img, 10, 10);
 ```
 
-* Use [our online SVG Converter](/SVG+Converter) to convert SVG vector images
+* Use [our online SVG Converter](./SVG Converter.md) to convert SVG vector images
 into `Graphics` calls that will render an image.
 
 
@@ -296,11 +296,11 @@ g.drawImage(img, 10, 10, {scale:1.5, rotate:Math.PI/4});
 
 If you use a single-bit image, the foreground and background colors will be used instead of the image's colors. Otherwise the color data will be copied directly so it's an idea to use a bitmap of the same bit depth as your display.
 
-See the reference for [`Graphics.drawImage`](/Reference#l_Graphics_drawImage) for more information...
+See the reference for [`Graphics.drawImage`](https://www.espruino.com/Reference#l_Graphics_drawImage) for more information...
 
 ### Creating an image via command-line
 
-The easiest solution is to use [our online Image Converter](/Image+Converter).
+The easiest solution is to use [our online Image Converter](./Image Converter.md).
 
 Or you can use command-line tools locally to create a raw image that can be uploaded separately. It's best to install [ImageMagick](http://www.imagemagick.org/). Then you can type commands like:
 
@@ -319,7 +319,7 @@ convert myimage.png -resize 16x16\! -depth 8  gray:output.raw
 convert myimage.png -resize 16x16\! -depth 1  gray:output.raw
 ```
 
-On Linux, you can type `base64 --wrap=0 myfilename.raw` to convert the raw file to base64 - or on other platforms you can use the [[File Converter]] webpage.
+On Linux, you can type `base64 --wrap=0 myfilename.raw` to convert the raw file to base64 - or on other platforms you can use the [File Converter](File Converter.md) webpage.
 
 Once you've got the base64 encoded image, simply decode it with `atob` and create an ArrayBuffer from it. For instance this is the Espruino logo:
 

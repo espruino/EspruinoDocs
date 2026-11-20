@@ -12,7 +12,7 @@ If you're trying to prototype something, it's often handy to be able to plug and
 
 [[http://youtu.be/ArQKxe7X_q4]]
 
-And how to solder connections suitable for [[Servo Motors]].
+And how to solder connections suitable for [Servo Motors](Servo Motors.md).
 
 [[http://youtu.be/9KX32jrSZts]] 
 

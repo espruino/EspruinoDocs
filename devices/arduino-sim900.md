@@ -14,8 +14,8 @@ The SIM900 is a common shield for GSM communication on Arduino.
 You can use the SIM900 in two ways with all official Espruino
 boards:
 
-* Internet using the [SIM900](/SIM900) software module
-* SMS Text messages using the [ATSMS](/ATSMS) module
+* Internet using the [SIM900](./SIM900.md) software module
+* SMS Text messages using the [ATSMS](../modules/ATSMS.md) module
 
 
 Wiring
@@ -29,9 +29,9 @@ Check the position of the jumpers by the aerial. If these
 are in the `SWSerial` position you'll need to use `{ rx: D7, tx : D8 }`,
 otherwise if it's `Xduino` use `{ rx: D0, tx : D1 }`.
 
-**Note:** If using `D0` and `D1` on [Pixl.js](/Pixl.js) you should be aware
+**Note:** If using `D0` and `D1` on [Pixl.js](../boards/Pixl.js.md) you should be aware
 that if `D0` is powered at boot, Espruino's console will [automatically be moved
-to it](/Pixl.js#serial-console). You can avoid this by calling `Terminal.setConsole();`
+to it](../boards/Pixl.js.md#serial-console). You can avoid this by calling `Terminal.setConsole();`
 from `onInit()`.
 
 This module needs powering on with a long press of the power key. You can however
@@ -67,7 +67,7 @@ var gprs = require('SIM900').connect(Serial1, undefined/*reset*/, function(err) 
 });
 ```
 
-See the [SIM900 module documentation](/SIM900) for more information.
+See the [SIM900 module documentation](./SIM900.md) for more information.
 
 ## SMS
 
@@ -99,7 +99,7 @@ sms.on('message', function(msgIndex) {
 });
 ```
 
-See the [ATSMS module documentation](/ATSMS) for more information.
+See the [ATSMS module documentation](../modules/ATSMS.md) for more information.
 
 
 Using

@@ -135,4 +135,4 @@ setInterval(function() {
 setDeepSleep(1);
 ```
 
-Now you have this framework, you could easily use it to record a few seconds of video every few minutes, or when a [[Pyroelectric]] sensor detected motion!
+Now you have this framework, you could easily use it to record a few seconds of video every few minutes, or when a [Pyroelectric](../devices/Pyroelectric.md) sensor detected motion!

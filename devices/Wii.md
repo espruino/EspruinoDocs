@@ -28,7 +28,7 @@ The connector viewed from the end is connected like this:
                   |________|
 ```
 
-Once wired up, you can use the Wii nunchuck with just the following - using the [[wii_nunchuck.js]] module:
+Once wired up, you can use the Wii nunchuck with just the following - using the [wii_nunchuck.js](wii_nunchuck.js) module:
 
 
 ```

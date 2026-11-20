@@ -7,7 +7,7 @@ Handling POSTed data from Forms
 * KEYWORDS: Internet,Form,Forms,HTTP,Server,HTTP Server,POST,GET,HTTP Request
 * USES: Internet,EspruinoWiFi,Pico,ESP8266
 
-On the [[Internet]] page there is a simple example of sending data in the
+On the [Internet](../info/Internet.md) page there is a simple example of sending data in the
 URL from a webpage, but it can be unreliable if anywhere between
 your browser and the Espruino decides to cache the received data.
 
@@ -34,8 +34,8 @@ form (which happens on the `end` event of the HTTP request).
 You'll Need
 ----------
 
-A device that'll connect to the [[Internet]], like an [Espruino WiFi](/WiFi)
-or a [[Pico]] with an ESP8266 attached.
+A device that'll connect to the [Internet](../info/Internet.md), like an [Espruino WiFi](../boards/WiFi.md)
+or a [Pico](../boards/Pico.md) with an ESP8266 attached.
 
 
 Software
@@ -43,7 +43,7 @@ Software
 
 Simply copy & paste the code below into the Web IDE, then update the `WIFI_NAME`
 and `WIFI_KEY` variables and delete the `onInit` function that *isn't* for
-your platform (if you're using [Espruino WiFi](/WiFi) or a [[Pico]] with ESP8266).
+your platform (if you're using [Espruino WiFi](../boards/WiFi.md) or a [Pico](../boards/Pico.md) with ESP8266).
 
 For other hardware you'll have to consult the documentation and create your
 own `onInit` function.

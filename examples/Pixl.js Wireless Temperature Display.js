@@ -7,16 +7,16 @@ Pixl.js Wireless Temperature Display
 
 ![Pixl.js Wireless Temperature Display](Pixl.js Wireless Temperature Display.jpg)
 
-Here we're using the on-chip temperature sensor of [Puck.js](/Puck.js) devices
+Here we're using the on-chip temperature sensor of [Puck.js](../boards/Puck.js.md) devices
 to turn them into beacons. They'll advertise the temperature and battery level
 as 'manufacturer data', with Espruino's own manufacturer code `0x590`.
 
-[Pixl.js](/Pixl.js) then scans for advertising packets once a minute and displays a list
+[Pixl.js](../boards/Pixl.js.md) then scans for advertising packets once a minute and displays a list
 of all devices it has found that are advertising with the manufacturer code `0x590`,
 along with their battery level and temperature.
 
-**Note:** [Pixl.js Wireless Weather Station](/Pixl.js Wireless Weather Station)
-is very similar but uses a [Thingy:52](/Thingy52) as a sensor. The Weather
+**Note:** [Pixl.js Wireless Weather Station](../examples/Pixl.js Wireless Weather Station.js)
+is very similar but uses a [Thingy:52](../boards/Thingy52.md) as a sensor. The Weather
 Station example uses significantly more power as it scans constantly (this
 scans for 1 second every minute).
 */

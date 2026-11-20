@@ -12,7 +12,7 @@ All you need to do is copy it in and change the Wifi Name and Key near the botto
 Wiring
 ------
 
-Just connect the [[CC3000]] connected as described on the [[CC3000]] page.
+Just connect the [CC3000](../devices/CC3000.md) connected as described on the [CC3000](../devices/CC3000.md) page.
 
 */
 

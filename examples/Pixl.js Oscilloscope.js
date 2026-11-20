@@ -7,11 +7,11 @@ Pixl.js Oscilloscope
 
 ![Pixl.js Oscilloscope](Pixl.js Oscilloscope.jpg)
 
-This example displays a simple oscilloscope on [Pixl.js](/Pixl.js)'s LCD
+This example displays a simple oscilloscope on [Pixl.js](../boards/Pixl.js.md)'s LCD
 display.
 
 Simply attach [an amplified Microphone](http://www.ebay.com/sch/i.html?_nkw=arduino+microphone)
-or some other varying input to pin `A0` on a [Pixl.js](/Pixl.js) board,
+or some other varying input to pin `A0` on a [Pixl.js](../boards/Pixl.js.md) board,
 connect, and upload the code.
 
 There is no triggering in this example, but it could be added relatively

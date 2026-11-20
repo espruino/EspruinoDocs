@@ -7,15 +7,15 @@ LIS3MDL
 * KEYWORDS: Shield, LIS3MDL, Magentic-Sensor, Compass, Magnetometer
 
 The [LIS3MDL](http://www.st.com/en/mems-and-sensors/lis3mdl.html) is an ultra-low-power high-performance three-axis magnetic sensor. Support is provided with the
-[[LIS3MDL.js]] module.
+[LIS3MDL.js](LIS3MDL.js) module.
 
 This module was tested with the NUCLEO-STM32F401 + X-NUCLEO-IKS01A1.
 
 The IKDS01A1 shield includes the following sensors:
-* [LPS25HB](/LPS25HB)  
-* [HTS221](/HTS221)
-* [LSM6DS0](/LSM6DSL)
-* [LIS3MDL](/LIS3MDL)
+* [LPS25HB](./LPS25HB.md)  
+* [HTS221](./HTS221.md)
+* [LSM6DS0](./LSM6DSL.md)
+* [LIS3MDL](./LIS3MDL.md)
 
 ## Required Resources
 

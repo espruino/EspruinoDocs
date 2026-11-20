@@ -31,8 +31,8 @@ the code into a library here which you can use.
 How to use
 -----------
 
-You just use the [[mouldking.js]] module on any Bluetooth LE capable
-[Espruino device](/Order). First you must call `.start()` - this
+You just use the [mouldking.js](mouldking.js) module on any Bluetooth LE capable
+[Espruino device](https://www.espruino.com/Order). First you must call `.start()` - this
 advertises what appears to be a 'pairing' packet.
 
 After a second or so the remote control will notice your device, and you can
@@ -98,5 +98,5 @@ NRF.setScan(d => print(new Uint8Array(d.manufacturerData).join(",")), {filters :
 Related
 --------
 
-* [LEGO WeDo 2 module](/LEGO WeDo 2.0) is a module that allows your Espruino to control LEGO WeDo 2.0 controllers
-* [Jolt.js LEGO Control](/Jolt.js+LEGO) shows how to connect LEGO Power Functions directly to a Jolt.js
+* [LEGO WeDo 2 module](LEGO WeDo 2.md) is a module that allows your Espruino to control LEGO WeDo 2.0 controllers
+* [Jolt.js LEGO Control](../tutorials/Jolt.js LEGO.md) shows how to connect LEGO Power Functions directly to a Jolt.js

@@ -7,14 +7,14 @@ Distance Sensing Robot
 
 ![Distance Sensing Robot](distance_sensing_robot.jpg)
 
-This [[Robot]] uses an [[HC-SR04]] Ultrasonic distance sensor, an Espruino board with an [[L293D]] motor driver IC soldered onto the surface mount prototyping area.
+This [Robot](../devices/Robot.md) uses an [HC-SR04](../devices/HC-SR04.md) Ultrasonic distance sensor, an Espruino board with an [L293D](../devices/L293D.md) motor driver IC soldered onto the surface mount prototyping area.
 
-**Note:** This is an older code example that doesn't use the [[HC-SR04]] library.
+**Note:** This is an older code example that doesn't use the [HC-SR04](../devices/HC-SR04.md) library.
 
 Wiring Up
 ---------
 
-Solder the [[L293D]] motor driver, and the [[HC-SR04]] Ultrasonic Distance sensor as described on their pages
+Solder the [L293D](../devices/L293D.md) motor driver, and the [HC-SR04](../devices/HC-SR04.md) Ultrasonic Distance sensor as described on their pages
 
 Connect the motors as follows:
 

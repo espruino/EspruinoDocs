@@ -8,11 +8,11 @@ JavaScript Compilation
 
 Normally, when you upload code to Espruino it is executed straight from source - which means that your source code is on the device itself so you can edit it easily.
 
-While this is fast enough for most things, occasionally you may need your code to run faster. Up until now you've had the option of writing [Inline Assembler](/Assembler), but now you can actually compile JavaScript directly into native code.
+While this is fast enough for most things, occasionally you may need your code to run faster. Up until now you've had the option of writing [Inline Assembler](./Assembler.md), but now you can actually compile JavaScript directly into native code.
 
-The Compiler uses a web service provided from espruino.com to convert your code to C, compile it with GCC, and then upload it to your board. There is [now the option of a JIT Compiler](/JIT) which runs completely on your device,
+The Compiler uses a web service provided from espruino.com to convert your code to C, compile it with GCC, and then upload it to your board. There is [now the option of a JIT Compiler](./JIT.md) which runs completely on your device,
 
-**Note:** The compiler is an online service that is only provided for [official Espruino boards](/Order). It won't work on devices like ESP8266 or ESP32.
+**Note:** The compiler is an online service that is only provided for [official Espruino boards](https://www.espruino.com/Order). It won't work on devices like ESP8266 or ESP32.
 
 
 How do I use it?
@@ -100,11 +100,11 @@ function go() {
 
 We need to cast `B2.getInfo().out_addr` to an integer by `or`ing it with `0`, as it allows the compiler to optimise the `poke32` call.
 
-**Note:** `in_addr` also works for the input address - see [`Pin.prototype.getInfo`](/Reference#l_Pin_getInfo)
+**Note:** `in_addr` also works for the input address - see [`Pin.prototype.getInfo`](https://www.espruino.com/Reference#l_Pin_getInfo)
 
 **Note 2:** We're only setting the Output Data register, not the pin state register. This means you'll need a call to `pinMode` (or `digitalWrite`) beforehand in order to set the pin to be an output.
 
-If you did want to access the pins directly, you still can. For example the following code will produce a roughly 8Mhz square wave on an **STM32F4** (Espruino [[Pico]]):
+If you did want to access the pins directly, you still can. For example the following code will produce a roughly 8Mhz square wave on an **STM32F4** (Espruino [Pico](../boards/Pico.md)):
 
 ```
 function toggler() {
@@ -123,11 +123,11 @@ function toggler() {
 }
 ```
 
-For what to do on an **STM32F1**, take a look at the [[Assembler]] page.
+For what to do on an **STM32F1**, take a look at the [Assembler](Assembler.md) page.
 
-Direct access can be done with other peripherals as well - check out the reference manual for the MCU on your board for more information on which addresses to write to. The correct reference manual is linked from the [Pico Board](/Pico) and [Original Espruino Board](/Original) pages under the 'Information' heading.
+Direct access can be done with other peripherals as well - check out the reference manual for the MCU on your board for more information on which addresses to write to. The correct reference manual is linked from the [Pico Board](../boards/Pico.md) and [Original Espruino Board](../boards/Original.md) pages under the 'Information' heading.
 
-There's a tutorial [on accessing low-level STM32 peripherals here](/STM32+Peripherals)
+There's a tutorial [on accessing low-level STM32 peripherals here](../tutorials/STM32 Peripherals.md)
 
 
 What Happens?

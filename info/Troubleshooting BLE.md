@@ -7,9 +7,9 @@ Troubleshooting (Bluetooth LE)
 * KEYWORDS: Troubleshooting,Trouble,Problems,Help,Broken,Not Working,BLE,Bluetooth LE,Web Bluetooth
 
 What follows is a quick list of potential problems and solutions for Bluetooth connection
-issues. **For more general problems, please look at [the main Troubleshooting page](/Troubleshooting)**
+issues. **For more general problems, please look at [the main Troubleshooting page](./Troubleshooting.md)**
 
-Have you got a [Bangle.js](/Bangle.js)? There's also a specific [Bangle.js Troubleshooting page](/Troubleshooting+Bangle.js)
+Have you got a [Bangle.js](../boards/Bangle.js.md)? There's also a specific [Bangle.js Troubleshooting page](./Troubleshooting Bangle.js.md)
 
 If your problem isn't covered, please post in the [Forum](http://forum.espruino.com).
 
@@ -20,27 +20,27 @@ Getting Connected
 
 ### Web Bluetooth doesn't appear in my Web IDE connection options
 
-* Try following [these instructions](Quick+Start+BLE#with_web_bluetooth)
+* Try following [these instructions](../tutorials/Quick Start BLE.md#with_web_bluetooth)
 * Do you have an up to date version of Chrome? (`Help` -> `About Google Chrome`) - it should be at least version 51
-* You need a Bluetooth LE-capable adaptor (at least Bluetooth 4.0). If your PC doesn't have one, you can [buy one for well under $10](Quick+Start+BLE#requirements)
+* You need a Bluetooth LE-capable adaptor (at least Bluetooth 4.0). If your PC doesn't have one, you can [buy one for well under $10](../tutorials/Quick Start BLE.md#requirements)
 * **Android** needs to be at least version 6 (or version 5 with recent builds of Chromium)
-* **Windows** Web Bluetooth isn't currently supported by Chrome. Check out the [Quick Start Guide](Quick+Start+BLE#windows) for more information.
-* **Linux** needs Bluez 5.41 or above - [see here for instructions on how to install it](/Web Bluetooth On Linux)
-* **MacOS** needs OS X Yosemite or later. Older hardware will [need an external USB dongle](Quick+Start+BLE#requirements) though - check that `Low Energy` supported in `About this Mac` -> `System Report`/`Bluetooth`  
+* **Windows** Web Bluetooth isn't currently supported by Chrome. Check out the [Quick Start Guide](../tutorials/Quick Start BLE.md#windows) for more information.
+* **Linux** needs Bluez 5.41 or above - [see here for instructions on how to install it](../tutorials/Web Bluetooth On Linux.md)
+* **MacOS** needs OS X Yosemite or later. Older hardware will [need an external USB dongle](../tutorials/Quick Start BLE.md#requirements) though - check that `Low Energy` supported in `About this Mac` -> `System Report`/`Bluetooth`
 * **Chrome OS** should work fine as long as it is up to date
 
 ### I clicked `COMx` in Windows and it's connecting but I get no response
 
 Bluetooth LE Serial devices (Nordic UART Service) like Espruino are not treated as serial port devices by Windows. If the IDE's connection menu shows devices beginning with the word `COM` (eg. `COM5`), they are not your device and connecting to them won't work.
 
-Check out the [Quick Start Guide](Quick+Start+BLE#windows) for more information.
+Check out the [Quick Start Guide](../tutorials/Quick Start BLE.md#windows) for more information.
 
 ### I can't see my device in the IDE in Windows
 
 * Are you sure some other device isn't connected to it? See the next item.
 * Are you **sure** you're using the [native Espruino IDE](http://www.espruino.com/Quick+Start+BLE#with-an-application) as opposed to the IDE Website or Chrome App?
 * **On Windows 10**, have your paired your Puck using the built-in Windows Bluetooth menu? You need that before the IDE can see it. If you can't pair then your PC may not support Bluetooth LE (even if it supports normal Bluetooth) and you may need an exernal Bluetooth dongle.
-* **On Windows 7** you'll need a [supported Bluetooth dongle](Quick+Start+BLE#requirements) that [may need setting up with Zadig](/Web+IDE#zadig)
+* **On Windows 7** you'll need a [supported Bluetooth dongle](../tutorials/Quick Start BLE.md#requirements) that [may need setting up with Zadig](../tutorials/Web IDE.md#zadig)
 
 ### I can't see my device any more
 
@@ -51,7 +51,7 @@ As a result, if you can't see your device advertising then it is probably becaus
 some other device that is connected. It may even be *an application on the same device*.
 
 Some BLE apps on phones automatically reconnect, as do most devices if you've configured
-Espruino as a [BLE HID device](Puck.js+Keyboard)).
+Espruino as a [BLE HID device](../tutorials/BLE Keyboard.md)).
 
 ### I can no longer connect to my device from Android
 
@@ -69,19 +69,19 @@ Try: `System Preferences` —> `Security & Privacy` —> `Bluetooth` -> Add `Goo
 
 ### I can't reconnect to my device on Mac OS
 
-This often happens if you've turned your Espriuno into a [HID device](/Puck.js+Keyboard) and paired it with your Mac.
+This often happens if you've turned your Espriuno into a [HID device](../tutorials/BLE Keyboard.md) and paired it with your Mac.
 
 * Close the Web Browser window that had the Web IDE in it
 * Hold the `option` key down while clicking on the Bluetooth icon in the top right menu bar.
 * You should see something like `Puck.js abcd` in bold on the drop-down list
 * Click on it, and you'll see menu options for `Disconnect` and `Remove`
 * Click `Remove`
-* Open up the [Web IDE](/ide) in Chrome and try connecting again
+* Open up the [Web IDE](https://www.espruino.com/ide) in Chrome and try connecting again
 
 
 ### I can't connect to my device with Chrome on Linux
 
-First, make sure you have an up to date version of Bluez installed - see [the Web Bluetooth on Linux page](/Web+Bluetooth+On+Linux)
+First, make sure you have an up to date version of Bluez installed - see [the Web Bluetooth on Linux page](../tutorials/Web Bluetooth On Linux.md)
 
 Web Bluetooth on Chrome for Linux isn't officially supported by Google, so
 it can be a bit unstable.
@@ -119,10 +119,10 @@ Device-specific
 
 Check out the specific instuctions on your device's page:
 
-* [Puck.js](/Puck.js#firmware-updates)
-* [Pixl.js](/Pixl.js#firmware-updates)
-* [MDBT42Q](/MDBT42Q#firmware-updates)
-* [Bangle.js](/Bangle.js#firmware-updates)
+* [Puck.js](../boards/Puck.js.md#firmware-updates)
+* [Pixl.js](../boards/Pixl.js.md#firmware-updates)
+* [MDBT42Q](../boards/MDBT42Q.md#firmware-updates)
+* [Bangle.js](../boards/Bangle.js.md#firmware-updates)
 
 ### I can't get the battery out
 
@@ -130,7 +130,7 @@ If using a device like Puck.js or Pixl.js with a CR2032 battery, poke it with
 something nonconductive from behind, like a matchstick.
 
 If you just want to reset your Puck.js you can also lift the battery away from the PCB
-slightly with a fingernail (although this doesn't work on [Pixl.js](/Pixl.js)).
+slightly with a fingernail (although this doesn't work on [Pixl.js](../boards/Pixl.js.md)).
 
 ### When power is applied a LED stays lit
 
@@ -143,7 +143,7 @@ your board's instructions (above) to update the firmware, which
 should fix the problem.
 
 
-[Puck.js](/Puck.js)
+[Puck.js](../boards/Puck.js.md)
 -------
 
 ### My Puck.js is not working when it arrives
@@ -151,7 +151,7 @@ should fix the problem.
 Puck.js is assembled with a **clear plastic tab** between the battery
 and PCB to keep it turned off.
 
-See [here](/Puck.js#turning-puck-js-on) for instructions on removing it.
+See [here](../boards/Puck.js.md#turning-puck-js-on) for instructions on removing it.
 
 ### When I insert the battery the green light comes on
 
@@ -181,7 +181,7 @@ so you will still be able to run JS even when the battery is too flat to
 use the magnetometer.
 
 
-[Pixl.js](/Pixl.js)
+[Pixl.js](../boards/Pixl.js.md)
 -------
 
 ### I'm no longer seeing text I print on the LCD
@@ -216,16 +216,16 @@ Using your device
 
 It's as easy as typing `save()` in the left-hand side of the IDE. When power is re-applied Espruino will resume where it left off, remembering timers, watches, and even pin state. For certain things (like initialising connected hardware like displays) you'll want to run some code when Espruino starts up, in which case you can just add a function called `onInit()` or a listener for `E.on('init', ...)` - it will then be executed each time Espruino starts.
 
-For more information, see the [page on Saving](/Saving).
+For more information, see the [page on Saving](./Saving.md).
 
 ### I saved some code and my device no longer works
 
 The easiest solution for this is to perform a Hard Reset, as firmware updates
 may not clear out saved code:
 
-* [Puck.js Hard Reset](/Puck.js#hard-reset)
-* [Pixl.js Hard Reset](/Pixl.js#hard-reset)
-* [MDBT42Q Hard Reset](/MDBT42Q#hard-reset)
+* [Puck.js Hard Reset](../boards/Puck.js.md#hard-reset)
+* [Pixl.js Hard Reset](../boards/Pixl.js.md#hard-reset)
+* [MDBT42Q Hard Reset](../boards/MDBT42Q.md#hard-reset)
 
 On most boards booting with BTN1 held down will usually boot without loading
 the saved code. However it won't have deleted your saved code. To do that,
@@ -235,7 +235,7 @@ you'll need to log in and:
 * On old firmwares type `save()` after a fresh boot to save a 'fresh' state
 * You can also type `require("Storage").eraseAll()`, as this will
 clear any saved code, but will also remove any data that your code
-may have saved using the [Storage Library](/Reference#Storage)
+may have saved using the [Storage Library](https://www.espruino.com/Reference#Storage)
 
 ### How do I find my Device's 4 character ID
 
@@ -257,7 +257,7 @@ You can simply call `NRF.setAdvertising({},{name:"My Name"});` to change your Pu
 <a name="console"></a>
 ### My code works when I'm connected via Bluetooth but stops when I disconnect
 
-Are you using `Serial1`? Perhaps to connect to a GSM/LTE, WiFi, or GPS?  When disconnected from Bluetooth, Espruino's REPL/'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` *if it has been initialised*. If you've got a [Serial](/USART) device on those pins then it will then stop working.
+Are you using `Serial1`? Perhaps to connect to a GSM/LTE, WiFi, or GPS?  When disconnected from Bluetooth, Espruino's REPL/'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` *if it has been initialised*. If you've got a [Serial](./USART.md) device on those pins then it will then stop working.
 
 To fix this, right at the top of your code that runs on initialisation (eg. the `onInit` function or `E.on('init', ...)` event), add the line `Bluetooth.setConsole()`, which will force the console onto Bluetooth. After `Bluetooth.setConsole()`, the console can still automatically move back to `Serial1` if there is some event that forces it (Bluetooth connect and disconnect), so you can *force* the console to stay on Bluetooth regardless with `Bluetooth.setConsole(true)` instead.
 
@@ -266,4 +266,4 @@ To fix this, right at the top of your code that runs on initialisation (eg. the 
 Something else is wrong!
 -------------------------
 
-Check out the [main Troubleshooting page](/Troubleshooting) and also the [Espruino Forums](http://forum.espruino.com/)
+Check out the [main Troubleshooting page](./Troubleshooting.md) and also the [Espruino Forums](http://forum.espruino.com/)

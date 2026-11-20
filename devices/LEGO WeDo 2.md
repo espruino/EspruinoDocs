@@ -86,5 +86,5 @@ Right now the tilt sensor doesn't appear to send any readings when it's connecte
 Related
 --------
 
-* [LEGO Power Functions Clone Remote Control](/LEGO+Power+Functions+Clone) is a module that allows your Espruino to control LEGO Power Functions clone devices
-* [Jolt.js LEGO Control](/Jolt.js+LEGO) shows how to connect LEGO Power Functions directly to a Jolt.js
+* [LEGO Power Functions Clone Remote Control](./LEGO Power Functions Clone.md) is a module that allows your Espruino to control LEGO Power Functions clone devices
+* [Jolt.js LEGO Control](../tutorials/Jolt.js LEGO.md) shows how to connect LEGO Power Functions directly to a Jolt.js

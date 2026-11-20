@@ -6,9 +6,9 @@ AT Command Handler
 
 * KEYWORDS: Module,AT,Modem
 
-[[AT.js]] handles sending AT-style commands to a Serial device and receiving their responses, while not blocking (allowing other JavaScript to execute in the background).
+[AT.js](AT.js) handles sending AT-style commands to a Serial device and receiving their responses, while not blocking (allowing other JavaScript to execute in the background).
 
-For real-world usage, check out the [[ESP8266]] and [[SIM900]] modules.
+For real-world usage, check out the [ESP8266](../devices/ESP8266.md) and [SIM900](../devices/SIM900.md) modules.
 
 You can use it as follows:
 

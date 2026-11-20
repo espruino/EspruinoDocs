@@ -11,9 +11,9 @@ In the app loader, it is possible to customise some apps **before** they are
 uploaded. We'll explain how to do that here.
 
 Another method is to create an `interface.html` file which allows you to read/write data for an
-app that is already installed - you can see how to do that on [the Bangle.js Storage page](/Bangle.js+Storage)
+app that is already installed - you can see how to do that on [the Bangle.js Storage page](./Bangle.js Storage.md)
 
-We'll assume you've been through [adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader)
+We'll assume you've been through [adding an app to the Bangle.js App Loader](./Bangle.js App Loader.md)
 already so you know what's involved in submitting an app and have one that you want
 to customise.
 

@@ -7,12 +7,12 @@ Pixl.js Multiplayer Pong Game
 
 [[https://youtu.be/2ehczLgUL-I]]
 
-Based on [this Pong Game for Pixl.js](/Pixl.js+Pong), this code uses
+Based on [this Pong Game for Pixl.js](../examples/Pixl.js Pong.js), this code uses
 the buttons instead of potentiometers, and adds wireless multiplayer
-using two [Pixl.js](/Pixl.js) boards. See the video
+using two [Pixl.js](../boards/Pixl.js.md) boards. See the video
 above for full details.
 
-This uses the [Bluetooth LE UART module](/Puck.js+BLE+UART) to
+This uses the [Bluetooth LE UART module](../tutorials/BLE UART.md) to
 handle communications.
 
 [Get connected to Espruino](http://www.espruino.com/Quick+Start) with the

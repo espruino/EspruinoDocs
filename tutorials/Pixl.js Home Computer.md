@@ -13,24 +13,24 @@ In this tutorial you'll learn how to make your own JavaScript computer in a few 
 
 ![Finished Computer](Pixl.js Home Computer/full.jpg)
 
-Also see [the original Espruino Home Computer](/Espruino Home Computer] that
-uses an Espruino [[Pico]] with a [VGA](/Television) output.  
+Also see [the original Espruino Home Computer](Espruino Home Computer.md) that
+uses an Espruino [Pico](../boards/Pico.md) with a [VGA](../info/Television.md) output.
 
 
 You'll Need
 ----------
 
-* An Espruino [Pixl.js](/Pixl.js)
+* An Espruino [Pixl.js](../boards/Pixl.js.md)
 * A piece of plastic or wood to act as a base
-* A [[Breadboard]]
-* 4x 4x4 [[KeyPad]]s
+* A [Breadboard](../devices/Breadboard.md)
+* 4x 4x4 [KeyPad](../devices/KeyPad.md)s
 * Lots of Stickers
 * 6 sets of 8x Male->Male Dupont-style Jumper wires (48 wires total) - matching multicoloured strips make life a lot easier
 
 Wiring Up
 --------
 
-* Stick your 4 [[KeyPad]]s next to each other on your base (they're sticky-back). You may want to trim their edges down, but be careful not to trim too far or you might cut some contacts off.
+* Stick your 4 [KeyPad](../devices/KeyPad.md)s next to each other on your base (they're sticky-back). You may want to trim their edges down, but be careful not to trim too far or you might cut some contacts off.
 
 * Stick your breadboard down in the middle - it's sticky-back too!
 
@@ -50,7 +50,7 @@ a big 8x8 grid of buttons.
 
 With the keypads numbered left to right this would look like:
 
-|    | D8| D9|D10|D11|D12|D13|SDA|SCL|      
+|    | D8| D9|D10|D11|D12|D13|SDA|SCL|
 |----|---|---|---|---|---|---|---|---|
 | D0 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 |
 | D1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 |
@@ -130,7 +130,7 @@ function setShift(s) {
     g.setColor(1);
     g.fillRect(105,0,128,6);
     g.setColor(0);
-    g.drawString("SHIFT",107,1);    
+    g.drawString("SHIFT",107,1);
     g.setColor(1);
   } else {
     g.setColor(0);

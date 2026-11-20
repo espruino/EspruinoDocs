@@ -9,7 +9,7 @@ Touch Key Pad based on Touchscreen
 Overview
 ------------------
 
-A module [[TouchKeyPad.js]] that maps a particular x and y within a gridded x y area safely to a
+A module [TouchKeyPad.js](TouchKeyPad.js) that maps a particular x and y within a gridded x y area safely to a
 key value and holds on to last grid .r(ow), .c(ol), and k(ey) index.
 
 

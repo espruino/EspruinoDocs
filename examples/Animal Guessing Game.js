@@ -7,7 +7,7 @@ Animal Guessing Game
 
 ![Animal Guessing Game](Animal Guessing Game.jpg)
 
-This is the classic animal guessing game, but using [Pixl.js's](/Pixl.js)
+This is the classic animal guessing game, but using [Pixl.js's](../boards/Pixl.js.md)
 menu library. Think of an animal, then answer the questions and get
 told what it is!
 
@@ -17,7 +17,7 @@ This is currently very limited, but please feel free to
 
 */
 
-// The data we use to guess what the animal is 
+// The data we use to guess what the animal is
 var tree = {
   "No Legs" : "worm",
   "2 Legs" : {
@@ -37,7 +37,7 @@ var tree = {
 either displays the animal name, or calls 'showMenu'
 to display another menu */
 function getMenuItem(item) {
-  if (typeof item == "string") 
+  if (typeof item == "string")
     return function() {
       Pixl.menu(); // disable menu
       g.clear();

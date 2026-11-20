@@ -65,7 +65,7 @@ setInterval(function() {
 }, 10000);
 ```
 
-You can use this with the [graph](/graph) library, so to plot the data so far today
+You can use this with the [graph](./graph.md) library, so to plot the data so far today
 you could do:
 
 ```

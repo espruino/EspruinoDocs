@@ -8,7 +8,7 @@ Espruino on ESP8266 WiFi
 
 **Note:** *This page documents running the Espruino firmware on the ESP8266 board.
 To find out how to connect an ESP8266 board to another Espruino board (as a Wifi Adaptor)
-[please see this page instead](/ESP8266)*
+[please see this page instead](../devices/ESP8266.md)*
 
 **Warning:** Espruino on the ESP8266 defaults to 115200 baud on its serial interface. This means you
 will need to adjust this setting in the IDE if you use that. (Other Espruino ports default to 9600 baud.)
@@ -23,9 +23,9 @@ Quick links
 
 * [Download the latest ESP8266 firmware release](http://www.espruino.com/Download)
 * [Download 'cutting edge' ESP8266 firmwares](http://www.espruino.com/binaries/travis/master/) - these may not always work
-* [Tutorial on flashing the esp8266](ESP8266_Flashing)
+* [Tutorial on flashing the esp8266](../tutorials/ESP8266_Flashing.md)
 * [Espruino ESP8266 Forum](http://forum.espruino.com/microcosms/925/)
-* [Using Wifi on the ESP8266](ESP8266_WifiUsage)
+* [Using Wifi on the ESP8266](../tutorials/ESP8266_WifiUsage.md)
 * [Gitter chat about Espruino](https://gitter.im/espruino/Espruino) (not focused on esp8266 but
 lots of esp8266 chatter)
 
@@ -44,9 +44,9 @@ Features
 Flashing<a name="firmware-updates"></a>
 -----------------------------------------
 
-If you have a Chromium-based web browser it's possible to flash your ESP32 device direct from the browser! [Click here to flash Espruino to your board](/Espressif+Flash)
+If you have a Chromium-based web browser it's possible to flash your ESP32 device direct from the browser! [Click here to flash Espruino to your board](https://www.espruino.com/Espressif+Flash)
 
-Otherwise see the [Tutorial on flashing the esp8266](ESP8266_Flashing)
+Otherwise see the [Tutorial on flashing the esp8266](../tutorials/ESP8266_Flashing.md)
 
 Build Content
 -------------
@@ -67,9 +67,9 @@ Limitations
 -----------
 The following features are only partially or not supported by Espruino on the ESP8266:
 
-- No hardware [[I2C]], however, the software I2C works OK.
-- No hardware [[PWM]], software PWM works OK.
-- No [[DAC]]: the esp8266 does not have a DAC.
+- No hardware [I2C](../info/I2C.md), however, the software I2C works OK.
+- No hardware [PWM](../info/PWM.md), software PWM works OK.
+- No [DAC](../info/DAC.md): the esp8266 does not have a DAC.
 - Sofware Serial works OK.
 - GPIO16 is now supported in Espruino as a D16 without watch but with all software functiontions like PWM/I2C/SPI/etc
 
@@ -123,7 +123,7 @@ You may want to add `wifi.setHostname("espruino")`.
 Once you're happy with your connection, you can use `wifi.save()` to persist it, so you don't have
 to reconnect each time you reset your ESP8266.
 
-Please see the [Using the ESP8266 with Wifi](ESP8266_WifiUsage) tutorial for the recommended
+Please see the [Using the ESP8266 with Wifi](../tutorials/ESP8266_WifiUsage.md) tutorial for the recommended
 way to use the esp8266 with Wifi.
 
 To make HTTP requests, use the [HTTP library](http://www.espruino.com/Reference#http).

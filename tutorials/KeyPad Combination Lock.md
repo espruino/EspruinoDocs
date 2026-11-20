@@ -10,13 +10,13 @@ KeyPad Combination Lock
 Introduction
 -----------
 
-If you want to make an electronic lock, using a [[KeyPad]] is the obvious way. There's one of these in the Espruino Ultimate kit, but see the [[KeyPad]] page to see where you can buy them.
+If you want to make an electronic lock, using a [KeyPad](../devices/KeyPad.md) is the obvious way. There's one of these in the Espruino Ultimate kit, but see the [KeyPad](../devices/KeyPad.md) page to see where you can buy them.
 
 You'll Need
 ----------
 
-* One [Espruino Board](/Original)
-* A [[KeyPad]]
+* One [Espruino Board](../boards/Original.md)
+* A [KeyPad](../devices/KeyPad.md)
 
 Wiring Up
 --------
@@ -83,7 +83,7 @@ And we're done! Press ```B...5...9``` and the green LED will light for 2 seconds
 Next Steps
 ---------
 
-The next thing to do might be to operate some kind of lock when the combination was entered. To do this, just change the ```setLocked``` function. For instance you could plug a [Servo Motor](/Servo Motors) into pin B13 and replace ```setLocked``` with the following:
+The next thing to do might be to operate some kind of lock when the combination was entered. To do this, just change the ```setLocked``` function. For instance you could plug a [Servo Motor](../devices/Servo Motors.md) into pin B13 and replace ```setLocked``` with the following:
 
 ```
 function setLocked(isLocked) {

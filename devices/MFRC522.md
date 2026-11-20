@@ -6,7 +6,7 @@ MFRC522 NFC/RFID module
 
 * KEYWORDS: Module,SPI,NFC,RFID,MFRC522,RC522,NXP,13.56 MHz,Mifare,RFID,RFID-RC522,RC522
 
-The MFRC522 is an RFID reader chip. It's common and very easy to interface to with the [[MFRC522.js]] module.
+The MFRC522 is an RFID reader chip. It's common and very easy to interface to with the [MFRC522.js](MFRC522.js) module.
 
 ![Common MFRC522 reader](MFRC522.jpg)
 

@@ -11,12 +11,12 @@ Espruino Pico 'Shims'
 ESP8266 WiFi
 -----------
 
-[![ESP8266](Shims/shim_esp8266.jpg)](/ESP8266)
+[![ESP8266](Shims/shim_esp8266.jpg)](../devices/ESP8266.md)
 
 WIZnet W550io Ethernet
 --------------------
 
-[![WIZnet W550io](Shims/shim_wiznet.jpg)](/WIZnet)
+[![WIZnet W550io](Shims/shim_wiznet.jpg)](../devices/WIZnet.md)
 
 Shim Collection
 -------------
@@ -38,7 +38,7 @@ Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/maste
  and [schematic](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/esp8266_esp01_shim_rev2.sch)
 
 
-See [the ESP8266 page](/ESP8266) for more information (and videos) on soldering this shim.
+See [the ESP8266 page](../devices/ESP8266.md) for more information (and videos) on soldering this shim.
 
 
 ### NRF24L01P 0.05" Shim
@@ -49,9 +49,9 @@ Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/maste
  and [schematic](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/nrf24_shim.sch)
 
 
-Solder this on to the end of your Pico like the [ESP8266](/ESP8266) shim. The NRF24 should be positioned such that it overlaps the Pico.
+Solder this on to the end of your Pico like the [ESP8266](../devices/ESP8266.md) shim. The NRF24 should be positioned such that it overlaps the Pico.
 
-See the [NRF24L01P](/NRF24L01P) page for more information on software.
+See the [NRF24L01P](../devices/NRF24L01P.md) page for more information on software.
 
 | Pico | NRF24L01P |
 |------|-----------|
@@ -102,7 +102,7 @@ var wifi = require("ESP8266WiFi_0v25").connect(Serial1, function(err) {
 });
 ```
 
-See [the ESP8266 page](/ESP8266) for more information on software.
+See [the ESP8266 page](../devices/ESP8266.md) for more information on software.
 
 | Pico | ESP8266   |
 |------|-----------|
@@ -125,7 +125,7 @@ Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/maste
  and [schematic](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/bluetooth_header.sch)
 
 
-This connects to HC-05, HC-06 or HM-10 bluetooth modules. See [the Bluetooth](/Bluetooth) and [BLE pages](/Bluetooth+BLE) for more information on software.
+This connects to HC-05, HC-06 or HM-10 bluetooth modules. See [the Bluetooth](../devices/Bluetooth.md) and [BLE pages](../devices/Bluetooth BLE.md) for more information on software.
 
 | Pico | Bluetooth |
 |------|-----------|
@@ -145,7 +145,7 @@ Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/maste
 
 This adaptor lets you solder on a RFM69 or a RFM12B module
 
-See the [RFM69](/RFM69) page for information on software. There is currently no software for the RFM12B.
+See the [RFM69](../devices/RFM69.md) page for information on software. There is currently no software for the RFM12B.
 
 | Pico | RFM12B | RFM69  |
 |------|--------|--------|
@@ -170,7 +170,7 @@ See the [RFM69](/RFM69) page for information on software. There is currently no 
 Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/arduino.brd)
  and [schematic](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/arduino.sch)
 
-This adaptor [has its own page](/ArduinoPico)
+This adaptor [has its own page](../devices/ArduinoPico.md)
 
 ### MicroSD 0.1" Adaptor
 

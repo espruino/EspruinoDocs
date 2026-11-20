@@ -6,11 +6,11 @@ LCD_SPI_UNBUF LCD Library
 
 * KEYWORDS: Graphics,Graphics Driver,SPI LCD,LCD_SPI_UNBUF
 
-This library allows you to connect a TFT LCD 16bit color display via [[SPI]] and use
+This library allows you to connect a TFT LCD 16bit color display via [SPI](../info/SPI.md) and use
 it with the Espruino Graphics library in unbuffered mode. That means each `g.<call>`
  is immediately processed, so no need to implement and call `g.flip()`.
 
-[Support for SPI LCDs](/Graphics#graphics-drivers) is normally provided in Espruino using a
+[Support for SPI LCDs](../info/Graphics.md#graphics-drivers) is normally provided in Espruino using a
 JavaScript graphics driver that is called either:
 
 * For each pixel (slow)
@@ -18,14 +18,14 @@ JavaScript graphics driver that is called either:
 
 `LCD_SPI_UNBUF` is called for every pixel, but is written in compiled C code,
 making it substantially faster. Due to its very specific nature, it is not
-compiled into Espruino board firmwares, and [must be compiled into a custom firmware](/Building+Custom+Firmware)
+compiled into Espruino board firmwares, and [must be compiled into a custom firmware](../tutorials/Building Custom Firmware.md)
 
 ### Sample module using LCD_SPI_UNBUF
 
 Once you have a firmware with LCD_SPI_UNBUF:
 
 Create a module based on this code and replace it with init commands suitable for your specific lcd board.
-You may be able to consult [existing Graphics Drivers](/Graphics#graphics-drivers) for this.
+You may be able to consult [existing Graphics Drivers](../info/Graphics.md#graphics-drivers) for this.
 
 ```JS
 // ST7789V-SLU.js

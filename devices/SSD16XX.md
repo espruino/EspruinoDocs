@@ -13,7 +13,7 @@ E-ink display with a display driver of SSD16XX (Ex - SSD1681) are a family of si
 Tested with
 * SSD1681 (W)(C)
 
-Functionality is provided by the [[SSD16XX.js]] module, using the [Graphics](http://www.espruino.com/Graphics) library.
+Functionality is provided by the [SSD16XX.js](SSD16XX.js) module, using the [Graphics](http://www.espruino.com/Graphics) library.
 
 Notes
 -------

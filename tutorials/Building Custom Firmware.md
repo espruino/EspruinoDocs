@@ -7,7 +7,7 @@ Building Custom Firmware
 * KEYWORDS: Firmware,Building,Compiling,Custom,Customised,Customise,Customize,bin,hex,LCD_SPI_UNBUF
 * USES: EspruinoWiFi
 
-For your project you might want to use an [Espruino WiFi](/WiFi) (or other) board with firmware
+For your project you might want to use an [Espruino WiFi](../boards/WiFi.md) (or other) board with firmware
 that has different features from the Espruino-supplied one. For instance you might
 want to add features, or remove some to make more room for storage.
 
@@ -27,7 +27,7 @@ To get started (assuming you have an Espruino WiFi):
 
 Here's what you might do to cut out some un-needed code and
 add support for a special LCD display type. For more info on the
-[LCD_SPI_UNBUF, click here](/LCD_SPI_UNBUF)
+[LCD_SPI_UNBUF, click here](../devices/LCD_SPI_UNBUF.md)
 
 
 See the comments in-line:

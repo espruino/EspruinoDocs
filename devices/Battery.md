@@ -10,8 +10,8 @@ Batteries
 
 If you plan to use Espruino with a battery, a small LiPo cell and charger like those above are probably the best things to use - see [below](#buying) for where to find them.
 
-* [Original Espruino](/Original) and [Jolt.js](/Jolt.js) boards come with a JST PHR-2 2 Pin connector for batteries
-* [[Pico]], [[MDBT42Q]] and [Pixl.js](/Pixl.js) come with a [place to solder](/Pico#battery) a JST connector (or normal 0.1" pins can be used instead)
+* [Original Espruino](../boards/Original.md) and [Jolt.js](../boards/Jolt.js.md) boards come with a JST PHR-2 2 Pin connector for batteries
+* [Pico](../boards/Pico.md), [MDBT42Q](../boards/MDBT42Q.md) and [Pixl.js](../boards/Pixl.js.md) come with a [place to solder](../boards/Pico.md#battery) a JST connector (or normal 0.1" pins can be used instead)
 
 The JST connector wiring is as follows:
 
@@ -28,7 +28,7 @@ Adafruit [has a good tutorial on different kinds of Lithium Battery](https://lea
 Charging
 -------
 
-Espruino Boards (apart from [Jolt.js](/Jolt.js)) do not contain a battery charger circuit (although the [original Espruino revision 1v4](/Original) has a place where a MAX1551 charger IC can be soldered).
+Espruino Boards (apart from [Jolt.js](../boards/Jolt.js.md)) do not contain a battery charger circuit (although the [original Espruino revision 1v4](../boards/Original.md) has a place where a MAX1551 charger IC can be soldered).
 
 While NiCd and NiMh batteries can be safely trickle charged with a resistor, Lithium Ion batteries need to be charged properly or there may be a risk of fire. If using Lithium Ion batteries we'd suggest that you use a dedicated charger board (links [below](#buying).
 
@@ -50,7 +50,7 @@ If you're willing to open up your USB power pack, you may be able to add wires t
 * [Adafruit batteries and chargers](http://www.adafruit.com/categories/138)
 * Olimex [battery](https://www.olimex.com/Products/Power/BATTERY-LIPO1400mAh/) and [charger](https://www.olimex.com/Products/Power/USB-uLiPo/), or [selection of batteries](https://www.olimex.com/Products/Power/)
 * Buy general purpose charger on [eBay](http://www.ebay.com/sch/i.html?_nkw=genuine+b6+imax)
-* See [this page](/Original#connecting_batteries) for details on where to buy the connectors
+* See [this page](../boards/Original.md#connecting_batteries) for details on where to buy the connectors
 
 ### Female Connectors (for batteries)
 
@@ -59,7 +59,7 @@ If you're willing to open up your USB power pack, you may be able to add wires t
 * Digitalmeans (UK) ([prewired connector](https://digitalmeans.co.uk/shop/jst_2pin_power_connector-2mm_pitch-20))
 * Makersify (UK) ([prewired connector](http://makersify.com/products/adafruit-jst-2-pin-cable))
 
-### Male Connectors (for the Espruino [[Pico]])
+### Male Connectors (for the Espruino [Pico](../boards/Pico.md))
 
 * Octopart [list of distributors](https://octopart.com/s2b-ph-sm4-tb%28lf%29%28sn%29-jst-248913)
 * [Farnell](http://uk.farnell.com/jst-japan-solderless-terminals/s2b-ph-sm4-tb-lf-sn/connector-header-smt-r-a-2mm-2way/dp/9492615)

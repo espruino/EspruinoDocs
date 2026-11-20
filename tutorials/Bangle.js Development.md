@@ -7,7 +7,7 @@ Bangle.js Development
 * KEYWORDS: Tutorials,Bangle.js,Development
 * USES: Bangle.js,Bangle.js2
 
-You may also be interested in the [Bangle.js 1](Bangle.js) or [Bangle.js 2](Bangle.js2) Hardware reference pages.
+You may also be interested in the [Bangle.js 1](../boards/Bangle.js.md) or [Bangle.js 2](../boards/Bangle.js2.md) Hardware reference pages.
 
 Don't have a watch?
 ------------------------------
@@ -195,7 +195,7 @@ to Bangle.js so is quick and safe to develop with.
 * `Flash` - DO NOT USE THIS ON BANGLE.JS because you will
 overwrite the existing Bangle.js bootloader with your own app (if you do, you can re-install the `bootloader` app using https://banglejs.com/apps).
 * `Storage` - you can use this to select a file on Storage to write to. This
-is great for developing your own apps - see [Bangle.js: First Application](Bangle.js+First+App)
+is great for developing your own apps - see [Bangle.js: First Application](./Bangle.js First App.md)
 
 
 Next Steps
@@ -203,7 +203,7 @@ Next Steps
 
 You might want to check out:
 
-* [Bangle.js: First Application](Bangle.js+First+App)
+* [Bangle.js: First Application](./Bangle.js First App.md)
 * https://github.com/espruino/BangleApps/blob/master/README.md for detailed info on the format of custom apps
 * https://github.com/espruino/BangleApps/tree/master/apps for all the source code for existing apps
 

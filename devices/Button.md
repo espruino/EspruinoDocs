@@ -92,7 +92,7 @@ setWatch(function(e) {
 ```
 
 Using the hardware like this allows Espruino to get very low 
-[[Power Consumption]] as it can stay asleep until the button is pressed.
+[Power Consumption](../info/Power Consumption.md) as it can stay asleep until the button is pressed.
 
 If you press the button hard or quickly, you may find that you get `'Button Pressed'`
 printed more than once. This is because the button is a mechanical device, and

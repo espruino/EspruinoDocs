@@ -8,8 +8,8 @@ Espruino Debugger
 
 This page describes the built-in debugger. You might also want to check out:
 
-* [Debugging Tips](/Debugging) for more general information on debugging code in Espruino.
-* [Advanced Debug (SWD)](/AdvancedDebug) for information on debugging and developing with the Espruino interpreter itself (using a hardware debugger)
+* [Debugging Tips](Debugging.md) for more general information on debugging code in Espruino.
+* [Advanced Debug (SWD)](AdvancedDebug.md) for information on debugging and developing with the Espruino interpreter itself (using a hardware debugger)
 
 [[http://youtu.be/2ODoIpnTDA4]]
 

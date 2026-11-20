@@ -11,7 +11,7 @@ REYAX RYLR896/406/895/405 LoRa modules
 ![RYLR896](RYLR.jpg)
 
 REYAX RYLR896/406/895/405 LoRa modules provide LoRa connectivity with an
-AT-command Serial interface to the host microcontroller. The [[RYLR.js]] module
+AT-command Serial interface to the host microcontroller. The [RYLR.js](RYLR.js) module
 provides a simple JavaScript interface for those modules.
 
 [[https://youtu.be/IStuUv9eAmE]]
@@ -62,6 +62,6 @@ Buying
 -----
 
 You can get REYAX RYLR modules from eBay - just ensure that you get a module
-advertised as supporting the AT command interface (some of them are bare [[SX127x]] modules).
+advertised as supporting the AT command interface (some of them are bare [SX127x](SX127x.md) modules).
 
 * [eBay](http://www.ebay.com/sch/i.html?_nkw=reyax+rylr)

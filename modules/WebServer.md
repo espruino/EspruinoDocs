@@ -9,7 +9,7 @@ Espruino WebServer Module
 Espruino WebServer let your Espruino act like a real web server and serve static and server generated content, including from an SD card.
 
 **Note:** You don't absolutely have to use this WebServer module as you can
-just use [the built-in web server directly](/Internet#server) - however this
+just use [the built-in web server directly](../info/Internet.md#server) - however this
 module does automate the task of serving multiple files.
 
 To use the `WebServer.js` module, you must be connected to WiFi/Ethernet/etc.

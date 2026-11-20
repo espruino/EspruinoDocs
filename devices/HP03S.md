@@ -16,7 +16,7 @@ The HP03S is a pressure and temperature module with:
 * Supply voltage 2.2v-3.6v with automatic power down switching
 * Low power consumption: 1µA standby supply current; 500µA supply current during conversion
 
-Use the [HP03S](/modules/HP03S.js) module for it.
+Use the [HP03S](HP03S.js) module for it.
 
 
 Wiring
@@ -53,8 +53,8 @@ I2C1.setup( { scl: B6, sda: B7 } );
 var hp03s = require('HP03S').connect( { i2c: I2C1, mclk: B4, xclr: B5 } );
 
 hp03s.getPressure( function( pressure, temperature ) {
-    console.log( "Pressure    = " + pressure + " Pa" ); 
-    console.log( "Temperature = " + temperature + " °C" ); 
+    console.log( "Pressure    = " + pressure + " Pa" );
+    console.log( "Temperature = " + temperature + " °C" );
 } );
 ```
 

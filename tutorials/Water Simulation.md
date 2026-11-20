@@ -21,13 +21,13 @@ In this case, we're going to (very badly) simulate water running down a thin cha
 You'll Need
 ----------
 
-* An [Espruino Board](/Original) wired up for [[Servo Motors]]
-* 6 [[Servo Motors]], arranged next to each other
+* An [Espruino Board](../boards/Original.md) wired up for [Servo Motors](../devices/Servo Motors.md)
+* 6 [Servo Motors](../devices/Servo Motors.md), arranged next to each other
 
 Wiring Up
 --------
 
-Just wire up the 6 Servo motors to B13,B14,B15,C4, C5 and C6. More details of how to wire the board up are available on the [[Servo Motors]] page.
+Just wire up the 6 Servo motors to B13,B14,B15,C4, C5 and C6. More details of how to wire the board up are available on the [Servo Motors](../devices/Servo Motors.md) page.
 
 Software
 -------

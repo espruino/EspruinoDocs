@@ -7,15 +7,15 @@ Stepper Motor Module
 * KEYWORDS: Stepper,Motor,Steppermotor,Stepper motor
 
 **Note:** For a more in-depth look at Stepper Motors, see the
-[Stepper Motor](/Stepper Motors) page - this page deals with the
+[Stepper Motor](./Stepper Motors.md) page - this page deals with the
 stepper motor module.
 
-You can see the source for the [[StepperMotor.js]] module here.
+You can see the source for the [StepperMotor.js](StepperMotor.js) module here.
 
 Wiring Up
 --------
 
-See the [Stepper Motor](/Stepper Motors) page for more information on wiring.
+See the [Stepper Motor](./Stepper Motors.md) page for more information on wiring.
 For this module you need to have attached your stepper motor driver to any
 4 IO pins on Espruino.
 

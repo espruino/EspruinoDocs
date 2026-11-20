@@ -6,7 +6,7 @@ SNTP Module
 
 * KEYWORDS: Module,SNTP,NTP,Date,Time
 
-This [[sntp.js]] module implements a SNTP for Espruino. It is a stripped down version of https://github.com/hueniverse/sntp.
+This [sntp.js](sntp.js) module implements a SNTP for Espruino. It is a stripped down version of https://github.com/hueniverse/sntp.
 
 
 # sntp

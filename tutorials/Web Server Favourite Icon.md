@@ -24,13 +24,13 @@ In this tutorial we'll just make sure we serve up two different webpages, the ic
 You'll Need
 ----------
 
-* One [Espruino Board](/Original)
-* A [[CC3000]] WiFi module
+* One [Espruino Board](../boards/Original.md)
+* A [CC3000](../devices/CC3000.md) WiFi module
 
 Wiring Up
 --------
 
-* Follow [the instructions](/CC3000) for wiring up the CC3000 module
+* Follow [the instructions](../devices/CC3000.md) for wiring up the CC3000 module
 
 Software
 -------
@@ -75,4 +75,4 @@ So how did we do it?
 
 In the getPage function, we look at `req.url` to see which file has been requested. If it's `\favicon.ico` we set the content type to icon, and send the random-looking string. Otherwise we sent a simple webpage.
 
-The string was created using the [[File Converter]] page which takes a normal file and turns it into a string of characters that Espruino can use. You can create your own favourite icon in many different ways - for instance you could use [this online designer](http://www.favicon.cc/), download `favicon.ico` and then feed it into the [[File Converter]].
+The string was created using the [File Converter](../info/File Converter.md) page which takes a normal file and turns it into a string of characters that Espruino can use. You can create your own favourite icon in many different ways - for instance you could use [this online designer](http://www.favicon.cc/), download `favicon.ico` and then feed it into the [File Converter](../info/File Converter.md).

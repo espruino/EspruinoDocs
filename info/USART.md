@@ -6,13 +6,13 @@ USART / UART / Serial Port
 
 * KEYWORDS: Peripheral,Peripherals,Serial,USART,UART,RS232,Built-In
 
-See the [`Serial Class`](/Reference#Serial) and [`Serial.setup(...)`](/Reference#l_Serial_setup) in the Reference.
+See the [`Serial Class`](https://www.espruino.com/Reference#Serial) and [`Serial.setup(...)`](https://www.espruino.com/Reference#l_Serial_setup) in the Reference.
 
 
 Choosing Pins
 -------------
 
-You can find out which pins to use by looking at [your board's reference page](/Reference#boards)
+You can find out which pins to use by looking at [your board's reference page](https://www.espruino.com/Reference#boards)
 and searching for pins with the `UART`/`USART` markers. On some boards (for example
 the nRF52 based Bluetooth Espruino boards) the UART can be used on any pin so won't
 be explicitly marked, but others (such as the STM32 based Espruino boards) only
@@ -48,9 +48,9 @@ Or more likely, something like:
 <Serial> orld
 ```
 
-As the callback function is called whenever serial data is available. You can also use [`Serial.available()`](/Reference#l_Serial_available) and [`Serial.read()`](/Reference#l_Serial_read) but the `data` event is preferable.
+As the callback function is called whenever serial data is available. You can also use [`Serial.available()`](https://www.espruino.com/Reference#l_Serial_available) and [`Serial.read()`](https://www.espruino.com/Reference#l_Serial_read) but the `data` event is preferable.
 
-Espruino can respond to any instance of the [`Serial Class`](/Reference#Serial) class - eg. serial ports, USB, Bluetooth, etc. If you're plugged in via USB, you can create a very simple command interpreter on the first serial port with the following code:
+Espruino can respond to any instance of the [`Serial Class`](https://www.espruino.com/Reference#Serial) class - eg. serial ports, USB, Bluetooth, etc. If you're plugged in via USB, you can create a very simple command interpreter on the first serial port with the following code:
 
 ```JavaScript
 var cmd="";
@@ -70,13 +70,13 @@ Serial1.on('data', function (data) {
 });
 ```
 
-Most chips can also have the same Serial port on different pins, for example Serial1 TX is available on `A9` or `B`6 on the [Original Espruino Board](/Original) (look at the Espruino reference pages for the board you have). Espruino will choose the first available pins by default - if you wish to use an alternate set of pins, you can specify them when you set up the Serial port:
+Most chips can also have the same Serial port on different pins, for example Serial1 TX is available on `A9` or `B`6 on the [Original Espruino Board](../boards/Original.md) (look at the Espruino reference pages for the board you have). Espruino will choose the first available pins by default - if you wish to use an alternate set of pins, you can specify them when you set up the Serial port:
 
 ```JavaScript
 Serial1.setup(9600, { tx:B6, rx:B7 });
 ```
 
-For more information, please see the [reference](/Reference#boards) for your board.
+For more information, please see the [reference](https://www.espruino.com/Reference#boards) for your board.
 
 
 USARTs (CK pin)
@@ -140,11 +140,11 @@ By default, Espruino may end up using one of the Serial ports (usually `Serial1`
 
 Check out the following for more information:
 
-* [Espruino works when connected to a computer, but stops when powered from something else](/Troubleshooting#console)
-* [My code works when I'm connected via Bluetooth but stops when I disconnect](/Troubleshooting+BLE#my-code-works-when-i-m-connected-via-bluetooth-but-stops-when-i-disconnect)
+* [Espruino works when connected to a computer, but stops when powered from something else](./Troubleshooting.md#console)
+* [My code works when I'm connected via Bluetooth but stops when I disconnect](./Troubleshooting BLE.md#my-code-works-when-i-m-connected-via-bluetooth-but-stops-when-i-disconnect)
 
 
-To avoid this behaviour, for example if you wish to use `Serial1` to talk to a device while disconnected from USB, explicitly set the console serial port using  [Serial.setConsole](/Reference#l_Serial_setConsole) during the [init event](Reference#l_E_init) which Espruino runs on boot.
+To avoid this behaviour, for example if you wish to use `Serial1` to talk to a device while disconnected from USB, explicitly set the console serial port using  [Serial.setConsole](https://www.espruino.com/Reference#l_Serial_setConsole) during the [init event](https://www.espruino.com/Reference#l_E_init) which Espruino runs on boot.
 
 ```JavaScript
 E.on('init', function() {

@@ -7,7 +7,7 @@ Pixl.js Clock
 
 ![Pixl.js Clock](Pixl.js Clock.jpg)
 
-This example turns [Pixl.js](/Pixl.js) into a simple clock,
+This example turns [Pixl.js](../boards/Pixl.js.md) into a simple clock,
 displaying the current time and date.
 
 Copy this to the right-hand side of the IDE, make sure `Set Current Time`

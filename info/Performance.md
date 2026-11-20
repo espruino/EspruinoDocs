@@ -6,21 +6,21 @@ Espruino Performance Notes
 
 * KEYWORDS: Built-In,Espruino,Performance,Speed,Memory Usage,Native Strings,Flat Strings,Typed Array,ArrayBuffer,Efficient Code,pretokenise,pretokenisation
 
-Please see [[Internals]] for a more technical description of the interpreter's implementation.
+Please see [Internals](Internals.md) for a more technical description of the interpreter's implementation.
 
 Espruino is designed to run on devices with very small amounts of RAM available (under 8kB) *while still keeping a copy of the source code so you can debug and edit on the device*. As such, it makes some compromises that affect the performance in ways you may not expect.
 
 **Is it too slow for you?**
 
-Check out [some easy Code Style changes](/Code+Style) to make your code run better.
+Check out [some easy Code Style changes](./Code Style.md) to make your code run better.
 
 JavaScript on Embedded devices will never be as efficient as compiled code, so we've made it easy for you to add extremely fast code *where it is needed*:
 
 * Add `"ram"` to the top of your function to tell Espruino to keep it in RAM and pretokenise it.
-* Add `"jit"` to the top of your function to [tell Espruino to JIT compile it](/JIT) on the device (2v16 firmware and later)
-* Use the Web IDE to [compile JavaScript into optimised Thumb Code](/Compilation) using an Online service
-* Create functions with [Inline C](/InlineC) or [Inline Assembler](/Assembler)
-* Recompile the Espruino firmware [with your own C code](/Extending+Espruino+1)
+* Add `"jit"` to the top of your function to [tell Espruino to JIT compile it](./JIT.md) on the device (2v16 firmware and later)
+* Use the Web IDE to [compile JavaScript into optimised Thumb Code](./Compilation.md) using an Online service
+* Create functions with [Inline C](./InlineC.md) or [Inline Assembler](./Assembler.md)
+* Recompile the Espruino firmware [with your own C code](../tutorials/Extending Espruino 1.md)
 
 
 ESPRUINO EXECUTES CODE DIRECTLY FROM SOURCE
@@ -252,7 +252,7 @@ myArray.forEach(digitalWrite.bind(null,[A0,A1,A2,A3]));
 ```
 
 If you need to go really fast you can also tag specific functions as `"ram"` or
-even [JIT compile them](/JIT) (see the very top of this page) and then use them
+even [JIT compile them](./JIT.md) (see the very top of this page) and then use them
 with `forEach`/`map`/etc.
 
 **Note:** Espruino contains some extra functions like `E.sum` and `E.variance` to
@@ -274,7 +274,7 @@ This may seem inefficient, but if you compare this with a naive malloc/free impl
 ARRAYS AND OBJECTS USE TWO STORAGE UNITS PER ELEMENT (ONE FOR THE KEY, AND ONE FOR THE VALUE)
 ---------------------------------------------------------------------------------
 
-This means that Sparse Arrays are relatively efficient, but Dense Arrays are not. For dense arrays you should use [Typed Arrays](Reference#l_Uint8Array_Uint8Array) (see the next heading).
+This means that Sparse Arrays are relatively efficient, but Dense Arrays are not. For dense arrays you should use [Typed Arrays](https://www.espruino.com/Reference#l_Uint8Array_Uint8Array) (see the next heading).
 
 If the name (index) of an element is a string that is greater than 10 characters (7 on 12 byte systems) then another variable will have to be allocated to store the remaining characters. The number of variables needed for the index is: `Math.ceil((characters-10)/12)`
 
@@ -310,7 +310,7 @@ but be aware that you'll probably need a Typed Array (see below) to write to it.
 [`E.toString`](http://www.espruino.com/Reference#l_E_toString) has to be used instead of `E.toFlatString`.
 
 Once allocated, you can use `E.getAddressOf(v, true)` to get the actual
-physical address in memory of the Flat String's data (which can be used for DMA, [Inline C](/InlineC) or [Assembly Code](/Assembler) ).
+physical address in memory of the Flat String's data (which can be used for DMA, [Inline C](./InlineC.md) or [Assembly Code](./Assembler.md) ).
 
 
 Functions and pretokenisation
@@ -345,7 +345,7 @@ stored as raw data when pretokenisation is enabled. This makes bigger strings ex
 to parse and also means that if defining a string in pretokenised code saved to flash, the String
 itself will not be loaded into RAM but only referenced, and loaded from Flash on demand.
 
-**Note:** If you're using a device with external flash (like [Bangle.js](/Bangle.js2)) then  `"ram"`
+**Note:** If you're using a device with external flash (like [Bangle.js](../boards/Bangle.js2.md)) then  `"ram"`
 (but not `E.setFlags({pretokenise:1})`) will ensure that your function is loaded
 into RAM rather than being executed from flash.
 
@@ -355,11 +355,11 @@ into RAM rather than being executed from flash.
 Functions in Flash
 ------------------
 
-If you write your code to flash memory (see [the page on Saving](/Saving))
+If you write your code to flash memory (see [the page on Saving](./Saving.md))
 then any function that is defined will have its function code executed
 directly from flash.
 
-If your device (like [Bangle.js](/Bangle.js) uses external flash) then
+If your device (like [Bangle.js](../boards/Bangle.js.md) uses external flash) then
 this will likely make functions execute more slowly than they would
 otherwise.
 
@@ -398,7 +398,7 @@ function useData() {
 Then the data won't be in RAM - it'll be in Flash memory until the
 function is executed, when it'll be loaded into memory.
 
-**Note:** This only works if you're [uploading to Flash](/Saving). If
+**Note:** This only works if you're [uploading to Flash](./Saving.md). If
 you upload to RAM then the function's code will be in RAM, and will
 use *more* memory than just having parsed and decoded the base64 data.
 
@@ -501,7 +501,7 @@ access data without taking up any RAM.
 While you can use `E.memoryArea` directly, you can also use [the `Storage` library](http://www.espruino.com/Reference#Storage)
 to write data to Flash memory (see above).
 
-If you [save your code with Save on Send](/Saving) then any functions that are
+If you [save your code with Save on Send](./Saving.md) then any functions that are
 defined will also have their contents stored in a Native String pointing directly
 to flash memory.
 

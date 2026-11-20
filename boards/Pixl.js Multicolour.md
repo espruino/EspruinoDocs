@@ -10,7 +10,7 @@ Pixl.js Multicolour
 
 * BUYFROM: £45,,https://shop.espruino.com/pixljs-multicolour
 
-A special version of the [Pixl.js](/Pixl.js) Smart LCD with multicolour LEDs,
+A special version of the [Pixl.js](./Pixl.js.md) Smart LCD with multicolour LEDs,
 sensors and a rechargeable battery.
 
 Contents
@@ -424,7 +424,7 @@ var wifi = require("ESP8266WiFi_0v25").connect(Serial1, function(err) {
 Check out [Espruino's page on Internet stuff](http://www.espruino.com/Internet)
 for more info.
 
-You can [now update ESP8266 firmware using the Web IDE](/ESP8266#use-the-espruino-ide).
+You can [now update ESP8266 firmware using the Web IDE](../devices/ESP8266.md#use-the-espruino-ide).
 
 ## Firmware Updates
 
@@ -435,7 +435,7 @@ to Espruino since then that have fixed:
 - Filesystem issues when repeatedly calling `require("Storage").write`
 - Other issues
 
-To update Espruino, just follow the normal [Firmware Update](/Firmware+Update#nrf52) instructions
+To update Espruino, just follow the normal [Firmware Update](../info/Firmware Update.md#nrf52) instructions
 with the 'Cutting edge' build linked from [the firmware download page](http://www.espruino.com/Download#pixljs).
 
 This'll take a few minutes, and you then need to follow the steps for [Returning your badge to normal](#returning-to-standard) - so if you're fine with everything as it is, we'd recommend that you keep version 2.00 for now.

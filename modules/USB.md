@@ -6,20 +6,20 @@ USB and USB HID
 
 * KEYWORDS: USB,HID,Human Interface Device,VCP,CDC,Mouse,Keyboard,Joystick
 
-**If you have a Bluetooth Espruino device, you can use [Bluetooth HID](/BLE+Keyboard)**
+**If you have a Bluetooth Espruino device, you can use [Bluetooth HID](../tutorials/BLE Keyboard.md)**
 
-Both the [Espruino Board](/Original) and the [[Pico]] have USB ports. When connected to a PC, they appear as a Virtual Communications Port (VCP) - as if you plugged in a USB-Serial converter dongle. On that port there's the console interface, which allows you to write code on Espruino using nothing more than a simple serial terminal.
+Both the [Espruino Board](../boards/Original.md) and the [Pico](../boards/Pico.md) have USB ports. When connected to a PC, they appear as a Virtual Communications Port (VCP) - as if you plugged in a USB-Serial converter dongle. On that port there's the console interface, which allows you to write code on Espruino using nothing more than a simple serial terminal.
 
-However Espruino [[Pico]] **also contains** a [USB HID mode](http://en.wikipedia.org/wiki/USB_human_interface_device_class). This means that when set up, it can appear to be a USB Human Interface device such as a Mouse, Keyboard, or Joystick in addition to a Virtual Com Port.
+However Espruino [Pico](../boards/Pico.md) **also contains** a [USB HID mode](http://en.wikipedia.org/wiki/USB_human_interface_device_class). This means that when set up, it can appear to be a USB Human Interface device such as a Mouse, Keyboard, or Joystick in addition to a Virtual Com Port.
 
-To set this up, you need to use the [`E.setUSBHID`](/Reference#l_E_setUSBHID) function to set up the USB report descriptor for the USB HID device you want to emulate. In order to make this less painful, we've provided some modules to handle this for you.
+To set this up, you need to use the [`E.setUSBHID`](https://www.espruino.com/Reference#l_E_setUSBHID) function to set up the USB report descriptor for the USB HID device you want to emulate. In order to make this less painful, we've provided some modules to handle this for you.
 
 **Note:** To use USB HID, you must unplug the Espruino board and then plug it back in. This means you'll need to run the `save()` command to save the code to your Espruino first, so that it isn't lost when the power goes off.
 
 Keyboard
 -------
 
-Handled by the [[USBKeyboard.js]] module.
+Handled by the [USBKeyboard.js](USBKeyboard.js) module.
 
 ```
 var kb = require("USBKeyboard");
@@ -35,7 +35,7 @@ setWatch(function() {
 }, BTN, {debounce:100,repeat:true, edge:"rising"});
 ```
 
-To see the available keys/modifiers, check out on [[USBKeyboard.js]]
+To see the available keys/modifiers, check out on [USBKeyboard.js](USBKeyboard.js)
 
 You could for instance store temperature readings, and then output them as keypresses when the button is pressed:
 
@@ -67,7 +67,7 @@ setWatch(outputData, BTN, {debounce:100,repeat:true, edge:"rising"});
 Mouse
 -----
 
-Handled by the [[USBMouse.js]] module.
+Handled by the [USBMouse.js](USBMouse.js) module.
 
 ```
 var mouse = require("USBMouse");
@@ -84,7 +84,7 @@ Available buttons are `NONE / LEFT / RIGHT / MIDDLE`.
 Tablet
 -----
 
-Handled by the [[USBTablet.js]] module.
+Handled by the [USBTablet.js](USBTablet.js) module.
 
 ```
 var tab = require("USBTablet");
@@ -105,7 +105,7 @@ Available buttons are `NONE / LEFT / RIGHT / MIDDLE`.
 Media Controls
 -----------------
 
-Handled by the [[USBMedia.js]] module.
+Handled by the [USBMedia.js](USBMedia.js) module.
 
 ```
 var media = require("USBMedia");

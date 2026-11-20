@@ -32,12 +32,12 @@ Features
 
 It contains the following sensors:
 
-* [[LIS2DH12]]
-* [[MPU9250]]
-* [[LPS22HB]]
-* [[HTS221]]
-* [[CCS811]]
-* [[BH1745]]
+* [LIS2DH12](../devices/LIS2DH12.md)
+* [MPU9250](../devices/MPU9250.md)
+* [LPS22HB](../devices/LPS22HB.md)
+* [HTS221](../devices/HTS221.md)
+* [CCS811](../devices/CCS811.md)
+* [BH1745](../devices/BH1745.md)
 
 For full technical docs, see [Nordic's Thingy:52 reference pages](https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.rds%2Fdita%2Frds%2Fdesigns%2Fthingy%2Fintro%2Ffrontpage.html) - particularly
 the [Hardware description](https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.rds%2Fdita%2Frds%2Fdesigns%2Fthingy%2Fhw_description%2Fhw_descr.html)
@@ -122,7 +122,7 @@ your device.
 * The red LED on the Thingy should flash to show Espruino has started. If it doesn't,
 power the Thingy off and back on.
 
-And you're ready to go! Follow the [Getting Started Guide](/Quick+Start+BLE#thingy52) for details
+And you're ready to go! Follow the [Getting Started Guide](../tutorials/Quick Start BLE.md#thingy52) for details
 on getting the IDE connected wirelessly.
 
 
@@ -136,7 +136,7 @@ On-board peripherals are exposed via the `Thingy` library:
 BTN
 
 // R/G/B leds
-LED1/2/3  
+LED1/2/3
 
 // Pins P0.02/P0.03/P0.04 on the Thingy PCB
 // correspond to D2/D3/D4 and are analog capable
@@ -208,7 +208,7 @@ by clicking `Settings` -> `General` ->  `Graphical Editor Extensions`-> `Nordic 
 Tutorials
 --------
 
-First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#thingy52)
+First, it's best to check out the [Getting Started Guide](../tutorials/Quick Start BLE.md#thingy52)
 
 Tutorials using Thingy:52:
 
@@ -225,7 +225,7 @@ Tutorials using Bluetooth LE and functionality that may not be part of Thingy:52
 Information
 -----------
 
-* [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
+* [nRF52832 Datasheet](../datasheets/nRF52832_PS_v1.0.pdf)
 * [Nordic Thingy:52 information](https://www.nordicsemi.com/eng/Products/Nordic-Thingy-52)
 
 

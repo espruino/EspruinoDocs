@@ -8,6 +8,6 @@ Puck.js Bluetooth with the Graphical Editor
 * USES: Puck.js,Web Bluetooth,BLE,Only BLE
 
 This video shows you how to create Bluetooth Low Energy devices using
-only the Graphical Editor inside the [Espruino Web IDE](/Web+IDE)
+only the Graphical Editor inside the [Espruino Web IDE](./Web IDE.md)
 
 [[http://youtu.be/yJPoF0HOMsg]]

@@ -6,7 +6,7 @@ Light Dependent Resistor
 
 * KEYWORDS: LDR,Light,Light Dependent Resistor,Photoresistor,Light,Sensor,GL5537
 
-[Datasheet](/datasheets/GL5537.pdf)
+[Datasheet](../datasheets/GL5537.pdf)
 
 ![Light Sensor](LDR/GL5537.jpg)
 

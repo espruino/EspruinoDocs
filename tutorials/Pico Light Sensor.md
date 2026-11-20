@@ -15,10 +15,10 @@ We're going to wire up a Light Sensor on some breadboard, and experiment with tu
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [Light Dependent Resistor](/LDR)
+* An Espruino [Pico](../boards/Pico.md)
+* A [Light Dependent Resistor](../devices/LDR.md)
 * A 10,000 Ohm Resistor ( Brown, Black, Orange )
-* [[Breadboard]]
+* [Breadboard](../devices/Breadboard.md)
 * Two Jumper Wires
 
 Wiring Up
@@ -26,12 +26,12 @@ Wiring Up
 
 ![Wiring](Pico Light Sensor.jpg)
 
-We're going to set up a very simple [Voltage Divider](http://en.wikipedia.org/wiki/Voltage_divider) circuit, with a known resistor on one side and the [Light Dependent Resistor](/LDR) on the other.
+We're going to set up a very simple [Voltage Divider](http://en.wikipedia.org/wiki/Voltage_divider) circuit, with a known resistor on one side and the [Light Dependent Resistor](../devices/LDR.md) on the other.
 
 * Plug your Espruino Pico into a breadboard with the USB connector on the left-hand side. 
 * With a Black Jumper wire, connect the bottom left pin (GND) to the '-' rail of the breadboard
 * With a Red Jumper wire, connect the bottom pin 3rd from the left (3.3v) to the '+' rail of the breadboard
-* Connect the [LDR](/LDR) between the top right pin (A5) and the '-' rail
+* Connect the [LDR](../devices/LDR.md) between the top right pin (A5) and the '-' rail
 * Connect the 10,000 Ohm resistor between the top right pin (A5) and the '+' rail
 
 Software

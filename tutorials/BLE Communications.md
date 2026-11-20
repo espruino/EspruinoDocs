@@ -7,7 +7,7 @@ BLE Communications
 * KEYWORDS: Tutorials,BLE,Bluetooth,Bluetooth LE,Communications,Send,Receive,Command
 * USES: Puck.js,MDBT42Q,BLE,Only BLE,Servo Motor
 
-In other tutorials like the [Wireless temperature Display](/Pixl.js+Wireless+Temperature+Display)
+In other tutorials like the [Wireless temperature Display](../tutorials/Wireless Temperature Sensor.md)
 we use Bluetooth Advertising to communicate. This is great for many-to-one type
 applications, but often you just want one-to-one communications.
 
@@ -23,8 +23,8 @@ receiver has to be listening for packets a lot of the time which is
 extremely inefficient. If the receiver needs to run off a battery you
 might want to consider using a connection as well.
 
-In this example we're going to use an [MDBT42Q breakout board](/MDBT42Q) attached
-to a [Servo Motor](/Servo Motors). There are a few main ways you might want to
+In this example we're going to use an [MDBT42Q breakout board](../boards/MDBT42Q.md) attached
+to a [Servo Motor](../devices/Servo Motors.md). There are a few main ways you might want to
 communicate:
 
 * Sending commands as JavaScript code
@@ -62,7 +62,7 @@ setWatch(flag, BTN, {repeat:true});
 
 ### Transmitter (Bluetooth Central Device)
 
-For the transmitter, we'll just use the [Bluetooth LE UART module](/Puck.js+BLE+UART)
+For the transmitter, we'll just use the [Bluetooth LE UART module](../tutorials/BLE UART.md)
 to allow us to send the command as if we were typing it in the REPL. Note that we need
 a newline to execute it - like we'd have to press `Enter` in the left hand side of the IDE.
 
@@ -85,7 +85,7 @@ setWatch(flag, BTN, {repeat:true});
 **NOTE:** By default Espruino is expecting a REPL, so it echoes back the characters
 it was sent (plus the result of executing the command). You might not want this
 normally as it will slow down communications - check out the notes at the
-top of [the page in Interfacing](/Interfacing) for the characters you can send
+top of [the page in Interfacing](../info/Interfacing.md) for the characters you can send
 to stop the echoing.
 
 

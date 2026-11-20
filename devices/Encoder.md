@@ -10,7 +10,7 @@ Rotary Encoder
 
 The encoder should have 3 pins (one common, and two switched). The common should be connected to 3.3v, and the two switched pins should be connected to two pins on Espruino, which should be supplied to the module.
 
-Rotary encoders are handled by the [[Encoder.js]] module. 
+Rotary encoders are handled by the [Encoder.js](Encoder.js) module. 
 
 ```
 var step = 0;

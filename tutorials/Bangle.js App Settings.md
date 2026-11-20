@@ -12,7 +12,7 @@ it to be customised. While you can use `E.showMenu` to add an options screen
 inside your app, Bangle.js provides a way to add extra menus to the
 global `Settings` application.
 
-First, check out the tutorial on [adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader)
+First, check out the tutorial on [adding an app to the Bangle.js App Loader](./Bangle.js App Loader.md)
 as it'll help you to understand about `metadata.json`.
 
 First off, you need to store your settings in a file. Apps in Bangle.js generally

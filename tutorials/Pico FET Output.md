@@ -10,18 +10,18 @@ Pico FET Output
 Introduction
 -----------
 
-The Espruino [[Pico]] has a [FET](/Pico#power) built in, which can supply a 1.5A (or even 5A pulsed) 5v output.
+The Espruino [Pico](../boards/Pico.md) has a [FET](../boards/Pico.md#power) built in, which can supply a 1.5A (or even 5A pulsed) 5v output.
 
 While this is usually used to power Espruino from a battery, when the Pico is running from USB it is not needed and can be controlled from the Pico itself.
 
-As an example, we're going to connect the piezo speaker up - if you compare the output to that of the [[Pico Piano]] it should be louder. However the output is capable of much more - for example driving bigger speakers, light bulbs, or relays.
+As an example, we're going to connect the piezo speaker up - if you compare the output to that of the [Pico Piano](Pico Piano.md) it should be louder. However the output is capable of much more - for example driving bigger speakers, light bulbs, or relays.
 
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [[Speaker]]
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* A [Speaker](../devices/Speaker.md)
+* [Breadboard](../devices/Breadboard.md)
 * A 470 Ohm resistor (yellow, purple, brown)
 * A Jumper Wire
 
@@ -46,9 +46,9 @@ If you wanted to power something else you'd just connect it straight between `Ba
 Software
 -------
 
-Now we're all wired up, the code to drive the output is simple. As [shown here](/Pico#power), to turn the output off you'll need to make sure the pin `B0` is an input (or is in [open drain](http://en.wikipedia.org/wiki/Open_collector) mode) first.
+Now we're all wired up, the code to drive the output is simple. As [shown here](../boards/Pico.md#power), to turn the output off you'll need to make sure the pin `B0` is an input (or is in [open drain](http://en.wikipedia.org/wiki/Open_collector) mode) first.
 
-As we don't want to damage the piezo we're only going to output a square wave, but you could connect some other device and use the [other bits of example code](/Pico#power) to turn it fully (or half) on.
+As we don't want to damage the piezo we're only going to output a square wave, but you could connect some other device and use the [other bits of example code](../boards/Pico.md#power) to turn it fully (or half) on.
 
 
 ```

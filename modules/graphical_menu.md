@@ -7,10 +7,10 @@ Graphical Menu
 * KEYWORDS: Module,Modules,Menu,Menus,Selection,Graphics
 * USES: Graphics
 
-This is a very simple, lightweight menu library ([[graphical_menu.js]]) for displays that use
-Espruino's [[Graphics]] library.
+This is a very simple, lightweight menu library ([graphical_menu.js](graphical_menu.js)) for displays that use
+Espruino's [Graphics](../info/Graphics.md) library.
 
-**NOTE:** This is the menu library used by the [`Pixl.menu()`](/Reference#l_Pixl_menu) command on [Pixl.js](/Pixl.js)
+**NOTE:** This is the menu library used by the [`Pixl.menu()`](https://www.espruino.com/Reference#l_Pixl_menu) command on [Pixl.js](../boards/Pixl.js.md)
 
 Simply use it as follows:
 
@@ -71,7 +71,7 @@ setWatch(function() {
 }, BTN3, {repeat:true,debounce:50,edge:"rising"});
 ```
 
-Call `menu.list` with the [[Graphics]] object and
+Call `menu.list` with the [Graphics](../info/Graphics.md) object and
 an object which defines the main menu.
 
 Each object is as follows:

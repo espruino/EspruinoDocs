@@ -15,25 +15,25 @@ All Espruino boards contain their own Real-Time Clock which allows them to keep 
 
 | Board | Oscillator | Accuracy |
 |-------|------------|----------|
-| Espruino [Original](/Original) 1v4+ | External Crystal | Good |
-| Espruino [Original](/Original) 1v3 | Internal RC | 1% |
-| Espruino [Pico](/Pico) | Internal RC | 10% |
-| Espruino [WiFi](/WiFi) | External Crystal | Good |
-| [Puck.js](/Puck.js) | Internal RC w. calibration | Good |
-| [Pixl.js](/Pixl.js) | Internal RC w. calibration | Good |
-| [MDBT42Q](/MDBT42Q) | Internal RC w. calibration | Good |
-| [Bangle.js](/Bangle.js) | Internal RC w. calibration | Good |
+| Espruino [Original](../boards/Original.md) 1v4+ | External Crystal | Good |
+| Espruino [Original](../boards/Original.md) 1v3 | Internal RC | 1% |
+| Espruino [Pico](../boards/Pico.md) | Internal RC | 10% |
+| Espruino [WiFi](../boards/WiFi.md) | External Crystal | Good |
+| [Puck.js](../boards/Puck.js.md) | Internal RC w. calibration | Good |
+| [Pixl.js](../boards/Pixl.js.md) | Internal RC w. calibration | Good |
+| [MDBT42Q](../boards/MDBT42Q.md) | Internal RC w. calibration | Good |
+| [Bangle.js](../boards/Bangle.js.md) | Internal RC w. calibration | Good |
 
 If you have an Espruino Original or Pico without a crystal it is possible to add one - see below.
 
-**Note:** You could also use an external module like the [[DS3231]].
+**Note:** You could also use an external module like the [DS3231](../devices/DS3231.md).
 
 Adding Crystals
 -------------------
 
 ### Espruino Original
 
-**Note:** Espruino [revision 1.4](/Original#layout) boards already have a low speed oscillator on board. It's only 1.3 where you might want to add one.
+**Note:** Espruino [revision 1.4](../boards/Original.md#layout) boards already have a low speed oscillator on board. It's only 1.3 where you might want to add one.
 
 ![32.768kHz crystal](Clocks/crystal.jpg)
 
@@ -78,4 +78,4 @@ It's recommended that you turn on `Set Current Time` in the Web IDE's communicat
 
 To set the time manually you can just use the `setTime(...)` function with the number of seconds since 1970.
 
-However you can also use the [[clock]] module which will keep track of time independent of the system time.
+However you can also use the [clock](../modules/clock.md) module which will keep track of time independent of the system time.

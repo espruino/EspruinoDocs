@@ -1,12 +1,12 @@
 <!--- Copyright (c) 2014 Hywel Warsop. See the file LICENSE for copying permission. -->
 SCD40
-=====================
+=========
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/SCD40. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Module,SCD40,SCD41,SCD43,Temperature,Humidity,C02
 
-This module should work with Sensirons SDC40, SCD41 and SCD43 sensors, although it has only been tested on the SDC40. Use the [SCD40](/modules/SCD40.js) ([About Modules](/Modules)) module for it.
+This module should work with Sensirons SDC40, SCD41 and SCD43 sensors, although it has only been tested on the SDC40. Use the [SCD40](SCD40.js) ([About Modules](../Modules.md)) module for it.
 
 You can wire this up as follows:
 
@@ -20,7 +20,7 @@ You can wire this up as follows:
 How to use my module:
 
 To Set up the module
- 
+
 ```JavaScript
   I2C2.setup({scl:B10,sda:B3});
   var scd = require("SCD40").connectI2C(I2C2);
@@ -52,9 +52,9 @@ The module also contains a commented out version of the C code to calculate the 
   Reference
   ---------
 
-  * APPEND_JSDOC: MOD123.js
+  * APPEND_JSDOC: SCD40.js
 
   Using
   -----
 
-  * APPEND_USES: MOD123
+  * APPEND_USES: SCD40

@@ -13,7 +13,7 @@ Turning On
 
 ### <a class="specific puckjs"></a>Puck.js
 
-[Puck.js](/Puck.js) is either supplied with a separate battery, or assembled with the
+[Puck.js](../boards/Puck.js.md) is either supplied with a separate battery, or assembled with the
 battery inside and a **clear plastic tab** between the battery
 and PCB to keep it turned off. To turn it on, you need to:
 
@@ -29,15 +29,15 @@ again, making sure the button next to the battery connector isn't pressed.
 the battery side facing towards the plastic case, with the `Puck.js ...` text against
 the shelf in the case itself**
 
-Please [see the Puck.js reference page](/Puck.js#turning-puck-js-on) for some
+Please [see the Puck.js reference page](../boards/Puck.js.md#turning-puck-js-on) for some
 pictures of the correct orientation of the battery and Puck.js case.
 
 While Puck.js ships with firmware that's fine for simple tasks, we're constantly
-improving the software and adding new features. To get the best out of it, we'd recommend that you [update Puck.js's firmware](/Puck.js#firmware-updates) first.
+improving the software and adding new features. To get the best out of it, we'd recommend that you [update Puck.js's firmware](../boards/Puck.js.md#firmware-updates) first.
 
 ### <a class="specific pixljs"></a>Pixl.js
 
-To turn on your [Pixl.js](/Pixl.js) you have three main options:
+To turn on your [Pixl.js](../boards/Pixl.js.md) you have three main options:
 
 * Use a Micro USB cable for power (there is no USB data connection on Pixl.js)
 * Slide a CR2032 battery into the holder on the board (with `+` facing away from the PCB)
@@ -46,11 +46,11 @@ To turn on your [Pixl.js](/Pixl.js) you have three main options:
 While Pixl.js ships with firmware that's fine for simple tasks, we're constantly
 improving the software and adding new features.
 
-To get the best out of it, we'd recommend that you [update Pixl.js's firmware](/Pixl.js#firmware-updates) first.
+To get the best out of it, we'd recommend that you [update Pixl.js's firmware](../boards/Pixl.js.md#firmware-updates) first.
 
 ### <a class="specific joltjs"></a>Jolt.js
 
-To turn on your [Jolt.js](/Jolt.js) you have three main options:
+To turn on your [Jolt.js](../boards/Jolt.js.md) you have three main options:
 
 * Use a USB-C cable for power
 * Attach a LiPo battery to the JST battery connector on the board
@@ -59,7 +59,7 @@ To turn on your [Jolt.js](/Jolt.js) you have three main options:
 While Jolt.js ships with firmware that's fine for simple tasks, we're constantly
 improving the software and adding new features.
 
-To get the best out of it, we'd recommend that you [update Jolt.js's firmware](/Jolt.js#firmware-updates) first.
+To get the best out of it, we'd recommend that you [update Jolt.js's firmware](../boards/Jolt.js.md#firmware-updates) first.
 
 ### <a class="specific banglejs"></a>Bangle.js
 
@@ -74,16 +74,16 @@ If bluetooth connectivity is disabled (by default Bangle.js will
 * **Either:** Ensure `BLE` and `Programmable` are `On` to enable programming permanently, and then choose `Back` to exit settings
 * **Or:** Scroll down to `Make Connectable`, select it, and leave Bangle.js displaying on the `Connectable` screen
 
-Check out [The Bangle.js 'Getting Started' page](/Bangle.js Getting Started) for more information.
+Check out [The Bangle.js 'Getting Started' page](./Bangle.js Getting Started.md) for more information.
 
 ### <a class="specific mdbt42q"></a>MDBT42Q
 
-Check out [the MDBT42Q](/MDBT42Q#getting-started) page for more information about powering the MDBT42Q.
+Check out [the MDBT42Q](../boards/MDBT42Q.md#getting-started) page for more information about powering the MDBT42Q.
 
 While pre-programmed MDBT42Q modules from us ship with firmware that's fine for simple tasks, we're constantly
 improving the software and adding new features.
 
-To get the best out of it, we'd recommend that you [update the firmware](/MDBT42Q#firmware-updates) first.
+To get the best out of it, we'd recommend that you [update the firmware](../boards/MDBT42Q.md#firmware-updates) first.
 
 ### <a class="specific ruuvitag"></a>Ruuvitag
 
@@ -91,17 +91,17 @@ Check out [Ruuvi's getting started page](https://lab.ruuvi.com/start/) for more 
 
 ### <a class="specific thingy52"></a>Nordic Thingy:52
 
-You'll need to have your Thingy:52 flashed with Espruino and powered on. [Check out the Thingy:52 page](/Thingy52#getting-started) for more information.
+You'll need to have your Thingy:52 flashed with Espruino and powered on. [Check out the Thingy:52 page](../boards/Thingy52.md#getting-started) for more information.
 
 ### <a class="specific nrf52832dk"></a>Nordic nRF52832DK
 
-Simply plug your nRF52832DK into a USB connector. [You need to have it flashed with Espruino](/nRF52832DK#getting-started).
+Simply plug your nRF52832DK into a USB connector. [You need to have it flashed with Espruino](../boards/nRF52832DK.md#getting-started).
 
 ### <a class="specific end"></a>
 
 Once your device is powered up it'll start advertising itself via Bluetooth Low Energy.
 
-[Puck.js](/Puck.js) and [Pixl.js](/Pixl.js) will also act as NFC tags that
+[Puck.js](../boards/Puck.js.md) and [Pixl.js](../boards/Pixl.js.md) will also act as NFC tags that
 can direct your NFC-capable phone to the relevant URLs.
 
 
@@ -208,7 +208,7 @@ You can also check out `chrome://bluetooth-internals/#adapter` to see what's hap
 Other potential issues:
 
 * Most [Flatpaks](https://flatpak.org/) don't work out of the box as Bluetooth priviledges aren't always turned on. You can change them using [flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal) or can just install a native package for your OS.
-* BlueZ 5.41+ required (5.43 is more stable) - you can check by typing `bluetoothd --version`. Pretty much every Linux distribution from the past 5 years is now up to date, but if yours isn't there are some [Bluez installation instructions here](/Web Bluetooth On Linux)
+* BlueZ 5.41+ required (5.43 is more stable) - you can check by typing `bluetoothd --version`. Pretty much every Linux distribution from the past 5 years is now up to date, but if yours isn't there are some [Bluez installation instructions here](./Web Bluetooth On Linux.md)
 * Some Chromium based browsers such as Brave disable Bluetooth functionality. If you run into issues with a specific browser try an alternative browser from the list above.
 
 #### Chromebook
@@ -219,7 +219,7 @@ All Chromebooks with Bluetooth should support Web Bluetooth.
 
 Android 6 (Marshmallow) or later are supported out of the box. You can use a Chromium based browser such as [Google Chrome](https://play.google.com/store/apps/details?id=com.android.chrome) or [Cromite](https://github.com/uazo/cromite)
 
-You can also use the [Bangle.js Gadgetbridge app](https://www.espruino.com/Gadgetbridge) to provide app loader functionality for your [Bangle.js](/Bangle.js2) (but not yet Web IDE).
+You can also use the [Bangle.js Gadgetbridge app](https://www.espruino.com/Gadgetbridge) to provide app loader functionality for your [Bangle.js](../boards/Bangle.js2.md) (but not yet Web IDE).
 
 Android 5 (Lollipop) devices can use [Chromium installed over ADB to a developer mode device](https://stackoverflow.com/questions/34810194/can-i-try-web-bluetooth-on-chrome-for-android-lollipop).
 
@@ -238,7 +238,7 @@ webpage viewed with the browser app (the app won't add Web Bluetooth to Safari).
 ### Once Web Bluetooth is set up:
 
 * Go to the [Puck.js site](https://www.puck-js.com/go). It should tell you that you have Web Bluetooth.
-* Click the [Web IDE option](/ide).
+* Click the [Web IDE option](https://www.espruino.com/ide).
 * Click the orange **Connect/Disconnect** icon in the Top Left: ![Connect icon](Quick Start BLE/connect.png)
 * You may see a list of connection options - choose `Web Bluetooth`:
 
@@ -258,7 +258,7 @@ On some platforms (Windows, or Linux with older versions of `Bluez`) Web
 Bluetooth isn't supported yet.
 
 On these you'll need to install a native application. We've created a
-[Web IDE installer for Windows](/Web+IDE#as-a-native-application).
+[Web IDE installer for Windows](./Web IDE.md#as-a-native-application).
 
 Once installed, you need to run `Espruino IDE` - which is confusingly
 similar to the `Espruino Web IDE` which you may have had installed if you'd
@@ -275,7 +275,7 @@ Bluetooth menu before it'll appear in the Web IDE. **This is not needed for Web 
 built-in Bluetooth software, rather than installing the software that came with
 your Bluetooth Dongle. Often the Bluetooth dongle's software will not pair
 with Bluetooth LE devices and expose them via Windows 10's API.
-* If using Windows 7 you'll need to have [set up your Bluetooth adaptor with Zadig first](/Web+IDE#zadig)
+* If using Windows 7 you'll need to have [set up your Bluetooth adaptor with Zadig first](./Web IDE.md#zadig)
 
 On Linux, Mac OS and other platforms you'll need to follow the NPM install
 [instructions on the Web IDE GitHub Page](https://github.com/espruino/EspruinoWebIDE#installing-from-npm)
@@ -288,9 +288,9 @@ Once set up, you can try [writing some code](#next)!
 There are two ways of using the Raspberry Pi to control Espruino devices.
 
 * You can use the Espruino Hub software (which provides an MQTT bridge) and the
-Node-RED UI - see the [Node RED Tutorial](/Puck.js Node-RED)
+Node-RED UI - see the [Node RED Tutorial](BLE Node-RED.md)
 
-* Or you can [use the Raspberry Pi to host a web-based version of the Web IDE](/Raspberry Pi Web IDE).
+* Or you can [use the Raspberry Pi to host a web-based version of the Web IDE](./Raspberry Pi Web IDE.md).
 
 Once set up, you can try [writing some code](#next)!
 
@@ -301,13 +301,13 @@ In the worst case, you don't have any computers that allow you to communicate us
 
 But all is not lost! With many devices you can connect directly using a USB-TTL converter:
 
-* [Connecting Serial to Puck.js](/Puck.js#serial-console)
-* [Connecting Serial to Pixl.js](/Pixl.js#serial-console)
-* [Connecting Serial to to the MDBT42Q](/MDBT42Q#serial-console)
-* [Connecting Serial to to the Thingy:52](/Thingy52#serial-console)
-* The nRF52832DK has [USB serial built-in](/nRF52832DK#serial-console)
+* [Connecting Serial to Puck.js](../boards/Puck.js.md#serial-console)
+* [Connecting Serial to Pixl.js](../boards/Pixl.js.md#serial-console)
+* [Connecting Serial to to the MDBT42Q](../boards/MDBT42Q.md#serial-console)
+* [Connecting Serial to to the Thingy:52](../boards/Thingy52.md#serial-console)
+* The nRF52832DK has [USB serial built-in](../boards/nRF52832DK.md#serial-console)
 
-You can then use the normal [Espruino Web IDE](/Web+IDE), which has [separate instructions for Getting Started](/Quick+Start+USB)
+You can then use the normal [Espruino Web IDE](./Web IDE.md), which has [separate instructions for Getting Started](./Quick Start USB.md)
 
 
 Command-line
@@ -358,7 +358,7 @@ and you can easily execute commands just by running JS code like:
 Puck.write('LED1.set();\n');
 ```
 
-We've got [a proper tutorial on it here](/Puck.js Web Bluetooth)
+We've got [a proper tutorial on it here](../tutorials/Web Bluetooth.md)
 
 ### Your own app
 
@@ -382,45 +382,45 @@ Having Trouble?
 
 Try:
 
-* The [Bluetooth Troubleshooting](/Troubleshooting+BLE) page
-* [General Troubleshooting](/Troubleshooting)
+* The [Bluetooth Troubleshooting](../info/Troubleshooting BLE.md) page
+* [General Troubleshooting](../info/Troubleshooting.md)
 * Or ask on [our forums](http://forum.espruino.com) if you can't find the answer you need
 
 
 <a id="next"></a>What now?
 ---------------------------
 
-**Please [try the walkthrough](/Quick+Start+Code) to get started writing
+**Please [try the walkthrough](./Quick Start Code.md) to get started writing
 your first code for Espruino**
 
 There's lots of detailed information on specific boards, as well
 as a list of tutorials for them:
 
-* [Bangle.js](/Bangle.js)
-* [Puck.js](/Puck.js)
-* [Pixl.js](/Pixl.js) and [Pixl.js Getting Started video](https://www.youtube.com/watch?v=pawHDr4i3jI)
-* [MDBT42Q](/MDBT42Q)
-* [Thingy:52](/Thingy52)
-* [nRF52832DK](/nRF52832DK)
-* [RuuviTag](/RuuviTag)
+* [Bangle.js](../boards/Bangle.js.md)
+* [Puck.js](../boards/Puck.js.md)
+* [Pixl.js](../boards/Pixl.js.md) and [Pixl.js Getting Started video](https://www.youtube.com/watch?v=pawHDr4i3jI)
+* [MDBT42Q](../boards/MDBT42Q.md)
+* [Thingy:52](../boards/Thingy52.md)
+* [nRF52832DK](../boards/nRF52832DK.md)
+* [RuuviTag](../boards/Ruuvitag.md)
 
 There is more general information:
 
-* [Bluetooth Troubleshooting](/Troubleshooting+BLE)
-* [Language Reference](/Reference), specifically:
-  * [Puck Object](/Reference#Puck) - for Puck.js specific functionality
-  * [Pixl Object](/Reference#Pixl) - for Pixl.js specific functionality
-  * [NRF Object](/Reference#NRF) - for nRF52 Bluetooth functionality
-  * [Global Functions](/Reference#_global) and [E Object](/Reference#E) - for built-in Espruino functionality
-* Instantly [Search](/Search) all the Espruino website's documentation (using the box in the top right)
-* [List of available modules](/Modules)
-* [Tutorials](/Tutorials)
-* [Frequently Asked Questions](/FAQ)
-* See other [ways of Programming Espruino devices](/Programming)
+* [Bluetooth Troubleshooting](../info/Troubleshooting BLE.md)
+* [Language Reference](https://www.espruino.com/Reference), specifically:
+  * [Puck Object](https://www.espruino.com/Reference#Puck) - for Puck.js specific functionality
+  * [Pixl Object](https://www.espruino.com/Reference#Pixl) - for Pixl.js specific functionality
+  * [NRF Object](https://www.espruino.com/Reference#NRF) - for nRF52 Bluetooth functionality
+  * [Global Functions](https://www.espruino.com/Reference#_global) and [E Object](https://www.espruino.com/Reference#E) - for built-in Espruino functionality
+* Instantly [Search](https://www.espruino.com/Search) all the Espruino website's documentation (using the box in the top right)
+* [List of available modules](../Modules.md)
+* [Tutorials](../Tutorials.md)
+* [Frequently Asked Questions](../info/FAQ.md)
+* See other [ways of Programming Espruino devices](../info/Programming.md)
 * Or check out [our forums](http://forum.espruino.com)
 
 **Note:** Espruino runs on many other devices, and [espruino.com](http://espruino.com)
-caters for all of them. Unless [a tutorial](/Tutorials) explicitly says it is for your device it's
+caters for all of them. Unless [a tutorial](../Tutorials.md) explicitly says it is for your device it's
 possible that you will have to change some pin names and wiring to match
 the pins that you used on your device.
 
@@ -451,10 +451,10 @@ background that might flatten the battery.
 However for normal, non-buggy code power consumption is low enough that there
  is no reason not to leave the device powered on.
 
-* [Puck.js power consumption](/Puck.js#power-consumption)
-* [Pixl.js power consumption](/Pixl.js#power-consumption)
-* [MDBT42Q power consumption](/MDBT42Q#power-consumption)
-* [Bangle.js power consumption](/Bangle.js#power-consumption)
+* [Puck.js power consumption](../boards/Puck.js.md#power-consumption)
+* [Pixl.js power consumption](../boards/Pixl.js.md#power-consumption)
+* [MDBT42Q power consumption](../boards/MDBT42Q.md#power-consumption)
+* [Bangle.js power consumption](../boards/Bangle.js.md#power-consumption)
 
 
 <script>

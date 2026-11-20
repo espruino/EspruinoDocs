@@ -9,7 +9,7 @@ IoT Services
 
 There are [quite a lot](http://postscapes.com/companies/iot-cloud-services) of IoT cloud service providers around at the moment. We've collected some sample code for a selection of them below. If you've got some code you'd like to share, please contribute it (you can submit changes via [this page on GitHub](https://github.com/espruino/EspruinoDocs/blob/master/info/IoT%20Services.md)).
 
-**Note:** To avoid duplication, all of this code expects that you already have an [Internet connection](/Internet).
+**Note:** To avoid duplication, all of this code expects that you already have an [Internet connection](./Internet.md).
 
 
 Vizibles
@@ -272,6 +272,6 @@ Using Espruino as the 'that' in 'if this then that' is more difficult at the mom
 Google Sheets / Google Forms
 ------------------------------
 
-There is a [tutorial on this here](/Logging to Google Sheets)
+There is a [tutorial on this here](../tutorials/Logging to Google Sheets.md)
 
-This is currently only possible on the Espruino [[Pico]] board, because HTTPS communications are needed.
+This is currently only possible on the Espruino [Pico](../boards/Pico.md) board, because HTTPS communications are needed.

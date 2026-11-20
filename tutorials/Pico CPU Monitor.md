@@ -19,9 +19,9 @@ You'll Need
 
 ![CPU Monitor](Pico CPU Monitor.jpg)
 
-* An Espruino [[Pico]]
-* A [Nokia 5110 LCD](/PCD8544)
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* A [Nokia 5110 LCD](../devices/PCD8544.md)
+* [Breadboard](../devices/Breadboard.md)
 
 Wiring Up
 --------

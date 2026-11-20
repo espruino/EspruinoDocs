@@ -13,10 +13,10 @@ This tutorial will show you how to stream data from Bangle.js to the PC. We're
 going to use the accelerometer, along with Web Bluetooth on
 the PC (using the `puck.js` library).
 
-For more detailed info, check out [this page on Web Bluetooth with Espruino](/Web+Bluetooth).
+For more detailed info, check out [this page on Web Bluetooth with Espruino](./Web Bluetooth.md).
 
 First off you need to be able to either host a webpage on your own PC (HTTP via `localhost`)
-or online via HTTPS. There's some info on doing this on [the Web Bluetooth page](/Web+Bluetooth).
+or online via HTTPS. There's some info on doing this on [the Web Bluetooth page](./Web Bluetooth.md).
 
 Then copy this code and try it in a web browser.
 

@@ -37,7 +37,7 @@ Useful Code
 Common Issues and Questions
 ---------------------------
 
-* You might also want to [check out the FAQ](/FAQ)
+* You might also want to [check out the FAQ](./FAQ.md)
 * [Trouble installing ST COM Port drivers](http://forum.espruino.com/conversations/290299/)
 * [SSD1306 display skips every other line](http://forum.espruino.com/conversations/269330/)
 * [STM32 current source/sink info](http://forum.espruino.com/conversations/428/)

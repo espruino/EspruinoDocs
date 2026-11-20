@@ -6,9 +6,9 @@ LIS302DL Accelerometer
 
 * KEYWORDS: STM32F4DISCOVERY,Accelerometer,LIS302DL,SPI,Sensor
 
-[Datasheet](/datasheets/LIS302DL.pdf)
+[Datasheet](../datasheets/LIS302DL.pdf)
 
-This is the accelerometer that is on some STM32F4DISCOVERY boards (newer boards have the [LIS3DSH](/LIS3DH)).
+This is the accelerometer that is on some STM32F4DISCOVERY boards (newer boards have the [LIS3DSH](./LIS3DH.md)).
 
 This code snippet reads a value from the accelerometer, and lights the 4 LEDs depending on the angle of the board.
 
@@ -32,4 +32,4 @@ function getAcc() {
 }
 onInit();setInterval(getAcc, 10);
 ```
- 
+

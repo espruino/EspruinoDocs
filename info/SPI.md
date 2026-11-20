@@ -8,7 +8,7 @@ SPI - Serial Peripheral Interface
 
 The [Serial Peripheral Interface](http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus) is a Serial Bus for peripherals that uses Clock, Data In, and Data Out (and often a Chip Select pin).
 
-See [SPI Class](/Reference#SPI) in the reference
+See [SPI Class](https://www.espruino.com/Reference#SPI) in the reference
 
 Hardware SPI
 ------------
@@ -30,7 +30,7 @@ SPI1.write([1,2,3,4])
 var d = SPI1.send([1,2,3,4]);
 ```
 
-See the reference for [SPI.setup](/Reference#l_SPI_setup) for more information on
+See the reference for [SPI.setup](https://www.espruino.com/Reference#l_SPI_setup) for more information on
 the arguments that can be passed in.
 
 Software SPI
@@ -56,7 +56,7 @@ Speed (baud rate)
 
 Pretty much all SPI devices are guaranteed to support 100kBits/sec transfer
 speed, so that is the default in Espruino. However you can specify
-higher speeds with `bitrate` in [SPI.setup](/Reference#l_SPI_setup) if your
+higher speeds with `bitrate` in [SPI.setup](https://www.espruino.com/Reference#l_SPI_setup) if your
 device supports it, eg:
 
 ```

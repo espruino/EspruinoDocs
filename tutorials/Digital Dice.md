@@ -21,7 +21,7 @@ What you need
 * An Espruino Board
 * A battery
 * A switch, and two wires for it
-* A string of [[WS2811]] Lights
+* A string of [WS2811](../devices/WS2811.md) Lights
 * (Not shown) Wrapping paper, tape, and double-sided tape
 
 
@@ -81,7 +81,7 @@ And now, you can tuck everything inside. The Espruino board and battery should f
 Software
 -------
 
-Now, for the software! Connect your computer as described in [[Quick Start]]. You can follow the examples in [[WS2811]] to play with the lights - remember to use 'B5' as the SPI pin though.
+Now, for the software! Connect your computer as described in [Quick Start](Quick Start.md). You can follow the examples in [WS2811](../devices/WS2811.md) to play with the lights - remember to use 'B5' as the SPI pin though.
 
 
 Now, just copy and paste the following code in, which turns your new digital dice into the purple spinner seen in the video:

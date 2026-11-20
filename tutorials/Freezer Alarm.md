@@ -12,7 +12,7 @@ Freezer Alarm
 We've got a problem where every so often the freezer door doesn't close
 properly, and everything inside gets thawed out. While some freezers have
 an alarm built in, ours doesn't - so this tutorial shows you how to
-make one using [Pixl.js](/Pixl.js). It beeps when the freezer gets too
+make one using [Pixl.js](../boards/Pixl.js.md). It beeps when the freezer gets too
 warm, but also shows the current and historical temperature **and**
 sends the data over Bluetooth LE so it can be logged.
 
@@ -20,12 +20,12 @@ sends the data over Bluetooth LE so it can be logged.
 You'll Need
 -----------
 
-* An Espruino [Pixl.js](/Pixl.js)
-* A [DS18B20 Temperature sensor](/DS18B20) - either a cable, or a small TO-92
+* An Espruino [Pixl.js](../boards/Pixl.js.md)
+* A [DS18B20 Temperature sensor](../devices/DS18B20.md) - either a cable, or a small TO-92
 sensor and some thin cable.
 * A 4.7k resistor
-* A LiPo [Battery](/Battery) (or anything over 3.5v but below 15v)
-* A [Piezo Buzzer](/Speaker) - I used [this one from Rapid](https://www.rapidonline.com/Audio-Visual/Miniature-PCB-Piezo-Transducer-35-0044)
+* A LiPo [Battery](../devices/Battery.md) (or anything over 3.5v but below 15v)
+* A [Piezo Buzzer](../devices/Speaker.md) - I used [this one from Rapid](https://www.rapidonline.com/Audio-Visual/Miniature-PCB-Piezo-Transducer-35-0044)
 
 
 Temperature Sensor
@@ -33,7 +33,7 @@ Temperature Sensor
 
 ![Types of DS18B20](Freezer Alarm/ds18b20.jpg)
 
-I'm using the [DS18B20](/DS18B20) because it's accurate, and digital - so there
+I'm using the [DS18B20](../devices/DS18B20.md) because it's accurate, and digital - so there
 are no inaccuracies caused by having a long wire.
 
 The sensors come in a few forms - you can get them with a cable attached (as above)
@@ -58,11 +58,11 @@ Wiring Up
 
 Wiring up is pretty simple:
 
-* Connect the [DS18B20 Temperature sensor](/DS18B20)
+* Connect the [DS18B20 Temperature sensor](../devices/DS18B20.md)
 up to `3.3v` and `GND` as described in the link, with the data wire connected to
 `A0`.
 * Connect a 4.7k resistor between `A0` and `3.3v`
-* Connect the [Piezo Buzzer](/Speaker) between pins `D10` and `GND`. You could
+* Connect the [Piezo Buzzer](../devices/Speaker.md) between pins `D10` and `GND`. You could
 use any data pin, but with [this piezo](https://www.rapidonline.com/Audio-Visual/Miniature-PCB-Piezo-Transducer-35-0044)
 has a pin spacing of 10mm which allows you to just push it into Pixl.js's headers.
 * Connect a battery between `Vin` and `GND`. You can use the JST pinout or the Arduino

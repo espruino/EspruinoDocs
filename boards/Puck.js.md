@@ -8,7 +8,7 @@ Puck.js
 
 ![Puck.js](Puckjs/board.jpg)
 
-* BUYFROM: £27,£21,https://shop.espruino.com/puckjs|v2,https://shop.espruino.com/puckjslite|Lite,/Order#puckjs
+* BUYFROM: £27,£21,https://shop.espruino.com/puckjs|v2,https://shop.espruino.com/puckjslite|Lite,https://www.espruino.com/Order#puckjs
 
 **Puck.js is an easy to use, programmable Bluetooth sensor and button**
 
@@ -44,9 +44,9 @@ Features
 |-----------|------------|------------|------------|
 | 0.1" GPIO |  8         | 7          | 7          |
 | SMD  GPIO |  9         | 2          | 2          |
-| Magnetometer | MAG3110 | [LIS3MDLTR](/datasheets/LIS3MDL.pdf)  | [MMC5603NJ](/datasheets/MMC5603NJ.pdf)  |
-| Accelerometer | No     | [LSM6DS3TR-C](/datasheets/LSM6DS3TR-C.pdf) | [LSM6DS3TR-C](/datasheets/LSM6DS3TR-C.pdf) |
-| Gyro          | No     | [LSM6DS3TR-C](/datasheets/LSM6DS3TR-C.pdf) | [LSM6DS3TR-C](/datasheets/LSM6DS3TR-C.pdf) |
+| Magnetometer | MAG3110 | [LIS3MDLTR](../datasheets/LIS3MDL.pdf)  | [MMC5603NJ](../datasheets/MMC5603NJ.pdf)  |
+| Accelerometer | No     | [LSM6DS3TR-C](../datasheets/LSM6DS3TR-C.pdf) | [LSM6DS3TR-C](../datasheets/LSM6DS3TR-C.pdf) |
+| Gyro          | No     | [LSM6DS3TR-C](../datasheets/LSM6DS3TR-C.pdf) | [LSM6DS3TR-C](../datasheets/LSM6DS3TR-C.pdf) |
 | Temperature Sensor | nRF52 (uncalibrated) | PCT2075TP (calibrated)  | PCT2075TP (calibrated)  |
 | MOSFET Output | No     | 1x         | 1x         |
 
@@ -128,7 +128,7 @@ Saved code will not be loaded from flash, *but will not be erased from flash eit
 Tutorials
 --------
 
-First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#puckjs)
+First, it's best to check out the [Getting Started Guide](../tutorials/Quick Start BLE.md#puckjs)
 
 Tutorials using Puck.js:
 
@@ -160,15 +160,15 @@ Information
 * [Board Layout (v1)](https://github.com/espruino/EspruinoBoard/blob/master/Puck.js/pdf/puckjs_brd.pdf)
 * [Eagle CAD files (v1)](https://github.com/espruino/EspruinoBoard/tree/master/Puck.js/eagle)
 * [3D Case design files](https://github.com/espruino/EspruinoBoard/tree/master/Puck.js/case)
-* [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
-* [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
+* [nRF52832 Datasheet](../datasheets/nRF52832_PS_v1.0.pdf)
+* [MDBT42 Datasheet](../datasheets/MDBT42Q-E.pdf)
 
 Certifications:
 
-* Puck.js 1/2 [CE certification](/files/Puck.js-CE.pdf)
-* Puck.js 1/2 radio module has certifications for [FCC (USA), CE(EU), TELEC (Japan), SRRC (China), IC (Canada), NCC (Taiwan) and KC (South Korea)](/datasheets/MDBT42Q-E.pdf)
-* Puck.js Lite [CE certification](/files/Puck.js-Lite-CE.pdf) and [RoHS](/files/Puck.js-Lite-RoHS.pdf)
-* Puck.js Lite [FCC certification](/files/Puck.js-Lite-FCC.pdf)
+* Puck.js 1/2 [CE certification](../files/Puck.js-CE.pdf)
+* Puck.js 1/2 radio module has certifications for [FCC (USA), CE(EU), TELEC (Japan), SRRC (China), IC (Canada), NCC (Taiwan) and KC (South Korea)](../datasheets/MDBT42Q-E.pdf)
+* Puck.js Lite [CE certification](../files/Puck.js-Lite-CE.pdf) and [RoHS](../files/Puck.js-Lite-RoHS.pdf)
+* Puck.js Lite [FCC certification](../files/Puck.js-Lite-FCC.pdf)
 
 
 <a name="onboard"></a>On-board LEDs, Button and GPIO
@@ -205,7 +205,7 @@ setWatch(function() {
 GPIO pins are numbered `D0` to `D31`. Their numbers are usually written on the PCB.
 
 You can use the same `digitalWrite`/`digitalRead` commands with these that you
-do with the buttons, but you can also use [[PWM]], [[I2C]], [[SPI]] and [[Analog]].
+do with the buttons, but you can also use [PWM](../info/PWM.md), [I2C](../info/I2C.md), [SPI](../info/SPI.md) and [Analog](../info/Analog.md).
 
 
 On-board peripherals
@@ -215,11 +215,11 @@ Puck.js's on-board peripherals are exposed by special-purpose functions
 
 ### Magnetometer
 
-You can use [`Puck.mag()`](/Reference#l_Puck_mag) to return one magnetometer
+You can use [`Puck.mag()`](https://www.espruino.com/Reference#l_Puck_mag) to return one magnetometer
 reading (with x, y, and z axes).
 
 However you can also leave the magnetometer on permanently and use it to
-wake Puck.js up whenever it gets a reading. See [`Puck.magOn()`](/Reference#l_Puck_magOn)
+wake Puck.js up whenever it gets a reading. See [`Puck.magOn()`](https://www.espruino.com/Reference#l_Puck_magOn)
 
 ```JS
 Puck.magOn();
@@ -239,7 +239,7 @@ power usage will be higher than normal (~350uA vs 40uA). To fix this add
 
 #### Field detection
 
-You can use the [[puckjsv2-mag-level.js]] module to configure the Puck.js
+You can use the [puckjsv2-mag-level.js](puckjsv2-mag-level.js) module to configure the Puck.js
 magnetometer for ultra low power mode (40uA on Puck.js v2.0) while acting like a reed
 switch (detecting when field strength is high or low).
 
@@ -267,15 +267,15 @@ we'd recommend using the new `Puck.on('field'` event.
 
 #### Direct configuration
 
-For more advanced usage you can also use [`Puck.magWr(reg,data)`](/Reference#l_Puck_magWr)
-and [`Puck.magRd(reg)`](/Reference#l_Puck_magRd) to configure the accelerometer
-chip exactly as required (using the [datasheet](/datasheets/LIS3MDL.pdf))..
+For more advanced usage you can also use [`Puck.magWr(reg,data)`](https://www.espruino.com/Reference#l_Puck_magWr)
+and [`Puck.magRd(reg)`](https://www.espruino.com/Reference#l_Puck_magRd) to configure the accelerometer
+chip exactly as required (using the [datasheet](../datasheets/LIS3MDL.pdf))..
 
 ### Accelerometer/Gyro
 
-**Puck.js v2.0 / v2.1 only** Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](/datasheets/LSM6DS3TR-C.pdf))
+**Puck.js v2.0 / v2.1 only** Puck.js v2 has an accelerometer and Gyro (the [LSM6DS3TR-C](../datasheets/LSM6DS3TR-C.pdf))
 
-You can use [`Puck.accel()`](/Reference#l_Puck_accel) to return one accelerometer/gyro
+You can use [`Puck.accel()`](https://www.espruino.com/Reference#l_Puck_accel) to return one accelerometer/gyro
 reading, for example:
 
 ```
@@ -287,7 +287,7 @@ reading, for example:
 ```
 
 However you can also leave the accelerometer on permanently and use it to
-wake Puck.js up whenever it gets a reading. See [`Puck.accelOn()`](/Reference#l_Puck_accelOn)
+wake Puck.js up whenever it gets a reading. See [`Puck.accelOn()`](https://www.espruino.com/Reference#l_Puck_accelOn)
 
 ```JS
 Puck.accelOn(); // default is 12.5Hz, with gyro
@@ -304,7 +304,7 @@ power usage will be higher than normal for low data rates (~800uA vs 40uA). To f
 
 #### Movement detection
 
-**Puck.js v2 / v2.1 only** You can use the [[puckjsv2-accel-movement.js]] module to configure the Puck.js
+**Puck.js v2 / v2.1 only** You can use the [puckjsv2-accel-movement.js](puckjsv2-accel-movement.js) module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting movement:
 
 ```JS
@@ -328,7 +328,7 @@ Puck.on('accel',function(a) {
 
 #### Significant Movement detection
 
-**Puck.js v2 / v2.1 only** You can use the [[puckjsv2-accel-bigmovement.js]] module to configure the Puck.js
+**Puck.js v2 / v2.1 only** You can use the [puckjsv2-accel-bigmovement.js](puckjsv2-accel-bigmovement.js) module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting when the Puck
 has been moved significantly for more than a few seconds.
 
@@ -346,7 +346,7 @@ Puck.on('accel',function(a) {
 
 #### Step counting
 
-**Puck.js v2 / v2.1 only** You can use the [[puckjsv2-accel-steps.js]] module to configure the Puck.js
+**Puck.js v2 / v2.1 only** You can use the [puckjsv2-accel-steps.js](puckjsv2-accel-steps.js) module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting movement:
 
 ```JS
@@ -365,7 +365,7 @@ Puck.on('accel',function(a) {
 
 #### Tilt detection
 
-**Puck.js v2 / v2.1 only**  You can use the [[puckjsv2-accel-tilt.js]] module to configure the Puck.js
+**Puck.js v2 / v2.1 only**  You can use the [puckjsv2-accel-tilt.js](puckjsv2-accel-tilt.js) module to configure the Puck.js
 accelerometer for ultra low power mode (40uA) while detecting when it has
 been rotated by more than 35 degrees:
 
@@ -384,15 +384,15 @@ Puck.on('accel',function(a) {
 
 #### Direct configuration
 
-**Puck.js v2 / v2.1 only** For more advanced usage you can also use [`Puck.accelWr(reg,data)`](/Reference#l_Puck_accelWr)
-and [`Puck.accelRd(reg)`](/Reference#l_Puck_accelRd) to configure the accelerometer
-chip exactly as required (using the [datasheet](/datasheets/LSM6DS3TR-C.pdf)). ST has
+**Puck.js v2 / v2.1 only** For more advanced usage you can also use [`Puck.accelWr(reg,data)`](https://www.espruino.com/Reference#l_Puck_accelWr)
+and [`Puck.accelRd(reg)`](https://www.espruino.com/Reference#l_Puck_accelRd) to configure the accelerometer
+chip exactly as required (using the [datasheet](../datasheets/LSM6DS3TR-C.pdf)). ST has
 an [app note](https://www.st.com/resource/en/application_note/dm00472670-lsm6ds3trc-alwayson-3d-accelerometer-and-3d-gyroscope-stmicroelectronics.pdf)
 on possible configurations.
 
 ### IR / Infrared
 
-To transmit an IR signal, you just need to call [`Puck.IR([...])`](/Reference#l_Puck_IR)
+To transmit an IR signal, you just need to call [`Puck.IR([...])`](https://www.espruino.com/Reference#l_Puck_IR)
 with an array of times in milliseconds. They alternate between the time the signal
 should be `on` and `off` - eg. `[on, off, on, off, on, etc]`.
 
@@ -405,15 +405,15 @@ Puck.IR([9.6,4.9,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,0.7,0.6,0.7,0.5,0.7,0.5,
   0.7,0.6,1.9,0.5,1.9,0.5,1.9,0.6,1.9,0.5,1.9,0.5,43.1,9.6,2.5,0.5]);
 ```
 
-You can sometimes work this information out based on details online (for instance [Pronto codes](/pronto)), however
-it's often easier to measure it by [attaching an IR receiver to your Puck.js](/Puck.js+Infrared).
+You can sometimes work this information out based on details online (for instance [Pronto codes](../modules/pronto.md)), however
+it's often easier to measure it by [attaching an IR receiver to your Puck.js](../tutorials/Puck.js Infrared.md).
 
 Puck.js's IR has a range of around 1.5 meters, so it needs to be relatively close to the device it's controlling - however
 range can be increased slightly by removing the silicone cover.
 
 ### NFC - Near Field Communications
 
-To set Puck.js up to redirect to a new NFC URL, just use [NRF.nfcURL(...)](/Reference#l_NRF_nfcURL):
+To set Puck.js up to redirect to a new NFC URL, just use [NRF.nfcURL(...)](https://www.espruino.com/Reference#l_NRF_nfcURL):
 
 ```JS
 NRF.nfcURL("http://espruino.com");
@@ -426,22 +426,22 @@ NRF.nfcURL();
 ```
 
 Other NFC functionality is available - check out the reference for `NRF.nfc*`
-methods and events, and see the [Web NFC](/Web+NFC) page for information
+methods and events, and see the [Web NFC](../tutorials/Web NFC.md) page for information
 on transferring data via NFC.
 
 ### Light sensor
 
-To get a light value you can simply call [`Puck.light()`](/Reference#l_Puck_light).
+To get a light value you can simply call [`Puck.light()`](https://www.espruino.com/Reference#l_Puck_light).
 
 This returns an (uncalibrated) value between `0` and `1`.
 
 The Puck doesn't have a dedicated light sensor, but the LEDs are connected to
 analog-capable pins (`D5`=red, `D4`=green, `D3`=blue). LEDs actually generate a
 slight voltage when light is on them, and this can be read back to get a light value.
-[`Puck.light()`](/Reference#l_Puck_light) used the red LED (`D5`) for this.
+[`Puck.light()`](https://www.espruino.com/Reference#l_Puck_light) used the red LED (`D5`) for this.
 
 While `Puck.light()` requires you to poll, it is possible to use the [nRF52's
-low power comparator](/NRF52LL) on the LED's pin to allow the Puck to go to sleep and
+low power comparator](../devices/NRF52LL.md) on the LED's pin to allow the Puck to go to sleep and
 wake up when there's a change in light:
 
 ```JS
@@ -466,10 +466,10 @@ setWatch(function() {
 
 ### Bluetooth
 
-Bluetooth is provided by the [`NRF object`](/Reference#NRF).
+Bluetooth is provided by the [`NRF object`](https://www.espruino.com/Reference#NRF).
 
 Bluetooth itself is quite complicated, so it's best to refer to the tutorials
-above, or check the documentation on [`NRF.requestDevice`](/Reference#l_NRF_requestDevice)
+above, or check the documentation on [`NRF.requestDevice`](https://www.espruino.com/Reference#l_NRF_requestDevice)
 for an example of how to connect to another device.
 
 ### Temperature
@@ -485,14 +485,14 @@ different. For best accuracy, work out each Puck.js's temperature offset by call
 ### Battery level
 
 Battery level (based on a normal CR2032 battery) can be accessed with
-[`E.getBattery()`](/Reference#l_E_getBattery).
-You can also get the battery voltage using [`NRF.getBattery()`](/Reference#l_NRF_getBattery).
+[`E.getBattery()`](https://www.espruino.com/Reference#l_E_getBattery).
+You can also get the battery voltage using [`NRF.getBattery()`](https://www.espruino.com/Reference#l_NRF_getBattery).
 
 ### Capacitive sense
 
 Puck.js contains a capacitive sense pin `D11`. To use it, simply add some wire
 (preferably attached to something with a large surface area) to the `D11` pin.
-Then call [`Puck.capSense()`](/Reference#l_Puck_capSense) - this will
+Then call [`Puck.capSense()`](https://www.espruino.com/Reference#l_Puck_capSense) - this will
 return an integer value that rises as the capacitance attached to `D11` increases.
 
 ### FET
@@ -504,7 +504,7 @@ capable of pulling the `FET` down to GND with around 200mA.
 * `FET.set()` will turn the FET on (shorting `FET` to GND)
 * `FET.reset()` will turn the FET off (leaving `FET` floating)
 
-See the [Puck.js FET](/Puck.js+FET) page for more information.
+See the [Puck.js FET](../tutorials/Puck.js FET.md) page for more information.
 
 
 Serial Console
@@ -584,7 +584,7 @@ Firmware Updates
 
 **Note:** On Puck.js v2 **do not install firmwares 2v04 and earlier**. See 'recovery after 2v04 installation' below.
 
-Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions on Flashing.
+Please see the [Firmware Update](../info/Firmware Update.md#nrf52) page for detailed instructions on Flashing.
 
 ### Different Firmwares
 
@@ -608,7 +608,7 @@ external power source, so as of 2v25 Networking features have been removed unles
 Troubleshooting
 ---------------
 
-Please check out the [Bluetooth Troubleshooting](Troubleshooting+BLE) or [General Troubleshooting](/Troubleshooting) pages.
+Please check out the [Bluetooth Troubleshooting](../info/Troubleshooting BLE.md) or [General Troubleshooting](../info/Troubleshooting.md) pages.
 
 
 Recovery after 2v04 Installation
@@ -618,7 +618,7 @@ On Puck.js v2 (v2.1 is unaffected), you should not install firmwares 2v04 and ea
 
 Pre-2v05 firmwares that are not designed for Puck.js v2 configure `D21/nRESET` as a reset pin. This then forces the chip into a reset state, effectively 'bricking' your Puck.js.
 
-In the very rare case that an old firmware was installed, you can recover your Puck.js by temporarily connecting [pin D21 on the bluetooth module](/MDBT42Q#pinout) to the 3v pin on the Puck. You can then flash an up to date firmware via DFU, rebooting into Espruno, connecting and running the following code (which resets the reset pin configuration flag):
+In the very rare case that an old firmware was installed, you can recover your Puck.js by temporarily connecting [pin D21 on the bluetooth module](./MDBT42Q.md#pinout) to the 3v pin on the Puck. You can then flash an up to date firmware via DFU, rebooting into Espruno, connecting and running the following code (which resets the reset pin configuration flag):
 
 ```
 setTimeout(function() { NRF.restart(function(){

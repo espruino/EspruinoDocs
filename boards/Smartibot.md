@@ -14,8 +14,8 @@ Smartibot works with your smartphone, meaning you can use your mobile as a remot
 
 Firmware binaries can be found in:
 
-* the [Download page](/Download#smartibot) - either from the list of firmwares, or a downloadable ZIP.
-* the [binaries folder](/binaries) (current version)
+* the [Download page](https://www.espruino.com/Download#smartibot) - either from the list of firmwares, or a downloadable ZIP.
+* the [binaries folder](https://www.espruino.com/binaries) (current version)
 * the [automatic Travis Builds](https://www.espruino.com/binaries/travis/master/) (cutting edge builds)
 
 To update your firmware, follow [the instructions below](#firmware-updates)
@@ -30,7 +30,7 @@ Using
 
 Smartibot can be used like any other Espruino Bluetooth LE device, with full access to the [NRF](http://www.espruino.com/Reference#NRF) class for BLE Functionality.
 
-Check out the [Getting Started Guide](/Quick+Start+BLE#smartibot).
+Check out the [Getting Started Guide](../tutorials/Quick Start BLE.md#smartibot).
 
 ### Buttons
 
@@ -97,7 +97,7 @@ smarti.setServo(1, 50); // Set servo 1 to midpoint
 ### Display board
 
 Plug the display into `E1`. Calling `g = require("Smartibot-display").connect(smarti.E1)`
-will return an instance of [[Graphics]] which you can then use. It is 16 pixels wide, 9 pixels high, and 8 bits per pixel.
+will return an instance of [Graphics](../info/Graphics.md) which you can then use. It is 16 pixels wide, 9 pixels high, and 8 bits per pixel.
 
 When you need to display something, call `g.flip()` to send it to the screen:
 
@@ -115,7 +115,7 @@ g.drawString("Hi",2,2);
 g.flip();
 ```
 
-Check out [[Graphics]] for full details on how to use Graphics and add your
+Check out [Graphics](../info/Graphics.md) for full details on how to use Graphics and add your
 own images.
 
 ### Distance board
@@ -126,8 +126,8 @@ returns an object with the following entries:
 * `dist.getLeft()` returns the distance from the left sensor in millimeters
 * `dist.getRight()` returns the distance from the left sensor in millimeters
 * `dist.getGesture()` returns `"left"`/`"right"`/`"up"`/`"down"` is a gesture was found, or `undefined` if not.
-* `dist.gesture` is an instance of [[APDS9960]] for direct access to the gesture sensor
-* `dist.left`/`dist.right` are instances of [[VL53L0X]] for direct access to the laser sensors
+* `dist.gesture` is an instance of [APDS9960](../devices/APDS9960.md) for direct access to the gesture sensor
+* `dist.left`/`dist.right` are instances of [VL53L0X](../devices/VL53L0X.md) for direct access to the laser sensors
 
 ```
 var smarti = require("Smartibot");
@@ -156,7 +156,7 @@ Reference
 Tutorials
 ---------
 
-First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#smartibot)
+First, it's best to check out the [Getting Started Guide](../tutorials/Quick Start BLE.md#smartibot)
 
 Tutorials using just Bluetooth LE:
 

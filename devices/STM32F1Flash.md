@@ -6,9 +6,9 @@ STM32F1 Flash Memory Module
 
 * KEYWORDS: Module,Flash,Memory,ROM,STM32
 
-This is a module ([[STM32F1Flash.js]]) for reading and writing internal flash memory on the STM32F103RC chip in the Espruino Board.
+This is a module ([STM32F1Flash.js](STM32F1Flash.js)) for reading and writing internal flash memory on the STM32F103RC chip in the Espruino Board.
 
-**THIS IS DEPRECATED** - There is now built-in support for writing flash memory of all STM32 boards, available via the [Flash module](/Reference#Flash)
+**THIS IS DEPRECATED** - There is now built-in support for writing flash memory of all STM32 boards, available via the [Flash module](https://www.espruino.com/Reference#Flash)
 
 **BEWARE - THIS IS POTENTIALLY DANGEROUS**
 

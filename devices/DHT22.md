@@ -8,12 +8,12 @@ DHT22/AM230x/RHT0x Temperature and RH Sensor
 
 ![DHT22 pins](DHT22/pins.jpg)
 
-Check the [datasheet](/datasheets/DHT22.pdf) for further details.
+Check the [datasheet](../datasheets/DHT22.pdf) for further details.
 
 Overview
 -----------------
 
-This module interfaces with the DHT22 (also DHT21, DHT22, DHT33, DHT44, RHT01, RHT02, RHT03, RHT04, RHT05, AM2301, AM2302, AM2303 and HM2301), an inexpensive temperature and relative humidity sensor similar to the [[DHT11]], but with higher accuracy and wider range. 
+This module interfaces with the DHT22 (also DHT21, DHT22, DHT33, DHT44, RHT01, RHT02, RHT03, RHT04, RHT05, AM2301, AM2302, AM2303 and HM2301), an inexpensive temperature and relative humidity sensor similar to the [DHT11](DHT11.md), but with higher accuracy and wider range.
 
 Key Specifications:
 
@@ -24,15 +24,15 @@ Key Specifications:
   | Humidity Range    | 0 ~ 100% |
   | Humidity Accuracy | +/- 2%   |
 
-The module will retry if it doesn't get any response, or if other sanity checks fail. If it fails 10 times in a row, the callback will be called with an error (see below), indicating a likely problem with the sensor or wiring. The DHT22 is much more reliable than the [[DHT11]], and it rarely fails to provide data, however, it is still important to perform your own sanity checks on the data returned. 
+The module will retry if it doesn't get any response, or if other sanity checks fail. If it fails 10 times in a row, the callback will be called with an error (see below), indicating a likely problem with the sensor or wiring. The DHT22 is much more reliable than the [DHT11](DHT11.md), and it rarely fails to provide data, however, it is still important to perform your own sanity checks on the data returned.
 
 
 Wiring
 -----------------
 
-From left to right when part is viewed from the front (the side with the ventilation holes) with pins pointing down. (The DHT22 has no pin markings). 
+From left to right when part is viewed from the front (the side with the ventilation holes) with pins pointing down. (The DHT22 has no pin markings).
 
-**IMPORTANT:** Be sure to get the polarity right! If connected backwards, it will ruin the DHT22. 
+**IMPORTANT:** Be sure to get the polarity right! If connected backwards, it will ruin the DHT22.
 
   | Device Pin | Espruino |
   |------------|----------|
@@ -41,13 +41,13 @@ From left to right when part is viewed from the front (the side with the ventila
   | 3 (NC)     | N/C*     |
   | 4 (GND)    | GND      |
 
-**Note:** There are reports of DHT22s on the market where pins 3 and 4 are reversed. Meanwhile, app notes sometimes depict pins 2 and 3 tied together. 
+**Note:** There are reports of DHT22s on the market where pins 3 and 4 are reversed. Meanwhile, app notes sometimes depict pins 2 and 3 tied together.
 
 
 Usage
 ------------
 
-Call `require("DHT22").connect(pin)` to get a DHT22 object. To read the sensor, the `read` method is called with a single argument, the function that is called when the read is complete. This function is called with an object containing two properties, `temp` and `rh`. Temperature is in °C, RH is in %. 
+Call `require("DHT22").connect(pin)` to get a DHT22 object. To read the sensor, the `read` method is called with a single argument, the function that is called when the read is complete. This function is called with an object containing two properties, `temp` and `rh`. Temperature is in °C, RH is in %.
 
 For example:
 
@@ -64,7 +64,7 @@ Returns `-1` for the temperature and humidity (and `err:true`) if no data is rec
 
 In all cases, a field called `raw` is present which contains the raw data received, as a string of `1` and `0` characters.
 
-**Note:** 
+**Note:**
 You can also supply a second argument which is the number of retries if there is an error. The default is 10. Collecting period should be : >2 seconds.
 
 

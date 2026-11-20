@@ -10,12 +10,12 @@ Micro:Bit Voting
 [[https://youtu.be/E7BA-zetcLw]]
 
 If you have a classroom of kids, one thing you might want to do is to make
-a voting system where children can do something with their [Micro:bit](/MicroBit) and
+a voting system where children can do something with their [Micro:bit](../boards/MicroBit.md) and
 have it shown at the front of the class.
 
-We're going to use a [Pixl.js](/Pixl.js) board with Espruino to receive
-data that is transmitted over Bluetooth by [Micro:bits](/MicroBit) programmed with
-[MakeCode](https://makecode.microbit.org) and display it on the [Pixl.js](/Pixl.js) screen.
+We're going to use a [Pixl.js](../boards/Pixl.js.md) board with Espruino to receive
+data that is transmitted over Bluetooth by [Micro:bits](../boards/MicroBit.md) programmed with
+[MakeCode](https://makecode.microbit.org) and display it on the [Pixl.js](../boards/Pixl.js.md) screen.
 
 Because standard Eddystone Bluetooth advertising is used, multiple receivers
 can be made - using other Bluetooth LE Espruino devices or just a PC with
@@ -51,7 +51,7 @@ Your code should look like this:
 
 ![Finished code](MicroBit Voting/makecode4.png)
 
-Click `Download` and save the file to each [Micro:bit](/MicroBit) you're interested in.
+Click `Download` and save the file to each [Micro:bit](../boards/MicroBit.md) you're interested in.
 
 
 Pixl.js Software
@@ -60,7 +60,7 @@ Pixl.js Software
 On the Pixl, we'll write code that scans for any advertised URLs that contain
 a `#` character, and use the text after the `#` as a vote.
 
-For [Pixl.js](/Pixl.js), follow the [Getting Started Guide](/Quick+Start+BLE#pixljs)
+For [Pixl.js](../boards/Pixl.js.md), follow the [Getting Started Guide](./Quick Start BLE.md#pixljs)
 to get connected with the Espruino IDE.
 
 Copy and paste the following code to the right-hand side of the IDE and click `Upload`,
@@ -142,6 +142,6 @@ for (var i=0;i<10;i++) {
 g.flip();  
 ```
 
-You could also use the [Arduino connectors](/Pixl.js#pinout) on the back of
-the [Pixl.js](/Pixl.js) to connect extra hardware that can be controlled by the
+You could also use the [Arduino connectors](../boards/Pixl.js.md#pinout) on the back of
+the [Pixl.js](../boards/Pixl.js.md) to connect extra hardware that can be controlled by the
 Micro:bits, for instance motors, WiFi connection, or large LED displays.

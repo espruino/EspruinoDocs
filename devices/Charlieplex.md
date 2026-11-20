@@ -11,7 +11,7 @@ Charlieplexed LED Module
 
 You can connect LEDs up in such a way that with `N` IO pins, you can control `N*(N-1)` LED lights.
 
-You can control Charlieplexed LED lights using the [[Charlieplex.js]] module. 
+You can control Charlieplexed LED lights using the [Charlieplex.js](Charlieplex.js) module. 
 
 **Note:** Charlieplexed LEDs require constant updates (ideally via interrupts and timers). Espruino doesn't allow you to do this at the moment, so you will find that if you update the display or write functions that take a long time to execute, the display will flicker.
 

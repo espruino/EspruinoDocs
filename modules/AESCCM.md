@@ -15,8 +15,8 @@ came from someone holding the key.
 firmware's `AES.ccmEncrypt` and `AES.ccmDecrypt` when the build has `AES_CCM`,
 and CCM built out of `AES.encrypt` when it has only `AES`.
 
-Both kinds are real. [Puck.js](/Puck.js) builds `AES` alone.
-[Bangle.js 2](/Bangle.js2) built `AES_CCM` alone from 2024 until October 2026 —
+Both kinds are real. [Puck.js](../boards/Puck.js.md) builds `AES` alone.
+[Bangle.js 2](../boards/Bangle.js2.md) built `AES_CCM` alone from 2024 until October 2026 —
 so it had no `AES.encrypt` at all, and any module assuming one simply could not
 run there — and now builds both.
 
@@ -88,7 +88,7 @@ own — 15 vectors, no disagreement.
 References
 ----------
 
-* [BTHomeWritable](/BTHomeWritable) — the module this was written for
+* [BTHomeWritable](./BTHomeWritable.md) — the module this was written for
 * [bthome-writable](https://github.com/yerpj/bthome-writable) — source,
   vectors, and the reasoning behind the construction
 * [RFC 3610](https://www.rfc-editor.org/rfc/rfc3610) — CCM itself

@@ -12,15 +12,15 @@ MeArm Robotic Arm
 Introduction
 -----------
 
-The [MeArm](http://www.phenoptix.com/products/mearm-pocket-sized-robot-arm) is a small, cheap Robot Arm kit designed by Ben Gray of Phenoptix. It uses [[Servo Motors]] and laser cut acrylic.
+The [MeArm](http://www.phenoptix.com/products/mearm-pocket-sized-robot-arm) is a small, cheap Robot Arm kit designed by Ben Gray of Phenoptix. It uses [Servo Motors](../devices/Servo Motors.md) and laser cut acrylic.
 
 This tutorial will show you how to wire it up, and will make it so that it can be controlled via an infra-red remote control.
 
 You'll Need
 ----------
 
-* An [Espruino Board](/Original) wired up for [[Servo Motors]]
-* An [IR Reciever](/IRReceiver)
+* An [Espruino Board](../boards/Original.md) wired up for [Servo Motors](../devices/Servo Motors.md)
+* An [IR Reciever](../devices/IRReceiver.md)
 * A TV remote control
 * A MeArm: either a kit from [Phenoptix](http://www.phenoptix.com/products/mearm-pocket-sized-robot-arm), or laser cut your own from design files on [Thingiverse](http://www.thingiverse.com/thing:360108)
 

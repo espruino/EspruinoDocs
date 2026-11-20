@@ -8,10 +8,10 @@ JIT Compiler
 
 Normally, when you upload code to Espruino it is executed straight from source - which means that your source code is on the device itself so you can edit it easily.
 
-In Espruino 2v16 we included a simple JIT compiler that will compile a subset of JS to native ARM code. Unlike the previous options of the [Inline Assembler](/Assembler) or [Online Compiler](/Compilation), the JIT
+In Espruino 2v16 we included a simple JIT compiler that will compile a subset of JS to native ARM code. Unlike the previous options of the [Inline Assembler](./Assembler.md) or [Online Compiler](./Compilation.md), the JIT
 compiler actually creates code inside the microcontroller.
 
-While final code is not as optimised as the [Online Compiler](/Compilation), JIT has a few big benefits:
+While final code is not as optimised as the [Online Compiler](./Compilation.md), JIT has a few big benefits:
 
 * JIT code can integrate more deeply and efficiently with the interpreter
 * No firmware version incompatibilities

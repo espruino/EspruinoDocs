@@ -7,7 +7,7 @@ LED Volume (VU) Meter
 
 This creates a simple sound-reactive LED meter on a string of WS2811 Lights. Varying numbers of LEDs light up white in response to the volume of sound detected.
 
-[[WS2811]] Wiring:
+[WS2811](../devices/WS2811.md) Wiring:
 
 | WS2811  | Pin on Espruino Board         |
 |---------|-------------------------------|

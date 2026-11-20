@@ -8,15 +8,15 @@ MDBT42Q Bluetooth Module
 
 ![Raytac MDBT42Q](MDBT42Q/board.jpg)
 
-* BUYFROM: £10,£5,https://shop.espruino.com/mdbt42q,/Order#mdbt42q
+* BUYFROM: £10,£5,https://shop.espruino.com/mdbt42q,https://www.espruino.com/Order#mdbt42q
 
-The MDBT42Q is the Bluetooth module that we use in [Puck.js](/Puck.js) and [Pixl.js](/Pixl.js)
+The MDBT42Q is the Bluetooth module that we use in [Puck.js](./Puck.js.md) and [Pixl.js](./Pixl.js.md)
 devices. You can get it with Espruino installed in two forms:
 
 * [Breakout board](https://shop.espruino.com/mdbt42q-breakout) with 0.1" pins, voltage regulator, Button and LEDs
 * [Bare module](https://shop.espruino.com/mdbt42q-module) (0.7mm pin pitch, surface mount)
 
-**Just got your MDBT42Q? [Take a look here!](/MDBT42Q#getting-started)**
+**Just got your MDBT42Q? [Take a look here!](./MDBT42Q.md#getting-started)**
 
 **Note:** We only provide support for MDBT42 modules purchased from us. Other
 modules don't have a bootloader installed and will need connecting to a programmer
@@ -54,7 +54,7 @@ Getting Started
 Check out [the section below on Powering](#powering) - the bare MDBT42Q module
 and the breakout have slightly different requirements.
 
-Once powered up follow the [Getting Started Guide](/Quick+Start+BLE#mdbt42q) for details
+Once powered up follow the [Getting Started Guide](../tutorials/Quick Start BLE.md#mdbt42q) for details
 on getting the IDE connected wirelessly. You can also [use a wired connection](#serial-console)
 if you prefer.
 
@@ -70,7 +70,7 @@ for more information on the location of pins.
 
 Just between `Vin/GND` and `D9/D10` on the bottom edge of the board in [the pinout](#pinout)
 there are two 2mm-spaced pins. These can be used to fit a JST PHR-2 battery connector
-as mentioned on [the Battery page](/Battery) - these are very common for LiPo batteries,
+as mentioned on [the Battery page](../devices/Battery.md) - these are very common for LiPo batteries,
 which are a good fit for the module.
 
 ### Bare Module
@@ -130,7 +130,7 @@ as normal.
 Tutorials
 --------
 
-First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#mdbt42q)
+First, it's best to check out the [Getting Started Guide](../tutorials/Quick Start BLE.md#mdbt42q)
 
 Tutorials using MDBT42Q:
 
@@ -168,12 +168,12 @@ Information
 * [Eagle CAD footprint](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/MDBT42/mdbt42.lbr)
 * [Eagle design files](https://github.com/espruino/EspruinoBoard/tree/master/MDBT42/eagle) for breakout board and simple beacon
 * [PDF schematic and board layouts](https://github.com/espruino/EspruinoBoard/tree/master/MDBT42/pdf) for breakout board and simple beacon
-* [nRF52832 Datasheet](/datasheets/nRF52832_PS_v1.0.pdf)
-* [MDBT42 Datasheet](/datasheets/MDBT42Q-E.pdf)
+* [nRF52832 Datasheet](../datasheets/nRF52832_PS_v1.0.pdf)
+* [MDBT42 Datasheet](../datasheets/MDBT42Q-E.pdf)
 
 Certifications:
 
-* The MDBT42Q radio module has certifications for [FCC (USA), CE(EU), TELEC (Japan), SRRC (China), IC (Canada), NCC (Taiwan) and KC (South Korea)](/datasheets/MDBT42Q-E.pdf)
+* The MDBT42Q radio module has certifications for [FCC (USA), CE(EU), TELEC (Japan), SRRC (China), IC (Canada), NCC (Taiwan) and KC (South Korea)](../datasheets/MDBT42Q-E.pdf)
 
 
 Serial Console
@@ -207,7 +207,7 @@ the UART but don't power down and power on the MDBT42Q, you won't get a serial p
 Firmware Updates
 -----------------
 
-Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
+Please see the [Firmware Update](../info/Firmware Update.md#nrf52) page for detailed instructions.
 
 **Note:** If you hold `BTN` (or leave `D0` connected to `VDD`) for too long (> 3 sec),
 the MDBT42 will leave bootloader mode and will instead start Espruino *without loading

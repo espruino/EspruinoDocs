@@ -6,9 +6,9 @@ Flashing and using the ESP8266 with Espruino
 
 This tutorial provides a little intro into getting going with the ESP8266 and Espruino, and then
 using it without serial wires going forward. For reference documentation about the esp8266 port
-of Espruino, please see the [reference section](/EspruinoESP8266).
+of Espruino, please see the [reference section](../boards/EspruinoESP8266.md).
 
-**NOTE:** If you have a Chromium-based web browser it's possible to flash your ESP8266 device direct from the browser! [Click here to flash Espruino to your board](/Espressif+Flash)
+**NOTE:** If you have a Chromium-based web browser it's possible to flash your ESP8266 device direct from the browser! [Click here to flash Espruino to your board](https://www.espruino.com/Espressif+Flash)
 
 __WARNING__: while everything described here works, the tutorial has not been tested much.
 

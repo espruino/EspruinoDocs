@@ -7,9 +7,9 @@ Bangle.js Layout library
 * KEYWORDS: Tutorials,Bangle.js,Development,App,Layout,Alignment
 * USES: Bangle.js,Bangle.js2
 
-You might have tried making an app (eg by following the [Bangle.js First App](/Bangle.js+First+App)
+You might have tried making an app (eg by following the [Bangle.js First App](./Bangle.js First App.md)
 tutorial), but as your app gets more complicated it can be more of a pain laying things out on the screen -
-especially if you want to write an app that works on both [Bangle.js 1](/Bangle.js) and [Bangle.js 2](/Bangle.js2)
+especially if you want to write an app that works on both [Bangle.js 1](../boards/Bangle.js.md) and [Bangle.js 2](../boards/Bangle.js2.md)
 which both have different screen sizes and numbers of buttons.
 
 Rather than requiring lots of fiddling and separate positions for each device,

@@ -10,16 +10,16 @@ Storing HTTPS Certificates
 Introduction
 -------------
 
-Normally Espruino [[Pico]] or [[WiFi]] will happily make an HTTPS connection using
+Normally Espruino [Pico](../boards/Pico.md) or [WiFi](../boards/WiFi.md) will happily make an HTTPS connection using
 keys and certificates they automatically generate. However for some connections
 you may need to specify a key, ca, or certificate.
 
 You can easily specify these manually when using `http.request` or `tls.connect`
-- see [the `tls.connect` docs](/Reference#l_tls_connect) for an example.
+- see [the `tls.connect` docs](https://www.espruino.com/Reference#l_tls_connect) for an example.
 
 However, sometimes (especially when using AT-command based devices) you may
 not have enough RAM free to store the keys and all your code. In this case you'll
-want to store the keys using the [Storage Module](/Reference#t_Storage)
+want to store the keys using the [Storage Module](https://www.espruino.com/Reference#t_Storage)
 which is built in to recent Espruino firmwares and uses the same flash area as saved code.
 
 
@@ -36,7 +36,7 @@ require("Storage").write("client1-crt.pem",atob("MIIFijCCA3KgAwIBAgIJAJhrfxuduld
 require("Storage").write("ca-crt.pem",atob("MIIFgDCCA2gCCQD1KANs3obrTjANBgkqhkiG9w0BAQsFADCBgTELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAk1BMQ8wDQYDVQQHEwZCb3N0b24xEzARBgNVBAoTCkV4YW1wbGUgQ28xEDAOBgNVBAsTB3RlY2hvcHMxCzAJBgNVBAMTAmNhMSAwHgYJKoZIhvcNAQkBFhFjZXJ0c0BleGFtcGxlLmNvbTAeFw0xNTExMjcxMjIyMzFaFw00MzA0MTMxMjIyMzFaMIGBMQswCQYDVQQGEwJVUzELMAkGA1UECBMCTUExDzANBgNVBAcTBkJvc3RvbjETMBEGA1UEChMKRXhhbXBsZSBDbzEQMA4GA1UECxMHdGVjaG9wczELMAkGA1UEAxMCY2ExIDAeBgkqhkiG9w0BCQEWEWNlcnRzQGV4YW1wbGUuY29tMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwjlJ3eyrnGIiJiplY5mvIaaoMC20oR4Jx5+FOXNJJhjSz9mOoqcpEe2U6ZmmVfcpc8zdt1f9KkED5yjzpnF02CG+KYaRs/Rfj0NJejcpBN3Hn4R6+yJek2rYrKi4uZyMZrWx/8PTp/lEypAEBf/2vX9WYNgi5eWyHeHEfJ4yucRI1UgRw5W/RLYoAePAPT1ekB66NbosBIZhRXJvjqED/jOMOlpHgNPQHTUyPj5lR8ZTSduATUQac6qRx9pdYyVICVE8bxma56R0pX8Cdx/wg+5gKOXUPuXW1xTPNuH4JpNTd7huJwa8Ff0ReKTLHZk1hYB7uDzL5moc8kylYEwz2W13KyXxZbh3kClVSNZvPbrcp1eWoyJyznLRLVv3cCWQwmEMr1071Th4/6dnUZ/wl085HIjV93X9H8nzZ7VBkwHD8ZHB1foW0/jgbK0qsH2gV7frGFPxZydmk/Nrwdl3RtoM+xEpQI7cPYDf9j/CX/ynM4LfOeHhVfMrx0I3E8wNPX9MU+O+Pu6wsT4WbGkNhcuS4oE2As13obMnUebLwOxxWu4ErI8WG1ITwRVEQik72Iqj0d5vvjZw2z5TFzkMB/Tl3qNvAp9jzpNtvRUyrS6KRY667BZOJ9TJK/5+jenGEi7+UNq9ig490WnYDBPA/N9QSPHCx6TLNapayQvem5UCAwEAATANBgkqhkiG9w0BAQsFAAOCAgEAS9mpX4QgnwntvH9wutY+zOWBLejd/psjjVmZdYzeVC6fkCaw0Qj1unszq58EHlA8275ARTYyicRHIYLF3ZDYwMxUCu7iIQJUzVYJRqowV2Ap4OeMlh5sUb/Wlmhs5TauSZ1gz4LqMqnGkVMrvvU+1WX2ePFl81nnr1UMb2+dLzC0Gj2jH3tlzW76yFD4gElR8W4ypgvAw9pFKlSuOc4y6KS32jaOJk9zWSigPQadI1pOSSk+iKuPp98BBY/gDw+FBKUNARo3ci5F2s1dJZwQSCnuBhVb1r+3aHjnp4PAO7Mq7YyFf7qwSmuA++nF7TGhu3lf3hY1Jzgo+rOi+pFZtebCsewLDJjyNUxhQkOIf4TutC9wPJUtCKDpLA0iJso1AX5297iap5g7y0J0fUls16U+F0arsBHhgIN5ARifImeE+1bVVx7kLtklA23njczUt88ylgsCEnYyu0U+0+kwAkMDyPWDd3KPfDhykhQJ0Ev/44+JTDk3zydO2YvCpqMqLuhbZr9mvmV7uzJVbFnLr3sU75upv0N4JQLIn3XyTtDbWjTqA8d6qbG5BxYL5xkrWRxo3Fd6r1AyFje1ilKUkwZ1YZZCDvgv/2uEFyL0VlgfHfBhNbN2nsTTxijKc19ROeIRXl7eqWq/cyIbA/5LzEy2UbbEhKIroPGosQML4sc="));
 ```
 
-Now just use the code below - this is for the Espruino [[Pico]] or [[WiFi]] - just remove the `onInit`
+Now just use the code below - this is for the Espruino [Pico](../boards/Pico.md) or [WiFi](../boards/WiFi.md) - just remove the `onInit`
 that isn't for the device you want.
 
 
@@ -89,7 +89,7 @@ function onInit() {
   setTimeout(function() {
     digitalWrite(B9,1); // enable on Pico Shim V2
     Serial2.setup(115200, { rx: A3, tx : A2 });
-    wifi = require("ESP8266WiFi_0v25").connect(Serial2, function(err) {  
+    wifi = require("ESP8266WiFi_0v25").connect(Serial2, function(err) {
       if (err) throw err;
       console.log("Connecting to WiFi");
       wifi.connect(WIFI_NAME,WIFI_OPTIONS.password, onConnected);
@@ -110,21 +110,21 @@ If you're uploading to RAM you'll need to manually call `onInit()` or `save()`..
 Changing the encryption key
 ---------------------------
 
-You should use your own encryption keys as the ones here are now in the public domain. See [the `tls.connect` page](/Reference#l_tls_connect) for more information on how to do this, or you can use the following commands [taken from here](https://engineering.circle.com/https-authorized-certs-with-node-js/):
+You should use your own encryption keys as the ones here are now in the public domain. See [the `tls.connect` page](https://www.espruino.com/Reference#l_tls_connect) for more information on how to do this, or you can use the following commands [taken from here](https://engineering.circle.com/https-authorized-certs-with-node-js/):
 
 ```
 # Get a new certificate (using some pre-made config info)
-wget https://raw.githubusercontent.com/anders94/https-authorized-clients/master/keys/ca.cnf  
-openssl req -new -x509 -days 9999 -config ca.cnf -keyout ca-key.pem -out ca-crt.pem  
+wget https://raw.githubusercontent.com/anders94/https-authorized-clients/master/keys/ca.cnf
+openssl req -new -x509 -days 9999 -config ca.cnf -keyout ca-key.pem -out ca-crt.pem
 
 # Create a client key
-openssl genrsa -out client1-key.pem 4096  
+openssl genrsa -out client1-key.pem 4096
 # get a config file
-wget https://raw.githubusercontent.com/anders94/https-authorized-clients/master/keys/client1.cnf  
+wget https://raw.githubusercontent.com/anders94/https-authorized-clients/master/keys/client1.cnf
 # Signing request
-openssl req -new -config client1.cnf -key client1-key.pem -out client1-csr.pem  
+openssl req -new -config client1.cnf -key client1-key.pem -out client1-csr.pem
 # Sign
-openssl x509 -req -extfile client1.cnf -days 999 -passin "pass:password" -in client1-csr.pem -CA ca-crt.pem -CAkey ca-key.pem -CAcreateserial -out client1-crt.pem  
+openssl x509 -req -extfile client1.cnf -days 999 -passin "pass:password" -in client1-csr.pem -CA ca-crt.pem -CAkey ca-key.pem -CAcreateserial -out client1-crt.pem
 # Verify
 openssl verify -CAfile ca-crt.pem client1-crt.pem
 ```

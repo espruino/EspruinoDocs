@@ -10,7 +10,7 @@ Bluetooth LE and If This Then That
 [If This Then That](https://ifttt.com) has a [Maker Applet](https://ifttt.com/maker)
 that allows you to trigger things easily from the internet.
 
-If you were using an Espruino device [connected straight to the Internet](/Internet)
+If you were using an Espruino device [connected straight to the Internet](../info/Internet.md)
 then all you'd have to do is to call the special URL (you'll see how to get this
 later on).
 
@@ -46,7 +46,7 @@ HTML
 
 Create a Webpage with the following code in - it'll need to be hosted on HTTPS.
 
-For an example of how to do this, see the [Web Bluetooth tutorial](Puck.js Web Bluetooth)
+For an example of how to do this, see the [Web Bluetooth tutorial](../tutorials/Web Bluetooth.md)
 
 ```HTML
 <html>

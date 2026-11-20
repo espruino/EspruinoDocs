@@ -16,8 +16,8 @@ The Ruuvitag is a Bluetooth LE beacon with an environment sensor and acceleromet
 
 Binaries can be found in:
 
-* the [Download page](/Download#ruuvitag) - either from the list of firmwares, or a downloadable ZIP.
-* the [binaries folder](/binaries) (current version)
+* the [Download page](https://www.espruino.com/Download#ruuvitag) - either from the list of firmwares, or a downloadable ZIP.
+* the [binaries folder](https://www.espruino.com/binaries) (current version)
 * the [automatic Travis Builds](https://www.espruino.com/binaries/travis/master/) (cutting edge builds)
 
 Contents
@@ -30,7 +30,7 @@ Using
 
 Ruuvitag can be used like any other Espruino Bluetooth LE device, with full access to the [NRF](http://www.espruino.com/Reference#NRF) class for BLE Functionality.
 
-Check out the [Getting Started Guide](/Quick+Start+BLE#ruuvitag)
+Check out the [Getting Started Guide](../tutorials/Quick Start BLE.md#ruuvitag)
 
 However to use the built-in sensors you will need to use the Ruuvitag library. For instance to get data, use:
 
@@ -55,15 +55,15 @@ Ruuvitag.setAccelOn(true, function(xyz) {
 
 By default Espruino uses the low power accelerometer mode, however the peripherals can be accessed directly:
 
-* `Ruuvitag.env` is an instance of the [BME280](/BME280) environment sensor library
-* `Ruuvitag.accel` is an instance of the [LIS2DH12](/LIS2DH12) accelerometer library
+* `Ruuvitag.env` is an instance of the [BME280](../devices/BME280.md) environment sensor library
+* `Ruuvitag.accel` is an instance of the [LIS2DH12](../devices/LIS2DH12.md) accelerometer library
 
 Saving Code
 -----------
 
 Normally, uploading code to Espruino will put everything in RAM and it will be
 lost when power is removed. You can type `save()` on the left-hand side of the IDE
-to save to Flash memory though ([more information](/Saving)).
+to save to Flash memory though ([more information](../info/Saving.md)).
 
 When you do that, the sensors will require initialising at power on (so may
   not work if you 'just' save your code). You'll need to create an `onInit`
@@ -82,7 +82,7 @@ function onInit() {
 Tutorials
 ---------
 
-First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#ruuvitag)
+First, it's best to check out the [Getting Started Guide](../tutorials/Quick Start BLE.md#ruuvitag)
 
 Tutorials using Bluetooth LE:
 

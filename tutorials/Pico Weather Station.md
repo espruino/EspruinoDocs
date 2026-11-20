@@ -12,26 +12,26 @@ Introduction
 
 We'll connect the Pico up to an LCD and WiFi module, and use it to grab the current english weather off of the [BBC Weather](http://www.bbc.co.uk/weather/) website's RSS feed and then display it on the screen.
 
-This is basically the code from the [[Pico LCD Hello World]] tutorial plus the code on the [[ESP8266]] page, with one extra function `parseWeather` which grabs the weather data out of the website's response and puts in on the LCD.
+This is basically the code from the [Pico LCD Hello World](Pico LCD Hello World.md) tutorial plus the code on the [ESP8266](../devices/ESP8266.md) page, with one extra function `parseWeather` which grabs the weather data out of the website's response and puts in on the LCD.
 
 ![Wiring](Pico Weather Station/finished.jpg)
 
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [Nokia 5110 LCD](/PCD8544)
-* An [ESP8266 WiFi module](/ESP8266)
-* [[Breadboard]] (unless soldering)
+* An Espruino [Pico](../boards/Pico.md)
+* A [Nokia 5110 LCD](../devices/PCD8544.md)
+* An [ESP8266 WiFi module](../devices/ESP8266.md)
+* [Breadboard](../devices/Breadboard.md) (unless soldering)
 
 Wiring Up
 --------
 
-To connect the ESP8266 module up, see the [[ESP8266]] page for instructions. 4 wires are needed, or you can use the [adaptor shim](/Shims)
+To connect the ESP8266 module up, see the [ESP8266](../devices/ESP8266.md) page for instructions. 4 wires are needed, or you can use the [adaptor shim](../info/Shims.md)
 
 ![Wiring](Pico Weather Station/back.jpg)
 
-The LCD draws so little power that we can power it from Espruino's GPIO lines... Follow the instructions on the [[Pico LCD Hello World]] tutorial if using breadboard, but if you're soldering you can make exactly the same connections by soldering the LCD straight to the Pico as shown in the picture above.
+The LCD draws so little power that we can power it from Espruino's GPIO lines... Follow the instructions on the [Pico LCD Hello World](Pico LCD Hello World.md) tutorial if using breadboard, but if you're soldering you can make exactly the same connections by soldering the LCD straight to the Pico as shown in the picture above.
 
 Software
 -------

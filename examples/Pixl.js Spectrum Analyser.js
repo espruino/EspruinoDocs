@@ -7,11 +7,11 @@ Pixl.js Spectrum Analyser
 
 ![Pixl.js Spectrum Analyser](Pixl.js Spectrum Analyser.jpg)
 
-This example outputs a spectrum analyser on [Pixl.js](/Pixl.js)'s LCD
+This example outputs a spectrum analyser on [Pixl.js](../boards/Pixl.js.md)'s LCD
 display.
 
 Simply attach [an amplified Microphone](http://www.ebay.com/sch/i.html?_nkw=arduino+microphone)
-or some other varying input to pin `A0` on a [Pixl.js](/Pixl.js) board,
+or some other varying input to pin `A0` on a [Pixl.js](../boards/Pixl.js.md) board,
 connect, and upload the code.
 
 The FFT calculation is performed in double arithmetic and is slow,
@@ -19,7 +19,7 @@ so this won't be a real-time FFT. For faster updates consider slowing
 down the sample rate and lowering the buffer size.
 
 **Note:** Some microphone boards have a potentiometer to adjust DC
-offset. If so, try running [the Oscilloscope Example](/Pixl.js+Oscilloscope)
+offset. If so, try running [the Oscilloscope Example](../examples/Pixl.js Oscilloscope.js)
 and adjust the potentiometer until the waveform is in the middle of the screen.
 
 */

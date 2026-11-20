@@ -7,7 +7,7 @@ Eddystone Beacons
 * KEYWORDS: Module,Modules,BLE,Bluetooth,EddyStone,FatBeacon,iBeacon,Beacon,Physical Web
 * USES: Puck.js,BLE,Only BLE
 
-**Note:** For iBeacons, see [this page](/Puck.js iBeacon)
+**Note:** For iBeacons, see [this page](iBeacon.md)
 
 [Eddystone](https://github.com/google/eddystone) is an open beacon format from Google
 that allows you to transmit a URL that will appear as a notification on
@@ -19,7 +19,7 @@ Android phones > 4.4 will have support - but it may need enabling.
 **Note:** [Google has now disabled Eddystone notifications](https://android-developers.googleblog.com/2018/10/discontinuing-support-for-android.html)
 because of abuse by advertisers, so Eddystone devices will no longer appear as Android Notifications.
 
-All you need to do to use it is use the [[ble_eddystone.js]] module:
+All you need to do to use it is use the [ble_eddystone.js](../modules/ble_eddystone.js) module:
 
 ```
 require("ble_eddystone").advertise("goo.gl/B3J0Oc");
@@ -83,7 +83,7 @@ For Eddystone and normal Espruino connection info:
 ```
 NRF.setAdvertising([
   require("ble_eddystone").get(...),
-  {} // this will add a 'normal' advertising packet showing name/etc  
+  {} // this will add a 'normal' advertising packet showing name/etc
   ], {interval:100});
 ```
 

@@ -17,17 +17,17 @@ This is a quick and easy Wireless Temperature Sensor. One Espruino reads the tem
 You'll Need
 ----------
 
-* Two [Espruino Boards](/Original) wired up with an [NRF24L01+](/NRF24L01P) module
-* A [[DS18B20]] Temperature sensor and 4.7k resistor
-* A [Nokia 5110 LCD](/PCD8544)
+* Two [Espruino Boards](../boards/Original.md) wired up with an [NRF24L01+](../devices/NRF24L01P.md) module
+* A [DS18B20](../devices/DS18B20.md) Temperature sensor and 4.7k resistor
+* A [Nokia 5110 LCD](../devices/PCD8544.md)
 
 Wiring Up
 --------
 
 ### Board 1 (transmitter)
 
-* Follow the wiring instructions for wiring up the [NRF24L01+](/NRF24L01P) wireless module
-* Connect up the [[DS18B20]] Temperature sensor as follows:
+* Follow the wiring instructions for wiring up the [NRF24L01+](../devices/NRF24L01P.md) wireless module
+* Connect up the [DS18B20](../devices/DS18B20.md) Temperature sensor as follows:
 
 | Sensor Wire | Espruino   | 4.7k Resistor |
 | --------- | ---------- | ------------- |
@@ -37,8 +37,8 @@ Wiring Up
 
 ### Board 2 (receiver)
 
-* Follow the wiring instructions for wiring up the [NRF24L01+](/NRF24L01P) wireless module
-* Connect the [Nokia 5110 LCD](/PCD8544) up as suggested [here](/PCD8544)
+* Follow the wiring instructions for wiring up the [NRF24L01+](../devices/NRF24L01P.md) wireless module
+* Connect the [Nokia 5110 LCD](../devices/PCD8544.md) up as suggested [here](../devices/PCD8544.md)
 
 Software
 -------
@@ -107,4 +107,4 @@ onInit();
 
 About 10 seconds later the display should update with the temperature received from the sender...
 
-And that's it! A wireless temperature sensor. This could be extended with the code from the [[Heater Controller]] to make a wireless themostat, a history graph could be drawn, more than one wireless temperature sensor could be used or data could be logged onto an SD card...
+And that's it! A wireless temperature sensor. This could be extended with the code from the [Heater Controller](Heater Controller.md) to make a wireless themostat, a history graph could be drawn, more than one wireless temperature sensor could be used or data could be logged onto an SD card...

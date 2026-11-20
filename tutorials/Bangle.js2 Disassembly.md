@@ -10,7 +10,7 @@ Bangle.js 2 Disassembly
 
 This video describes how to get inside your Bangle.js 2.
 
-For more information on what's inside, check out the [the Bangle.js 2 Technical Information page](/Bangle.js2+Technical)
+For more information on what's inside, check out the [the Bangle.js 2 Technical Information page](../info/Bangle.js2 Technical.md)
 
 [[https://youtu.be/ou2UuzgF2fo]]
 

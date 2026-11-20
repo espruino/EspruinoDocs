@@ -13,8 +13,8 @@ YouTube View Counter
 You'll Need
 ----------
 
-* An Espruino [[WiFi]]
-* A [[MAX7219]] 32x8 Pixel LED display
+* An Espruino [WiFi](../boards/WiFi.md)
+* A [MAX7219](../devices/MAX7219.md) 32x8 Pixel LED display
 
 
 Wiring Up
@@ -30,14 +30,14 @@ Just connect as follows:
 | CS      | B4       |
 | CLK     | B5       |
 
-**Note:** Due to the ordering of the wires on the [[MAX7219]] board and the
+**Note:** Due to the ordering of the wires on the [MAX7219](../devices/MAX7219.md) board and the
 colouring of the supplied ribbon cable, be really careful not to accidentally
 connect up the voltage backwards.
 
-The [[MAX7219]] board should run off of 3.3v or 5v. 5v will be brighter and will put
+The [MAX7219](../devices/MAX7219.md) board should run off of 3.3v or 5v. 5v will be brighter and will put
 less strain on the 3.3v line (also used by WiFi).
 
-Since we're using software [[SPI]] here, you can use any available GPIO pins for the [[MAX7219]].
+Since we're using software [SPI](../info/SPI.md) here, you can use any available GPIO pins for the [MAX7219](../devices/MAX7219.md).
 
 
 Software

@@ -12,14 +12,14 @@ Introduction
 
 Wouldn't it be cool if you could control Espruino from an Infrared remote control? You can!
 
-Do you want to control IR devices from Espruino instead?  Check out [using Puck.js's IR](/Puck.js Infrared), using [an IR transmitter with Espruino](/Pico Infrared), and [decoding Pronto Hex Infrared codes](/pronto)
+Do you want to control IR devices from Espruino instead?  Check out [using Puck.js's IR](./Puck.js Infrared.md), using [an IR transmitter with Espruino](./Pico Infrared.md), and [decoding Pronto Hex Infrared codes](../modules/pronto.md)
 
-**Note:** There's now [an infrared receiver module](IRReceiver) that you can use to simplify responding to infrared signals.
+**Note:** There's now [an infrared receiver module](../devices/IRReceiver.md) that you can use to simplify responding to infrared signals.
 
 You'll Need
 ----------
 
-* One [Espruino Board](/Original)
+* One [Espruino Board](../boards/Original.md)
 * An Infrared Receiver
 
 Getting an Infrared Receiver

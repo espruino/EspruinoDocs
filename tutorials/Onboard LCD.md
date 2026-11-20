@@ -12,13 +12,13 @@ Soldering an LCD directly to Espruino
 
 Sometimes you might want to make a very small device with an LCD display. Using the row of pins along the middle of Espruino, you can easily do this!
 
-The [[PCD8544]] LCD uses so little power that it can easily be powered directly from GPIO lines - requiring no special wiring other that the swapping of two signal wires.
+The [PCD8544](../devices/PCD8544.md) LCD uses so little power that it can easily be powered directly from GPIO lines - requiring no special wiring other that the swapping of two signal wires.
 
 You'll Need
 ----------
 
-* One [Espruino Board](/Original)
-* A [[PCD8544]] LCD Display and some pin strip (this should come with it)
+* One [Espruino Board](../boards/Original.md)
+* A [PCD8544](../devices/PCD8544.md) LCD Display and some pin strip (this should come with it)
 
 Wiring Up
 --------

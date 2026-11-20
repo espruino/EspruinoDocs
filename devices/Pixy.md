@@ -12,7 +12,7 @@ The Pixy is a computer vision camera that does all the hard work on-board. It ca
 
 The official documentation is here: [http://cmucam.org/projects/cmucam5/wiki/Quick_Start]
 
-There's an Espruino module called [[Pixy.js]] which will interface to it.
+There's an Espruino module called [Pixy.js](Pixy.js) which will interface to it.
 
 Wiring Up
 ---------

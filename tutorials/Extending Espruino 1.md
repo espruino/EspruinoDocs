@@ -8,7 +8,7 @@ Extending Espruino 1 - Making own firmware extension
 
 This tutorial provides a little intro into writing your own extension to Espruino and create your own binary.
 
-For a more detailed tutorial [you can see how to make your own class](/Extending Espruino 2)
+For a more detailed tutorial [you can see how to make your own class](./Extending Espruino 2.md)
 
 __WARNING__: while everything described here works, the tutorial has not been tested much.
 

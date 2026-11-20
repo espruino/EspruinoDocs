@@ -7,12 +7,12 @@ LSM6DSL Accelerometer and 3D Gyroscope
 * KEYWORDS: Module,Shield,LSM6DSL,I2C,Gyro,Accelerometer,Gyroscope,Sensor
 
 This module is used to initialize and setup a STMicroelectronis LSM6DSL.
-For testing I used a NUCLEO-STM32F401 + X-NUCLEO-IKS01A2.  [LSM6DSL](/modules/LSM6DSL.js)
+For testing I used a NUCLEO-STM32F401 + X-NUCLEO-IKS01A2.  [LSM6DSL](LSM6DSL.js)
 
 The IKDS01A1 shield includes the following sensors:
-* [LPS22HB](/modules/LPS22HB.js)
-* [HTS221](/modules/HTS221.js)
-* [LSM6DSL](/modules/LSM6DSL.js)
+* [LPS22HB](LPS22HB.js)
+* [HTS221](HTS221.js)
+* [LSM6DSL](LSM6DSL.js)
 * LSM303AGR
 
 ## Required Resources
@@ -84,12 +84,12 @@ Keep in mind: Read only required data, this reduce the time required to read the
 
 ```
 
-print("XL_X: " + MyLSM.XL_X);  
-print("XL_Y: " + MyLSM.XL_Y);  
-print("XL_Z: " + MyLSM.XL_Z);  
-print("G_X:  " + MyLSM.G_X);  
-print("G_Y:  " + MyLSM.G_Y);  
-print("G_Z:  " + MyLSM.G_Z);  
+print("XL_X: " + MyLSM.XL_X);
+print("XL_Y: " + MyLSM.XL_Y);
+print("XL_Z: " + MyLSM.XL_Z);
+print("G_X:  " + MyLSM.G_X);
+print("G_Y:  " + MyLSM.G_Y);
+print("G_Z:  " + MyLSM.G_Z);
 
 ```
 ## Komplex Example
@@ -123,7 +123,7 @@ function io_interrupt ( )
   if ( RunMode === true )
   {
     MyLSM.update();
-    print("X: " + MyLSM.XL_X + " Y: " + MyLSM.XL_Y+ " Z: " + MyLSM.XL_Z);  
+    print("X: " + MyLSM.XL_X + " Y: " + MyLSM.XL_Y+ " Z: " + MyLSM.XL_Z);
    }
 }
 

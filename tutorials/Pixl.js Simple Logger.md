@@ -18,7 +18,7 @@ Maybe you're growing Tomatoes and you want to count how many you
 get off your plant each day, or maybe you're counting the amount
 of times your coworker does something annoying.
 
-To use this, just get a [Pixl.js](/Pixl.js), connect with the Espruino
+To use this, just get a [Pixl.js](../boards/Pixl.js.md), connect with the Espruino
 IDE, copy the code below into the right-hand side of it, and click 'Upload'.
 
 When it's running, you just use the right-hand upper and lower buttons to
@@ -34,14 +34,14 @@ Data Storage
 ------------
 
 This code only keeps the data in RAM, so it will be lost if power is removed.
-You could easily use the [Storage Module](/Reference#Storage) to store the
+You could easily use the [Storage Module](https://www.espruino.com/Reference#Storage) to store the
 data when it changes, however since the current time will be lost, this could
 be of limited use.
 
 Other Boards
 ------------
 
-It's pretty straightforward to run this code on non-[Pixl.js](/Pixl.js) boards.
+It's pretty straightforward to run this code on non-[Pixl.js](../boards/Pixl.js.md) boards.
 Just ensure that a variable called `g` contains an instance of a Graphics
 class set up for your display, and that `BTN2` and `BTN3` point to pins
 attached to two buttons.
@@ -112,7 +112,7 @@ input is to call `count(1)` when you want to increase the counter.
 
 ### Wired Pyroelectric sensor
 
-Just wire a [Pyroelectric motion sensor](/Pyroelectric) up to `Vin` and `GND`
+Just wire a [Pyroelectric motion sensor](../devices/Pyroelectric.md) up to `Vin` and `GND`
 on your Pixl.js, and connect the signal wire to any input - the example uses
 `A0`.
 
@@ -128,7 +128,7 @@ For wireless connections, you need to run the command `Bluetooth.setConsole(true
 on the Pixl.js so that you don't get Bluetooth connection information written
 to the LCD.
 
-Then, get a [Puck.js](/Puck.js) and connect to it with the Web IDE. The following
+Then, get a [Puck.js](../boards/Puck.js.md) and connect to it with the Web IDE. The following
 code will connect to the Pixl.js when a button is pressed (remember to change
   `Pixl.js 6155` to your Pixl's name).
 
@@ -156,7 +156,7 @@ at a time, so you can't call `count()` before the previous call to
 keep track of when Puck.js is busy in a variable.
 
 You can use external inputs in the same way we did for Pixl.js above, or you
-can (for example) use the following code [from this example](/Puck.js+Door+Light)
+can (for example) use the following code [from this example](./Puck.js Door Light.md)
 to use the Magnetometer:
 
 ```

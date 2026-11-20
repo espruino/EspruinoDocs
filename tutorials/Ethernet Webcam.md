@@ -19,15 +19,15 @@ In this example, we'll use the Espruino board to serve up a webpage which access
 You'll Need
 ----------
 
-* An [[RGB123]] matrix - I've used a 16x16
-* A [[WIZnet]] W5500 module
+* An [RGB123](../devices/RGB123.md) matrix - I've used a 16x16
+* A [WIZnet](../devices/WIZnet.md) W5500 module
 * A Laptop/Tablet with a Webcam
 
 Wiring Up
 --------
 
-* Wire the [[RGB123]] up as described on the [[RGB123]] page
-* Wire the [[WIZnet]] W5500 up as described on the [[WIZnet]] page
+* Wire the [RGB123](../devices/RGB123.md) up as described on the [RGB123](../devices/RGB123.md) page
+* Wire the [WIZnet](../devices/WIZnet.md) W5500 up as described on the [WIZnet](../devices/WIZnet.md) page
 
 Software
 -------
@@ -81,7 +81,7 @@ setInterval(function() {
 </html>
 ```
 
-Then, you need to package it up into a string that can be stored in Espruino. You could have saved it to a file on an SD card, but storing the webpage as a string means that Espruino doesn't need a card to operate. To do this I simply removed the comments (to save on space) and opened the file in the [File Converter](/File+Converter] page.
+Then, you need to package it up into a string that can be stored in Espruino. You could have saved it to a file on an SD card, but storing the webpage as a string means that Espruino doesn't need a card to operate. To do this I simply removed the comments (to save on space) and opened the file in the [File Converter](https://www.espruino.com/File+Converter) page.
 
 And this is the code for the Espruino itself - see the inline comments:
 

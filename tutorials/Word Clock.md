@@ -19,9 +19,9 @@ You'll Need
 ![Parts](Word Clock/parts.jpg)
 
 * A deep picture frame (we used an Ikea one)
-* 88 [[WS2811]] LED lights - for an 8 x 11 grid
+* 88 [WS2811](../devices/WS2811.md) LED lights - for an 8 x 11 grid
 * Thick card and tools to cut it
-* An Espruino board. Either a Pico, revision 1v4, or a 1v3 with a [Clock](/Clocks) crystal
+* An Espruino board. Either a Pico, revision 1v4, or a 1v3 with a [Clock](./Clocks.md) crystal
 * A USB power supply
 * Tools for soldering
 
@@ -38,7 +38,7 @@ We've left gaps for the WS2811 LEDs and their wires- however we used a string of
 
 ![fitting LEDs](Word Clock/leds_part.jpg)
 
-Fit in the LEDs in an 'S' shape, and glue them securely with hot glue. Make sure know which end of the LED chain is the input and which is the output! Consult the [[WS2811]] page if you're not sure.
+Fit in the LEDs in an 'S' shape, and glue them securely with hot glue. Make sure know which end of the LED chain is the input and which is the output! Consult the [WS2811](../devices/WS2811.md) page if you're not sure.
 
 ![glued LEDs](Word Clock/leds_glued.jpg)
 
@@ -195,4 +195,4 @@ setInterval(function() {
 }, 1000);
 ```
 
-You could also add a way to use buttons to set the time, or you could even use some [[Internet]] connectivity to get the time off the net, or [[GPS]] to get it from the Global Positioning System.
+You could also add a way to use buttons to set the time, or you could even use some [Internet](../info/Internet.md) connectivity to get the time off the net, or [GPS](../devices/GPS.md) to get it from the Global Positioning System.

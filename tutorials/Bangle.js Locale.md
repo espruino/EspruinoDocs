@@ -7,7 +7,7 @@ Bangle.js Internationalisation
 * KEYWORDS: Tutorials,Bangle.js,Development,App Loader,App,Locale,Language,Internationalisation,Internationalization,Translate,Translation,Lang,Intl,Date
 * USES: Bangle.js
 
-If you have an app (eg by following the [Bangle.js First App](/Bangle.js+First+App)
+If you have an app (eg by following the [Bangle.js First App](./Bangle.js First App.md)
 tutorial), you might want to have a go at making it so that users in other countries
 can use it easily.
 
@@ -45,7 +45,7 @@ It's easiest to show some examples (for the `de_DE` locale):
 
 **Note:** Some strings may not render
 correctly in the console. They may need to be rendered with
-[a 6x8 or other ISO10646-1 font](/Fonts).
+[a 6x8 or other ISO10646-1 font](../info/Fonts.md).
 
 ```JS
 // The name of the Locale
@@ -298,7 +298,7 @@ Adding your own locale
 ----------------------
 
 All you need to do is form the BangleApps loader as you would have done
-for [adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader).
+for [adding an app to the Bangle.js App Loader](./Bangle.js App Loader.md).
 
 Now, edit the [apps/locale/locales.js file](https://github.com/espruino/BangleApps/blob/master/apps/locale/locales.js) -
 you can easily add your own date/time formats and translations.

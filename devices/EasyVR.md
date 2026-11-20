@@ -9,7 +9,7 @@ EasyVR Voice Recognition Board
 
 Overview
 ------------------
-The [[EasyVR.js]] module interfaces with EasyVR voice recognition board/shield. Presently, this support is very basic, and the module may change substantially. However, this is good enough to get started with EasyVR and the Espruino.
+The [EasyVR.js](EasyVR.js) module interfaces with EasyVR voice recognition board/shield. Presently, this support is very basic, and the module may change substantially. However, this is good enough to get started with EasyVR and the Espruino.
 
 Hardware:
 ------------------

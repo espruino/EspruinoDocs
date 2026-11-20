@@ -18,12 +18,12 @@ In the last few years, individually addressable RGB lights have been getting che
 
 There are two main types of Individually addressable LED at the moment - 3 wire and 4 wire.
 
-LEDs like the [WS2801](/datasheets/WS2801.pdf) use 4 wires - ground, power, clock and data. They can be controlled using SPI, which is available on most microcontrollers. There are some small disadvantages though:
+LEDs like the [WS2801](../datasheets/WS2801.pdf) use 4 wires - ground, power, clock and data. They can be controlled using SPI, which is available on most microcontrollers. There are some small disadvantages though:
 
 * You need 4 wires between each LED (which increases cost)
 * The package for the controller/LED needs more wires, increasing size and cost
 
-Many newer controllers use 3 wires, like the [WS2811/WS2812/APA104/APA106 and SK6812](/WS2811). The use a one-wire style serial protocol, which only requires (as the name suggests) one wire for data. This means:
+Many newer controllers use 3 wires, like the [WS2811/WS2812/APA104/APA106 and SK6812](../devices/WS2811.md). The use a one-wire style serial protocol, which only requires (as the name suggests) one wire for data. This means:
 
 * Only 3 wires between each LED
 * The controller chip fits in a smaller package, which fits on a smaller PCB
@@ -31,18 +31,18 @@ Many newer controllers use 3 wires, like the [WS2811/WS2812/APA104/APA106 and SK
 
 All this adds up to make RGB LED lighting that is significantly cheaper than the WS2801 controller.
 
-In this tutorial we'll show you how to drive these 3 wire LEDs from Espruino. The LEDs require a series of pulses at 800 kHz, where a 0 bit is a short pulse, and a 1 bit is a long pulse. There's a special [neopixel library](/Reference#neopixel) for interfacing with these devices. 
+In this tutorial we'll show you how to drive these 3 wire LEDs from Espruino. The LEDs require a series of pulses at 800 kHz, where a 0 bit is a short pulse, and a 1 bit is a long pulse. There's a special [neopixel library](https://www.espruino.com/Reference#neopixel) for interfacing with these devices.
 
 You'll Need
 ----------
 
-* A chain of [[WS2811]] style lights. I'll be using individually wired ones (rather than the ones on a flexible PCB) in a string of 25.
+* A chain of [WS2811](../devices/WS2811.md) style lights. I'll be using individually wired ones (rather than the ones on a flexible PCB) in a string of 25.
 * An Espruino board
 
 Wiring Up
 ---------
 
-Check out [the neopixel library reference](/Reference#neopixel) - WS2811 style LEDs can be quite picky about the voltage of the data wire. Using the Original [Espruino](/Original) and [Pico](/Pico) is easy, but other boards may require a little more thought.
+Check out [the neopixel library reference](https://www.espruino.com/Reference#neopixel) - WS2811 style LEDs can be quite picky about the voltage of the data wire. Using the Original [Espruino](../boards/Original.md) and [Pico](../boards/Pico.md) is easy, but other boards may require a little more thought.
 
 Your WS2811 LED light chain should have two ends, with 3 wires at each end (some may be duplicated). The colours for these are Red, White and Green. Red is 5v power, White is Ground, and Green is Signal. If you have instructions with your LED light chain, please use those instead.
 
@@ -52,7 +52,7 @@ So to wire up, all you need to do is:
 
 Connect White (0v) and Red (5v) wires to a 5v power source. You probably shouldn't use USB, as when all on, 50 LEDs draw around 1A - which is too much!
 
-Connect White to ground on the Espruino board, and Green to an SPI MOSI pin on your Espruino board. On the Espruino Board, B15 is good (although there are others available). On discovery boards this is usually A7, and on Maple/Olimexino boards it is D11. However if in doubt please check the [[Reference]] for your board.
+Connect White to ground on the Espruino board, and Green to an SPI MOSI pin on your Espruino board. On the Espruino Board, B15 is good (although there are others available). On discovery boards this is usually A7, and on Maple/Olimexino boards it is D11. However if in doubt please check the [Reference](https://www.espruino.com/Reference) for your board.
 
 Software
 -------
@@ -65,7 +65,7 @@ require("neopixel").write(B15, [255,0,0]);
 
 This will make the first LED red.
 
-Note that we're using pin `B15` here - if you want to use a different pin (see the wiring up section) then you'll have to change this, but on most devices you'll need to make sure the pin is capable of hardware [[SPI]] `MOSI`. [Puck.js](/Puck.js) can use any pin for this.
+Note that we're using pin `B15` here - if you want to use a different pin (see the wiring up section) then you'll have to change this, but on most devices you'll need to make sure the pin is capable of hardware [SPI](../info/SPI.md) `MOSI`. [Puck.js](../boards/Puck.js.md) can use any pin for this.
 
 We can do other colours too:
 
@@ -250,6 +250,6 @@ setWatch(changePattern, BTN, { repeat: true, edge:'falling' });
 setInterval(doLights,50);
 ```
 
-That's it! If you come up with any good patterns, please [[Contact Us]] and let us know!
+That's it! If you come up with any good patterns, please [Contact Us](https://www.espruino.com/Contact+Us) and let us know!
 
-Check out the [[WS2811]] page for a list of suppliers and types of LED that work in this way.
+Check out the [WS2811](../devices/WS2811.md) page for a list of suppliers and types of LED that work in this way.

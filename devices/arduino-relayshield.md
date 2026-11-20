@@ -9,7 +9,7 @@ Arduino Relay Shield
 
 ![Relay Shield](arduino-relayshield.jpg)
 
-This is a cheap relay shield for Arduino with four [[Relays]]. Relays are literally
+This is a cheap relay shield for Arduino with four [Relays](Relays.md). Relays are literally
 just electrically actuated switches, so you can connect them pretty much anywhere
 you would use a switch.
 
@@ -32,8 +32,8 @@ Wiring
 Simply plug the shield into your Espruino board.
 
 The shield depends on the `5V` line for voltage for the LEDs, so if connecting
-to a [Pixl.js](/Pixl.js) you'll need to short `5V` to `Vin` when running off USB/LiPo
-power source. This can be done either with the [solder jumper](/Pixl.js#shield-power) or just
+to a [Pixl.js](../boards/Pixl.js.md) you'll need to short `5V` to `Vin` when running off USB/LiPo
+power source. This can be done either with the [solder jumper](../boards/Pixl.js.md#shield-power) or just
 by connecting a patch wire between `5V` and `Vin` on the Relay Board's header.
 
 Software

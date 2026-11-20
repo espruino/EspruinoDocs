@@ -12,7 +12,7 @@ KeyPad Matrix
 A [KeyPad Matrix](http://en.wikipedia.org/wiki/Keyboard_matrix_circuit) is a selection of switches arranged in a grid. One side of each switch is connected with horizontal wires (rows) and one side is connected with vertical wires (columns). By putting a signal on one side (for example the rows) and reading the other side (the columns), you can determine which key is pressed down.
 
 
-KeyPads are handled by the [[KeyPad.js]] module. 
+KeyPads are handled by the [KeyPad.js](KeyPad.js) module. 
 
 Simply supply two arrays, one of wires connected to columns,
 one of wires connected to rows.

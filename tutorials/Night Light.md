@@ -13,7 +13,7 @@ when it's light.
 On the 2400mAh battery used it should last around 4 months assuming the LED
 is on for 4 hours a day.
 
-You might also want to check out the [Puck.js Night Light](/Puck.js+Night+Light)
+You might also want to check out the [Puck.js Night Light](./Puck.js Night Light.md)
 which glows a colour to show you the temperature.
 
 [[http://youtu.be/UNW3oGjMmk4]]
@@ -22,9 +22,9 @@ which glows a colour to show you the temperature.
 You'll need
 -----------
 
-* A [MDBT42Q Breakout board](/MDBT42Q)
+* A [MDBT42Q Breakout board](../boards/MDBT42Q.md)
 * A LED and resistor of around 300 Ohms (you can use the on-board
-* A [Battery](/Battery)
+* A [Battery](../devices/Battery.md)
 * A ping-pong ball and a case (details below)
 
 Wiring

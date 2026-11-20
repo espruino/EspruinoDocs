@@ -16,7 +16,7 @@ and display them as a graph on the PC.
 You'll need
 -----------
 
-* An [MDBT42Q](/MDBT42Q) breakout, but any Bluetooth Espruino board will do (although [Puck.js](/Puck.js) would need to be self-powered as it has no voltage regulator)
+* An [MDBT42Q](../boards/MDBT42Q.md) breakout, but any Bluetooth Espruino board will do (although [Puck.js](../boards/Puck.js.md) would need to be self-powered as it has no voltage regulator)
 * 1x 1 Ohm high current (1W or more) resistor
 * 2x 100 kOhm Resistors
 * 1x 24 kOhm Resistor
@@ -37,7 +37,7 @@ But any analog-capable inputs will do.
 Software
 --------
 
-We're using the [Averager Library](/Averager) here to store data in
+We're using the [Averager Library](../modules/Averager.md) here to store data in
 a format that is easy to graph:
 
 ```JS
@@ -67,7 +67,7 @@ setInterval(onSecond, 1000);
 NRF.setTxPower(4);
 ```
 
-It's easy to extend this with the [BTHome](/BTHome) Library to allow your
+It's easy to extend this with the [BTHome](../modules/BTHome.md) Library to allow your
 battery level to appear in  [Home Assistant](https://www.home-assistant.io/). We've kept the `Averager` in
 so the webpage below will still work, but it's easy to remove:
 
@@ -141,7 +141,7 @@ NRF.setTxPower(4);
 Webpage
 -------
 
-You'll need to serve this off a HTTPS link - see the [Web Bluetooth](/Web+Bluetooth) page
+You'll need to serve this off a HTTPS link - see the [Web Bluetooth](./Web Bluetooth.md) page
 for more information.
 
 **Note:** you can try this out as-is just by clicking the `Try Me!` link.

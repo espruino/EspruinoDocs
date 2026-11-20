@@ -6,9 +6,9 @@ EEPROMs (and related technologies)
 
 * KEYWORDS: EEPROM, eeprom, fram, FRAM, memory, rom, storage
 
-An EEPROM is a form of byte-addressable non-volatile storage, allowing a project based on Espruino to save small amounts of persistant data. 
+An EEPROM is a form of byte-addressable non-volatile storage, allowing a project based on Espruino to save small amounts of persistant data.
 
-"EEPROM" stands for "Electrically Erasable Programmable Read-Only Memory" - it is a form of non-volatile memory that is available using several interfaces, in many packages and capacities. This document describes how to use EEPROMs and similar non-volatile memory with Espruino, and explains some of the considerations involved in selecting a memory technology for your project. 
+"EEPROM" stands for "Electrically Erasable Programmable Read-Only Memory" - it is a form of non-volatile memory that is available using several interfaces, in many packages and capacities. This document describes how to use EEPROMs and similar non-volatile memory with Espruino, and explains some of the considerations involved in selecting a memory technology for your project.
 
 The operating principle of EEPROM is much like that of modern flash memory.  It is non-volatile memory, meaning that data is retained while the power is off. Those who have used AVR devices (like Arduino) will already be familiar with EEPROMs, as almost all AVR processors have built in EEPROMs. Unfortunately, the ARM processors used in the Espruino do not - however external EEPROM chips are widely available. Each page of an EEPROM can only be erased and rewritten a limited number of times before it stops working - this is typically in the range of 100,000 to 1,000,000 rewrite cycles, and is specified in the datasheet.
 
@@ -17,7 +17,7 @@ An Espruino board with multiple EEPROMs connected to it:
 * I2C EEPROM DIP-8 package on breakout board (these typically sell for $2-5 on ebay)
 * I2C EEPROM SOIC-8 package soldered onto Espruino's prototyping area
 * SPI EEPROM SOIC-8 package in an SOIC socket
-* OneWire EEPROM TO-92 package connected with the two clipleads. The pullup resistor has been connected between 3.3v and C4 on the underside of the board. 
+* OneWire EEPROM TO-92 package connected with the two clipleads. The pullup resistor has been connected between 3.3v and C4 on the underside of the board.
 
 
 
@@ -25,7 +25,7 @@ Using EEPROMs
 -------
 The EEPROM modules contain two main functions, read and write. To use this in your project, after wiring up the EEPROM (see the appropriate module documentation for details), simply setup the interface (I2C, SPI, or OneWire), and call 'connect()' (again, see module doc, as the arguments vary by interface).
 
-`write(address,data)` writes the supplied data to the specified address. Data can be an array of bytes or string. This handles page boundaries and waiting out the write cycle for long writes, and returns the length of the data written. 
+`write(address,data)` writes the supplied data to the specified address. Data can be an array of bytes or string. This handles page boundaries and waiting out the write cycle for long writes, and returns the length of the data written.
 
 `read(address,length)` reads data from the EEPROM starting from the supplied address, as a Uint8Array.
 
@@ -39,15 +39,15 @@ SPI1.setup({sck:B3,miso:B4,mosi:B5}); //SPI
 var OW=new OneWire(C4);//OneWire
 
 //Pick one:
-var eeprom=require("AT24").connect(I2C2,64,128,2); //I2C2, 64 byte pages, 128 (16 kbyte) kbit capacity, with the A1 pin high, and A0 and A2 low. 
+var eeprom=require("AT24").connect(I2C2,64,128,2); //I2C2, 64 byte pages, 128 (16 kbyte) kbit capacity, with the A1 pin high, and A0 and A2 low.
 
 var eeprom=require("AT25").connect(SPI1,0,64,B2); //SPI, 64 kbit FRAM (no pages).
 
-var eeprom=require("DS2xxx").connect(OW,32,20); //OneWire, 32 byte pages, 20kbit - DS28EC20. 
+var eeprom=require("DS2xxx").connect(OW,32,20); //OneWire, 32 byte pages, 20kbit - DS28EC20.
 
-console.log(E.toString(eeprom.read(0,25)); //Read the beginning of the EEPROM. 
+console.log(E.toString(eeprom.read(0,25)); //Read the beginning of the EEPROM.
 eeprom.write(10,[12,23,240,192,245]) //write some numbers;
-console.log(eeprom.read(0,16); //this will show the 5 bytes we wrote above, surrounded on both sides by whatever we wrote ontop of. 
+console.log(eeprom.read(0,16); //this will show the 5 bytes we wrote above, surrounded on both sides by whatever we wrote ontop of.
 var a;
 var l=eeprom.write(0x64,"digitalWrite(LED1,!a);a=!a;digitalWrite(LED3,!a);)"); //write a bit of JS to the EEPROM at position 100
 
@@ -60,9 +60,9 @@ var interval=setInterval("eval(E.toString(eeprom.read(0x64,l));",333); //Oh noes
 Applications
 ------
 * Saving user settings, presets, defaults
-* Remembering WiFi access point SSID and password for use with CC3000 or ESP8266. 
+* Remembering WiFi access point SSID and password for use with CC3000 or ESP8266.
 * Recording recent history of sensor data
-* Storing snippets of code that are used infrequently (in order to reduce usage of memory). 
+* Storing snippets of code that are used infrequently (in order to reduce usage of memory).
 
 Converting values
 ------
@@ -173,12 +173,12 @@ function aToUint16(a) {
 
 Interfaces and Capacities
 ------
-EEPROMs are available with almost every interface imaginable. Module support ([About Modules](/Modules)) is available for three of the most common interfaces: I2C, SPI, and OneWire. These interfaces all have their own considerations. 
+EEPROMs are available with almost every interface imaginable. Module support ([About Modules](../Modules.md)) is available for three of the most common interfaces: I2C, SPI, and OneWire. These interfaces all have their own considerations.
 
 ####I2C
-I2C is the most common interface for EEPROMs, and the least expensive. Support is provided by the [AT24](/modules/AT24.js) module, which supports devices with a capacity up to 4mbit. The speed of these EEPROMs is limited by the speed of the I2C bus, which is 100kbit by default, though the Espruino supports 400mbit mode as of v72. Most (but not all) I2C EEPROMs are rated for 1mhz use, and almost all are rated for 400mhz. For some parts, the maximum speed may depend on the supply voltage. 
+I2C is the most common interface for EEPROMs, and the least expensive. Support is provided by the [AT24](AT24.js) module, which supports devices with a capacity up to 4mbit. The speed of these EEPROMs is limited by the speed of the I2C bus, which is 100kbit by default, though the Espruino supports 400mbit mode as of v72. Most (but not all) I2C EEPROMs are rated for 1mhz use, and almost all are rated for 400mhz. For some parts, the maximum speed may depend on the supply voltage.
 
-I2C EEPROMs are available in 8-pin DIP, SOIC, and TSSOP packages. Breakout boards with a DIP socket and jumpers for address/wp pins are readily available from ebay, or ones in the SOIC package can be soldered onto the prototyping area on the Espruino Board (in this case, be sure to include the 10k pullup resistors on SDA and SCL). Connection requires 4 wires (Vcc, Ground, SDA, and SCL); the other 4 pins are used to set the address (A0-2) and write protect the chip (WP). WP should be tied to Vcc unless you want to prevent writes. The A0-A2 pins set the 3 low bits in the I2C address, allowing up to 8 EEPROMs on one I2C bus. Note that I2C EEPROMs of certain sizes use the low bits of the I2C address to expand the address space; these are listed in the [AT24 module documentation](AT24.md). 
+I2C EEPROMs are available in 8-pin DIP, SOIC, and TSSOP packages. Breakout boards with a DIP socket and jumpers for address/wp pins are readily available from ebay, or ones in the SOIC package can be soldered onto the prototyping area on the Espruino Board (in this case, be sure to include the 10k pullup resistors on SDA and SCL). Connection requires 4 wires (Vcc, Ground, SDA, and SCL); the other 4 pins are used to set the address (A0-2) and write protect the chip (WP). WP should be tied to Vcc unless you want to prevent writes. The A0-A2 pins set the 3 low bits in the I2C address, allowing up to 8 EEPROMs on one I2C bus. Note that I2C EEPROMs of certain sizes use the low bits of the I2C address to expand the address space; these are listed in the [AT24 module documentation](AT24.md).
 
 I2C EEPROMs are manufactured by almost every major semiconductor manufacturer, each of which use their own part numbering scheme. The parts from different manufacturers are fully interchangible.  Some examples are below - there are many more:
 
@@ -189,7 +189,7 @@ I2C EEPROMs are manufactured by almost every major semiconductor manufacturer, e
 *Rohm: BR24Gxxx
 
 ####SPI
-SPI is the second most common interface for EEPROMs, and the chips are only modestly more expensive than comparable I2C ones, and available in many of the same capacities as I2C EEPROMs. Support is provided by the [AT25](/modules/AT25.js) module, which supports devices with a capacity of 32 kbit up to 4 mbit. Smaller sizes exist, but the module does not support them.  
+SPI is the second most common interface for EEPROMs, and the chips are only modestly more expensive than comparable I2C ones, and available in many of the same capacities as I2C EEPROMs. Support is provided by the [AT25](AT25.js) module, which supports devices with a capacity of 32 kbit up to 4 mbit. Smaller sizes exist, but the module does not support them.
 
 SPI EEPROMs are available in 8-pin DIP, SOIC, and TSSOP packages, as well as larger packages with several not-connected pins. While breakout boards/modules are not available on ebay as is the case for I2C EEPROMs. SPI EEPROMs in SOIC package can be soldered onto the prototyping area on the Espruino Board. Connection requires 6 wires (Vcc, Ground, SCK, MISO, MOSI, and CS); The other two pins should be tied to Vcc, unless you want to write protect the chip. Many SPI EEPROMs can be connected to the same SPI bus, as long as a separate CS line is run for each chip. SPI EEPROMs can be used with software SPI.
 
@@ -198,10 +198,10 @@ Like I2C EEPROMs, compatible SPI EEPROMs are available from many manufacturers:
 *Atmel: AT25xxx (where xxx is the capacity in KB)
 *Microchip: 25LCxxx, 25AAxxx (low voltage)
 *ON Semiconductor: CAT25xxx
-*Rohm: BR25Sxxx 
+*Rohm: BR25Sxxx
 
 ####OneWire
-OneWire EEPROMs are manufactured only by Dallas Semiconductor, and are available in a limited range of capacities, at higher prices than comparable I2C or SPI EEPROMs. As the name implies, a OneWire EEPROM requires only a single wire (plus ground); it draws the power it needs to operate from the signal line, simplifying layout dramatically. These are typically available in TO-92 packages, though SMT packages are also available. Pin 1 is connected to ground, while pin 2 is connected to any IO pin on the Espruino. A 1k (approx) pullup resistor must be placed between pin 2 and 3.3v (it is easiest to do where the signal line reaches the Espruino). Support is provided by the [DS2xxx](/modules/DS2xxx.js) module.
+OneWire EEPROMs are manufactured only by Dallas Semiconductor, and are available in a limited range of capacities, at higher prices than comparable I2C or SPI EEPROMs. As the name implies, a OneWire EEPROM requires only a single wire (plus ground); it draws the power it needs to operate from the signal line, simplifying layout dramatically. These are typically available in TO-92 packages, though SMT packages are also available. Pin 1 is connected to ground, while pin 2 is connected to any IO pin on the Espruino. A 1k (approx) pullup resistor must be placed between pin 2 and 3.3v (it is easiest to do where the signal line reaches the Espruino). Support is provided by the [DS2xxx](DS2xxx.js) module.
 
 
 ####Summary
@@ -216,32 +216,32 @@ OneWire EEPROMs are manufactured only by Dallas Semiconductor, and are available
 
 EEPROMs vs SD Cards
 ------
-The Espruino Board has a built-in micro-SD card, and (micro-) SD card readers are readily available and can be connected to other boards running Espruino, communicating over SPI. 
+The Espruino Board has a built-in micro-SD card, and (micro-) SD card readers are readily available and can be connected to other boards running Espruino, communicating over SPI.
 
 Compared to EEPROM, an SD card:
 * Has much higher capacity - the smallest SD cards are larger than the largest EEPROMs.
-* Is meant to use a socket, and be easily removable. (EEPROMs in DIP packages can be used in sockets, but care is required to avoid damage to the pins, while the (micro-) SD card is meant to be inserted and removed frequently). 
+* Is meant to use a socket, and be easily removable. (EEPROMs in DIP packages can be used in sockets, but care is required to avoid damage to the pins, while the (micro-) SD card is meant to be inserted and removed frequently).
 * Is readily available from retail stores.
 * Can be read directly by a computer.
 * Supports a file system, allowing data to be organized as files and directories.
 * Does not support byte-level access, only files.
 * Is physically larger than an EEPROM chip, requiring more board real-estate
 * Only operates over SPI (within the context of microcontrollers)
-* Is less reliable - SD cards seem to have a remarkably high failure rate. 
+* Is less reliable - SD cards seem to have a remarkably high failure rate.
 * Has lower write endurance
 
-For purposes involving storing large amounts of data - such as logging - or where reading or writing of the non-volatile storage by a computer is desired, an SD card is probably a better choice. However, when the data to be saved is small, 
+For purposes involving storing large amounts of data - such as logging - or where reading or writing of the non-volatile storage by a computer is desired, an SD card is probably a better choice. However, when the data to be saved is small,
 
 EEPROMs vs FRAM and MRAM
 -----
 
 FRAM (ferroelectric RAM) and MRAM (magnetoresisive RAM) are two other types of non-volatile memory, based on magnetic effects. These can be used in similar ways to EEPROMs, however, there are several important differences. They are produced in pin compatible form, and use the same instruction set as EEPROMs.
 
-* FRAM/MRAM has no concept of pages, and writes are instantaneous; there is no internally timed write cycle. 
-* The write endurance is effectively unlimited (1 trillion for Fugitsu FRAM, Everspin claims unlimited writes for MRAM). 
-* FRAM and MRAM for SPI can be extremely fast, and is often spec'ed at speeds to 20mhz or more (I2C FRAM is limited by the speed of the I2C bus). 
-* FRAM and MRAM is exorbitantly expensive, with a cost per byte several times higher than EEPROMs. 
-* FRAM selection in DIP packages is very limited, while MRAM is only available in DFN package. 
+* FRAM/MRAM has no concept of pages, and writes are instantaneous; there is no internally timed write cycle.
+* The write endurance is effectively unlimited (1 trillion for Fugitsu FRAM, Everspin claims unlimited writes for MRAM).
+* FRAM and MRAM for SPI can be extremely fast, and is often spec'ed at speeds to 20mhz or more (I2C FRAM is limited by the speed of the I2C bus).
+* FRAM and MRAM is exorbitantly expensive, with a cost per byte several times higher than EEPROMs.
+* FRAM selection in DIP packages is very limited, while MRAM is only available in DFN package.
 
 CBRAM
 -----

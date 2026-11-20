@@ -12,7 +12,7 @@ State is as follows:
 
 * `-` not implemented.
 * `Yes` implemented
-* `Official` implemented, but only in boards that have enough memory. All [Official Espruino Boards](/Order) have these features.
+* `Official` implemented, but only in boards that have enough memory. All [Official Espruino Boards](https://www.espruino.com/Order) have these features.
 * `1vxx` implemented in version `1vxx`
 
 Summary
@@ -46,7 +46,7 @@ General
 | Semicolon insertion on newlines | - `return\n42;` returns `42` in Espruino. |
 | Function Hoisting | - |
 
-**Note:** [Espruino executes code](/Performance) by parsing as
+**Note:** [Espruino executes code](./Performance.md) by parsing as
 it executes. Function Hoisting wasn't implemented as it would require
 two passes, which would slow down execution.
 

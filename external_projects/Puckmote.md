@@ -8,7 +8,7 @@ Puckmote - Universal Remote Control
 * USES: BLE,Puck.js
 
 [Ben Foxall](https://benjaminbenben.com/) has made webpage that allows
-you to control any TV from your phone or PC using a [Puck.js](/Puck.js)
+you to control any TV from your phone or PC using a [Puck.js](../boards/Puck.js.md)
 
 It's installable as a progressive web app, so you can "Save" a controller
 on your phone homescreen for easy access.

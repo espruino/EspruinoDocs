@@ -9,8 +9,8 @@ Resistive Touchscreen Controller with Espruino
 Overview
 ------------------
 
-This [[TouchRD.js]] module makes Espruino the controller for resistive touchscreens that do *NOT* have
-a built-in controller, such as [ADS7843](/ADS7843) or XPT2046. The module supports standalone resistive touch screens
+This [TouchRD.js](TouchRD.js) module makes Espruino the controller for resistive touchscreens that do *NOT* have
+a built-in controller, such as [ADS7843](./ADS7843.md) or XPT2046. The module supports standalone resistive touch screens
 as well as resistive touch screens mounted on displays.
 
 Resistive Touch Screen only application as key pad input device for a simple calculator:
@@ -37,7 +37,7 @@ and is proportional to the touch position on the x-axis of the touch screen (and
 and Y+ and reading X- or X+ provides the value for the y-axis.
 
 Sketch of Top Portrait view of a 2.6" Touch Screen w/ YUp, XLeft, YDown and XRight edge drive and sense
-lines with film connector cable ([datasheet ER-TP026-1](/datasheets/ER-TP026-1_Drawing.pdf) of [BuyDisplay.com
+lines with film connector cable ([datasheet ER-TP026-1](../datasheets/ER-TP026-1_Drawing.pdf) of [BuyDisplay.com
 by EastRising](https://www.buydisplay.com/default/2-6-inch-4-wire-resistive-touch-panel-screen)).
 
 ```
@@ -290,7 +290,7 @@ Controller Constructor and Callback:
     - `x, y` coordinates of touch point with `x === undefined` for 'untouch' for compatibility reasons with existing `Touchscreen` module.
     - `t` touchRD controller instance (useful to access other and internal touch controller properties and methods for manipulation and calibration in application on touch / drag / move / untouch events AND to test if (t.t) touched or untouched (!t.t). Properties and methods are (same as the default config properties, pins, and callback, plus some additional, very useful properties, such as last `.xf`, `.yf` and time `.td` of last touch down.
 
-Controller value and function properties:     
+Controller value and function properties:
 
 - `.X`  x-axis / horizontal pixel # or resolution
 - `.Y`  y-axis / vertical pixel # or resolution

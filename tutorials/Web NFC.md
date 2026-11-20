@@ -7,7 +7,7 @@ Web NFC, and writing to NFC tags
 * KEYWORDS: Tutorials,Puck.js,NFC,Web NFC,WebNFC,Writing NFC
 * USES: Puck.js,Pixl.js,NFC
 
-Espruino Bluetooth devices like [Puck.js](/Puck.js) and [Pixl.js](/Pixl.js)
+Espruino Bluetooth devices like [Puck.js](../boards/Puck.js.md) and [Pixl.js](../boards/Pixl.js.md)
 contain a programmable NFC tag.
 
 In most cases you'd program them using `NRF.nfcURL` to make a URL available,

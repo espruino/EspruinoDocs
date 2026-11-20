@@ -10,7 +10,7 @@ Converting Bitmaps for Graphics
 This page helps you to convert an image file into a JS object that can
 be used with Espruino.
 
-See the [Graphics](/Graphics) library page for more information.
+See the [Graphics](./Graphics.md) library page for more information.
 
 <script src="/js/heatshrink.js"></script>
 <script src="/js/imageconverter.js"></script>

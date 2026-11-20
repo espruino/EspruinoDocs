@@ -10,7 +10,7 @@ AHT10 RH/TEMP Sensor
 
 The [AHT10](http://www.aosong.com/en/products-40.html) is a high precision, fully calibrated, temperature and humidity sensor chip package.
 
-Use the [AHT10](/modules/AHT10.js) module ([About Modules](/Modules)) for it.
+Use the [AHT10.js](AHT10.js) module for it.
 
 You can wire this up as follows:
 

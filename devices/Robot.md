@@ -18,9 +18,9 @@ The kit contains the chassis, motors and wheels, but you still need something to
 
 We used:
 
-* An [Espruino Board](Original) 
-* A [[L293D]] Motor Driver IC soldered on to the board
-* A [[HC-SR04]] Ultrasonic Distance Sensor so that the Robot could sense the distance to obstacles.
+* An [Espruino Board](../boards/Original.md) 
+* A [L293D](L293D.md) Motor Driver IC soldered on to the board
+* A [HC-SR04](HC-SR04.md) Ultrasonic Distance Sensor so that the Robot could sense the distance to obstacles.
 
 Using
 -----

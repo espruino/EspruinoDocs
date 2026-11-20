@@ -8,14 +8,14 @@ Internet (HTTP/TCP/UDP/etc)
 
 To use the internet in Espruino you need an internet connection. If you're using Espruino under Linux (for example Raspberry Pi or OpenWRT) then you're sorted and can use the examples below directly, otherwise you'll need a module to connect to the internet. Currently your choices are:
 
-* EspressIf [[ESP8266]] WiFi Module
-* TI [[CC3000]] WiFi Module
-* [[WIZnet]] W5500 Wired Ethernet Module
-* SIMCom [[SIM900]] GSM/GPRS Module
+* EspressIf [ESP8266](../devices/ESP8266.md) WiFi Module
+* TI [CC3000](../devices/CC3000.md) WiFi Module
+* [WIZnet](../devices/WIZnet.md) W5500 Wired Ethernet Module
+* SIMCom [SIM900](../devices/SIM900.md) GSM/GPRS Module
 
 You'll need to follow the instructions on those pages first in order to get connected to the net.
 
-Basic internet functionality is handled using the [`http`](/Reference#http), [`net`](/Reference#net) and [`tls`](/Reference#net) libraries.
+Basic internet functionality is handled using the [`http`](https://www.espruino.com/Reference#http), [`net`](https://www.espruino.com/Reference#net) and [`tls`](https://www.espruino.com/Reference#net) libraries.
 
 Contents
 --------
@@ -176,7 +176,7 @@ require("http").createServer(onPageRequest).listen(8080);
 ```
 
 However for real use cases you'll probably want to use Forms and HTTP POST
-requests, and [there's an example of doing that here](/Posting+Forms)
+requests, and [there's an example of doing that here](../tutorials/Posting Forms.md)
 
 ### Transferring files
 
@@ -275,7 +275,7 @@ var client = require("net").connect({host: "my.url.com", port: 1234}, function()
   console.log('client connected');
   client.write("Hello");
   client.on('data', function(data) {
-    console.log(">"+JSON.stringify(data));    
+    console.log(">"+JSON.stringify(data));
   });
   client.on('end', function() {
     console.log('client disconnected');
@@ -287,7 +287,7 @@ var client = require("net").connect({host: "my.url.com", port: 1234}, function()
 HTTPS
 -----
 
-The only boards currently supporting this are the Espruino [[Pico]] and [[WiFi]].
+The only boards currently supporting this are the Espruino [Pico](../boards/Pico.md) and [WiFi](../boards/WiFi.md).
 To use HTTPS simply use it in the URL of any normal HTTP request:
 
 ```
@@ -296,13 +296,13 @@ require("http").get("https://www.google.com", function(res) {
 });
 ```
 
-To specify keys and certificates, you can use an options object - see [`require('tls').connect(...)`](/Reference#l_tls_connect)
+To specify keys and certificates, you can use an options object - see [`require('tls').connect(...)`](https://www.espruino.com/Reference#l_tls_connect)
 
 
 TLS
 ---
 
-The only boards currently supporting this are the Espruino [[Pico]] and [[WiFi]].
+The only boards currently supporting this are the Espruino [Pico](../boards/Pico.md) and [WiFi](../boards/WiFi.md).
 Just use it as follows:
 
 ```
@@ -312,7 +312,7 @@ require("tls").connect("my.url.com:1234", function(c) {
 });
 ```
 
-See [`require('tls').connect(...)`](/Reference#l_tls_connect) for more information.
+See [`require('tls').connect(...)`](https://www.espruino.com/Reference#l_tls_connect) for more information.
 
 
 UDP / Datagram

@@ -8,7 +8,7 @@ Troubleshooting
 
 What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Forum](http://forum.espruino.com).
 
-**Do you have a Bluetooth LE device like [Puck.js](/Puck.js) or [Pixl.js](/Pixl.js)?** Check out the [Bluetooth specific troubleshooting page](/Troubleshooting+BLE)
+**Do you have a Bluetooth LE device like [Puck.js](../boards/Puck.js.md) or [Pixl.js](../boards/Pixl.js.md)?** Check out the [Bluetooth specific troubleshooting page](./Troubleshooting BLE.md)
 
 * APPEND_TOC
 
@@ -36,16 +36,16 @@ Hold down BTN1, and then press and release RST while keeping BTN1 held. The Blue
 
 ### On a Bluetooth LE device
 
-Check out the [Puck.js troubleshooting page](/Puck.js#troubleshooting)
+Check out the [Puck.js troubleshooting page](../boards/Puck.js.md#troubleshooting)
 
 ### On other boards
 
-If you've bought a different board, it won't come pre-installed with Espruino. You'll have to go to the [[Download]] page and follow the instructions there in order to flash the correct software onto it.
+If you've bought a different board, it won't come pre-installed with Espruino. You'll have to go to the [Download](../tutorials/Auto Data Download.md) page and follow the instructions there in order to flash the correct software onto it.
 
 
 ## My board doesn't appear as a USB Serial port in Windows
 
-Windows versions before 10 don't come with the correct drivers preinstalled. You'll need to install [ST's VCP drivers](/Quick+Start+USB#plugging-in) first.
+Windows versions before 10 don't come with the correct drivers preinstalled. You'll need to install [ST's VCP drivers](../tutorials/Quick Start USB.md#plugging-in) first.
 
 **NOTE:** It's not enough to just open the ZIP file and run the installer, you have to then go to the installation directory and run the correct installer as well. See the readme file in the ZIP above for more information.
 
@@ -187,7 +187,7 @@ If you get a glowing blue LED, it's because you pressed **BTN1** too quickly aft
 
 ### Puck.js
 
-See [the instructions on the Puck.js page](/Puck.js#i-saved-some-code-and-my-puck-js-no-longer-works)
+See [the instructions on the Puck.js page](../boards/Puck.js.md#i-saved-some-code-and-my-puck-js-no-longer-works)
 
 ### Finally
 
@@ -235,7 +235,7 @@ setTimeout(onInit, 1000);
 
 When saving, you may then want to remove the `setTimeout` line,
 upload, and then save (unless you're sure that calling `onInit` twice
-will not cause problems). See [the page on Saving](/Saving) for more
+will not cause problems). See [the page on Saving](./Saving.md) for more
 information.
 
 
@@ -243,7 +243,7 @@ information.
 
 Some devices (such as LCDs and WiFi) require their own initialisation code which Espruino can't remember. To do that initialisation at boot time, write a function called `onInit` which contains the initialisation code for your device. After typing `save()`, it will be executed at power on or reset.
 
-See [the page on Saving](/Saving) for more information.
+See [the page on Saving](./Saving.md) for more information.
 
 
 ## I typed `save()` but Espruino won't work (or stops working quickly) when powered from a computer (it only works from a USB power supply, battery, or the computer when the Web IDE is running)
@@ -267,13 +267,13 @@ This will call `setConsole` 1 second after boot, by which time USB should have i
 
 **Note:** Serial ports are not generally as fast as USB - 9600 baud is only around 1000 characters/second. If your code writes a lot of data to the console then you may find it fills up the output buffer and ends up stalled waiting for characters to send.
 
-**Note:** We're using `Serial1` and `USB` in the examples here, but depending on the board you have, you may also have access to other devices like `Serial2/3/4` or `Bluetooth`. Check out [the `Serial` class reference](/Reference#Serial) for a full list of options.
+**Note:** We're using `Serial1` and `USB` in the examples here, but depending on the board you have, you may also have access to other devices like `Serial2/3/4` or `Bluetooth`. Check out [the `Serial` class reference](https://www.espruino.com/Reference#Serial) for a full list of options.
 
 
 <a name="console"></a>
 ## Espruino works when connected to a computer, but stops when powered from something else
 
-Do you have a Serial device connected to pins `B6`/`B7` on the [Pico](/Pico) or [WiFi](/WiFi), or `A9`/`A10` on the [Original Espruino](/Original)? When disconnected from USB, Espruino's REPL/'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` - which is on those pins. If you've got a [Serial](/USART) device on those pins then it will then stop working.
+Do you have a Serial device connected to pins `B6`/`B7` on the [Pico](../boards/Pico.md) or [WiFi](../boards/WiFi.md), or `A9`/`A10` on the [Original Espruino](../boards/Original.md)? When disconnected from USB, Espruino's REPL/'console' (what's on the left-hand side of the Web IDE) gets moved over to `Serial1` - which is on those pins. If you've got a [Serial](./USART.md) device on those pins then it will then stop working.
 
 To fix this, right at the top of your code that runs on initialisation (eg. the `onInit` function or `E.on('init', ...)` event), add the line `USB.setConsole()`, which will force the console onto USB. After `USB.setConsole()`, the console can still automatically move back to `Serial1` if there is some event that forces it (USB connect and disconnect), so you can *force* the console to stay on USB regardless with `USB.setConsole(true)` instead.
 
@@ -337,7 +337,7 @@ else {
 
 Then now we have a problem. Halfway through, Espruino sees that the first `if` statement is complete and executes, and it's now given a line that starts `else {` that isn't a valid statement.
 
-The easiest way to fix this is to write code in something similar to the [K&R style](http://en.wikipedia.org/wiki/Indent_style#K.26R_style). See the [Coding Style](/Coding+Style) page for more information.
+The easiest way to fix this is to write code in something similar to the [K&R style](http://en.wikipedia.org/wiki/Indent_style#K.26R_style). See the [Coding Style](../info/Code Style.md) page for more information.
 
 ```
 if (true) {
@@ -367,23 +367,23 @@ This could be for several reasons:
 * Many of the other boards don't have enough memory for all the functionality of the Espruino Board, so things (such as Waveform, HTTP, and sometimes even Graphics) have had to be removed.
 * As we only make any money from the Espruino Boards, we can't afford to spend time implementing functionality on other boards - so even if the board you have has enough memory, the functionality the example is using may still not be implemented.
 
-In short, if you want to be sure that all the functionality you want is implemented, support us and [buy an Espruino board!](/Order)
+In short, if you want to be sure that all the functionality you want is implemented, support us and [buy an Espruino board!](https://www.espruino.com/Order)
 
 Electrical
 =========
 
-## I've connected a [[Serial]] device like a GPS, but I'm not getting a signal.
+## I've connected a [Serial](../info/USART.md) device like a GPS, but I'm not getting a signal.
 
-For normal [[Serial]] communications, you have two wires - RX and TX. However these are relative to the device - for instance TX on the Espruino transmits data out of Espruino, and TX on a GPS transmits data out of the GPS. That means that for the devices to communicate you must connect RX to TX and vice versa.
+For normal [Serial](../info/USART.md) communications, you have two wires - RX and TX. However these are relative to the device - for instance TX on the Espruino transmits data out of Espruino, and TX on a GPS transmits data out of the GPS. That means that for the devices to communicate you must connect RX to TX and vice versa.
 
-[[Serial]] ports also have to have a communications speed (baud rate) set up - you'll need to make sure that each device has exactly the same baud rate or they won't be able to communicate. For devices such as a GPS, you should find the baud rate in the datasheet.
+[Serial](../info/USART.md) ports also have to have a communications speed (baud rate) set up - you'll need to make sure that each device has exactly the same baud rate or they won't be able to communicate. For devices such as a GPS, you should find the baud rate in the datasheet.
 
 If you're still having problems, look at the next item too.
 
 
 ## I've connected an external device but I'm not getting a reliable signal
 
-This could be because your devices aren't sharing the same ground. For example if you have [[Serial]] communications set up, two wires will get mentioned a lot - RX and TX. However you *also* need to have ground connected, meaning you actually need 3 wires. Ground is required for pretty much everything: [[Serial]], [[I2C]], [[SPI]], [[OneWire]], and even simple logic signals from something like a [[Pyroelectric]] sensor.
+This could be because your devices aren't sharing the same ground. For example if you have [Serial](../info/USART.md) communications set up, two wires will get mentioned a lot - RX and TX. However you *also* need to have ground connected, meaning you actually need 3 wires. Ground is required for pretty much everything: [Serial](../info/USART.md), [I2C](I2C.md), [SPI](SPI.md), [OneWire](OneWire.md), and even simple logic signals from something like a [Pyroelectric](../devices/Pyroelectric.md) sensor.
 
 ## I've connected an I2C device, but I get 'timeout' errors
 
@@ -400,4 +400,4 @@ Something else is wrong!
 
 Check out the [Espruino Forums](http://forum.espruino.com/)
 
-Is your device a Bluetooth device? Check out the [Bluetooth Troubleshooting page](/Troubleshooting+BLE)
+Is your device a Bluetooth device? Check out the [Bluetooth Troubleshooting page](./Troubleshooting BLE.md)

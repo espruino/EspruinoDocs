@@ -12,30 +12,30 @@ What is Espruino?
 Espruino is a JavaScript Interpreter for Microcontrollers that makes embedded
 software development quick and easy. The Espruino interpreter is Open Source
 firmware that runs on a variety of different microcontrollers, but we also make
-[Espruino Boards](/Order) that come with the interpreter pre-installed and
+[Espruino Boards](https://www.espruino.com/Order) that come with the interpreter pre-installed and
 are the easiest devices to get started with.
 
 Espruino itself isn't just the interpreter firmware or hardware - there's also the
-[Web IDE](/Web+IDE), command-line tools, documentation, tutorials, and modules
+[Web IDE](../tutorials/Web IDE.md), command-line tools, documentation, tutorials, and modules
 which form a complete solution for embedded software development.
 
 
 Having problems with your Espruino Board?
 ---------------------------------------------------------------------------
 
-Check out the [[Troubleshooting]] page, and if that fails try posting on the [[Forum]]
+Check out the [Troubleshooting](Troubleshooting.md) page, and if that fails try posting on the [Forum](Tips and Tricks.md)
 
 
 It's plugged into my PC/Mac - what do I do now?
 ---------------------------------------------------------------------------
 
-Have a look at our [[Quick Start]] page - this will walk you through exactly what you need to do.
+Have a look at our [Quick Start](../tutorials/Quick Start.md) page - this will walk you through exactly what you need to do.
 
 
 Is there a forum where I can get help?
 ---------------------------------------------------------------------------
 
-Yes! It's [right here](/Forum)
+Yes! It's [right here](http://forum.espruino.com)
 
 
 Is Espruino related to ESP8266/ESP32/Espressif?
@@ -54,7 +54,7 @@ Is Espruino Open Source?
 
 Yes! It's [all available on GitHub](https://github.com/espruino). The main
 firmware is an MPLv2 License. If you're thinking of using Espruino for
-your business then please get in touch. [There may be mutually beneficial ways to work together](/Business).
+your business then please get in touch. [There may be mutually beneficial ways to work together](https://www.espruino.com/Business).
 
 
 Why JavaScript?
@@ -125,7 +125,7 @@ My code is lost when the power is removed from Espruino. What can I do?
 ---------------------------------------------------------------------------
 
 It's as easy as typing `save()` in the left-hand side of the IDE. When power is re-applied Espruino will resume where it left off, remembering timers, watches, and even pin state. For certain things (like initialising connected hardware like displays) you'll want to run some code when Espruino starts up, in which case you can just add a function called `onInit()` - this will be executed each time Espruino starts.
-For more information, see [the page on Saving](/Saving).
+For more information, see [the page on Saving](./Saving.md).
 
 
 Can I use Espruino to control things from a program on my PC?
@@ -133,7 +133,7 @@ Can I use Espruino to control things from a program on my PC?
 
 Yes! As long as you have a way to send data to the serial port from your program it's simple. All you need to do is send the command `echo(0)` - which stops the 'user interface' part of Espruino getting in the way. Then you can send and receive data using commands like `print(analogRead(A0))`.
 
-For more information, see the page on [Interfacing with a PC](/Interfacing).
+For more information, see the page on [Interfacing with a PC](./Interfacing.md).
 
 
 How fast is Espruino?
@@ -147,9 +147,9 @@ To give you a rough idea of speed, the following code will create a 1.5kHz squar
 setInterval("digitalWrite(LED1,l=!l)",1000/3000);
 ```
 
-So it is executing 3000 times a second while allowing you to run other tasks in the background. You can however create much faster square waves using the [[PWM]] peripherals. For more information, check out the [page on Performance](/Performance).
+So it is executing 3000 times a second while allowing you to run other tasks in the background. You can however create much faster square waves using the [PWM](PWM.md) peripherals. For more information, check out the [page on Performance](./Performance.md).
 
-What isn't Espruino suitable for? Video rendering/processing or analysing large amounts of data. However you can always add [Inline Assembly](/Assembler), [Inline C](/InlineC) or [precompiled JS code](/Compilation) if you need some part of your project to execute very quickly.
+What isn't Espruino suitable for? Video rendering/processing or analysing large amounts of data. However you can always add [Inline Assembly](./Assembler.md), [Inline C](./InlineC.md) or [precompiled JS code](./Compilation.md) if you need some part of your project to execute very quickly.
 
 
 How power efficient is Espruino?
@@ -159,7 +159,7 @@ Very. Because it is event based, the Espruino interpreter can put itself to slee
 
 This means that code written for Espruino will be substantially more power efficient than the same code written in C, unless the C programmer has explicitly added code to enter low power sleep modes.
 
-[[Power Consumption]] depends on the board you're using, but for a device like [Puck.js](/Puck.js) power consumption when idle can be as little as 3uA (0.000003 Amps).
+[Power Consumption](Power Consumption.md) depends on the board you're using, but for a device like [Puck.js](../boards/Puck.js.md) power consumption when idle can be as little as 3uA (0.000003 Amps).
 
 
 How much power can I supply from Espruino's Pins?
@@ -169,9 +169,9 @@ See the table below:
 
 |  Board Type   |   Current on one IO  | Sum of current on all IO |
 |---------------|----------------------|--------------------------|
-| [[Original]]  |   25mA               |  120mA                   |
-| [[Pico]]<br>[[WiFi]]  |   20mA               |  120mA                   |
-| [Puck.js](/Puck.js)<br>[Pixl.js](/Pixl.js)<br>[[MDBT42Q]]   |   15mA               |  15mA ([info](https://devzone.nordicsemi.com/f/nordic-q-a/15800/gpio-sink-current-on-nrf52832))                   |
+| [Original](../boards/Original.md)  |   25mA               |  120mA                   |
+| [Pico](../boards/Pico.md)<br>[WiFi](../boards/WiFi.md)  |   20mA               |  120mA                   |
+| [Puck.js](../boards/Puck.js.md)<br>[Pixl.js](../boards/Pixl.js.md)<br>[MDBT42Q](../boards/MDBT42Q.md)   |   15mA               |  15mA ([info](https://devzone.nordicsemi.com/f/nordic-q-a/15800/gpio-sink-current-on-nrf52832))                   |
 
 
 Is Espruino 100% JavaScript compatible?
@@ -179,30 +179,30 @@ Is Espruino 100% JavaScript compatible?
 
 Espruino implements a (large) subset of the full JavaScript specification, but it isn't 100% complete. We aim to make all functionality we do implement as standards-compliant as possible.
 
-Please check out [the Espruino Features Table](/Features) for a comprehensive
+Please check out [the Espruino Features Table](./Features.md) for a comprehensive
 list of the language features supported in Espruino.
 
-While we implement [a lot of JavaScript's standard library](/Reference), some of the less-used parts are missing because there just isn't enough memory to include them.
+While we implement [a lot of JavaScript's standard library](https://www.espruino.com/Reference), some of the less-used parts are missing because there just isn't enough memory to include them.
 
-**In reality, if you're writing normal JavaScript code then you're unlikely to notice any difference between Espruino and normal JavaScript.** If you do hit any problems, please post up in the [[Forum]] with a code example and we will try and fix it if it's a bug, or a feature that we think people will use.
+**In reality, if you're writing normal JavaScript code then you're unlikely to notice any difference between Espruino and normal JavaScript.** If you do hit any problems, please post up in the [Forum](Tips and Tricks.md) with a code example and we will try and fix it if it's a bug, or a feature that we think people will use.
 
 
 Will Espruino work on my board?
 ---------------------------------------------------------------------------
 
-If it's listed on our [[Other Boards]] page, then yes. If it isn't, and it contains a similar processor with the same amount (or more) of Flash and RAM, then give it a try - [check out GitHub](https://github.com/espruino/Espruino) for build instructions!
+If it's listed on our [Other Boards](../boards/Other Boards.md) page, then yes. If it isn't, and it contains a similar processor with the same amount (or more) of Flash and RAM, then give it a try - [check out GitHub](https://github.com/espruino/Espruino) for build instructions!
 
 We have [a special section of the forum](http://forum.espruino.com/microcosms/1085/) that you can ask questions or post your progress in.
 
 **Note:** Due to the large number of supported boards (over 50) we're now unable
 to accept support for new boards into the main Espruino codebase. You can always
-maintain a fork, or we can [support your board for a small monthly fee](/Business).
+maintain a fork, or we can [support your board for a small monthly fee](https://www.espruino.com/Business).
 
 
 Can I use official Espruino Boards in my product? How long will you keep making them for?
 ---------------------------------------------------------------------------
 
-Yes, we'd encourage you to use our products in your product - many of them such as [[Pico]] or the [[MDBT42Q]] are designed to be easy to embed.
+Yes, we'd encourage you to use our products in your product - many of them such as [Pico](../boards/Pico.md) or the [MDBT42Q](../boards/MDBT42Q.md) are designed to be easy to embed.
 
 Espruino has been available since 2012 and isn't going anywhere. We'll keep making and supporting **all of our boards** for the forseeable future. However if something unexpected were to happen, the Espruino software and hardware is Open Source so you'll still be able to make your own boards (other companies can start making them too) - meaning that any product using Espruino can be produced for years to come.
 
@@ -211,7 +211,7 @@ Can I sell boards containing the Espruino software?
 ---------------------------------------------------------------------------
 
 Yes, as long as you abide by the terms of Espruino's MPLv2 licence and respect the Espruino trademark (eg. don't call your board an Espruino board unless agreed with us).
-However, if you are profiting from the community's hard work then we'd apprectiate it if you could find a way to contribute something back - for instance you could [[Donate]], or [pay us to produce builds of Espruino for your device](/Business).
+However, if you are profiting from the community's hard work then we'd apprectiate it if you could find a way to contribute something back - for instance you could [Donate](https://www.espruino.com/Donate), or [pay us to produce builds of Espruino for your device](https://www.espruino.com/Business).
 
 
 How much Flash memory is free after installing Espruino, and can I use it?
@@ -219,24 +219,24 @@ How much Flash memory is free after installing Espruino, and can I use it?
 
 It depends on your device. Espruino uses between 100kb and 200kb of Flash, plus roughly the same amount of flash as you have RAM if you want to save programs. On smaller devices such as the Olimexino, this means that there is hardly any flash memory free, but on most modern boards you'll be fine.
 
-On nearly all boards you can use the built-in [Flash](/Reference#Flash) or [Storage](/Reference#Storage) Libraries to not only get access to Flash memory, but to find out which areas of memory are available for use.
+On nearly all boards you can use the built-in [Flash](https://www.espruino.com/Reference#Flash) or [Storage](https://www.espruino.com/Reference#Storage) Libraries to not only get access to Flash memory, but to find out which areas of memory are available for use.
 
 
 Espruino doesn't support some of my chip's functionality. Can I use it anyway?
 ---------------------------------------------------------------------------
 
-Yes! We have added [peek32](/Reference#l__global_peek32) and [poke32](/Reference#l__global_poke32) instructions which allow you to directly access anything in the ARM's address space.
+Yes! We have added [peek32](https://www.espruino.com/Reference#l__global_peek32) and [poke32](https://www.espruino.com/Reference#l__global_poke32) instructions which allow you to directly access anything in the ARM's address space.
 
 To get you started there's:
 
-* A tutorial on [accessing the STM32F4 counters/timers directly](/STM32+Peripherals)
-* [A library for accessing the peripherals on the NRF52](/NRF52LL)
+* A tutorial on [accessing the STM32F4 counters/timers directly](../tutorials/STM32 Peripherals.md)
+* [A library for accessing the peripherals on the NRF52](../devices/NRF52LL.md)
 
 
 Is there an editor that can be used instead of typing everything into a terminal window?
 ---------------------------------------------------------------------------------------
 
-Yes. [Check here for details of your available options](/Programming)
+Yes. [Check here for details of your available options](./Programming.md)
 
 ## What are the two panes of the Web IDE for?
 
@@ -256,7 +256,7 @@ This has to be different to the editor on the right-hand side (highlight, then `
 When is code executed?
 ---------------------------
 
-When you write code in the right-hand pane of the Espruino IDE and click `Send to Espruino`, by default the code is sent to Espruino almost as if you copied and pasted it into the left-hand pane (this doesn't have to be the case - see [the Saving page](/Saving)).
+When you write code in the right-hand pane of the Espruino IDE and click `Send to Espruino`, by default the code is sent to Espruino almost as if you copied and pasted it into the left-hand pane (this doesn't have to be the case - see [the Saving page](./Saving.md)).
 
 This means that if you write `var a = analogRead(A0);`, the value of `a` will be set to the voltage on `A0` *at the time you uploaded your code*. It won't be updated again, even after a reboot.
 
@@ -278,7 +278,7 @@ function onInit() {
 }
 ```
 
-But of course there can only be one `onInit` function, so if you copy and paste two bits of code with two `onInit` functions then the second function will overwrite the first. See [the Saving page](/Saving) for more information.
+But of course there can only be one `onInit` function, so if you copy and paste two bits of code with two `onInit` functions then the second function will overwrite the first. See [the Saving page](./Saving.md) for more information.
 
 
 Why is code executed at upload time?
@@ -298,15 +298,15 @@ The textual form of each array uses roughly `512` bytes. The form in the interpr
 
 By executing each line in turn, Espruino only needs `512 + 128*3` bytes maximum during upload - however if executing all at once it would need `512*3 + 128*3` bytes.
 
-If you're uploading *direct to flash memory* rather than RAM then this is less of an issue as usually there is a lot more flash memory than RAM. Espruino supports this via `Save on Send` - check out [the Saving page](/Saving) for more information. It has some benefits, but also some drawbacks - for instance you can no longer save your changes if you use the left-hand side of the IDE to modify your program.
+If you're uploading *direct to flash memory* rather than RAM then this is less of an issue as usually there is a lot more flash memory than RAM. Espruino supports this via `Save on Send` - check out [the Saving page](./Saving.md) for more information. It has some benefits, but also some drawbacks - for instance you can no longer save your changes if you use the left-hand side of the IDE to modify your program.
 
 
 How do modules work?
 -------------------------
 
-Espruino contains a mix of built-in and dynamically loaded modules of code that can be used with the `require(...)` function. Built-in modules are documented in the [[Reference]], and can be used without any need for the Web IDE and an internet connection. However on some boards you may find that these modules are not included (as there may not be enough space).
+Espruino contains a mix of built-in and dynamically loaded modules of code that can be used with the `require(...)` function. Built-in modules are documented in the [Reference](https://www.espruino.com/Reference), and can be used without any need for the Web IDE and an internet connection. However on some boards you may find that these modules are not included (as there may not be enough space).
 
-Dynamically loaded modules are uploaded to Espruino by the Web IDE *on demand*. They are usually documented on the main Espruino site, under [[Modules]]. When you type something like `require("PCD8544")` and then click `Send to Espruino` in the Web IDE, the Web IDE scans your code for any `require` statements, and if it doesn't think they are built-in, it looks online (usually in http://www.espruino.com/modules/) to find the module (you can configure this from Settings). It then downloads the module and uploads it to Espruino just before your code.
+Dynamically loaded modules are uploaded to Espruino by the Web IDE *on demand*. They are usually documented on the main Espruino site, under [Modules](../Modules.md). When you type something like `require("PCD8544")` and then click `Send to Espruino` in the Web IDE, the Web IDE scans your code for any `require` statements, and if it doesn't think they are built-in, it looks online (usually in http://www.espruino.com/modules/) to find the module (you can configure this from Settings). It then downloads the module and uploads it to Espruino just before your code.
 
 If dynamically loaded modules can't be found by the Web IDE, nothing is uploaded to the Espruino. When Espruino encounters a `require` statement that isn't built in or wasn't pre-loaded by the Web IDE it tries to look on the SD card for the module in the `node_modules` directory. If it can't find anything there (or there's no SD card!) then it will fail.
 
@@ -335,18 +335,20 @@ function hello()
 
 The Web IDE automatically replaces newline characters with `Alt-Enter` in code when it sends it to Espruino from the editor on the right-hand side (so you can write in whatever coding style you want in the right-hand editor window), however we'd still recommend that you use the same coding style as the examples in case you do want to copy+paste a single function into the left-hand side for debugging.
 
+See [Code Style](../info/Code Style.md) for more information.
+
 
 What is efficient and what isn't? How can I write the fastest code?
 ---------------------------------------------------------------------------
 
-See our [[Performance]] Notes page.
+See our [Performance](Performance.md) Notes page.
 
 
 Is there a `delay()` function in Espruino?
 ---------------------------------------------------------------------------
 
-There's [setTimeout](/Reference#l__global_setTimeout) which will execute a callback
-function after a certain time period, and there is also [digitalPulse](/Reference#l__global_digitalPulse)
+There's [setTimeout](https://www.espruino.com/Reference#l__global_setTimeout) which will execute a callback
+function after a certain time period, and there is also [digitalPulse](https://www.espruino.com/Reference#l__global_digitalPulse)
 hich can be used to send carefully timed pulses.
 
 An actual delay function isn't implemented because it encourages you to write code
@@ -365,7 +367,7 @@ and/or `digitalPulse` - the end result will be a much faster, more efficient pie
 Can I save values to Espruino - does it have an EEPROM?
 --------------------------------------------------------
 
-While there aren't any EEPROMS on Espruino boards, there is [the Storage Module](/Reference#Storage)
+While there aren't any EEPROMS on Espruino boards, there is [the Storage Module](https://www.espruino.com/Reference#Storage)
 which provides a simple filesystem that you can use to save data. It uses flash memory,
 but provides simple wear-levelling to improve the lifetime of the flash memory.
 
@@ -378,14 +380,14 @@ Mainly it's because of memory usage.
 Modern PCs have around 1,000,000 times more RAM than microcontrollers, so even with the
 most serious of diets a desktop JavaScript implementation just isn't going to fit.
 
-Check out [Espruino Performance Notes](/Performance) to see some of the things we
+Check out [Espruino Performance Notes](./Performance.md) to see some of the things we
 have to do to make it fit.
 
 
 Can I program the Espruino Boards in languages other than JavaScript?
 ---------------------------------------------------------------------------
 
-Yes. Espruino boards use relatively standard ST Microelectronics or Nordic Semiconductor ARM Cortex M3/M4 chips, so any tool that will produce code for those can be used to program the boards. There are extremely good C and C++ compilers available, as well as [Lua](http://www.eluaproject.net/) and [Python](http://micropython.org/) interpreters for the Cortex M4 chip that is in the [[Pico]].
+Yes. Espruino boards use relatively standard ST Microelectronics or Nordic Semiconductor ARM Cortex M3/M4 chips, so any tool that will produce code for those can be used to program the boards. There are extremely good C and C++ compilers available, as well as [Lua](http://www.eluaproject.net/) and [Python](http://micropython.org/) interpreters for the Cortex M4 chip that is in the [Pico](../boards/Pico.md).
 
 Instead of replacing the Espruino JavaScript interpreter you can also transcompile other languages to JavaScript, or can write your own extensions to it using C and C++. There's some more information on that [here](https://github.com/espruino/Espruino/blob/master/libs/README.md).
 
@@ -393,17 +395,17 @@ Instead of replacing the Espruino JavaScript interpreter you can also transcompi
 Will you be showing Espruino off an any events?
 ---------------------------------------------------------------------------
 
-Yes! Check out out [Events Page](/Events) to get an idea of events we'll be at,
+Yes! Check out out [Events Page](https://www.espruino.com/Events) to get an idea of events we'll be at,
 and those we have attended in the past.
 
 
 I want to write an article on Espruino. Can I get high resolution Pictures?
 ---------------------------------------------------------------------------
 
-Yes! Head to our [[Press]] page. Feel free to [[Contact Us]] if you have any other questions!
+Yes! Head to our [Press](https://www.espruino.com/Press) page. Feel free to [Contact Us](https://www.espruino.com/Contact+Us) if you have any other questions!
 
 
 Have we not answered your question here?
 ---------------------------------------------------------------------------
 
-Please try asking on the [[Forum]].
+Please try asking on the [Forum](Tips and Tricks.md).

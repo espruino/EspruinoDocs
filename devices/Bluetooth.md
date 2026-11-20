@@ -6,7 +6,7 @@ Bluetooth
 
 * KEYWORDS: Bluetooth,Wireless,BT,HC-05,HC05,Built-In,Radio,Transceiver
 
-**Note:** This page covers adding Bluetooth on the [Original Espruino Board](/Original).
+**Note:** This page covers adding Bluetooth on the [Original Espruino Board](../boards/Original.md).
 We now [sell Espruino devices](https://shop.espruino.com/ble) with Bluetooth LE capability pre-installed.
 
 ![HC-05 front](Bluetooth/HC05_front.jpg)
@@ -21,11 +21,11 @@ Connecting
 
 [[http://youtu.be/J0HJVTDNSUQ]]
 
-The [Espruino Board](/Original) has pads on it already for the placement of an HC-05 Bluetooth module, so it's very easy to connect. Note that while there are many connections on the HC-05 module, only 4 of them are needed.
+The [Espruino Board](../boards/Original.md) has pads on it already for the placement of an HC-05 Bluetooth module, so it's very easy to connect. Note that while there are many connections on the HC-05 module, only 4 of them are needed.
 
-For the Espruino [[Pico]], there is [an adaptor shim available](/Shims#bluetooth-0-1-adaptor) that makes connecting Bluetooth a lot easier!
+For the Espruino [Pico](../boards/Pico.md), there is [an adaptor shim available](../info/Shims.md#bluetooth-0-1-adaptor) that makes connecting Bluetooth a lot easier!
 
-See the [[Wiring Up]] page if you want to connect Bluetooth to something other than the Espruino Board.
+See the [Wiring Up](https://www.espruino.com/Wiring+Up) page if you want to connect Bluetooth to something other than the Espruino Board.
 
 To solder the HC-05 module, do the following:
 
@@ -105,4 +105,4 @@ Using
 Buying
 -----
 
-HC05 Bluetooth modules can be purchased from many places. If you wish to buy from eBay, make sure you get one **without** the 0.1" adaptor PCB included if you want to connect it to the [Espruino Board](/Original) ([eBay search](http://www.ebay.com/sch/i.html?_nkw=HC05+bluetooth) - around $6)
+HC05 Bluetooth modules can be purchased from many places. If you wish to buy from eBay, make sure you get one **without** the 0.1" adaptor PCB included if you want to connect it to the [Espruino Board](../boards/Original.md) ([eBay search](http://www.ebay.com/sch/i.html?_nkw=HC05+bluetooth) - around $6)

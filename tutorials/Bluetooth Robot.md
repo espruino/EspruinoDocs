@@ -14,9 +14,9 @@ Here, we'll show you how to create the bluetooth-controlled Robot that you can s
 What you need
 -----------
 
-* An Espruino board with [[Bluetooth]] and [[L293D]] Motor driver soldered on
-* A [[Battery]]
-* An assembled, two-motor [[Robot]]
+* An Espruino board with [Bluetooth](../devices/Bluetooth.md) and [L293D](../devices/L293D.md) Motor driver soldered on
+* A [Battery](../devices/Battery.md)
+* An assembled, two-motor [Robot](../devices/Robot.md)
 
 
 What to do
@@ -77,7 +77,7 @@ Serial1.on('data', function(command) {
 
 This looks on `Serial1` (the serial port that Bluetooth is connected to) and if it gets one of the letters w,s,a or d, it moves the robot.
 
-Try connecting your phone/tablet to Espruino and starting up a terminal application. See the [[Bluetooth]] page for more details.
+Try connecting your phone/tablet to Espruino and starting up a terminal application. See the [Bluetooth](../devices/Bluetooth.md) page for more details.
 
 You can now type the letters `w`,`s`,`a` and `d` on the keyboard of your device, and it'll control the Robot!
 

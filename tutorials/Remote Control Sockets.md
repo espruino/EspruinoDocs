@@ -12,7 +12,7 @@ Remote Control Sockets
 Introduction
 -----------
 
-You can now buy remote controlled sockets [very cheaply](http://www.ebay.com/sch/i.html?_nkw=remote+control+socket). If you want to turn some mains-powered things on and off with your computer but don't want to get involved with [[Relays]] and wiring up mains then controlling these could be a great idea.
+You can now buy remote controlled sockets [very cheaply](http://www.ebay.com/sch/i.html?_nkw=remote+control+socket). If you want to turn some mains-powered things on and off with your computer but don't want to get involved with [Relays](../devices/Relays.md) and wiring up mains then controlling these could be a great idea.
 
 We're going to use 'Status'-branded sockets.
 
@@ -26,7 +26,7 @@ Open up the remote control and then connect wires from Espruino to each pushbutt
 
 Or, you can buy a radio transmitter and can then try and duplicate the remote control's functionality. This is harder, but more flexible (you could control lots of sockets), and obviously more fun!
 
-The sockets I'm using are [433.92](/433Mhz)Mhz ones (it's written on the back). This band is an 'open' band - you don't need a license to use it, and it's a complete free for all. Every device has its own protocol, and they all transmit whenever they want. This means that there is quite a large likelihood that the signal that you send will not arrive intact so most devices send the same signal several times.
+The sockets I'm using are [433.92](../devices/433Mhz.md)Mhz ones (it's written on the back). This band is an 'open' band - you don't need a license to use it, and it's a complete free for all. Every device has its own protocol, and they all transmit whenever they want. This means that there is quite a large likelihood that the signal that you send will not arrive intact so most devices send the same signal several times.
 
 The Protocol
 ----------
@@ -41,14 +41,14 @@ Unless you have a storage oscilloscope, working out the protocol of your particu
 You'll Need
 ----------
 
-* An [Espruino Board](/Original) 
-* A [[433Mhz]] Radio transmitter/receiver pair
-* A [[CC3000]] module (if you want to web-enable your sockets)
+* An [Espruino Board](../boards/Original.md)
+* A [433Mhz](../devices/433Mhz.md) Radio transmitter/receiver pair
+* A [CC3000](../devices/CC3000.md) module (if you want to web-enable your sockets)
 
 Working out your code
 ------------------
 
-By far the easiest way to work our your code (and if your remote control sockets use the same protocol) would be to use a digital [storage oscilloscope](/Tools#oscilloscope), but we'll try and use the Espruino here.
+By far the easiest way to work our your code (and if your remote control sockets use the same protocol) would be to use a digital [storage oscilloscope](../info/Tools.md#oscilloscope), but we'll try and use the Espruino here.
 
 Wire the 433Mhz receiver up as follows:
 
@@ -89,11 +89,11 @@ The function `sig` is quite hard to understand. It has been written such that th
   function sig(e) {
     // set d to the time (in 0.1ms) the pulse was high or low for (makes the numbers nice and easy later on!)
     var d = 10000*(e.time-e.lastTime);
-    // If the pulse length is really out of range... 
-    // we were looking for 0.3ms or 0.9ms, so throw out anything 
+    // If the pulse length is really out of range...
+    // we were looking for 0.3ms or 0.9ms, so throw out anything
     // less than 0.2 or greater than 1ms
     if (d<2 || d>10) {
-      // it's out of range... 
+      // it's out of range...
       // if we had enough data, it could be our signal - print it!
       if (n.length>20) console.log(n);
       // now empty it
@@ -198,7 +198,7 @@ Now you'll find that when you press BTN1, it will turn Socket 1 either on or off
 Internet Enablement
 -------------------
 
-Next, Wire up the [[CC3000]] as described in [this link](/CC3000) and use the following code (Changing the WiFi access point and code):
+Next, Wire up the [CC3000](../devices/CC3000.md) as described in [this link](../devices/CC3000.md) and use the following code (Changing the WiFi access point and code):
 
 ```
 var TX = A0;
@@ -230,7 +230,7 @@ function sendMultiple(command) {
 function pageHandler(req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
   var u = url.parse(req.url, true);
-  res.write('<html><body>Socket <a href="/?s1=on">on</a> or <a href="/?s1=off">off</a></body></html>');
+  res.write('<html><body>Socket <a href="?s1=on">on</a> or <a href="?s1=off">off</a></body></html>');
   if (u.query !== null) {
     if (u.query["s1"]=="on") sendMultiple(0b11110);
     if (u.query["s1"]=="off") sendMultiple(0b01110);
@@ -239,7 +239,7 @@ function pageHandler(req, res) {
 }
 
 var wlan = require("CC3000").connect();
-wlan.connect( "AccessPointName", "WPA2key", function (s) { 
+wlan.connect( "AccessPointName", "WPA2key", function (s) {
   if (s=="dhcp") {
     console.log("Connect to http://"+wlan.getIP().ip);
     require("http").createServer(pageHandler).listen(80);

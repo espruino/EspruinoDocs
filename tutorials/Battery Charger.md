@@ -22,9 +22,9 @@ If you're anything like me you'll end up with a lot of rechargeable batteries, n
 You'll Need
 ----------
 
-* One [Espruino Pico](/Pico)
-* A long [[Breadboard]]
-* A [[PCD8544]] LCD display
+* One [Espruino Pico](../boards/Pico.md)
+* A long [Breadboard](../devices/Breadboard.md)
+* A [PCD8544](../devices/PCD8544.md) LCD display
 * Some patch wire (normal solid core wire is fine)
 * 4x 100 Ohm resistors
 * AA or AAA battery holders with pins (available from Rapid Electronics: [AA](http://www.rapidonline.com/Electrical-Power/TruPower-BH-311-1P-1-X-AA-PCB-Battery-Holder-18-2960) or [AAA](http://www.rapidonline.com/Electrical-Power/TruPower-BH-411-3P-1-X-AAA-PCB-Battery-Holder-18-2920))
@@ -36,17 +36,17 @@ Wiring Up
 ![Battery Charger Wiring](Battery Charger/wiring.jpg)
 
 * Place the breadboard with the `-` row of pins right at the bottom, and the `+` row right at the top.
-* Plug the Espruino [[Pico]] into the breadboard as far left as it will go (as in the picture)
+* Plug the Espruino [Pico](../boards/Pico.md) into the breadboard as far left as it will go (as in the picture)
 * Add a wire from Espruino's `GND` pin (on the far left) straight down to the bottom `-` row of pins. You can't see this in the picture because it's under the LCD screen.
-* Plug the [[PCD8544]] into the breadboard below the [[Pico]], with 2 pins sticking out to the right of the [[Pico]] (it should overlap the GND wire)
-* Take a patch wire and connect from pin `B1` on the [[Pico]] to the top of a column 5 pins to the right of the Pico (see the picture)
+* Plug the [PCD8544](../devices/PCD8544.md) into the breadboard below the [Pico](../boards/Pico.md), with 2 pins sticking out to the right of the [Pico](../boards/Pico.md) (it should overlap the GND wire)
+* Take a patch wire and connect from pin `B1` on the [Pico](../boards/Pico.md) to the top of a column 5 pins to the right of the Pico (see the picture)
 * Fold a 75 Ohm resistor, cut it to length, and add it diagonally between the 5th column right of the Pico and the 6th.
 * Now add 3 more sets of wires and resistors, from pins `A7`, `A6` and `A5`, to new columns, each with 7 columns of pins between it and the last. **Note:** This works for AAA batteries - for AA you will need to space the columns out a bit more.
 * Cut the pins on your battery holders down so they'll fit in the breadboard, and then place the battery holders in the breadboard at an angle: With the `+` contact relative to the resistor (as shown below), and with the `-` contact in the bottom `-` row of pins on the breadboard.
 
 ![Battery Charger](Battery Charger/batholder.jpg)
 
-* Now add 2 wires for the LCD: `B10` to the pin nearest the [[Pico]], and `B13` to the pin right on the edge.
+* Now add 2 wires for the LCD: `B10` to the pin nearest the [Pico](../boards/Pico.md), and `B13` to the pin right on the edge.
 
 And you're done!
 

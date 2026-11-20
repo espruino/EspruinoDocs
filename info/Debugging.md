@@ -8,8 +8,8 @@ Debugging Tips
 
 This page describes tips for debugging code written for Espruino - you might also want to check out:
 
-* The [Debugger page](/Debugger) for information on Espruino's built-in code debugger.
-* [Advanced Debug (SWD)](/AdvancedDebug) for information on debugging and developing with the Espruino interpreter itself (using a hardware debugger)
+* The [Debugger page](./Debugger.md) for information on Espruino's built-in code debugger.
+* [Advanced Debug (SWD)](./AdvancedDebug.md) for information on debugging and developing with the Espruino interpreter itself (using a hardware debugger)
 
 
 Contents
@@ -44,9 +44,9 @@ You can upload this, and can:
 * For bigger functions, type `edit(test)` to bring up the whole function on the input line and allow you to edit it
 * Use the up and down arrow keys to cycle through previously executed commands
 
-**Note:** Bangle.js apps (particularly clocks) have all the code inside `{ ... }` and use `let/const` to define vars, which means none of their code or variables is defined at the global scope and is easy to free (for [fast load](/Bangle.js+Fast+Load)). When debugging you may want to remove those outer brackets so you can actually check the contents of those variables (and run the functions) from the REPL as above.
+**Note:** Bangle.js apps (particularly clocks) have all the code inside `{ ... }` and use `let/const` to define vars, which means none of their code or variables is defined at the global scope and is easy to free (for [fast load](../tutorials/Bangle.js Fast Load.md)). When debugging you may want to remove those outer brackets so you can actually check the contents of those variables (and run the functions) from the REPL as above.
 
-Espruino has a built-in line-by-line debugger that can be triggered by adding the `debugger` keyword in your code, and is also accessed from the REPL. More info on the [Debugger page](/Debugger)
+Espruino has a built-in line-by-line debugger that can be triggered by adding the `debugger` keyword in your code, and is also accessed from the REPL. More info on the [Debugger page](./Debugger.md)
 
 
 Debugging when not connected
@@ -123,7 +123,7 @@ When the function is called, a stack trace will then be printed to the console.
 
 **Note:** if you want to override built-in global functions you'll need to use (for example) `global.print = ...;` and not `print = ....;`
 
-You can also just add the `debugger` keyword with `foo = function() { debugger }` and Espruino will jump into debug mode, allowing you to step out/through the code at the point that the function was executed (see the [Debugger page](/Debugger)).
+You can also just add the `debugger` keyword with `foo = function() { debugger }` and Espruino will jump into debug mode, allowing you to step out/through the code at the point that the function was executed (see the [Debugger page](./Debugger.md)).
 
 
 How often or with what arguments is a function called?
@@ -166,7 +166,7 @@ If you're using Espruino (not Bangle.js) there are [some examples of saving erro
 Memory usage
 -------------
 
-Espruino stores normal arrays as 'sparse' arrays - so each entry uses one variable. If you want to store any more than 20 items in an array, consider using types arrays like `Uint8Array` - they use less memory and are faster [more info here](/Performance#espruino-stores-normal-arrays-and-objects-in-linked-lists)
+Espruino stores normal arrays as 'sparse' arrays - so each entry uses one variable. If you want to store any more than 20 items in an array, consider using types arrays like `Uint8Array` - they use less memory and are faster [more info here](./Performance.md#espruino-stores-normal-arrays-and-objects-in-linked-lists)
 
 
 Checking for memory leaks
@@ -190,7 +190,7 @@ You can also use [EspruinoMemView](https://github.com/espruino/EspruinoMemView) 
 Memory leaks during 'fast load' (on Bangle.js)
 --------------------------------------------------
 
-There are some good examples of testing on [the Bangle.js fast load page](/Bangle.js+Fast+Load#testing-afterwards)
+There are some good examples of testing on [the Bangle.js fast load page](../tutorials/Bangle.js Fast Load.md#testing-afterwards)
 
 After you've unloaded an app, you can run `dump()` which attempts to dump the contents of RAM in a human readable form - you may be able to see some variables/functions defined there that look like they shouldn't be. It may help to uninstall all widgets first to ensure that they're not making it harder to find the real source of memory usage.
 

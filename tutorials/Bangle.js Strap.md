@@ -19,7 +19,7 @@ then pull with a pair of pliers.
 
 ![](Bangle.js Strap/pins.jpg)
 
-For full instructions check out the [Bangle.js Disassembly](/Bangle.js+Disassembly) video.
+For full instructions check out the [Bangle.js Disassembly](./Bangle.js Disassembly.md) video.
 
 
 Different Strap Colors

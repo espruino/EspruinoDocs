@@ -6,7 +6,7 @@ HTU21D Temperature and RH Sensor
 
 * KEYWORDS: Module,I2C,HTU21D,temperature,humidity
 
-The HTU21D is a low-cost, easy to use, highly accurate, digital humidity and temperature sensor.  Use the [HTU21D](/modules/HTU21D.js) ([About Modules](/Modules)) module for it.
+The HTU21D is a low-cost, easy to use, highly accurate, digital humidity and temperature sensor.  Use the [HTU21D](HTU21D.js) ([About Modules](../Modules.md)) module for it.
 
 You can wire this up as follows:
 
@@ -115,7 +115,7 @@ Possible resolutions are:
 | RH_10_BITS_TEMP_13_BITS | 10 bits | max.  5 ms     | 13 bits     | 25 ms          |
 | RH_11_BITS_TEMP_11_BITS | 11 bits | max.  8 ms     | 11 bits     |  7 ms          |
 
-Every HTU21D sensor has a unique chip identification number. Maybe you wants to tag your delivered devices?  
+Every HTU21D sensor has a unique chip identification number. Maybe you wants to tag your delivered devices?
 
 ```JavaScript
 I2C1.setup( {scl: B8, sda: B9 } );

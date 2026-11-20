@@ -7,7 +7,7 @@ Puck.js to GCP BigQuery & Data Studio
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Magnetic,GCP,Google Cloud Platform,Pub/Sub,BigQuery
 * USES: Puck.js,BLE,Only BLE
 
-This tutorial shows you how use [Puck.js](/Puck.js) and a Raspberry Pi to stream data to GCP.
+This tutorial shows you how use [Puck.js](../boards/Puck.js.md) and a Raspberry Pi to stream data to GCP.
 
 The GCP Tutorial (Temperature data to GCP BigQuery Table & Data Studio Graph):
 
@@ -22,7 +22,7 @@ The GCP Tutorial (Temperature data to GCP BigQuery Table & Data Studio Graph):
 
 Prerequesites
 --------
-* A [Puck.js](/Puck.js) device (or other [Espruino board](/Order) if you don't need Bluetooth LE
+* A [Puck.js](../boards/Puck.js.md) device (or other [Espruino board](https://www.espruino.com/Order) if you don't need Bluetooth LE
 * Raspberry Pi with Bluettoth/Wifi Capabilities and NodeRed & EspruinoHub installed on it
 * Install [Espruino Hub](https://github.com/espruino/EspruinoHub) & [NodeRed](https://www.espruino.com/BLE+Node-RED) on the Raspberry Pi
 * Set EspruinoHub & NodeRed to auto start on a reboot
@@ -314,4 +314,4 @@ BigQuery & Data Studio
 
 Buying
 ------
-[Puck.js](/Puck.js) devices can be [ordered from here](/Order#puckjs)
+[Puck.js](../boards/Puck.js.md) devices can be [ordered from here](https://www.espruino.com/Order#puckjs)

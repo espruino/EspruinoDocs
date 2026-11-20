@@ -7,8 +7,8 @@ Bangle.js Widgets
 * KEYWORDS: Tutorials,Bangle.js,Development,Widget
 * USES: Bangle.js
 
-We'll assume you've already been through the [Bangle.js Development page](/Bangle.js+Development)
-and have an idea how to get started, and have maybe looked at [making an app](/Bangle.js+First+App)
+We'll assume you've already been through the [Bangle.js Development page](./Bangle.js Development.md)
+and have an idea how to get started, and have maybe looked at [making an app](./Bangle.js First App.md)
 
 Widgets are bits of code that run in the background of other applications. For
 example the Battery level, Bluetooth Connection status, or other things. There
@@ -234,7 +234,7 @@ The widget is now installed and usable on your watch, even without the IDE!
 Adding to the App Loader
 -----------------------
 
-Checking out the page on [adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader)
+Checking out the page on [adding an app to the Bangle.js App Loader](./Bangle.js App Loader.md)
 
 Adding the widget is very similar...
 

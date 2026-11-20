@@ -6,7 +6,7 @@ LPS22HB pressure sensor
 
 * KEYWORDS: Module,I2C,LPS22HB,pressure,sensor
 
-LPS22HB is an [[I2C]] pressure sensor from ST, which is handled with the [LPS22HB](/modules/LPS22HB.js) module.
+LPS22HB is an [I2C](../info/I2C.md) pressure sensor from ST, which is handled with the [LPS22HB](LPS22HB.js) module.
 
 How to use
 ----------

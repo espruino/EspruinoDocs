@@ -22,7 +22,7 @@ You'll Need
 * An Espruino board
 * A Small Solar Powered Torch (available for around $2 on eBay).
 * An old Mobile phone battery (see below)
-* A JST battery connector (see [[EspruinoBoard]] for where to get these)
+* A JST battery connector (see [Original Espruino](../boards/Original.md) for where to get these)
 
 ![Solar Powered Torch](Small Solar Powered/torch.jpg)
 
@@ -48,14 +48,14 @@ However looking a bit closer there are some problems.
 Fixing it
 --------
 
-If your torch is actually as described (with a rechargable battery and a connected panel) [please let us know!](http://forum.espruino.com) If not, you're going to have to fit a proper rechargeable battery to it. 
+If your torch is actually as described (with a rechargable battery and a connected panel) [please let us know!](http://forum.espruino.com) If not, you're going to have to fit a proper rechargeable battery to it.
 
 ![Attaching a battery](Small Solar Powered/panel.jpg)
 
 * Carefully unsolder all the components from the board
 * Put two blobs of solder between the solar panel and the PCB - finally connecting everything up!
 * Get your old phone battery and figure out which pin is **+** and which is **-**. Often it will be marked, but you could use a voltmeter. Check the solar panel as well.
-* Get some wire and solder the panel and the JST battery connector to the battery. For more information about the JST connector, see [[EspruinoBoard]]
+* Get some wire and solder the panel and the JST battery connector to the battery. For more information about the JST connector, see [Original Espruino](../boards/Original.md)
 
 ![All attached](Small Solar Powered/battery.jpg)
 
@@ -70,8 +70,8 @@ Let's look at how much power is going in to and out of the battery:
 
 | Power | Reason |
 | ----- | ------ |
-| -110uA | Espruino in Deep Sleep - see the [[Power Consumption]] page |
-| -60uA  | Espruino might wake up (drawing 35mA) for 0.1 sec every minute - that's `35000uA * 0.1 sec / 60 sec = 58uA` | 
+| -110uA | Espruino in Deep Sleep - see the [Power Consumption](../info/Power Consumption.md) page |
+| -60uA  | Espruino might wake up (drawing 35mA) for 0.1 sec every minute - that's `35000uA * 0.1 sec / 60 sec = 58uA` |
 | +150uA | The solar panel produces around 300uA in bright sunlight, but that's maybe only half the day |
 | =&nbsp;-20uA | |
 
@@ -79,12 +79,12 @@ So it's not looking good. We're 20uA short on power (unless you're near the equa
 
 The issue here is the solar panel. At 150uA, the panel (with no Espruino) will still take over 6 months just to charge the battery!
 
-We can do better with Espruino though - in Deep Sleep, the majority of the power draw on the Espruino board is from the voltage regulator. If we're running from a Li-Ion battery we don't need the regulator and we can save a lot of power. See the [[Power Consumption]] page for details on how to remove the regulator. This brings our power draw down as follows:
+We can do better with Espruino though - in Deep Sleep, the majority of the power draw on the Espruino board is from the voltage regulator. If we're running from a Li-Ion battery we don't need the regulator and we can save a lot of power. See the [Power Consumption](../info/Power Consumption.md) page for details on how to remove the regulator. This brings our power draw down as follows:
 
 | Power | Reason |
 | ----- | ------ |
 | -30uA | Espruino in Deep Sleep with voltage regulator removed |
-| -60uA | Espruino might wake up (drawing 35mA) for 0.1 sec every minute - that's `35000uA * 0.1 sec / 60 sec = 58uA` | 
+| -60uA | Espruino might wake up (drawing 35mA) for 0.1 sec every minute - that's `35000uA * 0.1 sec / 60 sec = 58uA` |
 | +150uA | The solar panel produces around 300uA in bright sunlight, but that's maybe only half the day |
 | =&nbsp;+60uA | |
 
@@ -103,7 +103,7 @@ var currentHistory = 0;
 function onTimer() {
   currentHistory = (currentHistory+1) % history.length;
   history[currentHistory] = E.getAnalogVRef()+0.7;
-                           
+
   digitalWrite(LED1, 1);
   setTimeout(function () {
     digitalWrite(LED1, 0);
@@ -127,7 +127,7 @@ function onTimer() {
 
   currentHistory = (currentHistory+1) % history.length;
   history[currentHistory] = voltage;
-                           
+
   digitalWrite(LED1, 1);
   setTimeout(function () {
     digitalWrite(LED1, 0);

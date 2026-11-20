@@ -15,9 +15,9 @@ We'll make a simple [Slot Machine](http://en.wikipedia.org/wiki/Slot_machine) wi
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* 4x 5mm [WS2811/APA106](/WS2811) LED lights
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* 4x 5mm [WS2811/APA106](../devices/WS2811.md) LED lights
+* [Breadboard](../devices/Breadboard.md)
 * 3x Jumper Wires
 * A 47uF (or greater) Capacitor
 

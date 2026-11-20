@@ -8,7 +8,7 @@ ADS1x15 programmable gain ADC
 
 The ADS1015 (12 bit) / ADS1115 (16 bit) is a 4 channel, programmable gain Analog to Digital converter made by TI ([datasheet](http://www.ti.com/lit/ds/symlink/ads1015-q1.pdf)).
 
-Support is included in the [[ADS1X15.js]] module.
+Support is included in the [ADS1X15.js](ADS1X15.js) module.
 
 Wiring
 ------

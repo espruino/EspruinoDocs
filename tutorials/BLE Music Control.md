@@ -9,10 +9,11 @@ Bluetooth Music Controller
 
 [[http://youtu.be/3iZ9j_ga6zs]]
 
-In this video I show you how to set up [Puck.js](/Puck.js) to control
+
+In this video I show you how to set up [Puck.js](../boards/Puck.js.md) to control
 your mobile phone's music playback by pressing it in different ways.
 
-It uses [Puck.js's](/Puck.js) [Bluetooth LE HID](/Puck.js+Keyboard) capability.
+It uses [Puck.js's](../boards/Puck.js.md) [Bluetooth LE HID](../tutorials/BLE Keyboard.md) capability.
 
 You could extend this relatively easily - for instance:
 

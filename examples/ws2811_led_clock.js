@@ -11,7 +11,7 @@ The idea is to have a string of 24 LEDs, arranged in two rings of 12.
 
 Then, one LED is lit up for hours, minutes, seconds, and there's even a fast-moving one for sub-seconds.
 
-[[WS2811]] Wiring:
+[WS2811](../devices/WS2811.md) Wiring:
 
 | WS2811  | Pin on Espruino Board         |
 |---------|-------------------------------|

@@ -31,7 +31,6 @@ It also looks for a title (second line, after copyright notices) which it uses t
 
 There are a few extra bits too:
 
-* ```[[My Page]]``` links to a page on the Espruino website
 * ```[[http://youtu.be/VIDEOID]]``` puts a video on the page
 * ```![Image Title](MyFilename/foo.png)``` Adds an image. Images should be in a directory named after the filename of the file referencing them (or the same directory as the file referencing them)
 * The first image in the file (or a file named `PageName.thumb.jpg/png`) is resized and used as the thumbnail. If there's no image on the page at all it's added top-right.

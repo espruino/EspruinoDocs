@@ -17,7 +17,7 @@ and customise them for your own purposes:
 Forking and Enabling GitHub pages
 ----------------------------------
 
-Follow the tutorial on [Adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader)
+Follow the tutorial on [Adding an app to the Bangle.js App Loader](./Bangle.js App Loader.md)
 to get a GitHub fork set up with GitHub pages.
 
 Your own App Loader should now be available on https://your_user_name.github.io/BangleApps/

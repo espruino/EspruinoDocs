@@ -10,19 +10,19 @@ Arduino Ethernet and SD card shield (WIZnet W5100)
 ![WIZnet W5100 Ethernet shield](arduino-w5100/arduino-w5100.jpg)
 
 Standard Arduino Ethernet shields use the WIZnet W5100 chip, which provides
-hardware support for TCP/IP. The W5100 is supported out by [Pixl.js](/Pixl.js)
+hardware support for TCP/IP. The W5100 is supported out by [Pixl.js](../boards/Pixl.js.md)
 **when the `espruino_2vxx_pixljs_wiznet.zip` firmware is installed**.
-[See here](/Pixl.js#firmware-updates) for more information.
+[See here](../boards/Pixl.js.md#firmware-updates) for more information.
 
 Most other offical Espruino boards have firmware with support for the
-[WIZnet W5500](/WIZnet) and will not work with the W5100 without
+[WIZnet W5500](./WIZnet.md) and will not work with the W5100 without
 a special firmware build.
 
 Wiring
 ------
 
 The Ethernet shield shown above exposes the W5100 through pins on
-the Arduino 2x3 pin `ICSP` header (which isn't present on [Pixl.js](/Pixl.js))
+the Arduino 2x3 pin `ICSP` header (which isn't present on [Pixl.js](../boards/Pixl.js.md))
 rather than the standard Arduino footprint.
 
 To connect it up, you will need to add 3 wires to the shield (mirroring the
@@ -72,7 +72,7 @@ Software
 ---------
 
 As of Espruino 2v25, **you'll need the `espruino_2vxx_pixljs_wiznet.zip` firmware installed**.
-[See here](/Pixl.js#firmware-updates) for more information.
+[See here](../boards/Pixl.js.md#firmware-updates) for more information.
 
 ## Ethernet
 
@@ -129,9 +129,9 @@ require("http").createServer(pageHandler).listen(80);
 console.log("Connect to http://"+eth.getIP().ip)
 ```
 
-Functions that are available on `eth` are documented in [the Ethernet Class](/Reference#Ethernet)
+Functions that are available on `eth` are documented in [the Ethernet Class](https://www.espruino.com/Reference#Ethernet)
 
-See the [Internet](/Internet) page for more examples
+See the [Internet](../info/Internet.md) page for more examples
 of things you can do on Espruino  with an Internet connection.
 
 ## SD Card
@@ -156,7 +156,7 @@ require("fs")writeFileSync("test.txt","Some Data");
 print(require("fs").readFileSync("test.txt"));
 ```
 
-See [the page on File IO](/File+IO) for more information.
+See [the page on File IO](../info/File IO.md) for more information.
 
 Using
 -----

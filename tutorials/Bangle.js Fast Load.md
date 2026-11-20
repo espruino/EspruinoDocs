@@ -30,7 +30,7 @@ or reset to the correct state can cause a memory leak or interfere with the
 next app.
 
 There are a few things you need to get right with your app. As an example we'll
-use this code ([from here](/Bangle.js+Clock+Font))
+use this code ([from here](./Bangle.js Clock Font.md))
 
 ```JS
 // timeout used to update every minute
@@ -233,7 +233,7 @@ by the library that will remove that.
 
 If the library registers for input and can't be unloaded then it may not be suitable for 'fast load'.
 
-As an example, the [`clock_info.js`](/Bangle.js Clock Info) module allows you to
+As an example, the [`clock_info.js`](./Bangle.js Clock Info.md) module allows you to
 add custom information to your clock face:
 
 ```JS
@@ -249,7 +249,7 @@ need to call in your `remove` function:
 clockInfoMenu.remove();
 ```
 
-Or if your app used the [`widget_utils.js`](/Bangle.js+Hideable+Widgets) module
+Or if your app used the [`widget_utils.js`](./Bangle.js Hideable Widgets.md) module
 to hide widgets (or make them swipeable) it must use `.show()` to show them again.
 
 Libraries also stay in memory once used, but this is not a problem. For instance if

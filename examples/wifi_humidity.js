@@ -7,7 +7,7 @@ WiFi Xively Humidity/Temperature Sensor with Display
 
 ![WiFi Humidity](wifi_humidity.jpg)
 
-This is a Wireless Humidity/Temperature sensor that displays information as well as uploading it to [Xively](http://xively.com). For more information on using Xively or other services see the [[IoT Services]] page.
+This is a Wireless Humidity/Temperature sensor that displays information as well as uploading it to [Xively](http://xively.com). For more information on using Xively or other services see the [IoT Services](../info/IoT Services.md) page.
 
 To set this up:
 
@@ -23,11 +23,11 @@ Then all you have to do is copy the code to Espruino and type `onInit()` to star
 Wiring
 ------
 
-The [[CC3000]], [[PCD8544]] and [[DHT11]] have been arranged such that that can all be soldered onto the board.
+The [CC3000](../devices/CC3000.md), [PCD8544](../devices/PCD8544.md) and [DHT11](../devices/DHT11.md) have been arranged such that that can all be soldered onto the board.
 
-[[CC3000]] connected as described on that page. An external aerial has been soldered on to increase the range.
+[CC3000](../devices/CC3000.md) connected as described on that page. An external aerial has been soldered on to increase the range.
 
-[[PCD8544]] LCD connected as follows:
+[PCD8544](../devices/PCD8544.md) LCD connected as follows:
 
 | LCD pin | Pin type | Example pin on Espruino Board |
 |---------|----------|-------------------------------|
@@ -40,10 +40,10 @@ The [[CC3000]], [[PCD8544]] and [[DHT11]] have been arranged such that that can 
 |  CE     | Any      | B0                            |
 |  RST    | Any      | B1                            |
 
-**Note:** This can be done with a single piece of pin strip (with the DIN/DC pins bent so that they swap location). See the [Soldering an LCD directly to Espruino](/Onboard+LCD) page.
+**Note:** This can be done with a single piece of pin strip (with the DIN/DC pins bent so that they swap location). See the [Soldering an LCD directly to Espruino](../tutorials/Onboard LCD.md) page.
 
 
-[[DHT11]] connected:
+[DHT11](../devices/DHT11.md) connected:
 
   | Device Pin | Espruino |
   | ---------- | -------- |

@@ -11,10 +11,10 @@ This is a simple PCB that allows you to make a robot with the Espruino Pico. The
 * 2x continuous rotation servo motors
 * 3x LEDs (not controllable)
 * 4x Light sensors
-* Optional [ESP8266](/ESP8266) WiFi
-* Optional [HC-05](/Bluetooth) Bluetooth
-* Optional [ADNS5050](/ADNS5050) optical mouse sensor (includes 19x19 camera)
-* Optional 2x [HC-SR04](/HC-SR04) Ultrasonic sensors
+* Optional [ESP8266](./ESP8266.md) WiFi
+* Optional [HC-05](./Bluetooth.md) Bluetooth
+* Optional [ADNS5050](./ADNS5050.md) optical mouse sensor (includes 19x19 camera)
+* Optional 2x [HC-SR04](./HC-SR04.md) Ultrasonic sensors
 
 Eagle CAD Design files available here: [board](https://github.com/espruino/EspruinoBoard/blob/master/Pico/Adaptors/eagle/robot.brd) and [schematic](https://github.com/espruino/EspruinoBoard/blob/master/Pico/Adaptors/eagle/robot.sch)
 
@@ -43,11 +43,11 @@ Parts List
 | R8 | 1653308 | 4.7k 0805 (for optical sensor)  |
 | LED1,2,3 | 2335725 | 4.7k 0805 (for optical sensor)  |
 | LDR1,2,3,4 | 1652637 | GL55xx/VT90Nx Light Dependent resistor (20x cheaper on eBay) |
-| Optical Sensor | | [ADNS5050](/ADNS5050) |
-| Bluetooth | | [HC-05](/Bluetooth) |
-| WiFi | | [ESP8266](/ESP8266) |
+| Optical Sensor | | [ADNS5050](./ADNS5050.md) |
+| Bluetooth | | [HC-05](./Bluetooth.md) |
+| WiFi | | [ESP8266](./ESP8266.md) |
 | Servos | | Fitech/Feetech [FS90R](http://www.adafruit.com/products/2442) |
-| Ultrasonic | | [HC-SR04](/HC-SR04) |
+| Ultrasonic | | [HC-SR04](./HC-SR04.md) |
 
 Connections
 ----------
@@ -65,9 +65,9 @@ Connections
 |                  | 2 (Mid Left) | B13 |
 |                  | 3 (Mid Right) | B14 |
 |                  | 4 (Right) | B15 |
-| [Ultrasonic](/HC-SR04) Left  | Trig | A0 |
+| [Ultrasonic](./HC-SR04.md) Left  | Trig | A0 |
 |                  | Echo | B8 |
-| [Ultrasonic](/HC-SR04) Right | Trig | A1 |
+| [Ultrasonic](./HC-SR04.md) Right | Trig | A1 |
 |                  | Echo | B9 |
 | [Optical Sensor]   | SCL  | B3 |
 |                  | MISO | B5 (see errata) |
@@ -75,7 +75,7 @@ Connections
 |                  | CS   | A10 (see errata) |
 | Bluetooth        | TX   | B7 (Serial1 default console if no USB) |
 |                  | RX   | B6 (Serial1 default console if no USB) |
-|                  | Key  | A4 (used with [BLE](/Bluetooth+BLE)) |
+|                  | Key  | A4 (used with [BLE](./Bluetooth BLE.md)) |
 | ESP8266          | TX   | A3 |
 |                  | RX   | A2 |
 

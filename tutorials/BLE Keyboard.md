@@ -14,14 +14,14 @@ and buttons. Puck.js can emulate these, so can simulate keys being pressed.
 
 **Note:** Bluetooth HID can't be enabled on an active connection. To make it work (if you're connected wirelessly) you need to upload the code, disconnect, and then reconnect with your Operating System's `Pair` functionality. Sending HID keypresses without HID enabled will throw an exception.
 
-BLE HID can be enabled by providing a HID Report to [NRF.setServices](/Reference#l_NRF_setServices),
+BLE HID can be enabled by providing a HID Report to [NRF.setServices](https://www.espruino.com/Reference#l_NRF_setServices),
 however we've provided common types of HID report in modules to make it easier:
 
 
 Keyboards
 ---------
 
-Keyboard support is from the [[ble_hid_keyboard.js]] module. Using it
+Keyboard support is from the [ble_hid_keyboard.js](../modules/ble_hid_keyboard.js) module. Using it
 is as simple as calling `NRF.setServices` with the HID report
 provided by the module. You can then use the `.tap` method to
 send a key tap, or can use `NRF.sendHIDReport` directly.
@@ -92,7 +92,7 @@ For instance the following will light LED1 and LED2 depending on Num Lock and Ca
 
 ```JS
 NRF.on('HID', function(v) {
-  LED1.write(v&1);  
+  LED1.write(v&1);
   LED2.write(v&2);
 });
 ```
@@ -108,7 +108,7 @@ Multimedia Keys
 However, the multimedia keys on keyboards (play/stop/volume/etc) are treated
 as a completely separate device by USB and BLE.
 
-Support for this is from the [[ble_hid_controls.js]] module.
+Support for this is from the [ble_hid_controls.js](../modules/ble_hid_controls.js) module.
 
 ```
 var controls = require("ble_hid_controls");
@@ -133,7 +133,7 @@ controls.volumeUp(function() {
 Mouse
 ------
 
-You can also use the [[ble_hid_mouse.js]] module to emulate a mouse. For example:
+You can also use the [ble_hid_mouse.js](../modules/ble_hid_mouse.js) module to emulate a mouse. For example:
 
 ```
 var mouse = require("ble_hid_mouse");
@@ -150,7 +150,7 @@ setWatch(btnPressed, BTN, {edge:"rising",repeat:true,debounce:50});
 Combination
 ------
 
-If you find you require multiple HID defices at the same time (EG a keyboard and mouse combination) that is possible with more advanced custom HID reports. If you are looking for a quite complete keyboard and mouse combination implementation you can use the [[ble_hid_combo.js]] module.
+If you find you require multiple HID defices at the same time (EG a keyboard and mouse combination) that is possible with more advanced custom HID reports. If you are looking for a quite complete keyboard and mouse combination implementation you can use the [ble_hid_combo.js](../modules/ble_hid_combo.js) module.
 
 ```
 var int = require("ble_hid_combo");

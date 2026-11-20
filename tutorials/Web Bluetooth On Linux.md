@@ -19,7 +19,7 @@ Bluez 5.42 and later: Ubuntu 16.10 and newer
 5 years has up to date Bluetooth LE support.
 
 Bluetooth *should* work out of the box - try following the [Web Bluetooth getting
-started instructions](/Quick+Start+BLE#linux) and see if it works.
+started instructions](./Quick Start BLE.md#linux) and see if it works.
 
 You can also try running `sudo hcitool lescan` - if you see MAC addresses being displayed, this
 means your PC is able to see Bluetooth LE devices via Bluetooth, which is a great sign.

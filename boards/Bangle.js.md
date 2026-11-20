@@ -10,13 +10,13 @@ Bangle.js
 
 **Bangle.js is an open, hackable smartwatch**
 
-Bangle.js 1 is no longer for sale, however you can now purchase the much improved [Bangle.js 2!](/Bangle.js2)
+Bangle.js 1 is no longer for sale, however you can now purchase the much improved [Bangle.js 2!](./Bangle.js2.md)
 
 ------------------------
 
 You can easily install new apps from the web or develop your own using JavaScript or a graphical programming language (Blockly). All you need is a Web Browser (Chrome, Edge or Opera) and you can upload apps or write code to run on your watch wirelessly! Bangle.js is waterproof and AI enabled and comes with Bluetooth Low Energy, GPS, a heart rate monitor, accelerometer and more.
 
-**Just got your Bangle.js? Check out [The Bangle.js 'Getting Started' page](/Bangle.js Getting Started)**
+**Just got your Bangle.js? Check out [The Bangle.js 'Getting Started' page](../tutorials/Bangle.js Getting Started.md)**
 
 Contents
 --------
@@ -179,9 +179,9 @@ Deleting apps
 Tutorials
 --------
 
-* For general help with Bangle.js, see the [Bangle.js Getting Started Guide](/Bangle.js+Getting+Started)
-* To get your computer connected, check out the [Espruino Getting Started Guide](/Quick+Start+BLE#banglejs)
-* To get started with development see the [Bangle.js Development page](/Bangle.js+Development)
+* For general help with Bangle.js, see the [Bangle.js Getting Started Guide](../tutorials/Bangle.js Getting Started.md)
+* To get your computer connected, check out the [Espruino Getting Started Guide](../tutorials/Quick Start BLE.md#banglejs)
+* To get started with development see the [Bangle.js Development page](../tutorials/Bangle.js Development.md)
 * There is more technical information below about using the [LCD](#lcd) and [onboard peripherals](#onboard)
 
 Tutorials using Bangle.js:
@@ -196,20 +196,20 @@ Tutorials using Bluetooth LE and functionality that may not be part of Bangle.js
 
 * APPEND_USES: BLE,-Only BLE,-Bangle.js
 
-There are [many more tutorials](/Tutorials) that may not be specifically for
-you device but will probably work with some tweaking. [Try searching](/Search)
+There are [many more tutorials](../Tutorials.md) that may not be specifically for
+you device but will probably work with some tweaking. [Try searching](https://www.espruino.com/Search)
 to find what you want.
 
 Information
 -----------
 
-* For detailed technical information about Bangle.js, check out [the Bangle.js Technical Information page](/Bangle.js+Technical)
+* For detailed technical information about Bangle.js, check out [the Bangle.js Technical Information page](../info/Bangle.js Technical.md)
 * There's a [Bangle.js API reference here](https://espruino.com/ReferenceBANGLEJS)
 
 Certifications:
 
-* Links to [CE](/files/Bangle.js-CE.pdf), [FCC ID 2AILG-F18](/files/Bangle.js-FCC.pdf) and [RoHS](/files/Bangle.js-RoHS.pdf) Certifications
-* Links to shipping documentation: [Classification](/files/Bangle.js-shipping.pdf), [Battery UN38.3](/files/Bangle.js-UN38.3.pdf) and [Battery MSDS](/files/Bangle.js-MSDS.pdf)
+* Links to [CE](../files/Bangle.js-CE.pdf), [FCC ID 2AILG-F18](../files/Bangle.js-FCC.pdf) and [RoHS](../files/Bangle.js-RoHS.pdf) Certifications
+* Links to shipping documentation: [Classification](../files/Bangle.js-shipping.pdf), [Battery UN38.3](../files/Bangle.js-UN38.3.pdf) and [Battery MSDS](../files/Bangle.js-MSDS.pdf)
 
 
 <a name="lcd"></a>LCD Screen
@@ -223,7 +223,7 @@ connection will also be displayed on the LCD.
 ### Graphics
 
 You can output graphics on Bangle.js's display via the global variable `g`
-that is an instance of the [Graphics class](/Reference#Graphics). By default the display
+that is an instance of the [Graphics class](https://www.espruino.com/Reference#Graphics). By default the display
 is unbuffered, so any changes will take effect immediately.
 
 ```
@@ -254,9 +254,9 @@ You can also call `Bangle.setLCDMode()` to return to normal, unbuffered mode.
 
 ### Menus
 
-Bangle.js comes with a built-in menu library that can be accessed with the [`E.showMenu()`](/Reference#l_E_showMenu) command.
+Bangle.js comes with a built-in menu library that can be accessed with the [`E.showMenu()`](https://www.espruino.com/Reference#l_E_showMenu) command.
 
-[`E.showPrompt()`](/Reference#l_E_showPrompt) and [`E.showMessage()`](/Reference#l_E_showMessage) can also be used for simple
+[`E.showPrompt()`](https://www.espruino.com/Reference#l_E_showPrompt) and [`E.showMessage()`](https://www.espruino.com/Reference#l_E_showMessage) can also be used for simple
 prompts and full-screen messages.
 
 ```
@@ -451,7 +451,7 @@ See [the reference](https://banglejs.com/reference#l_Bangle_GPS) for
 more information.
 
 It's also possible to write data to the GPS to configure it. Check
-out the [Bangle.js technical specs page](/Bangle.js+Technical#GPS)
+out the [Bangle.js technical specs page](../info/Bangle.js Technical.md#GPS)
 for more info.
 
 ### Heart rate
@@ -488,16 +488,16 @@ var a = analogRead(D29); // read the raw PPG value
 Firmware Updates
 ------------------
 
-Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
+Please see the [Firmware Update](../info/Firmware Update.md#nrf52) page for detailed instructions.
 
 Troubleshooting
 ---------------
 
 Check out:
 
-* [Bangle.js Troubleshooting](Troubleshooting+Bangle.js)
-* [Bluetooth Espruino Troubleshooting](Troubleshooting+BLE)
-* [General Espruino Troubleshooting](/Troubleshooting)
+* [Bangle.js Troubleshooting](../info/Troubleshooting Bangle.js.md)
+* [Bluetooth Espruino Troubleshooting](../info/Troubleshooting BLE.md)
+* [General Espruino Troubleshooting](../info/Troubleshooting.md)
 
 
 Other Official Espruino Boards

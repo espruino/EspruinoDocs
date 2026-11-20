@@ -13,7 +13,7 @@ to you in JavaScript.
 
 If you want to really make the most of the hardware, you'll have to access it directly. Here,
 we'll detail how to access the timer hardware to measure pulse length on the STM32
-microcontrollers used in the [Original Espruino](/Original) and the [Espruino Pico](/Pico).
+microcontrollers used in the [Original Espruino](../boards/Original.md) and the [Espruino Pico](../boards/Pico.md).
 
 
 Documentation
@@ -21,16 +21,16 @@ Documentation
 
 The best source of documentation on the chip's peripherals come from the manufacturer
 themselves - [ST](http://www.st.com). You'll need the Reference Manual and Datasheet for the particular
-chip. The easiest way to do this is to go to the page on espruino.com for your board ([Original](/Original) or
-[Pico](/Pico) and to find the links there).
+chip. The easiest way to do this is to go to the page on espruino.com for your board ([Original](../boards/Original.md) or
+[Pico](../boards/Pico.md) and to find the links there).
 
-We're going to cover the [Pico](/Pico), so [this is the STM32F401CD Reference Manual](/datasheets/STM32F401xD_ref.pdf)
-and [this is the STM32F401CD Datasheet](/datasheets/STM32F401xD.pdf).
+We're going to cover the [Pico](../boards/Pico.md), so [this is the STM32F401CD Reference Manual](../datasheets/STM32F401xD_ref.pdf)
+and [this is the STM32F401CD Datasheet](../datasheets/STM32F401xD.pdf).
 
 It's a huge manual, but you're only interested in specific parts of it.
 
 
-What happens for [PWM](/PWM)
+What happens for [PWM](../info/PWM.md)
 ------------------
 
 First off, look at `Advanced-control timer (TIM1)` on page 241. We're going to look at what happens when you
@@ -44,7 +44,7 @@ Here, we've coloured what bits get used during `analogWrite(A8, 0.5, {freq:10})`
 
 First, Espruino looks around to see what peripherals are available on the pin `A8`. That information
 is in the Datasheet, under `Pinouts and pin description` in a table called `Table 8. STM32F401xD/xE pin definitions` (look for `PA8` in it).
-It's actually pretty painful to read, so we've documented it all properly on the [Pico](/Pico) page.
+It's actually pretty painful to read, so we've documented it all properly on the [Pico](../boards/Pico.md) page.
 Under the `Pinout` heading hover your mouse over the `PWM` tag below the pin `A8`. It'll say `TIM1_CH1` -
 so Channel 1 of the `TIM1` peripheral.
 
@@ -81,7 +81,7 @@ Finally it's done, and the `A8` will be outputting a square wave at 10Hz.
 Accessing the Timer
 -----------------
 
-So, that was all pretty heavy. While the Reference manual does walk you through what's needed, that's a lot to learn for a [PWM](/PWM) output.
+So, that was all pretty heavy. While the Reference manual does walk you through what's needed, that's a lot to learn for a [PWM](../info/PWM.md) output.
 
 All of those things that Espruino did were done by modifying the peripheral registers - bits of memory at certain locations that control how the peripherals work.
 
@@ -359,7 +359,7 @@ The relevant section of the reference manual is `12.3.6 Input capture mode`, but
 All we need to do is:
 
 * Enable and configure the counter (prescaler, autoreload) with `analogWrite`
-* Reconfigure Channel 1 to listen for events, rather that outputtting [PWM](/PWM)
+* Reconfigure Channel 1 to listen for events, rather that outputtting [PWM](../info/PWM.md)
 
 Obviously the first step is easy, and for the second step we can actually steal some of the code that we'd written previously for the counter - with one small tweak. This time we're using channel 1's prescaler `IC1PS`, so we want to make sure we reset it's value as well so it doesn't do anything. It's just a matter of making sure we clear 2 extra bits in the `CCMR1` register:
 
@@ -407,7 +407,7 @@ This may have marked an overflow already, and it can be cleared with `poke16(SR,
 Capacitive Touch Sensor
 -----------------------
 
-Input capture really shines when you use it alongside another timer channel on the same timer. Let's say you use pin `A10` on the Pico (`TIM1_CH3`) as a normal [PWM](/PWM) output, but then enable capture compare on `A8` using the code above. You can now measure how long it takes `A8`'s input to rise after `A10`'s output rose.
+Input capture really shines when you use it alongside another timer channel on the same timer. Let's say you use pin `A10` on the Pico (`TIM1_CH3`) as a normal [PWM](../info/PWM.md) output, but then enable capture compare on `A8` using the code above. You can now measure how long it takes `A8`'s input to rise after `A10`'s output rose.
 
 It turns out this is very useful for capacitive touch (amongst other things).
 

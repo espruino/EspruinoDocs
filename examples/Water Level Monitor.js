@@ -23,8 +23,8 @@ This uses the https://www.espruino.com/BTHome library to advertise information o
 
 Create a swinging float by bending a bit of wire and glueing a ping-pong ball to the end, then attach you device - I used Hot Glue for this.
 
-* [Puck.js](/Puck.js) should have the lanyard attachment point pointing towards the ping-pong ball.
-* [Bangle.js 2](/Bangle.js2) should be with the screen downwards, and the button pointing towards the ping-pong ball.
+* [Puck.js](../boards/Puck.js.md) should have the lanyard attachment point pointing towards the ping-pong ball.
+* [Bangle.js 2](../boards/Bangle.js2.md) should be with the screen downwards, and the button pointing towards the ping-pong ball.
 
 Copy the app below to the right-hand side of the Web IDE. For debugging you may want to change `60000` (1 minute) to something faster like `1000` for 1 sec.
 

@@ -16,7 +16,7 @@ It contains:
 
 * Worldwide LTE and UMTS/HSPA+
 * GPS/BeiDou/GLONASS/Galileo and QZSS
-* 6 [Grove](/Grove) Connectors
+* 6 [Grove](../devices/Grove.md) Connectors
 * Nano SIM and TF card 2 in 1 socket
 
 **NOTE: THE [Wio LTE Cat M1 / NB-IoT tracker](http://wiki.seeedstudio.com/Wio_LTE_Cat_M1_NB-IoT_Tracker)
@@ -28,8 +28,8 @@ Full details on flashing can be found on <a name="firmware-updates"></a>[Seeed's
 
 Binaries can be found in:
 
-* the [Downloadable zip of firmare](/Download#Wio_LTE) (current version)
-* the [binaries folder](/binaries) (current version)
+* the [Downloadable zip of firmare](https://www.espruino.com/Download#Wio_LTE) (current version)
+* the [binaries folder](https://www.espruino.com/binaries) (current version)
 * the [automatic Travis Builds](https://www.espruino.com/binaries/travis/master/) (cutting edge builds)
 
 Contents
@@ -59,7 +59,7 @@ WioLTE.setLEDPower(true);
 WioLTE.LED(r,g,b); // Output a color on the LED (values range 0..255)
 ```
 
-There are also built-in variables for each of the [Grove](/Grove)
+There are also built-in variables for each of the [Grove](../devices/Grove.md)
 connectors marked on the board. These are two-element arrays of Pins:
 
 ```
@@ -71,7 +71,7 @@ WioLTE.I2C
 WioLTE.UART
 ```
 
-They can be used with Espruino's [Grove modules](/Grove),
+They can be used with Espruino's [Grove modules](../devices/Grove.md),
 however remember to turn power on with `WioLTE.setGrovePower(true);`
 first!
 
@@ -89,7 +89,7 @@ digitalWrite(pin, 0);
 Using SD Card
 -------------
 
-The SD card can be accessed with [Espruino's normal File IO](/File+IO).
+The SD card can be accessed with [Espruino's normal File IO](../info/File IO.md).
 
 However you must be careful not to use it less than 4 seconds before
 power-on, as the SD card will not have initialised by that point.
@@ -103,7 +103,7 @@ WioLTE.init;
 var test = function() {
   // List files
   console.log('List files on root path:\r\n', fs.readdirSync());
-  // Write file  
+  // Write file
   fs.writeFileSync("hello.txt", "Hello World");
   // read file
   console.log(fs.readFileSync("hello.txt"));
@@ -122,7 +122,7 @@ Using LTE and GPS
 To use this functionality, you need to `require` the `wiolte` module
 with `require('wiolte')`.
 
-An example showing how to connect, use the [[Internet]] connection,
+An example showing how to connect, use the [Internet](../info/Internet.md) connection,
 GPS, and SMS is below:
 
 ```
@@ -226,11 +226,11 @@ Functionality provided is:
 * `geoLocStop()` - Stop getting geolocation data
 * `geoLocGet(callback)` - Get last location
 * `geoLocConvert(callback(err,latlong))` - Get last location as latitude/longitude
-* `board.SMS` - SMS functionality with `init/read/send/list/delete` functions based on the [[ATSMS]] module
+* `board.SMS` - SMS functionality with `init/read/send/list/delete` functions based on the [ATSMS](../modules/ATSMS.md) module
 * `board.Call`, with:
-  * `call(number, callback)`  
-  * `answer(callback)`  
-  * `hangup(callback)`  
+  * `call(number, callback)`
+  * `answer(callback)`
+  * `hangup(callback)`
   * `handleRing(boolean)` - if trie, will call any function added with `board.on('RING', ...)`
 * `sleep(callback)` -  LTE modem get into sleep mode, it can save about 100mA
 * `wake(callback)` -  LTE modem wake up from sleep mode

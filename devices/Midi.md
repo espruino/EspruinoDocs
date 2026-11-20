@@ -6,7 +6,7 @@ Midi
 
 * KEYWORDS: Module,Midi,Serial,Music
 
-This is for wired MIDI. There's also a module for [MIDI over Bluetooth LE](/BLE+MIDI).
+This is for wired MIDI. There's also a module for [MIDI over Bluetooth LE](../tutorials/BLE MIDI.md).
 
 This module uses the event emitter interface to let you choose what message you are
 interested in handling; Some day it may do midi out too. It's quick and dirty hack,

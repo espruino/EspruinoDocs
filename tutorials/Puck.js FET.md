@@ -7,7 +7,7 @@ Puck.js FET
 * KEYWORDS: Tutorials,Puck.js,FET
 * USES: Puck.js
 
-[Puck.js](/Puck.js) version 2 contains an on-board FET. This allows you to control
+[Puck.js](../boards/Puck.js.md) version 2 contains an on-board FET. This allows you to control
 medium current (up to 200mA) devices  direct from Puck.js, without external components.
 
 How it works
@@ -16,7 +16,7 @@ How it works
 Puck.js has an on-board FET, connected to pin `D26` and `GND` (there's also a global
 variable called `FET` in Espruino which is equal to `D26`).
 
-![Puck.js FET](sch.png)
+![Puck.js FET](./Puck.js FET/sch.png)
 
 When pin `D26` is set high, the FET conducts (acting like a closed switch) and
 connects the `FET` pin to `GND`. Anything connected between a power source and

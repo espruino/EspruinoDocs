@@ -7,7 +7,7 @@ Remote Control Helicopter with Wii Nunchuck
 
 This is a simple remote control for infrared remote control helicopters.
 
-After using the [[IRReceiver]] to look at the Infrared signals from the Helicopter's transmitter with the following code:
+After using the [IRReceiver](../devices/IRReceiver.md) to look at the Infrared signals from the Helicopter's transmitter with the following code:
 
 ```
 require("IRReceiver").connect(A0, function(code) {
@@ -40,7 +40,7 @@ IR transmitter (scavenged from an old remote control)
 
 One pin (A0) outputs a 38kHz square wave, and the other pin (C1) outputs the signal that we want to output. This way we're using the diode itself to modulate the square wave with the data. 
 
-Wire the Wii Nunchuck up as described for the [[Wii]] library (to B6/B7).
+Wire the Wii Nunchuck up as described for the [Wii](../devices/Wii.md) library (to B6/B7).
 
 
 */

@@ -38,11 +38,11 @@ You can now follow https://www.home-assistant.io/getting-started/onboarding/ to 
 
 There are a bunch of supported devices listed on https://bthome.io/, but for Espruino devices:
 
-* [Pre-made Bangle.js apps are available](https://banglejs.com/apps/?q=bthome) which will make your [Bangle.js watch](/Bangle.js2)
+* [Pre-made Bangle.js apps are available](https://banglejs.com/apps/?q=bthome) which will make your [Bangle.js watch](../boards/Bangle.js2.md)
 appear in BTHome
-* [Pre-made Puck.js apps are available](https://espruino.github.io/EspruinoApps/?q=bthome) which will make your [Puck.js](/Puck.js)
+* [Pre-made Puck.js apps are available](https://espruino.github.io/EspruinoApps/?q=bthome) which will make your [Puck.js](../boards/Puck.js.md)
 appear in BTHome
-* You can [write your own apps using the BTHome library](/BTHome)
+* You can [write your own apps using the BTHome library](../modules/BTHome.md)
 
 
 ## BTHome

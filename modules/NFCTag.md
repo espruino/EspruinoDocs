@@ -6,7 +6,7 @@ NFCTag
 
 * KEYWORDS: NFC, Tag, NDEF
 
-The [NFC Tag module](/modules/NFCTag.js) emulates a basic NFC Forum *Type 2 Tag*
+The [NFC Tag module](NFCTag.js) emulates a basic NFC Forum *Type 2 Tag*
 with up to 1k of storage. The storage may be read and written by an NFC Reader as
 well as JS code.
 
@@ -44,9 +44,9 @@ initializer bytes used on the second line:
 |     7 |  0x00 | Empty NDEF Record                                         |
 |     8 |  0xFE | Last TLV block in the data area                           |
 
-It is writtable using almost any NFC Reader e.g. an Android phone 
+It is writtable using almost any NFC Reader e.g. an Android phone
 (using [NFC TagWriter by NXP](https://play.google.com/store/apps/details?id=com.nxp.nfc.tagwriter))
-or an iPhone with iOS 13+ 
+or an iPhone with iOS 13+
 (using [NFC Tools by wakdev](https://apps.apple.com/ch/app/nfc-tools/id1252962749))
 
 ```

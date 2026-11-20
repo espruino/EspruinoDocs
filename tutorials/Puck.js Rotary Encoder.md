@@ -85,7 +85,7 @@ var SW = createSwitch(D28);
 SW.on("change",(sw)=>NRF.sendHIDReport([sw?1:0,0,0,0,0,0,0,0],()=>{}));
 ```
 
-The encoder handler is adapted from [here](http://www.technoblogy.com/show?1YHJ) and I found it worked much more reliably than the [Espruino encoder module](/Encoder). In addition the following code allows the device to switch from HID to normal Espruino mode for connection to the WebIDE. i.e. hold down the encoder switch until the Puck flashes GREEN. On reboot or reset, it will go into HID mode by default and flash BLUE. On connection, there is a BlUE flash and a RED flash on disconnection.
+The encoder handler is adapted from [here](http://www.technoblogy.com/show?1YHJ) and I found it worked much more reliably than the [Espruino encoder module](../devices/Encoder.md). In addition the following code allows the device to switch from HID to normal Espruino mode for connection to the WebIDE. i.e. hold down the encoder switch until the Puck flashes GREEN. On reboot or reset, it will go into HID mode by default and flash BLUE. On connection, there is a BlUE flash and a RED flash on disconnection.
 
 ```JS
 pinMode(D28,"input_pullup");

@@ -64,6 +64,6 @@ As well as `UART.write` for sending data, `UART.eval` is available for reading b
 
 
 
-For further details, check out the [Web Bluetooth](/Web+Bluetooth) page,
+For further details, check out the [Web Bluetooth](./Web Bluetooth.md) page,
 the [UART.js repository](https://github.com/espruino/EspruinoWebTools), and the
 [UART.js code](https://github.com/espruino/EspruinoWebTools/blob/master/uart.js) itself.

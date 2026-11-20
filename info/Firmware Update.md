@@ -12,7 +12,7 @@ slightly different for each flavour. See below for instructions.
 * **NRF52** : Puck.js, Pixl.js, MDBT42Q, Bangle.js, Bangle.js 2 - Boards **with** Bluetooth LE
 * **STM32** : Espruino Original, Pico and WiFi - Boards with USB, and **without** Bluetooth LE
 
-For non-official board firmware updates, see the [Other Boards](/Other+Boards) page for instructions.
+For non-official board firmware updates, see the [Other Boards](../boards/Other Boards.md) page for instructions.
 
 NRF52
 -----
@@ -58,9 +58,9 @@ Now, you need to put your device into DFU mode using the instructions below. Not
 
 ##### Pixl.js
 
-* [Reset Pixl.js](/Pixl.js#resetting-pixl-js) with `BTN1` held down. The display will show `BOOTLOADER` `RELEASE BTN1 FOR DFU`. Make sure release `BTN1` before the progress bar reaches the end.
+* [Reset Pixl.js](../boards/Pixl.js.md#resetting-pixl-js) with `BTN1` held down. The display will show `BOOTLOADER` `RELEASE BTN1 FOR DFU`. Make sure release `BTN1` before the progress bar reaches the end.
 * The display should now show `DFU STARTED` `READY TO UPDATE`
-* The Pixl.js is now in bootloader mode  
+* The Pixl.js is now in bootloader mode
 
 ##### Bangle.js 1
 
@@ -75,7 +75,7 @@ Now, you need to put your device into DFU mode using the instructions below. Not
 * While `====` is going across the screen, release the button (releasing it later will just boot back to Bangle.js)
 * The watch should now be in DFU mode
 
-#### Performing firmware update  
+#### Performing firmware update
 
 Run the relevant app on your Android/iOS device.
 
@@ -152,4 +152,4 @@ If you absolutely don't want or can't do this then do the following on Linux or 
   * On Linux, MySerialPort will probably look a lot like /dev/ttyACM# where # is a number. If you only have one USB-Serial device plugged in, it's almost certainly /dev/ttyUSB0
   * Note the -k flag above. This is specific to Espruino rev 1.3 Boards and helps to ensure that the USB link is reliable during flashing.
 
-You can also completely overwrite Espruino's bootloader using the [Serial Bootloader](/Serial+Bootloader) instructions, but you'll need a USB-TTL converter for this.
+You can also completely overwrite Espruino's bootloader using the [Serial Bootloader](https://www.espruino.com/Serial+Bootloader) instructions, but you'll need a USB-TTL converter for this.

@@ -18,23 +18,23 @@ and text messages tend to be extremely cheap, often with no monthly fee.
 
 In addition to this, you might have remote sensors that you don't want to
 connect to the main mobile phone connection. That's what we'll do here -
-using [Pixl.js](/Pixl.js) as a hub for remote devices.
+using [Pixl.js](../boards/Pixl.js.md) as a hub for remote devices.
 
-This is similar to the [Puck.js with SMS control](/Puck.js+SMS) except there's
+This is similar to the [Puck.js with SMS control](./Puck.js SMS.md) except there's
 less wiring and we can also display the status on the Pixl's screen.
 
 You'll Need
 ----------
 
-* An Espruino [Pixl.js](/Pixl.js)
-* A [SIM900 Arduino shield](/arduino-sim900) (or you can wire up a GSM/LTE module manually)
-* A [LiPo battery](/Battery)
-* Other Bluetooth LE devices (like [Puck.js](/Puck.js)) to act as sensors
+* An Espruino [Pixl.js](../boards/Pixl.js.md)
+* A [SIM900 Arduino shield](../devices/arduino-sim900.md) (or you can wire up a GSM/LTE module manually)
+* A [LiPo battery](../devices/Battery.md)
+* Other Bluetooth LE devices (like [Puck.js](../boards/Puck.js.md)) to act as sensors
 
 Wiring Up
 --------
 
-The wiring is very simple - just plug the [SIM900 Arduino shield](/arduino-sim900)
+The wiring is very simple - just plug the [SIM900 Arduino shield](../devices/arduino-sim900.md)
 into the back of the Pixl.js. The only thing you have to worry about is power - the
 SIM900 needs to draw a lot of power, and it's unlikely that the USB connector on
 Pixl.js will provide enough.
@@ -43,7 +43,7 @@ You can:
 
 * Use the external power connector on the SIM900 shield - there's a switch next
 to it to select the power source.
-* [Solder a JST battery connector to Pixl.js](/Pixl.js#powering) and short the
+* [Solder a JST battery connector to Pixl.js](../boards/Pixl.js.md#powering) and short the
  Pixl.js solder jumper from `Vin` to `5V` to provide power for the SIM900.
 
 After this, ensure the jumpers on the SIM900 board are set to `Xduino`, add
@@ -105,7 +105,7 @@ function onInit() {
   Terminal.setConsole();
   g.clear();
   Terminal.println("Initialising...");
-  // Connect to serial device  
+  // Connect to serial device
   Serial1.setup(115200, { rx: D0, tx : D1 });
   Serial1.removeAllListeners(); // in case we'd been running before
   var ATSMS = require("ATSMS");
@@ -154,7 +154,7 @@ function doScan(sendMessageToNumber) {
     Terminal.print("\n\n\n\n\n\n\n\n\n");
     // What are we going to send?
     var textMessage = "";
-    // Now iterate over them and display on the screen    
+    // Now iterate over them and display on the screen
     devs.forEach(function(dev, idx) {
       var name = devices[dev.id];
       if (!name) {
@@ -162,7 +162,7 @@ function doScan(sendMessageToNumber) {
         Terminal.println("Unknown "+dev.id);
         return;
       }
-      try {        
+      try {
         var j = JSON.parse(E.toString(dev.manufacturerData));
         Terminal.println(name+" "+JSON.stringify(j));
         textMessage += name+" "+JSON.stringify(j)+", ";
@@ -201,7 +201,7 @@ the information received.
 What Next?
 ----------
 
-You can implement many more commands - for instance you could use the [BLE UART](/Puck.js+BLE+UART)
+You can implement many more commands - for instance you could use the [BLE UART](../tutorials/BLE UART.md)
 library to send command directly to other Pucks (however if so, you need to remove
 `connectable:false` and increase the advertising interval on any connected devices).
 

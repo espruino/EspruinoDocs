@@ -19,15 +19,15 @@ There will be a WebServer on the CC3000, and when it is queried, a webpage will 
 You'll Need
 ----------
 
-* One [Espruino Board](/Original)
-* A [[DS18B20]] Temperature sensor and 4.7k resistor
-* A [[CC3000]] WiFi module
+* One [Espruino Board](../boards/Original.md)
+* A [DS18B20](../devices/DS18B20.md) Temperature sensor and 4.7k resistor
+* A [CC3000](../devices/CC3000.md) WiFi module
 
 Wiring Up
 --------
 
-* Follow [the instructions](/CC3000) for wiring up the CC3000 module
-* Connect up the [[DS18B20]] Temperature sensor as follows:
+* Follow [the instructions](../devices/CC3000.md) for wiring up the CC3000 module
+* Connect up the [DS18B20](../devices/DS18B20.md) Temperature sensor as follows:
 
 | Sensor Wire | Espruino   | 4.7k Resistor |
 | --------- | ---------- | ------------- |

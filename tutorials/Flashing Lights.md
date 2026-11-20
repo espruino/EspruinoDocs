@@ -7,12 +7,12 @@ Flashing Lights
 * KEYWORDS: Flash,Flashing,Blink,Blinky,LED,LEDs,Light
 * USES: LED,Only Espruino Board
 
-This Tutorial assumes that you are able to enter code in Espruino. If you can't do that yet, please follow the steps on the [[Quick Start]] page.
+This Tutorial assumes that you are able to enter code in Espruino. If you can't do that yet, please follow the steps on the [Quick Start](Quick Start.md) page.
 
 Introduction
 -----------
 
-If you've followed the [[Quick Start]], you've already made an LED flash. In this tutorial, we'll show some other ways of flashing lights.
+If you've followed the [Quick Start](Quick Start.md), you've already made an LED flash. In this tutorial, we'll show some other ways of flashing lights.
 
 Wiring Up
 --------
@@ -26,7 +26,7 @@ Software
 
 ### Try 1
 
-The example in the [[Quick Start]] shows how to flash an LED the 'right' way - but we can actually do it in one simple line. Just copy and paste:
+The example in the [Quick Start](Quick Start.md) shows how to flash an LED the 'right' way - but we can actually do it in one simple line. Just copy and paste:
 
 ```
 var l;setInterval("digitalWrite(LED1,l=!l);",200);

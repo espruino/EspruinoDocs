@@ -97,7 +97,7 @@ If your device is not already flashed, below are the instructions.  Flashing inv
 
 #### Easy Online Flashing
 
-If you have a Chromium-based web browser it's possible to flash your ESP32 device direct from the browser! [Click here to flash Espruino to your board](/Espressif+Flash)
+If you have a Chromium-based web browser it's possible to flash your ESP32 device direct from the browser! [Click here to flash Espruino to your board](https://www.espruino.com/Espressif+Flash)
 
 If that fails you'll have to install it manually (see below)
 

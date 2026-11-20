@@ -7,7 +7,7 @@ Tap Tap Rainbow - a 2 Player Quick Reaction Game
 * KEYWORDS: Rainbow,Game
 * USES: Espruino Board,WS2811
 
-A 2-Player Quick Reaction Game using an [Espruino Board](/Original) and [WS2811 lights](/WS2811)
+A 2-Player Quick Reaction Game using an [Espruino Board](../boards/Original.md) and [WS2811 lights](../devices/WS2811.md)
 
 ![](tap_tap_rainbow.jpg)
 

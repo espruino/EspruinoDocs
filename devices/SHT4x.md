@@ -6,7 +6,7 @@ SHT4x Temperature and Humidity sensor
 
 * KEYWORDS: Module,I2C,SHT4x,SHT40,sensirion,temperature,humidity
 
-Use the [SHT4x](/modules/SHT4x.js) ([About Modules](/Modules)) module for reading data from the Sensirion SHT4x series of devices.
+Use the [SHT4x](SHT4x.js) ([About Modules](../Modules.md)) module for reading data from the Sensirion SHT4x series of devices.
 
 Basic usage:
 

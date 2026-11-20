@@ -6,7 +6,7 @@ Clock Module
 
 * KEYWORDS: Module,Clock,Date,Calendar,RTC
 
-This [[clock.js]] module implements a Clock for Espruino.  It uses the [[date]] module to store 
+This [clock.js](clock.js) module implements a Clock for Espruino.  It uses the [date](date.md) module to store 
 both time and date.
 
 How to use the module:

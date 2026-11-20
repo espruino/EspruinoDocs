@@ -6,10 +6,10 @@ Power Consumption
 
 * KEYWORDS: Power,Watts,Efficiency,Milliamps,Microamps,Sleep,Stop,Standby,Deep Sleep
 
-[Official Espruino boards](/Order) come with one of two different types of processor:
+[Official Espruino boards](https://www.espruino.com/Order) come with one of two different types of processor:
 
-* Nordic nRF52 - [Puck.js](/Puck.js), [Pixl.js](/Pixl.js), [[MDBT42Q]] and [Bangle.js](/Bangle.js)
-* ST STM32 - [Original Espruino](/Original), [[Pico]], and [[WiFi]]
+* Nordic nRF52 - [Puck.js](../boards/Puck.js.md), [Pixl.js](../boards/Pixl.js.md), [MDBT42Q](../boards/MDBT42Q.md) and [Bangle.js](../boards/Bangle.js.md)
+* ST STM32 - [Original Espruino](../boards/Original.md), [Pico](../boards/Pico.md), and [WiFi](../boards/WiFi.md)
 
 nRF52
 -----
@@ -21,26 +21,26 @@ consumption is around 20uA (0.02mA) or over a year on a CR2032 battery.
 | Mode  | nRF52 devices | Notes  |
 |-------|---------------|--------|
 | Run   | 4-8mA | Processing JavaScript |
-| Sleep with HSE on  | ~1mA | [[USART]]/Serial or high speed timer in use |
+| Sleep with HSE on  | ~1mA | [USART](USART.md)/Serial or high speed timer in use |
 | Sleep with Bluetooth advertising  | 0.02mA - 0.08mA | The default when not executing code |
 | Sleep | 0.003mA | With bluetooth advertising disabled |
 
 Power usage varies slightly with the board used (based on voltage regulators and
   peripherals), so for detailed power usage stats see:
 
-* [Puck.js Power Consumption](/Puck.js#power-consumption)
-* [Pixl.js Power Consumption](/Pixl.js#power-consumption)
-* [Jolt.js Power Consumption](/Jolt.js#power-consumption)
-* [MDBT42Q Power Consumption](/MDBT42Q#power-consumption)
-* [Bangle.js Power Consumption](/Bangle.js#power-consumption)
-* [Bangle.js 2 Power Consumption](/Bangle.js2#power-consumption)
+* [Puck.js Power Consumption](../boards/Puck.js.md#power-consumption)
+* [Pixl.js Power Consumption](../boards/Pixl.js.md#power-consumption)
+* [Jolt.js Power Consumption](../boards/Jolt.js.md#power-consumption)
+* [MDBT42Q Power Consumption](../boards/MDBT42Q.md#power-consumption)
+* [Bangle.js Power Consumption](../boards/Bangle.js.md#power-consumption)
+* [Bangle.js 2 Power Consumption](../boards/Bangle.js2.md#power-consumption)
 
 STM32
 -----
 
 Espruino on STM32 can run in one of 3 different modes.
 
-| Mode  | nRF52 devices (see below) | [Original Espruino](/Original) 1v4 | [[Pico]]/[[WiFi]]  | Notes |
+| Mode  | nRF52 devices (see below) | [Original Espruino](../boards/Original.md) 1v4 | [Pico](../boards/Pico.md)/[WiFi](../boards/WiFi.md)  | Notes |
 |-------|---------------------------------|-------------------|------|
 | Run   | ~5mA | ~35mA   | 32mA | Espruino is executing code and running at full speed |
 | Sleep | -   | ~12mA   | ~11mA  | Espruino has stopped the clock to the CPU, but all peripherals are still running and can wake it up |
@@ -66,8 +66,8 @@ For deep sleep to work, you must:
 * Have called ```setDeepSleep(1)```
 * Not be connected to USB
 * Not have any data waiting to be sent down Serial or USB
-* Have no pending callbacks from setIntervals/setTimeout that are **less than 1.5 seconds** away (this is less on the [[Pico]]). Espruino uses the real time clock for wakeups, and the RTC can only wake up on a second by second basis.
-* Not have any [[Waveform]]s running, and not have a `digitalPulse(...)` command that is yet to finish
+* Have no pending callbacks from setIntervals/setTimeout that are **less than 1.5 seconds** away (this is less on the [Pico](../boards/Pico.md)). Espruino uses the real time clock for wakeups, and the RTC can only wake up on a second by second basis.
+* Not have any [Waveform](Waveform.md)s running, and not have a `digitalPulse(...)` command that is yet to finish
 
 **Note:** Espruino won't enter deep sleep as soon as you execute ```setDeepSleep(1)```. It'll wait until all the bullet points above are satisfied, and then it'll enter it. For example you can type ```setDeepSleep(1)``` while you're connected to your PC via USB, and Espruino will only enter deep sleep mode once you unplug from USB.
 

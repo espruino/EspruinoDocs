@@ -12,8 +12,8 @@ Getting connected
 
 If you haven't already, see the getting started guides for:
 
-* [USB-based boards](/Quick+Start+USB)
-* [Bluetooth-based boards](/Quick+Start+BLE)
+* [USB-based boards](./Quick Start USB.md)
+* [Bluetooth-based boards](./Quick Start BLE.md)
 
 for information on how to get the Web IDE connected to your device.
 
@@ -29,8 +29,8 @@ to a graphical code editor, and can click ![the Upload Icon](Quick Start Code/up
 to send the code you wrote on the right-hand side to Espruino.
 
 On new versions of the IDE you'll see some text and a down-arrow below the upload
-icon ([the Upload Icon](Quick Start Code/upload_icon.png)) - this allows you to
-quickly choose where you save your code - see [the page on Saving](/Saving) for more information.
+icon (![the Upload Icon](Quick Start Code/upload_icon.png)) - this allows you to
+quickly choose where you save your code - see [the page on Saving](../info/Saving.md) for more information.
 
 If you're using any version of the Espruino IDE, you can click on  ![the Book icon](Quick Start Code/book_icon.png) in
 the top right, then:
@@ -169,7 +169,7 @@ reset()
 
 If you press the reset button on the board (if your board has one), Espruino will also reset. However we don't recommend this - on most boards this will reset the USB/Bluetooth connection as well, so you may need to restart your terminal application, or in some cases even unplug and re-plug the device.
 
-If you power off or reset Espruino using the reset button, it will lose all the code that you wrote. You can save the state of Espruino so this doesn't happen using the `save()` command ([more information](/Saving)).
+If you power off or reset Espruino using the reset button, it will lose all the code that you wrote. You can save the state of Espruino so this doesn't happen using the `save()` command ([more information](../info/Saving.md)).
 
 The `save()` command saves the current state of the pins and on-chip peripherals, as well as all your functions, variables, watches and timers. The commands that you typed in previously *won't be executed again though*. If you want to execute some code when Espruino starts (for example you may need to initialise some external bit of hardware like an LCD), you can use the `init` event on `E`. For example this bit of code lights the red, then green LEDs each time Espruino starts up:
 
@@ -190,21 +190,21 @@ The code above uses a few extra features in Espruino that weren't covered above:
 * You can pass an array of pins into `digitalWrite` (the same applies to `digitalRead`). If you do that, the value you supply will be treated as a binary value, with the least significant bit going to the rightmost pin in the array and so on.
 * If you pass a string into `setTimeout` or `setInterval`, it'll be treated in the same way as a function and will be executed after a certain time period.
 
-If you do manage to save something to Espruino that causes it not to work, don't worry - you can easily recover it. Just see the [[Troubleshooting]] page.
+If you do manage to save something to Espruino that causes it not to work, don't worry - you can easily recover it. Just see the [Troubleshooting](../info/Troubleshooting.md) page.
 
 Now you've got an idea how to use Espruino:
 
 * Have a look at your board's reference page - it contains more in-depth information about your board, as well as for links to tutorials that specifically use your board:
-  * Espruino [Pico](/Pico)
-  * Espruino [WiFi](/WiFi)
-  * [Original](/Original) Espruino
-  * [Puck.js](/Puck.js)
-  * [Pixl.js](/Pixl.js)
-  * [MDBT42Q](/MDBT42Q)
-  * Other board? It may be listed in [the Reference](/Reference#hardware)
-* Have a look at the [[Tutorials]] and [[Reference]] pages
-* Check out [[Modules]] to see which libraries of code are available to use
-* See how to use the more advanced features of the [[Web IDE]]
-* Check out other [ways of Programming Espruino](/Programming)
-* Instantly [Search](/Search) all the Espruino website's documentation (using the box in the top right)
-* If you've got a question, please check out our [[Forum]]
+  * Espruino [Pico](../boards/Pico.md)
+  * Espruino [WiFi](../boards/WiFi.md)
+  * [Original](../boards/Original.md) Espruino
+  * [Puck.js](../boards/Puck.js.md)
+  * [Pixl.js](../boards/Pixl.js.md)
+  * [MDBT42Q](../boards/MDBT42Q.md)
+  * Other board? It may be listed in [the Reference](https://www.espruino.com/Reference#hardware)
+* Have a look at the [Tutorials](../Tutorials.md) and [Reference](https://www.espruino.com/Reference) pages
+* Check out [Modules](../Modules.md) to see which libraries of code are available to use
+* See how to use the more advanced features of the [Web IDE](Web IDE.md)
+* Check out other [ways of Programming Espruino](../info/Programming.md)
+* Instantly [Search](https://www.espruino.com/Search) all the Espruino website's documentation (using the box in the top right)
+* If you've got a question, please check out our [Forum](../info/Tips and Tricks.md)

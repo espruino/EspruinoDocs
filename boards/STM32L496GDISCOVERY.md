@@ -45,7 +45,7 @@ Getting Started<a name="firmware-updates"></a>
   for the absolute latest builds) and download the latest file named `espruino_*_stm32l496gdiscovery.bin`
 * Save it to the `DIS_L496ZG` drive that should have appeared on your computer and wait for the LEDs on the board to stop flashing
 
-And you're ready to go! Follow the [Getting Started Guide](/Quick+Start) for details
+And you're ready to go! Follow the [Getting Started Guide](../tutorials/Quick Start.md) for details
 on getting the IDE connected via USB. You can communicate with the board via the
 `USB STLINK` USB connector or the `OTG FS` USB connector (`OTG FS` takes priority if connected).
 

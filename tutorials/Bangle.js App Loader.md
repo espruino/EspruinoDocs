@@ -7,7 +7,7 @@ Adding an app to the Bangle.js App Loader
 * KEYWORDS: Tutorials,Bangle.js,Development,App Loader,App Store,Submit,App
 * USES: Bangle.js
 
-If you have an app (eg by following the [Bangle.js First App](/Bangle.js+First+App)
+If you have an app (eg by following the [Bangle.js First App](./Bangle.js First App.md)
 tutorial), you might want to add it to the [Bangle.js App Loader](http://banglejs.com/apps) so you or others can
 easily install it.
 
@@ -54,7 +54,7 @@ server (not HTTP) for Web Bluetooth to work.
 Adding your app
 ---------------
 
-If you followed the [Bangle.js First App](/Bangle.js+First+App) tutorial
+If you followed the [Bangle.js First App](./Bangle.js First App.md) tutorial
 you should now have an app with an ID of `timer`, so let's use that. We
 should create a new folder of the same name as your app's ID in the `apps`
 folder.
@@ -83,7 +83,7 @@ E.showMessage("My\nSimple\nApp","My App")
 * Now click the `Commit new file` button
 * The window will now be in the `BangleApps/apps/timer` folder, and
 we now want to add the app icon.
-* In [Bangle.js First App](/Bangle.js+First+App) we downloaded a 48px icon as a `PNG` file, so let's use that.
+* In [Bangle.js First App](./Bangle.js First App.md) we downloaded a 48px icon as a `PNG` file, so let's use that.
 * Rename the file on your computer to `app.png` (GitHub doesn't provide a way to rename files)
 * Click `Upload files` in GitHub's `BangleApps/apps/timer` folder, upload the file, and click `Commit Changes`
 
@@ -234,7 +234,7 @@ to make their way to the main App Loader at https://banglejs.com/apps
 More Info
 ----------
 
-There are a more [Bangle.js tutorials](/Bangle.js#tutorials) on making apps.
+There are a more [Bangle.js tutorials](../boards/Bangle.js.md#tutorials) on making apps.
 
 For a reference of the format of apps and the JSON, check out [the Bangle.js App Loader's README file](https://github.com/espruino/BangleApps)
 

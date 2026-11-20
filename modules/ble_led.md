@@ -8,7 +8,7 @@ LED BLE Library
 * USES: BLE,Only BLE,BTHome
 
 
-The [[ble_led.js]] library turns your Espruino device into a Bluetooth LED device compatible with the [Python led-ble library](https://github.com/Bluetooth-Devices/led-ble/blob/main/src/led_ble/led_ble.py)
+The [ble_led.js](ble_led.js) library turns your Espruino device into a Bluetooth LED device compatible with the [Python led-ble library](https://github.com/Bluetooth-Devices/led-ble/blob/main/src/led_ble/led_ble.py)
 which means your device can appear in Home Assistant with the [LED BLE integration](https://www.home-assistant.io/integrations/led_ble/).
 
 Once configured, a device running this library will appear in `http://homeassistant/config/integrations/dashboard` where it can be used alongside all your other devices.

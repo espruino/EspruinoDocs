@@ -7,7 +7,7 @@ Bangle.js Clock Face Fonts
 * KEYWORDS: Tutorials,Bangle.js,Development,Clock,Watch,Face,App,Apps,Application,Font,Fonts
 * USES: Bangle.js
 
-You should have already been through the [Bangle.js Clock tutorial](/Bangle.js+Clock)
+You should have already been through the [Bangle.js Clock tutorial](./Bangle.js Clock.md)
 to get an idea how to get started.
 
 In that tutorial we used the `7x11Numeric7Seg` font to create a 7 segment font.
@@ -291,4 +291,4 @@ Bangle.drawWidgets();
 Next Steps
 -----------
 
-To get this app permanently on your watch, check out the rest of the [Bangle.js Clock tutorial](/Bangle.js+Clock).
+To get this app permanently on your watch, check out the rest of the [Bangle.js Clock tutorial](./Bangle.js Clock.md).

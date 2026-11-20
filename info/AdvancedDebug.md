@@ -10,7 +10,7 @@ Advanced Debug (SWD)
 While the Espruino firmware itself can be compiled for and debugged on a Host PC, sometimes you'll need to be able to reflash and/or debug the hardware itself.
 
 * On STM32-based devices you can do this using SWD pins and an ST-Link device
-* On Nordic-based devices you would ideally connect a Nordic [nRF52832DK](/nRF52832DK) to the two labelled SWD pins, but it is possible to use a DAPLINK/CMSIS-DAP dongle as well
+* On Nordic-based devices you would ideally connect a Nordic [nRF52832DK](../boards/nRF52832DK.md) to the two labelled SWD pins, but it is possible to use a DAPLINK/CMSIS-DAP dongle as well
 
 See below for more information:
 
@@ -19,14 +19,14 @@ NRF52 boards
 
 Connecting up SWD just requires connecting 3 pins - GND, SWDIO and SWCLK. Connecting for each device is detailed in:
 
-* [Bangle.js 2 Technical pages](/Bangle.js2+Technical#swd) - the charge cable has SWD/SWCLK connected to the USB data wires.
-* [Bangle.js 1 Technical pages](/Bangle.js+Technical#swd-programming)
-* Pixl.js SWD/SWCLK are [shown in the Pinout diagram](/Pixl.js#pinout)
-* Puck.js SWD/SWCLK are [marked on the PCB](/Puck.js#pinout)
-* MDBT42Q SWD/SWCLK are [shown in the Pinout diagram](/MDBT42Q#pinout)
-* Jolt.js SWD/SWCLK are [marked on the PCB](/Jolt.js#pinout) as `3 D C 0` where 3=3.3v, D=SWD, C=SWCLK, 0=GND
+* [Bangle.js 2 Technical pages](./Bangle.js2 Technical.md#swd) - the charge cable has SWD/SWCLK connected to the USB data wires.
+* [Bangle.js 1 Technical pages](./Bangle.js Technical.md#swd-programming)
+* Pixl.js SWD/SWCLK are [shown in the Pinout diagram](../boards/Pixl.js.md#pinout)
+* Puck.js SWD/SWCLK are [marked on the PCB](../boards/Puck.js.md#pinout)
+* MDBT42Q SWD/SWCLK are [shown in the Pinout diagram](../boards/MDBT42Q.md#pinout)
+* Jolt.js SWD/SWCLK are [marked on the PCB](../boards/Jolt.js.md#pinout) as `3 D C 0` where 3=3.3v, D=SWD, C=SWCLK, 0=GND
 
-We'd suggest using a a Nordic [nRF52832DK](/nRF52832DK), but CMSIS-DAP is possible too:
+We'd suggest using a a Nordic [nRF52832DK](../boards/nRF52832DK.md), but CMSIS-DAP is possible too:
 
 ### nRF52832DK
 
@@ -88,7 +88,7 @@ Connect wires onto the 6 pin SWD connector as follows:
 
 ### Espruino Pico
 
-The Six SWD connections are available on six circular pads on the back of the [[Pico]]. Pin one is unmarked, but is nearest the USB connector.
+The Six SWD connections are available on six circular pads on the back of the [Pico](../boards/Pico.md). Pin one is unmarked, but is nearest the USB connector.
 
 You only actually need to connect pins 2,3 and 4 - but you can connect more if you want to.
 
@@ -137,7 +137,7 @@ There are some useful functions defined in `.gdinit` if you plan on debugging th
 Building Firmware
 -----------------
 
-We supply 'firmware update' images for Espruino boards at [on the Download page](Download) that are designed to be written with the bootloader. These images can not be written directly to an unprogrammed board via SWD as they do not contain the bootloader (and softdevice in nRF52 case). You'll need to build your own firmware.
+We supply 'firmware update' images for Espruino boards at [on the Download page](https://www.espruino.com/Download) that are designed to be written with the bootloader. These images can not be written directly to an unprogrammed board via SWD as they do not contain the bootloader (and softdevice in nRF52 case). You'll need to build your own firmware.
 
 See https://github.com/espruino/Espruino/blob/master/README_Building.md for full information on building.
 

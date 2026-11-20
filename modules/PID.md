@@ -56,7 +56,7 @@ Tuning PID systems is important for them to work correctly. There is a
 good explanation of this at https://pidexplained.com/how-to-tune-a-pid-controller/
 
 To do this easily you probably want to be able to graph the response of the
-system over time, perhaps using the [Graph Library](/graph)
+system over time, perhaps using the [Graph Library](./graph.md)
 
 You need to do the following (using temperature as an example) - with Espruino
 you can change the PID values on the fly just by sending the relevant commands

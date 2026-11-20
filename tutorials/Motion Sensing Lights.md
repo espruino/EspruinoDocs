@@ -19,16 +19,16 @@ Sure, you can buy those - but what if you want it to light up in an awesome way 
 You'll Need
 ----------
 
-* An [Espruino Board](/Original)
-* [[WS2811]] Lights
-* A [[Pyroelectric]] motion sensor - or something else you can use to detect movement
+* An [Espruino Board](../boards/Original.md)
+* [WS2811](../devices/WS2811.md) Lights
+* A [Pyroelectric](../devices/Pyroelectric.md) motion sensor - or something else you can use to detect movement
 
 Wiring Up
 --------
 
 ![Motion Sensing Lights Wiring](Motion Sensing Lights/setup.jpg)
 
-Connect the [[Pyroelectric]] sensor as follows:
+Connect the [Pyroelectric](../devices/Pyroelectric.md) sensor as follows:
 
 | HC-SR501 | Espruino   |
 | ------- | ------- |
@@ -36,7 +36,7 @@ Connect the [[Pyroelectric]] sensor as follows:
 | OUT | A1      |
 | GND | GND     |
 
-Connect the [[WS2811]] lights as follows:
+Connect the [WS2811](../devices/WS2811.md) lights as follows:
 
 | LED String | Espruino   |
 | -------    | ---------- |
@@ -166,6 +166,6 @@ setWatch(function(e) {
 
 Now the lights will smoothly turn on, and smoothly turn off.
 
-Because the code above is written in an event-based way (listening for movement using setWatch, rather than 'polling' using setInterval), you can add the ```setDeepSleep(true);``` command. This will send the Espruino board into a very low power sleep mode - which means that the whole project can run on batteries for a long time. Having said that, the LED strip draws around 20mA even when all LEDs are off - so if you want seriously low power you'll have to use a [relay](Relays) or FET on the 5v line of the LED string to ensure that when the LEDs are off, they are not drawing any power at all.
+Because the code above is written in an event-based way (listening for movement using setWatch, rather than 'polling' using setInterval), you can add the ```setDeepSleep(true);``` command. This will send the Espruino board into a very low power sleep mode - which means that the whole project can run on batteries for a long time. Having said that, the LED strip draws around 20mA even when all LEDs are off - so if you want seriously low power you'll have to use a [relay](../devices/Relays.md) or FET on the 5v line of the LED string to ensure that when the LEDs are off, they are not drawing any power at all.
 
-Another good addition to this would be a [Light Dependent Resistor](/LDR), so that you could detect when the area was light enough that the lights do not need to light up.
+Another good addition to this would be a [Light Dependent Resistor](../devices/LDR.md), so that you could detect when the area was light enough that the lights do not need to light up.

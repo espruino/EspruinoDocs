@@ -6,10 +6,10 @@ File IO and SD cards
 
 * KEYWORDS: File,Filesystem,File IO,SD card,microSD card,SD,microsd
 
-To access files from Espruino (if you're not getting them from the [[Internet]]) you'll need an SD card.
+To access files from Espruino (if you're not getting them from the [Internet](Internet.md)) you'll need an SD card.
 
-On the original [Espruino board](/Original) there's a Micro SD card slot built-in,
-or on the [Espruino Pico](/Pico) or other boards you'll have to wire a card up externally and then
+On the original [Espruino board](../boards/Original.md) there's a Micro SD card slot built-in,
+or on the [Espruino Pico](../boards/Pico.md) or other boards you'll have to wire a card up externally and then
 tell Espruino about it with [E.connectSDCard](http://www.espruino.com/Reference#l_E_connectSDCard)
 (see `Wiring` below).
 
@@ -59,7 +59,7 @@ returns a [File](http://www.espruino.com/Reference#File) Object, which has funct
 such as `read`, `write` and `seek` on it.
 
 For example the following would open a file, get one byte out of it, and then
-write to an analog ([[PWM]]) output 10 times a second.
+write to an analog ([PWM](PWM.md)) output 10 times a second.
 
 ```
 var f = E.openFile("data.raw","r");
@@ -161,7 +161,7 @@ You need to connect 6 wires from the SD card. For example:
 | VSS/GND   | GND      |
 
 
-**Note:** you can use software [[SPI]] for SD cards, in which case you
+**Note:** you can use software [SPI](SPI.md) for SD cards, in which case you
 can use any available GPIO pins on your device.
 
 **Note:** We'd strongly suggest you add a pullup resistor from CD/CS pin to 3.3v. It is
@@ -176,7 +176,7 @@ E.connectSDCard(SPI1, B6 /*CS*/);
 console.log(require("fs").readdirSync());
 ```
 
-For the Espruino [[Pico]], there is [an adaptor shim available](/Shims#microsd-0-1-adaptor) that makes connecting an SD card a lot easier!
+For the Espruino [Pico](../boards/Pico.md), there is [an adaptor shim available](./Shims.md#microsd-0-1-adaptor) that makes connecting an SD card a lot easier!
 
 If you don't have an SD breakout board at your disposal, you can make your own by soldering directly to a microSD/SDHC to SD card adapter (often provided with microSDs).
 

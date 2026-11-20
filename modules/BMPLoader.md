@@ -7,7 +7,7 @@ Bitmap file (BMP) Loader Module
 * KEYWORDS: Module,BMP,Bitmap,Image Loader
 * USES: Graphics
 
-This is a really simple bitmap loader that loads a [Windows Bitmap File](http://en.wikipedia.org/wiki/BMP_file_format) into an image that can be used with the [[Graphics]] library.
+This is a really simple bitmap loader that loads a [Windows Bitmap File](http://en.wikipedia.org/wiki/BMP_file_format) into an image that can be used with the [Graphics](../info/Graphics.md) library.
 
 This is currently only tested with 1 bit per pixel bitmap files, however it should work with 8 and 24 bit files.
 

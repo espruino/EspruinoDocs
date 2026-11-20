@@ -10,12 +10,12 @@ Single Button Combination Lock
 Introduction
 -----------
 
-If you want to make an electronic lock, the obvious way is to use something like a [KeyPad](/KeyPad Combination Lock). But maybe you don't want to wire up the wires, don't have space, or even just want to hide the entry. You could just use one button, and could tap out the code almost like morse code. That's what we'll do here.
+If you want to make an electronic lock, the obvious way is to use something like a [KeyPad](./KeyPad Combination Lock.md). But maybe you don't want to wire up the wires, don't have space, or even just want to hide the entry. You could just use one button, and could tap out the code almost like morse code. That's what we'll do here.
 
 You'll Need
 ----------
 
-* One [Espruino Board](/Original)
+* One [Espruino Board](../boards/Original.md)
 
 Wiring Up
 --------
@@ -192,7 +192,7 @@ setWatch(buttonWatcher, B12, { repeat:true, edge:'falling' });
 Next Steps
 ---------
 
-The next thing to do might be to operate some kind of lock when the combination was entered. To do this, just change the ```setLocked``` function. For instance you could plug a [Servo Motor](/Servo Motors) into pin B13 and write the following :
+The next thing to do might be to operate some kind of lock when the combination was entered. To do this, just change the ```setLocked``` function. For instance you could plug a [Servo Motor](../devices/Servo Motors.md) into pin B13 and write the following :
 
 ```
 function setLocked(isLocked) {

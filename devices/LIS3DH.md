@@ -9,7 +9,7 @@ LIS3DH Accelerometer
 The [LIS3DH](http://www.st.com/en/mems-and-sensors/lis3dh.html) is an ultra-low-power, high performance
 3-axis digital acceleration sensor.
 
-You can use the [[LIS3DH.js]] module with the LIS3DH as follows:
+You can use the [LIS3DH.js](LIS3DH.js) module with the LIS3DH as follows:
 
 I2C
 ---

@@ -85,7 +85,7 @@ Check out some of the [other modules](http://www.espruino.com/modules) for examp
 
       * KEYWORDS: Module,Comma,separated,list,of,search,words
 
-      A bit about my module. Use the [[MOD123.js]] module for it.
+      A bit about my module. Use the               module for it.
 
       You can wire this up as follows:
 
@@ -113,7 +113,7 @@ You'll probably also want to add this to the end of the file if your module has 
       * APPEND_JSDOC: MOD123.js
 
         
-You can also add `APPEND_USES` so that if others [Write Tutorials](Writing Tutorials) that say `USES: MOD123` at the top, they will be listed on your module's page:
+You can also add `APPEND_USES` so that if others [Write Tutorials](./Writing Tutorials.md) that say `USES: MOD123` at the top, they will be listed on your module's page:
 
       Using
       -----

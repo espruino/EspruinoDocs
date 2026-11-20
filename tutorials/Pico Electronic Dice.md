@@ -15,10 +15,10 @@ This is a simple electronic dice that comes up with a new random number each tim
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [Nokia 5110 LCD](/PCD8544)
-* An [SW18010P Vibration Sensor](/Vibration)
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* A [Nokia 5110 LCD](../devices/PCD8544.md)
+* An [SW18010P Vibration Sensor](../devices/Vibration.md)
+* [Breadboard](../devices/Breadboard.md)
 
 Wiring Up
 --------
@@ -34,9 +34,9 @@ This one's really easy...
 Software
 -------
 
-First we'll just copy and paste the code that we used in the [[Pico Hello World]] example, with the code from the [[Pico Vibration]] example. Put the following in the right-hand side  of the Web IDE and click `Send to Espruino`:
+First we'll just copy and paste the code that we used in the [Pico Hello World](Pico LCD Hello World.md) example, with the code from the [Pico Vibration](Pico Vibration.md) example. Put the following in the right-hand side  of the Web IDE and click `Send to Espruino`:
 
-```
+```JS
 A5.write(0); // GND
 A7.write(1); // VCC
 A6.write(1); // Turn on the backlight
@@ -81,7 +81,7 @@ Now, the screen will display `"Hello World"` and if you shake the board it'll li
 
 The next step is just to modify the `shaken` function to display a random number - replace it with the following:
 
-```
+```JS
 function showRandom() {
   // get a random number between 1 and 6
   var n = 1 + Math.floor(Math.random()*6);
@@ -113,7 +113,7 @@ And that's it, A simple electronic dice!
 
 You could expand it to draw the dice itself by changing the `showRandom` function:
 
-```
+```JS
 // the dots defined on each face
 var dots = [
   undefined,

@@ -19,7 +19,7 @@ While this isn't suitable for production, it's a great way to prototype things -
 
 * Chrome/Chromium web browser
 * An HTTPS website (so Web Bluetooth can work)
-* A Bluetooth Espruino device, like [Bangle.js](/Bangle.js2)
+* A Bluetooth Espruino device, like [Bangle.js](../boards/Bangle.js2.md)
 
 ## Let's get some data
 
@@ -69,7 +69,7 @@ function poll() {
   if (!lastViewCount || count!=lastViewCount) {
     lastViewCount = count;
     changed(count);
-  }    
+  }
 }
 ```
 
@@ -130,7 +130,7 @@ function poll() {
   if (!lastState || state!=lastState) {
     lastState = state;
     changed(state);
-  }    
+  }
 }
 ```
 
@@ -155,7 +155,7 @@ function bluetoothConnect(finishedCb) {
     return device.gatt.connect();
   }).then(function(server) {
     /*  now get the 'UART' bluetooth service, so we can read and write! */
-    console.log("Connected");    
+    console.log("Connected");
     bluetoothServer = server;
     return server.getPrimaryService("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
   }).then(function(service) {
@@ -175,7 +175,7 @@ function bluetoothConnect(finishedCb) {
       console.log("BT> "+JSON.stringify(str));
     });
     return bluetoothRX.startNotifications();
-  }).then(function() {    
+  }).then(function() {
     console.log("Completed!");
     if (finishedCb) finishedCb();
     setInterval(poll,1000);
@@ -305,7 +305,7 @@ javascript:(function(){
       return device.gatt.connect();
     }).then(function(server) {
       /*  now get the 'UART' bluetooth service, so we can read and write! */
-      console.log("Connected");    
+      console.log("Connected");
       bluetoothServer = server;
       return server.getPrimaryService("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
     }).then(function(service) {
@@ -325,7 +325,7 @@ javascript:(function(){
         console.log("BT> "+JSON.stringify(str));
       });
       return bluetoothRX.startNotifications();
-    }).then(function() {    
+    }).then(function() {
       console.log("Completed!");
       if (finishedCb) finishedCb();
       setInterval(poll,1000);
@@ -381,7 +381,7 @@ function poll() {
   if (!lastViewCount || count!=lastViewCount) {
     lastViewCount = count;
     changed(count);
-  }    
+  }
 }
 /*  Bluetooth Handling   */
 var bluetoothDevice, bluetoothServer, bluetoothService, bluetoothTX;
@@ -394,7 +394,7 @@ function bluetoothConnect() {
     return device.gatt.connect();
   }).then(function(server) {
     /*  now get the 'UART' bluetooth service, so we can read and write! */
-    console.log("Connected");    
+    console.log("Connected");
     bluetoothServer = server;
     return server.getPrimaryService("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
   }).then(function(service) {
@@ -414,7 +414,7 @@ function bluetoothConnect() {
       console.log("BT> "+JSON.stringify(str));
     });
     return bluetoothRX.startNotifications();
-  }).then(function() {    
+  }).then(function() {
     console.log("Completed!");
     if (finishedCb) finishedCb();
     setInterval(poll,1000);
@@ -507,7 +507,7 @@ left hand side and the app should update:
 E.emit('myapp', "12345")
 ```
 
-You could now save this as an app using [the instructions from the first tutorial](app.md#saving-as-an-app) but as
+You could now save this as an app using [the instructions from the first tutorial](Bangle.js First App.md#making-an-app) but as
 it's saved in RAM, as long as we don't change back to the clock screen (long pressing the button) then
 you're fine.
 
@@ -531,9 +531,9 @@ than running it from the Bookmarks page.
 
 ## Next steps?
 
-* We've used [Bangle.js](/Bangle.js2) here because it's easy to use, but now you can
+* We've used [Bangle.js](../boards/Bangle.js2.md) here because it's easy to use, but now you can
 escape from the browser you can control all kinds of different things.
 * You can push information to a website as well as pulling from it. You can use
 the same mechanisms to push information into a website -
-for example sensor data from [Bangle.js](/Bangle.js2)/[Puck.js](/Puck.js)/etc or even use the Web Bluetooth
+for example sensor data from [Bangle.js](../boards/Bangle.js2.md)/[Puck.js](../boards/Puck.js.md)/etc or even use the Web Bluetooth
 Advertising API to grab data from multiple sensors.

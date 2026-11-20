@@ -12,7 +12,7 @@ Analog inputs are easy to read in Espruino:
 
 This returns a value between 0 and 1. Internally ADCs in Espruino devices are usually 12 bits, but these are then divided by 4096 (2^12) such that the value is always in the range 0 to 1.
 
-**Note:** Not all pins are capable of Analog Input. See the [[Reference]] for your board ```ADC```.
+**Note:** Not all pins are capable of Analog Input. See the [Reference](https://www.espruino.com/Reference) for your board ```ADC```.
 
 Using Analog Inputs
 ------------------------

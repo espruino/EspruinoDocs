@@ -5,14 +5,14 @@ HTTP Image Loader
 * KEYWORDS: WiFi,Wireless,Image,Bitmap
 * USES: Internet,CC3000,PCD8544,BMPLoader,Graphics
 
-This code gets a 1 bit bitmap off the internet every 10 seconds, and displays it on a [[PCD8544]] LCD.
+This code gets a 1 bit bitmap off the internet every 10 seconds, and displays it on a [PCD8544](../devices/PCD8544.md) LCD.
 
 All you need to do is copy it in and change the Wifi Name and Key near the bottom. Note that the image doesn't change at all - ideally you'd connect this to a webpage that was able to send a customized image each time.
 
 Wiring
 ------
 
-Just connect the [[CC3000]] as described on the [[CC3000]] page, and the [[PCD8544]] as described on the [[Onboard LCD]] page.
+Just connect the [CC3000](../devices/CC3000.md) as described on the [CC3000](../devices/CC3000.md) page, and the [PCD8544](../devices/PCD8544.md) as described on the [Onboard LCD](../tutorials/Onboard LCD.md) page.
 
 */
 

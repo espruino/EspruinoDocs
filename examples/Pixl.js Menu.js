@@ -7,16 +7,16 @@ Pixl.js and Bangle.js Menus
 
 ![Pixl.js Menu](Pixl.js Menu.jpg)
 
-Pixl.js and Bangle.js contain a simple menu system based on [the graphical_menu module](graphical_menu).
+Pixl.js and Bangle.js contain a simple menu system based on [the graphical_menu module](../modules/graphical_menu.js).
 
 To use it just call `E.showMenu(...);` with an object where each field's name
 corresponds to a menu item, and the value is a function that is executed
 when that item is selected.
 
-To disable the menu, use `E.showMenu()` - see [the documentation](/Reference#l_E_showMenu)
+To disable the menu, use `E.showMenu()` - see [the documentation](https://www.espruino.com/Reference#l_E_showMenu)
 
-[E.showPrompt](/Reference#l_E_showPrompt), [E.showMessage](/Reference#l_E_showMessage)
-and [E.showAlert](/Reference#l_E_showAlert) are also available for displaying other types of information.
+[E.showPrompt](https://www.espruino.com/Reference#l_E_showPrompt), [E.showMessage](https://www.espruino.com/Reference#l_E_showMessage)
+and [E.showAlert](https://www.espruino.com/Reference#l_E_showAlert) are also available for displaying other types of information.
 
 **Note:** Earlier firmwares used `Pixl.menu(...);` (now deprecated) instead of
 `E.showMenu`. `E.showMenu` is more portable between Bangle.js and Pixl.js.

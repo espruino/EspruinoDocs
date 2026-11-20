@@ -7,7 +7,7 @@ Bangle.js 2 Technical Information
 * KEYWORDS: Bangle.js,Bangle,Banglejs,Smartwatch,Watch,pinout,pins,io,specs,spec
 * USES: Bangle.js
 
-**For general Bangle.js information, try [the Bangle.js 1](/Bangle.js) or [the Bangle.js 2](/Bangle.js2) pages**
+**For general Bangle.js information, try [the Bangle.js 1](../boards/Bangle.js.md) or [the Bangle.js 2](../boards/Bangle.js2.md) pages**
 
 This page contains detailed information on Bangle.js's 2's internals. If you're
 just writing JS then you should have no need for this information, but if you
@@ -26,16 +26,16 @@ Features
 --------
 
 * IP67 Water Resistant (everyday use, **not swimming or baths**)
-* Nordic 64MHz [nRF52840](/datasheets/nRF52840_PS_v1.1.pdf) ARM Cortex-M4 processor with Bluetooth LE
-* 256kB RAM 1024kB on-chip flash, 8MB external flash ([GD25Q64C](/datasheets/GD25Q64C.pdf)/[GD25Q64E](/datasheets/GD25Q64E.pdf))
-* 1.3 inch 176x176 always-on 3 bit colour LCD display ([LPM013M126](/datasheets/LPM013M126C.pdf))
-* Full touchscreen ([Hynitron CST816D](/datasheets/CST816D_CN.pdf))
+* Nordic 64MHz [nRF52840](../datasheets/nRF52840_PS_v1.1.pdf) ARM Cortex-M4 processor with Bluetooth LE
+* 256kB RAM 1024kB on-chip flash, 8MB external flash ([GD25Q64C](../datasheets/GD25Q64C.pdf)/[GD25Q64E](../datasheets/GD25Q64E.pdf))
+* 1.3 inch 176x176 always-on 3 bit colour LCD display ([LPM013M126](../datasheets/LPM013M126C.pdf))
+* Full touchscreen ([Hynitron CST816D](../datasheets/CST816D_CN.pdf))
 * Single button on side of watch
 * GPS/Glonass receiver ([AT6558 / AT6558R](#gps))
-* Heart rate monitor ([Vcare VC31 / VC31B](/datasheets/VC31B.pdf))
-* 3 Axis Accelerometer ([Kionix KX022](/datasheets/KX022-1020.pdf))
+* Heart rate monitor ([Vcare VC31 / VC31B](../datasheets/VC31B.pdf))
+* 3 Axis Accelerometer ([Kionix KX022](../datasheets/KX022-1020.pdf))
 * 3 Axis Magnetometer
-* Air Pressure/Temperature sensor (Bosch BMP280 / [Goertek SPL06](/datasheets/SPL06.pdf))
+* Air Pressure/Temperature sensor (Bosch BMP280 / [Goertek SPL06](../datasheets/SPL06.pdf))
 * Vibration motor
 * SWD program/debug pins on rear of watch
 * 175mAh battery (XK302627,  3 x 26 x 27mm), 4 weeks standby time
@@ -62,7 +62,7 @@ Hardware
 
 The watch body is made of ABS plastic, with the LCD+touchscreen assembly glued to the front.
 
-Want to get inside? Check out the [Bangle.js 2 Disassembly page](/Bangle.js2+Disassembly)
+Want to get inside? Check out the [Bangle.js 2 Disassembly page](../tutorials/Bangle.js2 Disassembly.md)
 
 There are CAD files for the Bangle.js 2 stand, as well as an STL of the watch body [available here](https://github.com/espruino/EspruinoBoard/blob/master/Bangle.js2)
 
@@ -102,14 +102,14 @@ The easiest way to connect to these is to use the provided USB charge cable and 
 
 Be sure to fully remove the tape and adhesive covering the SWDIO and SWDCLK pins.
 
-See [Advanced Debug](/AdvancedDebug) for more information on programming via SWD.
+See [Advanced Debug](./AdvancedDebug.md) for more information on programming via SWD.
 
 GPS
 ---
 
-The GPS is a [AT6558](/datasheets/AT6558.pdf) (or AT6558R on newest Bangle.js devices)
+The GPS is a [AT6558](../datasheets/AT6558.pdf) (or AT6558R on newest Bangle.js devices)
 
-For more information on common usage, check out [the Bangle.js 2 GPS page](/Bangle.js2#gps)
+For more information on common usage, check out [the Bangle.js 2 GPS page](../boards/Bangle.js2.md#gps)
 
 Espruino handles reception and parsing of NMEA data from the GPS UART when `Bangle.setGPSPower(1)` is called.
 
@@ -144,7 +144,7 @@ $GPTXT,01,01,02,MO=GR*67 false
 ```
 
 The receiver can be configured with `$PCAS` commands. It's hard to find decent documentation
-on these - the best we have found is [a Chinese Language datasheet here](/datasheets/Bangle.js2-GPS-CASIC-cn.pdf).
+on these - the best we have found is [a Chinese Language datasheet here](../datasheets/Bangle.js2-GPS-CASIC-cn.pdf).
 
 You need to calculate a checksum when sending, which can be done with the following:
 
@@ -181,7 +181,7 @@ CASIC_CMD("$PCAS00"); // Save all changes to flash memory (be careful!)
 ```
 
 The receiver also accepts and returns a binary protocol that begins with the characters `"\xBA\xCA"`, but you'll need to consult the CASIC datasheet for more information on that.
- We have an [English translated version here](/files/CASIC_en.pdf)
+ We have an [English translated version here](../files/CASIC_en.pdf)
 
  There's mention in some forum posts:
 

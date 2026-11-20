@@ -26,13 +26,13 @@ easy to use interface.
 You'll Need
 ----------
 
-* One [Espruino Pico](/Pico)
-* An [ESP8266 WiFi](/ESP8266) or [WIZnet W550io Ethernet](/WIZnet) module
+* One [Espruino Pico](../boards/Pico.md)
+* An [ESP8266 WiFi](../devices/ESP8266.md) or [WIZnet W550io Ethernet](../devices/WIZnet.md) module
 
 Wiring Up
 --------
 
-Just follow the wiring instructions for either [the ESP8266 WiFi](/ESP8266) or [WIZnet W550io Ethernet](/WIZnet) modules.
+Just follow the wiring instructions for either [the ESP8266 WiFi](../devices/ESP8266.md) or [WIZnet W550io Ethernet](../devices/WIZnet.md) modules.
 
 Software
 -------
@@ -218,7 +218,7 @@ document.addEventListener("mouseup", function(e) {
   req.send();
 });
 ```
-Save it all to disk, and then use the [[File Converter]] page to convert it to a string. While you could load it off an SD card without converting it to a string, storing the file as a variable means that Espruino can work without requiring an SD card at all.
+Save it all to disk, and then use the [File Converter](../info/File Converter.md) page to convert it to a string. While you could load it off an SD card without converting it to a string, storing the file as a variable means that Espruino can work without requiring an SD card at all.
 
 Finally, you just need to write some code for Espruino that will serve up the webpage and will do something when data is POSTed back via HTTP.
 

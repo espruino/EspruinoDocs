@@ -10,7 +10,7 @@ Using RGB LEDs with Espruino is straightforward and you don't really need any ex
 
 On the other hand, if you want to start quickly with operations like strobing or changing the color in a familiar way then you may want to use this module instead.
 
-There is only one thing to remember: on the board use either [[DAC]] or [[PWM]] output pins.
+There is only one thing to remember: on the board use either [DAC](../info/DAC.md) or [PWM](../info/PWM.md) output pins.
 
 Examples
 ---------------

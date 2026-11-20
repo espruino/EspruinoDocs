@@ -21,9 +21,9 @@ You'll need
 
 ![word clock parts](Tiny Word Clock/parts.jpg)
 
-* An 8x8 [LED Matrix](/LED+Matrix)
-* A [MDBT42Q Breakout](/MDBT42Q) board
-* A JST connector and [[Battery]] (or other way of powering your board)
+* An 8x8 [LED Matrix](../devices/LED Matrix.md)
+* A [MDBT42Q Breakout](../boards/MDBT42Q.md) board
+* A JST connector and [Battery](../devices/Battery.md) (or other way of powering your board)
 * A label printed with the 8x8 pattern of letters
 
 
@@ -41,7 +41,7 @@ On the board in the pictures, I've also pushed the PCB downwards so that
 it doesn't stick out of the side of the LED matrix.
 
 As in the video, if your LED Matrix is different, you used different pins,
-or wired it in a different orientation, check out the [LED Matrix wiring guide](/LED+Matrix#wiring)
+or wired it in a different orientation, check out the [LED Matrix wiring guide](../devices/LED Matrix.md#wiring)
 for some code that'll work out which wire goes where.
 
 **NOTE:** It's not good practice to connect LEDs directly to microcontroller
@@ -55,7 +55,7 @@ Labelling the display
 
 ![printed word clock label](Tiny Word Clock/label.png)
 
-The PDF file that was printed for the word clock [is available here](/files/wordclock_8x8_label.pdf).
+The PDF file that was printed for the word clock [is available here](../files/wordclock_8x8_label.pdf).
 
 The label in the video was printed on an inkjet printer, however there is some
 light bleed visible as black isn't entirely opaque. If you have access to one,
@@ -193,5 +193,5 @@ startScanning();
 Buying
 ------
 
-* [MDBT42Q Breakout](/MDBT42Q) boards can be [ordered from here](/Order#mdbt42q)
-* The [LED Matrix page](/LED+Matrix#buying) has information on where to buy matrices from
+* [MDBT42Q Breakout](../boards/MDBT42Q.md) boards can be [ordered from here](https://www.espruino.com/Order#mdbt42q)
+* The [LED Matrix page](../devices/LED Matrix.md#buying) has information on where to buy matrices from

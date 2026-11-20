@@ -7,13 +7,13 @@ nRF52 Low Level Interface Library
 * KEYWORDS: Module,nRF52,nRF5x,nRF52832,Low Level,Hardware,Differential,SAADC,GPIOTE,LPCOMP,PPI,TIMER
 * USES: Puck.js,Pixl.js,Jolt.js,MDBT42Q,nRF52832,nRF52
 
-The nRF52 microcontroller used in [Puck.js](/Puck.js), [Pixl.js](/Pixl.js) and [MDBT42Q](/MDBT42Q) has a load of really interesting peripherals built-in, not all of which are exposed by Espruino. The microcontroller also contains something called PPI - the "Programmable Peripheral Interconnect". This allows you to 'wire' peripherals together internally.
+The nRF52 microcontroller used in [Puck.js](../boards/Puck.js.md), [Pixl.js](../boards/Pixl.js.md) and [MDBT42Q](../boards/MDBT42Q.md) has a load of really interesting peripherals built-in, not all of which are exposed by Espruino. The microcontroller also contains something called PPI - the "Programmable Peripheral Interconnect". This allows you to 'wire' peripherals together internally.
 
 PPI lets you connect an `event` (eg. a pin changing state) to a `task` (eg. increment the counter). All of this is done without the processor being involved, allowing for very fast and also very power efficient peripheral use.
 
 Check out [the chip's reference manual](http://infocenter.nordicsemi.com/pdf/nRF52832_PS_v1.1.pdf) for more information.
 
-This library ([[NRF52LL.js]]) provides a low level interface to PPI and some of the nRF52's peripherals.
+This library ([NRF52LL.js](NRF52LL.js)) provides a low level interface to PPI and some of the nRF52's peripherals.
 
 **Note:** Failure to 'shut down' peripherals when not in use could drastically increase the nRF52's power consumption.
 
@@ -114,7 +114,7 @@ setInterval(function() {
 
 ### Use LED1 on Puck.js to sense a change in light level
 
-[LED1 in Puck.js can be a light sensor](/Puck.js#light-sensor), and we
+[LED1 in Puck.js can be a light sensor](../boards/Puck.js.md#light-sensor), and we
 can use the low power comparator with this to detect a state change.
 
 To make this work we have to use one IO pin (in this case D1) so that we

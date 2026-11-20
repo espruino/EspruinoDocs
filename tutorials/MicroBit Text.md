@@ -9,8 +9,8 @@ Sending Text to Micro:Bit
 
 ![Menu showing devices](MicroBit Text/menu.jpg)
 
-We're going to use a [Pixl.js](/Pixl.js) board with Espruino to scan for
-[Micro:bit](/MicroBit) devices programmed with [MakeCode](https://makecode.microbit.org)
+We're going to use a [Pixl.js](../boards/Pixl.js.md) board with Espruino to scan for
+[Micro:bit](../boards/MicroBit.md) devices programmed with [MakeCode](https://makecode.microbit.org)
 and to then send text to them using the UART service.
 
 Micro:Bit software
@@ -48,7 +48,7 @@ Your code should look like this:
 
 ![Finished code](MicroBit Text/makecode5.png)
 
-Click `Download` and save the file to each [Micro:bit](/MicroBit) you're interested in.
+Click `Download` and save the file to each [Micro:bit](../boards/MicroBit.md) you're interested in.
 
 
 Pixl.js Software
@@ -58,7 +58,7 @@ On the Pixl, we'll write code that scans for any Micro:Bits (with names beginnin
 with `BBC`) and displays them in a menu. When chosen from a menu you have a choice
 of text to send, and then a connection will be made and the text will be sent.
 
-For [Pixl.js](/Pixl.js), follow the [Getting Started Guide](/Quick+Start+BLE#pixljs)
+For [Pixl.js](../boards/Pixl.js.md), follow the [Getting Started Guide](./Quick Start BLE.md#pixljs)
 to get connected with the Espruino IDE.
 
 Copy and paste the following code to the right-hand side of the IDE and click `Upload`,
@@ -152,8 +152,8 @@ even after power is removed and restored.
 More functionality
 ------------------
 
-You can now send any text to a  [Micro:bit](/MicroBit), so you could write
-code on the [Micro:bit](/MicroBit) that checked if the text was a command
+You can now send any text to a  [Micro:bit](../boards/MicroBit.md), so you could write
+code on the [Micro:bit](../boards/MicroBit.md) that checked if the text was a command
 and that did what it said - for instance `"forward"` might move a Micro:bit Robot
 forwards.
 

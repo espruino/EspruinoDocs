@@ -7,7 +7,7 @@ Stopping Bangle.js Reset by Button
 * KEYWORDS: Reset,Button,Load,Timeout,Reload,Reboot,Long press
 * USES: Bangle.js,Bangle.js2
 
-In order to make sure you can't 'brick' your [Bangle.js 2](/Bangle.js2), it has two mechanisms to reboot built in:
+In order to make sure you can't 'brick' your [Bangle.js 2](../boards/Bangle.js2.md), it has two mechanisms to reboot built in:
 
 * If you hold the button for 1.5s second, the watch will reload the default app (normally the clock)
 * If you hold the button for ~10 seconds the firmware will completely reboot. This is handled by a hardware watchdog, and if for any reason the 'poll handler' doesn't get called in ~5 seconds the watch will automatically reboot too.

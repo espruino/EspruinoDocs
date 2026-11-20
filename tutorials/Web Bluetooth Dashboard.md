@@ -13,13 +13,13 @@ This tutorial will show you how to make something like the page below:
 
 ![dashboard](Web Bluetooth Dashboard.png)
 
-First, please check out [the Web Bluetooth tutorial](Web+Bluetooth),
+First, please check out [the Web Bluetooth tutorial](./Web Bluetooth.md),
 as it'll show you how to develop Web Bluetooth pages.
 
 We're going to use [TinyDash](https://github.com/espruino/TinyDash),
 a very simple HTML dashboard library that only needs a few files.
 
-Use the instructions in the [the Web Bluetooth tutorial](Web+Bluetooth)
+Use the instructions in the [the Web Bluetooth tutorial](./Web Bluetooth.md)
 to set up your own HTTPS webpage, then put the following in it:
 
 ```HTML_demo_link
@@ -59,9 +59,9 @@ Non-realtime Dashboard
 -------------------------
 
 To start off with, we'll create a dashboard that shows historical data from
-a [Puck.js](/Puck.js) when you connect to it.
+a [Puck.js](../boards/Puck.js.md) when you connect to it.
 
-First, we're going to want some data to display. Upload this to [Puck.js](/Puck.js)
+First, we're going to want some data to display. Upload this to [Puck.js](../boards/Puck.js.md)
 via the Web IDE:
 
 ```
@@ -152,7 +152,7 @@ Realtime Dashboard
 To get realtime updates from Puck.js we *could* repeatedly call `Puck.eval` to
 get the information we want, but that'll be quite slow.
 
-Instead, we'll use the [two-way communications example from the Web Bluetooth tutorial](Web+Bluetooth#two-way-communications).
+Instead, we'll use the [two-way communications example from the Web Bluetooth tutorial](./Web Bluetooth.md#two-way-communications).
 For that, we use `Puck.connect` to create a two-way connection, use `setInterval`
 on Puck.js to send data at regular intervals, and then pick it up in the
 `onLine` handler function.

@@ -173,6 +173,6 @@ You can get these displays from many places:
 However ensure that you are getting a single color matrix without a driver PCB.
 It should have 16 pins on the back of it.
 
-Displays also come in 2 colors, RGB, with [MAX7219](/MAX7219) drivers or as
-a PCB of neopixels [Neopixel](/W2811) - while these won't work
+Displays also come in 2 colors, RGB, with [MAX7219](MAX7219.md) drivers or as
+a PCB of neopixels [Neopixel](WS2811.md) - while these won't work
 with the code given here they can be made to work using the links above.

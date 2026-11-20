@@ -6,7 +6,7 @@ Resetting Espruino
 
 * KEYWORDS: Reset,Resetting,Reboot
 
-Only the [Original Espruino Board](/Original) has a dedicated Reset button. Espruino's
+Only the [Original Espruino Board](../boards/Original.md) has a dedicated Reset button. Espruino's
 interpreter means that very few things will lock up the device to the point where
 a hardware reset is needed, and using the `reset()` command (and/or Ctrl-C to
 break out of any running code) is usually good enough (while keeping the USB/Bluetooth
@@ -33,5 +33,5 @@ still execute.
 
 Upon reset, any previously saved code will still be loaded. If your device
 keeps loading the code and is unusable, please see the [reference page for
-your particular device](/Reference#hardware) as you can usually perform
+your particular device](https://www.espruino.com/Reference#hardware) as you can usually perform
 a full reset by holding the on-board button at the correct time while booting.

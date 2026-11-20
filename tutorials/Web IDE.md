@@ -7,7 +7,7 @@ Espruino Web IDE
 * KEYWORDS: Web IDE,Editor,IDE,Install,Tools
 * USES: Espruino Board,Puck.js,Espruino Pico,Pico,Espruino WiFi
 
-The Web IDE is the preferred way to program Espruino. It's got a syntax-highlighted editor as well as support for dynamically loading modules and for upgrading Espruino's Firmware. You might want to check out [other ways of programming Espruino devices](/Programming).
+The Web IDE is the preferred way to program Espruino. It's got a syntax-highlighted editor as well as support for dynamically loading modules and for upgrading Espruino's Firmware. You might want to check out [other ways of programming Espruino devices](../info/Programming.md).
 
 Installing
 ----------
@@ -25,7 +25,7 @@ Web Serial options.
 * Versions of Windows before Windows 10 don't support Web Bluetooth. You'll
 need to install the Native application (below).
 * Web Bluetooth and Web Serial may not be enabled in your Browser by default. Have a look
-at the [Quick Start guide](/Quick+Start) for information on how to enable it.
+at the [Quick Start guide](./Quick Start.md) for information on how to enable it.
 
 
 ### From the Chrome Web Store
@@ -42,8 +42,8 @@ Espruino device. If you're using Windows you'll need to use the Native Applicati
 
 The Web IDE is available as:
 
-* [Download for Windows 32 bit - 0.75.8](/files/espruino_ide_win32_0v75.8.exe)
-* [Download for Windows 64 bit - 0.75.8](/files/espruino_ide_win64_0v75.8.exe)
+* [Download for Windows 32 bit - 0.75.8](https://www.espruino.com/files/files/espruino_ide_win32_0v75.8.exe)
+* [Download for Windows 64 bit - 0.75.8](https://www.espruino.com/files/files/espruino_ide_win64_0v75.8.exe)
 
 The Native IDE versions lag behind the Online IDE, so if you're able to use the Online
 IDE we strongly recommend it.

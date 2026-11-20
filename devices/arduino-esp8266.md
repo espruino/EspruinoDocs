@@ -47,8 +47,8 @@ The DIP switches are:
 | SW3 | Enable bootloader mode |
 | SW4 | Use DFU LED to show serial activity (?) |
 
-Power is drawn from the `5v` pin (not `Vin`) so if connecting to [Pixl.js](/Pixl.js)
-ensure that [`Vin` and `5V` are shorted on the solder jumper ](/Pixl.js#shield-power)
+Power is drawn from the `5v` pin (not `Vin`) so if connecting to [Pixl.js](../boards/Pixl.js.md)
+ensure that [`Vin` and `5V` are shorted on the solder jumper ](../boards/Pixl.js.md#shield-power)
 unless you plan to power the shield separately.
 
 # Using as-is
@@ -70,7 +70,7 @@ unless you plan to power the shield separately.
 # Pixl.js
 
 If connecting to Pixl.js you should be aware that when if Pixl.js [detects a
-connection on `D0`](/Pixl.js#serial-console) at boot, it'll start using `Serial1`
+connection on `D0`](../boards/Pixl.js.md#serial-console) at boot, it'll start using `Serial1`
 as a console device rather than the LCD.
 
 To avoid this you'll need to explicitly set the console back to the LCD at boot
@@ -85,7 +85,7 @@ function onInit() {
 # Software
 
 **Note:** your module **may not come with ESP8266 AT firmware installed**. To fix this,
-see the [the ESP8266 page](/ESP8266#updating-esp8266-firmware). If you're using Pixl.js
+see the [the ESP8266 page](./ESP8266.md#updating-esp8266-firmware). If you're using Pixl.js
 you can now update the firmware on the ESP8266 module via the `Flasher` section of the Web IDE.
 
 ## Client
@@ -148,8 +148,8 @@ function go() {
 }
 ```
 
-See [the ESP8266 page](/ESP8266#software) for more information on how to
-use the ESP8266, and the [Internet](/Internet) page for more examples
+See [the ESP8266 page](./ESP8266.md#software) for more information on how to
+use the ESP8266, and the [Internet](../info/Internet.md) page for more examples
 of things you can do on Espruino  with an Internet connection.
 
 

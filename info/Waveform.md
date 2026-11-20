@@ -6,9 +6,9 @@ Waveforms
 
 * KEYWORDS: Peripheral,Peripherals,Analog,ADC,DAC,A2D,D2A,Built-In,Audio,Wave,Signal,Sound,Music
 
-Espruino contains both [[Analog]] Inputs ([[ADC]]) and [[Analog Outputs]] ([[DAC]]). Functions such as `analogRead` and `analogWrite` can be called at around 1kHz (although with [[PWM]] you can get higher frequency outputs). While that's fast enough for control it isn't fast enough to play and record audio.
+Espruino contains both [Analog](Analog.md) Inputs ([ADC](ADC.md)) and [Analog Outputs](DAC.md). Functions such as `analogRead` and `analogWrite` can be called at around 1kHz (although with [PWM](PWM.md) you can get higher frequency outputs). While that's fast enough for control it isn't fast enough to play and record audio.
 
-Instead, you can use the [Waveform Class](/Reference#Waveform) to play back or record waveforms.
+Instead, you can use the [Waveform Class](https://www.espruino.com/Reference#Waveform) to play back or record waveforms.
 
 **Note:** When dealing the large amounts of elements in Waveforms you'll start to notice Espruino's relatively slow execution speed. We'd recommend using `E.sum`, `E.variance`, `E.convolve` and `E.FFT` to work on large arrays wherever possible, and `Array.forEach` and `Array.map` to iterate over their elements.
 
@@ -91,7 +91,7 @@ w.startOutput(A0, 4000, {repeat:true});
 setTimeout(function() { w.stop(); }, 4000);
 ```
 
-Or to output a sine wave to the DAC on A4 (on the [Original Espruino](/Original) - this is the only board with a DAC:
+Or to output a sine wave to the DAC on A4 (on the [Original Espruino](../boards/Original.md) - this is the only board with a DAC:
 
 ```JS
 var w = new Waveform(256);
@@ -138,7 +138,7 @@ w2.startOutput(A5, 4000, {repeat:true, time:t});
 ```
 
 You can output a Sound file that you define in-line, with data created using
-the [[File Converter]] page (from a 4kHz RAW wave file):
+the [File Converter](File Converter.md) page (from a 4kHz RAW wave file):
 
 ```JS
 var wave = E.toArrayBuffer(atob("haezvL6+ua+ZX0pAOzpASGKbsLm+v7qwl1xJPTs6RE5/rLa+v7qxllpHPTo9Rl6asru/vLSdYEY+OT9Haqa1vr+4rHdIQTg/RWmlt76+tqJiRT06QlOStbvAt6dnRTw7Ql+itsC7tYpNQThAUJO0vr21kE4/OUFZobfAua1sQjs+S4m3vb2vcUI9PE+Pu7u+oV48Pj1srL28s3ZAPTxgpry9tHk/PjxnrL68qmA8PEePvLy5fUA9P3i4u7yEQj0+erm7uno+PUaTvb2rWTs8ZLS7u3Y+PFCkvb2KPz5Inby+hT89UKe9unM6PWi7uqtLP0Gdur5yPjmAusCJQThuuL+VRDlot8COQDpzvrt9N0OIxq1lL16px4xCOoLCr1wzZra+fDVPoceJPUOZxpM/QZTHk0BDmcaFOE6owm40Yr2vVDeFx5A5U7G6XzWAxpA4WLixTj2cwms0isZ9MnPEkjVqw5g3ZsOYN2nEkjVxx3s0fsdrN567TEy6nTdxxnY3orRDWsWCNJO9SFzFeTWisT1zyFtNwoI4rqM3jb1AccJPV8ZfUMVxQsFzQsFxRMNvSbivur2/vLSnek1GOjw6Rk+AqrS9vr60qnpNRTo7PUhdm6+8vcC1rX9PQjs6QUl2qbW+v7mwjVJEOztBTYKvt8C8tqJoREA4QUh9rbjAvLSXVkM6PENdnre9vradWkQ6PUNqqbfAurN/SUA5QlactcC7tIZKPjpCYae3wbiqZUI6PkyOt768r3JBPTxRlLq8vKNgPD4+aKq+vLR4Qj08WqO9vbV5QT47Zau8vqtiPT1Ehbq8uohEPT1ss7y9kUc9PGy0vLyJQj1AhLu8tGg7PVWqvL6HQT1GlL69nEc+QIy8vpdFPUSVvryJPT5Usrq3XD87h7u/iUE5Z7W/oEk6U6nBqFM2VKjDoU81Xq/DlEU4cru8fDdFjcikVzJmtMB2OEmbx5VDPInGo082fcKrVTR4wqxUNXvDqE45j8WWPEqmw3gyZr6rTjqNx4Q1X7ytSz+ew20ze8aON128qENOtrBNQKq2UD+nt09BqrRJR6+vQFe/lzdpxYEyjMJaQbKoOmfGeDWcuEZYw3g2orI/ZcVkP7SbNJG7RGjJYEvBgDiykjKdqTOXrDaDujqDuDqHtTaOsqnBu8G3sZdhSUE6Oz5JX5muub6/urKbYUk/OjtCTHeqs7+9vbGiZUk+OztFVI+vub++tqlySUE5PURalbS6wbm0jlRDOzpDVJC0usC5sH9KQjhARnWsuMC7s4xOQjhASHyxucG4q25DPTpEZaq2wrivbEY7PUNzrru+uZhUPzo/XKK5vruhWz87P1yivL26kk89PER9try+qWY8Pj1vr729rWg9PT91tby9nlM8PE6Xvby0bz09Qoa6vLl/Pz1Bhrq8tW88PkiXvb6jUjw9aLW7unY9PVCkvryKPz1Lo7u+hkA7U6m9unY6PmO5uq5PPz+Wu755Pzl3ucCTRDhltcCeSTdfscKWRThquL+IPD59wrVxMlCZyZhMNXK7umo1UqfEizxDk8iYRjuJxaFKOITGoko5h8eXQkGZxos4Uq6/bzFwwqNHP5bGejNowaVERae/YzSGx4Q0Z8GgPVe8qEVIsq5IRrCvR0iyrEFQt6U6YcOLNHXGdTSXvlBIuZ02c8dsOaewPmXFazusqjlzxFhHvIgznrI9dcdTVsRrP7qFNaqdM6OhM5GxNZGvNZWrMp2nqMK7wbawk11IQDo7QEljna+6vr+5sZZcSD47O0NOfay0v768sZ1gRz46PEVYlbC6v761pmxHQDk+RF+btbvBubKJUEM6PENYlrW7wLiueElBOUFJe663v7mwhUxCOkJMg7G4vrWmaEU/Pkhsq7S/tKlnSD1CSHqtuLm0kFNDP0Rko7W5tZlZREFFZKO2t7OKT0NCTYOytbegY0NFRnistbWjZERFSX2wtLSUVEVEW5yztKhrRkdNi7KzrXVHR02LsbKpakdIVZixspdVSEl2ra+scEhJXqGwrn1KSlqgrrB9TElhpK6qcElMcK2snVVNUZesrXJNS4CrroZQSnGorY9TS2ymrYpRTXWqqn9MU4KwoG9HZJixildNe6qja0ton6qBTlqRrolVVIusj1hUh6yPWVWJq4dUW5OpgFBnnqJvUHuojllckaZ1Unamj1lhmZ9pVYele1N2o4pXbqGPXGackl1lm5JdZ5uQW26di1p0oH5af590XY6XZGmahlx9nHBiko5ge5pwZZOKYYGWa2yWe2OMjGR/lGt0lHJskntpj4JoioNohodqhYZrhYRthYSFiYeHhYN+eXh6fH18fXx9fH18fXx9fH0="));
@@ -207,7 +207,7 @@ Creating Audio Files for Espruino
 * Choose `Other Uncompressed files`
 * Choose `Options` then `RAW (header-less)` and `Unsigned 8 bit PCM`
 * And save to the SD card
-* If you don't want to use an SD card, you can load small sound snippets (less than 8kB) directly into Espruino's memory using the [[File Converter]] page.
+* If you don't want to use an SD card, you can load small sound snippets (less than 8kB) directly into Espruino's memory using the [File Converter](File Converter.md) page.
 
 ### FFMpeg
 

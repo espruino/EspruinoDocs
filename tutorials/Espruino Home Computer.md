@@ -11,22 +11,22 @@ Espruino Home Computer
 
 Many of us learnt to program on Sinclair Spectrums, Commodore 64s, BBC Micros or similar. Computers that booted straight up to a prompt and that encouraged you to play with them.
 
-In this tutorial you'll learn how to make your own JavaScript computer with [VGA](/Television) output in a few hours using Espruino!
+In this tutorial you'll learn how to make your own JavaScript computer with [VGA](../info/Television.md) output in a few hours using Espruino!
 
-Also see [the Pixl.js Home Computer](/Espruino Home Computer] that uses
-[Pixl.js](/Pixl.js) as the display.
+Also see [the Pixl.js Home Computer](Pixl.js Home Computer.md) that uses
+[Pixl.js](../boards/Pixl.js.md) as the display.
 
-**Note:** Espruino 2v28 and before had TV output on [Espruino Pico](/Pico), but while it can be built in
-it has been removed from the default build to free up Flash memory for other features. You can still use [Espruino WiFi](/WiFi),
+**Note:** Espruino 2v28 and before had TV output on [Espruino Pico](../boards/Pico.md), but while it can be built in
+it has been removed from the default build to free up Flash memory for other features. You can still use [Espruino WiFi](../boards/WiFi.md),
 or to use this exact Tutorial as-is, use Espruino firmware 2v28 or build your own with `TV` enabled.
 
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
+* An Espruino [Pico](../boards/Pico.md)
 * A piece of plastic or wood to act as a base
-* A [[Breadboard]]
-* 4x 4x4 [[KeyPad]]s
+* A [Breadboard](../devices/Breadboard.md)
+* 4x 4x4 [KeyPad](../devices/KeyPad.md)s
 * Lots of Stickers
 * 40x Male->Male Dupont-style Jumper wires - a multicoloured strip of them makes life a lot easier
 * An old VGA cable
@@ -34,7 +34,7 @@ You'll Need
 Wiring Up
 --------
 
-* Stick your 4 [[KeyPad]]s next to each other on your base (they're sticky-back). You may want to trim their edges down, but be careful not to trim too far or you might cut some contacts off.
+* Stick your 4 [KeyPad](../devices/KeyPad.md)s next to each other on your base (they're sticky-back). You may want to trim their edges down, but be careful not to trim too far or you might cut some contacts off.
 
 * Stick your breadboard down in the middle - it's sticky-back too!
 
@@ -48,11 +48,11 @@ Wiring Up
 
 ![Back of the base plate](Espruino Home Computer/back.jpg)
 
-* Now you need the extra pins on your Espruino [[Pico]]. Get some solid core wire and solder it to the 0.05" pins. Check nothing is shorted!
+* Now you need the extra pins on your Espruino [Pico](../boards/Pico.md). Get some solid core wire and solder it to the 0.05" pins. Check nothing is shorted!
 
 ![Pico with wires](Espruino Home Computer/pico_wire1.jpg)
 
-* Put the [[Pico]] into the left-hand side of the breadboard, strip and place the wires as in the picture below:
+* Put the [Pico](../boards/Pico.md) into the left-hand side of the breadboard, strip and place the wires as in the picture below:
 
 ![Installed Pico](Espruino Home Computer/pico_wire2.jpg)
 

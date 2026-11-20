@@ -6,9 +6,9 @@ Infrared Remote Control Receiver Module
 
 * KEYWORDS: Module,IR,Infrared,Received,Remote Control,TSOP34838,TSOP322,TSOP324,TSOP344,TSOP348,VS1838B
 
-Remove controls are handled by the [[IRReceiver.js]] module.
+Remove controls are handled by the [IRReceiver.js](IRReceiver.js) module.
 
-Note that there are [several different types of protocol](http://en.wikipedia.org/wiki/Remote_control#Consumer_electronics_infrared_protocols) used by different manufacturers. This module currently only handles space-coded and pulse-length-coded protocols (such as Panasonic, Samsung and Humax). You may find that you need to look at the [[Infrared Remote Control]] tutorial and make your own decoder if you have a different type of remote control.
+Note that there are [several different types of protocol](http://en.wikipedia.org/wiki/Remote_control#Consumer_electronics_infrared_protocols) used by different manufacturers. This module currently only handles space-coded and pulse-length-coded protocols (such as Panasonic, Samsung and Humax). You may find that you need to look at the [Infrared Remote Control](../tutorials/Infrared Remote Control.md) tutorial and make your own decoder if you have a different type of remote control.
 
 Wiring Up
 --------

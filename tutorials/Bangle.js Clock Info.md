@@ -7,19 +7,19 @@ Bangle.js Clock Info
 * KEYWORDS: Tutorials,Bangle.js,Development,Clock,Watch,information,clockinfo,clock_info,clock info
 * USES: Bangle.js
 
-If you've been following the [Bangle.js Clock tutorial](/Bangle.js+Clock)
+If you've been following the [Bangle.js Clock tutorial](./Bangle.js Clock.md)
 you should have an idea how you can go about making a clock.
 
 One feature you might want in your clock face is to display some other
 information - be that step count, altitude, or the time until your
 next timer.
 
-[We have Widgets](/Bangle.js+Widgets) that you can use with `Bangle.loadWidgets()`
+[We have Widgets](./Bangle.js Widgets.md) that you can use with `Bangle.loadWidgets()`
 but these sit in a 24px bar at the top of your screen which may not integrate
 well with your clock, and they may not display what you need.
 
 **Note:** If you just want widgets to appear only when needed,
-you could check out [Widget Hiding](/Bangle.js+Hideable+Widgets)
+you could check out [Widget Hiding](./Bangle.js Hideable Widgets.md)
 
 While you can write any code you want in your clock face, you may soon
 decide that you want to display more than one thing, and to be able to
@@ -156,7 +156,7 @@ After calling `addInteractive` it returns the `options` parameter with the follo
 * `focus` : function - bool to show if menu is focused or not
 
 
-If your clock implements [Fast Loading](/Bangle.js+Fast+Load) you'll want to
+If your clock implements [Fast Loading](./Bangle.js Fast Load.md) you'll want to
 ensure you call `clockInfoMenu.remove();` when your clock unloads.
 
 ## Multiple clock_info

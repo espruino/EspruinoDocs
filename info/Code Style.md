@@ -60,7 +60,7 @@ These is also the same coding style used for [the firmware's C code](https://git
 Other Suggestions
 -----------------
 
-* If you need to store big blobs of data in your code, store them as Base64 Strings (you can encode with `btoa`, or the [Image](/Image+Converter), [File](/File+Converter) or [Font](/Font+Converter) Converters do this automatically) *and save your code to Flash with Pretokenisation enabled*.
+* If you need to store big blobs of data in your code, store them as Base64 Strings (you can encode with `btoa`, or the [Image](./Image Converter.md), [File](./File Converter.md) or [Font](./Font Converter.md) Converters do this automatically) *and save your code to Flash with Pretokenisation enabled*.
 
 When pretokenisation is enabled (in 2v21 and later), strings will be stored as raw data and only referenced (so that their contents are loaded from flash on demand). This is very fast and memory efficient.
 
@@ -112,13 +112,13 @@ draw("foo",{
 })
 ```
 
-* Before version 2v21, if you're using big blobs of data *and saving your code to Flash* it's best to [define them in functions](/Performance#functions-in-flash) so they're only allocated when the function is called. However in 2v21 and later, when uploading code that's pretokenised strings will be stored as raw data and only referenced (so that their contents are loaded from flash on demand).
+* Before version 2v21, if you're using big blobs of data *and saving your code to Flash* it's best to [define them in functions](./Performance.md#functions-in-flash) so they're only allocated when the function is called. However in 2v21 and later, when uploading code that's pretokenised strings will be stored as raw data and only referenced (so that their contents are loaded from flash on demand).
 
 
 Why?
 ----
 
-For much more detail, check out [the Espruino Performance page](/Performance)
+For much more detail, check out [the Espruino Performance page](./Performance.md)
 
 ### Code size
 

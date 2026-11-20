@@ -12,7 +12,7 @@ Introduction
 
 On most Arduinos, if you want to keep track of time then you have to use an external RTC (Real Time Clock) chip.
 
-Both the [[Pico]] and the original [Espruino Board](/Original) have one built-in though. As an example we'll make a simple clock using the LCD display.
+Both the [Pico](../boards/Pico.md) and the original [Espruino Board](../boards/Original.md) have one built-in though. As an example we'll make a simple clock using the LCD display.
 
 **Note:** While the Pico has an RTC built in, by default it doesn't have an accurate watch crystal and so uses its internal oscillator which isn't that accurate. It won't keep proper time over a month, but in conjunction with some other time source (an internet connection, or [the NPL time signal](http://en.wikipedia.org/wiki/Time_from_NPL)) it'll be just fine.
 
@@ -21,9 +21,9 @@ Both the [[Pico]] and the original [Espruino Board](/Original) have one built-in
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [Nokia 5110 LCD](/PCD8544)
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* A [Nokia 5110 LCD](../devices/PCD8544.md)
+* [Breadboard](../devices/Breadboard.md)
 
 Wiring Up
 --------
@@ -43,7 +43,7 @@ console.log((new Date()).toString());
 
 In the left hand side of Espruino, the current time should be displayed (it may not include daylight saving time).
 
-So the next step is to display the time on the LCD. We'll use the same basic code from the [[Pico LCD Hello World]] tutorial, but set to update the LCD just once a second:
+So the next step is to display the time on the LCD. We'll use the same basic code from the [Pico LCD Hello World](Pico LCD Hello World.md) tutorial, but set to update the LCD just once a second:
 
 ```
 A5.write(0); // GND

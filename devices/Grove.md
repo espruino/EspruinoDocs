@@ -13,10 +13,10 @@ The [Seeed Studio](http://www.seeedstudio.com) [Grove System](http://www.seeedst
 Wiring
 -----
 
-When using the [Arduino adaptor shield](/ArduinoPico) on the Pico, just plug the Grove Arduino Shield on top of it.
+When using the [Arduino adaptor shield](./ArduinoPico.md) on the Pico, just plug the Grove Arduino Shield on top of it.
 A direct Grove Pico adaptor will be available soon as well.
 
-Otherwise, you need to wire each module up to GND, VCC, and to signal wires on the Pico. The connections should be written on the board. If it specifies `SDA`/`SCL`, make sure you use pins on the Pico that can handle [[I2C]].
+Otherwise, you need to wire each module up to GND, VCC, and to signal wires on the Pico. The connections should be written on the board. If it specifies `SDA`/`SCL`, make sure you use pins on the Pico that can handle [I2C](../info/I2C.md).
 
 Software
 -------
@@ -27,9 +27,9 @@ To make this easier we've added some modules with these arrays already defined, 
 
 | Adaptor | Module |
 |---------|--------|
-| Standard Arduino | [[arduino-grove.js]] |
-| [Arduino Adaptor shield for Pico](/ArduinoPico) | [[GroveArduinoPico.js]] |
-| Pico Mini Adaptor Shield | [[GrovePico.js]] |
+| Standard Arduino | [arduino-grove.js](arduino-grove.js) |
+| [Arduino Adaptor shield for Pico](./ArduinoPico.md) | [GroveArduinoPico.js](GroveArduinoPico.js) |
+| Pico Mini Adaptor Shield | [GrovePico.js](GrovePico.js) |
 
 Once you're using the correct module, for instance with `var grove = require("GrovePico");`,
 you can then access the relevant pins just by typing `grove.NAME` where `NAME` is the name

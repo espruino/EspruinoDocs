@@ -19,16 +19,16 @@ This is done by embedding an SVG image into an HTML file. SVG elements can then 
 You'll Need
 ----------
 
-* One [Espruino Board](/Original)
-* A [[CC3000]] WiFi module
+* One [Espruino Board](../boards/Original.md)
+* A [CC3000](../devices/CC3000.md) WiFi module
 * A [model house](http://www.hazelwilliams.net/)
-* A string of 8 [[WS2811]] Lights
+* A string of 8 [WS2811](../devices/WS2811.md) Lights
 
 Wiring Up
 --------
 
-* Follow [the instructions](/CC3000) for wiring up the CC3000 module
-* Follow the [[WS2811]] instructions to wire the WS2811 to pin B15.
+* Follow [the instructions](../devices/CC3000.md) for wiring up the CC3000 module
+* Follow the [WS2811](../devices/WS2811.md) instructions to wire the WS2811 to pin B15.
 * Arrange the LEDs in a zig-zag, with 4 on the bottom row for the bottom set of windows, and 4 on the top-row for the top set of windows.
 
 Software
@@ -183,7 +183,7 @@ Then, delete the metadata, add `onclick` attributes to each of the paths you wan
 
 The code above will request the page `/set?l2=true` if the second window is clicked.
 
-Save the HTML file to disk, and then use the [[File Converter]] page to convert it to a string. While you could load it off an SD card without converting it to a string, storing the file as a variable means that Espruino can work without requiring an SD card at all.
+Save the HTML file to disk, and then use the [File Converter](../info/File Converter.md) page to convert it to a string. While you could load it off an SD card without converting it to a string, storing the file as a variable means that Espruino can work without requiring an SD card at all.
 
 Finally, you just need to write some code for Espruino that will serve up the webpage, or will turn the LEDs on and off when the page `/set` is requested.
 

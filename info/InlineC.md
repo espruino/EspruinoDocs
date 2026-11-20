@@ -12,13 +12,13 @@ be fast enough, or you may have existing C code that you wish to use.
 In this case, you have a few options:
 
 * Insert inline C code into your JS project
-* Recompile the Espruino firmware [with your own C code](/Extending+Espruino+1)
-* Use the IDE [to compile your JavaScript code](/Compilation)
-* Use the [Inline Assembler](/Assembler)
+* Recompile the Espruino firmware [with your own C code](../tutorials/Extending Espruino 1.md)
+* Use the IDE [to compile your JavaScript code](./Compilation.md)
+* Use the [Inline Assembler](./Assembler.md)
 
 This page covers the first option - follow the links above for other options.
 
-**Note:** This is an online service that is only provided for [official Espruino boards](/Order). It won't work on devices like ESP8266 or ESP32.
+**Note:** This is an online service that is only provided for [official Espruino boards](https://www.espruino.com/Order). It won't work on devices like ESP8266 or ESP32.
 
 
 How do I use it?
@@ -50,7 +50,7 @@ print(c.fibo(20));
 ```
 
 The first lines should contain comments that describe the arguments and return value for
-each function that you wish to export to Espruino, [in the same form as used for the Assembler](/Assembler#arguments).
+each function that you wish to export to Espruino, [in the same form as used for the Assembler](./Assembler.md#arguments).
 The variable `c` will then contain an object containing a field for each exported function.
 
 Interrupts

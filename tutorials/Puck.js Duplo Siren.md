@@ -7,14 +7,14 @@ Puck.js Duplo Siren
 * KEYWORDS: Tutorials,Puck.js,LED,Light,Siren,Lights,Noise,Duplo,Lego
 * USES: Puck.js,LED
 
-This is how you can use a [Espruino Puck.js](/Puck.js) and 3D printed Duplo block to create a siren for a Duplo Fire Engine!
+This is how you can use a [Espruino Puck.js](../boards/Puck.js.md) and 3D printed Duplo block to create a siren for a Duplo Fire Engine!
 
 [[https://youtu.be/1EkSWVqevaY]]
 
 You'll need
 -----------
 
-* A [Puck.js](/Puck.js)
+* A [Puck.js](../boards/Puck.js.md)
 * A 3D printed clear Duplo Block. I used [the design from here](https://www.thingiverse.com/thing:116411/files)
 with the middle removed, printed upside-down with PET.
 * Two Blue LEDs

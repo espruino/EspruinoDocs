@@ -17,15 +17,15 @@ This is extremely useful, and in fact most GPS's have the functionality built in
 You'll Need
 ----------
 
-* One [Espruino Board](/Original)
-* A [Nokia 5110 LCD](/PCD8544)
-* A [[GPS]] module
-* A [[Battery]]
+* One [Espruino Board](../boards/Original.md)
+* A [Nokia 5110 LCD](../devices/PCD8544.md)
+* A [GPS](../devices/GPS.md) module
+* A [Battery](../devices/Battery.md)
 
 Wiring Up
 --------
 
-Simply connect both the [[GPS]] and the [Nokia LCD](/PCD8544) as described in their pages. That's it!
+Simply connect both the [GPS](../devices/GPS.md) and the [Nokia LCD](../devices/PCD8544.md) as described in their pages. That's it!
 
 
 Software

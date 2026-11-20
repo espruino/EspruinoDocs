@@ -17,7 +17,7 @@ The Digole displays support communication via UART, I2C, and SPI, controlled by 
 Using in Double Buffer mode
 ---------------------------
 
-Double Buffer mode is supplied in the [[DigoleBuf.js]] module, using the [[Graphics]] library. In this mode, it can be used just like the PCD8544 or any other display that uses the [[Graphics]] library. This may be a little slower, and you do need to store the whole buffer in memory, but you can use all the functions of the Espruino graphics library. Additionally, the code is also really small. Call flip() to send the buffer to the screen.  
+Double Buffer mode is supplied in the [DigoleBuf.js](DigoleBuf.js) module, using the [Graphics](../info/Graphics.md) library. In this mode, it can be used just like the PCD8544 or any other display that uses the [Graphics](../info/Graphics.md) library. This may be a little slower, and you do need to store the whole buffer in memory, but you can use all the functions of the Espruino graphics library. Additionally, the code is also really small. Call flip() to send the buffer to the screen.  
 
 ```
 I2C2.setup({ sck:B3, mosi:B5 });
@@ -48,7 +48,7 @@ g.writeByte(b)
 
 Using in Hardware Graphics mode
 ---------------------------
-Double Buffer mode is supplied in the [[DigoleHW.js]] module, using the hardware graphics functions. In this mode, most of the graphics functions work the same way as they would in the [[Graphics]] library; each of these functions is simply wrapping a command to the hardware. 
+Double Buffer mode is supplied in the [DigoleHW.js](DigoleHW.js) module, using the hardware graphics functions. In this mode, most of the graphics functions work the same way as they would in the [Graphics](../info/Graphics.md) library; each of these functions is simply wrapping a command to the hardware. 
 
 
 ```
@@ -62,7 +62,7 @@ g.drawLine(0,20,127,20);
 All methods that draw something to the screen now take an extra, optional, final argument dm. If this is included, the "display mode" will be set for this operation, and each pixel will perform a logical test with the existing pixels. Options are "!" or "~" for 'not', "|" for or (normal behavior), "&" for 'and', and "^" for 'xor'. 
 
 
-Methods that work like normal functions in [[Graphics]] library:
+Methods that work like normal functions in [Graphics](../info/Graphics.md) library:
 
 ```
 drawLine(x1,y1,x2,y2,dm)

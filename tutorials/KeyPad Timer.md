@@ -10,13 +10,13 @@ KeyPad Timer
 Introduction
 -----------
 
-If you want to make an electronic lock, using a [[KeyPad]] is the obvious way. There's one of these in the Espruino Ultimate kit, but see the [[KeyPad]] page to see where you can buy them.
+If you want to make an electronic lock, using a [KeyPad](../devices/KeyPad.md) is the obvious way. There's one of these in the Espruino Ultimate kit, but see the [KeyPad](../devices/KeyPad.md) page to see where you can buy them.
 
 You'll Need
 ----------
 
-* One [Espruino Board](/Original)
-* A [[KeyPad]]
+* One [Espruino Board](../boards/Original.md)
+* A [KeyPad](../devices/KeyPad.md)
 
 Wiring Up
 --------

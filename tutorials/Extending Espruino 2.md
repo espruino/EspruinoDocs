@@ -6,9 +6,9 @@ Extending Espruino 2 - Making a new Graphics class
 
 * KEYWORDS: Custom,C,C++,Extending,Extension,Native,Firmware
 
-You might want to check out [this tutorial on making your own simple extensions](/Extending Espruino 1) first.
+You might want to check out [this tutorial on making your own simple extensions](./Extending Espruino 1.md) first.
 
-First of all, Espruino already has a built in [`Graphics class`](/Graphics), which supports lot of functions. By using the setup, most if not all LCD-screens can be supported by this class.
+First of all, Espruino already has a built in [`Graphics class`](../info/Graphics.md), which supports lot of functions. By using the setup, most if not all LCD-screens can be supported by this class.
 So why build a new one and not support existing one ? Hmm good question. Let me sum up:
 
 - even simple animations are not part of Graphics

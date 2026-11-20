@@ -7,14 +7,14 @@ Arduino Pico adaptor board
 * KEYWORDS: Module,Arduino,Pico,Adaptor
 * USES: Arduino,Pico
 
-There is now an Arduino adaptor shield that converts the Espruino Pico into an [Arduino](/Arduino) form factor. It is available as part of the [Shim Collection](/Shims)
+There is now an Arduino adaptor shield that converts the Espruino Pico into an [Arduino](../info/Arduino.md) form factor. It is available as part of the [Shim Collection](../info/Shims.md)
 
 [![](ArduinoPico/arduino.png)](https://www.tindie.com/products/gfwilliams/espruino-pico-adaptor-pack/)
 
 Eagle CAD [board](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/arduino.brd)
  and [schematic](https://raw.githubusercontent.com/espruino/EspruinoBoard/master/Pico/Adaptors/eagle/arduino.sch)
 
-Check out some of the  [Arduino Shields](/Arduino) you can use with this adaptor.
+Check out some of the  [Arduino Shields](../info/Arduino.md) you can use with this adaptor.
 
 Wiring
 ------
@@ -25,7 +25,7 @@ You can solder a Pinned Pico flat by carefully removing the black plastic on the
 
 There is also room for a JST surface mount battery connector, just to the side of the Pico.
 
-The two sets of surface mount pads by the JST connector are for 0805-size 4.7k resistors, which act as pullups for the [I2C](/I2C) pins.
+The two sets of surface mount pads by the JST connector are for 0805-size 4.7k resistors, which act as pullups for the [I2C](../info/I2C.md) pins.
 
 
 Software
@@ -69,12 +69,12 @@ console.log(analogRead(ard.A0));
 ard.D10.set();
 ```
 
-If you're plugging this board into a [Seeed Grove](/Grove) kit, you can also use the `GroveArduinoPico` module to get the correct pins.
+If you're plugging this board into a [Seeed Grove](./Grove.md) kit, you can also use the `GroveArduinoPico` module to get the correct pins.
 
 Buying
 ------
 
 You can:
 
-* Buy the [Shim Pack](/Shims) that contains the Arduino adaptor amongst many other things.
+* Buy the [Shim Pack](../info/Shims.md) that contains the Arduino adaptor amongst many other things.
 * Download the Eagle CAD board design (linked above) and upload it to be manufactured by a company such as [OSHPark](https://www.oshpark.com/).

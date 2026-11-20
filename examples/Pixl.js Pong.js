@@ -8,13 +8,13 @@ Pixl.js Pong Game
 [[https://youtu.be/lLB_F-eCMbg]]
 
 This is a very simple two player [Pong](https://en.wikipedia.org/wiki/Pong)
-game made using [Pixl.js](/Pixl.js) and two potentiometers. See the video
+game made using [Pixl.js](../boards/Pixl.js.md) and two potentiometers. See the video
 above for full details on how it was made.
 
 To use this, wire:
 
-* One side of each potentiometer to the GND pin on [Pixl.js](/Pixl.js#pinout)
-* The other side of each potentiometer to the 3.3v pin on [Pixl.js](/Pixl.js#pinout)
+* One side of each potentiometer to the GND pin on [Pixl.js](../boards/Pixl.js.md#pinout)
+* The other side of each potentiometer to the 3.3v pin on [Pixl.js](../boards/Pixl.js.md#pinout)
 * The left potentiometer to pin `A0`
 * The right potentiometer to pin `A1`
 
@@ -22,7 +22,7 @@ To use this, wire:
 Web IDE, copy and paste the following code into the right-hand side of the
 IDE, and click the upload button!
 
-For a two-player, two-Pixl.js based version of Pong, [see this page](/Pixl.js+Multiplayer+Pong)
+For a two-player, two-Pixl.js based version of Pong, [see this page](../examples/Pixl.js Multiplayer Pong.js)
 */
 
 var BATSIZE = 8;

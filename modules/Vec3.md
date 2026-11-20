@@ -7,7 +7,7 @@ Vec3 - 3 element Vector
 * KEYWORDS: Module,Vector,Vec3,XYZ,Point,Vertex,3D
 
 This is a very simple library for maths on 3 element vectors. It's especially
-useful when dealing with 3D data, for example from [Puck.js](/Puck.js)'s
+useful when dealing with 3D data, for example from [Puck.js](../boards/Puck.js.md)'s
 magnetometer:
 
 ```

@@ -6,7 +6,7 @@ HMAC Module
 
 * KEYWORDS: Module,HMAC,Hashlib,Crypto
 
-This [[hmac.js]] module implements a HMAC for Espruino.
+This [hmac.js](hmac.js) module implements a HMAC for Espruino.
 
 **Note:** There was an older `hmac` module that depended on `hashlib` (a built-in module
   that is no longer included in Espruino). This new `hmac` has a different API

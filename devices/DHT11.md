@@ -9,7 +9,7 @@ DHT11 Temperature and RH Sensor
 Overview
 -----------------
 
-This module interfaces with the DHT11, a very cheap (and cheaply made) temperature and relative humidity sensor. Support is included in the [[DHT11.js]] module.
+This module interfaces with the DHT11, a very cheap (and cheaply made) temperature and relative humidity sensor. Support is included in the [DHT11.js](DHT11.js) module.
 
  Key Specifications:
 
@@ -25,7 +25,7 @@ The DHT11 sometimes fails to recognize the trigger pulse, and occasionally the m
 
 The module will retry if it doesn't get any response, or if other sanity checks fail. If it fails 10 times in a row, the callback will be called with an error (see below), indicating a likely problem with the sensor or wiring. However it is still recommended that you do your own sanity-check on the data returned.
 
-**Note:** The [[DHT22]] sensor is also available - it is similar, but more accurate and reliable.
+**Note:** The [DHT22](DHT22.md) sensor is also available - it is similar, but more accurate and reliable.
 
 Wiring
 -----------------

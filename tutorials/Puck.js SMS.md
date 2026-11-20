@@ -7,7 +7,7 @@ Puck.js with SMS control
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Light,SMS,GSM,LTE,AWOX
 * USES: Puck.js,SIM800,SIM900,ATSMS,BLE,Only BLE
 
-This video shows you how use [Puck.js](/Puck.js) and a GSM modem
+This video shows you how use [Puck.js](../boards/Puck.js.md) and a GSM modem
 to control devices via SMS text messages.
 
 [[http://youtu.be/xvX2k5vRkg0]]
@@ -21,11 +21,11 @@ means at least 1v95 (when released) or a 'cutting edge' build (http://www.esprui
 You'll need
 -----------
 
-* A [Puck.js](/Puck.js) device (or other [Espruino board](/Order) if you don't need Bluetooth LE
-* A [SIM800 or SIM900](/SIM900) module. The one I'm using is designed for a 5v input (if yours isn't you'll need to change the wiring accordingly)
+* A [Puck.js](../boards/Puck.js.md) device (or other [Espruino board](https://www.espruino.com/Order) if you don't need Bluetooth LE
+* A [SIM800 or SIM900](../devices/SIM900.md) module. The one I'm using is designed for a 5v input (if yours isn't you'll need to change the wiring accordingly)
 * A 3.3v voltage regulator (LD1117AV33) if you're not going to use Puck.js's battery
 * A 5v power source
-* A [[Breadboard]] and patch wires if you're planning on assembling as in the video
+* A [Breadboard](../devices/Breadboard.md) and patch wires if you're planning on assembling as in the video
 
 
 Wiring Up
@@ -159,7 +159,8 @@ function setLight(isOn) {
 
 [[http://youtu.be/As2dqUOpEvU]]
 
-The code on the [Puck.js](/Puck.js) sending the temperature is:
+
+The code on the [Puck.js](../boards/Puck.js.md) sending the temperature is:
 
 ```
 setInterval(function() {
@@ -226,9 +227,9 @@ function getTemp(number) {
 Buying
 ------
 
-See the [Puck.js Lightbulb page](/Puck.js+and+Bluetooth+Lightbulbs)
+See the [Puck.js Lightbulb page](BLE Lightbulbs.md)
 for links to where to find the Awox lights for sale.
 
-The [SIM900](/SIM900) page has links to where to find the SIM900 module.
+The [SIM900](../devices/SIM900.md) page has links to where to find the SIM900 module.
 
-[Puck.js](/Puck.js) devices can be [ordered from here](/Order#puckjs)
+[Puck.js](../boards/Puck.js.md) devices can be [ordered from here](https://www.espruino.com/Order#puckjs)

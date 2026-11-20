@@ -21,7 +21,7 @@ Connect as follows:
 
 Note that Trig and Echo can be on any GPIO pins.
 
-It's easy to use with the [[HC-SR04.js]] module:
+It's easy to use with the [HC-SR04.js](HC-SR04.js) module:
 
 ```
 var sensor = require("HC-SR04").connect(A0,A1,function(dist) {

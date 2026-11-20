@@ -27,12 +27,12 @@ requires quite a large amount of vibration before it'll trigger.
 Wiring
 -------
 
-Wire these up exactly like is described for a [[Button]].
+Wire these up exactly like is described for a [Button](Button.md).
 
 Software
 ---------
 
-You can use these exactly like a [[Button]] as well. The only difference 
+You can use these exactly like a [Button](Button.md) as well. The only difference 
 is that you can't use `debounce` - as the spring inside the sensor will
 almost always be bouncing!
 

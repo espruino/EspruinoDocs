@@ -10,7 +10,7 @@ Bangle.js Data Storage (using interface.html)
 In Bangle.js you may often want to store data over time, and then recall it
 later on your PC. In this tutorial we'll talk about how to do that.
 
-There's a [more general tutorial about storing data on Espruino](/Data+Collection) as well.
+There's a [more general tutorial about storing data on Espruino](./Data Collection.md) as well.
 
 We'll assume you've been through [creating an app](https://www.espruino.com/Bangle.js+First+App)
 already so you know what's involved in creating one.
@@ -175,7 +175,7 @@ Reading with the App Loader
 However, you can also add the loading functionality to the App Loader itself.
 
 First, we'll need to add the app. This is basically as documented in
-[Adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader) with one extra
+[Adding an app to the Bangle.js App Loader](./Bangle.js App Loader.md) with one extra
 addition - a `"interface"` element in the JSON.
 
 * Set up [your own App loader as described here](https://www.espruino.com/Bangle.js+App+Loader#enable-github-pages)

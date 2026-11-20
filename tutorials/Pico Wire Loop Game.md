@@ -14,15 +14,15 @@ Introduction
 
 This is a really quick version of the [Wire Loop Game](http://en.wikipedia.org/wiki/Wire_loop_game). Try and move the loop along the wire without touching it - otherwise an alarm goes off!
 
-Because we're using the [[Pico]] it's easy to create a noise, flash lights, and to keep track of how many times the wire has been hit.
+Because we're using the [Pico](../boards/Pico.md) it's easy to create a noise, flash lights, and to keep track of how many times the wire has been hit.
 
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [Nokia 5110 LCD](/PCD8544)
-* A [[Speaker]]
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* A [Nokia 5110 LCD](../devices/PCD8544.md)
+* A [Speaker](../devices/Speaker.md)
+* [Breadboard](../devices/Breadboard.md)
 * Solid core wire (around 0.6mm/22 AWG)
 
 Wiring Up
@@ -34,7 +34,7 @@ Wiring up is pretty simple - see the picture above:
 
 * Place the Espruino Pico on the breadboard with the USB connector facing left, and as near the top as possible
 * Put the LCD directly above it, aligned to the right (so the pin on the Pico nearest the USB connector should not be connected to anything)
-* Put the Piezo [[Speaker]] below the Pico, with one pin as far left as possible (so the other pin is on pin B4)
+* Put the Piezo [Speaker](../devices/Speaker.md) below the Pico, with one pin as far left as possible (so the other pin is on pin B4)
 * Take a 20cm long piece of solid code wire and strip the final 5cm off one end, and 0.5cm off the other. Fold the long end around into a loop and twist it closed, and then plug the other end into the breadboard at the bottom right of the Espruino Pico (pin A8).
 * Take a 30cm piece of solid core wire and strip the middle 20cm (you can do this carefully with a knife, or can pull all of the insulation off and then push some back on the end.
 * Strip 0.5cm off each end, and bend the wire into whatever pattern you want (leaving some insulation at each end for the loop to rest on at the beginning and end of the game).

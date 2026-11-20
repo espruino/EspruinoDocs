@@ -11,7 +11,7 @@ Quectel M35 Quad-band GSM/GPRS module Module
 
 The Quectel M35 is a GSM/GPRS module that can provide internet access via an AT command set.
 
-Support is provided in Espruino by the [[QuectelM35.js]] module.
+Support is provided in Espruino by the [QuectelM35.js](QuectelM35.js) module.
 
 Software
 ---------

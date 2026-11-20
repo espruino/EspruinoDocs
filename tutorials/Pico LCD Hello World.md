@@ -19,9 +19,9 @@ Here, we'll wire up an LCD and will display `Hello World` on that.
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* A [Nokia 5110 LCD](/PCD8544)
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* A [Nokia 5110 LCD](../devices/PCD8544.md)
+* [Breadboard](../devices/Breadboard.md)
 
 Wiring Up
 --------
@@ -38,10 +38,10 @@ See the picture above for an example.
 Software
 -------
 
-We're going to start off using the code from the [Nokia 5110 LCD](/PCD8544) page, but with a few small tweaks:
+We're going to start off using the code from the [Nokia 5110 LCD](../devices/PCD8544.md) page, but with a few small tweaks:
 
 * We're going to manually set up the pins for the LCD's power
-* As the Pico's hardware [[SPI]] pins don't align with the LCD, we'll just use Software SPI instead (which will work on any pins).
+* As the Pico's hardware [SPI](../info/SPI.md) pins don't align with the LCD, we'll just use Software SPI instead (which will work on any pins).
 
 ```
 A5.write(0); // GND
@@ -100,7 +100,7 @@ Improving it...
 
 What we've displayed is a bit boring though - what if you wanted to display the text at slightly different sizes?
 
-Espruino has a [Vector font](/Fonts) built in, which can be accessed using `g.setFontVector(size)`. You can switch back to the original (small) font with `g.setFontBitmap()` too.
+Espruino has a [Vector font](../info/Fonts.md) built in, which can be accessed using `g.setFontVector(size)`. You can switch back to the original (small) font with `g.setFontBitmap()` too.
 
 ```
 A5.write(0); // GND

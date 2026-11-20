@@ -56,7 +56,7 @@ This contains a jumper between VCC and VCC-JD. This means that the relay will be
 
 ![Jumpers on Relay Module](Relays/jumperwire.jpg)
 
-The Espruino Pico [Starter Kit](/Espruino+Kits) comes with breadboard and male Jumper Wires. To connect to the relay, take the 4 supplied black jumpers and place them on the 4 male pins of the Relay Module. You can then push the Jumper Wires into the top of them.
+The Espruino Pico [Starter Kit](../info/Espruino Kits.md) comes with breadboard and male Jumper Wires. To connect to the relay, take the 4 supplied black jumpers and place them on the 4 male pins of the Relay Module. You can then push the Jumper Wires into the top of them.
 
 We'd suggest that you connect Relay GND to Espruino `GND`, and relay VCC to Espruino `VBAT`. The two inputs can then be connected to any of the IO pins.
 

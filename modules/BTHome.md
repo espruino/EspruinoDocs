@@ -215,7 +215,7 @@ Bidirectional Communication
 ----------------------------
 
 At the moment, BTHome devices can only transmit data (not be connected to), however you
-can use the [LED BLE Library](ble_led) to make your device appear to be a Bluetooth Light
+can use the [LED BLE Library](./ble_led.md) to make your device appear to be a Bluetooth Light
 which is supported by the [LED BLE integration](https://www.home-assistant.io/integrations/led_ble/) in Home Assistant.
 
 You can use both this and the `ble_led` library at the same time, just be sure to keep the advertising name beginning with
@@ -254,9 +254,9 @@ References
 
 There are:
 
-* [Pre-made Bangle.js apps](https://banglejs.com/apps/?q=bthome) which will make your [Bangle.js watch](/Bangle.js2)
+* [Pre-made Bangle.js apps](https://banglejs.com/apps/?q=bthome) which will make your [Bangle.js watch](../boards/Bangle.js2.md)
 appear in BTHome
-* [Pre-made Puck.js apps](https://espruino.github.io/EspruinoApps/?q=bthome) which will make your [Puck.js](/Puck.js)
+* [Pre-made Puck.js apps](https://espruino.github.io/EspruinoApps/?q=bthome) which will make your [Puck.js](../boards/Puck.js.md)
 appear in BTHome
 
 Some tutorials use BTHome:

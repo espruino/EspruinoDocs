@@ -10,28 +10,28 @@ Logging to Google Sheets
 Introduction
 -------------
 
-Often you'll want to take some measurements and then upload them to an online service. There are [some examples of common services here](/IoT+Services), but perhaps one of the most approachable ways to get at your data is just to put it on a [Google Spreadsheet](https://www.google.com/sheets/about/), which you can do by uploading data using [Google Forms](https://www.google.com/forms/about/)
+Often you'll want to take some measurements and then upload them to an online service. There are [some examples of common services here](../info/IoT Services.md), but perhaps one of the most approachable ways to get at your data is just to put it on a [Google Spreadsheet](https://www.google.com/sheets/about/), which you can do by uploading data using [Google Forms](https://www.google.com/forms/about/)
 
-With the Espruino Pico's HTTPS support you can now do this. In this example we'll use an [[ESP8266]] WiFi module to upload the STM32 chip's temperature to Google every minute.
+With the Espruino Pico's HTTPS support you can now do this. In this example we'll use an [ESP8266](../devices/ESP8266.md) WiFi module to upload the STM32 chip's temperature to Google every minute.
 
 **Note:** In the past this example used an explicit HTTPS key and certificates,
 but this is not needed so has been left out. For details on using certificates, see
-[[Storing HTTPS Certificates]].
+[Storing HTTPS Certificates](Storing HTTPS Certificates.md).
 
 You'll Need
 ----------
 
-* One [Espruino Pico](/Pico)
-* A [[ESP8266]] WiFi module
+* One [Espruino Pico](../boards/Pico.md)
+* A [ESP8266](../devices/ESP8266.md) WiFi module
 
-Or an Espruino [Espruino WiFi](/WiFi)
+Or an Espruino [Espruino WiFi](../boards/WiFi.md)
 
 Wiring Up
 --------
 
-For the [Espruino WiFi](/WiFi) you don't have any wiring up to do.
+For the [Espruino WiFi](../boards/WiFi.md) you don't have any wiring up to do.
 
-Just follow [the instructions](/ESP8266) for wiring up the ESP8266 module - it's easier to use an adaptor shim for it
+Just follow [the instructions](../devices/ESP8266.md) for wiring up the ESP8266 module - it's easier to use an adaptor shim for it
 
 Software
 --------

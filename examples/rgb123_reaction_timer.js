@@ -6,7 +6,7 @@ Reaction Timer using RGB123
 * USES: RGB123,Button,Graphics
 
 
-This uses an [[RGB123]] 16x8 display (on B15), and scrolls the text "Test your reaction time!". When a button is pressed, it goes to a short timer `3..2..1..` and then after a random time period it lights up bright red and you have to press the button... It then tells you your reaction time and goes back to the start.
+This uses an [RGB123](../devices/RGB123.md) 16x8 display (on B15), and scrolls the text "Test your reaction time!". When a button is pressed, it goes to a short timer `3..2..1..` and then after a random time period it lights up bright red and you have to press the button... It then tells you your reaction time and goes back to the start.
 
 Wiring Up
 ---------
@@ -15,7 +15,7 @@ Wiring Up
 |----------|------------|
 | A0       | Light in button |
 | A1       | Button (connected to ground) |
-| B15      | [[RGB123]] DIN |
+| B15      | [RGB123](../devices/RGB123.md) DIN |
 
 */
 

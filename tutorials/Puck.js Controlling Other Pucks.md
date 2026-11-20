@@ -13,7 +13,7 @@ There are two main ways for one Puck to control another:
 * Using custom services
 * Using advertising and scanning
 
-See the [About Bluetooth](/About Bluetooth LE) page for a bit more information
+See the [About Bluetooth](./About Bluetooth LE.md) page for a bit more information
 
 We're just going to use the UART here because it's the easiest.
 
@@ -97,7 +97,7 @@ and then we need to connect to it.
 
 To get a lot faster, we'll need to go a bit more low level than the
 `ble_simple_uart` module, and access the individual characteristics
-as shown on the [About Bluetooth](/About Bluetooth LE) page.
+as shown on the [About Bluetooth](./About Bluetooth LE.md) page.
 
 * Reconnect to the 'master' Puck again (if you'd disconnected).
 * Copy the following code onto the right-hand side

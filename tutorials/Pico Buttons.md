@@ -15,9 +15,9 @@ Here we're going to find out how to attach external buttons and switches to the 
 You'll Need
 ----------
 
-* An Espruino [[Pico]]
-* Two [Pushbuttons](/Button)
-* [[Breadboard]]
+* An Espruino [Pico](../boards/Pico.md)
+* Two [Pushbuttons](../devices/Button.md)
+* [Breadboard](../devices/Breadboard.md)
 
 Wiring Up
 --------

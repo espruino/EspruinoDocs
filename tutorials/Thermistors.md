@@ -7,9 +7,9 @@ Thermistors
 * KEYWORDS: Sensor,Temperature,Temp,Analog,ADC
 * USES: ADC,Resistor,Thermistor
 
-This Tutorial assumes that you are able to enter code in Espruino. If you can't do that yet, please follow the steps on the [[Quick Start]] page.
+This Tutorial assumes that you are able to enter code in Espruino. If you can't do that yet, please follow the steps on the [Quick Start](Quick Start.md) page.
 
-**Note:** There's now a [[Thermistor]] module that can handle these calculations for you, however this tutorial will walk you through how it works.
+**Note:** There's now a [Thermistor](../devices/Thermistor.md) module that can handle these calculations for you, however this tutorial will walk you through how it works.
 
 Introduction
 -----------

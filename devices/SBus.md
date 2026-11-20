@@ -7,15 +7,15 @@ Futaba S.Bus System
 * KEYWORDS: Module,Futaba,Frsky,SBus,S.Bus,Servo,RC,Remote Control
 
 The [S.Bus System](https://www.futabarc.com/sbus/index.html) is a way of
-controlling [RC servo Motors](/Servo+Motors) more accurately using serial data.
-Normally servo motors use [[PWM]] - you can only have one servo motor
+controlling [RC servo Motors](./Servo Motors.md) more accurately using serial data.
+Normally servo motors use [PWM](../info/PWM.md) - you can only have one servo motor
 per signal wire, and accuracy is usually around 1 in 200.
 
 S.Bus servos accept an 11 bit signal (so theoretically are accurate to 1 in 2048) and
 you can normally have 16 servos per signal wire (each servo needs programming
 so that it knows what channel it is on).
 
-The [[SBus.js]] module allows you to decode this signal in Espruino.
+The [SBus.js](SBus.js) module allows you to decode this signal in Espruino.
 
 S.Bus uses a standard Serial protocol (even parity, 2 stop bits, 100000 baud),
 however the polarity is inverted so you must use an external inverter (a transistor,
@@ -74,7 +74,7 @@ sbus.on('frame', function(sbus) {
 });
 ```
 
-Or to control normal [RC servo Motors](/Servo+Motors) from the SBus servo
+Or to control normal [RC servo Motors](./Servo Motors.md) from the SBus servo
 data:
 
 ```

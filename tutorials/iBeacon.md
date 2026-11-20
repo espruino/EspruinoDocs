@@ -7,14 +7,14 @@ iBeacons
 * KEYWORDS: Module,Modules,BLE,Bluetooth,EddyStone,FatBeacon,iBeacon,Beacon
 * USES: Puck.js,BLE,Only BLE
 
-**Note:** For Eddystone, see [this page](/Puck.js Eddystone)
+**Note:** For Eddystone, see [this page](Eddystone.md)
 
 [iBeacon](https://en.wikipedia.org/wiki/IBeacon) is a beacon format from Apple
 that allows you to transmit information which can appear as a notification on
 a user's iPhone.
 
 
-All you need to do to use it is use the [[ble_ibeacon.js]] module:
+All you need to do to use it is use the [ble_ibeacon.js](../modules/ble_ibeacon.js) module:
 
 ```
 require("ble_ibeacon").advertise({
@@ -53,7 +53,7 @@ For iBeacon and normal Espruino connection info:
 ```
 NRF.setAdvertising([
   require("ble_ibeacon").get(...),
-  {} // this will add a 'normal' advertising packet showing name/etc  
+  {} // this will add a 'normal' advertising packet showing name/etc
   ], {interval:100});
 ```
 

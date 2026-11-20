@@ -8,15 +8,15 @@ Espruino Pico
 
 ![Espruino Pico](Pico/angled.jpg)
 
-* BUYFROM: £16.67,£12,https://shop.espruino.com/pico,/Order#pico
+* BUYFROM: £16.67,£12,https://shop.espruino.com/pico,https://www.espruino.com/Order#pico
 
 **Espruino Pico is a tiny USB-enabled microcontroller that
 can be programmed in JavaScript**
 
 Just plug it into your computer and get started in seconds with the
-[Web IDE](/ide) - no software installation needed!
+[Web IDE](https://www.espruino.com/ide) - no software installation needed!
 
-**Just got your Pico? [Get started here!](/Quick+Start+USB)**
+**Just got your Pico? [Get started here!](../tutorials/Quick Start USB.md)**
 
 Contents
 --------
@@ -32,7 +32,7 @@ Features
 * 2 rows of 9 0.1" pins, with a third 0.05" row of 8 pins on the end
 * On-board USB Type A connector
 * Two on-board LEDs and one button.
-* [STM32F401CDU6](/datasheets/STM32F401xD.pdf) 32-bit 84MHz ARM Cortex M4 CPU
+* [STM32F401CDU6](../datasheets/STM32F401xD.pdf) 32-bit 84MHz ARM Cortex M4 CPU
 * 384kb flash, 96kb RAM
 * On-board 3.3v 250mA voltage regulator, accepts voltages from 3.5v to 16v
 * Current draw in sleep: &lt; 0.05mA - over 2.5 years on a 2500mAh battery
@@ -53,8 +53,8 @@ Information
 * There's an [API reference here](https://espruino.com/ReferencePICO_R1_3)
 * [Circuit Diagram](https://github.com/espruino/EspruinoBoard/raw/master/Pico/pdf/schematic_1v3.pdf)
 * [Board Layout](https://github.com/espruino/EspruinoBoard/raw/master/Pico/pdf/board_1v3.pdf)
-* [STM32F401CD Datasheet](/datasheets/STM32F401xD.pdf)
-* [STM32F401CD Reference Manual](/datasheets/STM32F401xD_ref.pdf)
+* [STM32F401CD Datasheet](../datasheets/STM32F401xD.pdf)
+* [STM32F401CD Reference Manual](../datasheets/STM32F401xD_ref.pdf)
 * [Part libraries for Eagle CAD and KiCad](https://github.com/espruino/EspruinoBoard/tree/master/Pico/Component)
 * [Part library for Fritzing](https://github.com/espruino/EspruinoBoard/blob/master/frizting/Espruino_Pico.fzpz)
 
@@ -77,7 +77,7 @@ Layout
 | Button | Button accessible using the built-in variable BTN |
 | SWD Debug | (Advanced) SWD debug connections for firmware debugging |
 | BOOT0 Jumper | (Advanced) Short this jumper out to connect the button to BOOT0. Plugging the device in with the button pressed will the cause the DFU bootloader to be started, allowing you to change absolutely all of Espruino's firmware. |
-| JST Battery | Pads for a surface mount JST PHR-2 [[Battery]] connector (see [below](#battery)) |
+| JST Battery | Pads for a surface mount JST PHR-2 [Battery](../devices/Battery.md) connector (see [below](#battery)) |
 | Micro/Mini USB | Under the white silkscreen are pads to solder USB sockets on (see [below](#usb)) |
 | FET Jumper | Shorting this jumper allows the PFET to be controlled from pin B0 (see [below](#power)) |
 
@@ -102,7 +102,7 @@ To make it even easier, there are [part libraries for Eagle CAD and KiCad](https
 | PICO_SMDONLY | Surface mount-only pads for a Pico. Good for double-sided boards with large SMD components on the other side |
 | PICO_0.05    | Through-hole pads for just 0.05" pins (including power) - useful for very small add-on boards |
 
-These parts are also used for a variety of [[Shims]] that allow the Pico to be easily attached to other hardware.
+These parts are also used for a variety of [Shims](../info/Shims.md) that allow the Pico to be easily attached to other hardware.
 
 Hardware Limitations
 ------------------
@@ -114,7 +114,7 @@ Hardware Limitations
 Troubleshooting
 -------------
 
-Please see the [[Troubleshooting]] section.
+Please see the [Troubleshooting](../info/Troubleshooting.md) section.
 
 <a name="battery"></a>Battery
 -------
@@ -123,9 +123,9 @@ Please see the [[Troubleshooting]] section.
 
 Espruino Pico contains the circuitry needed to power itself from a battery without the voltage drop of a diode. This means that it will run off of normal 3.7v LiPo batteries (or any voltage up to 16v).
 
-In order to connect to a battery, you can use either the pins marked `Bat` and `GND` (on opposite sides of the board, nearest the USB connector), or you can solder a JST S2B-PH-SM4-TB [[Battery]] connector connector onto the underside of the board.
+In order to connect to a battery, you can use either the pins marked `Bat` and `GND` (on opposite sides of the board, nearest the USB connector), or you can solder a JST S2B-PH-SM4-TB [Battery](../devices/Battery.md) connector connector onto the underside of the board.
 
-Please see the [[Battery]] page for information on connectors and where to buy them.
+Please see the [Battery](../devices/Battery.md) page for information on connectors and where to buy them.
 
 <a name="usb"></a>Alternate USB connectors
 -------------------------
@@ -190,14 +190,14 @@ digitalRead(B0); // turn off the output (also check if USB powered)
 pinMode(B0, "af_opendrain");analogWrite(B0, 0.5, {freq:100}); // output a 100Hz 50% duty cycle square wave
 ```
 
-The jumper can be shorted by scribbling over it with a normal HB pencil. See the [[Pico FET Output]] tutorial for an example.
+The jumper can be shorted by scribbling over it with a normal HB pencil. See the [Pico FET Output](../tutorials/Pico FET Output.md) tutorial for an example.
 
 
 Firmware Updates
 -----------------
 
 We'd **strongly** recommend that you use the Web IDE to update the firmware
-on this board - please see the [Firmware Update](/Firmware+Update#stm32) page for detailed instructions.
+on this board - please see the [Firmware Update](../info/Firmware Update.md#stm32) page for detailed instructions.
 
 If you do manage to erase all your board's flash memory you can use the
 on-chip bootloader though - see below.
@@ -227,7 +227,7 @@ Advanced Debugging
 
 The Pico also has SWD Debug connections on the back of it. An ST-Link debugger (or ST Discovery/Nucleo board) can be connected to these connections for fast firmware uploads and source-level debugging of the interpreter itself.
 
-See the [[AdvancedDebug]] page for more information.
+See the [AdvancedDebug](../info/AdvancedDebug.md) page for more information.
 
 
 Other Official Espruino Boards

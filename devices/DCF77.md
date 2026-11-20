@@ -12,9 +12,9 @@ DCF77
 
 It works in a very similar way to [Time from NPL](https://en.wikipedia.org/wiki/Time_from_NPL) (which broadcasts from the United Kingdom at 60 kHz).
 
-The DCF77 modules that you can buy are generally simple radios. Give them power, and they return a single digital signal. This signal contains one pulse a second (with a double-length pulse every minute), and the length of the gap between pulses signifies a 1 or a 0. This allows for 60 bits of data per minute ([details on Wikipedia]([DCF77](https://en.wikipedia.org/wiki/DCF77)).
+The DCF77 modules that you can buy are generally simple radios. Give them power, and they return a single digital signal. This signal contains one pulse a second (with a double-length pulse every minute), and the length of the gap between pulses signifies a 1 or a 0. This allows for 60 bits of data per minute ([details on Wikipedia](./DCF77.md)).
 
-Functionality is provided by the [[DCF77.js]] module.
+Functionality is provided by the [DCF77.js](DCF77.js) module.
 
 Wiring Up
 --------

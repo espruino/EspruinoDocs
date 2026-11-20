@@ -20,14 +20,14 @@ to.
 
 This is what we'd suggest programming Espruino devices with.
 
-**NOTE:** [Pixl.js](/Pixl.js) is an exception here - is has a USB connector but it is for
+**NOTE:** [Pixl.js](../boards/Pixl.js.md) is an exception here - is has a USB connector but it is for
 charging only.
 
 ### Bluetooth LE
 
-[Puck.js](/Puck.js) and other Espruino Bluetooth devices present themselves as as
+[Puck.js](../boards/Puck.js.md) and other Espruino Bluetooth devices present themselves as as
 Bluetooth LE 'Nordic UART' device, and can be connected to and programmed through
-that. It's the suggested method of connection for [Puck.js](/Puck.js).
+that. It's the suggested method of connection for [Puck.js](../boards/Puck.js.md).
 
 Adafruit make a [Bluetooth LE UART board](https://www.adafruit.com/product/2479)
 that can be used to add Bluetooth LE UART capability to other Espruino devices.
@@ -37,21 +37,21 @@ that can be used to add Bluetooth LE UART capability to other Espruino devices.
 When not connected to a computer by USB, Espruino boards usually open up a serial
 port on two of their pins at 9600 baud so that they can be programmed via Serial.
 The pins used for this are detailed in the Pinout section of your board's specific
-reference page (eg [the Pico](/Pico#pinout), where they're marked with `!`).
+reference page (eg [the Pico](../boards/Pico.md#pinout), where they're marked with `!`).
 
-**NOTE:**  [ESP32](/ESP32) and [ESP8266](/EspruinoESP8266) devices use 115200 baud
+**NOTE:**  [ESP32](../boards/ESP32.md) and [ESP8266](../boards/EspruinoESP8266.md) devices use 115200 baud
 for serial, not the 9600 that every other Espruino does.
 
-To save power, [Puck.js](/Puck.js) and other Bluetooth Espruinos only power up
+To save power, [Puck.js](../boards/Puck.js.md) and other Bluetooth Espruinos only power up
 the serial port if they detect a voltage on the RX pin at boot time.
-See [Puck.js](/Puck.js#serial-console)
+See [Puck.js](../boards/Puck.js.md#serial-console)
 
 ### Bluetooth UART
 
-The [Original Espruino Board](/Original) has a footprint on the back for
-an [HC-05/HC-06 Bluetooth Module](/Bluetooth). Once soldered, it uses the
+The [Original Espruino Board](../boards/Original.md) has a footprint on the back for
+an [HC-05/HC-06 Bluetooth Module](../devices/Bluetooth.md). Once soldered, it uses the
 standard Serial port (detailed above) for communication. For more information
-[see here](/Bluetooth).
+[see here](../devices/Bluetooth.md).
 
 Standard Bluetooth is not the same as Bluetooth LE, and can't be used to
 communicate from a Website.
@@ -59,7 +59,7 @@ communicate from a Website.
 ### WiFi/Ethernet
 
 Currently Espruino boards don't come with Telnet support out of the box.
-If you're running Espruino on [an ESP8266](/EspruinoESP8266) then Telnet is
+If you're running Espruino on [an ESP8266](../boards/EspruinoESP8266.md) then Telnet is
 enabled.
 
 On other boards, once you have a network connection established you can run:
@@ -77,7 +77,7 @@ However, using `reset()` will break your connection.
 ### Headphone Jack
 
 It is even possible to program Espruino from your headphone jack with a
-few external components! [See here!](/Headphone)
+few external components! [See here!](./Headphone.md)
 
 
 Applications
@@ -148,5 +148,5 @@ to upload code that isn't formatted in a K&R style.
 ### Serial Terminals
 
 You can even program Espruino directly from a Terminal application (if using Serial or Telnet),
-you'll just be lacking some of the code upload features. See [Alternative Terminal Apps](Alternative+Terminal+Apps)
+you'll just be lacking some of the code upload features. See [Alternative Terminal Apps](../tutorials/Alternative Terminal Apps.md)
 for more information.

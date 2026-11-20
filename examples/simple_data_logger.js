@@ -12,7 +12,7 @@ This example shows you how to log Espruino's temperature over time and use it to
 Wiring
 ------
 
-Connect a [[Battery]] to the JST battery connector. It doesn't have to be a big battery as Espruino won't use much power. 
+Connect a [Battery](../devices/Battery.md) to the JST battery connector. It doesn't have to be a big battery as Espruino won't use much power. 
 
 You can always power Espruino using a USB phone charger if you want to.
 

@@ -6,9 +6,9 @@ Vizibles
 
 * KEYWORDS: Vizibles,Module,IoT,cloud,API
 
-Read this in other languages: [English](/Vizibles), [Español](/Vizibles.es)
+Read this in other languages: [English](./Vizibles.md), [Español](./Vizibles.es.md)
 
-The [Vizibles module](/modules/Vizibles.js) provides an easy to use
+The [Vizibles module](Vizibles.js) provides an easy to use
 interface to share device state variables to and get commands from
 the [Vizibles](https://www.vizibles.com/) cloud IoT platform.
 This module depends on having a ESP8266 connected to your Espruino
@@ -75,7 +75,7 @@ Remember connection options can not be changed once the connection is establishe
 setOptions = function(options, callback)
 ```
 
-Again `options` is an object containing key/value pairs for configuring the connection and  
+Again `options` is an object containing key/value pairs for configuring the connection and
 
 `callback` is an optional function which will be called when the command finishes following the format:
 ```
@@ -127,7 +127,7 @@ This call will create a function that can be invoked either from the cloud or fr
 expose = function(fName, cbFunction, callback)
 ```
 
-`fName` will be the name to refer to call this function, so the name we will use to create controls or rules on the cloud.  
+`fName` will be the name to refer to call this function, so the name we will use to create controls or rules on the cloud.
 
 `cbFunction` is the function itself. This is the code that will be run each time the function is invoked. The callback must have the format
 ```
@@ -189,7 +189,7 @@ where `resp` can be `Ok` or `Error` depending on the result of the command. The 
 
 #### version
 
-Get firmware version of the code running on the WiFi module. This AT command shares syntax with other AT firmwares, being implemented by calling `AT+GMR` on the serial port. So it becomes a useful tool to check if we burned the right firmware to the ESP8266 module.  
+Get firmware version of the code running on the WiFi module. This AT command shares syntax with other AT firmwares, being implemented by calling `AT+GMR` on the serial port. So it becomes a useful tool to check if we burned the right firmware to the ESP8266 module.
 
 ```
 version = function (callback)
@@ -254,8 +254,8 @@ var cloud = require('Vizibles').init(Serial2, function (d) {
         }, function(d) {
         if(d=='Ok'){
         cloud.connect(null, null, connected);
-        }   
-      });  
+        }
+      });
     }
   });
 });
@@ -290,7 +290,7 @@ var connected = function() {
   cloud.update({status : 'off'}, function(d) {
     if(d=='Ok'){
        exposeFunctions();
-    }  
+    }
   });
 
 };
@@ -315,8 +315,8 @@ var cloud = require('Vizibles').init(Serial2, function (d) {
         }, function(d) {
         if(d=='Ok'){
         cloud.connect(null, null, connected);
-        }   
-      });  
+        }
+      });
     }
   });
 });

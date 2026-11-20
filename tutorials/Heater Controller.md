@@ -25,11 +25,11 @@ Here we'll show you a very quick, easy way to control the temperature of somethi
 You'll Need
 ----------
 
-* An [Espruino Board](/Original)
-* A [[DS18B20]] temperature sensor
+* An [Espruino Board](../boards/Original.md)
+* A [DS18B20](../devices/DS18B20.md) temperature sensor
 * A 4.7k resistor (for the temperature sensor)
 * A heater of some kind. I'll be using a [P21W](http://www.ebay.com/sch/i.html?_nkw=P21W+12V+21W+-led) car indicator bulb, and a 5v Power Supply that will supply at least 1 Amp to power it
-* A [relay module](/Relays), to turn the heater on and off
+* A [relay module](../devices/Relays.md), to turn the heater on and off
 
 Wiring Up
 --------
@@ -40,7 +40,7 @@ We need to wire up 3 things:
 
 ### Temperature Sensor
 
-You can follow the [instructions here](/DS18B20), however for convenience you need to connect:
+You can follow the [instructions here](../devices/DS18B20.md), however for convenience you need to connect:
 
 | Sensor Wire | Espruino   | 4.7k Resistor |
 | --------- | ---------- | ------------- |
@@ -73,8 +73,8 @@ We just need to make a simple Bulb + battery circuit here, where instead of a sw
 solely from 5v with the jumper connected. This will work but on some
 relay modules the relay may not turn off reliably. On 5v-capable pins
 you can fix this with the command `pinMode(A0, "opendrain");`, but `A0` 
-on the [Original Espruino Board](/Original) isn't 5v tolerant (it is 
-on the [Pico](/Pico)). Instead, we remove the jumper and power the relay
+on the [Original Espruino Board](../boards/Original.md) isn't 5v tolerant (it is 
+on the [Pico](../boards/Pico.md)). Instead, we remove the jumper and power the relay
 from 5v while running the input part of the relay module at 3.3v.
 
 

@@ -7,7 +7,7 @@ Bangle.js Clock Faces
 * KEYWORDS: Tutorials,Bangle.js,Development,Clock,Watch,Face,App,Apps,Application
 * USES: Bangle.js
 
-We'll assume you've already been through the [Bangle.js Development page](/Bangle.js+Development)
+We'll assume you've already been through the [Bangle.js Development page](./Bangle.js Development.md)
 and have an idea how to get started.
 
 If so you're now connected and can write some simple code - let's have a go at making a clock!
@@ -47,7 +47,7 @@ You'll now have some tiny text in the middle of the screen which displays the ti
 
 The `locale` module will print the clock in different formats depending on each user's language and area.
 
-**Why is the code formatted like this?** Check out the [Code Style](/Code+Style)
+**Why is the code formatted like this?** Check out the [Code Style](../info/Code Style.md)
 page for some tips and the reasoning behind it.
 
 
@@ -55,7 +55,7 @@ Changing font
 -------------
 
 First, we'll want to make the text bigger, and properly centered. You have
-a bunch of options here [which you can see on the Fonts page](/Fonts).
+a bunch of options here [which you can see on the Fonts page](../info/Fonts.md).
 
 We're going to load a custom font for 7 segments called `Font7x11Numeric7Seg`,
 which can then be used with `g.setFont("7x11Numeric7Seg")`.
@@ -157,7 +157,7 @@ can eat up a reasonable amount of battery (it'll reduce Bangle.js 2
 battery life by a factor of 2 or more) compared to updates once a minute.
 
 * If your clock face doesn't show seconds, consider only updating once
-a minute - [here is an example](/Bangle.js+Clock+Font)
+a minute - [here is an example](./Bangle.js Clock Font.md)
 * If possible, you could update the clock face once a minute using the
 code above and then update **just** the area of the clock face responsible
 for seconds once a second.
@@ -307,7 +307,7 @@ Next Steps
 
 Ok, so now we've got a clock!
 
-* How about adding it to the [Bangle.js App Loader](http://banglejs.com/apps)? Check out [Adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader)
-* You can [add useful information to the clock face with Clock Info](/Bangle.js+Clock+Info)
-* You can make the clock [Fast Load](/Bangle.js+Fast+Load) into the Launcher
-* What about [auto-hiding the widgets](/Bangle.js+Hideable+Widgets)
+* How about adding it to the [Bangle.js App Loader](http://banglejs.com/apps)? Check out [Adding an app to the Bangle.js App Loader](./Bangle.js App Loader.md)
+* You can [add useful information to the clock face with Clock Info](./Bangle.js Clock Info.md)
+* You can make the clock [Fast Load](./Bangle.js Fast Load.md) into the Launcher
+* What about [auto-hiding the widgets](./Bangle.js Hideable Widgets.md)

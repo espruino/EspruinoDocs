@@ -9,7 +9,7 @@ LIS2MDL Magnetometer
 The [LIS2MDL](http://www.st.com/en/mems-and-sensors/lis2mdl.html) is an ultra-low-power, high performance
 3-axis digital magnetic sensor.
 
-You can use the [[LIS2MDL.js]] module with the LIS2MDL as follows:
+You can use the [LIS2MDL.js](LIS2MDL.js) module with the LIS2MDL as follows:
 
 I2C
 ---

@@ -89,8 +89,8 @@ There are a few parts to this:
 
 * `.boot0` is the initial code that runs to set up the Bangle, much of the time taken by this will be checking to see whether any of the Bangle's `.js` files have changed using `require("Storage").hash`
 * `*.boot.js` are each of the boot files provided by each app that wants to run something at startup
-* `*.wid.js` are each of the [Widgets](/Bangle.js+Widgets), these are printed when/if your app calls `Bangle.loadWidgets`
-* `*.clkinfo.js` are each of the [ClockInfos](/Bangle.js+Clock+Info), these are printed when/if your app loads clockinfos with `require("clock_info").load`
+* `*.wid.js` are each of the [Widgets](./Bangle.js Widgets.md), these are printed when/if your app calls `Bangle.loadWidgets`
+* `*.clkinfo.js` are each of the [ClockInfos](./Bangle.js Clock Info.md), these are printed when/if your app loads clockinfos with `require("clock_info").load`
 
 When you're done, paste this in the left-hand side to turn off reporting:
 
@@ -162,7 +162,7 @@ and choose `Storage` then choose the matching file on your Bangle. You can now e
 
 We'd suggest adding `var _t = Date.now()` followed by  `print("A name",Date.now()-_t);_t = Date.now()` at various points through the code to measure the time taken to get to each point of it.
 
-**Note:** if you're working on a widget or ClockInfo, they are not designed to be run on their own so just clicking `Upload` is not enough. See the tutorials on [ClockInfos](/Bangle.js+Clock+Info) and [Widgets](/Bangle.js+Widgets) for hints on developing them.
+**Note:** if you're working on a widget or ClockInfo, they are not designed to be run on their own so just clicking `Upload` is not enough. See the tutorials on [ClockInfos](./Bangle.js Clock Info.md) and [Widgets](./Bangle.js Widgets.md) for hints on developing them.
 
 
 

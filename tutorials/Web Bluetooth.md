@@ -9,7 +9,7 @@ Using Web Bluetooth with Espruino
 
 Web Bluetooth allows a website to connect directly to Bluetooth LE devices.
 
-We've also made the [UART.js](/UART.js) Library to provide a consistent API for accessing Bluetooth *and Serial/USB* devices from the web.
+We've also made the [UART.js](./UART.js.md) Library to provide a consistent API for accessing Bluetooth *and Serial/USB* devices from the web.
 
 **Note:** Web Bluetooth currently works on Windows, Mac OS, Android, Chromebook, Linux and
 iOS (with [this app](https://itunes.apple.com/us/app/webble/id1193531073)).
@@ -57,7 +57,7 @@ So what happened? The HTML above creates two buttons, and when they are
 executed they call the `Puck.write` function, which is in the `puck.js`
 script file that we loaded up right before.
 
-`Puck.write` sends the string you pass to it directly to [Puck.js](/Puck.js)
+`Puck.write` sends the string you pass to it directly to [Puck.js](../boards/Puck.js.md)
 as a command. You need the `\n` (newline character) to tell Espruino that
 it's the end of the command and it should execute it.
 
@@ -516,7 +516,7 @@ document.getElementById("addDevice").addEventListener('click', event => {
 Dashboards
 ----------
 
-You might also be interested in the [Web Bluetooth Dashboard tutorial](/Web+Bluetooth+Dashboard).
+You might also be interested in the [Web Bluetooth Dashboard tutorial](./Web Bluetooth Dashboard.md).
 
 Tutorials
 ---------

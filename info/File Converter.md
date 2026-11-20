@@ -9,15 +9,15 @@ Converting files to Strings
 
 This page helps you to convert a file into a quoted JavaScript string of bytes.
 
-**NOTE:** The [Web IDE](/ide) now provides a 'Storage' window which allows
+**NOTE:** The [Web IDE](https://www.espruino.com/ide) now provides a 'Storage' window which allows
 you to upload/download files from an on-chip filesystem. This would normally
 be the preferred way to upload files to Espruino if it doesn't make sense
 to put them directly into a Templated String.
 
 It's useful if:
 
-* You're [making a webserver](/Internet) and you want to encode an image in a string.
-* You want to turn a raw bitmap into something that you can send to a display (you may also want to look at the [[Image Converter]] or [[SVG Converter]] in that case).
+* You're [making a webserver](./Internet.md) and you want to encode an image in a string.
+* You want to turn a raw bitmap into something that you can send to a display (you may also want to look at the [Image Converter](Image Converter.md) or [SVG Converter](SVG Converter.md) in that case).
 
 
 To use it just click 'Choose File'. Once the file is chosen, various string representations of it will be output in the text area below. You can then copy and paste them into your JS code.

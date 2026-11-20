@@ -11,8 +11,8 @@ Exercise Machine controlled Video
 
 In this video I show you how to rig up a cross trainer or
 other exercise machine to play or pause video depending on
-whether is it used or not. It uses [Puck.js's](/Puck.js)
-[Bluetooth LE HID](/Puck.js+Keyboard) capability.
+whether is it used or not. It uses [Puck.js's](../boards/Puck.js.md)
+[Bluetooth LE HID](../tutorials/BLE Keyboard.md) capability.
 
 The method of connecting to the trainer here could be used
 for all kinds of things - for instance you could easily
@@ -63,7 +63,7 @@ function setPlaying(play) {
     // flash a LED
     if (play) {
       // green = go
-      digitalPulse(LED2,1,100);      
+      digitalPulse(LED2,1,100);
     } else {
       // red = stop
       digitalPulse(LED1,1,100);

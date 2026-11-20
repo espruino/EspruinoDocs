@@ -17,7 +17,7 @@ Limitations:
 * The module will not parse multiple websocket messages that arrive at once
 * When sending, the library will only send JSON-formatted messages
 
-To use the [[ws.js]] module, you must be connected to WiFi/Ethernet/etc - see [here](/Internet).
+To use the [ws.js](ws.js) module, you must be connected to WiFi/Ethernet/etc - see [here](../info/Internet.md).
 
 WebSocket Client
 ----------------

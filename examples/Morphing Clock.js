@@ -7,7 +7,7 @@ Morphing 7 Segment Clock
 
 ![Morphing Clock](Morphing Clock.gif)
 
-This example turns a [Pixl.js](/Pixl.js) into a 7 segment clock where the digits
+This example turns a [Pixl.js](../boards/Pixl.js.md) into a 7 segment clock where the digits
 'morph' smoothly into new digits as the time changes. It is based on the idea
 in [this instructable](https://www.instructables.com/id/Morphing-Digital-Clock/)
 

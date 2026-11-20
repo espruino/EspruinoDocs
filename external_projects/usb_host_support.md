@@ -7,7 +7,7 @@ USB Host Support
 * KEYWORDS: MAX3421E,MAX3421,USB,USB Host,OTG
 * USES: Pixl.js,MAX3421E
 
-How to add USB Host support to an Espruino [Pixl.js](/Pixl.js) board using the MAX3421E.
+How to add USB Host support to an Espruino [Pixl.js](../boards/Pixl.js.md) board using the MAX3421E.
 
 ![](usb_host_support.jpg)
 

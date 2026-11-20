@@ -6,7 +6,7 @@ Losant
 
 * KEYWORDS: Losant,Module,IoT,cloud,API
 
-The [Losant module](/modules/Losant.js) provides an easy to use
+The [Losant module](Losant.js) provides an easy to use
 interface to send device updates to and get device commands from
 the [Losant](https://www.losant.com/) cloud IoT platform.
 It was developed on the ESP8266 and does not use TLS,
@@ -54,7 +54,7 @@ updateDeviceData = function (data, callback)
 ```
 The keys and value types need to match the attributes set up for a specific
 device in the Losant device setup.
-  
+
 `callback` is an optional callback function of the following format:
 ```
 function (err, resp) {}
@@ -71,7 +71,7 @@ getDeviceCommand = function (since, callback)
 `since` is an optional time stamp that indicates since when the commands
 should be returned.  This can be used to filter out old commands already
 processed.
-  
+
 `callback` is an optional callback function of the following format:
 ```
 function (err, resp) {}

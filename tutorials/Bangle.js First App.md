@@ -7,7 +7,7 @@ Bangle.js First Application (Timer)
 * KEYWORDS: Tutorials,Bangle.js,Development,Timer,App,Apps,Application
 * USES: Bangle.js,Bangle.js2
 
-We'll assume you've already been through the [Bangle.js Development page](/Bangle.js+Development)
+We'll assume you've already been through the [Bangle.js Development page](./Bangle.js Development.md)
 and have an idea how to get started.
 
 If so you're now connected and can write some simple code - let's have a go at making a timer app.
@@ -41,7 +41,7 @@ from 29.
 
 ![](Bangle.js First App/countdown_sml.png)
 
-**Why is the code formatted like this?** Check out the [Code Style](/Code+Style)
+**Why is the code formatted like this?** Check out the [Code Style](../info/Code Style.md)
 page for some tips and the reasoning behind it.
 
 
@@ -294,7 +294,7 @@ You can use http://www.espruino.com/Image+Converter for this, but
 the tools are now built into the IDE so we'll use those.
 
 **Note:** This method doesn't help you create the `app-icon.js` file you'll need for the
-App Loader. See the [Bangle.js App Loader](/Bangle.js+App+Loader) page for more info on
+App Loader. See the [Bangle.js App Loader](./Bangle.js App Loader.md) page for more info on
 that.
 
 * Click the `Storage` icon above Upload: ![](data:image/png;base64,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)
@@ -332,9 +332,9 @@ Next Steps
 Ok, so now we've got an app, and we can run it from the launcher.
 
 How about adding it to the [Bangle.js App Loader](http://banglejs.com/apps)?
-Check out [Adding an app to the Bangle.js App Loader](/Bangle.js+App+Loader)
+Check out [Adding an app to the Bangle.js App Loader](./Bangle.js App Loader.md)
 
-Or maybe you want to [make a clock face](/Bangle.js+Clock)
+Or maybe you want to [make a clock face](./Bangle.js Clock.md)
 
 
 Bonus: adjusting the timer

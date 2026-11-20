@@ -6,9 +6,9 @@ Vizibles (Español)
 
 * KEYWORDS: Vizibles,Module,IoT,cloud,API
 
-Leer en otro idioma: [English](/Vizibles), [Español](/Vizibles.es)
+Leer en otro idioma: [English](./Vizibles.md), [Español](./Vizibles.es.md)
 
-El [módulo Vizibles](/modules/Vizibles.js) proporciona una forma de compartir estados
+El [módulo Vizibles](Vizibles.js) proporciona una forma de compartir estados
 y acciones  de forma sencilla a través de la plataforma
 [Vizibles](https://www.vizibles.com/) para Internet de las Cosas.
 Este módulo necesita de un ESP8266 ejecutando el
@@ -74,7 +74,7 @@ Recuerda que las opciones de conexión no pueden cambiarse cuando hay una conexi
 setOptions = function(options, callback)
 ```
 
-De nuevo `options` es un objeto con pares clave/valor para configurar la conexión  
+De nuevo `options` es un objeto con pares clave/valor para configurar la conexión
 
 y `callback` es una función opcional que será ejecutada cuando el comando termine, siguiendo el formato:
 ```
@@ -126,7 +126,7 @@ Esta primitiva creará una función que podrá ser ejecutada remotamente desde l
 expose = function(fName, cbFunction, callback)
 ```
 
-`fName` será el nombre de la función, que se usará para crear controles y reglas en la plataforma.  
+`fName` será el nombre de la función, que se usará para crear controles y reglas en la plataforma.
 
 `cbFunction` es la función en si misma. Este será el código que se ejecute cuando se llame a la función desde cualquier parte. El callback debe tener la forma
 ```
@@ -188,7 +188,7 @@ donde `resp` puede ser `Ok` o `Error` dependiendo del resultado del comando. La 
 
 #### version
 
-Obtiene la versión de firmware del módulo WiFi. Este comando AT comparte sintaxis con los de otros firmwares AT existentes para el ESP8266, todos ellos usan `AT+GMR` en el puerto serie para leer el número de versión. Por lo tanto es muy útil para saber si el módulo tiene grabado el firmware correcto.  
+Obtiene la versión de firmware del módulo WiFi. Este comando AT comparte sintaxis con los de otros firmwares AT existentes para el ESP8266, todos ellos usan `AT+GMR` en el puerto serie para leer el número de versión. Por lo tanto es muy útil para saber si el módulo tiene grabado el firmware correcto.
 
 ```
 version = function (callback)
@@ -253,8 +253,8 @@ var cloud = require('Vizibles').init(Serial2, function (d) {
         }, function(d) {
         if(d=='Ok'){
         cloud.connect(null, null, connected);
-        }   
-      });  
+        }
+      });
     }
   });
 });
@@ -289,7 +289,7 @@ var connected = function() {
   cloud.update({status : 'off'}, function(d) {
     if(d=='Ok'){
        exposeFunctions();
-    }  
+    }
   });
 
 };
@@ -314,8 +314,8 @@ var cloud = require('Vizibles').init(Serial2, function (d) {
         }, function(d) {
         if(d=='Ok'){
         cloud.connect(null, null, connected);
-        }   
-      });  
+        }
+      });
     }
   });
 });

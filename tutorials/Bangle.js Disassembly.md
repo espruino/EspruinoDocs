@@ -10,6 +10,6 @@ Bangle.js Disassembly
 
 This video describes how to unscrew and get inside your Bangle.js, and how to put it back together!
 
-For more information on wiring, check out the [the Bangle.js Technical Information page](/Bangle.js+Technical)
+For more information on wiring, check out the [the Bangle.js Technical Information page](../info/Bangle.js Technical.md)
 
 [[http://youtu.be/GJHC925yti0]]

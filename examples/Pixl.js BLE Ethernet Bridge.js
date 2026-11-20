@@ -10,7 +10,7 @@ Pixl.js Bluetooth to Ethernet MQTT Bridge
 This is just a very simple example of using Puck.js to send received
 Bluetooth LE advertising packets over MQTT to an server.
 
-Just wire up an Arduino WIZnet adaptor [as shown on this page](/arduino-w5100)
+Just wire up an Arduino WIZnet adaptor [as shown on this page](../devices/arduino-w5100.md)
 then upload the following code with the `MQTTSERVER` variable set to the
 IP address of a server running a (non-HTTPS) MQTT server.
 

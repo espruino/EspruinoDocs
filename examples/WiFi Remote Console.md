@@ -19,13 +19,13 @@ There's a WebServer on the CC3000 which serves up a webpage that contains a text
 You'll Need
 ----------
 
-* One [Espruino Board](/Original)
-* A [[CC3000]] WiFi module
+* One [Espruino Board](../boards/Original.md)
+* A [CC3000](../devices/CC3000.md) WiFi module
 
 Wiring Up
 --------
 
-* Follow [the instructions](/CC3000) for wiring up the CC3000 module
+* Follow [the instructions](../devices/CC3000.md) for wiring up the CC3000 module
 
 Software
 -------
@@ -73,7 +73,7 @@ onInit();
 
 And now you're done. The CC3000 takes a while to initialise so you may have to wait a minute or two - when connected it'll print its IP address. You can then connect to that with a web browser and can start sending commands!
 
-**Note:** The variable `mainPage` is created using the [[File Converter]] page and the following HTML file. You can write the file directly to the SD card and can use that, but this method means that you don't need an SD card at all.
+**Note:** The variable `mainPage` is created using the [File Converter](../info/File Converter.md) page and the following HTML file. You can write the file directly to the SD card and can use that, but this method means that you don't need an SD card at all.
 
 ```HTML
 <html><head>

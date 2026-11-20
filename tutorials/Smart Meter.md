@@ -11,14 +11,14 @@ DIY Smart Meter
 
 Pretty much all Digital Electricity meters (smart or not) have a light that blinks every time a certain amount of energy is used - often once for every Watt-hour (Usually labelled as `1000 imp/kWh`).
 
-You can easily detect this with a simple [Light Dependent Resistor](/LDR) and use it to measure and record your energy usage over time.
+You can easily detect this with a simple [Light Dependent Resistor](../devices/LDR.md) and use it to measure and record your energy usage over time.
 
 
 You'll Need
 -----------
 
-* A [Puck.js](/Puck.js)
-* A standard [Light Dependent Resistor](/LDR) (eg. GL5537) - see the end for information about other options.
+* A [Puck.js](../boards/Puck.js.md)
+* A standard [Light Dependent Resistor](../devices/LDR.md) (eg. GL5537) - see the end for information about other options.
 * Some double sided tape (VHB tape works great)
 
 
@@ -33,7 +33,7 @@ See the video for more information.
 Simple Pulse Counter
 --------------------
 
-This is the code used in the video - it measures the number of pulses and reports that over [Bluetooth LE Advertising](/BLE+Advertising).
+This is the code used in the video - it measures the number of pulses and reports that over [Bluetooth LE Advertising](./BLE Advertising.md).
 
 Simply copy & paste this to the right-hand side of the Web IDE and click the 'Upload' button.
 
@@ -68,7 +68,7 @@ setWatch(function(e) {
 Pulse Counter with BTHome/Home Assistant
 -----------------------------------------
 
-You can also make your Puck.js advertise in the [BTHome advertising format](/BTHome)
+You can also make your Puck.js advertise in the [BTHome advertising format](../modules/BTHome.md)
 which means it'll be picked up and automatically integrated into [Home Assistant](https://www.home-assistant.io/).
 
 * APPLOADER_APP: bthome_energy
@@ -223,7 +223,7 @@ function onInit() {
 
 Now you have the Puck.js set up, you can use the Web Bluetooth website below (or can modify it for your needs).
 
-To try it, just click the `Try Me!` button in the bottom right of the code sample below. To make your own version, follow the instructions for creating a GitHub page at the top of the [Web Bluetooth tutorial](/Web+Bluetooth)
+To try it, just click the `Try Me!` button in the bottom right of the code sample below. To make your own version, follow the instructions for creating a GitHub page at the top of the [Web Bluetooth tutorial](./Web Bluetooth.md)
 
 ```HTML_demo_link
 <html>
@@ -290,14 +290,14 @@ Notes
 -----
 
 * While this example doesn't do it, your current power consumption can be calculated by measuring the time between pulses - it'd be a good addition to the advertising data.
-* Web Bluetooth websites can't read advertising data (yet) so cannot display any electricity data without connecting. However another Espruino device like [Pixl.js](/Pixl.js) could do that easily.
+* Web Bluetooth websites can't read advertising data (yet) so cannot display any electricity data without connecting. However another Espruino device like [Pixl.js](../boards/Pixl.js.md) could do that easily.
 * The resistance of the LDR varies with the light on it. On a standard LDR like a GL5537 complete darkness has a resistance of around 2 M Ohms, so the power usage from the coin cell (against the 40k internal pullup) is very low. However the more ambient light that gets into the sensor the lower the resistance and so the lower the battery life - so it's worth trying to fit the sensor as snugly as possible.
 
 
 Do I need to use an LDR?
 -------------------------
 
-The Puck does have the ability to measure light via [`Puck.light()`](/Reference#l_Puck_light),
+The Puck does have the ability to measure light via [`Puck.light()`](https://www.espruino.com/Reference#l_Puck_light),
 and it does this using the fact the red LED makes a small voltage when exposed to
 some wavelengths of light.
 

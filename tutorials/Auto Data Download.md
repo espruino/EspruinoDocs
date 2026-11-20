@@ -7,7 +7,7 @@ Automatic Data Download
 * KEYWORDS: Data,Automatic,Auto,Auto Download,Download,Upload,Node.js,Node,Storage,Sync,Synchronize,Data Storage,Data Download,Bluetooth Download
 * USES: BLE,Only BLE
 
-If you've deployed sensors with Bluetooth Espruino boards (see [Data Collection](/Data+Collection)), you might like a way to retrieve data from those devices automatically.
+If you've deployed sensors with Bluetooth Espruino boards (see [Data Collection](./Data Collection.md)), you might like a way to retrieve data from those devices automatically.
 
 There are a few ways of doing this, but the one we'd recommend is as follows:
 
@@ -23,7 +23,7 @@ For this example we'll just log the temperature, but it's pretty easy to modify 
 Espruino code
 -------------
 
-Here we're using a slightly modified version of the [Data Collection flash memory example](/Data+Collection#flash-memory) example.
+Here we're using a slightly modified version of the [Data Collection flash memory example](./Data Collection.md#flash-memory) example.
 
 Temperature (and a timestamp) is stored once a second in one of two binary files. When the first file is full, writing swaps to the second file and the Bluetooth advertising is updated.
 

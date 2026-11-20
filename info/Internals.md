@@ -6,7 +6,7 @@ Espruino Interpreter Internals
 
 * KEYWORDS: Espruino,Hacking,Internals,Contributing,Implementation
 
-Please see the [[Performance]] section first for a rough overview, and for the practical implications of the implementation.
+Please see the [Performance](Performance.md) section first for a rough overview, and for the practical implications of the implementation.
 
 **Note:** There's also a [forum thread](http://forum.espruino.com/conversations/265821) with some more in-depth answers to questions about the interpreter.
 
@@ -32,13 +32,13 @@ Parsing
 
 There is no bytecode, so execution happens inside the parser in `jsparse.c`
 
-The parser is a hand-written recursive-descent parser, and code to be executed is executed directly from variables (see below), **not** from a C-style string or flat buffer. The [Performance](/Performance) page has more information on this.
+The parser is a hand-written recursive-descent parser, and code to be executed is executed directly from variables (see below), **not** from a C-style string or flat buffer. The [Performance](./Performance.md) page has more information on this.
 
 
 Variable Storage
 --------------
 
-Variables are usually stored in fixed-size blocks defined by the `JsVar` data type. The size of them depends on how many variables need to be addressed. In small devices `JsVar` can get down to 12 bytes (10 bit addresses), but a device like [Bangle.js 2](/Bangle.js2) `JsVar` will have 14 byte blocks, and larger devices may use 16 bytes or more.
+Variables are usually stored in fixed-size blocks defined by the `JsVar` data type. The size of them depends on how many variables need to be addressed. In small devices `JsVar` can get down to 12 bytes (10 bit addresses), but a device like [Bangle.js 2](../boards/Bangle.js2.md) `JsVar` will have 14 byte blocks, and larger devices may use 16 bytes or more.
 
 You can check the size of `JsVar` using `process.memory().blocksize` from within Espruino
 

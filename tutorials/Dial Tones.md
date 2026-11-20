@@ -28,15 +28,15 @@ Espruino can't output two tones at once, but it can output one tone on each pin.
 You'll Need
 ----------
 
-* An [Espruino Board](/Original) 
-* A [[KeyPad]] (not required - see the last part of the tutorial)
-* A [[Speaker]]
+* An [Espruino Board](../boards/Original.md) 
+* A [KeyPad](../devices/KeyPad.md) (not required - see the last part of the tutorial)
+* A [Speaker](../devices/Speaker.md)
 
 Wiring Up
 --------
 
-* Wire up the two wires of the [[Speaker]] to pins C6 and C9
-* Wire up the [[KeyPad]] as described [here](/KeyPad)
+* Wire up the two wires of the [Speaker](../devices/Speaker.md) to pins C6 and C9
+* Wire up the [KeyPad](../devices/KeyPad.md) as described [here](../devices/KeyPad.md)
 
 Software
 -------

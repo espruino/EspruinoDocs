@@ -14,20 +14,20 @@ UART service (or a custom one!) - most devices (PC, Mac, Linux, Android) can onl
 * Have Puck.js connect to device and communicate with that device's services - most devices can only accept one concurrent connection.
 * Have Puck.js advertise data that any device with in range - while only in one direction (from Puck.js to a listening device), you can have as many Pucks sending data as you want.
 
-There's [more information on what this all means here](/About+Bluetooth+LE) but we're going
+There's [more information on what this all means here](./About Bluetooth LE.md) but we're going
 to focus on Advertising here.
 
 For tips on using a Bluetooth connection see:
 
-* [Connecting from another Espruino Device](/BLE+Communications)
-* [Connecting from a Web Page with Web Bluetooth](/Web+Bluetooth)
-* [Connecting via Node.js or Python](/Interfacing#bluetooth-le)
+* [Connecting from another Espruino Device](./BLE Communications.md)
+* [Connecting from a Web Page with Web Bluetooth](./Web Bluetooth.md)
+* [Connecting via Node.js or Python](../info/Interfacing.md#bluetooth-le)
 
 You could use [our Hub software](https://github.com/espruino/EspruinoHub) to
-convert advertising data to MQTT where [you can use Node-RED](/Puck.js+Node-RED) to
+convert advertising data to MQTT where [you can use Node-RED](BLE Node-RED.md) to
 work with it as well, but this tutorial will focus on writing your own host application.
 
-First, we need to advertise some data. This can be done with the [`NRF.setAdvertising`](/Reference#l_NRF_setAdvertising) method.
+First, we need to advertise some data. This can be done with the [`NRF.setAdvertising`](https://www.espruino.com/Reference#l_NRF_setAdvertising) method.
 
 There are two main types of advertising:
 

@@ -27,7 +27,7 @@ Some modules come built-in to the Espruino firmware on certain boards. If this i
 
 You can check which modules your board has just connecting to it with the Web IDE, then clicking the `Settings` icon in the Web IDE, going to `Board Information` and looking at `MODULES` (the same info is available by typing `process.env.MODULES` too).
 
-You can find more information on most of them via [Espruino's Software Reference](/Reference)
+You can find more information on most of them via [Espruino's Software Reference](https://www.espruino.com/Reference)
 
 If the Web IDE says `Module not found` when trying to upload a module that you know exists on your board, try reconnecting the IDE. If the IDE fails to communicate with the board when it first connects, it will be unable to get a list of the preinstalled modules and so will assume the module has to be downloaded (many pre-installed modules do not have downloadable equivalents).
 
@@ -160,7 +160,7 @@ Espruino also contains many built-in modules and classes that provide a lot of f
 
 * APPEND_KEYWORD: Built-In
 
-You don't need a module to be able to interface to hardware - sometimes it just makes it easier. If you want to interface to a device that isn't listed here, please check out the [[Tutorials]] page, or [[Search]] for it.
+You don't need a module to be able to interface to hardware - sometimes it just makes it easier. If you want to interface to a device that isn't listed here, please check out the [Tutorials](Tutorials.md) page, or [Search](https://www.espruino.com/Search) for it.
 
 
 Frequently Asked Questions
@@ -182,4 +182,4 @@ Yes. By default each module that is loaded will be cached (to avoid loading modu
 
 ### How do I make my own modules?
 
-It's easy! See the [[Writing Modules]] page...
+It's easy! See the [Writing Modules](tutorials/Writing Modules.md) page...

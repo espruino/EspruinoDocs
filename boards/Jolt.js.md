@@ -8,13 +8,13 @@ Jolt.js
 
 ![Jolt.js](Jolt/device.jpg)
 
-* BUYFROM: £35,£26,https://shop.espruino.com/joltjs,/Order#joltjs
+* BUYFROM: £35,£26,https://shop.espruino.com/joltjs,https://www.espruino.com/Order#joltjs
 
 **Jolt.js is a programmable Bluetooth Motor Driver board**. Control powerful external devices such as lights, motors, solenoids and relays, all from a device that can run for months or years on a battery!
 
 With the Espruino JavaScript interpreter on its internal ARM microcontroller, software can be uploaded, debugged and modified wirelessly from any modern computer or phone, making development of embedded devices significantly easier. Jolt.js has 8 high power outputs, capable of 1A each, as well as 4 Qwiic connectors. It can even control and be controlled by other Bluetooth LE devices.
 
-**Just got your Jolt.js? [Take a look here!](/Quick+Start+BLE#joltjs)**
+**Just got your Jolt.js? [Take a look here!](../tutorials/Quick Start BLE.md#joltjs)**
 
 
 Contents
@@ -162,7 +162,7 @@ Once Jolt.js has stopped flashing LEDs you can release it - this will clear out 
 Tutorials
 --------
 
-First, it's best to check out the [Getting Started Guide](/Quick+Start+BLE#joltjs)
+First, it's best to check out the [Getting Started Guide](../tutorials/Quick Start BLE.md#joltjs)
 
 There is more information below about using the motor driver and Qwiic connectors.
 
@@ -178,8 +178,8 @@ Tutorials using Bluetooth LE and functionality that may not be part of Jolt.js:
 
 * APPEND_USES: BLE,-Only BLE,-Jolt.js
 
-There are [many more tutorials](/Tutorials) that may not be specifically for
-you device but will probably work with some tweaking. [Try searching](/Search)
+There are [many more tutorials](../Tutorials.md) that may not be specifically for
+you device but will probably work with some tweaking. [Try searching](https://www.espruino.com/Search)
 to find what you want.
 
 Pinout
@@ -206,7 +206,7 @@ Information
 
 Certifications:
 
-* Jolt.js's radio module has certifications for [FCC (USA), CE(EU), TELEC (Japan), SRRC (China), IC (Canada), NCC (Taiwan) and KC (South Korea)](/datasheets/MDBT50Q-1M.pdf)
+* Jolt.js's radio module has certifications for [FCC (USA), CE(EU), TELEC (Japan), SRRC (China), IC (Canada), NCC (Taiwan) and KC (South Korea)](../datasheets/MDBT50Q-1M.pdf)
 
 <a name="motor"></a>Motor Drivers
 ----------------------------------
@@ -305,7 +305,7 @@ setInterval(timer,20);
 
 ### Individually Addressable LEDs
 
-Espruino supports sending the signals needed for [WS2811/WS2812/WS2812B/APA104/APA106/SK6812 Individually Addressable LEDs](/WS2811)
+Espruino supports sending the signals needed for [WS2811/WS2812/WS2812B/APA104/APA106/SK6812 Individually Addressable LEDs](../devices/WS2811.md)
 (collectively called Neopixels by Adafruit) using the [Neopixel library](https://www.espruino.com/Reference#neopixel).
 
 For some types of LED, the 3.3v signals from the Qwiic connectors are not high
@@ -378,7 +378,7 @@ which correspond to the Qwiic pins.
 
 You can use  `Jolt.Q0.setPower(1)` to set power on the connector (see below) or `Jolt.Q0.i2c` to directly access [an `I2C` Instance](https://www.espruino.com/Reference#I2C)
 
-For instance if you wish to control a [[SSD1306]] OLED from the `Q0` Qwiic connector you could do:
+For instance if you wish to control a [SSD1306](../devices/SSD1306.md) OLED from the `Q0` Qwiic connector you could do:
 
 ```JS
 Jolt.Q0.setPower(1);
@@ -472,13 +472,13 @@ such that the antenna resonates at 13.56 MHz.
 Firmware Updates
 -----------------
 
-Please see the [Firmware Update](/Firmware+Update#nrf52) page for detailed instructions.
+Please see the [Firmware Update](../info/Firmware Update.md#nrf52) page for detailed instructions.
 
 
 Troubleshooting
 ---------------
 
-For more answers please check out the [Bluetooth Troubleshooting](Troubleshooting+BLE) or [General Troubleshooting](/Troubleshooting) pages.
+For more answers please check out the [Bluetooth Troubleshooting](../info/Troubleshooting BLE.md) or [General Troubleshooting](../info/Troubleshooting.md) pages.
 
 
 

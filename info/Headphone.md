@@ -18,7 +18,7 @@ All you need is a very simple circuit using a few cents worth of components. You
 Wiring
 -------
 
-| Serial pin | [Original Espruino](/Original) | [Pico](/Pico) |
+| Serial pin | [Original Espruino](../boards/Original.md) | [Pico](../boards/Pico.md) |
 |----|-------|---------|
 | RX | A10 | B7 |
 | TX | A9  | B6 |
@@ -108,7 +108,7 @@ Using
 Normal Web IDE
 ------------
 
-* Start the [Web IDE](/webide)
+* Start the [Web IDE](https://www.espruino.com/ide)
 * Go to `Settings`, then `Communications`. Under `Connect over Audio`, choose `Normal Signal Polarity`
 * Exit settings, and click the `Connect` button, choose `Audio`
 * In the left-hand pane, press `enter`, then type `LED1.set()` then type enter again. It should light the LED.

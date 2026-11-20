@@ -9,7 +9,7 @@ Infrared 'Pronto Hex' decoder
 
 ![An IR remote](pronto.jpg)
 
-While you can [plug in an IR receiver and decode IR signals](/Puck.js Infrared),
+While you can [plug in an IR receiver and decode IR signals](../tutorials/Puck.js Infrared.md),
 it requires you to have an IR receiver and is a bit fiddly.
 
 [IRDB](https://github.com/probonopd/irdb) contains a list of common remote control
@@ -47,8 +47,8 @@ var prontoHex = "0000 006C 0000 0022 00AD 00AD 0016 0041 0016 0041 0016 0041 001
 var pulseTimes = require("pronto").decode(prontoHex);
 ```
 
-`pulseTimes` now contains an array of pulses in milliseconds that you can use with [`digitalPulse`](/Pico+Infrared)
-on normal Espruino boards, or [`Puck.IR`](/Puck.js Infrared) on Puck.js devices:
+`pulseTimes` now contains an array of pulses in milliseconds that you can use with [`digitalPulse`](../tutorials/Pico Infrared.md)
+on normal Espruino boards, or [`Puck.IR`](../tutorials/Puck.js Infrared.md) on Puck.js devices:
 
 ### Puck.js
 

@@ -17,12 +17,12 @@ Servo motors have 3 wires. Ground, Power, and Signal. For power, they will run o
 
 Just take a power source (4xAA batteries, or a 3.7v LiPo battery) and connect negative to the black wires of the servos, and to the ground connection on your Espruino board. Connect Positive on the battery to the red wires on the servos. Now connect the each white wire on each servo to a different signal pin on your Espruino board.
 
-For information on wiring up your Espruino Board for Servo Motors, see the [[Pin Strip]] page.
+For information on wiring up your Espruino Board for Servo Motors, see the [Pin Strip](Pin Strip.md) page.
 
 Servo Motor Module
 ------------------
 
-If you just want to move servo motors around in the simplest possible way, use the [[servo.js]] module.
+If you just want to move servo motors around in the simplest possible way, use the [servo.js](servo.js) module.
 
 Just use `require("servo").connect` with the pin the servo motor is attached to, and call `move` with a position between 0 and 1, and an optional parameter specifying the time taken to move, and another parameter that is a function to call when the movement is finished:
 

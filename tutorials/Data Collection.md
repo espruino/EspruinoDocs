@@ -11,7 +11,7 @@ Often you'll want to make a device that can sit in a place and will collect
 (log) data. Espruino is particularly good at this as all devices have a
 Real Time Clock (RTC) and don't draw much power when idle.
 
-**Note:** There's a Bangle.js specific [example of logging here](/Bangle.js+Storage)
+**Note:** There's a Bangle.js specific [example of logging here](./Bangle.js Storage.md)
 
 At its most simple, all you need to do is have some code that looks like this:
 
@@ -30,12 +30,12 @@ Reading Data
 Espruino devices have a built-in temperature sensor, accessible with
 `E.getTemperature()` - so you can easily use this for reading values.
 
-Puck.js also contains [various sensors](/Puck.js#on-board-peripherals)
+Puck.js also contains [various sensors](../boards/Puck.js.md#on-board-peripherals)
 you can read from.
 
 However often you'll use `analogRead(pin)` to read analog values from pins,
-or will `require` one of Espruino's [modules](/Modules) to interface to an
-external sensor (for instance the [DS18B20 temperature sensor](/DS18B20)).
+or will `require` one of Espruino's [modules](../Modules.md) to interface to an
+external sensor (for instance the [DS18B20 temperature sensor](../devices/DS18B20.md)).
 
 
 Time
@@ -55,7 +55,7 @@ or `Date.now()` will give the number of milliseconds since 1970.
 The time reported is according to Espruino's Real-Time Clock. You can set it
 with `setTime(secondsSince1970)`, or can turn on `Set Current Time` in the
 Web IDE's Communication Settings and the time will be set automatically next time code is
-uploaded. (If you're using the [Puck.js](/Web+Bluetooth#extra-features)
+uploaded. (If you're using the [Puck.js](./Web Bluetooth.md#extra-features)
 Web Bluetooth library you can also use `Puck.setTime()` on a Web Bluetooth website).
 
 
@@ -95,7 +95,7 @@ function storeMyData(data) {
 ```
 
 Usually each number added to the array takes up two *variable slots* - one
-for the number, and one for the array index (see the [performance section](/Performance)
+for the number, and one for the array index (see the [performance section](../info/Performance.md)
 for more information). You can use `process.memory().free` to see how many
 variable slots you have available, so can see how long you should restrict
 the array to (you need to leave a few variable slots free for exection too!).
@@ -183,7 +183,7 @@ var event = {
 So far we've only written to RAM, however some Espruino boards have
 areas of flash memory that you can use to store nonvolatile data.
 
-On Espruino 1v97 and above there is the [`Storage` module](/Reference#Storage)
+On Espruino 1v97 and above there is the [`Storage` module](https://www.espruino.com/Reference#Storage)
 which implements a simple filesystem in the area of flash memory that is also
 used to save your program code. The Storage module implements wear levelling and deals
 with flash page boundaries and pages for you, so is much easier to use than
@@ -213,7 +213,7 @@ function getData(callback) {
 // Get data with: getData(print);
 ```
 
-However, you can also use the [`Storage` module](/Reference#Storage) at a lower level,
+However, you can also use the [`Storage` module](https://www.espruino.com/Reference#Storage) at a lower level,
 allocating a fixed-size file (which starts of as all char code 255) and writing to it.
 The example below will write text into a log file, and will alternate between `log1` and `log2` as needed:
 
@@ -284,21 +284,21 @@ function getData() {
 }
 ```
 
-**NOTE:** You can also use [`require("Flash")`](/Reference#Flash) to write bytes straight
+**NOTE:** You can also use [`require("Flash")`](https://www.espruino.com/Reference#Flash) to write bytes straight
 to flash - but this is pretty advanced and requires you to deal with pages
 and page erasure.
 
 
 ### External Flash/EEPROM Memory
 
-You can also wire up external memory such as Flash or [EEPROMs](/EEPROMs) -
-usually via [SPI](/SPI) or [I2C](/I2C).
+You can also wire up external memory such as Flash or [EEPROMs](../devices/EEPROMs.md) -
+usually via [SPI](../info/SPI.md) or [I2C](../info/I2C.md).
 
 ### SD card
 
-For the maximum amount of storage, you can also write to [SD cards](/File+IO).
+For the maximum amount of storage, you can also write to [SD cards](../info/File IO.md).
 
-The [original Espruino board](/Original) has a micro SD card slot
+The [original Espruino board](../boards/Original.md) has a micro SD card slot
 pre-installed. While other Espruino boards don't have one, you can easily
 wire one up to any of the boards.
 
@@ -417,13 +417,13 @@ If you're trying to interface this to an application on your computer,
 you just need to open the Serial/Bluetooth connection, send the string `"\x10getData()\n"`,
 and then read the data that is sent in return.
 
-You can use the [Puck.js library](/Web+Bluetooth) or [UART.js library](/UART.js) to communicate
+You can use the [Puck.js library](./Web Bluetooth.md) or [UART.js library](./UART.js.md) to communicate
 using Web Bluetooth or Web Serial direct from a webpage. For example:
 
 **Click the 'Try Me' button on the code below to try it out
 and read data from your Espruino device**
 
-If you only need Web Bluetooth you can use the [Puck.js library](/Web+Bluetooth) too.
+If you only need Web Bluetooth you can use the [Puck.js library](./Web Bluetooth.md) too.
 
 ```HTML_demo_link
 <html>
@@ -506,4 +506,4 @@ button.addEventListener("click", function() {
 });
 ```
 
-**Want to do this automatically as soon as the devices are ready or in range?** Check out the [Automatic Data Download](/Auto+Data+Download) page.
+**Want to do this automatically as soon as the devices are ready or in range?** Check out the [Automatic Data Download](./Auto Data Download.md) page.

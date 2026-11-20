@@ -36,7 +36,7 @@ Time
 
 Espruino doesn't have `millis()`. It has `getTime()`, which reports the current time in seconds as a floating point number.
 
-Unlike most Arduinos, Espruino contains a Real Time [[Clock]] which allows it to keep track of time and date very accurately. This means you don't need an external RTC, and can instead use the [Date class](/Reference#Date).
+Unlike most Arduinos, Espruino contains a Real Time [Clock](../modules/clock.md) which allows it to keep track of time and date very accurately. This means you don't need an external RTC, and can instead use the [Date class](https://www.espruino.com/Reference#Date).
 
 
 There is no `loop()` function
@@ -48,7 +48,7 @@ A lot of Arduino code uses the following pattern:
 void call_me_from_loop() {
   if (millis() > last_time_called+1000) {
     last_time_called = millis();
-    
+
     // do stuff
   }
 }
@@ -71,7 +71,7 @@ Analog IO
 * `analogWrite` in Espruino takes a floating point value between 0 and 1, rather than an integer between 0 and 255
 * `analogRead` in Espruino returns a floating point value between 0 and 1, rather than an integer between 0 and 1023
 * Espruino is 3.3v (not 5v), so to get a voltage from `analogRead`, you have to multiply by 3.3 rather than 5. However we'd suggest multiplying by `E.getAnalogVRef()`, which measures the chip's voltage based on an internal voltage reference.
-* If you want to read or write Audio, see [[Waveform]] - using `setInterval` directly probably won't work.
+* If you want to read or write Audio, see [Waveform](../info/Waveform.md) - using `setInterval` directly probably won't work.
 
 
 Other IO
@@ -92,11 +92,11 @@ Language
 -------
 
 * Normal Arrays are sparse, so are not very efficient. You're best off using `Uint8Array` or similar.
-* Code execution speed is not fantastic, see [[Performance]]. Instead of writing code, try and use library functions wherever possible.
+* Code execution speed is not fantastic, see [Performance](../info/Performance.md). Instead of writing code, try and use library functions wherever possible.
 * You can't write code that runs inside interrupts, and your code is never preempted. You can still measure pulses accurately though, as events from `setWatch` are timestampted to the nearest microsecond.
 
 
 Found something else?
 -------------------
 
-Please let us know in the [[Forum]]...
+Please let us know in the [Forum](https://forum.espruino.com/)...

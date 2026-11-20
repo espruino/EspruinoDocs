@@ -11,7 +11,7 @@ Quectel LTE BG96 Cat.M1/NB1 & EGPRS Module
 
 The Quectel BG96 is a LTE/Cat.M1/NB1/EGPRS module that can provide internet access via an AT command set.
 
-Support is provided in Espruino by the [[QuectelBG96.js]] module.
+Support is provided in Espruino by the [QuectelBG96.js](QuectelBG96.js) module.
 
 Software
 ---------

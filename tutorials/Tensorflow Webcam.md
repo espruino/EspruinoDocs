@@ -8,11 +8,11 @@ Controlling Espruino from Tensorflow on the Desktop
 * USES: Bangle.js,Bangle.js2,BLE,Web Bluetooth
 
 In this tutorial we'll teach an AI to recognise features in video with a webcam,
-and to then send a signal from the PC - via Bluetooth - to a [Bangle.js](/Bangle.js2) (or
+and to then send a signal from the PC - via Bluetooth - to a [Bangle.js](../boards/Bangle.js2.md) (or
   other Bluetooth Espruino device) to make something happen.
 
 **In this case we'll make a website that reminds you not to pick your nose
-by buzzing a [Bangle.js](/Bangle.js2) when it thinks it sees your finger
+by buzzing a [Bangle.js](../boards/Bangle.js2.md) when it thinks it sees your finger
 near your nose.**
 
 Google provides a website called [Teachable Machine](https://teachablemachine.withgoogle.com/)

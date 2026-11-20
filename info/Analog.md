@@ -6,9 +6,9 @@ Analog IO
 
 * KEYWORDS: Peripheral,Peripherals,Analog,ADC,DAC,A2D,D2A,Built-In
 
-Espruino contains both Analog Inputs ([[ADC]]) and Analog Outputs ([[DAC]]).
+Espruino contains both Analog Inputs ([ADC](ADC.md)) and Analog Outputs ([DAC](DAC.md)).
 
-You can also create 'fake' Analog Outputs with [[PWM]], you can also record and play back [[Waveform]]s.
+You can also create 'fake' Analog Outputs with [PWM](PWM.md), you can also record and play back [Waveform](Waveform.md)s.
 
 Using Analog IO
 --------------------

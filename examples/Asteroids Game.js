@@ -7,7 +7,7 @@ Asteroids Game
 
 ![Asteroids](Asteroids Game.jpg)
 
-This code creates an Asteroids game on [Pixl.js](/Pixl.js):
+This code creates an Asteroids game on [Pixl.js](../boards/Pixl.js.md):
 
 * The bottom two buttons rotate left and right
 * Top left button moves forward
@@ -15,7 +15,7 @@ This code creates an Asteroids game on [Pixl.js](/Pixl.js):
 
 This can easily be ported to other devices by:
 
-* Making sure `g` is an instance of [[Graphics]]
+* Making sure `g` is an instance of [Graphics](../info/Graphics.md)
 * Ensuring `BTNL/R/U/A` are set correctly
 
 */

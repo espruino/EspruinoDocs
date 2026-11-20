@@ -8,7 +8,7 @@ UI input field module
 
 UI input module extends ui base module with input field ui element.
 
-**Note:** requires uiExt(ension) module (see [uiExt.js](/uiExt) module)
+**Note:** requires uiExt(ension) module (see [uiExt.js](./uiExt.md) module)
 
 ### Enable ui with uiInp element functions:
 

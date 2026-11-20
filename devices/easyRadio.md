@@ -10,7 +10,7 @@ LPRS easyRadio (eRIC) Radio Modules
 
 The 'easy Radio Integrated Controller' (eRIC) radio transceiver module is based on the Texas Instruments CC430F5137 System-on-Chip. It combines a high performance RF transceiver, RF band pass filters (BPF), an MSP430 microcontroller, 32Kb flash memory, non-volatile flash storage, temperature sensor, and a low drop voltage regulator. The device operates on the International licence exempt Industrial, Scientific and Medical (ISM) radio bands.
 
-While these modules can be programmed with their own code, they come pre-installed with the [easyRadio](http://www.lprs.co.uk/easy-radio/) firmware, which allows communication over a serial interface. A driver this is in the [[easyRadio.js]] module.
+While these modules can be programmed with their own code, they come pre-installed with the [easyRadio](http://www.lprs.co.uk/easy-radio/) firmware, which allows communication over a serial interface. A driver this is in the [easyRadio.js](easyRadio.js) module.
 
 See [LPRS's site](http://www.lprs.co.uk/easy-radio/eric/) for more information.
 
@@ -32,7 +32,7 @@ It's easier to buy an eRIC module in a [breakout board](http://www.lprs.co.uk/wi
 **NOTE:** 
 
 * While the breakout board is marked with `RX` and `TX` pins, unlike many peripherals this refers to the type of pin the eRIC's should be connected to, *not* the actual type of pin. So the `RX` pin actually transmits data.
-* If running the Pico when not connected to a computer, the console interface will automatically move to `Serial1`, disabling the `easyRadio` driver (see [Troubleshooting](/Troubleshooting#console) for more info and how to stop that behaviour). This will allow you to program and debug your Espruino Pico using a remote easyRadio module, but may not be what you intended.
+* If running the Pico when not connected to a computer, the console interface will automatically move to `Serial1`, disabling the `easyRadio` driver (see [Troubleshooting](../info/Troubleshooting.md#console) for more info and how to stop that behaviour). This will allow you to program and debug your Espruino Pico using a remote easyRadio module, but may not be what you intended.
 
 Software
 --------

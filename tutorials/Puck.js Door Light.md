@@ -7,7 +7,7 @@ Door Controlled Light with Puck.js
 * KEYWORDS: Tutorials,Puck.js,BLE,Bluetooth,Light,Magnet,Magnetometer,Door
 * USES: Puck.js,BLE
 
-This video shows you how to control devices from [Puck.js](/Puck.js) when a door opens.
+This video shows you how to control devices from [Puck.js](../boards/Puck.js.md) when a door opens.
 
 It uses the Magnetometer to sense when a Magnet is near the Puck.
 
@@ -76,4 +76,4 @@ You can buy the IR remote control lights like the ones I used from
 They are also available in strip form.
 
 **Note:** while some of these lights look identical, they often use a different
-set of control codes. About the only way to be sure is to [record your own codes](/Puck.js Infrared).
+set of control codes. About the only way to be sure is to [record your own codes](./Puck.js Infrared.md).

@@ -8,7 +8,7 @@ Bangle.js Hideable Widgets
 * USES: Bangle.js
 
 Normally, we'd recommend that your app or clock chooses to load and display
-[widgets](/Bangle.js+Widgets) with `Bangle.loadWidgets()` and `Bangle.drawWidgets()`.
+[widgets](./Bangle.js Widgets.md) with `Bangle.loadWidgets()` and `Bangle.drawWidgets()`.
 
 However there are cases when you might decide you need the 24px at the top of
 the screen for your app - either for data or just for the look of it.
@@ -21,7 +21,7 @@ Not calling `Bangle.loadWidgets()` is faster and saves memory, however:
 
 * You might want widgets loaded - sometimes a widget may provide functionality
 that doesn't work if widgets aren't loaded.
-* You might want to implement [Fast Loading](/Bangle.js+Fast+Load) - in this
+* You might want to implement [Fast Loading](./Bangle.js Fast Load.md) - in this
 case widgets **must** be loaded.
 
 ## Load Widgets and hide them
@@ -39,7 +39,7 @@ to set the include path - check out https://github.com/espruino/BangleApps/blob/
 To load and then hide all widgets. At a later date your app can
 use `require("widget_utils").show()` to show the widgets again if needed.
 
-**Using [Fast Loading](/Bangle.js+Fast+Load)?** You'll have to re-display widgets with
+**Using [Fast Loading](./Bangle.js Fast Load.md)?** You'll have to re-display widgets with
 `require("widget_utils").show()` when your app unloads.
 
 ## Make widgets swipeable (Recommended)
@@ -63,5 +63,5 @@ after a swipe up) the widgets will slide up again to hide themselves.
 This code uses overlays, so even when the widgets are down, the part of the
 screen under the widgets is left untouched.
 
-**Using [Fast Loading](/Bangle.js+Fast+Load)?** You'll have to re-display widgets with
+**Using [Fast Loading](./Bangle.js Fast Load.md)?** You'll have to re-display widgets with
 `require("widget_utils").show()` when your app unloads.

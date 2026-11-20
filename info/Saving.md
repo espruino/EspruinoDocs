@@ -37,7 +37,7 @@ temperature every time the device is powered on - in contrast to what happens wh
 
 There are two different options:
 
-* `Flash` - code is saved to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootcde` that is run automatically at boot (don't use this on [Bangle.js](/Bangle.js2)).
+* `Flash` - code is saved to a file [in Storage](https://www.espruino.com/Reference#Storage) called `.bootcde` that is run automatically at boot (don't use this on [Bangle.js](../boards/Bangle.js2.md)).
 * `Storage` - code is saved to a file name that you get to choose. You can then use
 `load(filename)` to force Espruino to reboot and load the file you've given. You may also choose
 to write to other files like `.bootrst`/`.boot0`/etc which are executed at certain times (see `Boot Process` below)
@@ -104,7 +104,7 @@ create a function called `onInit` (or add a `E.on('init', function() { ... })`
 listener) that is automatically called by the interpreter when it
 initialises.
 
-**Note:** `save()` is not available for [Bangle.js](/Bangle.js2) as the Bangle
+**Note:** `save()` is not available for [Bangle.js](../boards/Bangle.js2.md) as the Bangle
 needs to be able to run multiple different apps (so all code is saved to Storage)
 
 ### Pros
@@ -150,8 +150,8 @@ When Espruino starts up, it does a few things:
 
 * If `BTN1` is pressed or if it reset because of a call to `reset()`, it sets `hasBeenReset` to `true`.
 * If `hasBeenReset` wasn't set, it looks for a compressed image (`.varimg` [in Storage](https://www.espruino.com/Reference#Storage)) of the interpreter's state that was saved with `save()`. If it exists it unpacks it into RAM.
-* (2v19 and later) If this is the first boot right after power on, executes `.bootPowerOn` [from Storage](https://www.espruino.com/Reference#Storage). (On [Bangle.js](/Bangle.js) this is *not* executed if `BTN1` is held down, but all other devices execute them each time)
-* (2v00 and later) Looks for files [in Storage](https://www.espruino.com/Reference#Storage) named `.boot0`, `.boot1`, `.boot2` and `.boot3` and executes them in sequence. (On [Bangle.js](/Bangle.js) these are *not* executed if `BTN1` is held down, but all other devices execute them each time)
+* (2v19 and later) If this is the first boot right after power on, executes `.bootPowerOn` [from Storage](https://www.espruino.com/Reference#Storage). (On [Bangle.js](../boards/Bangle.js.md) this is *not* executed if `BTN1` is held down, but all other devices execute them each time)
+* (2v00 and later) Looks for files [in Storage](https://www.espruino.com/Reference#Storage) named `.boot0`, `.boot1`, `.boot2` and `.boot3` and executes them in sequence. (On [Bangle.js](../boards/Bangle.js.md) these are *not* executed if `BTN1` is held down, but all other devices execute them each time)
 * Looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootrst` and executes it if it exists (see [Save on Send](#save-on-send) below)
 * If `hasBeenReset` **wasn't** set and `.bootrst` wasn't found in the last step, it looks [in Storage](https://www.espruino.com/Reference#Storage) for a file named `.bootcde` and executes it (see [Save on Send](#save-on-send) below)
 * Initialises any previously-initialised peripherals
@@ -185,7 +185,7 @@ WIFI_PASS = "HelloWorld123";
 To ensure that you always had the variables `WIFI_NAME` and `WIFI_PASS`
 defined regardless of what other code you uploaded.
 
-For instance if you're making a device like [the Espruino Home Computer](/Espruino+Home+Computer)
+For instance if you're making a device like [the Espruino Home Computer](../tutorials/Espruino Home Computer.md)
 then you might want to use `Save on send` or `.boot0` to save all the code that initialises
 the display and keyboard. The computer can then be programmed and its state
 saved with `save()`, but regardless of what is saved to the device you will

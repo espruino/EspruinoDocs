@@ -7,20 +7,20 @@ Pixl.js Wireless Weather Station
 
 ![Pixl.js Wireless Weather Station](Pixl.js Wireless Weather Station.jpg)
 
-In the [Pixl.js Wireless Temperature Display](/Pixl.js Wireless Temperature Display) example
-we used a [Puck.js](/Puck.js) to transmit temperature information.
+In the [Pixl.js Wireless Temperature Display](../examples/Pixl.js Wireless Temperature Display.js) example
+we used a [Puck.js](../boards/Puck.js.md) to transmit temperature information.
 
-Here we're using the on-chip sensors from a [Thingy:52](/Thingy52) in a similar
+Here we're using the on-chip sensors from a [Thingy:52](../boards/Thingy52.md) in a similar
 way, but are packing more information in. The Thingys will advertise
 as 'manufacturer data' with Espruino's own manufacturer code `0x590`.
 
-[Pixl.js](/Pixl.js) then scans constantly for advertising packets and displays
+[Pixl.js](../boards/Pixl.js.md) then scans constantly for advertising packets and displays
 the decoded data from any device it finds that advertises with the manufacturer
 code `0x590`.
 
 **Note:** Scanning all the time uses a lot of power, and isn't suitable for
 battery operated devices. If you need to run off a battery consider using
-a solution like [Pixl.js Wireless Temperature Display](/Pixl.js Wireless Temperature Display)
+a solution like [Pixl.js Wireless Temperature Display](../examples/Pixl.js Wireless Temperature Display.js)
 which will only scan for a second once a minute.
 */
 

@@ -14,7 +14,7 @@ A digital potentiometer is a potentiometer that can be controlled via digital me
 Supported Parts
 ------------------
 
-This module [[MCP4xxx.js]] interfaces with a wide variety of I2C and SPI digital potentiometers and rheostats made by Microchip. Supported devices have either 129 or 257 taps (128 and 256 tap SPI parts are also supported), 1, 2, or 4 potentiometers (or rheostats), and may or may not have non-volitile memory.  Many of these devices have multiple pins available to set the I2C address. This module does not work with MCP401x or MCP4xxxx devices. 
+This module [MCP4xxx.js](MCP4xxx.js) interfaces with a wide variety of I2C and SPI digital potentiometers and rheostats made by Microchip. Supported devices have either 129 or 257 taps (128 and 256 tap SPI parts are also supported), 1, 2, or 4 potentiometers (or rheostats), and may or may not have non-volitile memory.  Many of these devices have multiple pins available to set the I2C address. This module does not work with MCP401x or MCP4xxxx devices. 
 
 Supported parts will have part numbers of the form MCP4abc
 a - Indicates number of pots and interface. I2C: 4 -> 4 pots, 5 -> 1 pot, 6 -> 2 pots SPI: 1-> 1 pot, 2-> 2 pots, 3-> 4 pots.  

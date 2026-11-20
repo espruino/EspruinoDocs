@@ -7,7 +7,7 @@ Platform Game
 
 ![Platform](Platform Game.jpg)
 
-This code creates a Mario-style platform game on [Pixl.js](/Pixl.js):
+This code creates a Mario-style platform game on [Pixl.js](../boards/Pixl.js.md):
 
 * The bottom two buttons move left and right
 * Top left button jumps
@@ -31,7 +31,7 @@ represents a different 'tile':
 
 This can easily be ported to other devices by:
 
-* Making sure `g` is an instance of [[Graphics]]
+* Making sure `g` is an instance of [Graphics](../info/Graphics.md)
 * Ensuring `BTNL/R/A` are set correctly
 
 */

@@ -30,7 +30,7 @@ USB / Serial
 You can use the [`Web Serial API`](https://codelabs.developers.google.com/codelabs/web-serial/#0) to access
 devices from a Web Page.
 
-To make this easier we've made the [UART.js](/UART.js) Library to provide a consistent API for accessing Serial/Bluetooth devices from the web:
+To make this easier we've made the [UART.js](../tutorials/UART.js.md) Library to provide a consistent API for accessing Serial/Bluetooth devices from the web:
 
 ```HTML_demo_link
 <html>
@@ -159,7 +159,7 @@ Bluetooth
 
 **For Bluetooth LE as used on Puck.js/Pixl.js/MDBT42Q, see the next heading**
 
-You can add an HC-05 or HC-06 [[Bluetooth]] module to the back of an Espruino [[Original]],
+You can add an HC-05 or HC-06 [Bluetooth](../devices/Bluetooth.md) module to the back of an Espruino [Original](../boards/Original.md),
 or can wire one up to the default UART pins of any Espruino board in order to
 communicate with the board wirelessly.
 
@@ -172,8 +172,8 @@ Bluetooth LE
 -------------
 
 If you just wish to receive non-private data from an Espruino Bluetooth LE device (eg temperature, or
-when a button is pressed) we'd recommend that you use [Bluetooth LE Advertising](/BLE+Advertising). This
-is connectionless and low power, so is flexible and robust. [See this link](/BLE+Advertising) for
+when a button is pressed) we'd recommend that you use [Bluetooth LE Advertising](../tutorials/BLE Advertising.md). This
+is connectionless and low power, so is flexible and robust. [See this link](../tutorials/BLE Advertising.md) for
 code examples.
 
 For two way communication, Espruino Bluetooth LE devices provide a serial port as something called the
@@ -200,7 +200,7 @@ Check out the page on [using Espruino with Web Bluetooth](http://www.espruino.co
 </html>
 ```
 
-We've also made the [UART.js](/UART.js) Library to provide a consistent API for accessing Serial/Bluetooth devices from the web.
+We've also made the [UART.js](../tutorials/UART.js.md) Library to provide a consistent API for accessing Serial/Bluetooth devices from the web.
 
 ### Node.js / JavaScript
 
@@ -519,7 +519,7 @@ such as HID.
 Custom characteristic
 ----------------------
 
-It can be a bit messy [and also insecure](/BLE+Security) to leave your
+It can be a bit messy [and also insecure](../tutorials/BLE Security.md) to leave your
 Espruino device entirely open to execute JavaScript, so instead you
 can create a characteristic to do what you want, and then write to that:
 

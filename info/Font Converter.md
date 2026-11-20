@@ -8,7 +8,7 @@ Font Converter
 * USES: Graphics
 
 This page helps you to convert a font into JavaScript that can be used
-with Espruino's [Graphics](/Graphics) library.
+with Espruino's [Graphics](./Graphics.md) library.
 
 How it works:
 

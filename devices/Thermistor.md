@@ -6,13 +6,13 @@ Thermistor Temperature Sensor
 
 * KEYWORDS: Module,Temperature,Temp,thermistor,sensor,10K3A1,10K4A1,20K6A1,PT100,NI1000,LAN1,SAT1,STA1,TAC1,2.2K3A1
 
-**Note:** If you want to see how this module works internally, check out the [[Thermistors]] tutorial.
+**Note:** If you want to see how this module works internally, check out the [Thermistors](../tutorials/Thermistors.md) tutorial.
 
 This module uses the following common thermistor characteristics found in most off the shelf thermistor based temperature sensors.
 
 The module has been written to match the characteristics and codes in this [thermistor datasheet](https://www.sontay.com/media/specs/Thermistor_Types_and_Compatibility_Charts.pdf).
 
-Use the [Thermistor](/modules/Thermistor.js) ([About Modules](/Modules)) module for it.
+Use the [Thermistor](Thermistor.js) ([About Modules](../Modules.md)) module for it.
 
 | Sensor Type | Code |
 | ----------  | ---- |
@@ -31,36 +31,36 @@ Use the [Thermistor](/modules/Thermistor.js) ([About Modules](/Modules)) module 
 Thermistors can be wired up as follows:
 
 ```
-  +3.3v                                                  
-  |                                                      
-  |                                                      
-  |                                                      
-  |                                                      
-  |                                                      
-+-+-+                                                    
-|   |                                                    
-|   | Biasing resistor                                   
-|   | (for a 10K sensor use a 10K resistor)              
-|   |                                                    
-+-+-+                                                    
-  |                                                      
-  |                                                      
-  |                                                      
-  |               +---------+                            
+  +3.3v
+  |
+  |
+  |
+  |
+  |
++-+-+
+|   |
+|   | Biasing resistor
+|   | (for a 10K sensor use a 10K resistor)
+|   |
++-+-+
+  |
+  |
+  |
+  |               +---------+
   +---------------+         +------------+----+ ADC Input
-  |               +---------+            |               
-  |                    100K current      |               
-  |                    limiting resistor |               
-+-+-+                                    |               
-|   |                                 +----+             
-|   | 10K Thermistor                  +----+ 100nF Capacitor            
-|   |                                    |               
-|   |                                    |               
-+-+-+                                    |               
-  |                                      |               
-  |                                      |               
-  |                                     GND              
- GND                                                        
+  |               +---------+            |
+  |                    100K current      |
+  |                    limiting resistor |
++-+-+                                    |
+|   |                                 +----+
+|   | 10K Thermistor                  +----+ 100nF Capacitor
+|   |                                    |
+|   |                                    |
++-+-+                                    |
+  |                                      |
+  |                                      |
+  |                                     GND
+ GND
 ```
 This example shows a 10K based thermistor like a 10K3A1.
 

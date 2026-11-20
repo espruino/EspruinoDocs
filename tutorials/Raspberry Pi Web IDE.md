@@ -8,7 +8,7 @@ Web IDE on a Raspberry Pi
 * USES: Puck.js,BLE,Only BLE
 
 If you want to use Node-RED on your Raspberry Pi there is also a
-[Node-RED Tutorial](/Puck.js Node-RED).
+[Node-RED Tutorial](BLE Node-RED.md).
 
 We'd recommend you use a Raspberry Pi 3 - it's faster, and has Ethernet, WiFi
 and Bluetooth LE on-board. If you use a different Raspberry Pi you'll have to
