@@ -65,6 +65,7 @@ lex.write('tes":{},"last_changed":"2026-10-07T11:05:02.781294+00:00"}');
 // TOKEN :
 // TOKEN "2026-10-07T11:05:02.781294+00:00"
 // TOKEN }
+lex.end();
 ```
 
 Or more usefully in this case we can look for the pattern `"state":something`:
@@ -85,6 +86,7 @@ lex.write('11:02:40.186633+00:00"},{"entity_id":"sensor.pv","state":498,"attribu
 lex.write('tes":{},"last_changed":"2026-10-07T11:05:02.781294+00:00"}');
 //STATE="unknown"
 //STATE=498
+lex.end();
 ```
 
 
