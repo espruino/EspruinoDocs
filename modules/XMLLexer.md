@@ -14,6 +14,8 @@ The callback is called with either:
 * `{t:"<>", name:"tagName", attrs:{key:value,key:value}}` - an XML tag
 * `{t:"/", name:"tagName"}` - the end of an XML tag
 
+Attribute values can be in double quotes, single quotes or unquoted (`<a href="x" id='y' n=1>`), and an attribute with no value (`<input disabled>`) is given the value `""`. Values are returned exactly as they appear in the XML - entities like `&amp;` are not decoded.
+
 This is designed to work with `.pipe`/`E.pipe`, specifically so that HTTP requests and large files can be read without requiring the whole file to be loaded into RAM.
 
 **Note:** This is not an XML Parser, it does not infer any structure in XML, it just breaks the XML into individual tags.
@@ -112,6 +114,7 @@ But the main use is parsing information retrieved from the internet. For instanc
 
 ```JS
 var http = require("http");
+var XMLLexer = require("XMLLexer");
 http.get("https://xkcd.com/rss.xml", function(res) {
   //console.log("Open",res);
   var lastTag, item;
@@ -123,7 +126,7 @@ http.get("https://xkcd.com/rss.xml", function(res) {
     }
     if (token.t == "/" && token.name=="item") {
       console.log("Item", item);
-      item == undefined;
+      item = undefined;
     }
     if (token.t == "c" && lastTag && item) {
       item[lastTag] = token.txt;
