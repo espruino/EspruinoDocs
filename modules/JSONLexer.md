@@ -12,6 +12,8 @@ The callback is called with the string representing the token. To avoid confusin
 
 This is designed to work with `.pipe`/`E.pipe`, specifically so that HTTP requests and large files can be read without requiring the whole file to be loaded into RAM.
 
+Tokens can be split anywhere between calls to `lex.write`. Because a number or a word like `true` at the very end of a block might continue in the next block, it isn't reported until the next block arrives. When there is no more data, call `lex.end()` so that any final token is reported. `.pipe` calls `end` automatically when the source has finished.
+
 **Note:** This is not a JSON Parser, it just breaks the JSON into individual tokens.
 
 Usage
