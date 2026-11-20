@@ -63,7 +63,9 @@ Contents
 | [**micro:bit**](/MicroBit)                           | nRF51822      | 16               | 200      | -        | Y       | 1        | 1       | Y       | Bluetooth LE, LED matrix                                                       |
 | [**micro:bit 2**](/MicroBit)                         | nRF52833      | 64               | 6000     | -        | Y       | 1        | 1       | Y       | Bluetooth LE, LED matrix, Speaker, Mic                                         |
 | [**ESP8266**](/EspruinoESP8266)                      | Xtensa        | 80               | 1023     | €10      | N       | 1        | 1       | N       | WiFi                                                                           |
-| [**ESP32**](/ESP32)                                  | Xtensa        | 240              | 5000     | $10      | N       | 2        | 2       | N       | Bluetooth LE, Flash FS, WiFi                                                   |
+| [**ESP32**](/ESP32)                                  | Xtensa        | 240              | ~5000    | $10      | N       | 2        | 2       | N       | Bluetooth LE, Flash FS, WiFi                                                   |
+| [**ESP32C3**](/ESP32)                                | RISC-V        | 160              | ~5000    | $10      | Y       | 2        | 2       | N       | Bluetooth LE, Flash FS, WiFi                                                   |
+| [**ESP32S3**](/ESP32)                                | Xtensa        | 240              | ~5000    | $10      | N       | 2        | 2       | N       | Bluetooth LE, Flash FS, WiFi                                                   |
 
 **Key:** `Y`=Yes, `N`=No
 
