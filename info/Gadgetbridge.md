@@ -275,6 +275,8 @@ Available message types are:
   * `act` optional (added in Gadgetbridge 0.82.1) - the current activity type, one of `UNKNOWN,NOT_WORN,DEEP_SLEEP,LIGHT_SLEEP,REM_SLEEP,ACTIVITY,RUNNING,WALKING,SWIMMING,CYCLING,EXERCISE` from [ActivityKind.java](https://codeberg.org/Freeyourgadget/Gadgetbridge/src/branch/master/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/model/ActivityKind.java)
   * `ts` is optional - in milliseconds since 1970. If not specified the current time is used
   * `rt` is optional - indicates whether the sample is realtime and therefore not to be stored in the database
+  * `cal` is optional - active calories (kcal) in the 10 minute sample, if the [Calorie Tracker](https://banglejs.com/apps/?id=calories) app is installed and [My Profile](https://banglejs.com/apps/?id=myprofile) is filled in
+* `t:"hrv", ts:long, hrv:int` - one HRV reading (RMSSD, milliseconds) from the [HRV Tracking](https://banglejs.com/apps/?id=hrvtracking) app, sent during `actfetch` for readings newer than its `ts`
 * `t:"actTrksList", list:"a list of new non-fetched `recorder` app logs"`
 * `t:"actTrk", log:"YYYYMMDDx"  (e.g. 20240101a), lines:"four lines of the log"/"erase", cnt: "the current packet count"`
 * `t:"force_calendar_sync", ids:[int,int,...]` - Sends a list of Bangle's existing calendar IDs, and ask Gadgetbridge to add/remove any calendar items that are different
