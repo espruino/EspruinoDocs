@@ -34,7 +34,8 @@ something on it:
 * the GATT UUIDs are provisional until the first release;
 * **receiving it needs the
   [bthome-writable](https://github.com/yerpj/bthome-writable) custom
-  integration** for Home Assistant, installable through HACS. Core BTHome is
+  integration** for Home Assistant, installable from the Marketplace
+  (Settings -> Marketplace on 2026.11 and newer, HACS before that). Core BTHome is
   unaffected: it skips the declaration and goes on reading your sensors
   exactly as before, so adding this to a device breaks nothing that already
   works.
