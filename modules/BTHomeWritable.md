@@ -117,8 +117,7 @@ reads encrypted, with BTHome v2's AES-CCM in both directions:
 bw.setup({
   advertise : [ { type:"light", set:v=>digitalWrite(LED1,v) } ],
   interval : 1000,
-  bindkey : "231d39c1d7cc1ab1aee224cd096db932",   // 32 hex characters
-  counterReport : true
+  bindkey : "231d39c1d7cc1ab1aee224cd096db932"   // 32 hex characters
 });
 ```
 
@@ -130,10 +129,19 @@ you do not have to care which board you are on.
 Encryption costs **8 bytes of service data** for the counter and the MIC, which
 is a third of the packet. Plan for it.
 
-`counterReport : true` is worth turning on. Without it the device resumes its
-write counter ahead of the receiver after every restart, and silently refuses
-commands until the receiver catches up; with it the receiver asks the device
-where it is instead of guessing.
+A sealed device also offers the **counter report** at `2FAA1000`, which you do
+not have to ask for: it is on whenever a `bindkey` is set. It answers the one
+question a receiver cannot answer for itself. Your device remembers the highest
+write counter it has accepted and refuses anything below it, which is replay
+protection and correct, but it resumes that counter from a mark in flash rather
+than from the exact value, so **after every reboot it is ahead of its
+receiver**. Nothing in the advertising says so, and a refused write is
+acknowledged before it is validated, so the receiver sees success and your
+commands quietly do nothing. The report lets it ask instead of guess.
+
+`counterReport : false` takes the characteristic away. Only do that if something
+else resynchronises the counter, because the symptom it leaves behind is a
+device that looks perfectly healthy and ignores everything.
 
 How much fits in one packet
 ---------------------------
@@ -177,7 +185,7 @@ Reference
 | `bindkey` | 16-byte AES key, as 32 hex characters or an array. Anything else is refused at `setup()`: a key that is silently the wrong key has every receiver blaming a key that is not at fault |
 | `showName` | put the device name in the advertising packet (default `true`) |
 | `maxServiceData` | what your radio will really accept, in bytes. Set it and the packet is checked at `setup()` rather than at the first transmission |
-| `counterReport` | offer the counter report at `2FAA1000` (default `false`, and only with a `bindkey`) |
+| `counterReport` | offer the counter report at `2FAA1000` (default `true` with a `bindkey`, never without one). `false` takes it away, and with it the only way a receiver can learn this device rebooted |
 | `onError` | called with a rejected write's error. Optional, and `rejects()` counts refusals whether you give one or not |
 | `signed`, per entry | force a numeric entry's signedness. The module knows which BTHome object ids are signed; if BTHome assigns a new signed id before this module learns it, `signed:true` on that entry is the way through without waiting for a release |
 
