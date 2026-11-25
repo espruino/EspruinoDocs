@@ -94,6 +94,7 @@ $ npm install
 $ npm run check           # spelling, internal and external links
 $ npm run check:quick     # don't check external links
 $ node bin/check_docs.js tutorials/My\ Tutorial.md   # just check one file
+$ node bin/check_docs.js --fix   # interactively fix spelling mistakes and broken links
 ```
 
 * Words that are correct but not in the British or American English dictionaries can be added to `bin/spelling-wordlist.txt`

@@ -13,6 +13,7 @@ Abracon
 acc
 accel
 accelerometer
+accelerometers
 Accelerometers
 Accessors
 Acetoxy
@@ -183,6 +184,7 @@ Digi
 Digikey
 digipot
 digipots
+Digitalmeans
 digole
 dir
 dm

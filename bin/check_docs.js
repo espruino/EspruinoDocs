@@ -30,6 +30,10 @@ Usage:
   --update-wordlist   Add every currently unknown word to the word list
   --no-suggest        Don't compute spelling suggestions (faster)
   --cache=FILE        Link cache file (default .linkcache.json)
+  --fix               Interactively fix problems: for each spelling mistake or
+                      link with a suggested fix, show the line (and the lines
+                      either side) and ask whether to fix it. Broken external
+                      URLs can be marked as OK in the link cache, or ignored
 
 Exit code is 1 if any errors were found.
 */
@@ -59,7 +63,7 @@ const ROOT_DIRS = ["files", "datasheets", "modules"];
 const opts = {
   spelling: true, internal: true, external: true,
   maxAge: 30, refresh: false, concurrency: 16, perHost: 2, timeout: 20,
-  strictExternal: false, updateWordlist: false, suggest: true,
+  strictExternal: false, updateWordlist: false, suggest: true, fix: false,
   cache: path.join(ROOT, ".linkcache.json"),
   files: []
 };
@@ -72,6 +76,7 @@ for (const arg of process.argv.slice(2)) {
   else if (arg == "--strict-external") opts.strictExternal = true;
   else if (arg == "--update-wordlist") opts.updateWordlist = true;
   else if (arg == "--no-suggest") opts.suggest = false;
+  else if (arg == "--fix") opts.fix = true;
   else if ((m = arg.match(/^--max-age=(\d+(?:\.\d+)?)$/))) opts.maxAge = parseFloat(m[1]);
   else if ((m = arg.match(/^--concurrency=(\d+)$/))) opts.concurrency = parseInt(m[1]);
   else if ((m = arg.match(/^--timeout=(\d+)$/))) opts.timeout = parseInt(m[1]);
@@ -88,9 +93,10 @@ for (const arg of process.argv.slice(2)) {
 }
 
 // ---------------------------------------------------------------- Issue reporting
-const issues = []; // {file, line, severity:"error"|"warning", type, message}
-function report(file, line, severity, type, message) {
-  issues.push({ file, line, severity, type, message });
+const issues = []; // {file, line, severity:"error"|"warning", type, message, ...extra}
+/* extra is used by --fix: {word} for spelling, {url, replacement} for links */
+function report(file, line, severity, type, message, extra) {
+  issues.push(Object.assign({ file, line, severity, type, message }, extra));
 }
 
 // ---------------------------------------------------------------- Files to check
@@ -307,7 +313,7 @@ function checkProse(file, text, line) {
     if (before == "_" || after == "_" || before == "=" || after == "=") continue;
     if (isWordOk(word)) continue;
     unknownWords.set(word, (unknownWords.get(word) || 0) + 1);
-    report(file, line, "error", "spelling", word);
+    report(file, line, "error", "spelling", word, { word });
   }
 }
 
@@ -321,12 +327,15 @@ function sitePageExists(p) {
     (ROOT_DIRS.includes(p.split("/")[0]) && fs.existsSync(path.join(ROOT, p))));
 }
 function checkInternalLink(file, line, url) {
+  const relTo = f => path.relative(path.dirname(file), f).split(path.sep).join("/");
   if (url.startsWith("[[")) { // old style [[Page Name]]
     const name = url.slice(2, -2).split("|")[0].trim();
     if (!pageNames[name] && !SITE_PAGES.includes(name))
-      report(file, line, "error", "link", `${url} - no page called ${JSON.stringify(name)}`);
-    else
-      report(file, line, "warning", "link", `${url} - old-style link, use [${name}](${pageNames[name] ? path.relative(path.dirname(file), pageNames[name]).split(path.sep).join("/") : "https://www.espruino.com/" + name}) so it works on GitHub too`);
+      report(file, line, "error", "link", `${url} - no page called ${JSON.stringify(name)}`, { url });
+    else {
+      const replacement = `[${name}](${pageNames[name] ? relTo(pageNames[name]) : "https://www.espruino.com/" + name})`;
+      report(file, line, "warning", "link", `${url} - old-style link, use ${replacement} so it works on GitHub too`, { url, replacement });
+    }
     return;
   }
   let target = url.replace(/[#?].*$/, "");
@@ -337,7 +346,9 @@ function checkInternalLink(file, line, url) {
     const p = target.substring(1).replace(/\/$/, "");
     const pageName = p.replace(/\+/g, " ");
     if (renamedPages[pageName]) {
-      report(file, line, "error", "link", `${url} - page was renamed to ${renamedPages[pageName]}`);
+      const newPage = renamedPages[pageName].replace(/^\//, "").replace(/\+/g, " ");
+      const replacement = pageNames[newPage] ? relTo(pageNames[newPage]) : renamedPages[pageName];
+      report(file, line, "error", "link", `${url} - page was renamed to ${renamedPages[pageName]}`, { url, replacement });
       return;
     }
     ok = sitePageExists(p);
@@ -358,8 +369,12 @@ function checkInternalLink(file, line, url) {
       hit = Object.keys(pageNames).find(n => n.toLowerCase() == lname);
       if (hit) hit = pageNames[hit];
     }
-    if (hit) msg += ` - did you mean ${path.relative(path.dirname(file), hit).split(path.sep).join("/")}?`;
-    report(file, line, "error", "link", msg);
+    let replacement;
+    if (hit) {
+      replacement = relTo(hit) + url.substring(url.search(/[#?]|$/)); // keep any #anchor
+      msg += ` - did you mean ${replacement}?`;
+    }
+    report(file, line, "error", "link", msg, { url, replacement });
   }
 }
 
@@ -444,8 +459,9 @@ async function checkUrl(url, host) {
   return { severity: opts.strictExternal ? "error" : "warning", message: `${lastErr.code}: ${lastErr.message}` };
 }
 
+let linkCache = null; // so --fix can modify it
 async function checkExternalLinks(externalLinks) {
-  const cache = loadCache();
+  const cache = linkCache = loadCache();
   const maxAgeMs = opts.maxAge * 24 * 60 * 60 * 1000;
   const now = Date.now();
   const fresh = date => { const t = date && Date.parse(date); return t && now - t < maxAgeMs; };
@@ -455,7 +471,7 @@ async function checkExternalLinks(externalLinks) {
     const w = cache.warnings[url];
     if (w && fresh(w.checked)) { // still report it, but don't re-fetch
       cachedWarnings++;
-      externalLinks[url].forEach(({ file, line }) => report(file, line, "warning", "external", `${url} - ${w.message} (cached ${w.checked.substring(0, 10)})`));
+      externalLinks[url].forEach(({ file, line }) => report(file, line, "warning", "external", `${url} - ${w.message} (cached ${w.checked.substring(0, 10)})`, { url }));
       return false;
     }
     return true;
@@ -485,7 +501,7 @@ async function checkExternalLinks(externalLinks) {
           else if (result.severity == "warning") cache.warnings[url] = { checked: new Date().toISOString(), message: result.message };
           if (++sinceSave >= 25) saveNow();
           if (!result.ok) {
-            externalLinks[url].forEach(({ file, line }) => report(file, line, result.severity, "external", `${url} - ${result.message}`));
+            externalLinks[url].forEach(({ file, line }) => report(file, line, result.severity, "external", `${url} - ${result.message}`, { url }));
           }
         }).finally(() => {
           hostActive[host]--;
@@ -503,8 +519,156 @@ async function checkExternalLinks(externalLinks) {
   saveNow();
 }
 
+function addToWordlist(newWords) {
+  const existing = fs.existsSync(WORDLIST_FILE) ? fs.readFileSync(WORDLIST_FILE, "utf8") : "";
+  const header = existing.split("\n").filter(l => l.startsWith("#"));
+  const words = new Set(existing.split("\n").filter(l => l.trim() && !l.startsWith("#")).map(l => l.trim()));
+  newWords.forEach(w => {
+    words.add(w);
+    if (w == w.toLowerCase()) customWords.add(w); else customWordsExact.add(w);
+    wordCache.delete(w);
+  });
+  fs.writeFileSync(WORDLIST_FILE, header.concat([...words].sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }) || a.localeCompare(b))).join("\n") + "\n");
+}
+
+// ---------------------------------------------------------------- Interactive fixing (--fix)
+const C = process.stdout.isTTY ?
+  { dim: "\x1b[2m", bold: "\x1b[1m", red: "\x1b[31;1m", green: "\x1b[32m", cyan: "\x1b[36m", reset: "\x1b[0m" } :
+  { dim: "", bold: "", red: "", green: "", cyan: "", reset: "" };
+
+async function fixIssues(fixable, suggestFor) {
+  const rl = require("readline").createInterface({ input: process.stdin, output: process.stdout });
+  // queue lines ourselves, so answers typed ahead aren't lost and Ctrl-C/Ctrl-D quit cleanly
+  const pending = [], waiting = [];
+  let quit = false, closed = false;
+  rl.on("line", l => waiting.length ? waiting.shift()(l) : pending.push(l));
+  rl.on("close", () => { closed = true; while (waiting.length) waiting.shift()("q"); });
+  rl.on("SIGINT", () => { quit = true; rl.close(); });
+  const ask = q => {
+    if (closed) return Promise.resolve("q");
+    process.stdout.write(q);
+    if (pending.length) { const l = pending.shift(); console.log(l); return Promise.resolve(l.trim()); }
+    return new Promise(r => waiting.push(r)).then(l => l.trim());
+  };
+
+  const fileLines = {}; // file -> array of lines (we write the file after each change)
+  const getLines = f => fileLines[f] || (fileLines[f] = fs.readFileSync(path.join(ROOT, f), "utf8").split("\n"));
+  const saveLines = f => fs.writeFileSync(path.join(ROOT, f), fileLines[f].join("\n"));
+  const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const wordRe = w => new RegExp(`(?<![\\p{L}\\d_'])${escRe(w)}(?![\\p{L}\\d_])`, "gu");
+  /* Replace whole-word 'word' in a line, but not inside `code`, URLs or link destinations */
+  const replaceWord = (line, word, to) => line.split(/(`+[^`]*`+|https?:\/\/\S+|\]\([^)]*\))/)
+    .map((part, i) => i & 1 ? part : part.replace(wordRe(word), to)).join("");
+  const lineHas = (file, line, re) => { re.lastIndex = 0; return re.test(getLines(file)[line - 1] || ""); };
+  function showContext(file, line, highlight) {
+    const lines = getLines(file);
+    for (let l = Math.max(1, line - 1); l <= Math.min(lines.length, line + 1); l++) {
+      let text = lines[l - 1].replace(/\r$/, "");
+      if (l == line && highlight) text = text.replace(highlight, m => C.red + m + C.reset);
+      console.log(`${l == line ? C.bold + ">" : C.dim + " "}${String(l).padStart(5)} | ${text}${C.reset}`);
+    }
+  }
+  const stats = { fixed: 0, words: 0, cached: 0, ignored: 0 };
+  const skipWords = new Set(), allFixes = new Map(); // word -> replacement for every occurrence
+  const doneUrls = new Set();
+
+  for (let n = 0; n < fixable.length && !quit; n++) {
+    const issue = fixable[n];
+    const where = `${C.cyan}[${n + 1}/${fixable.length}] ${issue.file}:${issue.line}${C.reset}`;
+
+    if (issue.type == "spelling") {
+      const word = issue.word, re = wordRe(word);
+      if (skipWords.has(word) || isWordOk(word) || !lineHas(issue.file, issue.line, re)) { issue.resolved = isWordOk(word); continue; }
+      const lines = getLines(issue.file);
+      if (allFixes.has(word)) {
+        lines[issue.line - 1] = replaceWord(lines[issue.line - 1], word, allFixes.get(word));
+        saveLines(issue.file); stats.fixed++; issue.resolved = true;
+        continue;
+      }
+      const sugg = suggestFor(word);
+      console.log(`\n${where}  Unknown word ${C.red}${word}${C.reset}`);
+      showContext(issue.file, issue.line, re);
+      console.log("  " + (sugg.length ? sugg.map((s, i) => `${C.green}${i + 1}${C.reset}) ${s}`).join("   ") +
+        `   ${C.dim}(add ! to fix every occurrence in this run, eg. 1!)${C.reset}` : `${C.dim}(no suggestions)${C.reset}`));
+      for (;;) {
+        const a = await ask(`  ${C.green}a${C.reset}) add to word list  ${C.green}e${C.reset}) enter replacement  ${C.green}s${C.reset}) skip  ${C.green}S${C.reset}) skip all "${word}"  ${C.green}q${C.reset}) quit > `);
+        const m = a.match(/^(\d+)(!?)$/);
+        let to = null, all = false;
+        if (m && sugg[m[1] - 1]) { to = sugg[m[1] - 1]; all = !!m[2]; }
+        else if (a == "e" || a == "e!") { to = await ask("  Replace with: "); all = a == "e!"; if (!to) continue; }
+        else if (a == "a") { addToWordlist([word]); stats.words++; issue.resolved = true; console.log(`  Added "${word}" to ${path.relative(ROOT, WORDLIST_FILE)}`); break; }
+        else if (a == "s" || a == "") break;
+        else if (a == "S") { skipWords.add(word); break; }
+        else if (a == "q") { quit = true; break; }
+        else { console.log("  ?"); continue; }
+        lines[issue.line - 1] = replaceWord(lines[issue.line - 1], word, to);
+        saveLines(issue.file); stats.fixed++; issue.resolved = true;
+        if (all) allFixes.set(word, to);
+        break;
+      }
+
+    } else if (issue.type == "link") {
+      const lines = getLines(issue.file);
+      if (!lines[issue.line - 1].includes(issue.url)) continue;
+      console.log(`\n${where}  ${issue.message}`);
+      showContext(issue.file, issue.line, issue.url);
+      for (;;) {
+        const a = await ask(`  ${C.green}y${C.reset}) replace with ${C.bold}${issue.replacement}${C.reset}  ${C.green}e${C.reset}) enter replacement  ${C.green}s${C.reset}) skip  ${C.green}q${C.reset}) quit > `);
+        let to = null;
+        if (a == "y") to = issue.replacement;
+        else if (a == "e") { to = await ask("  Replace with: "); if (!to) continue; }
+        else if (a == "s" || a == "") break;
+        else if (a == "q") { quit = true; break; }
+        else { console.log("  ?"); continue; }
+        lines[issue.line - 1] = lines[issue.line - 1].split(issue.url).join(to);
+        saveLines(issue.file); stats.fixed++; issue.resolved = true;
+        break;
+      }
+
+    } else if (issue.type == "external") {
+      if (doneUrls.has(issue.url)) continue;
+      doneUrls.add(issue.url);
+      const uses = fixable.filter(i => i.type == "external" && i.url == issue.url);
+      console.log(`\n${where}  ${issue.message}`);
+      showContext(issue.file, issue.line, issue.url);
+      if (uses.length > 1) console.log(`  ${C.dim}Also used in: ${uses.slice(1).map(i => i.file + ":" + i.line).join(", ")}${C.reset}`);
+      for (;;) {
+        const a = await ask(`  ${C.green}c${C.reset}) mark as OK in link cache  ${C.green}i${C.reset}) add to ${path.relative(ROOT, LINK_IGNORE_FILE)}  ${C.green}e${C.reset}) replace URL${uses.length > 1 ? " everywhere" : ""}  ${C.green}s${C.reset}) skip  ${C.green}q${C.reset}) quit > `);
+        if (a == "c") {
+          linkCache.urls[issue.url] = new Date().toISOString();
+          delete linkCache.warnings[issue.url];
+          saveCache(linkCache); stats.cached++;
+          console.log(`  Marked as OK for ${opts.maxAge} days in ${path.relative(ROOT, opts.cache)}`);
+        } else if (a == "i") {
+          fs.appendFileSync(LINK_IGNORE_FILE, "^" + escRe(issue.url) + "$\n");
+          stats.ignored++;
+        } else if (a == "e") {
+          const to = await ask("  Replace with: ");
+          if (!to) continue;
+          uses.forEach(i => {
+            const l = getLines(i.file);
+            l[i.line - 1] = l[i.line - 1].split(issue.url).join(to);
+            saveLines(i.file);
+          });
+          stats.fixed += uses.length;
+        } else if (a == "s" || a == "") break;
+        else if (a == "q") { quit = true; break; }
+        else { console.log("  ?"); continue; }
+        uses.forEach(i => i.resolved = true);
+        break;
+      }
+    }
+  }
+  rl.close();
+  console.log(`\n${stats.fixed} fixed, ${stats.words} words added to the word list, ${stats.cached} URLs marked OK, ${stats.ignored} URLs ignored`);
+}
+
 // ---------------------------------------------------------------- Main
 async function main() {
+  if (opts.fix && !process.stdin.isTTY) {
+    console.error("--fix needs an interactive terminal");
+    process.exit(2);
+  }
   if (opts.spelling) loadSpelling();
   const ignores = loadIgnores();
   const externalLinks = {}; // url -> [{file,line}]
@@ -546,13 +710,20 @@ async function main() {
   const esc = s => String(s).replace(/%/g, "%25").replace(/\r/g, "%0D").replace(/\n/g, "%0A");
   const escProp = s => esc(s).replace(/:/g, "%3A").replace(/,/g, "%2C");
   const suggestions = new Map();
+  const suggestFor = word => {
+    if (!suggestions.has(word)) suggestions.set(word, spellers[0].suggest(word).slice(0, opts.fix ? 5 : 3));
+    return suggestions.get(word);
+  };
   const suggest = word => {
     if (!opts.suggest || !spellers) return "";
-    if (!suggestions.has(word)) suggestions.set(word, spellers[0].suggest(word).slice(0, 3));
-    const s = suggestions.get(word);
+    const s = suggestFor(word);
     return s.length ? ` (did you mean ${s.join(", ")}?)` : "";
   };
+  // with --fix, we only list issues that we can't offer to fix
+  const canFix = i => opts.fix && (i.type == "spelling" || (i.type == "link" && i.replacement) ||
+    (i.type == "external" && i.severity == "error"));
   for (const i of issues) {
+    if (canFix(i)) continue;
     const msg = i.type == "spelling" ? `Unknown word ${JSON.stringify(i.message)}${suggest(i.message)}` : i.message;
     if (IN_GITHUB)
       console.log(`::${i.severity} file=${escProp(i.file)},line=${i.line},title=${escProp(i.type)}::${esc(msg)}`);
@@ -585,16 +756,15 @@ async function main() {
   }
 
   if (opts.updateWordlist && unknownWords.size) {
-    const existing = fs.existsSync(WORDLIST_FILE) ? fs.readFileSync(WORDLIST_FILE, "utf8") : "";
-    const header = existing.split("\n").filter(l => l.startsWith("#"));
-    const words = new Set(existing.split("\n").filter(l => l.trim() && !l.startsWith("#")).map(l => l.trim()));
-    unknownWords.forEach((c, w) => words.add(w));
-    fs.writeFileSync(WORDLIST_FILE, header.concat([...words].sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }) || a.localeCompare(b))).join("\n") + "\n");
+    addToWordlist([...unknownWords.keys()]);
     console.log(`Added ${unknownWords.size} words to ${path.relative(ROOT, WORDLIST_FILE)}`);
     issues.splice(0, issues.length, ...issues.filter(i => i.type != "spelling"));
   }
 
-  process.exit(issues.some(i => i.severity == "error") ? 1 : 0);
+  const fixable = issues.filter(canFix);
+  if (fixable.length) await fixIssues(fixable, suggestFor);
+
+  process.exit(issues.some(i => i.severity == "error" && !i.resolved) ? 1 : 0);
 }
 
 main().catch(e => { console.error(e); process.exit(2); });
