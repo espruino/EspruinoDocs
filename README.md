@@ -83,6 +83,24 @@ PCB
 Pinout                 Page contains pinout info
 ```
 
+## Checking spelling and links
+
+`bin/check_docs.js` checks all Markdown files (and comments in JS files) for spelling
+mistakes and broken links, both internal and external. It's run automatically by GitHub
+Actions on every push and pull request.
+
+```
+$ npm install
+$ npm run check           # spelling, internal and external links
+$ npm run check:quick     # don't check external links
+$ node bin/check_docs.js tutorials/My\ Tutorial.md   # just check one file
+```
+
+* Words that are correct but not in the British or American English dictionaries can be added to `bin/spelling-wordlist.txt`
+* External URLs that have been verified in the last 30 days are stored in `.linkcache.json`, so subsequent runs are fast. Use `--refresh` to re-check everything.
+* URLs that shouldn't be checked can be added to `bin/link-ignore.txt`
+* Run `node bin/check_docs.js --help` for more options
+
 ## Build Requirements
 
 ### Step 1: Obtain Espruino Source Code & Web Tools

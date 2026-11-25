@@ -1,0 +1,45 @@
+name: Check documentation
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1" # Every Monday - catch external links that have died
+  workflow_dispatch:
+
+jobs:
+  check-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Check spelling and internal links
+        run: node bin/check_docs.js --no-external
+
+      # Restore the list of recently verified URLs so we only check new/old ones
+      - name: Restore link cache
+        if: ${{ !cancelled() }}
+        uses: actions/cache/restore@v4
+        with:
+          path: .linkcache.json
+          key: linkcache-${{ github.run_id }}
+          restore-keys: linkcache-
+
+      - name: Check external links
+        if: ${{ !cancelled() }}
+        run: node bin/check_docs.js --no-spelling --no-internal --max-age=14
+
+      - name: Save link cache
+        if: ${{ !cancelled() }}
+        uses: actions/cache/save@v4
+        with:
+          path: .linkcache.json
+          key: linkcache-${{ github.run_id }}

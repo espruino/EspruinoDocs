@@ -18,3 +18,4 @@ npm-debug.log
 orig
 ordering.txt
 package-lock.json
+.linkcache.json

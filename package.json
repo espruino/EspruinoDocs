@@ -8,7 +8,9 @@
     "eslintdevices": "./node_modules/.bin/eslint devices/*.js",
     "eslintmodules": "./node_modules/.bin/eslint modules/*.js",
     "eslintboards": "./node_modules/.bin/eslint boards/*.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "check": "node bin/check_docs.js",
+    "check:quick": "node bin/check_docs.js --no-external"
   },
   "repository": {
     "type": "git",
@@ -37,5 +39,10 @@
     "highlight.js": "^8.9.1",
     "marked": "^0.3.6",
     "tern": "^0.16.0"
+  },
+  "devDependencies": {
+    "dictionary-en": "^4.0.0",
+    "dictionary-en-gb": "^3.0.0",
+    "nspell": "^2.1.5"
   }
 }

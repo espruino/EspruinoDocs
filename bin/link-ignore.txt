@@ -1,0 +1,4 @@
+# Regular expressions for external URLs that bin/check_docs.js should not check
+# (one per line, lines starting with # are comments). Local/private addresses,
+# example.com and URLs containing template characters are already ignored.
+your_user_name|YOUR_USERNAME|yourusername
