@@ -206,7 +206,7 @@ on-chip bootloader though - see below.
 Advanced Reflashing
 -----------------
 
-In very rare cases (if you are experimenting with writing to Flash Memory), you may be able to damage the bootloader, which will effecitively 'brick' the Pico.
+In very rare cases (if you are experimenting with writing to Flash Memory), you may be able to damage the bootloader, which will effectively 'brick' the Pico.
 
 To fix this, you'll have to use the hard-wired USB DFU (Device Firmware Upgrade) bootloader. You can also use this method for flashing non-Espruino firmwares to Espruino.
 

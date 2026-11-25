@@ -186,7 +186,7 @@ MCP9808.prototype.setAlertHighActive = function ( highActive ) {
 //------------------------------------------------------------------------------------------------------------------
 /**
  * If the sensor is in alert mode MCP9808.CHECK_ALL_LIMITS_INTERRUPT then the alert will not
- * disapper when the temperature is in a valid range again.
+ * disappear when the temperature is in a valid range again.
  * Only a call the clearInterrupt() will reset the alert.
  */
 MCP9808.prototype.clearInterrupt = function () {
@@ -233,7 +233,7 @@ MCP9808.prototype.setAlertMode = function ( mode ) {
 };
 
 /**
- * returns if a configure temperature alert has occured
+ * returns if a configure temperature alert has occurred
  */
 MCP9808.prototype.hasAlert = function () {
     return !!(this.read16( C.REG_CONFIG ) & 0x10);

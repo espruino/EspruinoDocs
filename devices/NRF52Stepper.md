@@ -55,7 +55,7 @@ stepper.stop();
 Restart the motor after it has stopped, with the same step
 count given in the previous start() call. If this is called
 while the motor is still moving, the step counter will be reset,
-similar to the bahaviour of the start() method:
+similar to the behaviour of the start() method:
 ```
 stepper.restart();
 ```

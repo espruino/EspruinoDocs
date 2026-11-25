@@ -235,7 +235,7 @@ g.drawString("Hello World",30,30);
 
 ### Screen buffering
 
-Bangle'js's screen is 240 x 240 x 16 bits - which uses substantially more
+Bangle.js's screen is 240 x 240 x 16 bits - which uses substantially more
 memory than the microcontroller has RAM. As such, draw commands go straight
 to the screen (and `g.getPixel` will not work).
 

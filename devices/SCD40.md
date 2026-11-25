@@ -35,7 +35,7 @@ To make a single measurement
   console.log({readings});
 ```
 
-To make a continous measurements
+To make a continuous measurements
 
 ```JavaScript
   scd.start_periodic_measurement();

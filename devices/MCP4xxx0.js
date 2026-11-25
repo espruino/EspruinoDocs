@@ -7,7 +7,7 @@ Usage:
 
 var digipot=require("MCP4xxx0").connect(SPI,pots)
 
-These pots provide very little functionality. The only operations availabe are:
+These pots provide very little functionality. The only operations available are:
 
 digipot.setVal(value, pot)
 

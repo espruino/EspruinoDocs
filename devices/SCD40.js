@@ -11,7 +11,7 @@ scd.get_data_ready_status();
 readings = scd.read_measurement();
 console.log({readings});
 
-//continous measurement (5 sec interval)
+//continuous measurement (5 sec interval)
 scd.start_periodic_measurement();
 readings = scd.read_measurement();
 console.log({readings});

@@ -95,7 +95,7 @@ var y = Math.floor(yAxisValue * yAxisScreenPixels); // 0..319 (0..Y-1)
 The actual formulas used to calculate accurate touch coordinates are a bit more complex and use values from
 center touch as base, rather than 0/0. This applies to touch screen only as well to displays with touch screen,
 because for latter the size and position of most touch screen do not always exactly match those of the display
-and the minimumb and maximum values read are not exactly 0.000 and 1.000
+and the minimum and maximum values read are not exactly 0.000 and 1.000
 
 For touch screen only use, gathering the calibration values for (custom) configuration is relatively simple:
 
@@ -103,8 +103,8 @@ For touch screen only use, gathering the calibration values for (custom) configu
    - upload the touch-screen-only calibration application in calibrate mode
    - perform four (4) touch down in the center with moving into each corner of the screen for untouch
    - transfer suggest values displayed in the console into the provided basic configuration
-   - uploadi the touch-screen-only calibration application in non-calibration mode
-   - validate touch coordinates by touch donws and moving into the cornersk, along and over all for edges
+   - upload the touch-screen-only calibration application in non-calibration mode
+   - validate touch coordinates by touch down and moving into the corners, along and over all for edges
      of the screen
 
 For display with touch screen display, gather calibration data from touching markers displayed at known display
@@ -119,7 +119,7 @@ When the touch screen area overlaps the display area - touch screen has porches 
 minimum (lowest) and maximum (highest) permits returning x and y coordinates outside of the display, then the
 application configuration has to catch the display limits and process outliers differently. Even though the
 porches do not map to the display, they are sensitive and can be used as fixed buttons Some screens have even
-symbos / icons printed on them for that purpose, such as mail, calendar, music, home, escape, etc. icons. To
+symbols / icons printed on them for that purpose, such as mail, calendar, music, home, escape, etc. icons. To
 enable porches, configuration has to allow for the extra Y or X values. See Configuration section.
 
 For more details about how a resistive touch screen is built and works and how they can be calibrated, see forum
@@ -199,7 +199,7 @@ touchRD.enable(); // placed in onInit() function
 ```
 
 Reassignment of x and y values in callback for *Landscape format* wit a *Portrait format configuration* is a bit
-a quick and dirty and has performance impact - especially on touch-move/drag. It is better to crate a *Landscap
+a quick and dirty and has performance impact - especially on touch-move/drag. It is better to crate a *Landscape
 format configuration* and pass it into the constructor at creation time combined with reversed pin argument list.
 
 Configurations can be stored as modules as well and retrieved with, for example, `require("P240x320")`:
@@ -235,7 +235,7 @@ if (touchRD.xy().t) {
 Configuration
 -------------------
 
-Touch Controller has has a default configuration bilt in that can be full or partially overwritten with  custom
+Touch Controller has has a default configuration built in that can be full or partially overwritten with  custom
 configuration on construction.
 
 The default configuration can be overridden by passing a configuration object *C* as the 6th argument in the
@@ -316,7 +316,7 @@ Controller value and function properties:
 - `.yd` y delta per pixel analog value
 - `.ti` track interval in [ms] while touching
 - `.db` 5 debounce time in [ms] for touch down detection
-- `.moved()` : returns true when x or y difference between touch down (firtst touch0 and last touch x or y
+- `.moved()` : returns true when x or y difference between touch down (first touch0 and last touch x or y
 - `.enable()` or `.enable(truthy | falsy)` initiate listening to touch events when not listening (yet) on invocation with *no* or *truthy* argument, and stop listening to touch events with *falsy* argument.
 - `.xy(callback)` can be directly used when controller is not listening to probe whether touching is going on or not. Properties are updated and can be queried. Callback is optional and works the same way as described above.
 
@@ -331,7 +331,7 @@ object can the be copied into the application or stored as a module in modules f
 
 When touching, apply some but not too much pressure. Use a touch pen or soft, non scratching and
 rounded down pencil. You may see untouch in the console when coming close to the edges before you
-reach your expected 'last' pixel. This is expected. Youy can press harder to go closer to the edges
+reach your expected 'last' pixel. This is expected. You can press harder to go closer to the edges
 but will overuse the touch screen, make dents into it, and shorten the touch screens life. The window
 or active area of screens on displays usually overlap the display's active area and to reach the
 'last' display pixel should be possible without getting an untouch.

@@ -2,7 +2,7 @@
 /*
 TouchRD.js - Touch screen, Resistive, Direct - controller class.
 
-Module returning 'class' (contructor) for connecting Espruino
+Module returning 'class' (constructor) for connecting Espruino
 directly to resistive touch screen's four (4) Y-, X-, Y+, Y+
 drive and sense lines. No touch controller IC, such as ADS7843
 or XPT2046 involved. Espruino *IS* the controller. TouchRD is
@@ -66,7 +66,7 @@ var C =         // default C(onfig) for 240x320 TFT w/ touch screen
   _.w  = null;      // watch id for touch down
   _.enable(_.en);   // enable/disable as config after constructed
 }, _p = TouchRD.prototype;
-/** read xy returning this - callback, watch event of touch dowh */
+/** read xy returning this - callback, watch event of touch down */
 _p.xy = function(cb, e, _) { _ = _ || this;
   pinMode(_.yn,"input_pulldown"); // prep reading raw y
   pinMode(_.yp); _.yp.read();
@@ -89,7 +89,7 @@ _p.xy = function(cb, e, _) { _ = _ || this;
   } else if (!e && cb) { cb(undefined, undefined, _); } // ...untouch
   return _;
 };
-/** - 'private' - track between touch down annd un-touch */
+/** - 'private' - track between touch down and un-touch */
 _p._trk = function(e, _) { _ = _ || this; _.w = null;
   if (_.xy(_.cb, e, _).t && _.en) {    // while touch keep tracking:
     setTimeout(_._trk, _.ti, null, _); // - set time for next xy read 

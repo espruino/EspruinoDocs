@@ -110,7 +110,7 @@ const ANODES = [ D28, D19, D18, D31, D16, D30, D26, D25 ];
 const CATHODES = [ D3, D27, D14, D29, D22, D15, D20, D17 ];
 ```
 
-The two arrays are the arrays that Espruino has determined are the anodes (postive connections)
+The two arrays are the arrays that Espruino has determined are the anodes (positive connections)
 and cathodes (negative connections) of the LED display.
 
 Software

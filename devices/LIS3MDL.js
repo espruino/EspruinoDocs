@@ -109,7 +109,7 @@ LIS3MDL.prototype.GetID = function () {
 
 /** GetTemperature
  * Return the current value of the temperature register 
- * The value is not explaind in the data sheet.
+ * The value is not explained in the data sheet.
  * Return value is only provided if temperature measurement is enabled.
 */
 LIS3MDL.prototype.GetTemperature = function () {
@@ -168,7 +168,7 @@ LIS3MDL.prototype.r2 = function(addr) {
 };
 
 /** Read
-* return the data from x, y, z regsiter as an Array 
+* return the data from x, y, z register as an Array 
 */
 LIS3MDL.prototype.Read = function() {
 	this.i2c.writeTo({address:C.I2C_ADDRESS, stop:false}, 0x80 | C.OUT_X[0]);

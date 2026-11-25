@@ -14,7 +14,7 @@ hardware support for TCP/IP. The W5100 is supported out by [Pixl.js](../boards/P
 **when the `espruino_2vxx_pixljs_wiznet.zip` firmware is installed**.
 [See here](../boards/Pixl.js.md#firmware-updates) for more information.
 
-Most other offical Espruino boards have firmware with support for the
+Most other official Espruino boards have firmware with support for the
 [WIZnet W5500](./WIZnet.md) and will not work with the W5100 without
 a special firmware build.
 

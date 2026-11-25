@@ -4,7 +4,7 @@ function clearIRQ() {
   Puck.accelRd(0x53);
 }
 
-/** Configure acclerometer to listen for when the device is
+/** Configure accelerometer to listen for when the device is
 tilted by more than 35 degrees. When configured,
 power usage is around 50uA. Tilt events fire the `Puck.accel`
 event.

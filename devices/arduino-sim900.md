@@ -21,7 +21,7 @@ boards:
 Wiring
 ------
 
-The SIM900 can draw big burts of current and may not work reliably if
+The SIM900 can draw big bursts of current and may not work reliably if
 powered off of USB. For a reliable connection we'd recommend powering
 it directly off a LiPo battery using the on-board connector.
 

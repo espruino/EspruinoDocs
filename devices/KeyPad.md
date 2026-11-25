@@ -36,7 +36,7 @@ var keypad = require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9]);
 print("123A456B789C*0#D"[keypad.read()]);
 ```
 
-With the 4x5 KeyPads (readily availble on ebay), the four wires nearest the ```F1``` key are the columns. For example, it might be hooked up like this: 
+With the 4x5 KeyPads (readily available on ebay), the four wires nearest the ```F1``` key are the columns. For example, it might be hooked up like this: 
 
 ```
 require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9,B12], function(e) {
@@ -44,7 +44,7 @@ require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9,B12], function(e) {
 });
 ```
 
-This example uses B12, which also has BTN1 on it - this is fine, though pressing BTN1 will result in spurrious keypresses being recorded. 
+This example uses B12, which also has BTN1 on it - this is fine, though pressing BTN1 will result in spurious keypresses being recorded. 
 
 
 Caveats

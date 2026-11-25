@@ -47,7 +47,7 @@ Pinout
 
 * APPEND_PINOUT: ESPRUINOWIFI
 
-<span style="color: red">**Note:** Unlike [Espruino Pico](./Pico.md) and the [original Espruino board](./Original.md), Espruno WiFi **doesn't** contain any
+<span style="color: red">**Note:** Unlike [Espruino Pico](./Pico.md) and the [original Espruino board](./Original.md), Espruino WiFi **doesn't** contain any
 battery switchover circuitry. The `+`/`+VUSB` pin is connected straight to **USB 5V**, and shouldn't be used to power the
 WiFi board while Micro USB is plugged in, unless it is via a diode from 5V.</span>
 
@@ -271,7 +271,7 @@ the device path (see the first step)
 ./esptool.py --no-stub --port /dev/ttyACM0 --baud 74880 write_flash --flash_mode dio 0 AiThinker_ESP8266_DIO_32M_32M_20160615_V1.5.4.bin
 ```
 
-* When complete, unplug the Espruno WiFi and re-plug it
+* When complete, unplug the Espruino WiFi and re-plug it
 * Now check firmware works with:
 
 ```

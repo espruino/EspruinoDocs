@@ -62,7 +62,7 @@ temp.logReg();
 
 ## Enable the Sensor
 
-To verify if we are connected to the expected periveral we can read the chip ID.
+To verify if we are connected to the expected peripheral we can read the chip ID.
 The return value should be 61 (dec).
 
 ```

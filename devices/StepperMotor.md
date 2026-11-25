@@ -50,7 +50,7 @@ Advanced usage
 --------------
 
 If your motor is stepping too fast or slow then you can set `stepsPerSec`
-to a differen number (default is 100):
+to a different number (default is 100):
 
 ```
 var motor = new StepperMotor({
@@ -61,7 +61,7 @@ var motor = new StepperMotor({
 
 You can also choose the speed at which you wish to move the motor by specifying
 it in `moveTo` - you can also have a callback function when the position is reached,
-and by specitying `true` for `turnOff` (the very last argument) you can turn
+and by specifying `true` for `turnOff` (the very last argument) you can turn
 the motor off when finished:
 
 ```

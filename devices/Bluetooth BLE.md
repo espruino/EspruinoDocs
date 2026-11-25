@@ -26,7 +26,7 @@ To use it, just solder the same pins as you used to do for the HC-05.
 
 However, there's one exception: This board doesn't use pin 34 as key pin, but pin 23. In addition pin 24 gives information whether it is working/connected. For the beginning you might want to connect these as well as the configuration is more complicated than for the HC-05.
 
-In order to use pin 23, connect this pin via a switch to ground (defaul position of the switch is open). Also connect this pin via a resistor of 1k to 3.3V.
+In order to use pin 23, connect this pin via a switch to ground (default position of the switch is open). Also connect this pin via a resistor of 1k to 3.3V.
 
 Pin 24, can be connected to an LED and a 470R resistor in series to ground. It is powered by the module.
 

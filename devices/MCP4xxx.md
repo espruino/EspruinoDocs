@@ -14,11 +14,11 @@ A digital potentiometer is a potentiometer that can be controlled via digital me
 Supported Parts
 ------------------
 
-This module [MCP4xxx.js](MCP4xxx.js) interfaces with a wide variety of I2C and SPI digital potentiometers and rheostats made by Microchip. Supported devices have either 129 or 257 taps (128 and 256 tap SPI parts are also supported), 1, 2, or 4 potentiometers (or rheostats), and may or may not have non-volitile memory.  Many of these devices have multiple pins available to set the I2C address. This module does not work with MCP401x or MCP4xxxx devices. 
+This module [MCP4xxx.js](MCP4xxx.js) interfaces with a wide variety of I2C and SPI digital potentiometers and rheostats made by Microchip. Supported devices have either 129 or 257 taps (128 and 256 tap SPI parts are also supported), 1, 2, or 4 potentiometers (or rheostats), and may or may not have non-volatile memory.  Many of these devices have multiple pins available to set the I2C address. This module does not work with MCP401x or MCP4xxxx devices. 
 
 Supported parts will have part numbers of the form MCP4abc
 a - Indicates number of pots and interface. I2C: 4 -> 4 pots, 5 -> 1 pot, 6 -> 2 pots SPI: 1-> 1 pot, 2-> 2 pots, 3-> 4 pots.  
-b - Indicates number of taps and whether it has non-volitile memory. 3 -> 129 taps volatile, 4-> 129 taps non-volatile. 5 -> 257 taps volatile, 6-> 257 taps non-volatile. 
+b - Indicates number of taps and whether it has non-volatile memory. 3 -> 129 taps volatile, 4-> 129 taps non-volatile. 5 -> 257 taps volatile, 6-> 257 taps non-volatile. 
 c - 1 indicates a potentiometer, 2 indicates a rheostat. 
 
 Additionally, the MCP41HVx1 series of high voltage potentiometers is supported.
@@ -97,7 +97,7 @@ Applications
 ----------------
 
 
-* Extra analog outputs (connect one side to VCC and the other side to ground, and you have a simple DAC - you can't draw any significant amount of current from it withyout changing the voltage, but you can't do that with a proper DAC either)
+* Extra analog outputs (connect one side to VCC and the other side to ground, and you have a simple DAC - you can't draw any significant amount of current from it without changing the voltage, but you can't do that with a proper DAC either)
 * Replacing resistors used to set behavior of parts - for example, many constant current source chips (LED drivers, et al) have a resistor to set the current (and hence brightness). 
 * Replacing analog pots on external devices, allowing them to be digitally controlled
 * Controlling voltage or current adjustments on a power supply, creating a digitally controlled power supply. Be aware of the limits on the analog voltages applied across the potentiometer - the MCP41HVx1 line supports voltages as high as 36 volts on the analog pins, and may be best suited to this purpose.

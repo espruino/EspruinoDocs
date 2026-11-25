@@ -28,7 +28,7 @@ Use EasyVR.setRecognize(list,timeout) to start listening for SD commands from th
 You must supply three callbacks: 
 onCom is called with two arguments, the option group, and the command returned, when a command is recognized.  
 onTimeout is called with one argument, the option group, when the command times out. 
-onErr is called with one argument, the option group, when a speach recognition error occurs (usually that the command was close, but not close enough). 
+onErr is called with one argument, the option group, when a speech recognition error occurs (usually that the command was close, but not close enough). 
 
 Example:
 -------------

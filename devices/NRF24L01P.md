@@ -31,7 +31,7 @@ Connect as follows:
 
 For the [Pico](../boards/Pico.md) there is [an adaptor shim available](../info/Shims.md#nrf24l01p-0-05-shim) as part of the [shim collection](../info/Shims.md#shim-collection) that makes the NRF24 a lot easier to solder!
 
-We'd also suggest that you add a 10nF - 100nF decoupling capacitor between GND and 3.3v. Some cheaper modules can be unrelible without this.
+We'd also suggest that you add a 10nF - 100nF decoupling capacitor between GND and 3.3v. Some cheaper modules can be unreliable without this.
 
 You can either connect the module with wires and mount it separately, or you can solder it into the prototype area, and run wires as follows on the back of the board. We'd recommend using thin, solid core wire for this.
 

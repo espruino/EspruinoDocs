@@ -38,7 +38,7 @@ You can use any I2C port, e.g. I2C1. Additionally a simple output pin and one pw
 Important Notices from the datasheet: *Never unplug the module when power is on.*
 
 
-### Initialisiation
+### Initialisation
 
 ```JavaScript
 I2C1.setup( { scl: B6, sda: B7 } );

@@ -1,7 +1,7 @@
 /* 
 Module for the NRF905 wireless transceiver
 
-IC pin cross refernce
+IC pin cross reference
 CE == TRX_EN
 txen == TXE == TX_EN == TxEN
 

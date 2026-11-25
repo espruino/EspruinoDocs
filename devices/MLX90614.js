@@ -50,7 +50,7 @@ MLX90614.prototype.readObject2Temperature = function () {
 
 /**
  * Enter the sensor into sleep mode (typ. 2.5µA). Afterwards the sensor doesn't answer I2C requests anymore.
- * There are two ways to put MLX90614 into power-up default mode: 1) POR or 2) By wake up request (SCL pin hight and
+ * There are two ways to put MLX90614 into power-up default mode: 1) POR or 2) By wake up request (SCL pin high and
  * then SDA pin low for at least 33ms). Wakeup is currently not implemented.
  *
  * This function is not available in 5V supply version.

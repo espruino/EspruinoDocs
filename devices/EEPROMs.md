@@ -6,7 +6,7 @@ EEPROMs (and related technologies)
 
 * KEYWORDS: EEPROM, eeprom, fram, FRAM, memory, rom, storage
 
-An EEPROM is a form of byte-addressable non-volatile storage, allowing a project based on Espruino to save small amounts of persistant data.
+An EEPROM is a form of byte-addressable non-volatile storage, allowing a project based on Espruino to save small amounts of persistent data.
 
 "EEPROM" stands for "Electrically Erasable Programmable Read-Only Memory" - it is a form of non-volatile memory that is available using several interfaces, in many packages and capacities. This document describes how to use EEPROMs and similar non-volatile memory with Espruino, and explains some of the considerations involved in selecting a memory technology for your project.
 
@@ -180,7 +180,7 @@ I2C is the most common interface for EEPROMs, and the least expensive. Support i
 
 I2C EEPROMs are available in 8-pin DIP, SOIC, and TSSOP packages. Breakout boards with a DIP socket and jumpers for address/wp pins are readily available from ebay, or ones in the SOIC package can be soldered onto the prototyping area on the Espruino Board (in this case, be sure to include the 10k pullup resistors on SDA and SCL). Connection requires 4 wires (Vcc, Ground, SDA, and SCL); the other 4 pins are used to set the address (A0-2) and write protect the chip (WP). WP should be tied to Vcc unless you want to prevent writes. The A0-A2 pins set the 3 low bits in the I2C address, allowing up to 8 EEPROMs on one I2C bus. Note that I2C EEPROMs of certain sizes use the low bits of the I2C address to expand the address space; these are listed in the [AT24 module documentation](AT24.md).
 
-I2C EEPROMs are manufactured by almost every major semiconductor manufacturer, each of which use their own part numbering scheme. The parts from different manufacturers are fully interchangible.  Some examples are below - there are many more:
+I2C EEPROMs are manufactured by almost every major semiconductor manufacturer, each of which use their own part numbering scheme. The parts from different manufacturers are fully interchangeable.  Some examples are below - there are many more:
 
 *Atmel: AT24Cxxx (where xxx is the capacity in KB)
 *Microchip: 24LCxxx, 24AAxxx (low voltage)
@@ -246,7 +246,7 @@ FRAM (ferroelectric RAM) and MRAM (magnetoresisive RAM) are two other types of n
 CBRAM
 -----
 
-CBRAM (conductive bridge RAM) is a new type of non-volatile memory, based on forming or breaking metalic bridges. It is available in 8-pin SPI and I2C packages which are intended as a low cost replacement for EEPROM for use cases that involve little write activity. The parts are currently available in sizes up to 128 kbit (16 kbyte), at around half the cost of EEPROMs. In some cases, these parts are fully compatible with EEPROMs, and offer thousands of write cycles - these are fully supported by the AT24 and AT25 modules. In other cases they are only spec'ed for 100 write cycles, and require a separate command for erasing; this erase command is not included in the AT24/AT25 modules.
+CBRAM (conductive bridge RAM) is a new type of non-volatile memory, based on forming or breaking metallic bridges. It is available in 8-pin SPI and I2C packages which are intended as a low cost replacement for EEPROM for use cases that involve little write activity. The parts are currently available in sizes up to 128 kbit (16 kbyte), at around half the cost of EEPROMs. In some cases, these parts are fully compatible with EEPROMs, and offer thousands of write cycles - these are fully supported by the AT24 and AT25 modules. In other cases they are only spec'ed for 100 write cycles, and require a separate command for erasing; this erase command is not included in the AT24/AT25 modules.
 
 Related Documents
 ------

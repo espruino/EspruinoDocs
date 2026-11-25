@@ -204,7 +204,7 @@ Your device is flashed.
 
 #### Building Firmware and installing the toolchain
 
-You can get the Espruino firmare from the [cutting-edge builds](https://www.espruino.com/binaries/travis/master/).
+You can get the Espruino firmware from the [cutting-edge builds](https://www.espruino.com/binaries/travis/master/).
 Get the file ending in `_esp32.bin`.
 
 You can also build the Espruino firmware yourself:
@@ -426,7 +426,7 @@ var g = require('PCD8544').connect(SPI1,
 ### Serial / UART Example
 
 There are two serial ports (UARTs) available for use on the ESP32 with Espruino.  These are accessed
-throught the [Serial](https://www.espruino.com/Reference#Serial) class.  The `Serial1` and `Serial2`
+through the [Serial](https://www.espruino.com/Reference#Serial) class.  The `Serial1` and `Serial2`
 functions are available for use.  Note that if you are accessing the ESP32 via serial terminal
 `Serial1` may already be used, hence it's not available (use Telnet if this is an issue).
 
@@ -459,7 +459,7 @@ PWM on most pins. True DAC on GPIO25 and GPIO26.
 
 First version of PWM uses ledc driver. Usually, this matches needs for frequency much more than sigmadelta. Mapping of PWM channel to timer is done in a special way.
 There are 5 channel usable, as long as 5Khz are ok for frequency. Channels are internally controlled. If you try to use more than 5, you will get a message.
-Left 3 channels are designed to support a frequency of your choice, as long as it is between 1hz and 78 Khz. If you try to use a 4th channel with a frequency, other than 5Khz you will a meesage.
+Left 3 channels are designed to support a frequency of your choice, as long as it is between 1hz and 78 kHz. If you try to use a 4th channel with a frequency, other than 5Khz you will a message.
 
 ## Problem
 
@@ -495,7 +495,7 @@ a time in seconds (float).
 
 ### digitalPulse implementation
 
-There are 8 channel available. Each one with is connected to a pin. Timimg goes down to micro secs.
+There are 8 channel available. Each one with is connected to a pin. Timing goes down to micro secs.
 Implemented with the esp-idf RMT driver.
 
 ### setWatch implementation
@@ -543,7 +543,7 @@ The result of all this is the following:
 
 This is defined in partitions_espruino.csv in the EspruinoBuildTools repository
 
-The last 1Mb has been defined as a flash FAT filesystem. It needs to be intialised for first use - this does it in a safe way that won't delete existing files:
+The last 1Mb has been defined as a flash FAT filesystem. It needs to be initialised for first use - this does it in a safe way that won't delete existing files:
 
 ```JavaScript
 try {

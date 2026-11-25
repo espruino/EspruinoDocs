@@ -43,7 +43,7 @@ Pinouts
 
 ![Typical MOSFET pinouts](mosfets/pinouts.jpg)
 
-These show the pinout of typical TO-220 and SOT-23 MOSFETs. However, ALWAYS consult the datasheet before connecting anything, in case you find yourself using a wierdo part. 
+These show the pinout of typical TO-220 and SOT-23 MOSFETs. However, ALWAYS consult the datasheet before connecting anything, in case you find yourself using a strange part. 
 
 
 Connection

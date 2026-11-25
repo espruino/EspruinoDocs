@@ -11,7 +11,7 @@ var TLE = require("TLE94112").connect(SPI1, B6, A9);
 
 TLE.enable();				// Enable chip, POR
 
-TLE.setPWMFrequency(1,3);   // Set PWN Freqency 1 to 200 Hz
+TLE.setPWMFrequency(1,3);   // Set PWN Frequency 1 to 200 Hz
 TLE.setPWMSource(1,1);      // Select PWM 1 as Source
 TLE.setDutyCycle(1, 240 );  // Set duty cycle of PWM channel to 90 %
 TLE.setDirection(1,1);      // Enable Motor 1 HS/LS for turning left or right 1 or 2
@@ -89,7 +89,7 @@ TLE94112.prototype.setDutyCycle = function( Channel, Value ) {
   this.writeRegister(C.PWM_DC_CTRL[Channel-1], Value); 
 }
 
-/** set PWM Soruce for a motor.
+/** set PWM Source for a motor.
 Motor 1..6, Source 1..3 
 */
 TLE94112.prototype.setPWMSource = function( Motor, PWMCh ) {

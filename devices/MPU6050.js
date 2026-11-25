@@ -250,7 +250,7 @@ MPU6050.prototype.getRotation = function() {
   return this.readSXYZ(R.GYRO_XOUT_H);
 };
 
-/* Get rotation measuren in degrees/s */
+/* Get rotation measurement in degrees/s */
 MPU6050.prototype.getDegreesPerSecond = function() {
   var rot = this.getRotation();
   var mpu = this;

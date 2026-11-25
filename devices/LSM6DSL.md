@@ -27,9 +27,9 @@ Speed is slow (12.5 Hz). It is a good idea to use a low frequency.
 If interrupts are used keep in mind, that a higher frequency will cause a high interrupt load.
 
 If no settings are used for the enable function the following default configuration is used:
-- intrrupts disabled
+- interrupts disabled
 - 12.5Hz Data rate in low power mode
-- gyro and acceleromter enabled
+- gyro and accelerometer enabled
 
 ```
 
@@ -57,7 +57,7 @@ There exist three functions to read out sensor data.
 - updateXL: Accelerator data from sensor
 
 Keep in mind: Read only required data, this reduce the time required to read the data.
-This approach is choosen, since this allow it to implement more complex allgorithm in the library.
+This approach is chosen, since this allow it to implement more complex algorithm in the library.
 Also it is faster to store the data, then to return data which is not used.
 
 ```

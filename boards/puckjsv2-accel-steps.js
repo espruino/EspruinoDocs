@@ -5,7 +5,7 @@ function clearIRQ() {
 }
 
 
-/** Configure acclerometer to listen for steps. When configured,
+/** Configure accelerometer to listen for steps. When configured,
 power usage is around 50uA. Step events fire the `Puck.accel`
 event.
 

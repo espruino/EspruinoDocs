@@ -11,7 +11,7 @@ Usage (with any available SPI):
   Serial Out |          | IN 6
         IN 4 |          | IN 5
         IN 3 |          | -
-        IN 2 |          | Serial In (for Castating with other CD4021BE)
+        IN 2 |          | Serial In (for Cascading with other CD4021BE)
         IN 1 |          | Clock
         GND  | 8      9 | Parallel/Serial Control
               ----------

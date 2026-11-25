@@ -159,7 +159,7 @@ MAG3110.prototype.getSamplingParams = function () {
  * The temperature data is updated on every measurement cycle.
  * The sensitivity of the temperature sensor is factory trimmed to 1°C but the absolute offset is NOT calibrated.
  * It must be calibrated by the user software if absolute accuracy is required.
- * @returns {number} temperatur in °C
+ * @returns {number} temperature in °C
  */
 MAG3110.prototype.readTemperature = function () {
     var t = this.read8(MAG3110.DIE_TEMP);
@@ -169,7 +169,7 @@ MAG3110.prototype.readTemperature = function () {
 /**
  * Performs a manual magnetic sensor reset (One-Shot).
  * Initiates a magnetic sensor reset cycle that will restore correct operation after exposure to an excessive magnetic
- * field wich exceeds the Full Scale Range of +/-1000µT, e.g. near a speaker magnet.
+ * field which exceeds the Full Scale Range of +/-1000µT, e.g. near a speaker magnet.
  */
 MAG3110.prototype.magneticReset = function () {
     var value = this.read8(MAG3110.CTRL_REG2);
@@ -178,7 +178,7 @@ MAG3110.prototype.magneticReset = function () {
 };
 
 /**
- * Set the automatic magentic reset flag.
+ * Set the automatic magnetic reset flag.
  * If set the magnetic resets occur automatically before each data acquisition. If unset no automatic reset occurs.
  * The default value after power on reset is false (no automatic magnetic reset).
  * @param automatic true, if automatic magnetic reset before each measurement

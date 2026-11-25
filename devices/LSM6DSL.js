@@ -42,7 +42,7 @@ var C = {
 /** create object LSM6DSL 
  * Object includes i2c interface and variables for the result.
  * To reduce CPU usage the update functions do not return data.
- * The results wil be stored in the object variables.
+ * The results will be stored in the object variables.
  * Scaling is done after read.
  * Accelerator data is in g.
  * Gyrodata is in degree per second (dps).
@@ -59,7 +59,7 @@ function LSM6DSL( i2c ) {
 }
 
 /** connect
- * default fuction for connecting the I2C Interface to the sensor. 
+ * default function for connecting the I2C Interface to the sensor. 
  */
 exports.connect = function(LSM_i2c) {
 	return new LSM6DSL(LSM_i2c);
@@ -69,7 +69,7 @@ exports.connect = function(LSM_i2c) {
  * Allows to write directly to the config registers.
  * This is a developer function which should be used to implement new functions.
  * 
- * CFGREG: Register adress.
+ * CFGREG: Register address.
  * NewCfg: value to be written
 */
 LSM6DSL.prototype.SetReg = function ( CFGREG, NewCfg ) {
@@ -78,7 +78,7 @@ LSM6DSL.prototype.SetReg = function ( CFGREG, NewCfg ) {
 }
 
 /** GetReg
- * Allows toread a single register.
+ * Allows to read a single register.
  * Path through to r
  * Implementation for developers to try new settings from IDE.
  * 
@@ -152,7 +152,7 @@ LSM6DSL.prototype.GetID = function () {
 
 /** GetTemperature
  * Return the current value of the temperature register 
- * The value is not explaind in the data sheet.
+ * The value is not explained in the data sheet.
  * Return value is only provided if temperature measurement is enabled.
 */
 LSM6DSL.prototype.GetTemperature = function () {

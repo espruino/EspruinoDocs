@@ -161,7 +161,7 @@ Per default all pixels in this buffer have their color set to ```0```. For the S
 |white/black | decimal ```0```, or hexadecimal ```0x00```   | decimal ```0``` or hexadecimal ```0x00``` |
 
 #### Pixel Colors under the hood
-The way color is handle is with black and white is with a single buffer, but to have color it requires 2 buffers.  One for black and white and one that either enables or disables the given (red/yellow) color in that given pixel.  Its structured this way because thats how hardware registers hold the data.  
+The way color is handle is with black and white is with a single buffer, but to have color it requires 2 buffers.  One for black and white and one that either enables or disables the given (red/yellow) color in that given pixel.  Its structured this way because that's how hardware registers hold the data.  
 
 The reverse order of pixels to concrete bits is taken care of by the module with a suitable Graphics configuration.
 

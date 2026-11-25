@@ -101,9 +101,9 @@ On the rear of Jolt.js are some pads which can be cut/soldered to change how it 
 on drawing more than 3A or you want to avoid the voltage drop, you can short this jumper which shorts out the diode.
 * `LiPo Chg` (default shorted) - Jolt.js includes a 100mA LiPo battery charger which charges a battery on the JST connector. If you don't want charging or are planning on using a multi-cell or non-LiPo battery, cut this jumper so that the battery won't be charged and the charge circuit won't be broken if the voltage is too high.
 * `USB Pwr` (default shorted) - Jolt.js includes a 3A, 0.35v drop diode from the USB connection (plus a 1A self-resetting fuse) to the motor drivers/terminals. If you're connecting a <4.6v battery to
-the termnals, or you've shorted `LiPo Pwr` then you can cut this jumper to disconnect the diode and stop USB power being used for anything other than LiPo Charging (if `LiPo Chrg` is shorted)
+the terminals, or you've shorted `LiPo Pwr` then you can cut this jumper to disconnect the diode and stop USB power being used for anything other than LiPo Charging (if `LiPo Chrg` is shorted)
 
-To 'open' a shorted solder pad, you need to cut inbetween the two gold pads. ⚠️ Always check with a multimeter to ensure that the two pads really are disconnected if you need them open.
+To 'open' a shorted solder pad, you need to cut in-between the two gold pads. ⚠️ Always check with a multimeter to ensure that the two pads really are disconnected if you need them open.
 
 | LiPo Pwr | LiPo Chg | USB Pwr | Notes |
 |----------|----------|---------|-------|

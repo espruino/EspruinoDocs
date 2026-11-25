@@ -75,7 +75,7 @@ cases there could be some skin irritation.
 Bangle.js 2 devices sold since the KickStarter campaign ship with a small
 piece of tape covering the contacts to prevent any problems. If you have
 a watch without this tape we would strongly advise you apply some paint,
-tape, a sticker or laquer over the middle two contacts as shown in the
+tape, a sticker or lacquer over the middle two contacts as shown in the
 images below:
 
 ![](Banglejs2/corrosion_fix1.jpg)
@@ -105,8 +105,6 @@ until then (or if you need a cable next day) you can use:
 
 * [Amazon US Compatible cable](https://www.amazon.com/gp/product/B08R9GLMJD/ref=ppx_od_dt_b_asin_title_s00)
 * [Amazon DE Compatible cable](https://www.amazon.de/dp/B077RFZJ8Z/ref=cm_sw_r_apan_glt_i_6ZH025Y98QRKS0HJK3A7)
-* [Amazon JP Compatible USB-C adapter](https://www.amazon.co.jp/dp/B0G13RXWTF)
-
 
 Apps
 ----

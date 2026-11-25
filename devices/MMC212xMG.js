@@ -85,7 +85,7 @@ MMC212x.prototype.restoreSensorCharacteristic = function () {
 /**
  * Calibrates internal ellipse parameter with the minimum and maximum of the x- and y-axis.
  *
- * Explaination:
+ * Explanation:
  * If the sensor will be rotated the values of (x,y) will form an ellipse. These method
  * calculates the center of the ellipse and the scaling factor from x to y.
  *

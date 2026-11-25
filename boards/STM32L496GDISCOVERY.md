@@ -34,7 +34,7 @@ Features
 <a name="buy"></a>Buying
 -------------------------
 
-This board can be [purchsed direct from ST or from distributors](http://www.st.com/en/evaluation-tools/32l496gdiscovery.html#samplebuy-scroll).
+This board can be [purchased direct from ST or from distributors](http://www.st.com/en/evaluation-tools/32l496gdiscovery.html#samplebuy-scroll).
 
 
 Getting Started<a name="firmware-updates"></a>
@@ -54,7 +54,7 @@ Information
 -----------
 
 * [STM32L496AG information](http://www.st.com/en/microcontrollers/stm32l496ag.html)
-* [Dicovery board information](http://www.st.com/en/evaluation-tools/32l496gdiscovery.html)
+* [Discovery board information](http://www.st.com/en/evaluation-tools/32l496gdiscovery.html)
 
 
 Pinout

@@ -46,7 +46,7 @@ INA226.prototype.rds = function(a) {
 };
 /* Returns an object with:
 
-* vshunt - voltgage across shunt - -0.082 to 0.082mV
+* vshunt - voltage across shunt - -0.082 to 0.082mV
 * vbus - bus voltage - 0 to 41v
 * power - calculated power in watts
 * current - calculated current in amps

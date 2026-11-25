@@ -8,7 +8,7 @@ In order to set up the hardware, you must short the two solder-points marked I2C
 
 There is no double buffer. 
 
-Most of the normal graphics commands work. All have an optional last argument, DM. If defined, the specified logical operation will be applieed to the pixels relative to the existing pixed - "!", "~" : Not, "|": or, "^": xor, "&" and. 
+Most of the normal graphics commands work. All have an optional last argument, DM. If defined, the specified logical operation will be applied to the pixels relative to the existing pixel - "!", "~" : Not, "|": or, "^": xor, "&" and. 
 
 setRotation() - second argument ignored. 
 

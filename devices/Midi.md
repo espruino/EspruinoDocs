@@ -26,7 +26,7 @@ I wired mine like:
 | (VCC)      | 3.3      |
 | (TX)       | A3       |
 
-Obviusly when the module will do midi-out you may want to add RX => A2, if you are using Serial2 like I do.
+Obviously when the module will do midi-out you may want to add RX => A2, if you are using Serial2 like I do.
 
 Software
 -----

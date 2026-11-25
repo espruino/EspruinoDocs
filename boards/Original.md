@@ -126,7 +126,7 @@ There's a [Pin Strip](../devices/Pin Strip.md) page covering how to solder Pin S
 
 ### <a name="connecting_batteries"></a>Batteries
 
-You can usually buy batteries with the PH-type 2 pin female JST (PHR-2) connector ready-soldered, see [Battery](../devices/Battery.md) for more details on battries and connectors.
+You can usually buy batteries with the PH-type 2 pin female JST (PHR-2) connector ready-soldered, see [Battery](../devices/Battery.md) for more details on batteries and connectors.
 
 ### Servo Motors
 

@@ -113,13 +113,13 @@ Bits 1 and 2 set how often the device wakes in sleep mode to take a measurement:
 Interrupts
 ------------------
 
-The ADXL345 supports interupts on the two interupt pins. You can connect these to input pins, and use setWatch() to react to them. The functions below act as wrappers for the relevant registers; This is not intended as a substitute for the datasheet, nor is is expected that this will make much sense without the datasheet. 
+The ADXL345 supports interrupts on the two interrupt pins. You can connect these to input pins, and use setWatch() to react to them. The functions below act as wrappers for the relevant registers; This is not intended as a substitute for the datasheet, nor is is expected that this will make much sense without the datasheet. 
 
 ```JavaScript
 accel.tap(threshold,duration,latency,window,axes)
 ```
 
-This configures interupts based on "tap" events (ie, a brief acceleration, as if you tapped the device). The sort of interrupt is used in (among many other things) some fitness trackers, which have no buttons, but already have an accelerometer to act as a pedometer. 
+This configures interrupts based on "tap" events (ie, a brief acceleration, as if you tapped the device). The sort of interrupt is used in (among many other things) some fitness trackers, which have no buttons, but already have an accelerometer to act as a pedometer. 
 
 * threshold is amount of acceleration needed for something to qualify as a tap (in milli-g's, rounded to nearest 62.5).
 * duration is max length of a tap (ms)
@@ -140,21 +140,21 @@ This configures interrupts based on "freefall" events (ie, when acceleration is 
 accel.act(thact,thinact,tinact,actctl)
 ```
 
-The ADXL can generate interupts on activity or inactivity. 
+The ADXL can generate interrupts on activity or inactivity. 
 * thact is the threshold for activity (in milli-g's, rounded to nearest 62.5)
 * thinact is the threshold for activity  (in milli-g's, rounded to nearest 62.5) 
-* tinact is how long (in seconds) accleration must be below thinact before the device considers itself inactive. 
+* tinact is how long (in seconds) acceleration must be below thinact before the device considers itself inactive. 
 * actctl is a byte specifying which axes may participate in activity and inactivity determination. Axes for activity and inactivity can be set separately. 0x77 enables all axes to participate in both activity and inactivity. 
 
 ```JavaScript
 accel.interrupts(enable,map)
 ```
 
-After configuring your interupts, enable them with this function. The datasheet repeatedly warns that the interrupts being used should be configured before being enabled, lest unspecified "undesired behavior" result. 
+After configuring your interrupts, enable them with this function. The datasheet repeatedly warns that the interrupts being used should be configured before being enabled, lest unspecified "undesired behavior" result. 
 
-Both arguments are a byte; enable determies whether each interrupt is enabled (1=enabled), and map determines whether it goes to INT1 (0) or INT2 (1) pin. Format is the same on both, with 1 bit per type of interrupt:
+Both arguments are a byte; enable determines whether each interrupt is enabled (1=enabled), and map determines whether it goes to INT1 (0) or INT2 (1) pin. Format is the same on both, with 1 bit per type of interrupt:
 
-  | Bit | Tyope |
+  | Bit | Type |
   |---|------------|
   | 7 | Data Ready |
   | 6 | Single Tap |

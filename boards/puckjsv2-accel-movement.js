@@ -8,7 +8,7 @@ function accelHandler(a) {
   Puck.accelWr(0x5E,a.motion ? 0x00 : 0x20);  // No MD1_CFG wakeup on INT1
 }
 
-/** Configure acclerometer to listen for movement. When configured,
+/** Configure accelerometer to listen for movement. When configured,
 power usage is around 40uA. Movement events fire the `Puck.accel`
 event.
 

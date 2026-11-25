@@ -4,7 +4,7 @@ function clearIRQ() {
   Puck.accelRd(0x53);
 }
 
-/** Configure acclerometer to listen for when the device is
+/** Configure accelerometer to listen for when the device is
 moved significantly for a while. When configured,
 power usage is around 50uA, and the `Puck.accel`
 event is fired when movement happens.

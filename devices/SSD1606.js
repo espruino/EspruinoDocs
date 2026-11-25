@@ -35,8 +35,8 @@ var C  = {
 };
 /**
  * Represents an SSD1606 Display Driver with Controller.
- * All functions are based on spefication version 1.1 from 10/2011.
- * Informations:
+ * All functions are based on specification version 1.1 from 10/2011.
+ * Information:
  * <ul>
  * <li>The display controller provides up to 180/128/4=5580 bytes of display buffer RAM.</li>
  * <li>Works only with SPI 4-wire mode with using a D/C (data/command) pin.</li>
@@ -196,7 +196,7 @@ SSD1606.prototype.init = function(callback, options) {
  * <li>0x1D - Load temperature register with temperature sensor reading</li>
  * <li>0x1E - Reserve</li>
  * <li>0x1F - Reserve</li>
- * <li>0x20 - Master acvitvation</li>
+ * <li>0x20 - Master activation</li>
  * <li>0x21 - Display update 1</li>
  * <li>0x22 - Display update 2</li>
  * <li>0x23 - Reserve</li>
@@ -277,7 +277,7 @@ SSD1606.prototype.scd = function(command, data) {
   this.sd(data);
 };
 /**
- * Checks the busyPin and runs the callback, wenn the busyPin is LOW.
+ * Checks the busyPin and runs the callback, when the busyPin is LOW.
  * @param {Function} callback - the callback function
  */
 SSD1606.prototype.cbp = function(callback) {

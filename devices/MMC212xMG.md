@@ -114,7 +114,7 @@ Types with different I²C-addresses
 
 There are four types which only differ by their I²C addresses:
 
-| Device    | I²C addresse |                         |
+| Device    | I²C address |                         |
 | --------- | ------------ |------------------------ |
 | MMC2120MG | 0x30         | Default, used in HDMM01 |
 | MMC2121MG | 0x32         |                         |

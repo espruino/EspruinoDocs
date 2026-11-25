@@ -63,7 +63,7 @@ As mentioned above you can solder a JST connector (part number `B2B-PH-K-S` to P
 
 ![JST pins on Pixl.js](Pixljs/jst.jpg)
 
-**Note:** This connects stright to the `Vin` pins, so you should use USB
+**Note:** This connects straight to the `Vin` pins, so you should use USB
 *or* CR2032 *or* the JST connector, but not more than one at the same time!
 
 
@@ -362,7 +362,7 @@ on transferring data via NFC.
 Known Problems
 ---------------
 
-On the 2v01 firmware release (which the first Pixl.js shiped with), NFC doesn't work.
+On the 2v01 firmware release (which the first Pixl.js shipped with), NFC doesn't work.
 
 If you upgrade, 2v02 firmware and later have this fixed.
 

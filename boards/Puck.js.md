@@ -106,7 +106,7 @@ Occasionally you may want to reset Puck.js. To do this:
 * The red LED should then flash, indicating that Puck.js had rebooted.
 
 If you are not able to do that, you can always remove the battery by pushing it
-out of the holder from behind with matchstick or biro. When you re-insert it,
+out of the holder from behind with matchstick or Biro. When you re-insert it,
 Puck.js will have reset.
 
 
@@ -251,7 +251,7 @@ Puck.on('field',function(m) {
 // turn off with require("puckjsv2-mag-level").off();
 ```
 
-**Note:** The low power mode is opnly available on Puck.js v2.0. On
+**Note:** The low power mode is only available on Puck.js v2.0. On
 Puck.js v1 and v2.1 the same functionality is implemented, but in
 software. The actual difference in power usage is relatively
 small.
@@ -618,7 +618,7 @@ On Puck.js v2 (v2.1 is unaffected), you should not install firmwares 2v04 and ea
 
 Pre-2v05 firmwares that are not designed for Puck.js v2 configure `D21/nRESET` as a reset pin. This then forces the chip into a reset state, effectively 'bricking' your Puck.js.
 
-In the very rare case that an old firmware was installed, you can recover your Puck.js by temporarily connecting [pin D21 on the bluetooth module](./MDBT42Q.md#pinout) to the 3v pin on the Puck. You can then flash an up to date firmware via DFU, rebooting into Espruno, connecting and running the following code (which resets the reset pin configuration flag):
+In the very rare case that an old firmware was installed, you can recover your Puck.js by temporarily connecting [pin D21 on the bluetooth module](./MDBT42Q.md#pinout) to the 3v pin on the Puck. You can then flash an up to date firmware via DFU, rebooting into Espruino, connecting and running the following code (which resets the reset pin configuration flag):
 
 ```
 setTimeout(function() { NRF.restart(function(){

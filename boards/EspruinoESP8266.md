@@ -70,8 +70,8 @@ The following features are only partially or not supported by Espruino on the ES
 - No hardware [I2C](../info/I2C.md), however, the software I2C works OK.
 - No hardware [PWM](../info/PWM.md), software PWM works OK.
 - No [DAC](../info/DAC.md): the esp8266 does not have a DAC.
-- Sofware Serial works OK.
-- GPIO16 is now supported in Espruino as a D16 without watch but with all software functiontions like PWM/I2C/SPI/etc
+- Software Serial works OK.
+- GPIO16 is now supported in Espruino as a D16 without watch but with all software functions like PWM/I2C/SPI/etc
 
 The main limitations of Espruino on the esp8266 come from two factors:
 - The esp8266 does not have rich I/O peripheral interfaces, this means protocols need to be run in software, which not only may
@@ -305,7 +305,7 @@ a time in seconds (float).
 Saving code to flash
 --------------------
 
-With the implementation of buildin module Storge it's simple to store any type of object you can think of.
+With the implementation of builtin module Storage it's simple to store any type of object you can think of.
 
 Currently 16KB for 512KB ESPs and 192KB for 4MB ESPs of flash are reserved to save JS code
 to flash using the save() function. The total JS memory is larger (22400 bytes) so if you
@@ -403,7 +403,7 @@ possible. When the SDK does not have anything to do this takes about 200us. Ways
 improve this are being investigated.
 
 One important effect of this overall strategy is that running javascript code
-without any iterruption will starve the SDK Wifi processing and will cause a
+without any interruption will starve the SDK Wifi processing and will cause a
 chip reset.
 
 Performance

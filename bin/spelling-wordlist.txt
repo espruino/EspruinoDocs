@@ -433,6 +433,7 @@ Lukacs
 Luwar
 lx
 Macronix
+magnetoresisive
 Mainflingen
 Makefile
 Makersify
@@ -555,6 +556,7 @@ Oosterwijck
 Opichal
 Oprescu
 Optn
+opto
 Opto
 optocoupler
 optoisolator
@@ -579,6 +581,7 @@ Petr
 Phenoptix
 photodiode
 photopic
+phototransistor
 Phototransistor
 pico
 Picos
@@ -907,6 +910,7 @@ wiolte
 wirelessly
 wirings
 woff
+wpa
 writeup
 wroom
 ws

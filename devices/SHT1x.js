@@ -45,7 +45,7 @@ SHT11.prototype.clockTick = function(pinstate){
 	this.Delay(1);
 }
 
-/** Function for sending a command using the proprietry 2 wire protocol*/
+/** Function for sending a command using the proprietary 2 wire protocol*/
 SHT11.prototype.sendCommand = function(command){
  digitalWrite(this.clockpin,0);
  digitalWrite(this.datapin,1);

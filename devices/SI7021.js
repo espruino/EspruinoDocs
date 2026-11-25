@@ -6,7 +6,7 @@ Default temperature unit of measure (by factory) is Celsius.
 Breakout Board is purchasable at: https://www.adafruit.com/product/3251.
 Datasheet: https://www.silabs.com/documents/public/data-sheets/Si7021-A20.pdf.
 
-This module is interfacing all the possibile commands available on Si7021(-A20) module.
+This module is interfacing all the possible commands available on Si7021(-A20) module.
 Temperature and Humidity formulas are provided by the Sensor's Datasheet.
 */
 

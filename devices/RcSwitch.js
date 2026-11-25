@@ -14,7 +14,7 @@ var C = {
  /* Format for protocol definitions:
   * {pulselength, Sync bit, "0" bit, "1" bit}
   *
-  * pulselength: pulse length in miliseconds, e.g. 0.350
+  * pulselength: pulse length in milliseconds, e.g. 0.350
   * Sync bit: {1, 31} means 1 high pulse and 31 low pulses
   *     (perceived as a 31*pulselength long pulse, total length of sync bit is
   *     32*pulselength microseconds), i.e:

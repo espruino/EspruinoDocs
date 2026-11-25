@@ -1,5 +1,5 @@
 /* Created by Brenden Adamczak 
-   Inspirted from Michael Pralow - SSD1606 driver
+   Inspired from Michael Pralow - SSD1606 driver
    With help from yngv126399 from the forum and of course Gordon 
 */
 
@@ -11,7 +11,7 @@
 
 /**
  * Represents an SSD16xx Display Driver with Controller.
- * Informations:
+ * Information:
  * <ul>
  * <li>This controller is designed to work with many different controllers in the SSD16__ series.</li>
  * <li>Works only with SPI 4-wire mode with using a D/C (data/command) pin.</li>
@@ -161,7 +161,7 @@ SSD16xx.prototype.waitCmd = function(command, data){
 
 
 /**
- * Sends the refresh dispaly command and then waits
+ * Sends the refresh display command and then waits
  */
 SSD16xx.prototype.refreshDisplay = function(command){
   return this.waitCmd(0x20);
@@ -227,7 +227,7 @@ SSD16xx.prototype.setFullRefresh = function(){
  * SetFastRefresh - is used make the device refresh the display in only the changed pixels.  
  * This will increase the displays refresh rate, but might cause burn into the display.
  * So its recommended to do a (setFullRefresh) to fully reset the display pixels.  But if you do this.
- * You'll have to use this SetFastRefresh to make the display only refresh partiaily.  
+ * You'll have to use this SetFastRefresh to make the display only refresh partially.  
  */
 SSD16xx.prototype.setFastRefresh = function() {
   const WF_PARTIAL = E.toUint8Array(atob('AEAAAAAAAAAAAAAAgIAAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIiIiIiIiAAAA'));
