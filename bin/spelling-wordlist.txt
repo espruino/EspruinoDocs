@@ -106,6 +106,7 @@ bthome
 btn
 Btns
 Btw
+Budde
 busspeed
 bytecode
 capacitive
@@ -454,6 +455,7 @@ Marinis
 Marsch
 Masafumi
 maxscale
+Mazurov
 mbar
 mbed
 mbit
@@ -556,6 +558,7 @@ offscreen
 ok
 Okada
 ol
+Oleg
 Olimex
 Olimexino
 oname

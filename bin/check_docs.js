@@ -709,8 +709,21 @@ async function main() {
   for (const file of filesToCheck) {
     if (!fs.existsSync(path.join(ROOT, file))) { console.warn("No such file " + file); continue; }
     const contents = fs.readFileSync(path.join(ROOT, file), "utf8");
+    // The 'view the correctly rendered version of this page at URL' banner (added by bin/commenter.js)
+    // must link to this page: https://www.espruino.com/ + filename without .md, with spaces as '+'
+    let banner = null;
+    const bm = file.endsWith(".md") && contents.match(/correctly rendered version of this page at\s+(https?:\/\/\S+?)[.,]?(?=[\s*<]|$)/);
+    if (bm && opts.internal) {
+      const expected = "https://www.espruino.com/" + path.basename(file, ".md").replace(/ /g, "+");
+      const line = contents.substring(0, bm.index).split("\n").length;
+      if (bm[1] != expected) {
+        banner = { url: bm[1], line };
+        report(file, line, "error", "link", `${bm[1]} - the 'correctly rendered version' link should point to this page, ${expected}`, { url: bm[1], replacement: expected });
+      }
+    }
     for (const chunk of getMarkdownChunks(file, contents)) {
       scanMarkdown(chunk.text, chunk.line, (url, line) => {
+        if (banner && url == banner.url && line == banner.line) return; // already reported above
         linkCount++;
         if (url.startsWith("//")) url = "https:" + url;
         if (/^https?:\/\//i.test(url)) {
