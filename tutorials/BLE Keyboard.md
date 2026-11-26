@@ -150,7 +150,7 @@ setWatch(btnPressed, BTN, {edge:"rising",repeat:true,debounce:50});
 Combination
 ------
 
-If you find you require multiple HID defices at the same time (EG a keyboard and mouse combination) that is possible with more advanced custom HID reports. If you are looking for a quite complete keyboard and mouse combination implementation you can use the [ble_hid_combo.js](../modules/ble_hid_combo.js) module.
+If you find you require multiple HID devices at the same time (EG a keyboard and mouse combination) that is possible with more advanced custom HID reports. If you are looking for a quite complete keyboard and mouse combination implementation you can use the [ble_hid_combo.js](../modules/ble_hid_combo.js) module.
 
 ```
 var int = require("ble_hid_combo");

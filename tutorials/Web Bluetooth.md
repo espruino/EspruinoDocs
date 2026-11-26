@@ -412,7 +412,7 @@ calls `onLine` each time a line is received.
 * Sends `reset()` to Puck.js - while not required this performs a software
 reset, which would clear out any previously send code.
 * Waits for the reset to complete. The reset is fast, but sending the text
-created bythe reset itself is slow!
+created by the reset itself is slow!
 * Sends `setInterval(function(){Bluetooth.println(Puck.light());},100);` - this
 causes Espruino to write the current light value down the Bluetooth link every
 `100ms`.

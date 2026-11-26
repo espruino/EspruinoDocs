@@ -1,7 +1,7 @@
 /* Copyright (c) 2022 Kasper Müller. See the file LICENSE for copying permission. */
 /*
-Bluetooth Low Energy Human Interface Defice Combo.
-With this defice definition and API you have access to mouse and keyboard at the same time.
+Bluetooth Low Energy Human Interface Device Combo.
+With this device definition and API you have access to mouse and keyboard at the same time.
 Tested on windows 10, android and linux. 
 Usage:
   var int = require("ble_hid_combo");
@@ -27,7 +27,7 @@ Usage:
   // (note you need to wait a few ms between calls or use callbacks at least)
   int.holdButton(int.BUTTON.MIDDLE);
   int.moveMouse(5, 10);
-  int.getHoldingButtons(); // returns number with bit positions of holded buttons (only 2^1=4 currently).
+  int.getHoldingButtons(); // returns number with bit positions of held buttons (only 2^1=4 currently).
   int.moveMouse(10, 5);
   int.releaseButton(int.BUTTON.ALL);
   // Click at the same time:
@@ -294,7 +294,7 @@ exports.releaseButton = function(b, callback) {
 };
 
 /**
- * Single click a certain (mouse) button (hold & immidiatly release).
+ * Single click a certain (mouse) button (hold & immediately release).
  * @param {number} b - The button or buttons to click.
  * @param {function()} callback - Function to call when the bluetooth messages are sent.
  */
@@ -375,7 +375,7 @@ exports.keyUp = function(keyCode, callback) {
 };
 
 /**
- * Single tap a certain (keyboard) key (hold & immidiatly release).
+ * Single tap a certain (keyboard) key (hold & immediately release).
  * @param {number|Array<number>} keyCode - The keycode(s) to tap.
  * @param {number} [modifiers] - The keyboard modifier(s) to use.
  * @param {function()} [callback] - Function to call when the bluetooth messages are sent.

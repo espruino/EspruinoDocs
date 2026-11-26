@@ -84,7 +84,7 @@ var busy = false;
 undefined       : unused
 true            : connected and ready
 Wait            : waiting for connection (client), or for data to be sent
-tobeclosed      : closed (either locally request or remotly or both)
+tobeclosed      : closed (either locally request or remotely or both)
                   but not yet closed because of data still in the pipe.
 */
 var socks = [];
@@ -106,7 +106,7 @@ var flowcontrol = false;
 
 /* Geolocalisation variables :  longitude,latitude */
 var longlat = "";
-/* Geolocaliation state (running or not) */
+/* Geolocation state (running or not) */
 var geoPos = false;
 
 // by default, without setting, debug in the module is disabled
@@ -226,7 +226,7 @@ Closing is possible if the AT media is free
 - check if a AT communication is on-going
 
 At the end, socket is either closed (successful) or waiting to be closed.
-In this last case, either a new closing is initiated (remote if first attemps was local, local if first attemps was remote)
+In this last case, either a new closing is initiated (remote if first attempt was local, local if first attempt was remote)
 or triggered from this module when data buffer is emptied
 - Mark this socket as tobeclosed, will be closed when data buffer emptied
 */
@@ -526,7 +526,7 @@ When TCP socket service is closed by remote peer or network error, this function
 Typical expected format : +QIURC: "recv",<connectID><CR><LF>
 
 First search for <CR><LF> index in the line to locate the end
-Note <CR> is enough (no need to wait for <LF>) : this will immediatly closes the socket
+Note <CR> is enough (no need to wait for <LF>) : this will immediately closes the socket
 
 2 options
 - Not enough data may not have been received at this moment so that line is simply returned.
@@ -534,7 +534,7 @@ Note <CR> is enough (no need to wait for <LF>) : this will immediatly closes the
 <connectID> is the socket index to close.
 
 Note the trick to convert string into integer with this instruction :
-parms[1] = 0|parms[1];
+`parms[1] = 0|parms[1];`
 */
 function closehandler(line) {
   dbglog("closehandler:" + line);

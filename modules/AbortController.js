@@ -2,7 +2,7 @@
 
 /*
  * A Basic Implementation of AbortController 
- * compatible with fetch.js, or any other spec that supports Abortcontrollers
+ * compatible with fetch.js, or any other spec that supports AbortControllers
  * 
  
 Usage:

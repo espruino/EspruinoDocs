@@ -2,11 +2,11 @@
 /*
 This module interfaces with Vishay VCNL4020. 
 The API is similar to the API in the Vishay examples.
-It should be easy to use the Vishay examples to implement any kind of applicaiton.
+It should be easy to use the Vishay examples to implement any kind of application.
 
 Connection:
 
-To use the VCNL4020 only a i2c Interface ist required. Data rate might be setup to 100kHz.
+To use the VCNL4020 only a i2c Interface is required. Data rate might be setup to 100kHz.
 
 For more information please read the module description.
 

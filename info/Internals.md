@@ -88,7 +88,7 @@ In Espruino, each `JsVar` contains:
   * A reference is when another variable links to the current variable (eg. a variable is a child of an object)
   * You increase reverences with `jsvRef` and decrease with `jsvUnRef` but generally you never have to do this. If you're using `jsvAddChild/etc` then they handle references for you
   * When a variable is referenced but not locked, it can be moved around in memory by `jsvDefrag` to help avoid fragmentation
-  * The only variable type that doesn't contain a reference cound is `StringExt` - this is a part of a string that gets added
+  * The only variable type that doesn't contain a reference count is `StringExt` - this is a part of a string that gets added
   on the end with more characters, so it's always assumed that it's only referenced once (by the `String`` it is part of)
 
 In most cases a variable can be freed without a GC pass. It will be allocated, used, and then when finally unlocked, if the reference count is zero then it and all its children will be freed.
@@ -100,5 +100,5 @@ When writing C code to run inside Espruino the rules are reasonably straightforw
 * Use the built-in `jsv*` functions for adding/removing children and setting values and you won't have to worry about using `jsvRef`/`jsvUnRef`
 * If you call a function and it returns a `JsVar*` in pretty much all cases you'll be responsible for calling `jsvUnLock` on it
 * If you call another function with a `JsVar*`, unless it's called something like `js....AndUnLock`, you're still responsible for freeing the variable
-* You should avoid having global pointers to `JsVar` structures, and if sensibe avoid even having `JsVarRef`. However if you do keep them you need to
+* You should avoid having global pointers to `JsVar` structures, and if sensible avoid even having `JsVarRef`. However if you do keep them you need to
   ensure they are locked/referenced as appropriate, and that you have a `jswrap_..._kill` handler that will unlock/reference them when the interpreter needs to be torn down.

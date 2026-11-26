@@ -7,7 +7,7 @@ Example...
 
 NOTE: Intended to be a single instance to limit resources and timer overhead. 
 Multiple instances will all reference same job queue and timer, thus multiple 
-instances will see the same jobs and init calls will supercede previous calls 
+instances will see the same jobs and init calls will supersede previous calls 
 by other instances. Works with DateExt module if used to match local time 
 values. A second argument passed to the constructor, set to true, can be used 
 to force UTC if so desired. This is only necessary if DateExt is included and 

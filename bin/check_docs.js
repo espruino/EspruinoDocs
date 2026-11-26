@@ -33,7 +33,9 @@ Usage:
   --fix               Interactively fix problems: for each spelling mistake or
                       link with a suggested fix, show the line (and the lines
                       either side) and ask whether to fix it. Broken external
-                      URLs can be marked as OK in the link cache, or ignored
+                      URLs can be marked as OK in the link cache, or ignored.
+                      Replacement words you type are remembered in
+                      bin/spelling-corrections.txt and suggested next time
 
 Exit code is 1 if any errors were found.
 */
@@ -44,6 +46,7 @@ const childProcess = require("child_process");
 
 const ROOT = path.resolve(__dirname, "..");
 const WORDLIST_FILE = path.join(ROOT, "bin/spelling-wordlist.txt");
+const CORRECTIONS_FILE = path.join(ROOT, "bin/spelling-corrections.txt");
 const LINK_IGNORE_FILE = path.join(ROOT, "bin/link-ignore.txt");
 const RENAMED_FILE = path.join(ROOT, "RENAMED.csv");
 const IN_GITHUB = !!process.env.GITHUB_ACTIONS;
@@ -271,6 +274,11 @@ function loadSpelling() {
     return nspell(fs.readFileSync(path.join(dir, "index.aff")), fs.readFileSync(path.join(dir, "index.dic")));
   };
   spellers = [load("dictionary-en-gb"), load("dictionary-en")];
+  if (fs.existsSync(CORRECTIONS_FILE))
+    fs.readFileSync(CORRECTIONS_FILE, "utf8").split("\n").forEach(l => {
+      const m = l.match(/^([^#].*?)\s+->\s+(.+?)\s*$/);
+      if (m) corrections.set(m[1].toLowerCase(), m[2]);
+    });
   if (fs.existsSync(WORDLIST_FILE))
     fs.readFileSync(WORDLIST_FILE, "utf8").split("\n").forEach(w => {
       w = w.replace(/#.*$/, "").trim();
@@ -279,6 +287,28 @@ function loadSpelling() {
       if (w == w.toLowerCase()) customWords.add(w);
       else customWordsExact.add(w);
     });
+}
+
+/* Corrections entered with 'e' in --fix mode (misspelling -> replacement),
+offered as the first suggestion next time. Stored in bin/spelling-corrections.txt */
+const corrections = new Map(); // lowercase misspelling -> replacement
+function getCorrection(word) {
+  const to = corrections.get(word.toLowerCase());
+  if (!to) return null;
+  // match the capitalisation of the misspelt word
+  if (word == word.toUpperCase() && word.length > 1) return to.toUpperCase();
+  if (word[0] == word[0].toUpperCase()) return to[0].toUpperCase() + to.substring(1);
+  return to;
+}
+function rememberCorrection(word, to) {
+  if (word.toLowerCase() == to.toLowerCase()) return;
+  // store lowercase unless the replacement has capitals that matter (eg. 'Espruino')
+  const keepCase = to.substring(1) != to.substring(1).toLowerCase() || (word[0] == word[0].toLowerCase() && to[0] != to[0].toLowerCase());
+  corrections.set(word.toLowerCase(), keepCase ? to : to.toLowerCase());
+  const header = "# Spelling corrections remembered by `node bin/check_docs.js --fix` (misspelling -> replacement)\n" +
+    "# These are offered as the first suggestion when the misspelling is found again\n";
+  fs.writeFileSync(CORRECTIONS_FILE, header + [...corrections].sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([w, t]) => `${w} -> ${t}`).join("\n") + "\n");
 }
 
 const wordCache = new Map();
@@ -595,7 +625,11 @@ async function fixIssues(fixable, suggestFor) {
         const m = a.match(/^(\d+)(!?)$/);
         let to = null, all = false;
         if (m && sugg[m[1] - 1]) { to = sugg[m[1] - 1]; all = !!m[2]; }
-        else if (a == "e" || a == "e!") { to = await ask("  Replace with: "); all = a == "e!"; if (!to) continue; }
+        else if (a == "e" || a == "e!") {
+          to = await ask("  Replace with: "); all = a == "e!";
+          if (!to) continue;
+          rememberCorrection(word, to);
+        }
         else if (a == "a") { addToWordlist([word]); stats.words++; issue.resolved = true; console.log(`  Added "${word}" to ${path.relative(ROOT, WORDLIST_FILE)}`); break; }
         else if (a == "s" || a == "") break;
         else if (a == "S") { skipWords.add(word); break; }
@@ -711,8 +745,10 @@ async function main() {
   const escProp = s => esc(s).replace(/:/g, "%3A").replace(/,/g, "%2C");
   const suggestions = new Map();
   const suggestFor = word => {
-    if (!suggestions.has(word)) suggestions.set(word, spellers[0].suggest(word).slice(0, opts.fix ? 5 : 3));
-    return suggestions.get(word);
+    const max = opts.fix ? 5 : 3;
+    if (!suggestions.has(word)) suggestions.set(word, spellers[0].suggest(word).slice(0, max));
+    const remembered = getCorrection(word); // checked every time, as --fix may have just added one
+    return remembered ? [remembered].concat(suggestions.get(word).filter(s => s != remembered)).slice(0, max) : suggestions.get(word);
   };
   const suggest = word => {
     if (!opts.suggest || !spellers) return "";

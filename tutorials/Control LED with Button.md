@@ -104,7 +104,7 @@ becomes
   timeout_ID = setTimeout(function () { LED1.write(0); LED2.write(0); LED3.write(0); timeout_ID = undefined; }, 5000);
 ``
 
-Finally, the Espruino code contains a feauture to only watch for the rising of a signal. This helps us, in that we don't even need the function `swap_on_down`! We can simply write:
+Finally, the Espruino code contains a feature to only watch for the rising of a signal. This helps us, in that we don't even need the function `swap_on_down`! We can simply write:
 
 ```
 setWatch(swap, BTN1, {repeat:true, edge:"rising"});

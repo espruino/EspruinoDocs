@@ -292,7 +292,7 @@ async def main():
 asyncio.run(main())
 ```
 
-* Then run the Python file. Administrator priviledges are not needed:
+* Then run the Python file. Administrator privileges are not needed:
 
 ```
 python advertising_python.py
@@ -360,7 +360,7 @@ while True: scanner.process(10)
 scanner.stop()
 ```
 
-* Then run the Python file. Python must be run with administrator priviledges
+* Then run the Python file. Python must be run with administrator privileges
 to access the Bluetooth device:
 
 ```

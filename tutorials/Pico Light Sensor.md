@@ -84,7 +84,7 @@ By itself this won't do anything, but let's tell Espruino to execute it every 10
 setInterval(step, 10);
 ```
 
-Now, move you hand near the sensor. You should notice that when you cover it, the red LED lights up. At some point when you move your hand away (especially if you try and cover it with a white sheet of paper) you should notice that the light starts blinking on and off very quicky. This is because the light sensor is detecting the light from the LED - when it is dark the LED turns on, but 1/100th of a second later the LED is on, which makes it bright enough that it should turn off, and so on.
+Now, move you hand near the sensor. You should notice that when you cover it, the red LED lights up. At some point when you move your hand away (especially if you try and cover it with a white sheet of paper) you should notice that the light starts blinking on and off very quickly. This is because the light sensor is detecting the light from the LED - when it is dark the LED turns on, but 1/100th of a second later the LED is on, which makes it bright enough that it should turn off, and so on.
 
 You can also experiment with turning the light on at different light levels, for instance try:
 

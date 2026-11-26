@@ -42,8 +42,8 @@ Espruino device. If you're using Windows you'll need to use the Native Applicati
 
 The Web IDE is available as:
 
-* [Download for Windows 32 bit - 0.75.8](https://www.espruino.com/files/files/espruino_ide_win32_0v75.8.exe)
-* [Download for Windows 64 bit - 0.75.8](https://www.espruino.com/files/files/espruino_ide_win64_0v75.8.exe)
+* [Download for Windows 32 bit - 0.75.8](https://www.espruino.com/files/espruino_ide_win32_0v75.8.exe)
+* [Download for Windows 64 bit - 0.75.8](https://www.espruino.com/files/espruino_ide_win64_0v75.8.exe)
 
 The Native IDE versions lag behind the Online IDE, so if you're able to use the Online
 IDE we strongly recommend it.

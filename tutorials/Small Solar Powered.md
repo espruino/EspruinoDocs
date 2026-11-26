@@ -14,7 +14,7 @@ Introduction
 
 So you've made a program in Espruino, and now you want to put it somewhere and have it run without you having to worry about changing batteries.
 
-The obvious solution to this is to use a solar panel and a battery (to keep Espruino working overnight). A really good, cheap source of these seems to be solar powered torches. They're advertised as having a 3.6v rechargable lithium battery inside, which would be perfect for Espruino.
+The obvious solution to this is to use a solar panel and a battery (to keep Espruino working overnight). A really good, cheap source of these seems to be solar powered torches. They're advertised as having a 3.6v rechargeable lithium battery inside, which would be perfect for Espruino.
 
 You'll Need
 -----------
@@ -43,12 +43,12 @@ However looking a bit closer there are some problems.
 
 * Right at the bottom of this picture, you can just see the dark red solar panel with two metal pads on it. They're not attached to anything. This torch is not solar powered at all - but they have still fitted a working solar panel onto it!
 * If you take the plastic disc labelled 'charge' off, you'll see that there are two CR2016 batteries inside. This makes 6v, not 3.6v, and **they are not rechargeable**.
-* If you put a voltmeter on the circuit, you'll see that the battery and LEDs are fitted **back to front** - so the traces labelled with **+** are actually **-** and vice-vera. The solar panel is correct, so if you were to connect the panel it would just discharge the batteries rather than charging them!
+* If you put a voltmeter on the circuit, you'll see that the battery and LEDs are fitted **back to front** - so the traces labelled with **+** are actually **-** and vice-versa. The solar panel is correct, so if you were to connect the panel it would just discharge the batteries rather than charging them!
 
 Fixing it
 --------
 
-If your torch is actually as described (with a rechargable battery and a connected panel) [please let us know!](http://forum.espruino.com) If not, you're going to have to fit a proper rechargeable battery to it.
+If your torch is actually as described (with a rechargeable battery and a connected panel) [please let us know!](http://forum.espruino.com) If not, you're going to have to fit a proper rechargeable battery to it.
 
 ![Attaching a battery](Small Solar Powered/panel.jpg)
 

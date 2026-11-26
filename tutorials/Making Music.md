@@ -12,7 +12,7 @@ Making Sounds and Music
 Introduction
 -----------
 
-Espruino isn't fast enough to play MP3 or WAV music files, but it can output beeps of different frequencies using its pulse width moduled outputs. In this tutorial we'll show you how to make sound using a speaker from an old PC.
+Espruino isn't fast enough to play MP3 or WAV music files, but it can output beeps of different frequencies using its pulse width modulated outputs. In this tutorial we'll show you how to make sound using a speaker from an old PC.
 
 You'll Need
 ----------
@@ -66,7 +66,7 @@ freq(0);
 But now, we want to play some music! We'll need the following 2 websites:
  
 * [Frequencies of Musical Notes](https://plastic.audio/note-frequencies/)
-* [Childrens Songs written as characters](http://saregamapiano.blogspot.co.uk/2011/07/children-songs.html)
+* [Children's Songs written as characters](http://saregamapiano.blogspot.co.uk/2011/07/children-songs.html)
  
 The second website uses the letters a-g for lower pitch notes, and A-G for higher-pitch notes. We'll make a function which goes through a string of characters, one at a time, and plays the corresponding pitch note:
  

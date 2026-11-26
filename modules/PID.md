@@ -67,7 +67,7 @@ in the Web IDE's REPL:
 Set Integral and Derivative values to 0, which you can do with `pid.Ig = pid.Dg = 0`.
 
 Increase the proportional value `pid.Pg = ...` until the system starts to oscillate
-when you change the desired temperature valye (with the output value oscillating between the full range of `-1..1`).
+when you change the desired temperature value (with the output value oscillating between the full range of `-1..1`).
 
 Now divide the proportional value in half and use that.
 

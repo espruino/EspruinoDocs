@@ -24,8 +24,8 @@ Connect SDA and SCL to the appropriate I2C pins on the Espruino, and VCC and GND
 
 The ADXL is calibrated for operation at 2.5v, not 3.3v, and this throws off the measurements slightly (see datasheet for details on correcting for this).
 
-The CS pin must be connected to a GPIO pin (the ADXL345 doesn't seem to register that CS is high if it's that way when the part is powered on). 
-The INT1 and INT2 pins can be connected to any GPIO pin if you wish to use the interrupt feature. Otherwise, don't connect them. 
+The CS pin must be connected to a GPIO pin (the ADXL345 doesn't seem to register that CS is high if it's that way when the part is powered on).
+The INT1 and INT2 pins can be connected to any GPIO pin if you wish to use the interrupt feature. Otherwise, don't connect them.
 
 Setup
 -----------------
@@ -35,7 +35,7 @@ Setup I2C, then call:
 var accel = require("ADXL345").connect(i2c,cspin,range)
 ```
 
-i2c is the I2C it is connected to, cspin is the pin that CS is connected to, since the ADXL345 doesn't seem to recognize that CS is high if it's high on startup. 
+i2c is the I2C it is connected to, cspin is the pin that CS is connected to, since the ADXL345 doesn't seem to recognize that CS is high if it's high on startup.
 Range (default 0, +/- 2 g's) is:
 
   |   |         |
@@ -45,7 +45,7 @@ Range (default 0, +/- 2 g's) is:
   | 2 | +/-8 g  |
   | 3 | +/-16 g |
 
-By default, the accelerometer starts off in standby mode. To take data, you need to set it to Measure mode. If argument is true, measure mode will be turned on, otherwise, it will be turned off. Calling setup() will also turn off measure mode. 
+By default, the accelerometer starts off in standby mode. To take data, you need to set it to Measure mode. If argument is true, measure mode will be turned on, otherwise, it will be turned off. Calling setup() will also turn off measure mode.
 
 
 Reading
@@ -71,14 +71,14 @@ Advanced Options
 accel.setup(BW_RATE,POWER_CTL)
 ```
 
-This sets the two setup registers. Both arguments are bytes that get sent to the respective registers. Note that for power_ctl, bit 4 (measure) is forced off, so calling this turns off measure mode. According to the datasheet, it is recommended to turn off measure mode if any changes are made to power status to ensure that it returns accurate data. 
+This sets the two setup registers. Both arguments are bytes that get sent to the respective registers. Note that for power_ctl, bit 4 (measure) is forced off, so calling this turns off measure mode. According to the datasheet, it is recommended to turn off measure mode if any changes are made to power status to ensure that it returns accurate data.
 
-BW_RATE: Bit 5 is low power bit - if set, noise will be higher, but power use lower. 
+BW_RATE: Bit 5 is low power bit - if set, noise will be higher, but power use lower.
 Bit 4~1 set the data rate:
-  
+
   | Rate (Hz)|Bandwidth (Hz)|Rate Code|IDD (µA)|
   |----------|--------------|---------|--------|
-  | 3200	 | 1600			| 1111    |   140  | 
+  | 3200	 | 1600			| 1111    |   140  |
   | 1600	 | 800			| 1110    |    90  |
   | 800		 | 400			| 1101    |   140  |
   | 400		 | 200			| 1100    |   140  |
@@ -113,44 +113,44 @@ Bits 1 and 2 set how often the device wakes in sleep mode to take a measurement:
 Interrupts
 ------------------
 
-The ADXL345 supports interrupts on the two interrupt pins. You can connect these to input pins, and use setWatch() to react to them. The functions below act as wrappers for the relevant registers; This is not intended as a substitute for the datasheet, nor is is expected that this will make much sense without the datasheet. 
+The ADXL345 supports interrupts on the two interrupt pins. You can connect these to input pins, and use setWatch() to react to them. The functions below act as wrappers for the relevant registers; This is not intended as a substitute for the datasheet, nor is is expected that this will make much sense without the datasheet.
 
 ```JavaScript
 accel.tap(threshold,duration,latency,window,axes)
 ```
 
-This configures interrupts based on "tap" events (ie, a brief acceleration, as if you tapped the device). The sort of interrupt is used in (among many other things) some fitness trackers, which have no buttons, but already have an accelerometer to act as a pedometer. 
+This configures interrupts based on "tap" events (ie, a brief acceleration, as if you tapped the device). The sort of interrupt is used in (among many other things) some fitness trackers, which have no buttons, but already have an accelerometer to act as a pedometer.
 
 * threshold is amount of acceleration needed for something to qualify as a tap (in milli-g's, rounded to nearest 62.5).
 * duration is max length of a tap (ms)
 * latency is the time after the first tap before a second tap can start (ms)
 * window is the length of the window during which the second tap of a double tap can happen. (ms)
-* axes is a byte listing which axes can participate in tap events. Only the three least significant bits are used; 0x04 is x, 0x02 is y, 0x01 is z. Default is 0x07 (all axes). 
+* axes is a byte listing which axes can participate in tap events. Only the three least significant bits are used; 0x04 is x, 0x02 is y, 0x01 is z. Default is 0x07 (all axes).
 
 ```JavaScript
 accel.ff(threshold,time)
 ```
 
-This configures interrupts based on "freefall" events (ie, when acceleration is below a given threshold, as if the object is falling). This sort of interrupt is used to park the heads on laptop harddrives when the laptop is dropped, in the (often futile) hope of saving the drive. 
+This configures interrupts based on "freefall" events (ie, when acceleration is below a given threshold, as if the object is falling). This sort of interrupt is used to park the heads on laptop harddrives when the laptop is dropped, in the (often futile) hope of saving the drive.
 
 * threshold is the threshold below which the accelerometer will assume it's in freefall, in milli-g's The data sheet recommends 300-600.
-* time is the time it has to be in freefall before the interrupt is triggered, in ms. 
+* time is the time it has to be in freefall before the interrupt is triggered, in ms.
 
 ```JavaScript
 accel.act(thact,thinact,tinact,actctl)
 ```
 
-The ADXL can generate interrupts on activity or inactivity. 
-* thact is the threshold for activity (in milli-g's, rounded to nearest 62.5)
-* thinact is the threshold for activity  (in milli-g's, rounded to nearest 62.5) 
-* tinact is how long (in seconds) acceleration must be below thinact before the device considers itself inactive. 
-* actctl is a byte specifying which axes may participate in activity and inactivity determination. Axes for activity and inactivity can be set separately. 0x77 enables all axes to participate in both activity and inactivity. 
+The ADXL can generate interrupts on activity or inactivity.
+* `thact` is the threshold for activity (in milli-g's, rounded to nearest 62.5)
+* `thinact` is the threshold for activity  (in milli-g's, rounded to nearest 62.5)
+* `tinact` is how long (in seconds) acceleration must be below `thinact` before the device considers itself inactive.
+* `actctl` is a byte specifying which axes may participate in activity and inactivity determination. Axes for activity and inactivity can be set separately. 0x77 enables all axes to participate in both activity and inactivity.
 
 ```JavaScript
 accel.interrupts(enable,map)
 ```
 
-After configuring your interrupts, enable them with this function. The datasheet repeatedly warns that the interrupts being used should be configured before being enabled, lest unspecified "undesired behavior" result. 
+After configuring your interrupts, enable them with this function. The datasheet repeatedly warns that the interrupts being used should be configured before being enabled, lest unspecified "undesired behavior" result.
 
 Both arguments are a byte; enable determines whether each interrupt is enabled (1=enabled), and map determines whether it goes to INT1 (0) or INT2 (1) pin. Format is the same on both, with 1 bit per type of interrupt:
 

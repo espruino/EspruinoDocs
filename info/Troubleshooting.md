@@ -95,7 +95,7 @@ As Espruino itself won't work, the IDE won't know what type of board it is suppo
 
 ## My board appears as a mouse or joystick in Windows Control Panel's 'Devices and Printers' page.
 
-This may happen if you are using an ST Discovery board and haven't yet installed the Espuino firmware. Some of these boards are automatically recognized by Windows as a completely different kind of device (because of the 'demo software' that comes installed). Install the firmware as described on the Download page, disconnect the board a reconnect it again.
+This may happen if you are using an ST Discovery board and haven't yet installed the Espruino firmware. Some of these boards are automatically recognized by Windows as a completely different kind of device (because of the 'demo software' that comes installed). Install the firmware as described on the Download page, disconnect the board a reconnect it again.
 
 Using Espruino
 ==============
@@ -277,7 +277,7 @@ Do you have a Serial device connected to pins `B6`/`B7` on the [Pico](../boards/
 
 To fix this, right at the top of your code that runs on initialisation (eg. the `onInit` function or `E.on('init', ...)` event), add the line `USB.setConsole()`, which will force the console onto USB. After `USB.setConsole()`, the console can still automatically move back to `Serial1` if there is some event that forces it (USB connect and disconnect), so you can *force* the console to stay on USB regardless with `USB.setConsole(true)` instead.
 
-Other reasons could be that the power supply you're using isn't supplying enougn current or is too low a voltage.
+Other reasons could be that the power supply you're using isn't supplying enough current or is too low a voltage.
 
 To debug further, you can take advantage of the console that was mentioned before. Connect a USB-TTL converter to GND and the Serial1 pins (shown above) and connect with the Web IDE at 9600 baud. You can then interact with Espruino as if it was connected to USB - but while it is powered from another source.
 

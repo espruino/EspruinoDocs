@@ -74,7 +74,7 @@ application code terse in order to save memory / variables:
 
 The `ui` base module takes care of most of the plumbing, logic and data
 flow between touch screen (or physical buttons) and display as input and
-output components and controling application.
+output components and controlling application.
 
 
 ### Implementation approach
@@ -90,7 +90,7 @@ objects: just data and - where needed - some format function(s).
 ### Memory / Variable usage
 
 Below some (ballpark) figures on various usage, categorized as U
-for unminified vs. M for minified and I for individual vs C for cumulated.
+for unminified vs. M for minified and I for individual vs C for emulated.
 
 ```
 // vars (Idividual|Cumulated)  IU /  IM -   CU -   CM  B (Un|Minified)
@@ -376,7 +376,7 @@ exports = // ui base / 'DOM'/ ui e(lement) data & code holder, singleton, for mi
           io framework but their module (file / url) name differs from
           'internal, built=-in module name .mn, for for any other modules,
           such as font modules, that are somehow integrated into ui
-          framwork and later referenced.
+          framework and later referenced.
           etc.
      'Integrate-able' extensions / modules - modules specifically written
      for ui framework - have an (internal) property called .mn - for
@@ -440,7 +440,7 @@ Touch event flags `t.f` - experimental - are:
 ```
 
 Re-focusing happens when having touched down, dragged out of the element
-and now draging back 'into' the initially focused element (touched down
+and now dragging back 'into' the initially focused element (touched down
 element (`_.ef` / `_.lf`).
 
 In preferred callback, a typical untouch - touch down on a ui element and

@@ -14,14 +14,14 @@ Note: It requires the uiExt - ui extension module - to be loaded.
 
 ### Enable ui base with uiRad element functions:
 
-Note: requires uiExt(ension) module (see uiExt.js module)
+**Note:** requires [uiExt.js module](uiExt.js)
 
 ```
 var ui = require("ui")     // load ui base module
     .adx(require("iuExt")) // add uiExt module into base and remove from cache
     .adx(require("uiRad")) // add uiRad module into base and remove from cache
     ;
-```  
+```
 
 ### Create - specify - radio buttons
 

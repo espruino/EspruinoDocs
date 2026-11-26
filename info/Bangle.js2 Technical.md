@@ -13,7 +13,7 @@ This page contains detailed information on Bangle.js's 2's internals. If you're
 just writing JS then you should have no need for this information, but if you
 plan on modifying the Bangle.js firmware it might be of interest.
 
-This file is based on reverse engineering of publically available firmware
+This file is based on reverse engineering of publicly available firmware
 and information, buy Gordon Williams, [fanoush](https://github.com/fanoush), and [atc1441](https://github.com/atc1441).
 It was originally published as a [hackaday.io project page](https://hackaday.io/project/175577-hackable-nrf52840-smart-watch)
 

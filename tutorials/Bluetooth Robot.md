@@ -104,7 +104,7 @@ Serial1.on('data', function(data) {
 
 This will watch for the words 'forward', 'back', 'left' and 'right' being sent over bluetooth and separated by spaces and will move the robot when it sees them. Click the little microphone symbol on your Android Device's keyboard to enable voice typing and try it out!
 
-It might take a few attempts to respond - the voice typing expects sentances, not individual commands and so it sometimes gets confused.
+It might take a few attempts to respond - the voice typing expects sentences, not individual commands and so it sometimes gets confused.
 
 If you leave USB connected, you'll see what words are being sent over bluetooth - you could easily add your own commands to do other things!
 

@@ -42,7 +42,7 @@ Don't be fooled by the huge semi-automatic wire strippers. Simple is better - ei
 
 Wire cutters with a simple cutting point - these are extremely useful for cutting wires close to the PCB
 
-### Tweezers or foreceps 
+### Tweezers or forceps 
 
 Tweezers or forceps can be very helpful for holding parts in place while soldering, particularly for surface mount parts.
 
@@ -100,7 +100,7 @@ As with other passive components, assortment packs of capacitors are available o
 
 ### Diodes
 
-Everyone who plays with electronics should have some basic diodes in stock - particularly since they're so cheap. The 1N4001 is a cheap and ubiquitious 1 amp diode. The rest of the 1N400x series is also perfectly suitable. Normal diodes have a forward voltage drop of around 0.7v. Schottky diodes have a lower forward voltage drop (0.3-0.5v), but are more expensive.
+Everyone who plays with electronics should have some basic diodes in stock - particularly since they're so cheap. The 1N4001 is a cheap and ubiquitous 1 amp diode. The rest of the 1N400x series is also perfectly suitable. Normal diodes have a forward voltage drop of around 0.7v. Schottky diodes have a lower forward voltage drop (0.3-0.5v), but are more expensive.
 
 ### LEDs
 

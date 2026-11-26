@@ -8,7 +8,7 @@ UI Example - Checkbox on Pixl.js
 Example with checkboxes
 
 Check boxes in all kinds of sizes; used dev margins, bevels
-and X-mark for pixl, because TTF vsrsion was not suitable for
+and X-mark for pixl, because TTF version was not suitable for
 B&W and resolutions / very small checkboxes. This pixl version
 is also working for TTF 240x320 ('backwards' compatible).
 

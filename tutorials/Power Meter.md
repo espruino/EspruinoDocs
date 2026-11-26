@@ -49,7 +49,7 @@ Connect the [INA226](../devices/INA226.md) as follows:
 | IN+ | Not connected |
 
 You can then connect the device you intend to power to the big `GND`/`IN+`
-terminals at the top of the INA226. I used a terminal block and a JST connetor
+terminals at the top of the INA226. I used a terminal block and a JST connector
 wire to make it easy to connect.
 
 I'd also recommend you attach a large capacitor (220uF or above) between `GND` and `IN+`.

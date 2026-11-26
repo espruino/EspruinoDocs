@@ -121,7 +121,7 @@ The Web IDE or command-line tools will load modules from the internet automatica
 
 However an Internet-connected Espruino device can't automatically load a modules from the internet by itself because `require` is synchronous while network connections are asynchronous.
 
-However you can use the following asyncronous code to load a module from the internet on demand.
+However you can use the following asynchronous code to load a module from the internet on demand.
 
 ```
 function loadModule(moduleName, callback) {

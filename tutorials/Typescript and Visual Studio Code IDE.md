@@ -15,7 +15,7 @@ supports type annotation, can deduce types.
 It can compile upper versions of ECMAScript to lower versions like ES5.
 
 Visual Studio Code is lightweight IDE that offers
-intellisence, syntax highlight, refactoring tools.
+IntelliSense, syntax highlight, refactoring tools.
 
 This tutorial describes how to use typescript for compiling typescript to ES5 (javascript 5) using Visual Studio Code IDE.
 
@@ -38,7 +38,7 @@ It shall run Visual Studio Code IDE and open then project.
 
 ![Visual Studio Code main screen](Typescript and Visual Studio Code IDE/main-screen.png)
 
-Poject has 3 build tasks: `build`, `espruino-console`, `send-to-espruino-console`. To access it press `Ctrl-Shift-B`
+Project has 3 build tasks: `build`, `espruino-console`, `send-to-espruino-console`. To access it press `Ctrl-Shift-B`
 
 ![Build commands](Typescript and Visual Studio Code IDE/build-commands.png)
 

@@ -22,8 +22,8 @@ for ...
 Each callback is optional, but sensibly each state must define at least one.
 A state with no enter or signal callback represents a dead state that can be 
 entered, but not exited normally. Callbacks not defined are not called when 
-changing states. The enter and exit callback signitures have no arguments 
-and the signal callback recieves the event argument passed to the state 
+changing states. The enter and exit callback signatures have no arguments 
+and the signal callback receives the event argument passed to the state 
 machine signal function, which may be a string or object as the state excepts. 
 
 The state machine makes callbacks with its context (i.e. this = state 
@@ -96,7 +96,7 @@ sm.init('One');
 
 // make state changes (assuming starting from One defined above) such as...
 sm.signal(500);         // Signal state One to change to state Two after 500ms
-sm.signal('dont_care'); // Signal state Two to chagne to state One immediately    
+sm.signal('dont_care'); // Signal state Two to change to state One immediately    
 sm.signal();            // Signal state One to change to state Two immediately
 
 */

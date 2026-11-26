@@ -77,6 +77,7 @@ bitrate
 bitrates
 ble
 blockly
+blocky
 blu
 Bluefruit
 Bluefy
@@ -154,6 +155,7 @@ Crypto
 cspin
 Ctrl
 cts
+customiser
 Customiser
 customizable
 daisychain
@@ -180,6 +182,7 @@ Dg
 dht
 dia
 dialout
+diffuser
 Digi
 Digikey
 digipot
@@ -219,6 +222,7 @@ emissivity
 Enablement
 encodings
 Eneby
+english
 Enthought
 enum
 enumerables
@@ -226,6 +230,7 @@ Enzinger
 Espressif
 Esprima
 espruino
+Espruinos
 esptool
 et
 ethernet
@@ -351,7 +356,9 @@ img
 Imin
 ina
 Infineon
+ing
 init
+initializations
 initializer
 inkjet
 inkscape
@@ -497,6 +504,7 @@ multifunction
 Multiline
 multimeter
 multimeters
+multiplatform
 Multiplatform
 Mux
 mv
@@ -635,6 +643,7 @@ Proxying
 psck
 psel
 ptr
+puckmote
 Puckmote
 pulldown
 pullup
@@ -649,6 +658,7 @@ px
 Pyroelectric
 qos
 Quectel
+quicksort
 Quicksort
 Qwiic
 Radiobutton
@@ -672,6 +682,7 @@ Renaud
 renderer
 Renesas
 replugging
+repo
 Repo
 Req
 resettable
@@ -748,6 +759,7 @@ sourcecode
 sourcefiles
 Sparkfun
 spec'ed
+Spectrums
 spi
 Spidermonkey
 spimode
@@ -771,6 +783,7 @@ subdirectory
 sublicense
 submodules
 substrings
+Sur
 Suunto
 swipeable
 Switchmode
@@ -816,6 +829,7 @@ travis
 tri
 trie
 tristate
+truey
 truthy
 tty
 Twilio
@@ -877,6 +891,7 @@ Vdd
 Vds
 Velleman
 Vgs
+vide
 Vin
 Vio
 Vishay

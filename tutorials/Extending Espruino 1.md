@@ -12,7 +12,7 @@ For a more detailed tutorial [you can see how to make your own class](./Extendin
 
 __WARNING__: while everything described here works, the tutorial has not been tested much.
 
-__WARNING__: Since my intension was to get some special functions for Espruino on ESP8266, example below are tested for ESP8266-port of Espruino. Good news, there is a lot of general information, hopefully of help for others.
+__WARNING__: Since my intention was to get some special functions for Espruino on ESP8266, example below are tested for ESP8266-port of Espruino. Good news, there is a lot of general information, hopefully of help for others.
 
 __Prerequisite__: before you start with this, you should have your own development running, to compile your own version. Follow [the instructions on GitHub](https://github.com/espruino/Espruino/blob/master/README_Building.md) to get started.
 
@@ -45,7 +45,7 @@ jswrap_FlashExtension.c
 
 Template for .h and .c
 ---------------------
-Lets start with the header file. For this time, lets skip the copyright part. My recommendation is, to take a closer look to other files and do something similiar. Please have in mind, Espruino is open source.
+Lets start with the header file. For this time, lets skip the copyright part. My recommendation is, to take a closer look to other files and do something similar. Please have in mind, Espruino is open source.
 
 ```C
 #include "jsvar.h"
@@ -100,7 +100,7 @@ JsVar *jswrap_flash_readString(int addr, int pointer){
 }
 ```
 
-Reading data from flash in hardware relevant function (jshFlashRead) is done in sets of 4 bytes on 4 bytes boundaries. The Int32 is splitted into start and length.
+Reading data from flash in hardware relevant function (jshFlashRead) is done in sets of 4 bytes on 4 bytes boundaries. The Int32 is split into start and length.
 Last we only have to use already existing read function from Flash object to get the text. Return format is an Uint8Array, which can easily be converted to a string using `E.toString`.
 
 Changes to make file

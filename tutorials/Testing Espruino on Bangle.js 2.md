@@ -9,7 +9,7 @@ Testing Espruino on Bangle.js 2
 
 If you are making changes to Espruino itself, you need a way to quickly build and test it. This tutorial shows you how to do that on the [Bangle.js 2 watch](https://www.espruino.com/Bangle.js2).
 
-We will build Espruino both for a real Bangle.js 2 and the eumulator that is built into the [Web IDE](https://www.espruino.com/Web+IDE). It is always recommended to test on real hardware, but you can use the emulator if you don't have a watch, or if you're just trying things out and plan to test on the real watch later.
+We will build Espruino both for a real Bangle.js 2 and the emulator that is built into the [Web IDE](https://www.espruino.com/Web+IDE). It is always recommended to test on real hardware, but you can use the emulator if you don't have a watch, or if you're just trying things out and plan to test on the real watch later.
 
 
 Compiling Espruino

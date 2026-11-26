@@ -124,7 +124,7 @@ function DoInit() {
   }); 
 
   /* 
-  // Reqeust forecast data
+  // Request forecast data
   Req = GetOWM_Request("forecast", Location, API_Key);
   print ("Request: "+ Req);
   http.get( Req, function(res) {

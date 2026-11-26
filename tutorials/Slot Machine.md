@@ -38,7 +38,7 @@ Now the tricky part... The LED lights need wiring up to GND and VCC, and also ne
 
 * Take the first LED, and figure out which pins are which using the diagram above. Hold it so the plastic part is facing up, and the two shorter pins are on the left. The slightly flat side of the plastic bit should be on the right-hand side.
 
-* Bend the left and right pins (data in/out) towards the left and right, and bend the middle two pins towards you (beinding the shorter one on middle-left slight more).
+* Bend the left and right pins (data in/out) towards the left and right, and bend the middle two pins towards you (bending the shorter one on middle-left slight more).
 * Then push the LED into the breadboard:
   * The Leftmost pin (data in) should be in the same column as the yellow jumper wire
   * The Middle-left pin (5V) should be in the row right at the bottom marked with '+;

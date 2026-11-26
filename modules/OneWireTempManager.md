@@ -47,5 +47,5 @@ All constants should be modified **before** calling manager.start().
 
 | Constant                            | Description |
 | ----------------------------------- | -------- |
-| manager.C.SCAN_PERIOD    | 1-wire bus scan period. Default is 5 secons. |
+| manager.C.SCAN_PERIOD    | 1-wire bus scan period. Default is 5 seconds. |
 | manager.C.POLL_PERIOD    | Temperature sensors poll period. Default is 1 second. |

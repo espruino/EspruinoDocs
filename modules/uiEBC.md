@@ -29,7 +29,7 @@ The uiEBC extension is added to the base ui the same way as the uiExt
 extension  module. uiEBC extension requires iuExt extension to be loaded
 in order to work.
 
-```
+```JS
 var ui = require("ui")
     .adx(require("uiBtn"))
     .adx(require("uiExt"))
@@ -44,19 +44,19 @@ left and top borders of a rectangle in touch color.
 
 --- Brief documentation of the methods / functions available:
 
-- .sd - delay for re-drawing the selection cue after ui element has been
+- `.sd` - delay for re-drawing the selection cue after ui element has been
       tapped / (un)touched - which concludes with a blur. Application
       can control / overwrite select redraw delay as well as the (un)touch
       delay by passing values to tap/touch selected ui element mimicking
       tap / touch duration : `.st(sd,ud)`. Passing a value for `du`
       will  override the default value specified in `ui` base module.
-- .sx - property holds index of selected element in ui element array `.es.`
+- `.sx` - property holds index of selected element in ui element array `.es.`
       Value `-1` indicates that no ui element is selected.
-- .sn(w,f,l) - method selects the next qualifying ui element. If there is
+- `.sn(w,f,l)` - method selects the next qualifying ui element. If there is
       none (anymore, if not wrapped), undefined is returned. If there is
       only exactly one, then that one is returned every time. If none is
       currently selected, the first one is returned.
-- .st(sd,ud) - method taps / touches the selected ui element and delays the
+- `.st(sd,ud)` - method taps / touches the selected ui element and delays the
       untouch by specified time overriding the `.ud` default as defined
       in the `uiExt` module, where the tap / touch function `.t(iie,ud)`
       is defined.
@@ -69,7 +69,7 @@ ranges of qualifying and application desired ui elements.
 --- EBC (ui extension for push button controlled ui) properties - variables
     and methods - mixed into ui base:
 
-```
+```JS
 exports = // ui ctrl w/ btns vs touch ext, used by ui3|4|5|6BC modules
 { mn: "uiEBC" // module 'clazz' name - globally unique (used to rem frm cache)
 , sd: 100 // ms default select delay

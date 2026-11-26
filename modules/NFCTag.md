@@ -44,7 +44,7 @@ initializer bytes used on the second line:
 |     7 |  0x00 | Empty NDEF Record                                         |
 |     8 |  0xFE | Last TLV block in the data area                           |
 
-It is writtable using almost any NFC Reader e.g. an Android phone
+It is writable using almost any NFC Reader e.g. an Android phone
 (using [NFC TagWriter by NXP](https://play.google.com/store/apps/details?id=com.nxp.nfc.tagwriter))
 or an iPhone with iOS 13+
 (using [NFC Tools by wakdev](https://apps.apple.com/ch/app/nfc-tools/id1252962749))

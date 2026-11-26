@@ -26,7 +26,7 @@ Open up the remote control and then connect wires from Espruino to each pushbutt
 
 Or, you can buy a radio transmitter and can then try and duplicate the remote control's functionality. This is harder, but more flexible (you could control lots of sockets), and obviously more fun!
 
-The sockets I'm using are [433.92](../devices/433Mhz.md)Mhz ones (it's written on the back). This band is an 'open' band - you don't need a license to use it, and it's a complete free for all. Every device has its own protocol, and they all transmit whenever they want. This means that there is quite a large likelihood that the signal that you send will not arrive intact so most devices send the same signal several times.
+The sockets I'm using are [433.92](../devices/433Mhz.md)MHz ones (it's written on the back). This band is an 'open' band - you don't need a license to use it, and it's a complete free for all. Every device has its own protocol, and they all transmit whenever they want. This means that there is quite a large likelihood that the signal that you send will not arrive intact so most devices send the same signal several times.
 
 The Protocol
 ----------

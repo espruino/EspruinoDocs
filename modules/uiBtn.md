@@ -9,7 +9,7 @@ UI Button module
 The ui button module extends ui base with button ui element.
 
 Implementation note: vs3 overlaps/is duplicates of uiExt module and
-uwill overwrite each other. Therefore - on changes - changes have to
+will overwrite each other. Therefore - on changes - changes have to
 be applied to both of them to maintain consistent outcome. It is
 duplicated in the ui checkbox so that ui extensions does not need to
 be loaded when not used. It saves memory / vars with simple UIs.
@@ -108,7 +108,7 @@ ui.c(3,"btn","b01",10,20,50,30,4,7,"B_1"
 ```
 
 The same callback shared by multiple uiBtns can produce button specific
-results when callback takes into account the each buttone's unique id or
+results when callback takes into account the each button's unique id or
 value (object) as passed to the callback as 2nd argument. Example code for
 label change above shows that callback parameters include the value object
 of the button (as well as the button element itself). This allows to use

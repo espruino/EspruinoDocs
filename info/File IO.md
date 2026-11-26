@@ -119,7 +119,7 @@ To avoid this, Espruino has the [`E.unmountSD()`](http://www.espruino.com/Refere
 
 Just be sure not to perform any File IO after calling it, as they will 're-mount' the SD card.
 
-For example you might want to create a logger that writed to a log file when the Red LED is lit, but that allows you to press a button to toggle between recording and not recording:
+For example you might want to create a logger that writes to a log file when the Red LED is lit, but that allows you to press a button to toggle between recording and not recording:
 
 ```
 var logFile;

@@ -81,7 +81,7 @@ The next step is to get your computer to send the command `draw(...)` every so o
 Software - Host Computer
 ---------------------
 
-Unforunately every Operating system is different - pick yours from below:
+Unfortunately every Operating system is different - pick yours from below:
 
 ### Linux
 

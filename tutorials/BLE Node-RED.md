@@ -48,7 +48,7 @@ debug messages.
 Narrowing it down
 -----------------
 
-Getting all the adverising information isn't very useful, but
+Getting all the advertising information isn't very useful, but
 we can easily narrow it down by changing `Topic` in the `mqtt` input.
 
 In my example, there was `/ble/advertise/e7:e0:57:ad:36:a2/rssi` in
@@ -95,7 +95,7 @@ msg.payload = msg.payload > -70;
 return msg;
 ```
 
-* Now link it inbetween `mqtt` and `debug`, You can delete existing links
+* Now link it between `mqtt` and `debug`, You can delete existing links
 by clicking them and pressing delete.
 * Click `Deploy` - the number will now change to a boolean which will
 change to true when the Puck is closer than a certain distance.

@@ -5,7 +5,7 @@ Tested with the Adafruit breakout, read more: https://learn.adafruit.com/adafrui
 
 Datasheet: http://www.adafruit.com/datasheets/DRV2605.pdf
 
-This code is a port of Ladyada's Ardunio implementation
+This code is a port of Ladyada's Arduino implementation
 https://github.com/adafruit/Adafruit_DRV2605_Library/
 
 Copyright (c) 2022 CH. See the file LICENSE for copying permission.

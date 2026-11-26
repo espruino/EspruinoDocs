@@ -17,7 +17,7 @@ This module defines a few Date object extensions to add local time support to Es
 ```javascript
   // At start of program, require and optionally set locale data:
   require('DateExt'); // uses defaults
-  // Same as: 
+  // Same as:
   require('DateExt').locale({zone:['UTC','UTC'], offset:[0,0], dst:0, str:"UY-0M-0D'T'0h:0m:0s'Z'"});
   // Example for defining local time as US Mountain Time:
   require('DateExt').locale({zone:['MST','MDT'], offset:[420,360], dst:0, str:"T C 0D Y 0h:0m:0s z"});
@@ -65,13 +65,13 @@ The **as()** method internally generates a *representative* date object used in 
   - **Y**:  FullYear
   - **V**:  2-digit Year
   - **M**:  Month, i.e. Jan=1
-  - **C**:  3-letter text for "C"alendar Month
-  - **D**:  Day of the Month 
+  - **C**:  3-letter text for Calendar Month
+  - **D**:  Day of the Month
   - **W**:  Day of the Week
   - **T**:  3-letter "T"ext for the Day of the Week
   - **h**:  Hours (24 hour format)
   - **i**:  Hours (12 hour format)
-  - **m**:  Minutes 
+  - **m**:  Minutes
   - **s**:  Seconds
   - **x**:  Milliseconds, fractional seconds, not same as [date].ms
   - **a**:  AM or PM
@@ -80,17 +80,17 @@ The **as()** method internally generates a *representative* date object used in 
   - **tx**:  a record of time units suitable for creating a new date, useful for date arithmetic
   - **dst**:  Daylight Savings Time flag
   - **str**:  the resulting formatted time string
-  
+
   Hint: upper case => Date values; lower case => time values; multicharacter => non-format
-  
+
 Also,
 
-  - **0**: Prefixing M, D, W, h, i, m, s or x with zero pads result (i.e. for h=3, 0h=>03) 
+  - **0**: Prefixing M, D, W, h, i, m, s or x with zero pads result (i.e. for h=3, 0h=>03)
      Note use 00x for milliseconds.
   - **' or "**: Quoted substrings, single or double, pass directly to output string (str)
 
 ### Example Test Code
-    
+
 ```javascript
 // dateExt.js test
 

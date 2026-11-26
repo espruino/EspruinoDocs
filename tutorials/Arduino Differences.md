@@ -93,7 +93,7 @@ Language
 
 * Normal Arrays are sparse, so are not very efficient. You're best off using `Uint8Array` or similar.
 * Code execution speed is not fantastic, see [Performance](../info/Performance.md). Instead of writing code, try and use library functions wherever possible.
-* You can't write code that runs inside interrupts, and your code is never preempted. You can still measure pulses accurately though, as events from `setWatch` are timestampted to the nearest microsecond.
+* You can't write code that runs inside interrupts, and your code is never preempted. You can still measure pulses accurately though, as events from `setWatch` are timestamped to the nearest microsecond.
 
 
 Found something else?

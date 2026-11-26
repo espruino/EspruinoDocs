@@ -25,7 +25,7 @@ Wiring Up
 
 Attach the KeyPad as Follows
 
-| KeyPad | Jolt.js Quiic connector |
+| KeyPad | Jolt.js Qwiic connector |
 |--------|-------------------------|
 | 1 | Q3 GND (Black) |
 | 2 | Q3 VCC (Red) |

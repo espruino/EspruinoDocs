@@ -94,7 +94,7 @@ to attempt to look up the non-random address (if the device is bonded).
 
 **NOTE:** MAC addresses can be modified so this is not 100% secure. However
 the chances of someone *guessing* the correct MAC address without being in the
-area to snoop on a connection while it is active are extemely low.
+area to snoop on a connection while it is active are extremely low.
 
 
 ## Disable the BLE UART

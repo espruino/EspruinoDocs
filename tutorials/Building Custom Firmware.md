@@ -18,7 +18,7 @@ To get started (assuming you have an Espruino WiFi):
 * Set up the Espruino build environment like described in
  * [README BuildProcess](https://github.com/espruino/Espruino/blob/master/README_BuildProcess.md)
  * [README Building](https://github.com/espruino/Espruino/blob/master/README_Building.md)
-* Clone the [Espruino GitHub Reposutory](https://github.com/espruino/Espruino) locally
+* Clone the [Espruino GitHub Repository](https://github.com/espruino/Espruino) locally
 * Copy `boards/ESPRUINOWIFI.py` to `boards/ESPRUINOWIFI_CUSTOM.py`
 
 **Note:** The board name file should be only alphanumeric capitals or underscores, starting with a letter (no dashes or lowercase).

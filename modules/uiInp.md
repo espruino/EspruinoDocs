@@ -8,19 +8,19 @@ UI input field module
 
 UI input module extends ui base module with input field ui element.
 
-**Note:** requires uiExt(ension) module (see [uiExt.js](./uiExt.md) module)
+**Note:** requires [uiExt.js module](uiExt.js)
 
 ### Enable ui with uiInp element functions:
 
 ```
 var ui = require("ui")       // load ui base module
-      .adx(require("iuExt")) // add module into base and remove from cache
+      .adx(require("uiExt")) // add module into base and remove from cache
       .adx(require("uiInp")) // add module into base and remove from cache
       ;
 ```
 
 ### Create and add to ui an active(2), visible(1) =(3) input field at x/y
-(left/top: 45/7) of size width/height (195/28), turkis border color (3),
+(left/top: 45/7) of size width/height (195/28), turquoise border color (3),
 white. Callback clears content when tap lasted longer than 550ms and there
 is content. Not checking for content runs into stack overflow, because `.u(e,"")`
 triggers again a callback because it is a change of value...
@@ -97,7 +97,7 @@ a[]  e[]
  8   [8] fc - fill color
  9   [9] v  - value - (string) value to start with
 10  [10] cb - simple, preferred callback on untouch after touchdown
-11  [11] ls - labels - array of labels of which 1st is also value related   
+11  [11] ls - labels - array of labels of which 1st is also value related
       ls[0] label (info) for value related info, array with:
          l[0]  fs    - font spec:s>0: fontVector (size); s<0: .fnts[-s] of loaded font
          l[1]  tc    - (label) text color (index)

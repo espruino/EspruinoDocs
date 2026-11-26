@@ -202,7 +202,7 @@ ES2021
 Regular Expressions
 -------------------
 
-Espruino aims to support most commonly used RegExp contructs, however some parts of the spec are not implemented:
+Espruino aims to support most commonly used RegExp constructs, however some parts of the spec are not implemented:
 
 * [Assertions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions) other than `^` and `$`
 * [Numeric quantifiers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers) (eg `x{3}`)

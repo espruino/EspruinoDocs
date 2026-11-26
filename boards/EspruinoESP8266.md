@@ -79,7 +79,7 @@ The main limitations of Espruino on the esp8266 come from two factors:
   as a good ARM processor.
 - The esp8266 uses FreeRTOS with non-preemptible tasks and has extremely limited code space for interrupt handlers, as a result,
   it is not possible to handle certain peripherals at interrupt time and a task has to be scheduled instead, which would be OK
-  if tasks were pre-emptible, but they are not. This means that functions like digitalPulse have to use busy-waiting between
+  if tasks were preemptible, but they are not. This means that functions like digitalPulse have to use busy-waiting between
   edge transitions instead of being interrupt driven.
 
 In general the above limitations can be overcome by writing C code and loading it into a custom Espruino build.

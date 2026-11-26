@@ -5,7 +5,7 @@ BLE Characteristic Scan
 * KEYWORDS: BLE,BLuetooth,Characteristic,Service,Scan,Dump
 * USES: BLE,Only BLE
 
-Sometimes you might want to see what services and characeristics a device provides.
+Sometimes you might want to see what services and characteristics a device provides.
 
 You can do this using the `NRF Connect` app for Android/iOS but sometimes you might want to do it on Espruino too.
 

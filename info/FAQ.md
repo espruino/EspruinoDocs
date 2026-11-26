@@ -204,14 +204,14 @@ Can I use official Espruino Boards in my product? How long will you keep making 
 
 Yes, we'd encourage you to use our products in your product - many of them such as [Pico](../boards/Pico.md) or the [MDBT42Q](../boards/MDBT42Q.md) are designed to be easy to embed.
 
-Espruino has been available since 2012 and isn't going anywhere. We'll keep making and supporting **all of our boards** for the forseeable future. However if something unexpected were to happen, the Espruino software and hardware is Open Source so you'll still be able to make your own boards (other companies can start making them too) - meaning that any product using Espruino can be produced for years to come.
+Espruino has been available since 2012 and isn't going anywhere. We'll keep making and supporting **all of our boards** for the foreseeable future. However if something unexpected were to happen, the Espruino software and hardware is Open Source so you'll still be able to make your own boards (other companies can start making them too) - meaning that any product using Espruino can be produced for years to come.
 
 
 Can I sell boards containing the Espruino software?
 ---------------------------------------------------------------------------
 
 Yes, as long as you abide by the terms of Espruino's MPLv2 licence and respect the Espruino trademark (eg. don't call your board an Espruino board unless agreed with us).
-However, if you are profiting from the community's hard work then we'd apprectiate it if you could find a way to contribute something back - for instance you could [Donate](https://www.espruino.com/Donate), or [pay us to produce builds of Espruino for your device](https://www.espruino.com/Business).
+However, if you are profiting from the community's hard work then we'd appreciate it if you could find a way to contribute something back - for instance you could [Donate](https://www.espruino.com/Donate), or [pay us to produce builds of Espruino for your device](https://www.espruino.com/Business).
 
 
 How much Flash memory is free after installing Espruino, and can I use it?
@@ -349,7 +349,7 @@ Is there a `delay()` function in Espruino?
 
 There's [setTimeout](https://www.espruino.com/Reference#l__global_setTimeout) which will execute a callback
 function after a certain time period, and there is also [digitalPulse](https://www.espruino.com/Reference#l__global_digitalPulse)
-hich can be used to send carefully timed pulses.
+which can be used to send carefully timed pulses.
 
 An actual delay function isn't implemented because it encourages you to write code
 that causes problems for Espruino. As Espruino doesn't have preemptive multitasking,

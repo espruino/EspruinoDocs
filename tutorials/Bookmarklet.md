@@ -458,7 +458,7 @@ Now, in Chrome:
 * Select `Bookmarks bar` on the left.
 * Click the `Organize` link (top right), then `Add new bookmark`
 * Set the name as `Bangle.js Bookmarklet`
-* Copy the code from the text editor and patse it in under `URL`
+* Copy the code from the text editor and paste it in under `URL`
 * Click `Save`
 
 ## The App

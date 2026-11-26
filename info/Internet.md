@@ -112,7 +112,7 @@ function pageRequest(req, res) {
 require("http").createServer(pageRequest).listen(8080); // port 8080
 ```
 
-Note that we're using port `8080` in these examples, because it works when running Espruino on Linux/Raspberry Pi (without superuser priviledges). If you're using a microcontroller you could just use port 80, which means that you can just connect to `http://your_device`.
+Note that we're using port `8080` in these examples, because it works when running Espruino on Linux/Raspberry Pi (without superuser privileges). If you're using a microcontroller you could just use port 80, which means that you can just connect to `http://your_device`.
 
 ### Pages
 
@@ -226,7 +226,7 @@ This loads the file a section at a time, and even closes it and the HTTP connect
 
 In a similar way, you may have problems if you're trying to send a lot of data. For instance, you may have a 10,000 byte buffer of data and you want to send it as text.
 
-It's possble that in text form this could take 40,000 bytes (eg. `100,101,102,103,...`), which wouldn't fit into memory.
+It's possible that in text form this could take 40,000 bytes (eg. `100,101,102,103,...`), which wouldn't fit into memory.
 
 Instead, you can send the data a chunk at at time, using the HTTP response's `drain` event (which is called when the output buffer is empty).
 

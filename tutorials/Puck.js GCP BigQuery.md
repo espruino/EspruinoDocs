@@ -20,7 +20,7 @@ The GCP Tutorial (Temperature data to GCP BigQuery Table & Data Studio Graph):
 - A GCP Pub/sub subscription stores the data to a BigQuery Table
 - A Data Studio dashboard displays the data from BigQuery
 
-Prerequesites
+Prerequisites
 --------
 * A [Puck.js](../boards/Puck.js.md) device (or other [Espruino board](https://www.espruino.com/Order) if you don't need Bluetooth LE
 * Raspberry Pi with Bluettoth/Wifi Capabilities and NodeRed & EspruinoHub installed on it
@@ -126,9 +126,9 @@ Flash the Code to Puck.js
     * As long as the button state remains 1, every minute, your Puck.js will advertise the temperature (f), battery level, voltage, light, and LED states. It also will advertise when it senses movement, a change in magnetic field, NFC field, or a button press. For this tutorial, we'll just be using the temperature advertisements. Upload the code to the Puck.js's flash, so it'll still be there if you swap out the battery.
 * Testing the Code in [Espruino Web IDE](https://www.espruino.com/ide/)
     * ![window](Puck.js GCP BigQuery/puck-flash.png)
-    * Check that the code is running by reading the console log output. Make surethat temperature data is coming across. Sometimes temperature data doesn't advertise if the temperature hasn't changed. If you want to test the temperature advertisement, warm up or cool down the puck temp sensor by transferring heat with your hand.
+    * Check that the code is running by reading the console log output. Make sure that temperature data is coming across. Sometimes temperature data doesn't advertise if the temperature hasn't changed. If you want to test the temperature advertisement, warm up or cool down the puck temp sensor by transferring heat with your hand.
 * Start Advertising!
-    * To get the data to stop showing up in the console & start advertising, take the battey out & put it back in. As long as the code was uploaded to the device's flash, it'll start advertising when the battery is put back in. The temperature data won't start sending over until one minute has gone by. Then it'll advertise the temp every minute.
+    * To get the data to stop showing up in the console & start advertising, take the battery out & put it back in. As long as the code was uploaded to the device's flash, it'll start advertising when the battery is put back in. The temperature data won't start sending over until one minute has gone by. Then it'll advertise the temp every minute.
 
 ```
 var state =1;

@@ -106,7 +106,7 @@ Try `peek16(CCR1)` again to get the value of `CCR1` - it's now saying `32307`.
 
 Try setting the LED to blink only very quickly with `analogWrite(A8, 0.05, {freq:10})` and then check `peek16(CCR1)`. You'll see that as you'd expect, the value is now one tenth of what is was. It's `3230`.
 
-By itself that's not useful, but we can actually change it ourself, using `poke`.
+By itself that's not useful, but we can actually change it yourself, using `poke`.
 
 * Try `poke16(CCR1, 0)` - this should set the duty cycle to 0, turning it off.
 * Or try `poke16(CCR1, 40000)` to make it stay on most of the time.
@@ -359,7 +359,7 @@ The relevant section of the reference manual is `12.3.6 Input capture mode`, but
 All we need to do is:
 
 * Enable and configure the counter (prescaler, autoreload) with `analogWrite`
-* Reconfigure Channel 1 to listen for events, rather that outputtting [PWM](../info/PWM.md)
+* Reconfigure Channel 1 to listen for events, rather that outputting [PWM](../info/PWM.md)
 
 Obviously the first step is easy, and for the second step we can actually steal some of the code that we'd written previously for the counter - with one small tweak. This time we're using channel 1's prescaler `IC1PS`, so we want to make sure we reset it's value as well so it doesn't do anything. It's just a matter of making sure we clear 2 extra bits in the `CCMR1` register:
 

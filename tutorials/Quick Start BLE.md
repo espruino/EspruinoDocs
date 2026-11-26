@@ -119,7 +119,7 @@ If your computer doesn't have Bluetooth LE then Bluetooth LE USB adaptors and sm
 * **Broadcom chipset** (eg. BCM20702) works well on all platforms.
 * **Cambridge Silicon Radio (CSR)** - these work great on Linux and Windows. However while they used to work on Macs, *Apple removed support in the High Sierra OS update* - so you're better off with a Broadcom module.
 
-To be sure that you get a usable adaptor we'd recommend that you buy ONLY adaptors that explicitly mention `CSR` or `Broadcom` in the descriptuon. **The BlueGiga BLED112 module WILL NOT WORK** - it is a serial port device, not a general purpose Bluetooth adaptor.
+To be sure that you get a usable adaptor we'd recommend that you buy ONLY adaptors that explicitly mention `CSR` or `Broadcom` in the description. **The BlueGiga BLED112 module WILL NOT WORK** - it is a serial port device, not a general purpose Bluetooth adaptor.
 
 Common USB Bluetooth adaptors that have been tested and work are:
 
@@ -207,7 +207,7 @@ You can also check out `chrome://bluetooth-internals/#adapter` to see what's hap
 
 Other potential issues:
 
-* Most [Flatpaks](https://flatpak.org/) don't work out of the box as Bluetooth priviledges aren't always turned on. You can change them using [flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal) or can just install a native package for your OS.
+* Most [Flatpaks](https://flatpak.org/) don't work out of the box as Bluetooth privileges aren't always turned on. You can change them using [flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal) or can just install a native package for your OS.
 * BlueZ 5.41+ required (5.43 is more stable) - you can check by typing `bluetoothd --version`. Pretty much every Linux distribution from the past 5 years is now up to date, but if yours isn't there are some [Bluez installation instructions here](./Web Bluetooth On Linux.md)
 * Some Chromium based browsers such as Brave disable Bluetooth functionality. If you run into issues with a specific browser try an alternative browser from the list above.
 

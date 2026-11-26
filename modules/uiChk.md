@@ -11,7 +11,7 @@ UI Checkbox module
 The ui checkbox module extends ui base with checkbox ui element.
 
 Implementation note: vs2 overlaps/is duplicates of uiExt module and
-uwill overwrite each other. Therefore - on changes - changes have to
+will overwrite each other. Therefore - on changes - changes have to
 be applied to both of them to maintain consistent outcome. It is
 duplicated in the ui checkbox so that ui extensions does not need to
 be loaded when not used. It saves memory / vars with simple UIs.

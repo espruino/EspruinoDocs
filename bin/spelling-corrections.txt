@@ -1,0 +1,28 @@
+# Spelling corrections remembered by `node bin/check_docs.js --fix` (misspelling -> replacement)
+# These are offered as the first suggestion when the misspelling is found again
+alook -> a look
+bythe -> by the
+cond -> condition
+crinitilized -> initialized
+defice -> device
+espriuno -> espruino
+espuino -> espruino
+hich -> which
+holded -> held
+immidiatly -> immediately
+intellisence -> IntelliSense
+interchangabley -> interchangeably
+interpretering -> interpreting
+javascriipt -> javascript
+javascriptvariable -> the JavaScript variable
+labe -> label
+moduled -> modulated
+multiplicated -> multiplied
+ou -> our
+pase -> paste
+quiic -> qwiic
+splitted -> split
+surethat -> sure that
+vera -> versa
+wath -> what
+welknown -> well known

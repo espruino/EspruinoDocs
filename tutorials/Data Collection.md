@@ -98,7 +98,7 @@ Usually each number added to the array takes up two *variable slots* - one
 for the number, and one for the array index (see the [performance section](../info/Performance.md)
 for more information). You can use `process.memory().free` to see how many
 variable slots you have available, so can see how long you should restrict
-the array to (you need to leave a few variable slots free for exection too!).
+the array to (you need to leave a few variable slots free for execution too!).
 
 ### RAM - Typed Array
 

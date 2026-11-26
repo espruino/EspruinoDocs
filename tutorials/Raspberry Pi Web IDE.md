@@ -18,7 +18,7 @@ find a compatible Bluetooth LE adaptor and plug it in.
 Initial Pi Setup
 ----------------
 
-If you've got a Raspberry Pi with an up to date OS and a command primpt
+If you've got a Raspberry Pi with an up to date OS and a command prompt
 (either via network, or with a monitor & keyboard) then you can skip this bit.
 
 * Download the `RASPBIAN JESSIE LITE` image from the [Raspberry Pi website](https://www.raspberrypi.org/downloads/raspbian/)

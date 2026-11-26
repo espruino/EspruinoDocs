@@ -26,7 +26,7 @@ In addition:
 * Ensure `HID` is `Off`, and `BLE` and `Programmable` are set to `On` in the `Settings` screen.
 * On Bangle.js 1: Hold `BTN1` and `BTN2` for 5 seconds to force a full software reset of Bangle.js: https://www.espruino.com/Bangle.js#resetting
 * On Bangle.js 2: Hold `BTN1` for 6 seconds until the screen changes to show blocky text to force a full software reset of Bangle.js: https://www.espruino.com/Bangle.js2#resetting
-* On Mac OS Big Sur, it may help to go to your Mac's Bluetooth Widget (in the toolbar), choose `Bluetooth Preferences`, then remove the Bangle.js from the list of devices if it has appeared in there.
+* On Mac OS `Big Sur`, it may help to go to your Mac's Bluetooth Widget (in the toolbar), choose `Bluetooth Preferences`, then remove the Bangle.js from the list of devices if it has appeared in there.
 
 Then go to https://banglejs.com/apps and connect using the window provided by the Web Browser.
 

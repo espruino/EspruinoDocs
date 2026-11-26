@@ -8,7 +8,7 @@ SSD16XX e-Paper display driver
 
 ![GDEH0154D67](SSD16XX/GDEH0154D67.png)
 
-E-ink display with a display driver of SSD16XX (Ex - SSD1681) are a family of similar controller set with different properties.  Some with color options or with the ability to do partial refreshes.  
+E-ink display with a display driver of SSD16XX (Ex - SSD1681) are a family of similar controller set with different properties.  Some with color options or with the ability to do partial refreshes.
 
 Tested with
 * SSD1681 (W)(C)
@@ -27,7 +27,7 @@ Wiring Up
 
 The bare display and controller module needs to be connected with a 24pin FPC connector with 0.5mm pitch and an additional driving circuit. There are rather huge and expensive ready to use development boards available from the display manufacturer. You can even try to build the minimum circuit yourself, e.g. like [Jaroslav Sýkora](http://www.jsykora.info/2014/05/attempt-at-soldering-an-fpc-connector-with-0-5mm-pitch-and-a-prototyping-pcb-design/) did.
 
-The following infos apply only to the connection between a common display and a microcontroller, ignoring the driving circuit.
+The following info applies only to the connection between a common display and a microcontroller, ignoring the driving circuit.
 
 ### Pin overview
 
@@ -70,7 +70,7 @@ Software
 ### Example
 
 ```
-//Example using a Nordict NRF52840DK 
+//Example using a Nordict NRF52840DK
 var screen = require("SSD16XX");
 
 var sck  = D47;
@@ -136,7 +136,7 @@ Right now this seems to be the easiest solution.
 
 ### Fast refresh rate.
 
-When you enable ```display.setFastRefresh()``` the display will only change the changed pixels.  Instead of going through then entire refresh cycle.  This will increase the displays refresh rate, but might cause burn into the display.  So its recommended to do a ```setFullRefresh``` to fully reset the display pixels.  But if you do this. You'll have to use this ```SetFastRefresh``` to make the display only refresh partially.  
+When you enable ```display.setFastRefresh()``` the display will only change the changed pixels.  Instead of going through then entire refresh cycle.  This will increase the displays refresh rate, but might cause burn into the display.  So its recommended to do a ```setFullRefresh``` to fully reset the display pixels.  But if you do this. You'll have to use this ```SetFastRefresh``` to make the display only refresh partially.
 
 ### Colors
 
@@ -161,7 +161,7 @@ Per default all pixels in this buffer have their color set to ```0```. For the S
 |white/black | decimal ```0```, or hexadecimal ```0x00```   | decimal ```0``` or hexadecimal ```0x00``` |
 
 #### Pixel Colors under the hood
-The way color is handle is with black and white is with a single buffer, but to have color it requires 2 buffers.  One for black and white and one that either enables or disables the given (red/yellow) color in that given pixel.  Its structured this way because that's how hardware registers hold the data.  
+The way color is handle is with black and white is with a single buffer, but to have color it requires 2 buffers.  One for black and white and one that either enables or disables the given (red/yellow) color in that given pixel.  Its structured this way because that's how hardware registers hold the data.
 
 The reverse order of pixels to concrete bits is taken care of by the module with a suitable Graphics configuration.
 

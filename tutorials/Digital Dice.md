@@ -74,7 +74,7 @@ On the lights, take the end that was marked  '5V, DI, GND', and separate out the
 
 ![Step 9](Digital Dice/step9.jpg)
 
-And now, you can tuck everything inside. The Espruino board and battery should fit snugly inbetween the LEDs. Make sure the USB connector faces outwards so that you can connect to it with your PC
+And now, you can tuck everything inside. The Espruino board and battery should fit snugly between the LEDs. Make sure the USB connector faces outwards so that you can connect to it with your PC
 
 ![Step 10](Digital Dice/step10.jpg)
 

@@ -2,7 +2,7 @@
 /*
   Largely inspired from SIM900 modem library, based on UG96 modem (Quectel).
   Uses the 'NetworkJS' library to provide a JS endpoint for HTTP.
-  
+
   Documented in espruino.com/WioLTE
 */
 
@@ -79,7 +79,7 @@ var busy = false;
 undefined       : unused
 true            : connected and ready
 Wait            : waiting for connection (client), or for data to be sent
-tobeclosed      : closed (either locally request or remotly or both)
+tobeclosed      : closed (either locally request or remotely or both)
                   but not yet closed because of data still in the pipe.
 */
 var socks = [];
@@ -99,10 +99,10 @@ var pwrkey;
 var pwrkey_active_level;
 var flowcontrol = false;  // Not support flowcontrol on WioLTE, as the RTS and CTS pins is floating
 
-/* 
+/*
 gpsItems = {
   "time": "",
-  "lat": "", 
+  "lat": "",
   "lng": "",
   "hdop": "",
   "altitude": "",
@@ -115,9 +115,9 @@ gpsItems = {
 };
 */
 var gpsItems = {};
-/* Geolocaliation variables :  longitude,latitude */
+/* Geolocation variables :  longitude,latitude */
 var gpsLocInfo = "";
-/* Geolocaliation state (running or not) */
+/* Geolocation state (running or not) */
 var geoPos = false;
 
 // by default, without setting, debug in the module is disabled
@@ -152,7 +152,7 @@ Closing is possible if the AT media is free
 - check if a AT communication is on-going
 
 At the end, socket is either closed (successful) or waiting to be closed.
-In this last case, either a new closing is initiated (remote if first attemps was local, local if first attemps was remote)
+In this last case, either a new closing is initiated (remote if first attempt was local, local if first attempt was remote)
 or triggered from this module when data buffer is emptied
 - Mark this socket as tobeclosed, will be closed when data buffer emptied
 */
@@ -414,7 +414,7 @@ function receiveHandler(line) {
   } else {
     // still some to get - use getData to request a callback
     sockData[parms[0]] += line.substr(colon+2,len);
-    at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });   
+    at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });
     return "";
   }
 }
@@ -435,7 +435,7 @@ function receiveHandler2(line) {
   } else {
    // still some to get - use getData to request a callback
    sockData[parms[0]] += line.substr(colon+1,len);
-   at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });   
+   at.getData(parms[1]-len, function(data) { sockData[parms[0]] += data; });
    return "";
   }
 }
@@ -446,7 +446,7 @@ When TCP socket service is closed by remote peer or network error, this function
 Typical expected format : +QIURC: "recv",<connectID><CR><LF>
 
 First search for <CR><LF> index in the line to locate the end
-Note <CR> is enough (no need to wait for <LF>) : this will immediatly closes the socket
+Note <CR> is enough (no need to wait for <LF>) : this will immediately closes the socket
 
 2 options
 - Not enough data may not have been received at this moment so that line is simply returned.
@@ -454,7 +454,7 @@ Note <CR> is enough (no need to wait for <LF>) : this will immediatly closes the
 <connectID> is the socket index to close.
 
 Note the trick to convert string into integer with this instruction :
-parms[1] = 0|parms[1];
+`parms[1] = 0|parms[1];`
 */
 function closehandler(line) {
   if (dbg) console.log("closehandler:" + line);
@@ -557,7 +557,7 @@ function RdyHandler(line) {
 }
 
 var gprsFuncs = {
-  
+
   receiveHandler: receiveHandler,
   "debug" : function(dbg_gprs = false, dbg_at = false) {
     dbg = dbg_gprs;
@@ -600,7 +600,7 @@ var gprsFuncs = {
 
               s = AtInitSequence.AT_URC_PORT_CONFIG;
               at.cmd('AT+QURCCFG="urcport","uart1"\r\n',1000,cb);
-              
+
             }   else {
               s = AtInitSequence.AT_SYNCHRO;
               atSync++;
@@ -619,9 +619,9 @@ var gprsFuncs = {
           break;
 
         case AtInitSequence.AT_URC_PORT_CONFIG:
-          
+
           if(dbg) console.log("debug AT_URC_PORT_CONFIG : " +r);
- 
+
           /* wait for 'OK' */
           if(r.substr(0,10) === 'AT+QURCCFG') {
             return cb;
@@ -630,12 +630,12 @@ var gprsFuncs = {
           else if(r === "OK") {
             if(dbg) console.log("URC port config OK - use uart1");
             s = AtInitSequence.AT_RSP_FORMAT;
-            at.cmd("ATV1\r\n",1000,cb);            
-          } 
+            at.cmd("ATV1\r\n",1000,cb);
+          }
           else if(r) {
               callback("Error in config URC port: " +r);
           }
-          
+
           /* case processing with no response */
           if (r===undefined) {
             callback('AT+QURCCFG time-out !!!');
@@ -875,12 +875,12 @@ var gprsFuncs = {
     setTimeout(function(){at.cmd('AT\r\n', 1000, cb);},500);
   },
   "reset": function(callback) {
-    
+
     digitalWrite(B10, 1);  // Enable VCCB
     digitalWrite(B5, 1);   // Enable module power
     digitalWrite(B12, 1);  // Enable antenna
-    digitalWrite(C5, 1);   // Enable Codec power 
-    digitalWrite(C0, 0);   // Reset WakeupIn pin 
+    digitalWrite(C5, 1);   // Enable Codec power
+    digitalWrite(C0, 0);   // Reset WakeupIn pin
     function reset_pulse(callback) {
       digitalWrite(rst, rst_active_level);
       setTimeout(function() {
@@ -988,11 +988,11 @@ var gprsFuncs = {
     if (dbg) console.log("getIP is AT+CGPADDR");
     at.cmd('AT+CGPADDR=1\r\n', 30000, cb);
   },
-  "geoLocGet": function(callback) {    
+  "geoLocGet": function(callback) {
     if(dbg) console.log("Getting geolocalization data");
-    if(gpsItems.lat === undefined) 
+    if(gpsItems.lat === undefined)
       callback("GPS not ready");
-    else 
+    else
       callback(null, gpsItems);
   },
   "geoLocConvert": function(callback) {
@@ -1002,10 +1002,10 @@ var gprsFuncs = {
     };
     try{
       latlng.lat = gpsItems.lat.substr(0,2)+"'"+gpsItems.lat.substr(2,gpsItems.lat.length-3)+"''"+gpsItems.lat.substr(gpsItems.lat.length-1);
-      latlng.lng = gpsItems.lng.substr(0,3)+"'"+gpsItems.lng.substr(3,gpsItems.lng.length-4)+"''"+gpsItems.lng.substr(gpsItems.lng.length-1);  
+      latlng.lng = gpsItems.lng.substr(0,3)+"'"+gpsItems.lng.substr(3,gpsItems.lng.length-4)+"''"+gpsItems.lng.substr(gpsItems.lng.length-1);
     } catch (e) {
       callback("Cannot convert geolocalization data");
-    } 
+    }
     callback(null, latlng);
   },
   "geoLocStart": function(period) {
@@ -1019,12 +1019,12 @@ var gprsFuncs = {
           gpsLocInfo = "";
         } else if (r==='OK') {
           if(dbg) console.log("GeoLocalization acquisition done : " + gpsLocInfo);
-          if(gpsLocInfo.indexOf("ERROR") < 0){            
+          if(gpsLocInfo.indexOf("ERROR") < 0){
             var items = gpsLocInfo.split(",");
             try{
               gpsItems = {
                 "time": items[0],
-                "lat": items[1], 
+                "lat": items[1],
                 "lng": items[2],
                 "hdop": items[3],
                 "altitude": items[4],
@@ -1040,7 +1040,7 @@ var gprsFuncs = {
         } else if (r&&r.substr(0,10)=="+QGPSLOC: ") {
           var pos_last = r.length;
           var pos_space = r.indexOf(" ");
-          gpsLocInfo = r.substring(1+pos_space,pos_last);                  
+          gpsLocInfo = r.substring(1+pos_space,pos_last);
           /* wait for OK */
           return cb;
         } else {
@@ -1062,7 +1062,7 @@ var gprsFuncs = {
     at.cmd('AT+QGPSEND\r\n');
 
     gpsLocInfo = "";
-  },  
+  },
   "SMS": {
     "init": function(callback) {
       at.cmd("AT+CMGF=1\r\n",1000,function(d) {
@@ -1114,7 +1114,7 @@ var gprsFuncs = {
         }
         // if (callback) callback(d=="OK"?null:("CMGL ERROR "+d), list);
         if (d === "OK" && callback) callback(d, currItem);
-        return "";      
+        return "";
       });
     },
     "send": function(number, text, callback) {
@@ -1123,7 +1123,7 @@ var gprsFuncs = {
         at.write(text+"\x1A\r");
         return "";
       });
-      at.cmd('AT+CMGS="'+number+'"\r\n',10000,function cb(d) {      
+      at.cmd('AT+CMGS="'+number+'"\r\n',10000,function cb(d) {
         at.unregister('>');
         if (d && d.substr(0,5)=="+CMGS") return cb;
         if (callback) callback(d=="OK"?null:("CMGS ERROR "+d));
@@ -1173,7 +1173,7 @@ var gprsFuncs = {
         }
         // if (callback) callback(d=="OK"?null:("CMGL ERROR "+d), list);
         if (callback) callback(d, list);
-        return "";      
+        return "";
       });
     },
     "delete": function(index, callback) {
@@ -1199,7 +1199,7 @@ var gprsFuncs = {
       });
     },
     "handleRing": function(handle) {
-      // Handle RING is not 100% sure for Call coming, 
+      // Handle RING is not 100% sure for Call coming,
       // when RING come from SMS or socket stream.
       if(handle === true) {
         at.registerLine("RING", function(line) {
@@ -1207,15 +1207,15 @@ var gprsFuncs = {
           gprsFuncs.emit("RING");
 
           return "";
-        }); 
+        });
       } else {
         at.unregisterLine("RING");
-      }            
+      }
     },
   },
   "sleep": function (callback) {
     pinMode(C0, 'output');
-    at.cmd('AT+QSCLK=1\r\n', function(d) {      
+    at.cmd('AT+QSCLK=1\r\n', function(d) {
       digitalWrite(A1, 1);
       digitalWrite(C0, 1);
       if(callback) callback(d=="OK"?null:("Error: AT+QSCLK=1 "+d));
@@ -1229,7 +1229,7 @@ var gprsFuncs = {
       at.cmd('AT+QSCLK=0\r\n', 1000, function(d) {
         pinMode(A1, 'input');
         if(callback) callback(d=="OK"?null:("Error: AT+QSCLK=0 "+d));
-      });      
+      });
     },1000);
   },
 };

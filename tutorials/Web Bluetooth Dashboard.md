@@ -43,7 +43,7 @@ to set up your own HTTPS webpage, then put the following in it:
 </html>
 ```
 
-This is the bare miniumum you'll need for a dashboard, so what does it all do?
+This is the bare minimum you'll need for a dashboard, so what does it all do?
 
 * The `<meta>` tag makes sure the page renders at a 640 pixel width on devices
 like phones and tablets. You can adjust this once you've figured out how wide

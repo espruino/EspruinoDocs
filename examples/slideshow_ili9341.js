@@ -33,7 +33,7 @@ Before we can get started, we need to cheat a bit. Espruino can't decode JPEG fi
 
 Instead, we're going to store the pictures in a format that Espruino can load directly onto the LCD.
 
-To do that, we need to resize the pictures by 320x240, rotate them (the display is actually 240x320), and convert them to a raw 16bpp RGB565 file formatr.
+To do that, we need to resize the pictures by 320x240, rotate them (the display is actually 240x320), and convert them to a raw 16bpp RGB565 file formats.
 
 This is something that you can do with the [ImageMagick](http://www.imagemagick.org/) command-line tools. You just need the command:
 

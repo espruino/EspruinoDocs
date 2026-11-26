@@ -15,7 +15,7 @@ The module exports the function `create(server, options)` that returns a new MQT
 Setting up and connecting
 ---------------------------
 
-First off load the module and create a MQTT object using ```require("MQTT").create(server)```. In the example below the CC3000 is used to set up a network connection and get a DHCP address. Upon a successful connection connect to the MQTT broker by calling ```connect()```. This will open a socket connection to the server and establish MQTT communications. The client will ping the server every 40 seconds to keep the connection alive in case no other control packets are sent. The connected event can be used to set up subscriptions etc upon sucessful connection.
+First off load the module and create a MQTT object using ```require("MQTT").create(server)```. In the example below the CC3000 is used to set up a network connection and get a DHCP address. Upon a successful connection connect to the MQTT broker by calling ```connect()```. This will open a socket connection to the server and establish MQTT communications. The client will ping the server every 40 seconds to keep the connection alive in case no other control packets are sent. The connected event can be used to set up subscriptions etc upon successful connection.
 
 ```js
   var server = "192.168.1.10"; // the ip of your MQTT broker
@@ -144,7 +144,7 @@ Publish can also be given a third argument:  `mqtt.publish(topic, message, { qos
 Subscribe/Unsubscribe
 -----------
 
-Subscriptions are managed using the ```subscribe(topic_filter)``` and ```unsubscribe(topic_filter)```functions. A topic filter can be just a specific topic or contain wildcards that matches groups and/or sub-groups of topics. An event, publish, is fired whenever a message is received by the client. The event emitter calls the listener with an object containin all the relevant packet information: topic, message, (dup, qos and retain).
+Subscriptions are managed using the ```subscribe(topic_filter)``` and ```unsubscribe(topic_filter)```functions. A topic filter can be just a specific topic or contain wildcards that matches groups and/or sub-groups of topics. An event, publish, is fired whenever a message is received by the client. The event emitter calls the listener with an object containing all the relevant packet information: topic, message, (dup, qos and retain).
 
 ```
 mqtt.subscribe("test/espruino");

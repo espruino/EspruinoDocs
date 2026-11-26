@@ -98,6 +98,7 @@ $ node bin/check_docs.js --fix   # interactively fix spelling mistakes and broke
 ```
 
 * Words that are correct but not in the British or American English dictionaries can be added to `bin/spelling-wordlist.txt`
+* Replacements you type in `--fix` mode are remembered in `bin/spelling-corrections.txt` and offered as the first suggestion next time
 * External URLs that have been verified in the last 30 days are stored in `.linkcache.json`, so subsequent runs are fast. Use `--refresh` to re-check everything.
 * URLs that shouldn't be checked can be added to `bin/link-ignore.txt`
 * Run `node bin/check_docs.js --help` for more options

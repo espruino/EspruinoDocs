@@ -15,7 +15,7 @@ support Cron keywords such as `@year`, `@month`, etc.
 
 Intended to be a single instance to limit resources and timer overhead.
 Multiple instances will all reference same job queue and timer, thus multiple
-instances will see the same jobs and init calls will supercede previous calls
+instances will see the same jobs and init calls will supersede previous calls
 by other instances.
 
 Works with DateExt (Date Extensions) module if used to match local time values.
@@ -67,7 +67,7 @@ Where the cronjob object passed to job may contain:
   - Cron supports wildcard (*) and comma delimited lists, but does not
     support modulo (/), range (-), and Cron keyword shortcut syntaxes.
   - Cron will use local time if a require('DateExt') call has been made
-    and utc (i.e. second constructor paramter) is false.
+    and utc (i.e. second constructor parameter) is false.
 
 ### Other Methods
 #### init(<minutes>)

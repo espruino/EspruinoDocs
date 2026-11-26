@@ -147,7 +147,7 @@ The Puck's Services
 
 By default, Puck.js has a `Nordic UART` service (UUID `6e400001-b5a3-f393-e0a9-e50e24dcca9e`)
 that allows you to communicate with the JS interpreter. This service offers two
-way communications. It has two Characeristics, `RX` and `TX`:
+way communications. It has two Characteristics, `RX` and `TX`:
 
 * The `TX` characteristic (UUID `6e400002-b5a3-f393-e0a9-e50e24dcca9e`) lets you send data to Puck.js. You can write up to
 20 bytes of data to it, and each time you write, the characters you send go

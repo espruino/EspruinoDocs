@@ -349,7 +349,7 @@ The calibration process goes as follows:
 
 1. Copy-paste either calibration code into the IDE editor and upload it to the Espruino board.
 2. Set the pins ***of your wiring*** in line [11]
-3. Set the desired resolution for X and Y properperties in the custom config object [62 and 63]
+3. Set the desired resolution for X and Y properties in the custom config object [62 and 63]
 4. Set `calibrate = true;` in line [75]
 5. Upload the code to the board
 6. Touch at the center and drag diagonally into the top left corner (min x, min y).
@@ -357,7 +357,7 @@ The calibration process goes as follows:
 8. Touch at the center and drag diagonally into the top right corner (max x, min y).
 9. Touch at the center and drag diagonally into the bottom left corner (min x, max y).
 10. Repeat several times 5. thru 9. until you see about same values in console.
-11. Update the custom config object with values as mamed an shown in console.
+11. Update the custom config object with values as named an shown in console.
 12. Set `calibrate = false;` in line [75]
 13. Validate that you can reach each corner with the values you expect (0..max X / max Y)
 14. Use first them same touch and drags as in steps 6. thru 9. and observe values.

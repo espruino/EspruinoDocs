@@ -20,7 +20,7 @@ You'll Need
 ----------
 
 * An [Espruino Board](../boards/Original.md) wired up for [Servo Motors](../devices/Servo Motors.md)
-* An [IR Reciever](../devices/IRReceiver.md)
+* An [IR Receiver](../devices/IRReceiver.md)
 * A TV remote control
 * A MeArm: either a kit from [Phenoptix](http://www.phenoptix.com/products/mearm-pocket-sized-robot-arm), or laser cut your own from design files on [Thingiverse](http://www.thingiverse.com/thing:360108)
 

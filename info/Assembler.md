@@ -369,7 +369,7 @@ In order to be properly useful you'll probably want to access the current time:
 
 * Low precision 16 bit (32/40 kHz) on Espruino (F103): RTC DIVL (0x40002814)
 * Low precision 16 bit (32 kHz) on Espruino Pico (F401): RTC_SSR (0x40002828)
-* Higher precision 32 bit (72/80 Mhz) use SYSTICK (0xE000E018), which stops when the device sleeps.
+* Higher precision 32 bit (72/80 MHz) use SYSTICK (0xE000E018), which stops when the device sleeps.
 
 
 Compiling C Code

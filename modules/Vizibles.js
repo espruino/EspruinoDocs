@@ -9,7 +9,7 @@ This module is only a simplification of the AT API to ease its use in Javascript
 The use of a full client on the ESP8266 allows us to include fully SSL encrypted
 communications while leaving the resources of Espruino free for your application.
 This library heavily uses at module for Espruino, and is inspired on the original ESP8266
-module, so thaks to Gordon Williams and Pur3 Ltd for their contributions.
+module, so thanks to Gordon Williams and Pur3 Ltd for their contributions.
 */
 
 var viziblesFuncs = {

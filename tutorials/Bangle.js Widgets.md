@@ -153,7 +153,7 @@ setInterval(function() {
 Finally, we might want to add an icon above the day to show what the text is
 meant to be. So...
 
-* Search for [a calandar icon](https://icons8.com/icons/set/calendar)
+* Search for [a calendar icon](https://icons8.com/icons/set/calendar)
 * Download the image: ![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAcklEQVRIiWNgGEDwH4opUsdENecQaYEXAwPDYwZUF/0ngJHVPWZgYPDEZyHMcErwI2QDGdEsICbMiQFwc+keB1QHLDjE0YOOWIARxEM/iEYtGLVg1AJMC55AaXKLagYGSJGPE3gyQMpzSuoCDzI8OpIBABfVRCSeUd9lAAAAAElFTkSuQmCC)
 * Scale/crop it and convert it to white on black: ![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAIAAAASSxgVAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5AQDChYUreEeZgAAAGNJREFUGNPNj8sJxDAMRF8W9yLclFuy3ILr8V3VmMkhgQTyYWEv+26jNzAIAJBkZpwwM0l7aK1JmnPqwnZ09+WoP/PhCxJQSomIW51z7r0nICLGGL/O/WMpbX8+6V25u16pta4QG1hS79KvfwAAAABJRU5ErkJggg==)
 * Open the [Image Converter page](http://www.espruino.com/Image+Converter) and upload the image

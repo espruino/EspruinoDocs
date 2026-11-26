@@ -135,7 +135,7 @@ function checkTemp() {
 }
 ```
 
-But that's a bit small - so let's add big numbers. Go back to the LCD Driver page, and copy and pase the code immediately under the title 'Big Number Library'.
+But that's a bit small - so let's add big numbers. Go back to the LCD Driver page, and copy and paste the code immediately under the title 'Big Number Library'.
 
 We need to initialise it:
 

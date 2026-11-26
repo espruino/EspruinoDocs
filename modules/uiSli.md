@@ -42,8 +42,8 @@ ui.c( 3,"sli","s2"  , 30,175,180, 29, -4,[-4,0],33  ,cb,  [[12, 6,  70, 6,   u,
 
 Above example definition creates, adds to ui, and returns (and stores in
 global variable `s2` ) a 0..100% horizontal slider of 3 pixel change
-value touch / drag s(ensitivity) with left top at x and y (30, 175) and
-of h(eight) and w(idth) (180,29), with custom colored border (-4) and
+value touch / drag sensitivity `s` with left top at x and y (30, 175) and
+of height `h` and width `w` (180,29), with custom colored border (-4) and
 same colored 'left' filling and black colored (0) 'right' filling, with
 start value 33 (%) within min (0) and max (100) range and 3 respective
 labels with own font specs (fs, all 12), text colors (tc, 6 and 7) and
@@ -153,9 +153,9 @@ Custom formatter has dual purpose:
  - Render discrete text values based on numeric value, such as
    "high", "medium" and "low" alone or combined with (formatted)
    numeric value.
- - Placing a visual - value labe or any other thing - alone
+ - Placing a visual - value label or any other thing - alone
    or in combination with (formatted) value anywhere on the
-   display with value derivced position and color and form and
+   display with value derived position and color and form and
    shape and...
  - Avoid slowing down sliding by suppressing rendering on some of
    the touch events. When value label's font spec ( ```fs / l[0] /
@@ -212,13 +212,13 @@ do just not fit the ui's needs or aren't looking right (After all it is
 UX and and the ui has to look at be usable at its best). To avoid
 value-based adjustment of color and position after setting parameters,
 define the slider ui element with `0 for a / l[8] / ls[0][8]` (like
-for fixed specified color and postion).
+for fixed specified color and position).
 
 With value-based auto adjustment (a) of value label's color and position
 enabled - value of ( `a / l[8] / ls[0][8]` ) is set to  ( `1` ) -
 drawing position is adjusted a third of the slider bar width to the left
 when slider value is >= 50% (half an upper half), otherwise to the right
-(when the slider is <50%, lower half), and the color of the labe takes on
+(when the slider is <50%, lower half), and the color of the label takes on
 the opposite fill color. Specifying another non-0 value than `1` does
 it proportionally less ( `<1` ) or more ( `>1` ). Best results
 are easiest achieved when drawn label length is around a third of the
@@ -249,7 +249,7 @@ accommodate a label value, which - under some circumstances - may not be
 an issue because of not added value or (accurate,) numeric value is not
 needed. Btw, custom formatter can return text values, such as "high",
 "medium", "low" instead of numeric values... or combined with numeric
-values). Last but not least the value label can be drawen anywhere on
+values). Last but not least the value label can be drawn anywhere on
 the display with the respective 'fix' x and y relative to the left top
 of the bounding box ('fix', `0` for the auto value-based adjustment
 of position and color value label 111a / l[8] / ls[0][8]``` may be

@@ -23,7 +23,7 @@ The AWS Tutorial (Door Alarm SNS Email):
 - An SNS subscription sends the message as an email to a subscriber
 - Subscriber receives an email on their phone letting them know their door is open/closed or the "security system" is armed/disarmed
 
-Prerequesites
+Prerequisites
 --------
 * A [Puck.js](../boards/Puck.js.md) device (or other [Espruino board](https://www.espruino.com/Order) if you don't need Bluetooth LE
 * A Magnet & Command Strips to hold Magnet & Puck.js to Door & Door Frame
@@ -115,9 +115,9 @@ Flash the Code to Puck.js
     * As long as the button state remains 1, every minute, your Puck.js will advertise the temperature (f), battery level, voltage, light, and LED states. It also will advertise when it senses movement, a change in magnetic field, NFC field, or a button press. For this tutorial, we'll just be using the temperature advertisements. Upload the code to the Puck.js's flash, so it'll still be there if you swap out the battery.
 * Testing the Code in [Espruino Web IDE](https://www.espruino.com/ide/)
     * ![window](Puck.js AWS IOT/puck-flash.png)
-    * Check that the code is running by reading the console log output. Make surethat temperature data is coming across. Sometimes temperature data doesn't advertise if the temperature hasn't changed. If you want to test the temperature advertisement, warm up or cool down the puck temp sensor by transferring heat with your hand.
+    * Check that the code is running by reading the console log output. Make sure that temperature data is coming across. Sometimes temperature data doesn't advertise if the temperature hasn't changed. If you want to test the temperature advertisement, warm up or cool down the puck temp sensor by transferring heat with your hand.
 * Start Advertising!
-    * To get the data to stop showing up in the console & start advertising, take the battey out & put it back in. As long as the code was uploaded to the device's flash, it'll start advertising when the battery is put back in. The temperature data won't start sending over until one minute has gone by. Then it'll advertise the temp every minute.
+    * To get the data to stop showing up in the console & start advertising, take the battery out & put it back in. As long as the code was uploaded to the device's flash, it'll start advertising when the battery is put back in. The temperature data won't start sending over until one minute has gone by. Then it'll advertise the temp every minute.
 
 ```
 var state =1;
@@ -269,7 +269,7 @@ Setting up AWS IOT Core & SNS Topic/Subscription
         * ![window](Puck.js AWS IOT/iot-core-create-thing4.png)
     * Name the policy & allow all for policy action & policy source. Click Create
         * ![window](Puck.js AWS IOT/iot-core-create-thing5-policy.png)
-    * Choose the new polcy you just created & click "Create Thing"
+    * Choose the new policy you just created & click "Create Thing"
         * ![window](Puck.js AWS IOT/iot-core-create-thing6.png)
     * Optn the thing you just created and create/download certificates
         * ![window](Puck.js AWS IOT/iot-core-create-thing7-certificates.png)
@@ -290,7 +290,7 @@ Setting up AWS IOT Core & SNS Topic/Subscription
         * ![window](Puck.js AWS IOT/iot-core-create-rule4-sns-topic.png)
     * Go back to the other page & find the topic you just created (may need to click refresh). Create & name a new rule. Click Next.
         * ![window](Puck.js AWS IOT/iot-core-create-rule5.png)
-    * Now we have a SNS topic being published to, we need to create a SNS subscription that sends an email to yout email address.
+    * Now we have a SNS topic being published to, we need to create a SNS subscription that sends an email to your email address.
         * ![window](Puck.js AWS IOT/iot-core-create-rule6-sns-subscription.png)
 
 Setting up NodeRed
@@ -361,7 +361,7 @@ if (msg.payload["data"][0] === 1) {
 
 Test!
 --------
-* Tip: Please reatert the puck.js by taking the battery out and putting it bakc in. As long as the code was flashed to the puck it'll start advertising immediately
+* Tip: Please restart the puck.js by taking the battery out and putting it back in. As long as the code was flashed to the puck it'll start advertising immediately
 * Put a Magnet near your door frame and the Puck right next to it.
     * [[https://youtube.com/shorts/Ejb9RpYWCKc?feature=share]]
 * Test the features by opening/closing your door, and pressing the button. You'll get emails from AWS about door movement, door open/closed/ and alarm on/off.

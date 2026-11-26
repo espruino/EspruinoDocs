@@ -67,7 +67,7 @@ Install latest Bluez from Debian
 for you, your version of Bluez is extremely unlikely to be the issue.
 
 This advice originally [came from here](https://gist.github.com/MichaelLawton/a56371969a18d2f735a77ed1ac4b5512).
-You can also compile from source as well (see below), but this method is very easy if you have Debian, Ubuntu ot Linux Mint.
+You can also compile from source as well (see below), but this method is very easy if you have Debian, Ubuntu or Linux Mint.
 
 Look in the Debian package repository or the latest version of Bluez:
 

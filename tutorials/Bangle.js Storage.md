@@ -122,7 +122,7 @@ Ok, now this is sorted, you can upload the app, run it, and get some data:
 
 * Open the [Web IDE](https://www.espruino.com/ide/) and connect to your Bangle
 * Click the down-arrow by the Upload button, choose `Storage`, `New File`, and enter `gpspoilog.app.js` as the name.
-* Click the Upload button to uplaod the app
+* Click the Upload button to upload the app
 * Now copy/paste the following into the IDE on the left-hand side. This will
 create a listing for your app in the Launcher without you having to upload
 it via the app store:

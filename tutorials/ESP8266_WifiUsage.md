@@ -106,7 +106,7 @@ If you need to wipe the wifi save area flash blank.bin to 0x7b000.
 
 ### How to wait for a connection before starting services
 
-You can actually start any listening sockets at any time, even before a wifi connetion is
+You can actually start any listening sockets at any time, even before a wifi connection is
 established. The listening socket is on the wifi interface devices and doesn't care whether
 wifi is connected or not, whether the IP address changes over time, etc.
 

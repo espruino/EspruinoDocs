@@ -14,14 +14,14 @@ So why build a new one and not support existing one ? Hmm good question. Let me 
 - even simple animations are not part of Graphics
 - standard on the market often have WS2812 like 8*8 matrix or 5-circle
 - learning by doing is always a good starting point
-- flexibilty of Graphics class also means, complex operations
+- flexibility of Graphics class also means, complex operations
 
 __Prerequisite__: before you start with this, you should have your own development running, to compile your own version. Follow [the instructions on GitHub](https://github.com/espruino/Espruino/blob/master/README_Building.md) to get started.
 
 Anyway, lets start with first step for our new graphics class.
 
 * __Naming__ the name of the new class should not match existing classes, and give some information about the target. In our case the name is `LedMatrix`.
-* __files__ we have to create at least 2 source files (.c and .h). To keep naming similiar to Espruino, we create `jswrap_LedMatrix.h` and `jswrap_LedMatrix.c`
+* __files__ we have to create at least 2 source files (.c and .h). To keep naming similar to Espruino, we create `jswrap_LedMatrix.h` and `jswrap_LedMatrix.c`
 * __header file__ as usual in C, we should start with some copyright and licence information. Next we add general lines
 
 ```C
@@ -41,7 +41,7 @@ __source file__ one more time copyright and licence information should be on top
 ```
 
 Later on we will add some more includes, which are special to our new class.
-__define local data__ up to now we have nothing in there for ou class, so lets start with a struct for general data.
+__define local data__ up to now we have nothing in there for our class, so lets start with a struct for general data.
 
 ```C
 typedef struct {
@@ -59,7 +59,7 @@ typedef struct JsLedMatrix {
 } PACKED_FLAGS JsLedMatrix;
 ```
 
-Together with a placeholder for the javascript object itself we have our struct for internal data. Obviously there are other ways to get a similiar result. For me, seperating between internal data and javascript data was helpful.
+Together with a placeholder for the javascript object itself we have our struct for internal data. Obviously there are other ways to get a similar result. For me, separating between internal data and javascript data was helpful.
 
 
 Handling of internal data
@@ -74,8 +74,8 @@ __add includes__ we already included jsvar.h, now we add some more.
 #include "jswrap_espruino.h"
 ```
 
-If you want to know, which functions are added, please take alook to sourcecode by yourself. A list would be too big for this tutorial.
-__initialize internal data__ JsLedMatrix is crinitilized this way
+If you want to know, which functions are added, please take a look to sourcecode by yourself. A list would be too big for this tutorial.
+__initialize internal data__ JsLedMatrix is initialized this way
 
 ```C
 static inline void LedMatrixStructInit(JsLedMatrix *lm){
@@ -90,7 +90,7 @@ static inline void LedMatrixStructInit(JsLedMatrix *lm){
 ```
 
 cells could also be calculated and is width * height
-cellsLength is cells multiplicated by 3, to hold three bytes for each pixel in WS2812
+cellsLength is cells multiplied by 3, to hold three bytes for each pixel in WS2812
 
 __store internal data and connect to javascript variable__
 
@@ -109,10 +109,10 @@ void LedMatrixSetVar(JsLedMatrix *lm){
 }
 ```
 
-Internal data is stored and connected to javascriipt variable.
+Internal data is stored and connected to javascript variable.
 Between us, I cannot explain this part in detail. Anyway let me do my best. First we have a pointer to dataname, which is used next to skip over and ge a pointer to data itself. If we don't have data we have to create this data.
-Never forget next line, jsvUnlock is important. Otherwise a memory leak is created which will sooner or later rsult in an error.
-Now we set internal data connected to javascriptvariable and last not least one more jsvUnLock.
+Never forget next line, jsvUnlock is important. Otherwise a memory leak is created which will sooner or later result in an error.
+Now we set internal data connected to the JavaScript variable and last not least one more jsvUnLock.
 
 __read internal data and prepare for use__
 
@@ -130,7 +130,7 @@ bool LedMatrixGetFromVar(JsLedMatrix *lm, JsVar *parent){
 }
 ```
 
-One more time, let me do my best to explain. Start is to take the parent which usually is a javascript variable and read the connected internal data. If there is no data, return false, otherwise rerad the data and connect to parent.
+One more time, let me do my best to explain. Start is to take the parent which usually is a javascript variable and read the connected internal data. If there is no data, return false, otherwise reread the data and connect to parent.
 __initialize internal data and create buffer__
 
 ```C
@@ -180,7 +180,7 @@ For a LED Matrix like the 8*8 WS2812 board
 ```
 
 In this simple description we have one part written in JSON syntax. This will be used internally to create objects. Therefore we have to follow guidelines for JSON.
-Second part is free text and is used to create a description for Espruino Reference. Since we are writing our own class, description may not be neccessary, but its always good style.
+Second part is free text and is used to create a description for Espruino Reference. Since we are writing our own class, description may not be necessary, but its always good style.
 __create initialize__ Now that we have our new class, lets describe how we build this class. We start with initialize and returning a pointer to the buffer.
 
 ```C
@@ -284,7 +284,7 @@ void jswrap_LedMatrix_fill(JsVar *parent){
 }
 ```
 
-For fill we need internal data like width, height and the buffer itself. So first we get internal data and next a pointer to the buffer. Whole filling is splitted into 2 functions, the first we have here is more general and closer to javascript.
+For fill we need internal data like width, height and the buffer itself. So first we get internal data and next a pointer to the buffer. Whole filling is split into 2 functions, the first we have here is more general and closer to javascript.
 
 ```C
 void LedMatrix_fill(JsVar *buf,JsLedMatrix lm){
@@ -302,7 +302,7 @@ void LedMatrix_fill(JsVar *buf,JsLedMatrix lm){
 }
 ```
 
-Second one dooes the main job. Buffer is stored in an Espruino specific buffer. To walk through this buffer special iterators are used. Setting the data and walking from one item in the array to the next use special function.
+Second one does the main job. Buffer is stored in an Espruino specific buffer. To walk through this buffer special iterators are used. Setting the data and walking from one item in the array to the next use special function.
 At the end, never forget to free memory.
 
 Arrays, use as params or return from function
@@ -312,7 +312,7 @@ In previous sections, we already used arguments for function. Sometimes it would
 Sending data is one direction, sometimes you would like to return data as array. In this tutorial you will see, how to do this.
 __Argument__
 In our LedCircle example is an internal description for size of each circle. Depending on the way you wired the circles, this will not match anymore. Imagine to start from inner circle or from outer circle and you will see.
-Standard number of Leds starts from outer circle, so it looks like [24,16,12,8,1]. Starting with inner circle, it should be [1,8,12,16,24].
+Standard number of LEDs starts from outer circle, so it looks like [24,16,12,8,1]. Starting with inner circle, it should be [1,8,12,16,24].
 Lets create a simple function to handle this, in our example the class is already available, named `lc`
 
 ```
@@ -325,7 +325,7 @@ To see how this is coded, lets start with definition in headerfile
 void jswrap_LedCircle_circleSize(JsVar *parent, JsVar *circleSizeArr);
 ```
 
-So we have one argument only to set number of Leds for 5 circles.
+So we have one argument only to set number of LEDs for 5 circles.
 Next lets see JSON description for Wrapper in c file
 
 ```C
@@ -412,7 +412,7 @@ JsVar *LedMatrix_getPixel(JsVar *buf,JsLedMatrix lm, int row,int column){
 }
 ```
 
-Its interesting to see, how an iterator is used to walk through an array. In Simple functions, we already talked about Iterator. Therefor lets set the focus on general parts. First we create an Iterator pointing to the internal pixelbuffer. Next is to create a new array, length 3 bytes for retrun values. Copy form Pixelbuffer to Returnbuffer, free used iterators and return Returnbuffer, done.
+Its interesting to see, how an iterator is used to walk through an array. In Simple functions, we already talked about Iterator. Therefor lets set the focus on general parts. First we create an Iterator pointing to the internal pixelbuffer. Next is to create a new array, length 3 bytes for return values. Copy form Pixelbuffer to Returnbuffer, free used iterators and return Returnbuffer, done.
 In our next example we will see how to handle objects for arguments.
 
 Object arguments for functions
@@ -440,7 +440,7 @@ In Header file this looks like
 void jswrap_LedCircle_init(JsVar *parent, JsVar *options);
 ```
 
-Decription for wrapper is as simple as for arrays
+Description for wrapper is as simple as for arrays
 
 ```C
 /*JSON{
@@ -485,7 +485,7 @@ In header file we add a small line only
 JsVar *jswrap_LedCircle_getColor(JsVar *parent);
 ```
 
-Next step is, as usual, JSON descripton of command
+Next step is, as usual, JSON description of command
 
 ```C
 /*JSON{
@@ -521,7 +521,7 @@ Integer or String, check args
 
 One of the big advantages in Javascript is the type of a variable. An variable can be a string, an integer, a function, a float, etc.
 In Espruino we have a general struct for variables, called JsVar. This construct holds all information about the actual type of a variable.
-Now imagine, you want to have a function that supports args as Integer or as String. It could be used to get information by index or by name. Creating 2 functions like getDataByInt and getDataByName would be one option. A general function like getData, that seperates inside based on actual arg could be better solution.
+Now imagine, you want to have a function that supports args as Integer or as String. It could be used to get information by index or by name. Creating 2 functions like getDataByInt and getDataByName would be one option. A general function like getData, that separates inside based on actual arg could be better solution.
 Lets first define this function in header file
 
 ```C
@@ -545,7 +545,7 @@ Lets see definition of the function for Espruino in source file.
 */
 ```
 
-Definition for JavaScript is similiar to header file. Argument is of type JsVar. Please have in mind to change class name to name of your class ;-)
+Definition for JavaScript is similar to header file. Argument is of type JsVar. Please have in mind to change class name to name of your class ;-)
 Now we have to switch between type of arg, int or string.
 
 ```C
@@ -567,9 +567,9 @@ If it is not an int, we assume its a string. It would be better style to make su
 Emit events
 -----------
 
-Events are welknown in JavaScript. They are called onClick, onChange, etc in your browser.
+Events are well known in JavaScript. They are called onClick, onChange, etc in your browser.
 Espruino also has some events, around http you will find a lot. In this tutorial we will see how to create our own events.
-For this tutorial we will create a Schmitt Trigger. If you want to know in detail wath this is, take a look to [wikipedia](https://en.wikipedia.org/wiki/Schmitt_trigger).
+For this tutorial we will create a Schmitt Trigger. If you want to know in detail what this is, take a look to [wikipedia](https://en.wikipedia.org/wiki/Schmitt_trigger).
 In short, Schmitt Trigger has an analog input and a binary output. Inside it is a 2 level comparator. If input is greater than **high**, out put changes to true, and to false if it is less than **low**. If input is between **low** and **high** there is no change. In most cases it is important to recognize changes of output only.
 Lets start with javascript code that we would like to call
 

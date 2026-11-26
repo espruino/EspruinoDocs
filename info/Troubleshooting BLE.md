@@ -39,7 +39,7 @@ Check out the [Quick Start Guide](../tutorials/Quick Start BLE.md#windows) for m
 
 * Are you sure some other device isn't connected to it? See the next item.
 * Are you **sure** you're using the [native Espruino IDE](http://www.espruino.com/Quick+Start+BLE#with-an-application) as opposed to the IDE Website or Chrome App?
-* **On Windows 10**, have your paired your Puck using the built-in Windows Bluetooth menu? You need that before the IDE can see it. If you can't pair then your PC may not support Bluetooth LE (even if it supports normal Bluetooth) and you may need an exernal Bluetooth dongle.
+* **On Windows 10**, have your paired your Puck using the built-in Windows Bluetooth menu? You need that before the IDE can see it. If you can't pair then your PC may not support Bluetooth LE (even if it supports normal Bluetooth) and you may need an external Bluetooth dongle.
 * **On Windows 7** you'll need a [supported Bluetooth dongle](../tutorials/Quick Start BLE.md#requirements) that [may need setting up with Zadig](../tutorials/Web IDE.md#zadig)
 
 ### I can't see my device any more
@@ -69,7 +69,7 @@ Try: `System Preferences` —> `Security & Privacy` —> `Bluetooth` -> Add `Goo
 
 ### I can't reconnect to my device on Mac OS
 
-This often happens if you've turned your Espriuno into a [HID device](../tutorials/BLE Keyboard.md) and paired it with your Mac.
+This often happens if you've turned your Espruino into a [HID device](../tutorials/BLE Keyboard.md) and paired it with your Mac.
 
 * Close the Web Browser window that had the Web IDE in it
 * Hold the `option` key down while clicking on the Bluetooth icon in the top right menu bar.
@@ -117,7 +117,7 @@ Device-specific
 
 ### How do I update the firmware?
 
-Check out the specific instuctions on your device's page:
+Check out the specific instructions on your device's page:
 
 * [Puck.js](../boards/Puck.js.md#firmware-updates)
 * [Pixl.js](../boards/Pixl.js.md#firmware-updates)

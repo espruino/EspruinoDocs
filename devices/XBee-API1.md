@@ -58,7 +58,7 @@ Submits an AT Command.
 `value` array of bytes. When empty the function reads the current value, otherwise it will be written
 
 `function` the callback function. Called on timeout, or on success.
-on sucess, the value of 're' will be true and data contains an array with the returned data.
+on success, the value of 're' will be true and data contains an array with the returned data.
 
 Example of the data array:
 
@@ -120,7 +120,7 @@ Sends data to another xBee radio.
 `data` Data to send
 
 `function` the callback function. Called on timeout, or on success.
-on sucess, the value of 're' will be true and data contains an array with the returned data.
+on success, the value of 're' will be true and data contains an array with the returned data.
 
 Example of the data array:
 

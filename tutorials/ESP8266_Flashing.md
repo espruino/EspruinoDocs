@@ -48,7 +48,7 @@ You need a good power supply: typically powering from a USB FTDI type adapter do
 A typical symptom is that flashing works but the esp crashes as soon as you try to run it afterwards.
 
 __To get into flash mode__ you need to pull-up gpio2, and pull down gpio0 and gpio15. Afterwards
-to run the flashed firware you need to pull-up gpio0 and gpio2, and pull down gpio15 (i.e. gpio0
+to run the flashed firmware you need to pull-up gpio0 and gpio2, and pull down gpio15 (i.e. gpio0
 changes).
 To issue a reset, you briefly pull either reset or ch\_en (chip-enable) low. A pull-up resistor is
 recommended on both (reset has a weak internal pull-up, which is OK if you're not connecting

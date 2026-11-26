@@ -4,7 +4,7 @@
 ----- uiEIP ------------------------- 20191108
 
 
-*** ui EIP - Extension Initializations for Pixl
+*** ui EIP - Extension initializations for Pixl
 
 
 Setup and initialize flip() and colors for Pixl. A specific customization for

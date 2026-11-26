@@ -18,4 +18,4 @@ The [Image Converter webpage is at espruino.com/Image+Converter](http://www.espr
 Find more in-depth information on [the Graphics page](https://www.espruino.com/Graphics)
 and [Graphics Object Reference](https://www.espruino.com/Reference#Graphics).
 
-Background image used is by [surt on opengameart.org](https://opengameart.org/content/beastlands)
+Background image used is by [`surt` on opengameart.org](https://opengameart.org/content/beastlands)

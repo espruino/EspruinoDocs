@@ -4,7 +4,7 @@
 ----- uiE3P ------------------------- 20191117
 
 
-*** ui E3P - Extension Initializations for 3-Button ui controlled Pixl
+*** ui E3P - Extension initializations for 3-Button ui controlled Pixl
 
 
 Setup and initialize flip() and colors for Pixl. A specific customization for

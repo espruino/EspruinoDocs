@@ -13,7 +13,7 @@ elements, but not mixed into the ui element and managed by the ui (yet
 or ever).
 
 
---- Key assugnments and mappings
+--- Key assignments and mappings
 
 For Keyboards with buttons, key ids are the button ids, and button ids are
 SINGLE character ids (thus reserved for the ui modules and not available
@@ -119,7 +119,7 @@ In other words - basically:
 
 - When no-shift (^): first char on key prints.
 - Tap shift once (^^) prints next char in uppercase or 2nd special key on special key.
-- Tap shift twice goes into SHIFT-LOCK and twice again goes bakc to no-shift.
+- Tap shift twice goes into SHIFT-LOCK and twice again goes back to no-shift.
 - When in SHIFT-LOCK (^^^): char key prints uppercase and special key 3rd char.
 - Touch shift long goes always into NUM-LOCK.
 - When in NUM-LOCK (#^): key with number prints number, special key.

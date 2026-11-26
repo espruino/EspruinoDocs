@@ -121,7 +121,7 @@ Or:
 Bluetooth.println(JSON.stringify({t:"intent", target:"activity", action:"android.media.action.MEDIA_PLAY_FROM_SEARCH", flags:["FLAG_ACTIVITY_NEW_TASK"], categories:["android.intent.category.DEFAULT"], extra:{"query":'track:"Sittin\' on the Dock of the Bay" artist:"Otis Redding"'}}))
 ```
 
-This will search for and play the song "Sittin' on the Dock of the Bay". The android device will ask about what app to use. The flag ```"FLAG_ACTIVITY_NEW_TASK"``` is needed in order for the activity to launch in this case.
+This will search for and play the song `"Sittin' on the Dock of the Bay"`. The android device will ask about what app to use. The flag ```"FLAG_ACTIVITY_NEW_TASK"``` is needed in order for the activity to launch in this case.
 
 Gadgetbridge connected to a Bangle.js watch can broadcast intents and start activities or services.
 
@@ -199,7 +199,7 @@ supplied data as the first argument.
 Currently implemented messages are:
 
 * `t:"notify", id:int, src,title,subject,body,sender,tel:string,reply`  - new notification
-  * `id` is a unique ID for this noticiation
+  * `id` is a unique ID for this notification
   * `src` is name of app sending notification
   * `reply:true` is present when it's possible to send a `{t:"notify", id:int, n:"REPLY", msg:"My Reply"}` response (Gadgetbridge 0.80 and later)
 * `t:"notify-", id:int`  - delete notification

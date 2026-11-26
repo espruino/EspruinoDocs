@@ -62,7 +62,7 @@ digitalWrite(LED1,1)
 
 Remember to enter capital letters where they appear above - JavaScript (and so Espruino) is case-sensitive, so for instance `digitalwrite` won't work while `digitalWrite` will.
 
-*Is `Uncaught ReferenceError: "LED1" is not defined` displayed? If so you're probably not using an offical board (which all have `LED1` defined) - you can always attach an LED to a pin and type `var LED1 = you_pin_name` to continue.*
+*Is `Uncaught ReferenceError: "LED1" is not defined` displayed? If so you're probably not using an official board (which all have `LED1` defined) - you can always attach an LED to a pin and type `var LED1 = you_pin_name` to continue.*
 
 If all goes well, `=undefined` will be displayed, however the `LED1` light on the board will light up. This allows you to set voltages that come out of the processor (`1`=3.3 volts, `0`=0 volts). Instead of `LED1`, you can use any pin name, such as `A1` or `B5` (there's a handy diagram of your device's pins under the `Pinout` heading in your device's reference page).
 
