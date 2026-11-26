@@ -36,7 +36,7 @@ The LCD draws so little power that we can power it from Espruino's GPIO lines...
 Software
 -------
 
-When you place a query to the [BBC Weather RSS feed](http://open.live.bbc.co.uk/weather/feeds/en/2647937/observations.rss), you get a result like this:
+When you place a query to the [BBC Weather RSS feed](https://weather-broker-cdn.api.bbci.co.uk/en/forecast/rss/3day/2643123), you get a result like this:
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>

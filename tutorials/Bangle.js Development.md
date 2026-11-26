@@ -43,8 +43,6 @@ If your watch isn't connectable by Bluetooth:
 
 You should hopefully be connected now! If not, take a look at http://www.espruino.com/Quick+Start+BLE#banglejs
 
-If you just want to get started and have an Android phone, you can use that too! If you don't have an external keyboard then you might want to install the free ['Hackers Keyboard'](https://play.google.com/store/apps/details?id=org.pocketworkstation.pckeyboard&hl=en_US) app to get access to arrow keys via touchscreen.
-
 **Note:** If you've used Espruino before, make sure the Upload button (middle of the screen) shows `RAM` underneath it. Otherwise by writing to `Flash` you can remove the watch's built-in menu (you can just re-add it by removing and installing `bootloader` using https://banglejs.com/apps)
 
 Once connected

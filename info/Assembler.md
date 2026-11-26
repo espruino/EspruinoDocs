@@ -44,7 +44,7 @@ Which can then be used like a normal function:
 This is handled as follows:
 
 * When you click `Send to Espruino` the Web IDE pulls out the `E.asm` call
-* It runs the strings you supplied through [its assembler](https://github.com/espruino/EspruinoWebIDE/blob/master/js/plugins/assembler.js) (which doesn't support all the ARM's opCodes yet)
+* It runs the strings you supplied through [its assembler](https://github.com/espruino/EspruinoTools/blob/master/plugins/assembler.js) (which doesn't support all the ARM's opCodes yet)
 * It then creates code to load the assembler into Espruino as a String
 * It uses [`E.nativeCall`](http://www.espruino.com/Reference#l_E_nativeCall) to create a JavaScript function using the code that was generated.
 
@@ -53,8 +53,6 @@ This is handled as follows:
 * This only works on ARM-based microcontrollers - ARM Thumb assembler will not work on ESP8266/ESP32.
 * The assembler is only partially implemented so will only parse some opcodes at the moment. If you find something missing [please let us know!](https://github.com/espruino/EspruinoTools/issues)
 * If this is a bit hardcore for you, there are other options that allow you to write JS or C - please check out the [Performance page](./Performance.md) for more information!
-
-For an ARM Thumb reference, [see this link](https://ece.uwaterloo.ca/~ece222/ARM/ARM7-TDMI-manual-pt3.pdf)
 
 Argument Specifiers / Call Signature<a name="arguments"></a>
 --------------------------------

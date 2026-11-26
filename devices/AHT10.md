@@ -8,7 +8,7 @@ AHT10 RH/TEMP Sensor
 
 ![AHT10](AHT10.jpg)
 
-The [AHT10](http://www.aosong.com/en/products-40.html) is a high precision, fully calibrated, temperature and humidity sensor chip package.
+The [Aosong](https://www.aosong.com) AHT10 is a high precision, fully calibrated, temperature and humidity sensor chip package.
 
 Use the [AHT10.js](AHT10.js) module for it.
 
@@ -23,7 +23,7 @@ You can wire this up as follows:
 
 How to use the module:
 
-```
+```JS
 const sensor = require("AHT10").connect(SCL,SDA, bitrate); // Bitrate is optional, defaults to 300000
 sensor.getTemperature();
 sensor.getHumidity();

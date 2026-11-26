@@ -133,17 +133,9 @@ var mmc = require("MMC212x").connect( I2C3, 0x36 ); // MMC2123MG
 ```
 
 
-Buying
------
-
-* [Pollin](http://www.pollin.de/shop/dt/NTM4OTgxOTk-)
-
-
 Links
 -----
 * [Datasheet from Memsic](../datasheets/MMC212xMG.pdf)
-* [Datasheet from Pollin](http://www.pollin.de/shop/downloads/D810164D.PDF)
-* [Breakout HDMM01 (in German)](http://www.pollin.de/shop/downloads/D810164B.PDF)
 
 
 References

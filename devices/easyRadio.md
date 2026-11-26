@@ -10,9 +10,9 @@ LPRS easyRadio (eRIC) Radio Modules
 
 The 'easy Radio Integrated Controller' (eRIC) radio transceiver module is based on the Texas Instruments CC430F5137 System-on-Chip. It combines a high performance RF transceiver, RF band pass filters (BPF), an MSP430 microcontroller, 32Kb flash memory, non-volatile flash storage, temperature sensor, and a low drop voltage regulator. The device operates on the International licence exempt Industrial, Scientific and Medical (ISM) radio bands.
 
-While these modules can be programmed with their own code, they come pre-installed with the [easyRadio](http://www.lprs.co.uk/easy-radio/) firmware, which allows communication over a serial interface. A driver this is in the [easyRadio.js](easyRadio.js) module.
+While these modules can be programmed with their own code, they come pre-installed with the [easyRadio](https://lprs.co.uk/products/easyradio-ism-modules/) firmware, which allows communication over a serial interface. A driver this is in the [easyRadio.js](easyRadio.js) module.
 
-See [LPRS's site](http://www.lprs.co.uk/easy-radio/eric/) for more information.
+See [LPRS's site](https://lprs.co.uk/assets/files/eRIC_Datasheet%20V1.21.pdf) for more information.
 
 
 Wiring Up
@@ -20,7 +20,7 @@ Wiring Up
 
 ![eRIC module breakout](easyRadio/breakout.jpg)
 
-It's easier to buy an eRIC module in a [breakout board](http://www.lprs.co.uk/wireless-modules/eric-breakout-board.html). You then just need to connect the following wires:
+It's easier to buy an eRIC module in a [breakout board](https://lprs.co.uk/knowledge-centre/development-tools/evaluation-tools/eric-evaluation-development-kits.html). You then just need to connect the following wires:
 
 | Label | Espruino Pico | Notes |
 |-------|---------------|-------|
@@ -141,4 +141,4 @@ Using
 Buying
 ------
 
-LPRS maintain [a list of distributors here](http://www.lprs.co.uk/distributors) 
+LPRS maintain [a list of distributors here](https://lprs.co.uk/contact/distribution-network.html) 

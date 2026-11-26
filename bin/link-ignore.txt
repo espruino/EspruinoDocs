@@ -2,3 +2,10 @@
 # (one per line, lines starting with # are comments). Local/private addresses,
 # example.com and URLs containing template characters are already ignored.
 your_user_name|YOUR_USERNAME|yourusername
+^https://play\.google\.com/store/apps/details\?id=com\.adafruit\.bluefruit\.le\.connect$
+^http://google\.com/whatever/you/want\?foo=bar$
+^http://raspberry:1880$
+^http://homeassistant\.local:8123/config/integrations/integration/bthome$
+^http://raspberrypi:1880/$
+^https://your_username\.github\.io/UARTTest/test\.html$
+^https://your_username\.github\.io/PuckTest/test\.html$

@@ -440,9 +440,9 @@ with the 'Cutting edge' build linked from [the firmware download page](http://ww
 
 This'll take a few minutes, and you then need to follow the steps for [Returning your badge to normal](#returning-to-standard) - so if you're fine with everything as it is, we'd recommend that you keep version 2.00 for now.
 
-## Changing your name on the badge in the Web IDE
+## Changing your name on the badge
 
-As an alternative to using the [simple Web Bluetooth page](https://nearform.github.io/nceubadge2018/namechanger.html) to change the name, you can also do the following:
+To change the name, you can do the following:
 
 - On the badge, press the top left button, then select "Make Connectable" from the menu and note the last four hex digits of the address of the badge
 - <a href="https://www.espruino.com/ide/?codeurl=https://raw.githubusercontent.com/nearform/nceubadge2018/master/js/namechange.js" target="_blank">Click this link</a> in Chrome to open the Online IDE with the correct code

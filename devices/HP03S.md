@@ -61,12 +61,6 @@ hp03s.getPressure( function( pressure, temperature ) {
 You can only start a new measurement when a previous measurement is completed.
 
 
-Links
------
-* Manufacturer [http://www.hoperf.com/pressure_sensor/digital/HP03S.html](http://www.hoperf.com/pressure_sensor/digital/HP03S.html)
-* Datasheet [http://www.hoperf.com/upload/sensor/HP03S.pdf](http://www.hoperf.com/upload/sensor/HP03S.pdf)
-
-
 Buying
 ------
 * AliExpress [http://www.aliexpress.com/wholesale?SearchText=hp03s](http://www.aliexpress.com/wholesale?SearchText=hp03s)

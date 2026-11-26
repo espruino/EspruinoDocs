@@ -151,7 +151,7 @@ JsVar *jswrap_LedMatrix_createArrayBuffer(int width,int height){
 ```
 
 We already created this function in previous introduction, now lets put some beef.
-This is usually our starting point for LedMatrix. We 
+This is usually our starting point for LedMatrix. We
 
 - create the class with jsvNewObject
 - read internal data
@@ -233,7 +233,7 @@ First simple function is __setting color__ for drawing functions.
     ["hue","float","hue"],
     ["sat","float","saturation"],
     ["bri","float","brightness"]
- ]   
+ ]
 }
 Sets color for following drawings
 Based on hue, saturation and brightness
@@ -266,7 +266,7 @@ Another often used function is __filling the buffer__ with one color.
  "type"     : "method",
  "class"    : "LedMatrix",
  "name"     : "fill",
- "generate" : "jswrap_LedMatrix_fill"  
+ "generate" : "jswrap_LedMatrix_fill"
 }
 Fills whole matrix with same color
 */
@@ -336,7 +336,7 @@ Next lets see JSON description for Wrapper in c file
   "generate" : "jswrap_LedCircle_circleSize",
   "params"   : [
     ["circleSizeArr","JsVar","circleSizes"]
- ]   
+ ]
 }
 Sets number of Leds for each circle
 */
@@ -383,7 +383,7 @@ Should not be a big problem to understand, lets take next step directly, which i
     ["row","int","row"],
     ["column","int","column"]
   ],
-  "return" : ["JsVar","pixelBuffer"] 
+  "return" : ["JsVar","pixelBuffer"]
 }
 Returns a buffer with color of pixel defined by row and column
 */
@@ -450,7 +450,7 @@ Description for wrapper is as simple as for arrays
   "generate" : "jswrap_LedCircle_init",
   "params"   : [
     ["options","JsVar","options"]
- ]   
+ ]
 }
 Initializes color based on Javascript object.
 */
@@ -493,7 +493,7 @@ Next step is, as usual, JSON description of command
   "class" : "LedCircle",
   "name" : "getColor",
   "generate" : "jswrap_LedCircle_getColor",
-  "return" : ["JsVar","color_Object"]   
+  "return" : ["JsVar","color_Object"]
 }
 returns actual color setting
 */
@@ -582,9 +582,7 @@ st.set(4);
 st.set(2);
 ```
 
-In console we should see 2 lines, one for switching to true and one for switching to false.
-
-This tutorial is focused on events, if you want to see full source code, its available on [github](https://github.com/jumjum123/EspruinoExtensions/tree/master/Flash). As usual lets start with header file.
+In console we should see 2 lines, one for switching to true and one for switching to false. As usual lets start with header file.
 
 ```C
 JsVar *jswrap_SchmittTrigger_constructor(JsVarFloat low,JsVarFloat high);

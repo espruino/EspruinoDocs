@@ -17,7 +17,7 @@ These are other boards that Espruino compiles for, but which aren't 'officially 
 *   We're not able to support you if you have problems using these boards. If you want support, get an [official board](https://www.espruino.com/Order)
 *   The community is responsible for maintaining these boards, and as such releases are not subject to the same level of testing.
 
-**Note:** ST Nucleo and Discovery boards are sold at a low price, for evaluation purposes only. According to the [Evaluation products license agreement](http://www.st.com/st-web-ui/static/active/en/resource/legal/legal_agreement/license_agreement/EvaluationProductLicenseAgreement.pdf) that comes with each board, you must **not use them as part of a finished product**. If you want to do that, please check out our [official boards](https://www.espruino.com/Order).
+**Note:** ST Nucleo and Discovery boards are sold at a low price, for evaluation purposes only. According to the Evaluation products license agreement that comes with each board, you must **not use them as part of a finished product**. If you want to do that, please check out our [official boards](https://www.espruino.com/Order).
 
 To see how to get started with the [official boards](https://www.espruino.com/Order), just follow our [Quick Start](../tutorials/Quick Start.md) guide, or you can [Order one here](https://www.espruino.com/Order).
 
@@ -136,7 +136,7 @@ See the [Download](https://www.espruino.com/Download) page for more information 
 
 *   When you plug your board in, it should appear as a USB flash drive.
 
-*   To actually communicate with Espruino you'll need access to the communications port on the Nucleo, and for that you may need some drivers. ST provides them for Windows [Vista/7/8](http://www.st.com/web/en/catalog/tools/PF260218) and [XP](http://www.st.com/web/en/catalog/tools/PF260219). You may also want to check out ST's [getting started](http://www.st.com/st-web-ui/static/active/en/resource/technical/document/user_manual/DM00105928.pdf) guide.
+*   To actually communicate with Espruino you'll need access to the communications port on the Nucleo, and for that you may need some drivers. ST provides them for Windows [Vista/7/8](http://www.st.com/web/en/catalog/tools/PF260218) and [XP](http://www.st.com/web/en/catalog/tools/PF260219). You may also want to check out ST's getting started guide.
 
 *   If this is the first time you've used the board then you will probably want to [update your Nucleo's firmware](http://developer.mbed.org/teams/ST/wiki/Nucleo-Firmware). Not doing this could cause problems when you try and upload Espruino (or any software) - especially on Macs.
 
@@ -164,7 +164,7 @@ See the [Download](https://www.espruino.com/Download) page for more information 
 
 ### On Linux/Mac
 
-*   On Linux: Download and install 'stlink' using the instructions here:[https://github.com/texane/stlink/blob/master/README](https://github.com/texane/stlink/blob/master/README)
+*   On Linux: Download and install 'stlink' using the instructions here:[https://github.com/texane/stlink/blob/master/README.md](https://github.com/texane/stlink/blob/master/README.md)
 
 *   On Mac: Download and install 'stlink', either by typing:
 
@@ -179,7 +179,7 @@ See the [Download](https://www.espruino.com/Download) page for more information 
     make
 ```
 
-    Or by using the instructions here: [http://cu.rious.org/make/getting-stlink-to-work-on-mac-os-x-with-macports/](http://cu.rious.org/make/getting-stlink-to-work-on-mac-os-x-with-macports/) however Branton tells us that these are out of date.
+    Or by using the instructions at https://ports.macports.org/port/stlink/
 
 *   Extract the archive containing Espruino to the stlink directory.
 
@@ -189,7 +189,7 @@ See the [Download](https://www.espruino.com/Download) page for more information 
 
 Unfortunately the USB bootloader pre-installed on these devices takes up too much flash to allow a usable version of Espruino to be installed. This means you'll have to overwrite the USB bootloader. This is pretty simple - you just need a USB-TTL converter. It's also trivial to write the bootloader back in later on.
 
-Just follow our [Serial Bootloader](https://www.espruino.com/Serial+Bootloader) instructions and use the file espruino_1vXX_olimexino_stm32.bin. If you want to restore your board to use the Maple bootloader, just use the binary file available from [http://leaflabs.com/docs/bootloader.html#flashing-a-custom-bootloader](http://leaflabs.com/docs/bootloader.html#flashing-a-custom-bootloader)
+Just follow our [Serial Bootloader](https://www.espruino.com/Serial+Bootloader) instructions and use the file `espruino_XvXX_olimexino_stm32.bin`.
 
 ### 'HY' LCD Boards
 

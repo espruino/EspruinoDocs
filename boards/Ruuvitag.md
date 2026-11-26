@@ -12,8 +12,6 @@ The Ruuvitag is a Bluetooth LE beacon with an environment sensor and acceleromet
 
 **NOTE: Espruino for Ruuvitag is no longer officially supported. The last available build is 2v06**
 
-<a name="firmware-updates"></a>Full details on flashing Ruuvitag can be found at [https://ruu.vi/setup](https://ruu.vi/setup/)
-
 Binaries can be found in:
 
 * the [Download page](https://www.espruino.com/Download#ruuvitag) - either from the list of firmwares, or a downloadable ZIP.
@@ -98,8 +96,3 @@ Reference
 
 * APPEND_JSDOC: Ruuvitag.js
 
-
-Firmware Updates
------------------
-
-Check out [Ruuvi's DFU instructions](https://lab.ruuvi.com/dfu/)

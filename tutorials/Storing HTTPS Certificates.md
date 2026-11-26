@@ -110,7 +110,7 @@ If you're uploading to RAM you'll need to manually call `onInit()` or `save()`..
 Changing the encryption key
 ---------------------------
 
-You should use your own encryption keys as the ones here are now in the public domain. See [the `tls.connect` page](https://www.espruino.com/Reference#l_tls_connect) for more information on how to do this, or you can use the following commands [taken from here](https://engineering.circle.com/https-authorized-certs-with-node-js/):
+You should use your own encryption keys as the ones here are now in the public domain. See [the `tls.connect` page](https://www.espruino.com/Reference#l_tls_connect) for more information on how to do this, or you can use the following commands:
 
 ```
 # Get a new certificate (using some pre-made config info)

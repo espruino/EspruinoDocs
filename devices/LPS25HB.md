@@ -39,11 +39,3 @@ I2C1.setup({scl:B6,sda:B7});
 var pressure = require("LPS25HB").connect(I2C1, 1);
 pressure.getPressure(print);
 ```
-
-Buying:
--------
-
-Shield can be purchased from many places:
-* http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-sense-hw/x-nucleo-iks01a1.html
-* http://fr.farnell.com/stmicroelectronics/x-nucleo-iks01a1/expansion-brd-mems-sensor-stm32/dp/2475489
-

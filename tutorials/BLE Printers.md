@@ -7,7 +7,7 @@ Bluetooth LE Printers
 * KEYWORDS: Module,Modules,BLE,Bluetooth,Printer,Receipt Printer
 * USES: Puck.js,Graphics,BLE,Only BLE
 
-[![Koolertron BLE printer](Puck.js Printer/koolertron.jpg)](http://www.koolertron.com/koolertron-58mm-mini-portable-bluetooth-40-wireless-receipt-thermal-printer-compatible-with-apple-and-android-p-648.html)
+![Koolertron BLE printer](Puck.js Printer/koolertron.jpg)
 
 Some wireless receipt printers come with Bluetooth Low Energy support, and you can use these with Espruino Bluetooth LE devices using the [ble_printer.js](../modules/ble_printer.js) module as follows:
 

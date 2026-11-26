@@ -10,7 +10,7 @@ CMUcam5 Pixy
 
 The Pixy is a computer vision camera that does all the hard work on-board. It can recognize coloured objects that it 'sees', and will then report their size and position back to a connected microcontroller.
 
-The official documentation is here: [http://cmucam.org/projects/cmucam5/wiki/Quick_Start]
+The official documentation is here: [https://pixycam.com/](https://pixycam.com/)
 
 There's an Espruino module called [Pixy.js](Pixy.js) which will interface to it.
 
@@ -57,10 +57,10 @@ returns something like:
 
 Reference
 --------
- 
+
 * APPEND_JSDOC: Pixy.js
 
-Using 
+Using
 -----
 
 * APPEND_USES: Pixy

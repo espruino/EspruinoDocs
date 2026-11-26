@@ -32,7 +32,7 @@ All you need to do is make sure that when the meter is across
 the wire, it reads a positive (not negative) voltage.
 
 If the voltage across the wire is higher than 3v, ask on
-[the forums](http://form.espruino.com) - you may need some
+[the forums](http://forum.espruino.com/) - you may need some
 extra work to safely connect to Puck.js without damaging it.
 
 

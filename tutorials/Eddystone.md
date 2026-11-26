@@ -13,9 +13,6 @@ Eddystone Beacons
 that allows you to transmit a URL that will appear as a notification on
 a user's phone.
 
-Android phones > 4.4 will have support - but it may need enabling.
-[See here](https://developers.google.com/beacons/) for more information.
-
 **Note:** [Google has now disabled Eddystone notifications](https://android-developers.googleblog.com/2018/10/discontinuing-support-for-android.html)
 because of abuse by advertisers, so Eddystone devices will no longer appear as Android Notifications.
 

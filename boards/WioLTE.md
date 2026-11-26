@@ -235,8 +235,3 @@ Functionality provided is:
 * `sleep(callback)` -  LTE modem get into sleep mode, it can save about 100mA
 * `wake(callback)` -  LTE modem wake up from sleep mode
 
-
-Buying
--------
-
-You can buy the Wio LTE Tracker [direct from Seeed](https://www.seeedstudio.com/Wio-LTE-US-Version-4G%2C-Cat.1%2C-GNSS%2C-Espruino-Compatible-p-2957.html)

@@ -6,7 +6,7 @@ W25.js
 https://github.com/pastaclub/espruino-w25q
 
 Driver for Winbond 25Q series SPI Flash RAM
-Tested with W2580BV, http://www.adafruit.com/datasheets/W2580BV.pdf
+Tested with W2580BV
 */
 
 function W25(spi, csPin) {

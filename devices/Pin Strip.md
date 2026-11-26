@@ -14,7 +14,7 @@ If you're trying to prototype something, it's often handy to be able to plug and
 
 And how to solder connections suitable for [Servo Motors](Servo Motors.md).
 
-[[http://youtu.be/9KX32jrSZts]] 
+[[http://youtu.be/9KX32jrSZts]]
 
 Don't want to solder?
 -------------------
@@ -26,6 +26,4 @@ Buying
 
 * [eBay Pin Strip](http://www.ebay.com/sch/i.html?_nkw=0.1+pin+strip)
 * [eBay Jumper wires](http://www.ebay.com/sch/i.html?_nkw=female+dupont+jumper+wire)
-* [Sparkfun **solderless** headers](https://www.sparkfun.com/products/10527)
-* [Proto-pic **solderless** headers](http://proto-pic.co.uk/solderless-headers-10-pin-straight/)
 * [digitalmeans.co.uk headers](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=pin-header)

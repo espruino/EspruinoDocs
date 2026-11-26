@@ -66,7 +66,6 @@ Interesting Projects
 * [Real-life T-Rex Game](https://github.com/urish/real-trex-runner)
 * [Hacking Espruino onto a Wristwatch](http://forum.espruino.com/conversations/280747/)
 * [Espruino Pico Mario Clock](https://github.com/paulcockrell/espruino-mario-clock)
-* [Plastic Player – an Espruino nfc based controller for Spotify](http://brendandawes.com/projects/plastic­player2/)
 * [Bespoke Espruino conference badge for NodeConf 2017](http://forum.espruino.com/conversations/313468/)
 * [Controlling Retro Bubble LED displays](http://forum.espruino.com/conversations/311847)
 * [Building a Smart Air Pressure Sensor with Espruino and Angular](https://medium.com/@urish/building-a-smart-air-pressure-sensor-with-espruino-and-angular-942ef7373b92)

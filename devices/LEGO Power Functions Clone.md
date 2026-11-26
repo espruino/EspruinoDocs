@@ -69,7 +69,6 @@ These appear to be available from a variety of places, but be careful as there
 seem to be a variety of different options.
 
 * [mouldking.co.uk](https://www.mouldking.co.uk/collection/products/technic/mould-king-m-0006-motorized-car-parts-the-app-remote-controller-4-0-intelligent-module-motor-model-building-blocks-bricks-battery-box/)
-* [mouldking.store](https://mouldking.store/themes/mould-king-m-0006/)
 * [Amazon](https://www.amazon.com/s?k=power+functions+bluetooth) - search for 'Power Functions Bluetooth'
 * [eBay](http://www.ebay.com/sch/i.html?_nkw=power+functions+bluetooth) - search for 'Power Functions'
 

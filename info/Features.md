@@ -53,8 +53,6 @@ two passes, which would slow down execution.
 ES5
 ---
 
-List of ES5 features from http://kangax.github.io/compat-table/es5/
-
 | ES5 Feature | Implementation Status |
 |---------|-----------------------|
 | Strict Mode | - |

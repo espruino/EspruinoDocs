@@ -58,7 +58,7 @@ for (y=0;y<32;y++) {
 
 It's 301 bytes long.
 
-When compiled with [SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey), the following bytecode is created (obtained by running a debug build and `dbg(function() { .... })`:
+When compiled with [SpiderMonkey](https://en.wikipedia.org/wiki/SpiderMonkey), the following bytecode is created (obtained by running a debug build and `dbg(function() { .... })`:
 
 ```
 loc     op

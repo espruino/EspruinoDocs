@@ -51,8 +51,8 @@ With the slave behaviour it should be able to connect to Bluetooth 4.0 devices. 
 
 In case you want to use the latest commands from your HM-10 module, make sure you are using the latest version. To query the version number, just call:
 
-```
+```JS
 Serial1.print("AT+VERS?")
 ```
 
-and it should read 'HMSoft V522' (eventually scrambled by line breaks) or higher. If not you may want to flash your firmware with the latest version. On the [vendor's website](http://www.jnhuamao.cn/download_rom_en.asp?id=66) further information about this can be found.
+and it should read 'HMSoft V522' (eventually scrambled by line breaks) or higher. If not you may want to flash your firmware with the latest version. Further information about this can be found on the [vendor's website](http://www.jnhuamao.cn).

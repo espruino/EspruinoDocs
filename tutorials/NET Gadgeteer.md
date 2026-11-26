@@ -10,14 +10,14 @@
 Introduction
 -----------
 
-[.NET Gadgeteer](http://www.netmf.com/gadgeteer/) is a Microsoft prototyping platform that can be programmed in Microsoft .NET-based languages.
+[.NET Gadgeteer](https://en.wikipedia.org/wiki/.NET_Gadgeteer) is a Microsoft prototyping platform that can be programmed in Microsoft .NET-based languages.
 
 One of the main features is the use of 10 pin sockets to allow peripherals to be attached quickly and easily. The [Espruino Board](../boards/Original.md) has enough space on the surface mount prototyping area to allow you to solder two of these connectors onto it.
 
 There are a few different configurations of socket, but we're only going to deal with the SPI version here.
 
-Wiring Up for [SPI](http://gadgeteer.codeplex.com/wikipage?title=Socket%20Type%20S)
----------------
+Wiring Up for SPI
+------------------
 
 We'd suggest you solder a gadgeteer connector onto the prototype area of the Espruino board, with the 'keyed' side nearest the buttons.
 

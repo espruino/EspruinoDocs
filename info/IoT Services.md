@@ -239,7 +239,7 @@ putXively({ humidity : 0.5, temperature : 25 });
 IFTTT - If This Then That
 ----------------------
 
-[IFTTT](https://ifttt.com) lets you make recipes of the form 'if this happens then do that'. They have a [Maker Channel](http://blog.ifttt.com/post/121786069098/introducing-the-maker-channel) now, which means you can trigger loads of random stuff (tweeting, emails, etc) to happen on the net *really easily*
+[IFTTT](https://ifttt.com) lets you make recipes of the form 'if this happens then do that'. They have a [Maker Channel](https://ifttt.ai/maker_webhooks) now, which means you can trigger loads of random stuff (tweeting, emails, etc) to happen on the net *really easily*
 
 To use it:
 

@@ -169,7 +169,6 @@ Buying
 -----
 
 * [AdaFruit breakout board](https://www.adafruit.com/products/1899)
-* [SparkFun Breakout](https://www.sparkfun.com/products/12064)
 * .. or cheaper from EBay
 
 Links

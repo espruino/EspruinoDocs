@@ -57,7 +57,6 @@ If you're willing to open up your USB power pack, you may be able to add wires t
 * Farnell ([pins](http://uk.farnell.com/jst-japan-solderless-terminals/sph-002t-p0-5s/contact-loose-piece-0-05-0-22mm/dp/3617210) and [shroud](http://uk.farnell.com/jst-japan-solderless-terminals/phr-2/housing-2way-2mm/dp/3616186))
 * Adafruit (US) ([prewired connector](http://www.adafruit.com/products/261))
 * Digitalmeans (UK) ([prewired connector](https://digitalmeans.co.uk/shop/jst_2pin_power_connector-2mm_pitch-20))
-* Makersify (UK) ([prewired connector](http://makersify.com/products/adafruit-jst-2-pin-cable))
 
 ### Male Connectors (for the Espruino [Pico](../boards/Pico.md))
 
@@ -65,5 +64,3 @@ If you're willing to open up your USB power pack, you may be able to add wires t
 * [Farnell](http://uk.farnell.com/jst-japan-solderless-terminals/s2b-ph-sm4-tb-lf-sn/connector-header-smt-r-a-2mm-2way/dp/9492615)
 * [RS](http://uk.rs-online.com/web/p/products/6881353/)
 * [Adafruit (US)](http://www.adafruit.com/products/1769)
-* [Makersify (UK)](http://makersify.com/products/adafruit-jst-ph-2-pin-smt-right-angle-connector)
-* [Seeed OPL Kit](http://www.seeedstudio.com/depot/Open-Parts-LibraryBasic-V2-p-1560.html)

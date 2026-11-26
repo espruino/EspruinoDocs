@@ -1,5 +1,5 @@
 <!--- Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-DCF77 
+DCF77
 ======================
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/DCF77. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
@@ -50,7 +50,7 @@ The callback will be called every minute (assuming a good signal has been receiv
 When `Date` is valid, `info` will be an object of the form:
 
 ```
-{ 
+{
   CEST : boolean,  // Central European Summer Time
   CET : boolean   // Central European Time
 }
@@ -58,7 +58,7 @@ When `Date` is valid, `info` will be an object of the form:
 
 As this is radio, things can get corrupted. If two bits of the signal are wrong then the parity can still be correct and your callback will be called with the wrong `Date` object and no error - to ensure an accurate time signal we'd suggest storing the previous two minutes' `Date` values, and *only* updating the time if all 3 dates are consecutive: eg `13:35`, `13:36`, `13:37`.
 
-Using 
+Using
 -----
 
 * APPEND_USES: DCF77
@@ -70,6 +70,5 @@ You can buy DCF77 modules separately, but they tend to cost around £10 each.
 
 * [eBay](http://www.ebay.com/sch/i.html?_nkw=dcf77+module)
 * [Conrad](http://www.conrad.com/ce/en/product/641138/DCF-receiver-board)
-* [pollin](http://www.pollin.de/shop/dt/NTQ5OTgxOTk-/Bausaetze_Module/Module/DCF_Empfangsmodul_DCF1.html)
 
 You may find that it is in fact cheaper to just buy a DCF77 clock, dismantle it and remove the radio (which is usually a separate module).

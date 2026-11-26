@@ -11,4 +11,4 @@ An open source, retro-inspired smartwatch running JavaScript
 
 ![](time_machine_watch.jpg)
 
-[See the full project on Eric Min's site](https://iamericmin.github.io/tm5.html) or [GitHub](https://github.com/iamericmin/Time-Machine-Mk.-V)
+[See the full project on Eric Min's site](https://minworks.org/tech_writeups/tm5.html) or [GitHub](https://github.com/iamericmin/Time-Machine-Mk.-V)
