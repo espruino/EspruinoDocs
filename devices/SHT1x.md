@@ -6,7 +6,7 @@ Sensirion SHT10 SHT11 & SHT15 Temperature and Relative Humidity Sensor Module
 
 * KEYWORDS: Module,SHT10,SHT11,SHT15,sensirion,temperature,humidity
 
-Use the [SHT1x](SHT1x.js) ([About Modules](../Modules.md)) module for reading data from the Sensirion SHT1x series of devices.
+Use the [SHT1x](SHT1x.js) module for reading data from the Sensirion SHT1x series of devices.
 
 These devices use a 2 wire communication bus using a protocol similar to, but not quite the same as the I2C protocol. The differences mean that these sensor devices cannot be used with a standard I2C bus.
 

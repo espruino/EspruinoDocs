@@ -173,7 +173,7 @@ function aToUint16(a) {
 
 Interfaces and Capacities
 ------
-EEPROMs are available with almost every interface imaginable. Module support ([About Modules](../Modules.md)) is available for three of the most common interfaces: I2C, SPI, and OneWire. These interfaces all have their own considerations.
+EEPROMs are available with almost every interface imaginable. [Module support](../Modules.md) is available for three of the most common interfaces: I2C, SPI, and OneWire. These interfaces all have their own considerations.
 
 ####I2C
 I2C is the most common interface for EEPROMs, and the least expensive. Support is provided by the [AT24](AT24.js) module, which supports devices with a capacity up to 4mbit. The speed of these EEPROMs is limited by the speed of the I2C bus, which is 100kbit by default, though the Espruino supports 400mbit mode as of v72. Most (but not all) I2C EEPROMs are rated for 1mhz use, and almost all are rated for 400mhz. For some parts, the maximum speed may depend on the supply voltage.

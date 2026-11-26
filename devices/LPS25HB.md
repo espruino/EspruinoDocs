@@ -10,7 +10,7 @@ LPS25HB is a pressure sensor that can be used by i2c. This sensor is available o
 datasheet is available on ST web site :
      http://www.st.com/content/ccc/resource/technical/document/datasheet/9a/4c/aa/72/1f/45/4e/24/DM00141379.pdf/files/DM00141379.pdf/jcr:content/translations/en.DM00141379.pdf
 
-Use the [LPS25HB](LPS25HB.js) ([About Modules](../Modules.md)) module for it.
+Use the [LPS25HB](LPS25HB.js) module for it.
 
 You can wire this up as follows:
 

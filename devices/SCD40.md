@@ -6,7 +6,7 @@ SCD40
 
 * KEYWORDS: Module,SCD40,SCD41,SCD43,Temperature,Humidity,C02
 
-This module should work with Sensirons SDC40, SCD41 and SCD43 sensors, although it has only been tested on the SDC40. Use the [SCD40](SCD40.js) ([About Modules](../Modules.md)) module for it.
+This module should work with Sensirons SDC40, SCD41 and SCD43 sensors, although it has only been tested on the SDC40. Use the [SCD40](SCD40.js) module for it.
 
 You can wire this up as follows:
 

@@ -6,7 +6,7 @@ SHT3C Temperature and Humidity sensor
 
 * KEYWORDS: Module,I2C,SHT3C,SHT3,sensirion,temperature,humidity
 
-Use the [SHT3C](SHT3C.js) ([About Modules](../Modules.md)) module for reading data from the Sensirion SHT3C series of devices.
+Use the [SHT3C](SHT3C.js) module for reading data from the Sensirion SHT3C series of devices.
 
 Basic usage:
 

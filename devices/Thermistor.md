@@ -12,7 +12,7 @@ This module uses the following common thermistor characteristics found in most o
 
 The module has been written to match the characteristics and codes in this [thermistor datasheet](https://www.sontay.com/media/specs/Thermistor_Types_and_Compatibility_Charts.pdf).
 
-Use the [Thermistor](Thermistor.js) ([About Modules](../Modules.md)) module for it.
+Use the [Thermistor](Thermistor.js) module for it.
 
 | Sensor Type | Code |
 | ----------  | ---- |

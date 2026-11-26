@@ -6,7 +6,7 @@ MQTT Client
 
 * KEYWORDS: Module,MQTT,protocol,client,Internet
 
-A [MQTT](http://mqtt.org/) client implementation for Espruino. MQTT is a lightweight publish-subscribe protocol built for reliable machine-2-machine communication with a very small footprint. It provides efficient and robust communication mechanisms as well as QOS. This module only implements a subset of the MQTT protocol. As of now only QOS 0 (at most once) is truly supported. Encryption and keys are not supported. The module has been tested with Mosquitto-1.3.5. Use the [MQTT](/modules/MQTT.js) ([About Modules](../Modules.md)) module for it.
+A [MQTT](http://mqtt.org/) client implementation for Espruino. MQTT is a lightweight publish-subscribe protocol built for reliable machine-2-machine communication with a very small footprint. It provides efficient and robust communication mechanisms as well as QOS. This module only implements a subset of the MQTT protocol. As of now only QOS 0 (at most once) is truly supported. Encryption and keys are not supported. The module has been tested with Mosquitto-1.3.5. Use the [MQTT](/modules/MQTT.js) module for it.
 
 **Note:** If you don't need all the features, consider using [the tinyMQTT module](./tinyMQTT.md) which only provides simple PUB/SUB but which is about 1/3 of the size.
 
