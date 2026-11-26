@@ -109,10 +109,13 @@ exports.getFiles = function(dir) {
   return results;
 };
 
+// Markdown files that are documentation for the repo itself, not website pages
+exports.NON_PAGE_MARKDOWN = ["README.md", "AGENTS.md", "CLAUDE.md"];
+
 exports.getMarkdown = function(dir) {
   var results = [];
   exports.getFiles(dir).forEach(function(f) {
-    if (f.substr(-3) == ".md" && f.substr(-9)!="README.md") {
+    if (f.substr(-3) == ".md" && exports.NON_PAGE_MARKDOWN.indexOf(path.basename(f))<0) {
       results.push(f);
     }
   });

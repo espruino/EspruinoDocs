@@ -576,6 +576,8 @@ function addToWordlist(newWords) {
 }
 
 // ---------------------------------------------------------------- Page header format
+// Markdown files that document the repo itself rather than being website pages (keep in sync with bin/common.js)
+const NON_PAGE_MARKDOWN = ["README.md", "AGENTS.md", "CLAUDE.md"];
 /* The start of each .md file must be laid out as bin/build.js and bin/commenter.js expect:
   1: <!--- Copyright ... -->
   2: Page Title
@@ -583,9 +585,9 @@ function addToWordlist(newWords) {
   4: (blank)
   5: <span ...>:warning: **Please view the correctly rendered version of this page at ...</span>
   6: (blank)
-README.md files aren't turned into pages, so aren't checked. */
+README.md/AGENTS.md/CLAUDE.md files aren't turned into pages, so aren't checked. */
 function checkHeader(file, contents) {
-  if (path.basename(file) == "README.md") return;
+  if (NON_PAGE_MARKDOWN.includes(path.basename(file))) return;
   const lines = contents.split("\n").map(l => l.replace(/\r$/, ""));
   while (lines.length < 6) lines.push("");
   const err = (line, msg) => report(file, line, "error", "format", msg);
@@ -751,7 +753,7 @@ async function main() {
     // The 'view the correctly rendered version of this page at URL' banner (added by bin/commenter.js)
     // must link to this page: https://www.espruino.com/ + filename without .md, with spaces as '+'
     let banner = null;
-    const bm = file.endsWith(".md") && contents.match(/correctly rendered version of this page at\s+(https?:\/\/\S+?)[.,]?(?=[\s*<]|$)/);
+    const bm = file.endsWith(".md") && !NON_PAGE_MARKDOWN.includes(path.basename(file)) && contents.match(/correctly rendered version of this page at\s+(https?:\/\/\S+?)[.,]?(?=[\s*<]|$)/);
     if (bm && opts.internal) {
       const expected = "https://www.espruino.com/" + path.basename(file, ".md").replace(/ /g, "+");
       const line = contents.substring(0, bm.index).split("\n").length;
