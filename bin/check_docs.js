@@ -7,6 +7,9 @@ Checks the documentation in this repository for:
     (code blocks, inline code, URLs, identifiers and acronyms are ignored).
     Words are accepted if they're valid British *or* American English, or
     are listed in bin/spelling-wordlist.txt
+  * Page format - the top of each .md file must have the copyright line, title,
+    '===' underline, and 'correctly rendered version' banner that bin/build.js
+    and bin/commenter.js expect (the banner must link to the page itself)
   * Broken internal links - relative links to files in this repository, plus
     the site-relative links the build script understands (`/modules/X.js`,
     `/Reference`, `/Page+Name`, `/files/...`)
@@ -559,6 +562,29 @@ function addToWordlist(newWords) {
   fs.writeFileSync(WORDLIST_FILE, header.concat([...words].sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }) || a.localeCompare(b))).join("\n") + "\n");
 }
 
+// ---------------------------------------------------------------- Page header format
+/* The start of each .md file must be laid out as bin/build.js and bin/commenter.js expect:
+  1: <!--- Copyright ... -->
+  2: Page Title
+  3: ==========
+  4: (blank)
+  5: <span ...>:warning: **Please view the correctly rendered version of this page at ...</span>
+  6: (blank)
+README.md files aren't turned into pages, so aren't checked. */
+function checkHeader(file, contents) {
+  if (path.basename(file) == "README.md") return;
+  const lines = contents.split("\n").map(l => l.replace(/\r$/, ""));
+  while (lines.length < 6) lines.push("");
+  const err = (line, msg) => report(file, line, "error", "format", msg);
+  if (!/<!--+ Copyright/.test(lines[0])) err(1, "First line should be a copyright comment, eg. <!--- Copyright (c) 2026 Your Name. See the file LICENSE for copying permission. -->");
+  if (lines[1].trim() == "") err(2, "Second line should be the page title");
+  if (!lines[2].startsWith("===")) err(3, "Third line should be '===' underlining the title");
+  if (lines[3] != "") err(4, "Fourth line should be blank");
+  if (!lines[4].startsWith("<span ") || !lines[4].includes("correctly rendered version of this page"))
+    err(5, "Fifth line should be the 'correctly rendered version of this page' banner (run bin/commenter.js to add it)");
+  if (lines[5] != "") err(6, "Sixth line should be blank");
+}
+
 // ---------------------------------------------------------------- Interactive fixing (--fix)
 const C = process.stdout.isTTY ?
   { dim: "\x1b[2m", bold: "\x1b[1m", red: "\x1b[31;1m", green: "\x1b[32m", cyan: "\x1b[36m", reset: "\x1b[0m" } :
@@ -721,6 +747,7 @@ async function main() {
         report(file, line, "error", "link", `${bm[1]} - the 'correctly rendered version' link should point to this page, ${expected}`, { url: bm[1], replacement: expected });
       }
     }
+    if (file.endsWith(".md")) checkHeader(file, contents);
     for (const chunk of getMarkdownChunks(file, contents)) {
       scanMarkdown(chunk.text, chunk.line, (url, line) => {
         if (banner && url == banner.url && line == banner.line) return; // already reported above
@@ -781,6 +808,7 @@ async function main() {
   const count = (sev, type) => issues.filter(i => i.severity == sev && (!type || i.type == type)).length;
   const summary = [
     `Spelling: ${opts.spelling ? count("error", "spelling") + " unknown words (" + unknownWords.size + " unique)" : "skipped"}`,
+    `Page format: ${count("error", "format")} problems`,
     `Internal links: ${opts.internal ? count("error", "link") + " broken, " + count("warning", "link") + " warnings" : "skipped"}`,
     `External links: ${opts.external ? count("error", "external") + " broken, " + count("warning", "external") + " warnings" : "skipped"}`
   ];
@@ -796,7 +824,7 @@ async function main() {
     }
     const bad = issues.filter(i => i.type != "spelling" && i.severity == "error");
     if (bad.length) {
-      md += "\n### Broken links\n\n| File | Line | Problem |\n|---|---|---|\n";
+      md += "\n### Broken links and page format problems\n\n| File | Line | Problem |\n|---|---|---|\n";
       bad.slice(0, 500).forEach(i => md += `| ${i.file} | ${i.line} | ${i.message.replace(/\|/g, "\\|")} |\n`);
     }
     fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
