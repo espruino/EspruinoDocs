@@ -144,5 +144,5 @@ Buying
 -----
 
 You can get all kinds of stepper motors and drivers, however the
-[small 5V geared stepper motors on eBay](http://www.ebay.com/sch/i.html?_nkw=5v+stepper+motor+uln2003)
+[small 5V geared stepper motors on eBay](https://www.ebay.com/sch/i.html?_nkw=5v+stepper+motor+uln2003)
 are amazingly cheap, and very easy to wire up to Espruino.

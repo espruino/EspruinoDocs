@@ -69,4 +69,3 @@ Buying
 -----
 
 * [Order from Charmed Labs](http://charmedlabs.com/)
-* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=pixy)

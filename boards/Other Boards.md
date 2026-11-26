@@ -83,7 +83,7 @@ Good value, and can usually be purchased from well-known suppliers. It contains 
 
 It comes pre-flashed with a bootloader. HOWEVER there is not enough space for this and Espruino, so you will need to overwrite it using a USB-TTL converter. See [Serial Bootloader](https://www.espruino.com/Serial+Bootloader) for instructions.
 
-You can get this directly from [Olimex](https://www.olimex.com/Products/Duino/STM32/OLIMEXINO-STM32/) or [Farnell/Element14](http://uk.farnell.com/olimex/olimexino-stm32/board-dev-olimexino-stm32/dp/2061325).
+You can get this directly from [Olimex](https://www.olimex.com/Products/Duino/STM32/OLIMEXINO-STM32/)
 
 ### 'HY' LCD Modules
 

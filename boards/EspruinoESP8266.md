@@ -24,7 +24,7 @@ Quick links
 * [Download the latest ESP8266 firmware release](http://www.espruino.com/Download)
 * [Download 'cutting edge' ESP8266 firmwares](http://www.espruino.com/binaries/travis/master/) - these may not always work
 * [Tutorial on flashing the esp8266](../tutorials/ESP8266_Flashing.md)
-* [Espruino ESP8266 Forum](http://forum.espruino.com/microcosms/925/)
+* [Espruino ESP8266 Forum](https://forum.espruino.com/microcosms/925/)
 * [Using Wifi on the ESP8266](../tutorials/ESP8266_WifiUsage.md)
 * [Gitter chat about Espruino](https://gitter.im/espruino/Espruino) (not focused on esp8266 but
 lots of esp8266 chatter)
@@ -480,11 +480,6 @@ Some of the top-level issues at the time of writing are:
 - Support sleep mode
 - Provide more memory, like more JSvars and heap)
 
-Further reading
----------------
-
-The esp8266 has its own [community](http://www.esp8266.com/), free books, videos and more.
-For esp8266 questions not related to Espruino, it is recommended to research using those resources.
 
 Official Espruino Boards
 -------------------------

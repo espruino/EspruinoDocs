@@ -22,7 +22,7 @@ You'll Need
 * An [Espruino Board](../boards/Original.md) wired up for [Servo Motors](../devices/Servo Motors.md)
 * An [IR Receiver](../devices/IRReceiver.md)
 * A TV remote control
-* A MeArm: either a kit from [Phenoptix](http://www.phenoptix.com/products/mearm-pocket-sized-robot-arm), or laser cut your own from design files on [Thingiverse](http://www.thingiverse.com/thing:360108)
+* A MeArm: either a kit from [Phenoptix](http://www.phenoptix.com/products/mearm-pocket-sized-robot-arm), or laser cut your own from design files on [Thingiverse](https://www.thingiverse.com/thing:360108)
 
 Wiring Up
 --------
@@ -42,7 +42,7 @@ And plug the IR receiver directly onto the board, such that:
 |-----|-------------|
 | A1  | VCC         |
 | A0  | GND         |
-| C3  | Signal      | 
+| C3  | Signal      |
 
 
 Software
@@ -122,7 +122,7 @@ A1.write(1);
 A0.write(0);
 
 /* Set up the IR receiver. The codes used here are the codes that we got
-from our remote control, so you'll have to use the codes shown by the 
+from our remote control, so you'll have to use the codes shown by the
 `print("Unknown "+code)` statement below. */
 require("IRReceiver").connect(C3, function(code) {
   switch (code) {
@@ -134,7 +134,7 @@ require("IRReceiver").connect(C3, function(code) {
     case "111100000111000000100011010111001": servos.base.move(0.1); break; // right
     case "111100000111000000000011011111001": servos.shoulder.move(0.1); break; // up
     case "111100000111000001000011001111001": servos.shoulder.move(-0.1); break; // down
-    case "111100000111000000001011011101001": clenched = !clenched; 
+    case "111100000111000000001011011101001": clenched = !clenched;
                      servos.hand.goto(clenched ? hand_on : hand_off); break; // ok
     default: print("Unknown "+code);
   }

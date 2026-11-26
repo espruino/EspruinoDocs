@@ -25,7 +25,7 @@ Notes
 Wiring Up
 --------
 
-The bare display and controller module needs to be connected with a 24pin FPC connector with 0.5mm pitch and an additional driving circuit. There are rather huge and expensive ready to use development boards available from the display manufacturer. You can even try to build the minimum circuit yourself, e.g. like [Jaroslav Sýkora](http://www.jsykora.info/2014/05/attempt-at-soldering-an-fpc-connector-with-0-5mm-pitch-and-a-prototyping-pcb-design/) did.
+The bare display and controller module needs to be connected with a 24pin FPC connector with 0.5mm pitch and an additional driving circuit. There are rather huge and expensive ready to use development boards available from the display manufacturer.
 
 The following info applies only to the connection between a common display and a microcontroller, ignoring the driving circuit.
 

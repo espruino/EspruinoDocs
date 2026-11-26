@@ -53,8 +53,6 @@ const IN_GITHUB = !!process.env.GITHUB_ACTIONS;
 
 // Directories whose .md / .js files we check
 const SKIP_DIRS = ["node_modules", "html", ".git", "testing", ".github"];
-// Translated pages (eg. Vizibles.es.md) - not spell checked
-const TRANSLATED_FILE = /\.(es|de|fr|it|pt|nl|ru|zh|ja|ko|pl|cs)\.md$/;
 // Pages that exist on espruino.com but aren't Markdown files here (see knownPageLinks in build.js)
 const SITE_PAGES = ["Order", "Search", "Reference", "Download", "binaries"];
 // Directories whose .js files are served as /modules/X.js
@@ -732,7 +730,7 @@ async function main() {
           checkInternalLink(file, line, url);
         }
       }, (text, line) => {
-        if (opts.spelling && !TRANSLATED_FILE.test(file)) checkProse(file, text, line);
+        if (opts.spelling) checkProse(file, text, line);
       });
     }
   }

@@ -1,7 +1,7 @@
 /* Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. */
 /*
 
-Created from http://uzebox.org/wiki/index.php?title=File:F8x16all.gif with http://ebfc.mattbrailsford.com/
+Created from https://uzebox.org/wiki/index.php?title=File:F8x16all.gif with https://www.espruino.com/Bitmap+Font+Converter
 
 Usage:
 

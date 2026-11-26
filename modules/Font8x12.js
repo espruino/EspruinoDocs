@@ -1,7 +1,7 @@
 /* Copyright (c) 2013 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. */
 /*
 
-Created from http://uzebox.org/wiki/index.php?title=File:Dangen_charset_8x12.png with Espruino/scripts/create_custom_font.js
+Created from https://uzebox.org/wiki/index.php?title=File:Dangen_charset_8x12.png with Espruino/scripts/create_custom_font.js
 
 Usage:
 

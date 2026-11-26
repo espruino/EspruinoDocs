@@ -60,13 +60,13 @@ Want to get inside? Check out the [Bangle.js Disassembly page](../tutorials/Bang
 * 32 mbit flash - similar command set to [Macronix MX25](https://media.digikey.com/pdf/Data%20Sheets/Macronix/MX25U12835F.pdf)
 * 240x240 LCD with [ST7789 driver](https://www.rhydolabz.com/documents/33/ST7789.pdf) used in 8 bit parallel mode
 * Holtek touch controller - probably the [BS83A02A](https://www.holtek.com.tw/documents/10179/11842/BS83A02A-4_A04A-3-4v171.pdf) with 2 zone on/off
-* GPS is [UBlox UBX-M8130](../files/UBLOX-M8.pdf)
+* GPS is [UBlox UBX-M8130](../datasheets/UBLOX-M8.pdf)
 * 502527 Lithium ion battery
 
 GPS
 ---
 
-As above the GPS is a [UBlox UBX-M8130](https://www.u-blox.com/sites/default/files/products/documents/u-blox8-M8_ReceiverDescrProtSpec_%28UBX-13003221%29_Public.pdf)
+As above the GPS is a [UBlox UBX-M8130](../datasheets/UBLOX-M8.pdf)
 
 On boot, it reports: `ROM CORE 3.01, PROTVER=18.00*11`
 

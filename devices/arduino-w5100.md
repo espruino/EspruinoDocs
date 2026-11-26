@@ -166,4 +166,4 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=arduino+w5100+shield)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=arduino+w5100+shield)

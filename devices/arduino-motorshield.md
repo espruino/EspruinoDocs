@@ -96,5 +96,5 @@ setInterval(motorControl, 22 * 1000);
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=arduino+l293d+motor+shield+-nodemcu)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=arduino+l293d+motor+shield+-nodemcu)
 * [Banggood](https://www.banggood.com/Motor-Driver-Shield-L293D-Duemilanove-Mega-U-NO-p-72855.html)

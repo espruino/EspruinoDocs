@@ -11,7 +11,7 @@ issues. **For more general problems, please look at [the main Troubleshooting pa
 
 Have you got a [Bangle.js](../boards/Bangle.js.md)? There's also a specific [Bangle.js Troubleshooting page](./Troubleshooting Bangle.js.md)
 
-If your problem isn't covered, please post in the [Forum](http://forum.espruino.com).
+If your problem isn't covered, please post in the [Forum](https://forum.espruino.com).
 
 * APPEND_TOC
 
@@ -266,4 +266,4 @@ To fix this, right at the top of your code that runs on initialisation (eg. the 
 Something else is wrong!
 -------------------------
 
-Check out the [main Troubleshooting page](./Troubleshooting.md) and also the [Espruino Forums](http://forum.espruino.com/)
+Check out the [main Troubleshooting page](./Troubleshooting.md) and also the [Espruino Forums](https://forum.espruino.com/)

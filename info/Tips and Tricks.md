@@ -7,7 +7,7 @@ Tips and Tricks
 * KEYWORDS: Tips,Tricks,Forum,Useful,Hints
 * LIST_LINKS_AS_KEYWORDS
 
-[Espruino's Forums](http://forum.espruino.com) have thousands of post with
+[Espruino's Forums](https://forum.espruino.com) have thousands of post with
 useful information, but it can sometimes be hard to find the posts you need.
 
 Here are some of the interesting posts that forum users have flagged up. If you
@@ -18,56 +18,56 @@ find something and would like to add it, please [let us know](https://github.com
 Useful Code
 -----------
 
-* [Serve a Web IDE directly off a network-connected Espruino](http://forum.espruino.com/conversations/318472/)
-* [Detecting movement with Puck.js](http://forum.espruino.com/conversations/301185)
-* [Recording audio to SD card](http://forum.espruino.com/conversations/324262/#14390638)
-* [Better Analog readings using multiple readings and taking a median](http://forum.espruino.com/conversations/297218/#14365428)
-* [Writing a Module containing a class](http://forum.espruino.com/conversations/317394/#comment14111852)
-* [Module for producing custom format Date/Time Strings](http://forum.espruino.com/comments/13109698/)
-* [Creating a Neural Net on Espruino with Synaptic.js](http://forum.espruino.com/conversations/311688/)
-* [Repeatedly call the same code from inside a Promise chain](http://forum.espruino.com/conversations/325552/#comment14431230)
-* [Using Inline C to create LED patterns quickly](http://forum.espruino.com/conversations/325997/#14431325)
-* [Counting up and down on a Web page with a Puck.js](http://forum.espruino.com/conversations/326269/)
-* [Using Tween.js in Espruino](http://forum.espruino.com/conversations/326659/#comment14458738)
+* [Serve a Web IDE directly off a network-connected Espruino](https://forum.espruino.com/conversations/318472/)
+* [Detecting movement with Puck.js](https://forum.espruino.com/conversations/301185)
+* [Recording audio to SD card](https://forum.espruino.com/conversations/324262/#14390638)
+* [Better Analog readings using multiple readings and taking a median](https://forum.espruino.com/conversations/297218/#14365428)
+* [Writing a Module containing a class](https://forum.espruino.com/conversations/317394/#comment14111852)
+* [Module for producing custom format Date/Time Strings](https://forum.espruino.com/comments/13109698/)
+* [Creating a Neural Net on Espruino with Synaptic.js](https://forum.espruino.com/conversations/311688/)
+* [Repeatedly call the same code from inside a Promise chain](https://forum.espruino.com/conversations/325552/#comment14431230)
+* [Using Inline C to create LED patterns quickly](https://forum.espruino.com/conversations/325997/#14431325)
+* [Counting up and down on a Web page with a Puck.js](https://forum.espruino.com/conversations/326269/)
+* [Using Tween.js in Espruino](https://forum.espruino.com/conversations/326659/#comment14458738)
 * [Mirroring Pixl.js's display over Web Bluetooth](https://medium.com/@urish/mirroring-lcd-display-over-web-bluetooth-bb9ff2cb5d30)
-* [Xiaomi sensors/appliances, eg. Plant Moisture Sensor](http://forum.espruino.com/conversations/333218)
-* [eBook page turner with Puck.js](http://forum.espruino.com/comments/14860192/)
-* [Implementing a text menu/prompt in the console](http://forum.espruino.com/conversations/329366/)
+* [Xiaomi sensors/appliances, eg. Plant Moisture Sensor](https://forum.espruino.com/conversations/333218)
+* [eBook page turner with Puck.js](https://forum.espruino.com/comments/14860192/)
+* [Implementing a text menu/prompt in the console](https://forum.espruino.com/conversations/329366/)
 
 Common Issues and Questions
 ---------------------------
 
 * You might also want to [check out the FAQ](./FAQ.md)
-* [Trouble installing ST COM Port drivers](http://forum.espruino.com/conversations/290299/)
-* [SSD1306 display skips every other line](http://forum.espruino.com/conversations/269330/)
-* [STM32 current source/sink info](http://forum.espruino.com/conversations/428/)
-* [Using one button to simulate many different buttons](http://forum.espruino.com/conversations/1781/#31439)
-* [Setting Espruino's time from HTTP Headers](http://forum.espruino.com/conversations/280894/#12755183)
-* [Custom arrangements of Neopixel/WS2812/etc RGB LED Matrices](http://forum.espruino.com/conversations/315564/)
-* [Detecting I2C peripherals on a I2C bus](http://forum.espruino.com/conversations/278556/#12663043)
-* [How do I measure battery voltage on devices that don't have `E.getBattery`?](http://forum.espruino.com/conversations/326231/#14441504)
+* [Trouble installing ST COM Port drivers](https://forum.espruino.com/conversations/290299/)
+* [SSD1306 display skips every other line](https://forum.espruino.com/conversations/269330/)
+* [STM32 current source/sink info](https://forum.espruino.com/conversations/428/)
+* [Using one button to simulate many different buttons](https://forum.espruino.com/conversations/1781/#31439)
+* [Setting Espruino's time from HTTP Headers](https://forum.espruino.com/conversations/280894/#12755183)
+* [Custom arrangements of Neopixel/WS2812/etc RGB LED Matrices](https://forum.espruino.com/conversations/315564/)
+* [Detecting I2C peripherals on a I2C bus](https://forum.espruino.com/conversations/278556/#12663043)
+* [How do I measure battery voltage on devices that don't have `E.getBattery`?](https://forum.espruino.com/conversations/326231/#14441504)
 
 
 Useful Information
 ------------------
 
-* [Web Bluetooth for iOS](http://forum.espruino.com/conversations/298547/)
-* [How do HTTP requests work?](http://forum.espruino.com/conversations/1364/)
-* [List of I2C devices known to work on Espruino ESP8266](http://forum.espruino.com/conversations/286554/)
+* [Web Bluetooth for iOS](https://forum.espruino.com/conversations/298547/)
+* [How do HTTP requests work?](https://forum.espruino.com/conversations/1364/)
+* [List of I2C devices known to work on Espruino ESP8266](https://forum.espruino.com/conversations/286554/)
 * [Espruino and LoRaWan with RN2483](https://github.com/yerpj/TTN_with_Espruino/blob/master/QuickStart.md) (external link)
-* [Mac OSX/Linux hack to allow the Web IDE to connect to a Serial device over TCP/IP](http://forum.espruino.com/comments/14450988/)
-* [How to use Software/Hardware I2C/SPI/Serial](http://forum.espruino.com/conversations/327459/#comment14488718)
-* [How does Espruino differ from Duktape/JerryScript/mjs/V7?](http://forum.espruino.com/conversations/329430/#14565912)
+* [Mac OSX/Linux hack to allow the Web IDE to connect to a Serial device over TCP/IP](https://forum.espruino.com/comments/14450988/)
+* [How to use Software/Hardware I2C/SPI/Serial](https://forum.espruino.com/conversations/327459/#comment14488718)
+* [How does Espruino differ from Duktape/JerryScript/mjs/V7?](https://forum.espruino.com/conversations/329430/#14565912)
 
 Interesting Projects
 --------------------
 
 * [Pixl.js powered rock tumbler](https://github.com/urish/diy-tumbler)
 * [Real-life T-Rex Game](https://github.com/urish/real-trex-runner)
-* [Hacking Espruino onto a Wristwatch](http://forum.espruino.com/conversations/280747/)
+* [Hacking Espruino onto a Wristwatch](https://forum.espruino.com/conversations/280747/)
 * [Espruino Pico Mario Clock](https://github.com/paulcockrell/espruino-mario-clock)
-* [Bespoke Espruino conference badge for NodeConf 2017](http://forum.espruino.com/conversations/313468/)
-* [Controlling Retro Bubble LED displays](http://forum.espruino.com/conversations/311847)
+* [Bespoke Espruino conference badge for NodeConf 2017](https://forum.espruino.com/conversations/313468/)
+* [Controlling Retro Bubble LED displays](https://forum.espruino.com/conversations/311847)
 * [Building a Smart Air Pressure Sensor with Espruino and Angular](https://medium.com/@urish/building-a-smart-air-pressure-sensor-with-espruino-and-angular-942ef7373b92)
 * [Building a Rock Polisher using Espruino Pixl.js](https://medium.com/@urish/improvising-hardware-diy-rotary-rock-tumbler-d3a1a1915ea9)
 

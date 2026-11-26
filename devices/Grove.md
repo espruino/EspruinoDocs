@@ -106,4 +106,4 @@ Buying
 The Grove System Starter kits and individual parts are available directly from SeeedStudio in China, or from a range of distributors.
 
 * [SeeedStudio](http://www.seeedstudio.com/depot/s/grove.html)
-* [Digitalmeans](https://digitalmeans.co.uk/shop/index.php?search=grove)
+

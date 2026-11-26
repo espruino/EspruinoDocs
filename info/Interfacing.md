@@ -146,7 +146,7 @@ $ ./espruino_command.py "digitalWrite(LED1,1)"
 [no output, but turns the LED on]
 ```
 
-To be able to communicate with the serial port using Python, you will need pySerial: [http://pyserial.sourceforge.net](http://pyserial.sourceforge.net) . If you run into the trouble that the code complains that it cannot find `serial`, you will first need to install pySerial, which is luckily very straightforward (example below assumes you have downloaded version 2.7, update the commands as appropriate):
+To be able to communicate with the serial port using Python, you will need pySerial: [https://github.com/pyserial/pyserial](https://github.com/pyserial/pyserial) . If you run into the trouble that the code complains that it cannot find `serial`, you will first need to install pySerial, which is luckily very straightforward (example below assumes you have downloaded version 2.7, update the commands as appropriate):
 
 ```Bash
 tar xfvz pyserial-2.7.tar.gz

@@ -345,7 +345,7 @@ did with the LEDs and buttons, but you can also use [PWM](../info/PWM.md), [I2C]
 To set Puck.js up to redirect to a new NFC URL, just use [NRF.nfcURL(...)](https://www.espruino.com/Reference#l_NRF_nfcURL):
 
 ```JS
-NRF.nfcURL("http://espruino.com");
+NRF.nfcURL("https://espruino.com");
 ```
 
 or to turn off, call it with no arguments:

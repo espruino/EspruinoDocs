@@ -17,7 +17,7 @@ You'll need
 -----------
 
 * A [Puck.js](../boards/Puck.js.md)
-* A IR controlled RGB Light bulb ([you can find these on eBay](http://www.ebay.com/sch/i.html?_nkw=rgb+led+light+ir+remote+control&_sacat=0))
+* A IR controlled RGB Light bulb ([you can find these on eBay](https://www.ebay.com/sch/i.html?_nkw=rgb+led+light+ir+remote+control&_sacat=0))
 * An [Infrared Receiver](./Puck.js Infrared.md) (if your light bulb differs from the one I used)
 
 Software

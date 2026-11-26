@@ -8,7 +8,7 @@ DMX
 
 DMX is a standard protocol that's commonly used for digital stage lighting. See the [Wikipedia article on DMX512](https://en.wikipedia.org/wiki/DMX512)
 
-Here we're only going to cover reception of DMX. Head over to [the forums](http://forum.espruino.com/) if you're interested in transmission.
+Here we're only going to cover reception of DMX. Head over to [the forums](https://forum.espruino.com/) if you're interested in transmission.
 
 Wiring
 ------
@@ -34,13 +34,13 @@ require("DMX").connectRX(pin, 6, function(data) {
 });
 ```
 
-**Note:** 
+**Note:**
 
 * Some DMX transmitters don't transmit the full 512 bytes of message
 * Data comes in from DMX quite quickly. If you don't handle each packet quickly enough, the next packet could be corrupted.
 * If you print the received data to the console (the commented out code), it make take so long to print it that the next packet gets corrupted.
 
-Using 
+Using
 -----
 
 * APPEND_USES: DMX

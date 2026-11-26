@@ -20,4 +20,4 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=TCRT5000)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=TCRT5000)

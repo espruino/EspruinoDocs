@@ -142,4 +142,4 @@ cd
 ```
 
 Of course things never just work... Please provide feedback in the
-[espruino forum](http://forum.espruino.com/) or on [gitter](https://gitter.im/espruino/Espruino) about this tutorial and the mishaps you've had so it can be improved!
+[espruino forum](https://forum.espruino.com/) or on [gitter](https://gitter.im/espruino/Espruino) about this tutorial and the mishaps you've had so it can be improved!

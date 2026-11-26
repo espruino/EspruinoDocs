@@ -139,7 +139,7 @@ function go() {
   wifi = require("ESP8266WiFi_0v25").connect(Serial1, function(err) {
     if (err) throw err;
     console.log("Connecting to WiFi");
-    wifi.createAP("ESP123","HelloWorld",5,"wpa2_psk", function(err) {   
+    wifi.createAP("ESP123","HelloWorld",5,"wpa2_psk", function(err) {
       if (err) throw err;
       console.log("Connected!");
       require("http").createServer(pageHandler).listen(80);
@@ -156,5 +156,5 @@ of things you can do on Espruino  with an Internet connection.
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=arduino+esp8266+serial+shield) - the
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=arduino+esp8266+serial+shield) - the
 boards mentioned on this page are the ones with the red DIP switch on.

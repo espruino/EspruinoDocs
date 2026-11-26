@@ -72,4 +72,4 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=HC-SR501)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=HC-SR501)

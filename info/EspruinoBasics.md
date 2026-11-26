@@ -13,7 +13,7 @@ Electronics Basics
 
 **Foundation** Just about all the documentation assumes that you have some knowledge of components like resistors and transformers, and which way to solder on a diode.  If you need to go beyond one of the tutorials, you'll need to know the basics (and it'll make just about everything more fun).  Pick up a good electronics introductory book and knock it out in a few nights.  Here are [some good books](http://www.circuitstoday.com/4-great-books-to-study-basic-electronics).
 
-**Advice** If you get stuck, there are some very helpful people in the [forums](http://forum.espruino.com).  Create an account and don't be shy.
+**Advice** If you get stuck, there are some very helpful people in the [forums](https://forum.espruino.com).  Create an account and don't be shy.
 
 
 Things You'll Need

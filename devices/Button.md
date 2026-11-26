@@ -66,8 +66,8 @@ We've done a bit of software already to set up the internal resistors, but to re
 
 ### Checking it
 
-You can check the value just by writing ```digitalRead(B1)```. This will return 
-a number - 0 when the button is released and 1 when it is pressed (unless you 
+You can check the value just by writing ```digitalRead(B1)```. This will return
+a number - 0 when the button is released and 1 when it is pressed (unless you
 connected to 0v, in which case it's reversed);
 
 For instance you could check the button 10 times a second and use it to light
@@ -91,7 +91,7 @@ setWatch(function(e) {
 // you'll need to use  edge: 'falling' if you connected the button to 0v
 ```
 
-Using the hardware like this allows Espruino to get very low 
+Using the hardware like this allows Espruino to get very low
 [Power Consumption](../info/Power Consumption.md) as it can stay asleep until the button is pressed.
 
 If you press the button hard or quickly, you may find that you get `'Button Pressed'`
@@ -103,7 +103,7 @@ which makes Espruino only call your code once the button has stayed in the
 same state for more than a certain number of milliseconds. In the case below
 the button has to stay pressed for at least 50 milliseconds before `'Button Pressed'`
 is printed:
-  
+
 ```
 setWatch(function(e) {
   console.log("Button pressed");
@@ -111,7 +111,7 @@ setWatch(function(e) {
 // you'll need to use  edge: 'falling' if you connected the button to 0v
 ```
 
-Using 
+Using
 -----
 
 * APPEND_USES: Button,Pushbutton
@@ -119,5 +119,5 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=tactile switch)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=tactile switch)
 

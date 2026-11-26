@@ -17,7 +17,7 @@ There are plenty of times that you might need to control the temperature in some
 * Fancy 'sous-vide' cooking
 * Heating your house
 
-and so on... 
+and so on...
 
 Here we'll show you a very quick, easy way to control the temperature of something. There are plenty of other ways (especially if you have more control over your heater than just On or Off), but this is a good starting point.
 
@@ -28,7 +28,7 @@ You'll Need
 * An [Espruino Board](../boards/Original.md)
 * A [DS18B20](../devices/DS18B20.md) temperature sensor
 * A 4.7k resistor (for the temperature sensor)
-* A heater of some kind. I'll be using a [P21W](http://www.ebay.com/sch/i.html?_nkw=P21W+12V+21W+-led) car indicator bulb, and a 5v Power Supply that will supply at least 1 Amp to power it
+* A heater of some kind. I'll be using a [P21W](https://www.ebay.com/sch/i.html?_nkw=P21W+12V+21W+-led) car indicator bulb, and a 5v Power Supply that will supply at least 1 Amp to power it
 * A [relay module](../devices/Relays.md), to turn the heater on and off
 
 Wiring Up
@@ -72,8 +72,8 @@ We just need to make a simple Bulb + battery circuit here, where instead of a sw
 **Note:** The wiring shown on the picture shows the relay module powered
 solely from 5v with the jumper connected. This will work but on some
 relay modules the relay may not turn off reliably. On 5v-capable pins
-you can fix this with the command `pinMode(A0, "opendrain");`, but `A0` 
-on the [Original Espruino Board](../boards/Original.md) isn't 5v tolerant (it is 
+you can fix this with the command `pinMode(A0, "opendrain");`, but `A0`
+on the [Original Espruino Board](../boards/Original.md) isn't 5v tolerant (it is
 on the [Pico](../boards/Pico.md)). Instead, we remove the jumper and power the relay
 from 5v while running the input part of the relay module at 3.3v.
 
@@ -111,7 +111,7 @@ setInterval(function() {
 
 Now, if the temperature is below 30 degrees C (the value of ```targetTemp```), the bulb will turn on and will generate heat. When the temperature is exceeded by a small amount, the bulb will turn off. When the temperature drops a bit below 30 degrees the bulb will turn back on again!
 
-**Note:** If the temperature sensor and the bulb aren't close enough together or aren't in an enclosed space, the sensor will never reach the correct temperature. Try placing the bulb and sensor in a small cardboard box, or taping them together. 
+**Note:** If the temperature sensor and the bulb aren't close enough together or aren't in an enclosed space, the sensor will never reach the correct temperature. Try placing the bulb and sensor in a small cardboard box, or taping them together.
 
 We use ```targetTemp-1``` and ```targetTemp+1``` in our if statements because we want a bit of [hysteresis](http://en.wikipedia.org/wiki/Hysteresis). This is what is built into all thermostats (for instance in your fridge or house's central heating), and it makes sure that we don't reach the stage where we're turning our bulb on and off every second!
 

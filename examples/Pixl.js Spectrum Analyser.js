@@ -10,7 +10,7 @@ Pixl.js Spectrum Analyser
 This example outputs a spectrum analyser on [Pixl.js](../boards/Pixl.js.md)'s LCD
 display.
 
-Simply attach [an amplified Microphone](http://www.ebay.com/sch/i.html?_nkw=arduino+microphone)
+Simply attach [an amplified Microphone](https://www.ebay.com/sch/i.html?_nkw=arduino+microphone)
 or some other varying input to pin `A0` on a [Pixl.js](../boards/Pixl.js.md) board,
 connect, and upload the code.
 

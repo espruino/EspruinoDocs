@@ -18,5 +18,5 @@ on your phone homescreen for easy access.
 [Try it out!](https://benjaminbenben.com/puckmote/)
 
 Or [see the code on GitHub](https://benjaminbenben.com/puckmote/) - and there's
-[a forum post](http://forum.espruino.com/conversations/363344) describing
+[a forum post](https://forum.espruino.com/conversations/363344) describing
 it in more detail.

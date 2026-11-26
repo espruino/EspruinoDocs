@@ -12,7 +12,7 @@ KeyPad Matrix
 A [KeyPad Matrix](http://en.wikipedia.org/wiki/Keyboard_matrix_circuit) is a selection of switches arranged in a grid. One side of each switch is connected with horizontal wires (rows) and one side is connected with vertical wires (columns). By putting a signal on one side (for example the rows) and reading the other side (the columns), you can determine which key is pressed down.
 
 
-KeyPads are handled by the [KeyPad.js](KeyPad.js) module. 
+KeyPads are handled by the [KeyPad.js](KeyPad.js) module.
 
 Simply supply two arrays, one of wires connected to columns,
 one of wires connected to rows.
@@ -36,7 +36,7 @@ var keypad = require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9]);
 print("123A456B789C*0#D"[keypad.read()]);
 ```
 
-With the 4x5 KeyPads (readily available on ebay), the four wires nearest the ```F1``` key are the columns. For example, it might be hooked up like this: 
+With the 4x5 KeyPads (readily available on ebay), the four wires nearest the ```F1``` key are the columns. For example, it might be hooked up like this:
 
 ```
 require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9,B12], function(e) {
@@ -44,19 +44,19 @@ require("KeyPad").connect([B2,B3,B4,B5],[B6,B7,B8,B9,B12], function(e) {
 });
 ```
 
-This example uses B12, which also has BTN1 on it - this is fine, though pressing BTN1 will result in spurious keypresses being recorded. 
+This example uses B12, which also has BTN1 on it - this is fine, though pressing BTN1 will result in spurious keypresses being recorded.
 
 
 Caveats
 -----
 
-* This module sets watches on the *columns*. The STMF103 chip (used in the Espruino board) does not allow a watch to be put on two pins with the same number at the same time (for example, A0 and C0). This must be taken into account when choosing pins to use, particularly with regards to other modules which set watches. Watches are not set on the *rows*, so there are no special restrictions on those. 
+* This module sets watches on the *columns*. The STMF103 chip (used in the Espruino board) does not allow a watch to be put on two pins with the same number at the same time (for example, A0 and C0). This must be taken into account when choosing pins to use, particularly with regards to other modules which set watches. Watches are not set on the *rows*, so there are no special restrictions on those.
 
-* It is impossible to reliably detect multiple simultaneous keypresses on a switch matrix (without including a diode for each switch, which most keypads don't have). This modules does not try to handle multiple key-presses. 
+* It is impossible to reliably detect multiple simultaneous keypresses on a switch matrix (without including a diode for each switch, which most keypads don't have). This modules does not try to handle multiple key-presses.
 
 
 
-Using 
+Using
 -----
 
 * APPEND_USES: KeyPad
@@ -64,6 +64,5 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=matrix+membrane+keypad)
-* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=membrane-button)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=matrix+membrane+keypad)
 

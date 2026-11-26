@@ -129,5 +129,4 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=9g+servo)
-* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&search=9g%20servo)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=9g+servo)

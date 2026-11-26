@@ -8,7 +8,7 @@ Bangle.js Troubleshooting
 
 What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please
 [check out the Bangle.js Wiki's FAQ](https://github.com/espruino/BangleApps/wiki) and if you don't find an
-answer there, post in the [Bangle.js Forum](http://forum.espruino.com/microcosms/1424/).
+answer there, post in the [Bangle.js Forum](https://forum.espruino.com/microcosms/1424/).
 
 Please also check out the [Bluetooth specific troubleshooting page](http://www.espruino.com/Troubleshooting+BLE)
 
@@ -73,5 +73,5 @@ It's easy enough to fix though - the bootloader still works, so just follow the 
 
 ### I have another problem
 
-Please [check out the Bangle.js Wiki's FAQ](https://github.com/espruino/BangleApps/wiki) for more suggestions, or failing that post in the [Bangle.js Forum](http://forum.espruino.com/microcosms/1424/)
+Please [check out the Bangle.js Wiki's FAQ](https://github.com/espruino/BangleApps/wiki) for more suggestions, or failing that post in the [Bangle.js Forum](https://forum.espruino.com/microcosms/1424/)
 

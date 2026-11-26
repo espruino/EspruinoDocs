@@ -11,7 +11,7 @@ The nRF52 microcontroller used in [Puck.js](../boards/Puck.js.md), [Pixl.js](../
 
 PPI lets you connect an `event` (eg. a pin changing state) to a `task` (eg. increment the counter). All of this is done without the processor being involved, allowing for very fast and also very power efficient peripheral use.
 
-Check out [the chip's reference manual](http://infocenter.nordicsemi.com/pdf/nRF52832_PS_v1.1.pdf) for more information.
+Check out [the chip's reference manual](https://infocenter.nordicsemi.com/pdf/nRF52832_PS_v1.1.pdf) for more information.
 
 This library ([NRF52LL.js](NRF52LL.js)) provides a low level interface to PPI and some of the nRF52's peripherals.
 

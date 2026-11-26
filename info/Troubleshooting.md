@@ -6,7 +6,7 @@ Troubleshooting
 
 * KEYWORDS: Troubleshooting,Trouble,Problems,Help,Broken,Not Working
 
-What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Forum](http://forum.espruino.com).
+What follows is a quick list of potential problems and solutions. If your problem isn't covered here, please post in the [Forum](https://forum.espruino.com).
 
 **Do you have a Bluetooth LE device like [Puck.js](../boards/Puck.js.md) or [Pixl.js](../boards/Pixl.js.md)?** Check out the [Bluetooth specific troubleshooting page](./Troubleshooting BLE.md)
 
@@ -53,11 +53,11 @@ Windows versions before 10 don't come with the correct drivers preinstalled. You
 
 * If it's a 'no driver' message, please try installing the drivers referenced above.
 * Try another USB cable - it could be an electrical problem
-* If this happens for you with an older Espruino Pico in Windows 10 [see this thread](http://forum.espruino.com/conversations/328895) - this doesn't apply to any other Espruino boards.
+* If this happens for you with an older Espruino Pico in Windows 10 [see this thread](https://forum.espruino.com/conversations/328895) - this doesn't apply to any other Espruino boards.
 
 ## My board doesn't appear in Windows Control Panel's 'Devices and Printers' page.
 
-If you use many COM port devices in Windows, you may find that the COM port numbers quickly get so high that Windows refuses to add more. If this is the case, you'll have to follow the instructions here: [http://superuser.com/questions/408976/how-do-i-clean-up-com-ports-in-use]
+If you use many COM port devices in Windows, you may find that the COM port numbers quickly get so high that Windows refuses to add more. If this is the case, you'll have to follow the instructions here: [https://superuser.com/questions/408976/how-do-i-clean-up-com-ports-in-use]
 
 If not, see the first troubleshooting item above.
 
@@ -398,6 +398,6 @@ This is usually one of four reasons:
 Something else is wrong!
 -------------------------
 
-Check out the [Espruino Forums](http://forum.espruino.com/)
+Check out the [Espruino Forums](https://forum.espruino.com/)
 
 Is your device a Bluetooth device? Check out the [Bluetooth Troubleshooting page](./Troubleshooting BLE.md)

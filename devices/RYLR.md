@@ -64,4 +64,4 @@ Buying
 You can get REYAX RYLR modules from eBay - just ensure that you get a module
 advertised as supporting the AT command interface (some of them are bare [SX127x](SX127x.md) modules).
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=reyax+rylr)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=reyax+rylr)

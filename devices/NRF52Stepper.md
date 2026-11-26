@@ -77,4 +77,4 @@ You can get Stepper Motor Drivers from:
 
 * [Pololu](https://www.pololu.com/category/120/stepper-motor-drivers)
 * [SparkFun](https://www.sparkfun.com/categories/334)
-* eBay - [A4988](http://www.ebay.com/sch/i.html?_nkw=A4988), [DRV8825](http://www.ebay.com/sch/i.html?_nkw=DRV8825) and [DRV8834](http://www.ebay.com/sch/i.html?_nkw=DRV8834)
+* eBay - [A4988](https://www.ebay.com/sch/i.html?_nkw=A4988), [DRV8825](https://www.ebay.com/sch/i.html?_nkw=DRV8825) and [DRV8834](https://www.ebay.com/sch/i.html?_nkw=DRV8834)

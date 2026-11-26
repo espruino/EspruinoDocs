@@ -50,7 +50,7 @@ Create a file in your app's folder called `custom.html` and add:
   </head>
   <body>
 
-    <p>Some text: <input type="text" id="mytext" class="form-input" value="http://espruino.com"></p>
+    <p>Some text: <input type="text" id="mytext" class="form-input" value="https://espruino.com"></p>
     <p>Click <button id="upload" class="btn btn-primary">Upload</button></p>
 
     <script src="../../core/lib/customize.js"></script>

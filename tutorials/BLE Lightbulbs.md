@@ -57,5 +57,5 @@ Buying
 
 You can buy the lights I used here from eBay:
 
-* [Awox Smartlight C9](http://www.ebay.com/sch/i.html?_nkw=awox+c9&_sacat=0) - multicolour
-* [Awox Smartlight W13](http://www.ebay.com/sch/i.html?_nkw=awox+w13+-striim+-striimlight&_sacat=0) - white, variable temperature
+* [Awox Smartlight C9](https://www.ebay.com/sch/i.html?_nkw=awox+c9&_sacat=0) - multicolour
+* [Awox Smartlight W13](https://www.ebay.com/sch/i.html?_nkw=awox+w13+-striim+-striimlight&_sacat=0) - white, variable temperature

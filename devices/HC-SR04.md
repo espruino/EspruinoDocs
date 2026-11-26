@@ -15,7 +15,7 @@ Connect as follows:
 | HC-SR04 | Espruino   |
 | ------- | ---------- |
 | GND     | GND        |
-| Vcc     | VBAT (5v)  | 
+| Vcc     | VBAT (5v)  |
 | Trig    | A0         |
 | Echo    | A1         |
 
@@ -32,7 +32,7 @@ setInterval(function() {
 }, 500);
 ```
 
-Using 
+Using
 -----
 
 * APPEND_USES: Ultrasonic
@@ -40,4 +40,4 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=HC-SR04)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=HC-SR04)

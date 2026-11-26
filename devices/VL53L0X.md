@@ -1,5 +1,5 @@
 <!--- Copyright (c) 2017 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying permission. -->
-VL53L0X 
+VL53L0X
 =======
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/VL53L0X. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
@@ -18,7 +18,7 @@ Wiring
 ------
 
 The easiest solution is to use a 'VL53L0X satellite' board from the X-NUCLEO-53L0A1:
- 
+
 ![](VL53L0X/satellite.png)
 
 You need to wire up as follows:
@@ -38,7 +38,7 @@ You need to wire up as follows:
 
 **The square pin on the PCB is pin 1**
 
-**XSDN is for shutting down/waking up the device.** 
+**XSDN is for shutting down/waking up the device.**
 You can just connect it straight to VDD if needed.
 
 Software
@@ -64,7 +64,7 @@ setTimeout(function() {
 ```
 
 **XSDN** isn't needed and can be connected to 3.3v. It is used
-for powering the device on and off (and you must leave a 2ms 
+for powering the device on and off (and you must leave a 2ms
 delay between powering the VL53L0X on and using it).
 
 Currently there is no calibration performed so the results aren't
@@ -75,7 +75,7 @@ to reverse engineer their libraries.
 Using more than one Sensor
 --------
 
-This example shows how to use more than one sensor by calling the changeAddress function. 
+This example shows how to use more than one sensor by calling the changeAddress function.
 Things you have to consider: This example uses different pins than the example before.
 The table shows how the pins are connected:
 
@@ -88,14 +88,14 @@ The table shows how the pins are connected:
 | VDD | 3.3v            | X | X |
 | GND | GND             | X | X |
 
-* **XSDN** should be both connected to different IO pins. 
+* **XSDN** should be both connected to different IO pins.
   It's not possible to use two sensors if XSDN of one is connected to VDD.
-* **STARTUP** B3 and B5 have to be set to 0 during startup. This will reset the VL53 
+* **STARTUP** B3 and B5 have to be set to 0 during startup. This will reset the VL53
   Sensor. This means: the sensor starts always with the default address.
-* **TIMING** I2C Communication needs time! A datarate of 400k is supported. 
+* **TIMING** I2C Communication needs time! A datarate of 400k is supported.
   If you combine the VL53 with a slow I2C device this will increase the time to get the sensor data!
   The slowest device will determine the busspeed!
-* **RESISTORS** I2C needs Pull up resistors. The VL53 Modules from ST don't include pullup-resistors. 
+* **RESISTORS** I2C needs Pull up resistors. The VL53 Modules from ST don't include pullup-resistors.
 This means you need one extension module with I2C Pull up resistors or you connect two resistors yourself!
 
 The example below will init two VL53 Sensors and the read the sensors every 200ms. Each sensor will get a address which is different from the default address (0x52). The result is written on the serial interface.
@@ -105,9 +105,9 @@ The example below will init two VL53 Sensors and the read the sensors every 200m
 var laser1;
 var laser2;
 
-/** 
+/**
 Enable first VL53 Sensor, Change Adress
-Enable Second VL53 Sensor, 
+Enable Second VL53 Sensor,
  */
 function InitVL53( ) {
   console.log("Init VL53 1");
@@ -125,7 +125,7 @@ function onTimer() {
   console.log("Sensor 1: "+ l1 +" mm, Sensor 2: "+l2+" mm" );
 }
 
-/** 
+/**
 Set IO Pins to low for VL53 Sensors (turn off)
 Enable I2C Interface, Set IO Interrupts
 */
@@ -133,7 +133,7 @@ function InitHW( ) {
   console.log("Turn off VL53 vSensors");
   digitalWrite(B3,0); // set XSDN -> turn the sensor off
   digitalWrite(B5,0); // set XSDN -> turn the sensor off
-  
+
   console.log("I2C Interface on, 400k");
   I2C1.setup({ sda:B9, scl:B8, bitrate:400000} );
 }
@@ -151,18 +151,18 @@ DoStart();
 
 Reference
 ---------
- 
+
 * APPEND_JSDOC: VL53L0X.js
 
 Buying
 ------
 
-The cheapest way to get a VL53L0X at the moment seems to be [from eBay](http://www.ebay.com/sch/i.html?_nkw=VL53L0X)
+The cheapest way to get a VL53L0X at the moment seems to be [from eBay](https://www.ebay.com/sch/i.html?_nkw=VL53L0X)
 
 However you can also use ST's X-NUCLEO-53L0A1 kit (shown above):
 
-* [Mouser](http://www.mouser.co.uk/ProductDetail/STMicroelectronics/X-NUCLEO-53L0A1)
-* [Digikey](http://www.digikey.co.uk/product-detail/en/stmicroelectronics/X-NUCLEO-53L0A1/497-16533-ND/6023686)
+* [Mouser](https://www.mouser.co.uk/ProductDetail/STMicroelectronics/X-NUCLEO-53L0A1)
+* [Digikey](https://www.digikey.co.uk/product-detail/en/stmicroelectronics/X-NUCLEO-53L0A1/497-16533-ND/6023686)
 
 Or can also buy boards from:
 

@@ -123,7 +123,7 @@ symbols / icons printed on them for that purpose, such as mail, calendar, music,
 enable porches, configuration has to allow for the extra Y or X values. See Configuration section.
 
 For more details about how a resistive touch screen is built and works and how they can be calibrated, see forum
-conversation at [Resistive Touchscreen directly (no touch controller)](http://forum.espruino.com/conversations/256122/).
+conversation at [Resistive Touchscreen directly (no touch controller)](https://forum.espruino.com/conversations/256122/).
 
 
 Wiring Up

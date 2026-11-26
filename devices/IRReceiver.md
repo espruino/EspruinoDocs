@@ -47,7 +47,7 @@ require("IRReceiver").connect(A0, function(code) {
 }, {usePulseLength:true});
 ```
 
-Using 
+Using
 -----
 
 * APPEND_USES: IRReceiver
@@ -55,4 +55,4 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=TSOP34838)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=TSOP34838)

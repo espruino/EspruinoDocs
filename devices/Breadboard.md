@@ -19,4 +19,4 @@ The four long power rails are shorted horizontally, and each shorter block of pi
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=solderless+breadboard)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=solderless+breadboard)

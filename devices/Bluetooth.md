@@ -66,7 +66,7 @@ If there is no USB connection, the Espruino board defaults to using the first Se
 Changing Bluetooth Module's Name and Passkey
 ---------------------------------------
 
-_This information is from [this forum post](http://forum.espruino.com/conversations/454/)_
+_This information is from [this forum post](https://forum.espruino.com/conversations/454/)_
 
 If you have more than one Espruino with the standard HC-05 Bluetooth attached, it can be a little confusing as they may all have the same name, HC-05, appearing on the PC. Also, by default they'll have the same default passkey, 1234, which you'll probably want to change.
 
@@ -105,4 +105,4 @@ Using
 Buying
 -----
 
-HC05 Bluetooth modules can be purchased from many places. If you wish to buy from eBay, make sure you get one **without** the 0.1" adaptor PCB included if you want to connect it to the [Espruino Board](../boards/Original.md) ([eBay search](http://www.ebay.com/sch/i.html?_nkw=HC05+bluetooth) - around $6)
+HC05 Bluetooth modules can be purchased from many places. If you wish to buy from eBay, make sure you get one **without** the 0.1" adaptor PCB included if you want to connect it to the [Espruino Board](../boards/Original.md) ([eBay search](https://www.ebay.com/sch/i.html?_nkw=HC05+bluetooth) - around $6)

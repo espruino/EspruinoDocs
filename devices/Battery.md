@@ -49,18 +49,17 @@ If you're willing to open up your USB power pack, you may be able to add wires t
 
 * [Adafruit batteries and chargers](http://www.adafruit.com/categories/138)
 * Olimex [battery](https://www.olimex.com/Products/Power/BATTERY-LIPO1400mAh/) and [charger](https://www.olimex.com/Products/Power/USB-uLiPo/), or [selection of batteries](https://www.olimex.com/Products/Power/)
-* Buy general purpose charger on [eBay](http://www.ebay.com/sch/i.html?_nkw=genuine+b6+imax)
+* Buy general purpose charger on [eBay](https://www.ebay.com/sch/i.html?_nkw=genuine+b6+imax)
 * See [this page](../boards/Original.md#connecting_batteries) for details on where to buy the connectors
 
 ### Female Connectors (for batteries)
 
 * Farnell ([pins](http://uk.farnell.com/jst-japan-solderless-terminals/sph-002t-p0-5s/contact-loose-piece-0-05-0-22mm/dp/3617210) and [shroud](http://uk.farnell.com/jst-japan-solderless-terminals/phr-2/housing-2way-2mm/dp/3616186))
 * Adafruit (US) ([prewired connector](http://www.adafruit.com/products/261))
-* Digitalmeans (UK) ([prewired connector](https://digitalmeans.co.uk/shop/jst_2pin_power_connector-2mm_pitch-20))
 
 ### Male Connectors (for the Espruino [Pico](../boards/Pico.md))
 
 * Octopart [list of distributors](https://octopart.com/s2b-ph-sm4-tb%28lf%29%28sn%29-jst-248913)
 * [Farnell](http://uk.farnell.com/jst-japan-solderless-terminals/s2b-ph-sm4-tb-lf-sn/connector-header-smt-r-a-2mm-2way/dp/9492615)
-* [RS](http://uk.rs-online.com/web/p/products/6881353/)
+* [RS](https://uk.rs-online.com/web/p/products/6881353/)
 * [Adafruit (US)](http://www.adafruit.com/products/1769)

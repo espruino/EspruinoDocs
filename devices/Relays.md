@@ -60,7 +60,7 @@ The Espruino Pico [Starter Kit](../info/Espruino Kits.md) comes with breadboard 
 
 We'd suggest that you connect Relay GND to Espruino `GND`, and relay VCC to Espruino `VBAT`. The two inputs can then be connected to any of the IO pins.
 
-Using 
+Using
 -----
 
 * APPEND_USES: Relay Module
@@ -70,5 +70,5 @@ Buying
 
 You can buy relays from any electrical component supplier. However, as discussed above, we'd suggest that you don't connect a relay directly to Espruino.
 
-Instead, think of buying a Relay Module. These are available from many places, but [eBay](http://www.ebay.com/sch/i.html?_nkw=relay+module+5v) is probably the easiest. Look for 'Relay Module 5V' to ensure that you get one that can be powered from a simple 5V power source. In addition to the big block on the PCB that is the relay, look for smaller black chip (not a transistor). This probably means that there is an opto-isolator on board, which provides better isolation than a normal transistor.
+Instead, think of buying a Relay Module. These are available from many places, but [eBay](https://www.ebay.com/sch/i.html?_nkw=relay+module+5v) is probably the easiest. Look for 'Relay Module 5V' to ensure that you get one that can be powered from a simple 5V power source. In addition to the big block on the PCB that is the relay, look for smaller black chip (not a transistor). This probably means that there is an opto-isolator on board, which provides better isolation than a normal transistor.
 

@@ -3,14 +3,14 @@
 
 ------------------------------------------------------------
 
-**PLEASE VIEW THIS DOCUMENTATION ON [WWW.ESPRUINO.COM](http://espruino.com) - you can even [Search](http://espruino.com/Search).** The markdown files in this repository are designed to be parsed by a build script - by viewing them on GitHub you may be missing useful links or information.
+**PLEASE VIEW THIS DOCUMENTATION ON [WWW.ESPRUINO.COM](https://espruino.com) - you can even [Search](https://espruino.com/Search).** The markdown files in this repository are designed to be parsed by a build script - by viewing them on GitHub you may be missing useful links or information.
 
 ------------------------------------------------------------
 
-This project generates the website and tutorial code for [Espruino.com](http://espruino.com). This also contains the modules that can be required by the [Espruino  Web IDE](http://www.espruino.com/Web+IDE). You can contribute to the site and modules in this project.
+This project generates the website and tutorial code for [Espruino.com](https://espruino.com). This also contains the modules that can be required by the [Espruino  Web IDE](https://www.espruino.com/Web+IDE). You can contribute to the site and modules in this project.
 
-* Find out how to [create modules here](http://www.espruino.com/Writing+Modules)
-* Find out how to [create tutorials here](http://www.espruino.com/Writing+Tutorials)
+* Find out how to [create modules here](https://www.espruino.com/Writing+Modules)
+* Find out how to [create tutorials here](https://www.espruino.com/Writing+Tutorials)
 
 ------------------------------------------------------------
 

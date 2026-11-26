@@ -10,7 +10,7 @@ NRF24L01+ Wireless Module
 
 ![NRF24L01+ Wireless Module on Espruino](NRF24L01P/espruino_front.jpg)
 
-The Nordic [NRF24L01+](http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P) transceiver is very popular and works well with Espruino. It is sold in very inexpensive wireless modules that interface via SPI. They can easily be obtained via [eBay](http://www.ebay.com/sch/i.html?_nkw=NRF24L01%2B) and many other places for prices as low as $2.
+The Nordic [NRF24L01+](https://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P) transceiver is very popular and works well with Espruino. It is sold in very inexpensive wireless modules that interface via SPI. They can easily be obtained via [eBay](https://www.ebay.com/sch/i.html?_nkw=NRF24L01%2B) and many other places for prices as low as $2.
 
 A driver for it is available in the [NRF24L01P.js](NRF24L01P.js) module.
 
@@ -175,5 +175,4 @@ Buying
 
 NRF24L01+ modules are usually based on Nordic's own reference design, so can be purchased from many places:
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=NRF24L01%2B)
-* [digitalmeans.co.uk](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=nrf24l01)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=NRF24L01%2B)

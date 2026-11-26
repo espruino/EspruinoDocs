@@ -249,7 +249,7 @@ Puck.on('field',function(m) {
 });
 
 //NFC Detection
-NRF.nfcURL("http://espruino.com");
+NRF.nfcURL("https://espruino.com");
 NRF.on('NFCon', function() {
     digitalPulse(LED2, 1, 500);//flash on green light
     console.log('nfc_field : [1]');

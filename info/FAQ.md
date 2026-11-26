@@ -35,7 +35,7 @@ Have a look at our [Quick Start](../tutorials/Quick Start.md) page - this will w
 Is there a forum where I can get help?
 ---------------------------------------------------------------------------
 
-Yes! It's [right here](http://forum.espruino.com)
+Yes! It's [right here](https://forum.espruino.com)
 
 
 Is Espruino related to ESP8266/ESP32/Espressif?
@@ -71,7 +71,7 @@ We wanted to use a language that:
 I've created something cool with Espruino, would you like to see it?
 ---------------------------------------------------------------------------
 
-Absolutely! Please post up on the [projects page](http://forum.espruino.com/microcosms/139/) of the [forum](http://forum.espruino.com).
+Absolutely! Please post up on the [projects page](https://forum.espruino.com/microcosms/139/) of the [forum](https://forum.espruino.com).
 
 
 How is Espruino different to Arduino / Raspberry Pi / Embedded Linux?
@@ -192,7 +192,7 @@ Will Espruino work on my board?
 
 If it's listed on our [Other Boards](../boards/Other Boards.md) page, then yes. If it isn't, and it contains a similar processor with the same amount (or more) of Flash and RAM, then give it a try - [check out GitHub](https://github.com/espruino/Espruino) for build instructions!
 
-We have [a special section of the forum](http://forum.espruino.com/microcosms/1085/) that you can ask questions or post your progress in.
+We have [a special section of the forum](https://forum.espruino.com/microcosms/1085/) that you can ask questions or post your progress in.
 
 **Note:** Due to the large number of supported boards (over 50) we're now unable
 to accept support for new boards into the main Espruino codebase. You can always

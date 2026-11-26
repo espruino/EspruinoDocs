@@ -96,4 +96,4 @@ Example for a key board implementation:
 
 ![Touch Screen Only as Keyboard input device](TouchKeyPad/touchKeyPadKbd.jpg)
 
-For the working calculator input example see forum conversation: [Poor man's flexible input device: keyboard sketched on paper and a touchscreen](http://forum.espruino.com/conversations/326332)
+For the working calculator input example see forum conversation: [Poor man's flexible input device: keyboard sketched on paper and a touchscreen](https://forum.espruino.com/conversations/326332)

@@ -167,7 +167,7 @@ Buying
 
 You can get these displays from many places:
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=8x8+led+%28cathode%2Canode%29)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=8x8+led+%28cathode%2Canode%29)
 * [Pimoroni](https://shop.pimoroni.com/products/1-2-8x8-square-led-matrix)
 
 However ensure that you are getting a single color matrix without a driver PCB.

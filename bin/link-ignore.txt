@@ -1,4 +1,4 @@
-# Regular expressions for external URLs that bin/check_docs.js should not check
+www.# Regular expressions for external URLs that bin/check_docs.js should not check
 # (one per line, lines starting with # are comments). Local/private addresses,
 # example.com and URLs containing template characters are already ignored.
 your_user_name|YOUR_USERNAME|yourusername
@@ -9,3 +9,38 @@ your_user_name|YOUR_USERNAME|yourusername
 ^http://raspberrypi:1880/$
 ^https://your_username\.github\.io/UARTTest/test\.html$
 ^https://your_username\.github\.io/PuckTest/test\.html$
+^https://www\.bluetooth\.com/specifications/
+^https://www\.ebay\.com
+^https://stores\.ebay\.com
+^https://www\.raspberrypi\.org
+^https://www\.raspberrypi\.com
+^https://brickipedia\.fandom\.com/wiki
+^https://www\.kickstarter\.com/projects
+^http://1\.2\.3\.4$
+^https://www\.nordicsemi\.com
+^https://infocenter\.nordicsemi\.com
+^https://devzone\.nordicsemi\.com
+^https://pixycam\.com
+^https://icons8\.com/
+^https://www\.npmjs\.com
+^http://www\.ftdichip\.com/Drivers/D2XX\.htm$
+^https://www\.pycom\.io/
+^http://.*\.sourceforge\.net/
+^https://.*\.sourceforge\.net/
+^https://www\.digikey\.co\.uk/
+^https://www\.digikey\.com/
+^https://uk\.rs-online\.com
+^https://uk\.farnell\.com
+^https://www\.mouser\.co
+^https://mouser\.co
+^https://www\.thingiverse\.com
+^https://goo\.gl/
+^https://uzebox\.org/
+^https://superuser\.com/
+^https://stackoverflow\.com/
+^https://codeberg\.org/
+^https://www\.lego\.com
+^https://shop\.pimoroni\.com
+^https://www\.tindie\.com
+^https://www\.hackster\.io
+^https://liberapay\.com

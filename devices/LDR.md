@@ -37,4 +37,4 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=GL5537)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=GL5537)

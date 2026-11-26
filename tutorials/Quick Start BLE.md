@@ -372,7 +372,7 @@ Try:
 
 * The [Bluetooth Troubleshooting](../info/Troubleshooting BLE.md) page
 * [General Troubleshooting](../info/Troubleshooting.md)
-* Or ask on [our forums](http://forum.espruino.com) if you can't find the answer you need
+* Or ask on [our forums](https://forum.espruino.com) if you can't find the answer you need
 
 
 <a id="next"></a>What now?
@@ -405,9 +405,9 @@ There is more general information:
 * [Tutorials](../Tutorials.md)
 * [Frequently Asked Questions](../info/FAQ.md)
 * See other [ways of Programming Espruino devices](../info/Programming.md)
-* Or check out [our forums](http://forum.espruino.com)
+* Or check out [our forums](https://forum.espruino.com)
 
-**Note:** Espruino runs on many other devices, and [espruino.com](http://espruino.com)
+**Note:** Espruino runs on many other devices, and [espruino.com](https://espruino.com)
 caters for all of them. Unless [a tutorial](../Tutorials.md) explicitly says it is for your device it's
 possible that you will have to change some pin names and wiring to match
 the pins that you used on your device.

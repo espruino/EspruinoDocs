@@ -24,6 +24,5 @@ You can buy solderless pin headers (see below). They're a little more expensive,
 Buying
 -----
 
-* [eBay Pin Strip](http://www.ebay.com/sch/i.html?_nkw=0.1+pin+strip)
-* [eBay Jumper wires](http://www.ebay.com/sch/i.html?_nkw=female+dupont+jumper+wire)
-* [digitalmeans.co.uk headers](https://digitalmeans.co.uk/shop/index.php?route=product/search&tag=pin-header)
+* [eBay Pin Strip](https://www.ebay.com/sch/i.html?_nkw=0.1+pin+strip)
+* [eBay Jumper wires](https://www.ebay.com/sch/i.html?_nkw=female+dupont+jumper+wire)

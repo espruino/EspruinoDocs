@@ -71,4 +71,4 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=Ublox+NEO6MV2)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=Ublox+NEO6MV2)

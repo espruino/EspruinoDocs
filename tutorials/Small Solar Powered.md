@@ -48,7 +48,7 @@ However looking a bit closer there are some problems.
 Fixing it
 --------
 
-If your torch is actually as described (with a rechargeable battery and a connected panel) [please let us know!](http://forum.espruino.com) If not, you're going to have to fit a proper rechargeable battery to it.
+If your torch is actually as described (with a rechargeable battery and a connected panel) [please let us know!](https://forum.espruino.com) If not, you're going to have to fit a proper rechargeable battery to it.
 
 ![Attaching a battery](Small Solar Powered/panel.jpg)
 

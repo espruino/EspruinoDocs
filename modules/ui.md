@@ -324,7 +324,7 @@ exports = // ui base / 'DOM'/ ui e(lement) data & code holder, singleton, for mi
      sliders, this logic needs adjustment, or, the state(s) / flag(s) need
      to be pre-set accordingly, latter though without interfering with
      their overall life cycle or their dependents (ui components' logic).
-- `.clr(c,i)` - set color according this.clrs{0](c,i) (customizable)
+- `.clr(c,i)` - set color according `this.clrs[0](c,i)` (customizable)
      function. Default is set for bit coded value for 3-bit (rgb) color
      depth and provides 8 colors: `b&000=0` = black, `b&111=7`
      = white, `b&100=4` = red, etc. `ui.clrs[0]()` can be
@@ -618,7 +618,7 @@ out of the box and for easy distinction, choose for custom ui elements
 clazz names of 5 characters or more, use for mixed in properties -
 variables and methods - names with 6 or more characters. Also, add a
 custom parallel array object or real js object rather than adding
-elements to the existing array object.  
+elements to the existing array object.
 
 
 ### More...
@@ -626,7 +626,7 @@ elements to the existing array object.
 The unminified sources and examples have in-line documentation - same
 as this - and in-line comments. Latter is useful when reading the code
 to grok 'what is going on'. Feedback - in general and in particular -
-and (improving) contributions are welcome - [@allObjects](http://forum.espruino.com/profiles/1922/).
+and (improving) contributions are welcome - [@allObjects](https://forum.espruino.com/profiles/1922/).
 
 
 Using

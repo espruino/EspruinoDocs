@@ -11,7 +11,7 @@ Charlieplexed LED Module
 
 You can connect LEDs up in such a way that with `N` IO pins, you can control `N*(N-1)` LED lights.
 
-You can control Charlieplexed LED lights using the [Charlieplex.js](Charlieplex.js) module. 
+You can control Charlieplexed LED lights using the [Charlieplex.js](Charlieplex.js) module.
 
 **Note:** Charlieplexed LEDs require constant updates (ideally via interrupts and timers). Espruino doesn't allow you to do this at the moment, so you will find that if you update the display or write functions that take a long time to execute, the display will flicker.
 
@@ -46,7 +46,7 @@ setInterval(function() {
 },200);
 ```
 
-Using 
+Using
 -----
 
 * APPEND_USES: Charlieplex
@@ -60,4 +60,4 @@ You can buy Charlieplexed LEDs from the places below (and many others), or it's 
 
 * [5x4 led matrix on Tindie](https://www.tindie.com/products/bobricius/charlieplex-5x4-charlieplexed-color-0603-led-matrix-for-arduino-micro-lol/)
 * [Phenoptix](http://www.phenoptix.com/products/adafruit-jprodgers-lol-shield-lots-of-leds-for-arduino-charlieplexed-display)
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=Charlieplexed)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=Charlieplexed)

@@ -27,7 +27,7 @@ Different Strap Colors
 
 ![](Bangle.js Strap/straps.jpg)
 
-We sold three different Strap Colors in the Espruino Shop, 
+We sold three different Strap Colors in the Espruino Shop,
 however unfortunately these are no longer manufactured and
 we are out of stock.
 
@@ -58,7 +58,7 @@ watch straps. To do this on Bangle.js you can buy a watch
 adaptor designed for another similar style of watch called the
 [Suunto Core](https://www.suunto.com/).
 
-If you search for [Suunto Core adaptor on eBay](http://www.ebay.com/sch/i.html?_nkw=suunto+core+adaptor)
+If you search for [Suunto Core adaptor on eBay](https://www.ebay.com/sch/i.html?_nkw=suunto+core+adaptor)
 you'll find a selection of options which should fit Bangle.js:
 
 ![](Bangle.js Strap/suunto2.jpg)

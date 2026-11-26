@@ -1,7 +1,7 @@
 /* Copyright (c) 2014 Spence Konde. See the file LICENSE for copying permission. */
 /*
 
-Created from http://uzebox.org/wiki/images/5/50/Dangen_charset_6x12.png with http://ebfc.mattbrailsford.com/
+Created from https://uzebox.org/wiki/images/5/50/Dangen_charset_6x12.png with https://www.espruino.com/Bitmap+Font+Converter
 
 Usage:
 

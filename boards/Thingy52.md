@@ -45,7 +45,7 @@ the [Hardware description](https://infocenter.nordicsemi.com/index.jsp?topic=%2F
 <a name="buy"></a>Buying
 ------
 
-Nordic has [a list of distributors](http://www.nordicsemi.com/eng/Buy-Online?search_token=nRF6936)
+Nordic has [a list of distributors](https://www.nordicsemi.com/eng/Buy-Online?search_token=nRF6936)
 on their website.
 
 Getting Started

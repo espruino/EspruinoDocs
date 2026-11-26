@@ -132,7 +132,7 @@ Online Web IDE
 
 Since you're just using the headphone jack, there's actually no need for the Chrome Web App at all.
 
-Simply run the Web IDE online [by clicking here](http://espruino.github.io/EspruinoWebIDE/) - and use the instructions from above.
+Simply run the Web IDE online [by clicking here](https://espruino.github.io/EspruinoWebIDE/) - and use the instructions from above.
 
 **Note:** this is a work in progress - any changes that could be made to the code at https://github.com/espruino/EspruinoWebIDE would be greatly appreciated!
 
@@ -165,4 +165,4 @@ work on getting an easy to use library developed.
 More examples and information are available on:
 
 * [This page on GitHub](https://github.com/espruino/EspruinoOrion)
-* [This forum post](http://forum.espruino.com/conversations/257732/)
+* [This forum post](https://forum.espruino.com/conversations/257732/)

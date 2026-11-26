@@ -4,7 +4,7 @@
 Classic 8x8 Sinclair font, taken from a ZX Spectrum, with
 * added backtick and Euro symbols
 * pounds sterling and copyright symbols moved to standard ISO/IEC 8859-1 locations
-Created using http://ebfc.mattbrailsford.com/
+Created using https://www.espruino.com/Bitmap+Font+Converter
 Usage:
 ```
 require("FontSinclair").add(Graphics);

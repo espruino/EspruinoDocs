@@ -65,6 +65,6 @@ digitalWrite([D7,D6,D5,D4], 0b0000);
 Buying
 -----
 
-[These Relay Shields are available on eBay](http://www.ebay.com/sch/i.html?_nkw=arduino+four+relay+shield),
+[These Relay Shields are available on eBay](https://www.ebay.com/sch/i.html?_nkw=arduino+four+relay+shield),
 however many other versions of the same shield are available, and are often higher
 quality. For example [Seeedstudio Relay Shield 3.0](https://m.seeedstudio.com/productDetail/2440)

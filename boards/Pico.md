@@ -143,16 +143,16 @@ The connectors you need are very standard parts. While some parts are listed bel
 
 (Pico Revision 1v3 and 1v4) - 5 pin, 4 pad surface mount
 
-* [Digi-Key](http://www.digikey.co.uk/product-detail/en/DX2R005HN2E700/670-1190-1-ND/1283605)
+* [Digi-Key](https://www.digikey.co.uk/product-detail/en/DX2R005HN2E700/670-1190-1-ND/1283605)
 
 ### Micro-B USB
 
 (Pico Revision 1v3 only) - 5 pin, 2 pad surface mount
 
 * Octopart [list of distributors](https://octopart.com/zx62-b-5pa%2811%29-hirose-42422030)
-* [Farnell](http://uk.farnell.com/hirose-hrs/zx62-b-5pa-11/micro-usb-b-type-receptacle/dp/1645325)
-* [RS](http://uk.rs-online.com/web/p/products/6850965/)
-* [Mouser](http://www.mouser.com/ProductDetail/Hirose-Electric/ZX62-B-5PA11/)
+* [Farnell](https://uk.farnell.com/hirose-hrs/zx62-b-5pa-11/micro-usb-b-type-receptacle/dp/1645325)
+* [RS](https://uk.rs-online.com/web/p/products/6850965/)
+* [Mouser](https://www.mouser.com/ProductDetail/Hirose-Electric/ZX62-B-5PA11/)
 
 
 <a name="power"></a>Power, and the FET/B0 Jumper

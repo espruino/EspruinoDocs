@@ -93,7 +93,7 @@ ES5
 ES6
 ---
 
-List of ES6 features from http://es6-features.org:
+List of ES6 features from https://es6-features.org:
 
 | ES6 Feature | Implementation Status |
 |---------|-----------------------|

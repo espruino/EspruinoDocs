@@ -25,7 +25,7 @@ This tutorial has the following steps:
 
 It is assumed that you have downloaded an Espruino for esp8266 tgz archive. At the time of writing
 the latest download for the esp8266 can be found in
-[this forum thread](http://forum.espruino.com/conversations/279176).
+[this forum thread](https://forum.espruino.com/conversations/279176).
 The archive should have a name like
 `espruino_1v84.tve_master_8bb4202_esp8266.tgz`, where "1v84" is the base Espruino version,
 "tve\_master" is the name of the branch, and "8bb4202" is the SHA of the git commit used for
@@ -169,7 +169,7 @@ reset()
  |   __|___ ___ ___ _ _|_|___ ___
  |   __|_ -| . |  _| | | |   | . |
  |_____|___|  _|_| |___|_|_|_|___|
-           |_| http://espruino.com
+           |_| https://espruino.com
  1v84.tve_master_b603c8a Copyright 2015 G.Williams
 WARNING: the esp8266 port is in beta!
 Flash map 4MB:512/512, manuf 0xe0 chip 0x4016
@@ -177,10 +177,8 @@ Flash map 4MB:512/512, manuf 0xe0 chip 0x4016
 >
 ```
 
-The last "Flash map..." line tells you that I have my module configured for 4MBytes of flash
-and that the actual flash chip is from manufacturer 0xe0 and code 0x4016. You can look up most
-codes at http://code.coreboot.org/svn/flashrom/trunk/flashchips.h and Espruino will complain
-if the config doesn't match the chip for some common chips.
+The last "Flash map..." line tells you that the module is configured for 4MBytes of flash
+and that the actual flash chip is from manufacturer 0xe0 and code 0x4016.
 
 Erase flash
 -----------
@@ -299,7 +297,7 @@ Once you are happy and want Espruino to start your sketch automatically at boot 
 use `save()` to save the sketch code (note that this is separate from `wifi.save()`, which saves
 the wifi settings in a separate flash area. For a more in-depth explanation of saving your
 Javascript code so it starts automatically see
-[this forum thread](http://forum.espruino.com/conversations/278526).
+[this forum thread](https://forum.espruino.com/conversations/278526).
 
 Updating the Espruino firmware over Wifi
 ----------------------------------------
@@ -332,6 +330,6 @@ Troubleshooting
 ---------------
 
 Of course things never just work... Please provide feedback in the
-[espruino forum](http://forum.espruino.com/conversations/279330/)
+[espruino forum](https://forum.espruino.com/conversations/279330/)
 or on [gitter](https://gitter.im/espruino/Espruino)
 about this tutorial and the mishaps you've had so it can be improved!

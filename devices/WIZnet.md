@@ -139,8 +139,8 @@ Buying
 
 You can buy this module from:
 
-* from [Digi-Key US](http://www.digikey.com/product-detail/en/WIZ550IO/1278-1022-ND/4425703)
+* from [Digi-Key US](https://www.digikey.com/product-detail/en/WIZ550IO/1278-1022-ND/4425703)
 * from [WIZnet EU](https://shop.wiznet.eu/en/wiz550io.html)
-* from [WIZnet US](http://www.shopwiznet.com/wiz550io)
+* from [WIZnet US](https://www.shopwiznet.com/wiz550io)
 
 However when buying direct from WIZnet, the cost of postage may end up being particularly high.

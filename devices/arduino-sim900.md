@@ -111,4 +111,4 @@ Using
 Buying
 -----
 
-* [eBay](http://www.ebay.com/sch/i.html?_nkw=arduino+sim900+shield)
+* [eBay](https://www.ebay.com/sch/i.html?_nkw=arduino+sim900+shield)
