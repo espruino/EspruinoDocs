@@ -11,6 +11,8 @@ Can be used only to publish messages to Kafka which is pretty typical scenario i
 
 Short Example:
 ---------------------------
+
+```
 const Kafka  = require('kafka-tiny-client');
  
 const kafka = new Kafka({
@@ -40,8 +42,7 @@ kafka.connect().then(function (){
         }
     });
 })
-
-
+```
 */
 
 var Kafka = function (options) {
