@@ -34,7 +34,8 @@ something on it:
 * the GATT UUIDs are provisional until the first release;
 * **receiving it needs the
   [bthome-writable](https://github.com/yerpj/bthome-writable) custom
-  integration** for Home Assistant, installable through HACS. Core BTHome is
+  integration** for Home Assistant, installable from the Marketplace
+  (Settings -> Marketplace on 2026.11 and newer, HACS before that). Core BTHome is
   unaffected: it skips the declaration and goes on reading your sensors
   exactly as before, so adding this to a device breaks nothing that already
   works.
@@ -116,8 +117,7 @@ reads encrypted, with BTHome v2's AES-CCM in both directions:
 bw.setup({
   advertise : [ { type:"light", set:v=>digitalWrite(LED1,v) } ],
   interval : 1000,
-  bindkey : "231d39c1d7cc1ab1aee224cd096db932",   // 32 hex characters
-  counterReport : true
+  bindkey : "231d39c1d7cc1ab1aee224cd096db932"   // 32 hex characters
 });
 ```
 
@@ -129,10 +129,19 @@ you do not have to care which board you are on.
 Encryption costs **8 bytes of service data** for the counter and the MIC, which
 is a third of the packet. Plan for it.
 
-`counterReport : true` is worth turning on. Without it the device resumes its
-write counter ahead of the receiver after every restart, and silently refuses
-commands until the receiver catches up; with it the receiver asks the device
-where it is instead of guessing.
+A sealed device also offers the **counter report** at `2FAA1000`, which you do
+not have to ask for: it is on whenever a `bindkey` is set. It answers the one
+question a receiver cannot answer for itself. Your device remembers the highest
+write counter it has accepted and refuses anything below it, which is replay
+protection and correct, but it resumes that counter from a mark in flash rather
+than from the exact value, so **after every reboot it is ahead of its
+receiver**. Nothing in the advertising says so, and a refused write is
+acknowledged before it is validated, so the receiver sees success and your
+commands quietly do nothing. The report lets it ask instead of guess.
+
+`counterReport : false` takes the characteristic away. Only do that if something
+else resynchronises the counter, because the symptom it leaves behind is a
+device that looks perfectly healthy and ignores everything.
 
 How much fits in one packet
 ---------------------------
@@ -176,7 +185,7 @@ Reference
 | `bindkey` | 16-byte AES key, as 32 hex characters or an array. Anything else is refused at `setup()`: a key that is silently the wrong key has every receiver blaming a key that is not at fault |
 | `showName` | put the device name in the advertising packet (default `true`) |
 | `maxServiceData` | what your radio will really accept, in bytes. Set it and the packet is checked at `setup()` rather than at the first transmission |
-| `counterReport` | offer the counter report at `2FAA1000` (default `false`, and only with a `bindkey`) |
+| `counterReport` | offer the counter report at `2FAA1000` (default `true` with a `bindkey`, never without one). `false` takes it away, and with it the only way a receiver can learn this device rebooted |
 | `onError` | called with a rejected write's error. Optional, and `rejects()` counts refusals whether you give one or not |
 | `signed`, per entry | force a numeric entry's signedness. The module knows which BTHome object ids are signed; if BTHome assigns a new signed id before this module learns it, `signed:true` on that entry is the way through without waiting for a release |
 
@@ -310,6 +319,39 @@ the radio refuses throws inside `setup()`, the radio stops to reconfigure and
 stays stopped, and a device that does not advertise cannot be connected to, so
 it cannot be fixed over the air. A power cycle undoes a sketch in RAM; one
 saved to flash repeats the problem at every boot.
+
+**A scan response of your own breaks `setup()` on 2v28.** `setup()` calls
+`NRF.setServices()` once, and that call throws `ERR 0x10 (INVALID ADDR)`
+whenever a scan response is already stored -- an empty
+`NRF.setScanResponse([])` as surely as a valid one
+([#2773](https://github.com/espruino/Espruino/issues/2773)). The stored bytes
+show up as `BLE_RESP` in `global['\xff']`, and `NRF.setScanResponse()` with no
+argument clears them.
+
+That throw is not cosmetic. It leaves the device with no service to write to,
+nothing of this module's on air, no sensor schedule and no connection
+handlers, while the `console.log` on the line below it still prints, because
+Espruino runs each top-level statement on its own: a sketch that died looks
+like one that started. So clear the store before `setup()`, and do not keep a
+scan response of your own while this module advertises.
+
+Setting one *after* `setup()` buys nothing on that firmware either, because
+a stored scan response does not survive the next start of advertising, and
+this module restarts advertising on every rate change and after every
+disconnect. On 2v28 the board quietly goes back to its own default scan
+response, with no error and the stored bytes still in `global['\xff']`. On a
+2v29 build older than 2026-11-05 the restart is refused outright with
+`ERR 0x9 (INVALID_LENGTH)` and the board stops advertising altogether,
+whether the bytes were stored as an array or as a `Uint8Array`.
+`NRF.updateServices()`, which is what the module uses for every value it
+publishes afterwards, is unaffected throughout.
+
+**Both of those are fixed upstream since 2026-11-05**, in `3cbd6b93` from
+@fanoush's patch: the surplus `setScanResponse()` during reconfiguration is
+gone on nRF5x, and a stored scan response is reapplied from its own bytes at
+every start of advertising. On a build that carries it, a scan response of your
+own costs nothing and survives; everything above is the behaviour of 2v28 and
+of earlier 2v29 builds.
 
 References
 ----------

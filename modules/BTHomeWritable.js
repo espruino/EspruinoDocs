@@ -22,7 +22,7 @@ const ENC_OVERHEAD = 4 + MIC_LEN; // counter u32 LE and MIC, on top of the ciphe
 const BUDGET = 31 - 3 - 4; // adv payload - Flags AD - service data header (S2.4)
 const UUID_TAIL = "-3B0B-4B1A-9E2A-B4C2952E62F2"; // provisional (D-001)
 const SERVICE_UUID = "2FAA0000" + UUID_TAIL;
-const COUNTER_UUID = "2FAA1000" + UUID_TAIL; /* the counter report (D-075), off unless `counterReport:true`. */
+const COUNTER_UUID = "2FAA1000" + UUID_TAIL; /* the counter report (D-075), offered unless `counterReport:false` (D-166). */
 const TEXT_TYPES = { text:true }; // encoded by the BTHome module with a length byte
 const EVENT_IDS = { 0x3A:true, 0x3C:true }; // button, dimmer: the value is an event code
 
@@ -593,7 +593,7 @@ function setup(opts) {
   if (st.plan.writable.length) {
     const chars = {}, svcs = {};
 
-    if (opts.counterReport === true && key) chars[COUNTER_UUID] = counterCharacteristic();
+    if (opts.counterReport !== false && key) chars[COUNTER_UUID] = counterCharacteristic();
     st.plan.writable.forEach(w => {
       const c = {
         writable : true,
