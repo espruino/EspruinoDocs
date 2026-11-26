@@ -922,6 +922,7 @@ wifi
 Wiimote
 wikipedia
 Winbond
+Winsen
 wio
 wiolte
 wirelessly
