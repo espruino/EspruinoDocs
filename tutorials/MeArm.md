@@ -22,7 +22,7 @@ You'll Need
 * An [Espruino Board](../boards/Original.md) wired up for [Servo Motors](../devices/Servo Motors.md)
 * An [IR Receiver](../devices/IRReceiver.md)
 * A TV remote control
-* A MeArm: either a kit from [Phenoptix](http://www.phenoptix.com/products/mearm-pocket-sized-robot-arm), or laser cut your own from design files on [Thingiverse](https://www.thingiverse.com/thing:360108)
+* A MeArm: either a kit from [MeArm Robotics](https://shop.mearm.com/), or laser cut your own from design files on [Thingiverse](https://www.thingiverse.com/thing:360108)
 
 Wiring Up
 --------

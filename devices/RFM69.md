@@ -6,7 +6,7 @@ HopeRF RFM69 Wireless Module
 
 * KEYWORDS: Module,SPI,RFM69,HopeRF,315Mhz,433Mhz,434Mhz,868Mhz,915Mhz,Wireless,Radio,Transceiver
 
-The HopeRF RFM69 is a transceiver module capable of operation over a wide frequency range, including the 315,433, 868 and 915MHz license-free ISM (Industry Scientific and Medical) frequency bands. ([datasheet here](http://www.hoperf.cn/upload/rf/RFM69-V1.3.pdf))
+The HopeRF RFM69 is a transceiver module capable of operation over a wide frequency range, including the 315,433, 868 and 915MHz license-free ISM (Industry Scientific and Medical) frequency bands. ([datasheet here](../datasheets/RFM69HW-V1.3.pdf))
 
 A driver for it is available in the [RFM69.js](RFM69.js) module.
 
@@ -17,12 +17,12 @@ Connect as follows:
 | RFM69 | Name |  Espruino  |
 |-------|------|------------|
 | 1 | RST  | B1 |
-| 2 | DIO0 | | 
-| 3 | DIO1 | | 
-| 4 | DIO2 | | 
-| 5 | DIO3 | | 
-| 6 | DIO4 | | 
-| 7 | DIO5 | | 
+| 2 | DIO0 | |
+| 3 | DIO1 | |
+| 4 | DIO2 | |
+| 5 | DIO3 | |
+| 6 | DIO4 | |
+| 7 | DIO5 | |
 | 8 | 3.3V | 3.3 |
 | 9 | GND | GND |
 | 10 | ANA | Aerial of correct length - around 17.3cm |
@@ -71,9 +71,9 @@ function onInit() {
   rfm = require("RFM69").connect(SPI2, {cs:B10, rst:B1, freq:434}, function() {
     rfm.rxmode(); // in order to receive data
     console.log("Connected");
-    setInterval(function() { 
-      if (rfm.hasPacket()) 
-        console.log("Received : "+JSON.stringify(E.toString(rfm.getPacket()))); 
+    setInterval(function() {
+      if (rfm.hasPacket())
+        console.log("Received : "+JSON.stringify(E.toString(rfm.getPacket())));
     },100);
   });
 }
@@ -81,10 +81,10 @@ function onInit() {
 
 Reference
 --------------
- 
+
 * APPEND_JSDOC: RFM69.js
 
-Using 
+Using
 -----
 
 * APPEND_USES: RFM69
