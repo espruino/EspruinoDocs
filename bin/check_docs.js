@@ -174,9 +174,21 @@ function scanMarkdown(text, firstLine, onLink, onProse) {
   const lines = text.split("\n");
   let fence = null, inComment = false, inPre = false;
   let prevBlank = true, inIndentedCode = false, lastWasList = false;
+  let copyrightLines = 0; // lines left of a copyright notice that wraps
+  const LICENSE = /\blicen[cs]e\b/i;
   lines.forEach((rawLine, idx) => {
     const lineNo = firstLine + idx;
     let line = rawLine.replace(/\r$/, "");
+    // Don't spell check copyright notices - they're full of people's names. They're normally
+    // one line ('Copyright (c) 2026 Name. See the file LICENSE...') but allow them to wrap
+    let isCopyright = false;
+    if (/\bcopyright\s*(\(c\)|©|\d{4})/i.test(line)) {
+      isCopyright = true;
+      copyrightLines = LICENSE.test(line) ? 0 : 2;
+    } else if (copyrightLines) {
+      isCopyright = true;
+      copyrightLines = LICENSE.test(line) ? 0 : copyrightLines - 1;
+    }
     // fenced code
     const fm = line.match(/^\s*(`{3,}|~{3,})/);
     if (fence) {
@@ -262,6 +274,7 @@ function scanMarkdown(text, firstLine, onLink, onProse) {
     });
     // ---- prose
     if (/^\s*\*\s+[A-Z_]+:/.test(line)) return; // * KEYWORDS: etc
+    if (isCopyright) return;
     onProse(line.replace(/<[^>]*>/g, " ").replace(/&\w+;/g, " "), lineNo);
   });
 }
