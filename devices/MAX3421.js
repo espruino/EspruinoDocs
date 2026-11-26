@@ -280,7 +280,7 @@ MAX3421.prototype.vbusPower = function(action) {
   });
 };
 
-/** Probe bus to determine device presense and speed and switch host to this speed */
+/** Probe bus to determine device presence and speed and switch host to this speed */
 MAX3421.prototype.busprobe = function() {
   var bus_sample;
 
