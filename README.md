@@ -33,7 +33,7 @@ There are a few extra bits too:
 
 * ```[[http://youtu.be/VIDEOID]]``` puts a video on the page
 * ```![Image Title](MyFilename/foo.png)``` Adds an image. Images should be in a directory named after the filename of the file referencing them (or the same directory as the file referencing them)
-* The first image in the file (or a file named `PageName.thumb.jpg/png`) is resized (to 180x140) and used as the thumbnail. If there's no image on the page at all it's added top-right.
+* The first image in the file (or a file named `PageName.thumb.jpg/png`) is resized (to 180x140) and used as the thumbnail. If there's no image on the page at all it's added top-right. Pages with no image can have a `PageName.thumb.jpg` created for them with `bin/thumbnail.js` - see [Creating thumbnails](#creating-thumbnails).
 
 It then converts the Markdown to HTML and shoves it on the Espruino website. Lovely!
 
@@ -102,6 +102,24 @@ $ node bin/check_docs.js --fix   # interactively fix spelling mistakes and broke
 * External URLs that have been verified in the last 30 days are stored in `.linkcache.json`, so subsequent runs are fast. Use `--refresh` to re-check everything.
 * URLs that shouldn't be checked can be added to `bin/link-ignore.txt`
 * Run `node bin/check_docs.js --help` for more options
+
+## Creating thumbnails
+
+`bin/thumbnail.js` draws a `PageName.thumb.jpg` (360x280, white background) for pages (and
+`examples/*.js` files) that have no image to use as a thumbnail - a breakout board for devices, an icon and code snippet
+for modules, or icons for other pages, with the title underneath. It needs ImageMagick.
+
+```
+$ node bin/thumbnail.js --list                     # list pages with no thumbnail
+$ node bin/thumbnail.js                            # create thumbnails for all of them
+$ node bin/thumbnail.js devices/MyDevice.md        # just one page
+$ node bin/thumbnail.js --out=preview devices/MyDevice.md   # preview without writing next to the page
+$ node bin/thumbnail.js --force devices/BME280.md  # recreate an existing thumbnail
+```
+
+* How each page is drawn (title, icons, colours, etc) is stored in `bin/thumbnail-pages.json`. Pages that aren't listed there have their settings guessed from the page's title and `KEYWORDS`, so for a better result add an entry for the page and re-run with `--force`
+* Icons are in `bin/thumbnail-icons.json` (mostly [Material Icons](https://github.com/google/material-design-icons))
+* Run `node bin/thumbnail.js --help` for all the options and settings
 
 ## Build Requirements
 

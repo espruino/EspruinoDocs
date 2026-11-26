@@ -87,7 +87,34 @@ Other conventions:
   on the page. Some older pages use `.thumb.png`/`.thumb.svg` - new pages should use
   `.thumb.jpg`.
 
-To make one with ImageMagick from a photo:
+### Creating thumbnails with `bin/thumbnail.js`
+
+Every new page should end up with a thumbnail. If it has no suitable photo or screenshot, use
+`bin/thumbnail.js` (needs ImageMagick) to draw one: a breakout board for devices, an icon
+plus a code snippet for modules, or icons for other pages, with the title underneath. It
+writes a correctly sized `FILENAME.thumb.jpg` next to the page.
+
+```
+node bin/thumbnail.js --list                              # pages with no thumbnail
+node bin/thumbnail.js devices/MyDevice.md                 # create one for a page
+node bin/thumbnail.js --out=preview devices/MyDevice.md   # preview into ./preview (look at it!)
+node bin/thumbnail.js --force devices/MyDevice.md         # recreate an existing one
+node bin/thumbnail.js --help                              # all options and fields
+```
+
+* Pages not listed in `bin/thumbnail-pages.json` have their settings guessed from the title,
+  `KEYWORDS` and folder. For a good result, add an entry for the page under `"pages"`
+  (keyed by repo-relative path, eg. `"devices/MyDevice.md"`) and re-run with `--force`.
+  Main fields: `layout` (`"hw"`, `"code"`, `"icon"` or `"photo"`), `title`, `sub`, `icons`
+  (1-3 names from `bin/thumbnail-icons.json`), `colors`, `label`, and for `"hw"` `look`/`board`.
+  Copy a similar existing entry and see `--help` for the rest.
+* Use `layout: "photo"` with `photo: "path/to/image.jpg"` to turn an existing photo into a
+  thumbnail on a white background.
+* Only run it for the pages you are working on - running it with no files creates thumbnails
+  for *every* page without one. Don't commit the `--out` preview folder.
+* Always view the generated image to check the title fits and the icons make sense.
+
+Alternatively, to make one by hand from a photo with ImageMagick:
 
 ```
 convert input.jpg -resize 360x280 -background white -gravity center -extent 360x280 -flatten -quality 90 "tutorials/My Page.thumb.jpg"
