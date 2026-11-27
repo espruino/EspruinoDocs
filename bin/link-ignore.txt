@@ -10,6 +10,7 @@ your_user_name|YOUR_USERNAME|yourusername
 ^https://your_username\.github\.io/UARTTest/test\.html$
 ^https://your_username\.github\.io/PuckTest/test\.html$
 ^https://www\.bluetooth\.com/specifications/
+^https://www\.bluetooth\.com/wp-content/uploads/Files/Specification/HTML/Assigned_Numbers/out/en/Assigned_Numbers\.pdf$
 ^https://www\.ebay\.com
 ^https://stores\.ebay\.com
 ^https://www\.raspberrypi\.org
@@ -44,3 +45,5 @@ your_user_name|YOUR_USERNAME|yourusername
 ^https://www\.tindie\.com
 ^https://www\.hackster\.io
 ^https://liberapay\.com
+^https://www\.influxdata\.com
+^https://github\.com/google/material-design-icons

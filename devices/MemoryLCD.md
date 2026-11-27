@@ -49,13 +49,3 @@ Notes
 * SPI must be set up with `order : 'lsb'` (the default is 'msb'), and the baud rate shouldn't be above 4000000
 * Make sure you specify the correct width and height (either 96x96, 128x128, or 400x240 )
 * Espruino toggles the VCOM pin (if specified) every 5 seconds. Sharp recommend 1 second but the longer time period allows Espruino to enter Deep Sleep and save a lot of power.
-
-Buying
------
-
-The LCDs come with a ~0.5mm ribbon on them so they're hard to connect to directly and you'll probably need a breakout board. 
-
-Sellers of LCDs on breakout boards are:
-
-* [MakerDyne 1.3" and 2.7"](http://www.makerdyne.com/blog/shop/)
-* [AdaFruit 1.3"](https://www.adafruit.com/products/1393)

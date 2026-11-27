@@ -10,7 +10,7 @@ Mounting the Espruino Board
 The Espruino board doesn't have any mounting holes on it (there just isn't space!), but you do have a few options for mounting it.
 
 * Use a 3D Printed Box or Mount (see our [EspruinoBoard](https://github.com/espruino/EspruinoBoard/tree/master/boxes) repository)
-* Use PCB mounts designed edge mounting - for example [these ones](https://www.adafruit.com/blog/2012/11/21/new-product-board-edge-mounting-kit-pack-of-4-raspberry_pi/)
+* Use PCB mounts designed edge mounting
 * Solder Espruino to a bit of proto board, and drill holes in that
 * Tape Espruino down with double-sided tape ('Servo Tape' is designed for this kind of thing)
 * Use Cable ties

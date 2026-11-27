@@ -69,6 +69,5 @@ Buying
 You can buy DCF77 modules separately, but they tend to cost around £10 each.
 
 * [eBay](https://www.ebay.com/sch/i.html?_nkw=dcf77+module)
-* [Conrad](http://www.conrad.com/ce/en/product/641138/DCF-receiver-board)
 
 You may find that it is in fact cheaper to just buy a DCF77 clock, dismantle it and remove the radio (which is usually a separate module).

@@ -55,7 +55,3 @@ Reference
 * `port` - the Serial port to use, for example `Serial1`
 * `speed` - (optional) baud rate, default 9600
 
-Links
------
-
-* [MH-Z19B datasheet](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf)

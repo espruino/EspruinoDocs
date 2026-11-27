@@ -6,7 +6,7 @@ Futaba S.Bus System
 
 * KEYWORDS: Module,Futaba,Frsky,SBus,S.Bus,Servo,RC,Remote Control
 
-The [S.Bus System](https://www.futabarc.com/sbus/index.html) is a way of
+The [S.Bus System](https://futabausa.com/futaba-rc-tech/s-bus-system/) is a way of
 controlling [RC servo Motors](./Servo Motors.md) more accurately using serial data.
 Normally servo motors use [PWM](../info/PWM.md) - you can only have one servo motor
 per signal wire, and accuracy is usually around 1 in 200.

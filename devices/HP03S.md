@@ -60,13 +60,6 @@ hp03s.getPressure( function( pressure, temperature ) {
 
 You can only start a new measurement when a previous measurement is completed.
 
-
-Buying
-------
-* AliExpress [http://www.aliexpress.com/wholesale?SearchText=hp03s](http://www.aliexpress.com/wholesale?SearchText=hp03s)
-* Pollin [https://www.pollin.de/shop/dt/MDg4OTgxOTk-](https://www.pollin.de/shop/dt/MDg4OTgxOTk-)
-
-
 References
 ----------
 

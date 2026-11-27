@@ -83,7 +83,7 @@ stty -F /dev/ttyACM0 9600
 
 ### Python (Multiplatform)
 
-There's a [good thread on it here](http://www.raspberrypi.org/phpBB3/viewtopic.php?f=45&t=19301&p=188619)
+There's a [good thread on it here](https://www.raspberrypi.org/phpBB3/viewtopic.php?f=45&t=19301&p=188619)
 
 However, it's very simple:
 

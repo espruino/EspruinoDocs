@@ -37,8 +37,7 @@ and is proportional to the touch position on the x-axis of the touch screen (and
 and Y+ and reading X- or X+ provides the value for the y-axis.
 
 Sketch of Top Portrait view of a 2.6" Touch Screen w/ YUp, XLeft, YDown and XRight edge drive and sense
-lines with film connector cable ([datasheet ER-TP026-1](../datasheets/ER-TP026-1_Drawing.pdf) of [BuyDisplay.com
-by EastRising](https://www.buydisplay.com/default/2-6-inch-4-wire-resistive-touch-panel-screen)).
+lines with film connector cable ([datasheet ER-TP026-1](../datasheets/ER-TP026-1_Drawing.pdf)
 
 ```
 `
