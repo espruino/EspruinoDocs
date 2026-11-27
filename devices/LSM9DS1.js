@@ -155,7 +155,7 @@ LSM9DS1.prototype.run = function () {
     this.i2c.writeTo(this.mAddress, this.mstack[i].sub, this.mstack[i].data);
   }
   return whoAmICombined;
-}; M.
+};
 
 /** read a byte from the magnetometer at `subAddress`*/
 LSM9DS1.prototype.mReadByte = function (subAddress) {
@@ -164,7 +164,7 @@ LSM9DS1.prototype.mReadByte = function (subAddress) {
   this.i2c.writeTo(x, subAddress);
   data = this.i2c.readFrom(x, 1);
   return data[0];
-}; M.
+};
 
 /** read a byte from the dyro/accelerometer at `subAddress`*/
 LSM9DS1.prototype.xgReadByte = function (subAddress) {
@@ -173,7 +173,7 @@ LSM9DS1.prototype.xgReadByte = function (subAddress) {
   this.i2c.writeTo(x, subAddress);
   data = this.i2c.readFrom(x, 1);
   return data[0];
-}; M.
+};
 
 /** write axis offset to magnetometer */
 LSM9DS1.prototype.magOffset = function (axis, offset) {
@@ -183,7 +183,7 @@ LSM9DS1.prototype.magOffset = function (axis, offset) {
   lsb = offset & 0x00ff;
   this.mWriteByte(Mags.OFFSET_X_REG_L_M + 2 * axis, lsb);
   this.mWriteByte(Mags.OFFSET_X_REG_H_M + 2 * axis, msb);
-}; M.
+};
 
 LSM9DS1.prototype.mWriteByte = function (subAddress, data) {
   //console.log("mWriteByte ",this.mAddress, subAddress, data);
@@ -202,7 +202,7 @@ LSM9DS1.prototype.enableFIFO = function (enable) {
 LSM9DS1.prototype.xgWriteByte = function (subAddress, data) {
   var x = this.xgAddress;
   this.i2c.writeTo(x, subAddress, data);
-}; M.
+};
 
 /** 'setFIFO(fifoMode,fifoThs) Sets FIFO mode and length' */
 LSM9DS1.prototype.setFIFO = function (fifoMode, fifoThs) {
@@ -211,7 +211,7 @@ LSM9DS1.prototype.setFIFO = function (fifoMode, fifoThs) {
     Regs.FIFO_CTRL,
     ((fifoMode & 0x7) << 5) | (threshold & 0x1f),
   );
-}; M.
+};
 
 /** 'readAccel() reads X,Y,Z accelerometer values'*/
 LSM9DS1.prototype.readAccel = function () {
@@ -222,12 +222,12 @@ LSM9DS1.prototype.readAccel = function () {
   this.a[2] = this.twos_comp(temp[4], temp[5]);
   if (this.autoCalc > 0) {
     for (i = 0; i < 3; i++) this.a[i] -= this.accelscale[this.aScale].aoff[i];
-  } M.
+  } 
   if (this.autoCalc > 1) {
     for (i = 0; i < 3; i++)
       this.a[i] = this.a[i] * this.accelscale[this.aScale].ares[i];
-  } M.
-}; M.
+  } 
+}; 
 
 /** 'xgReadBytes(subAddress,count) read count bytes from gyro/accelerometer at subAddress'*/
 LSM9DS1.prototype.xgReadBytes = function (subAddress, count) {
@@ -236,13 +236,13 @@ LSM9DS1.prototype.xgReadBytes = function (subAddress, count) {
   this.i2c.writeTo(x, subAddress | 0x80);
   dest = this.i2c.readFrom(x, count);
   return dest;
-}; M.
+};
 
 /** 'prototype.twos_comp(low,high) converts low and high bytes'*/
 LSM9DS1.prototype.twos_comp = function (low, high) {
   var t = (high << 8) | low;
   return t & 0x8000 ? t - 0x10000 : t;
-}; M.
+};
 
 /** 'readGyro() get data reading from the Gyro' */
 LSM9DS1.prototype.readGyro = function () {
@@ -253,12 +253,12 @@ LSM9DS1.prototype.readGyro = function () {
   this.g[2] = this.twos_comp(temp[4], temp[5]);
   if (this.autoCalc > 0) {
     for (i = 0; i < 3; i++) this.g[i] -= this.gyroscale[this.gScale].goff[i];
-  } M.
+  }
   if (this.autoCalc > 1) {
     for (i = 0; i < 3; i++)
       this.g[i] = this.g[i] * this.gyroscale[this.gScale].gres[i];
-  } M.
-}; M.
+  }
+};
 
 /** 'readMag() get data reading from the magnetometer'*/
 LSM9DS1.prototype.readMag = function () {
@@ -269,12 +269,12 @@ LSM9DS1.prototype.readMag = function () {
   this.m[2] = this.twos_comp(temp[4], temp[5]);
   if (this.autoCalc > 0) {
     for (i = 0; i < 3; i++) this.m[i] -= this.mscale[this.mScale].moff[i];
-  } M.
+  }
   if (this.autoCalc > 1) {
     for (i = 0; i < 3; i++)
       this.m[i] = this.m[i] * this.mscale[this.mScale].mres[i];
-  } M.
-}; M.
+  }
+};
 
 /** 'mReadBytes(subAddress,count) read count bytes from magnetometer at subAddress'*/
 LSM9DS1.prototype.mReadBytes = function (subAddress, count) {
@@ -283,14 +283,14 @@ LSM9DS1.prototype.mReadBytes = function (subAddress, count) {
   this.i2c.writeTo(x, subAddress | 0x80);
   dest = this.i2c.readFrom(x, count);
   return dest;
-}; M.
+};
 
 /** 'readTemp() read the chip temperature C' */
 LSM9DS1.prototype.readTemp = function () {
   var temp = this.xgReadBytes(Regs.OUT_TEMP_L, 2);
   this.temperature = this.twos_comp(temp[1] << 4, (temp[0] & 0xf) << 4);
   this.temperature = this.temperature / 15;
-}; M.
+}; 
 
 /** `gScl` 0 for 245, 1 for 500, 2 for 2000' */
 LSM9DS1.prototype.setGyroScale = function (gScl) {
@@ -302,7 +302,7 @@ LSM9DS1.prototype.setGyroScale = function (gScl) {
   this.xgWriteByte(Regs.CTRL_REG1_G, ctrl1RegValue);
   this.gScale = gScl;
   return this.gyroscale[gScl].scale;
-}; M.
+};
 
 /** 0..3 */
 LSM9DS1.prototype.setGyroBandwidth = function (bw) {
@@ -313,7 +313,7 @@ LSM9DS1.prototype.setGyroBandwidth = function (bw) {
   temp |= bw;
   this.xgWriteByte(Regs.CTRL_REG1_G, temp);
   return bw;
-}; M.
+};
 
 /** 0/1, 0..31*/
 LSM9DS1.prototype.setGyroHPfilter = function (onoff, cutoff) {
@@ -327,7 +327,7 @@ LSM9DS1.prototype.setGyroHPfilter = function (onoff, cutoff) {
   temp |= onoff;
   this.xgWriteByte(Regs.CTRL_REG3_G, temp);
   return cutoff;
-}; M.
+};
 
 LSM9DS1.prototype.setAccelScale = function (aScl) {
   if (aScl < 0) return "Bad Acceleration Scale selection";
@@ -339,7 +339,7 @@ LSM9DS1.prototype.setAccelScale = function (aScl) {
   this.xgWriteByte(Regs.CTRL_REG6_XL, tempRegValue);
   this.aScale = aScl;
   return this.accelscale[aScl].scale;
-}; M.
+};
 
 /** 0..3' */
 LSM9DS1.prototype.setMagScale = function (mScl) {
@@ -351,32 +351,32 @@ LSM9DS1.prototype.setMagScale = function (mScl) {
   this.mWriteByte(Mags.CTRL_REG2_M, temp);
   this.mScale = mScl;
   return this.mscale[mScl].scale;
-}; M.
+};
 
 /** returns bool */
 LSM9DS1.prototype.magAvailable = function () {
   var status;
   status = this.mReadByte(Mags.STATUS_REG_M);
   return (status & 8) >> 3;
-}; M.
+};
 
 /** returns bool */
 LSM9DS1.prototype.accelAvailable = function () {
   var status = this.xgReadByte(Regs.STATUS_REG_1);
   return status & (1 << 0);
-}; M.
+};
 
 /** returns bool */
 LSM9DS1.prototype.gyroAvailable = function () {
   var status = this.xgReadByte(Regs.STATUS_REG_1);
   return (status & (1 << 1)) >> 1;
-}; M.
+};
 
 /** returns bool */
 LSM9DS1.prototype.tempAvailable = function () {
   var status = this.xgReadByte(Regs.STATUS_REG_1);
   return (status & (1 << 2)) >> 2;
-}; M.
+};
 
 LSM9DS1.prototype.setGyroODR = function (gRate) {
   if ((gRate & 0x07) !== 0) {
@@ -385,8 +385,8 @@ LSM9DS1.prototype.setGyroODR = function (gRate) {
     temp |= (gRate & 0x07) << 5;
     this.gyro_sampleRate = gRate & 0x07;
     this.xgWriteByte(Regs.CTRL_REG1_G, temp);
-  } M.
-}; M.
+  }
+};
 
 LSM9DS1.prototype.setAccelODR = function (aRate) {
   if ((aRate & 0x07) !== 0) {
@@ -395,8 +395,8 @@ LSM9DS1.prototype.setAccelODR = function (aRate) {
     temp |= (aRate & 0x07) << 5;
     this.accel_sampleRate = aRate & 0x07;
     this.xgWriteByte(Regs.CTRL_REG6_XL, temp);
-  } M.
-}; M.
+  }
+};
 
 LSM9DS1.prototype.setMagODR = function (mRate) {
   var temp = this.mReadByte(Mags.CTRL_REG1_M);
@@ -404,7 +404,7 @@ LSM9DS1.prototype.setMagODR = function (mRate) {
   temp |= (mRate & 0x07) << 2;
   this.mag_sampleRate = mRate & 0x07;
   this.mWriteByte(Mags.CTRL_REG1_M, temp);
-}; M.
+};
 
 /** Use with `require('LSM9DS1.js').connect(i2c,xgAddress,mAddress)` */
 exports.connect = function (i2c, xgAddress, mAddress) {
