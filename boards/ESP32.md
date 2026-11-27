@@ -4,7 +4,7 @@ Espruino on ESP32
 
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/ESP32. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
-* KEYWORDS: ESP32,Espruino,Board,PCB,Pinout,Internet,WiFi,Wireless,Radio,Bluetooth,BLE,Bluetooth LE
+* KEYWORDS: ESP32,ESP32C3,ESP32S3,Espruino,Board,PCB,Pinout,Internet,WiFi,Wireless,Radio,Bluetooth,BLE,Bluetooth LE
 
 **Note:** *This page documents running the Espruino firmware on the ESP32 board.
 
@@ -18,49 +18,39 @@ Contents
 
 ## Overview
 
-The [ESP32](https://espressif.com/en/products/hardware/esp32/overview) is a dual core Tensilica LX6
-microcontroller with 520 KB SRAM, integrated Wifi, Bluetooth, and more.  [Espruino](https://github.com/espruino/Espruino)
-is a very lightweight JavaScript interpreter that runs on the ESP32, and other microcontrollers.
-
-This documentation is intended for those who want to run JavaScript on any ESP32 microcontrollers.
-It will describe how to flash the ESP32 with the latest firmware, connect to Wifi and get the
-other pins going.
-
-There are a few different boards that contain the ESP32 microcontroller.  These instructions below
-should be generic enough for all boards, but you may have to adapt the instructions in places.
-
-## Supported ESP32 Targets
-
-Besides the original ESP32, Espruino firmware can also be built for the following Espressif ESP32-family microcontrollers:
+The ESP32 family includes several chips with different processor architectures and peripheral capabilities. The following table compares the four targets covered by this documentation.
 
 | Chip | Architecture |
 |---|---|
 | ESP32 | Xtensa LX6 (dual-core) |
 | ESP32-S3 | Xtensa LX7 (dual-core) |
 | ESP32-C3 | RISC-V (single-core) |
-| ESP32-P4 | RISC-V (dual-core) |
+| ESP32-P4 ^[1] | RISC-V (dual-core) |
 
-Note: ESP32-P4 implementation is planed for Q1 20227
+<sup>1</sup> *The ESP32-P4 implementation is planned for Q1 2027.*
 
-These targets use the ESP-IDF build system. Depending on the chip, firmware builds use the corresponding ESP-IDF configuration and target-specific build settings.
+This documentation is intended for those who want to run JavaScript on any ESP32 microcontrollers.
+It will describe how to flash the ESP32 with the latest firmware, connect to Wifi and get the other pins going.
 
-**Important:** Hardware peripherals, GPIO assignments and available features differ between ESP32 variants. Not all features documented on this page are available on every target. Check the documentation and hardware capabilities of the individual chip before using a peripheral.
+---
 
-For further information, see the [Espressif ESP-IDF documentation](https://docs.espressif.com/projects/esp-idf/en/stable/).
+### Quick links
 
-## ESP32 Family Hardware Comparison
+* [Online ESP32 Espruino Flashing tool](https://www.espruino.com/Espressif+Flash)
+* [Download the latest ESP32 firmware release](https://www.espruino.com/Download)
+* [Download 'cutting edge' ESP32 firmware](https://www.espruino.com/binaries/travis/master/) - these may not always work
+* [Espruino ESP32 Forum](https://forum.espruino.com/microcosms/1086/) - Main support forum
+* [ESP32 Forum](https://www.esp32.com)
+* [Developer chat for Espruino ESP32](https://gitter.im/espruino/esp32) - Focuses on development issues.
 
-Espruino firmware can be built for several members of the Espressif ESP32 family. The available hardware peripherals and wireless capabilities differ between chips.
-
-The following table provides an overview of the hardware capabilities of each target.
-
-The ESP32 family includes several chips with different processor architectures and peripheral capabilities. The following table compares the four targets covered by this documentation.
+### ESP32 Features
 
 | Feature | ESP32 | ESP32S3 | ESP32C3 | ESP32P4 |
-|---|---|---|---|---|
+| :--- | :---: | :---: | :---: | :---: |
 | CPU architecture | Xtensa LX6 | Xtensa LX7 | RISC-V | RISC-V |
 | CPU cores | 2 | 2 | 1 | 2 |
 | Maximum CPU frequency | 240 MHz | 240 MHz | 160 MHz | 400 MHz |
+| RAM (SRAM) | 520 KB | 512 KB | 400 KB | 768 KB |
 | Wi-Fi | 2.4 GHz | 2.4 GHz | 2.4 GHz | — |
 | Bluetooth Classic | Yes | No | No | No |
 | Bluetooth LE | 4.2 | 5.0 | 5.0 | No |
@@ -68,7 +58,7 @@ The ESP32 family includes several chips with different processor architectures a
 | UART controllers | 3 | 3 | 2 | 5 |
 | General-purpose SPI controllers | 2 | 2 | 1 | 4 |
 | I2C controllers | 2 | 2 | 1 | 2 |
-| I2S controllers | 2 | 2 | 1 | 3 |
+| I2S controllers ^[2]| 2 | 2 | 1 | 3 |
 | PWM | 16 channels | 8 channels | 6 channels | Yes |
 | ADC | 12-bit | 12-bit | 12-bit | 12-bit |
 | DAC | 2 × 8-bit | — | — | — |
@@ -76,29 +66,36 @@ The ESP32 family includes several chips with different processor architectures a
 | Hall sensor | Yes | — | — | — |
 | External flash | Yes | Yes | Yes | Yes |
 | PSRAM | Optional | Optional | — | Supported |
-| Strapping GPIOs | GPIO0, GPIO2, GPIO5, GPIO12, GPIO15 | GPIO0, GPIO3, GPIO45, GPIO46 | GPIO2, GPIO8, GPIO9 | GPIO34, GPIO35, GPIO36, GPIO37, GPIO38|
+| Strapping GPIOs | GPIO0, GPIO2, GPIO5, GPIO12, GPIO15 | GPIO0, GPIO3, GPIO45, GPIO46 | GPIO2, GPIO8, GPIO9 | GPIO34, GPIO35, GPIO36, GPIO37, GPIO38 |
 
-**Notes:**
+<sup>2</sup> *not included*
 
-- Values describe the chip's hardware capabilities, not necessarily the features exposed by a particular development board.
-- The number of available GPIOs depends on the chip package and the pins reserved for flash, PSRAM, or other internal functions.
-- Peripheral availability and functionality in Espruino depend on the ESP-IDF version, target configuration, and implementation status.
-- ESP32-P4 does not include integrated Wi-Fi or Bluetooth. Wireless connectivity requires an external companion chip or module.
+### Limitations / Work in Progress
 
-LP = Low-power peripheral. GPIO counts are chip-level values and may be limited by the selected package.
+Supported by Espruino on the ESP32:
+* onewire
+* hardware SPI
+* hardware I2C
+* DAC
+* ADC
+* Serial
+* WIFI - as a client and access point
+* Bluetooth LE - BLE
 
-USB FS = Full Speed, USB HS = High Speed.
+Not supported by Espruino on the ESP32 (yet):
 
-The table describes hardware capabilities. Actual peripheral availability in Espruino depends on the selected ESP-IDF version, firmware configuration and implementation.
+* No Over-The-Air (OTA) firmware updates.
+* Bluetooth Classic
 
-For detailed specifications, consult the individual Espressif datasheets:
+### Known Issues
 
-- [ESP32](https://documentation.espressif.com/esp32_datasheet_en.html)
-- [ESP32-S3](https://documentation.espressif.com/esp32-s3_datasheet_en.pdf)
-- [ESP32-C3](https://documentation.espressif.com/esp32-c3_datasheet_en.html)
-- [ESP32-P4](https://documentation.espressif.com/esp32-p4_datasheet_en.html)
+* Espruino Web IDE had issues with the ESP32 back in 2017, see [below](#espruino-web-ide).
 
-## Firmware Installation
+---
+
+## Getting Started
+
+### Installing drivers
 
 Depending on the board and operating system you have, you might need to install the FTDI or Silicon Labs USB driver:
 
@@ -111,7 +108,7 @@ If your device is not already flashed, below are the instructions.  Flashing inv
 
 #### Easy Online Flashing
 
-If you have a Chromium-based web browser it's possible to flash your ESP32 device direct from the browser! [Click here to flash Espruino to your board](/Espressif+Flash)
+If you have a Chromium-based web browser it's possible to flash your ESP32 device direct from the browser! [Click here to flash Espruino to your board](https://www.espruino.com/Espressif+Flash)
 
 If that fails you'll have to install it manually (see below)
 
@@ -174,11 +171,12 @@ included from the same source you acquired the `espruino_esp32.bin` build,
 they should be available in the corresponding `espruino_1v92.*_esp32.tgz`
 package of the [Travis cutting-edge builds](https://www.espruino.com/binaries/travis/master/).
 
+
 ###### Subsequent updates
 
 This example is to replace existing Espruino firmware after a new release:
 
-```sh
+```shell
 esp-idf/components/esptool_py/esptool/esptool.py    \
         --chip esp32                                \
         --port /dev/ttyUSB0                         \
@@ -215,44 +213,31 @@ Hard resetting...
 
 Your device is flashed.
 
+
+
+
 ## Building Firmware
 
-### ESP32
-
 You can get the Espruino firmare from the [cutting-edge builds](https://www.espruino.com/binaries/travis/master/).
-Get the file ending in `_esp32.bin`.
+Get the file ending in `_esp[32|32c3|32s3].[bin|tgz]`.
 
 You can also build the Espruino firmware yourself:
 
 The following work in a bash shell environment, you will need git, and other essential build tools (e.g. on Ubuntu run `sudo apt-get install build-essential`).
 
-```sh
+```shell
 # Get the Espruino source code
-git clone https://github.com/espruino/Espruino.git
-cd Espruino
+$ git clone https://github.com/espruino/Espruino.git
+$ cd Espruino
 # Download and set up the toolchain ('source' is important here)
-source scripts/provision.sh ESP32
+$ source scripts/provision.sh ESP32
 # Clean and rebuild
-make clean && BOARD=ESP32 make
+make clean && RELEASE=1 BOARD=[ESP32|ESP32C3|ESP32C3] make
 ```
 
-You will have a file called `espruino_esp32.bin`.  This is your ESP32 firmware.
+You will have a file called `espruino_esp32.bin` in folder bin. This is your ESP32 firmware.
 
-See https://github.com/espruino/Espruino/blob/master/README_Building.md for more information.
-
-### ESP32-S3
-
-TODO: Add ESP32-S3-specific build prerequisites, target configuration and build command.
-
-### ESP32-C3
-
-TODO: Add ESP32-C3-specific build prerequisites, target configuration and build command.
-
-### ESP32-P4
-
-TODO: Add ESP32-P4-specific build prerequisites, target configuration and build command.
-
-## Getting Started
+See [Building](https://github.com/espruino/Espruino/blob/master/README_Building.md) for more information.
 
 ### Espruino Web IDE
 
@@ -272,7 +257,7 @@ Another cross platform terminal program with a friendly interface is [CoolTerm](
 alive while you're logged out, and so forth. However, it will also function as
 a serial terminal
 
-```sh
+```shell
 screen /dev/ttyUSB0 115200
 ```
 
@@ -373,17 +358,11 @@ The source document notes that the ESP32 Wi-Fi implementation supports access po
 
 The source document mentions station and access point modes, including simultaneous operation where supported by the target and ESP-IDF configuration. A tested simultaneous-mode example is not yet documented.
 
-### Hostname
-
-The source document previously stated that `wifi.setHostname()` was not implemented. This status needs to be checked against the current ESP32 implementation before publishing.
-
 ### HTTPS Client
 
 The ESP32 can access HTTPS resources when the firmware
-includes TLS support.
-
-The HTTP module can be used for both HTTP and HTTPS
-requests.
+includes TLS support. 
+The HTTP module can be used for both HTTP and HTTPS requests.
 
 Example:
 
@@ -413,7 +392,6 @@ Example:
       );
     });
 
-HTTPS requires TLS support in the firmware.
 Certificate and server authentication settings depend
 on the TLS configuration.
 
@@ -423,9 +401,7 @@ See:
 - [HTTP reference](https://www.espruino.com/Reference#http)
 - [TLS reference](https://www.espruino.com/Reference#tls)
 
-## Bluetooth
-
-### Bluetooth LE
+### Bluetooth
 
 See [https://www.espruino.com/BLE+Communications](https://www.espruino.com/BLE+Communications)
 
@@ -549,43 +525,12 @@ Espruino supports NeoPixel-compatible LED strips through the standard `neopixel`
 
 Use `require("neopixel").write(pin, data)` to send RGB data to a LED strip.
 
-```js
-var neopixel = require("neopixel");
-
-// Set the first LED to red
-neopixel.write(D2, [255, 0, 0]);
-
-// Set three LEDs: red, green and blue
-neopixel.write(D2, [
-  255, 0, 0,
-  0, 255, 0,
-  0, 0, 255
-]);
-```
-
-The `data` argument contains three bytes per LED (red, green and blue). Use an `ArrayBuffer` or `Uint8ClampedArray` for larger LED strips to reduce memory overhead.
-
-**Hardware considerations:**
-
-- Connect the LED strip's data input to a suitable ESP32 GPIO.
-- Ensure that the LED strip and ESP32 share a common ground.
-- Check the logic-level requirements of the LED strip. A 3.3 V ESP32 output may require a level shifter when driving a 5 V-powered strip.
-- Provide a suitable external power supply for LED strips with multiple LEDs.
-
 See the [Espruino NeoPixel reference](https://www.espruino.com/Reference#neopixel) and the [WS2811/WS2812 documentation](https://www.espruino.com/WS2811) for further details.
 
 ### I2C
 
-Below is an example of the [HD44780 LCD controller](https://en.wikipedia.org/wiki/Hitachi_HD44780_LCD_controller).
-It uses the [I2C class](https://www.espruino.com/Reference#I2C).
+See the [I2C class](https://www.espruino.com/Reference#I2C) for further details.
 
-```JavaScript
-I2C1.setup({ 'scl': D17,
-             'sda': D16,
-             bitrate: 100000 });
-var lcd = require('HD44780').connectI2C(I2C1);
-lcd.print('Hello ESP32!!');
-```
 ### Hardware I2C
 
 The ESP32 supports hardware I2C. The SDA and SCL pins can be
@@ -594,111 +539,42 @@ configured using `I2C.setup()`.
 Unlike some microcontrollers, the ESP32 GPIO matrix allows
 I2C signals to be routed to different GPIO pins.
 
-Example:
-```js
-    I2C1.setup({
-      scl: D17,
-      sda: D16,
-      bitrate: 100000
-    });
-
-    var lcd = require("HD44780").connectI2C(I2C1);
-    lcd.print("Hello Espruino!");
-```
-The I2C pins are configurable. The example uses GPIO17 for
-SCL and GPIO16 for SDA.
-
-External pull-up resistors are normally required on SDA and
-SCL. Typical values are 4.7kOhm to 10kOhm, depending on the
-bus voltage, capacitance and bus speed.
-
-For more information see the
-[I2C reference](https://www.espruino.com/Reference#I2C).
+For more information see the [I2C reference](https://www.espruino.com/Reference#I2C).
 
 ### SPI
 
-Below is an example for the [PCD8544](https://www.sparkfun.com/datasheets/LCD/Monochrome/Nokia5110.pdf)
-LCD controller (48 × 84 pixels matrix LCD).  It uses the [SPI class](https://www.espruino.com/Reference#SPI).
+It uses the [SPI class](https://www.espruino.com/Reference#SPI).
 
-### Hardware SPI
+#### Hardware SPI
 
-The ESP32 provides hardware SPI controllers. SPI pins can
-be configured using the GPIO matrix.
+The ESP32 provides hardware SPI controllers. SPI pins can be configured using the GPIO matrix.
 
-The original ESP32 has two general-purpose SPI controllers
-available for external peripherals. SPI0 and SPI1 are normally
-reserved for flash access.
+For more information see the [SPI reference](https://www.espruino.com/Reference#SPI).
 
-The following GPIO assignments are commonly used:
+##### Native SPI IOMUX Pin Mapping by Chip
 
-| Signal | VSPI | HSPI |
-|--------|------|------|
-| SCK    | GPIO18 | GPIO14 |
-| MISO   | GPIO19 | GPIO12 |
-| MOSI   | GPIO23 | GPIO13 |
-| CS     | GPIO5  | GPIO15 |
+Espressif renamed the user-available SPI buses starting with the S2/C3 generation (`VSPI`/`HSPI` became `SPI2`/`SPI3` or `FSPI`/`HSPI`). Using native IOMUX pins allows maximum bus speed (up to 80 MHz) without GPIO matrix latency.
 
-These are conventional assignments, not mandatory pin
-assignments. Other suitable GPIO pins can be configured.
+| Signal | ESP32 `VSPI` (SPI3) | ESP32 `HSPI` (SPI2) | ESP32-C3 `FSPI` (SPI2) | ESP32-S3 `FSPI` (SPI2) | ESP32-P4 `SPI2` |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **SCK** | GPIO18 | GPIO14 | GPIO6 | GPIO12 | GPIO9 |
+| **MISO** | GPIO19 | GPIO12 | GPIO2 | GPIO13 | GPIO10 |
+| **MOSI** | GPIO23 | GPIO13 | GPIO7 | GPIO11 | GPIO8 |
+| **CS (CS0)** | GPIO5 | GPIO15 | GPIO10 | GPIO10 | GPIO7 |
 
-Example using VSPI:
-```js
-    SPI2.setup({
-      sck: D18,
-      miso: D19,
-      mosi: D23
-    });
+**Notes:**
+* On the **ESP32-S3** and **ESP32-P4**, `SPI3` has no dedicated IOMUX pins and always routes via the GPIO matrix.
+* The **ESP32-C3** only has one user-accessible SPI controller (`SPI2`).
 
-    var spi = SPI2;
-```
-Example using a PCD8544 display:
-```js
 
-    var g = require("PCD8544").connect(
-      spi,
-      D17, // DC
-      D5,  // CS
-      D16, // Reset
-      function() {
-        g.clear();
-        g.drawString("Hello ESP32", 0, 0);
-        g.flip();
-      }
-    );
-```
-Note: Chip select is normally controlled using a separate
-GPIO pin.
+#### Compatibility & Pin Constraints by Chip
 
-For more information see the
-[SPI reference](https://www.espruino.com/Reference#SPI).
-
-```js
-/*
-Display     ESP-32   DEF Colour
-LED         3V3      N/A
-SCLCK       GPIO4    Green    IO05
-DN<MOSI>    GPIO16   Yellow
-D/C         GPIO17   Orange
-SCE         GPIO5    Red
-RST         GPIO18   Brown
-GND         GND      Grey
-VCC         3V3      Blue
-BackLight   GND      Purple
-*/
-
-SPI2.setup({ sck:D5, mosi:D23 });
-
-var g = require('PCD8544').connect(SPI1,
-    D17 /* RS / DC */,
-    D18 /* CS / CE */,
-    D16 /*RST*/, function() {
-  g.clear();
-  g.setRotation(2); //Flip display 180
-  g.drawString('Hi Esp32',0,0);
-  g.drawLine(0, 10, 84, 10);
-  g.flip();
-});
-```
+| Chip | User SPI Buses | Max Clock (IOMUX / Matrix) | Reserved / Off-Limits Pins | Espruino Implementation Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **ESP32** | `SPI2` (HSPI), `SPI3` (VSPI) | 80 MHz / 26 MHz | **GPIO6–11** (SPI Flash/PSRAM), **GPIO34–39** (Input-only; cannot use for SCK/MOSI/CS) | Full-duplex SPI over the GPIO matrix is capped at ~26 MHz due to input delay. |
+| **ESP32-C3** | `SPI2` (FSPI) only | 80 MHz / 40 MHz | **GPIO11–17** (SPI Flash), **GPIO18–19** (USB Serial/JTAG), **GPIO2, 8, 9** (Strapping pins) | Only 22 GPIOs total (0–21). Only 1 user SPI peripheral exists in hardware. |
+| **ESP32-S3** | `SPI2` (FSPI), `SPI3` (HSPI) | 80 MHz / 40 MHz | **GPIO19–20** (USB OTG / JTAG), **GPIO26–32** (SPI Flash/PSRAM), **GPIO33–37** (If Octal Flash/PSRAM is used) | `SPI3` (`SPI3_HOST`) works on any free GPIO via the GPIO matrix. |
+| **ESP32-P4** | `SPI2`, `SPI3` | 80 MHz / 40 MHz | **GPIO24–27** (USB 2.0 OTG / PHY), **GPIO34–38** (Strapping pins; GPIO35 = Boot) | Flash/PSRAM use dedicated internal buses (`SPI0`/`SPI1`), leaving standard GPIOs free. On P4 DevKits, GPIO7–10 may be wired to onboard peripherals (e.g., I2C or C6 Wi-Fi SDIO). |
 
 ### UART
 
@@ -707,22 +583,6 @@ throught the [Serial](https://www.espruino.com/Reference#Serial) class.  The `Se
 functions are available for use.  Note that if you are accessing the ESP32 via serial terminal
 `Serial1` may already be used, hence it's not available (use Telnet if this is an issue).
 
-For the example below, connect a wire from the `GPIO04` (transmit pin, TX) and `GPIO15` (receive pin,
-RX).
-
-```JavaScript
-Serial2.setup(9600, { tx: D4, rx: D15 });
-Serial2.on('data', function(data) {
-    console.log('Serial2: ', data);
-});
-Serial2.print('Hello UART');
-```
-
-This will output:
-
-```text
-Serial2: Hello UART
-```
 
 *Note:* The ESP32 has two UARTS. UART0 (`Serial1`) uses `GPIO10` for TX and `GPIO32` for RX and is used by
 the Espruino JavaScript console. It can be used for other things once the Espruino console
@@ -733,9 +593,11 @@ use like any normal Espruino Serial port.
 ### RMT / digitalPulse
 
 There are 8 channel available. Each one with is connected to a pin. Timimg goes down to micro secs.
-Implemented with the esp-idf RMT driver.
+Implemented with the esp-idf RMT driver. 
 
 ## Storage and Flash
+
+for details see the [Storage Libray](https://www.espruino.com/Reference#t_Storage) and [Flash Libray](https://www.espruino.com/Reference#t_Flash)
 
 ### Flash Map
 
@@ -811,19 +673,7 @@ flashing blank.bin to 0x100000.
 
 The ESP32 flash filesystem can be accessed through the standard Espruino `fs` module. See the filesystem initialization and file access examples in the Flash Map section above. Formatting deletes existing contents, so only format when necessary.
 
-## ESP32-P4 Specific Features
 
-### Ethernet
-
-TODO: Document the ESP32-P4 Ethernet MAC, external PHY requirements and Espruino API support.
-
-### USB
-
-TODO: Document the USB interfaces available on ESP32-P4 and their current Espruino support.
-
-### Display and Camera Interfaces
-
-TODO: Document the ESP32-P4 display and camera interfaces and identify which are currently supported by Espruino.
 
 ## Limitations / Work in Progress
 
@@ -832,8 +682,7 @@ The following features are supported by Espruino on ESP32 targets, depending on 
 **Supported:**
 
 - OneWire
-- Hardware SPI
-- Hardware I2C
+- Software & Hardware SPI and I2C
 - DAC (only on chips providing hardware DAC, such as ESP32)
 - ADC (including ESP32-C3 support)
 - Hardware Serial (UART)
@@ -864,6 +713,64 @@ The following features are supported by Espruino on ESP32 targets, depending on 
 - Peripheral availability also depends on the selected ESP-IDF version and firmware build configuration.
 
 For current implementation details, see the [Espruino ChangeLog](https://www.espruino.com/ChangeLog) and the [ESP32 target source code](https://github.com/espruino/Espruino/tree/master/targets/esp32).
+
+
+
+### Saving code to flash
+
+Currently 64KB of flash are reserved to save JS code to flash using the
+save() function. This area is also used for `E.saveBootCode()`
+
+If the save() area contains something that crashes Espruino or otherwise
+doesn't let you reset the system you can disable whatever is saved by
+flashing blank.bin to 0x100000.
+
+
+### Flash map and access
+
+Note: if you are looking for a free flash area to use, call `require( "Flash").getFree()`,
+which will return a list of available areas (see docs).
+
+Current ESP32 modules are 4Mb.
+
+The result of all this is the following:
+
+|    Start | Length | Function                                                            |
+|---------:|-------:|:--------------------------------------------------------------------|
+| 0x000000 |    4KB | Secure Boot                                                         |
+| 0x008000 |    4KB | Bootloader                                                          |
+| 0x009000 |   16KB | nvs - esp-idf non-volatile storage area                             |
+| 0x00d000 |    8KB | otadata - esp-idf keeps track on which the current firmware to boot |
+| 0x010000 |  960KB | factory - the initial espruino firmware.                            |
+| 0x100000 |   64KB | js_code - the saved espruino interpreter and `E.setBootCode()`      |
+| 0x200000 | 1024KB | ota_0 - area for ota updates (not yet implemented)                  |
+| 0x300000 | 1024KB | 1Mb Flash Fat Filesystem                                            |
+
+This is defined in partitions_espruino.csv in the EspruinoBuildTools repository
+
+The last 1Mb has been defined as a flash FAT filesystem. It needs to be initialised for first use - this does it in a safe way that won't delete existing files:
+
+```JavaScript
+try {
+  fs.readdirSync();
+ } catch (e) { //'Uncaught Error: Unable to mount media : NO_FILESYSTEM'
+  console.log('Formatting FS - only need to do once');
+  E.flashFatFS({ format: true });
+}
+```
+
+you can then use the filesystem with fs or File objects:
+
+```JavaScript
+fs.writeFileSync('hello world.txt', 'This is the way the world ends\nHello World\nnot with a bang but a whimper.\n');
+fs.readFileSync('hello world.txt');
+```
+
+---
+
+### Further reading
+
+**TODO: Add additional resources not already covered**.
 
 ## Troubleshooting
 
