@@ -47,6 +47,7 @@
  "devices/LPS25HB.md": {"layout": "hw", "title": "LPS25HB", "sub": "Pressure sensor", "label": "LPS25HB", "icons": ["speed"], "colors": ["pressure"], "board": "teal"},
  "devices/LSM303DLHC.md": {"layout": "hw", "title": "LSM303DLHC", "sub": "Accelerometer & magnetometer", "label": "LSM303", "icons": ["axes", "explore"], "colors": ["motion", "magnetic"], "board": "green"},
  "devices/LSM6DSL.md": {"layout": "hw", "title": "LSM6DSL", "sub": "Accelerometer & gyroscope", "label": "LSM6DSL", "icons": ["axes", "3d_rotation"], "colors": ["motion", "magnetic"], "board": "teal"},
+ "devices/LSM9DS1.md": {"layout": "hw", "title": "LSM9DS1", "sub": "Accelerometer, gyro & magnetometer", "label": "LSM9DS1", "icons": ["axes", "3d_rotation", "explore"], "colors": ["motion", "magnetic", "pressure"], "board": "purple"},
  "devices/MAX1704x.md": {"layout": "hw", "title": "MAX1704x", "sub": "LiPo battery fuel gauge", "label": "MAX17048", "icons": ["battery_charging_full"], "colors": ["air"], "board": "blue"},
  "devices/MAX31855.md": {"layout": "hw", "title": "MAX31855", "sub": "Thermocouple amplifier", "label": "MAX31855", "icons": ["thermo", "whatshot"], "colors": ["temperature", "motion"], "board": "red"},
  "devices/MAX44009.md": {"layout": "hw", "title": "MAX44009", "sub": "Ambient light sensor", "label": "MAX44009", "icons": ["wb_sunny"], "colors": ["light"], "board": "purple"},
