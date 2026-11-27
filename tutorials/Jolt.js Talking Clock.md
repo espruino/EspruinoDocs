@@ -5,7 +5,7 @@ Jolt.js Talking Clock
 <span style="color:red">:warning: **Please view the correctly rendered version of this page at https://www.espruino.com/Jolt.js+Talking+Clock. Links, lists, videos, search, and other features will not work correctly when viewed on GitHub** :warning:</span>
 
 * KEYWORDS: Tutorials,Sound,Voice,Clock,Talking Clock
-* USES: Jolt.js,Battery,Speaker,Vibration
+* USES: Jolt.js,Battery,Speaker,Vibration,Waveform
 
 You can use  [Jolt.js](../boards/Jolt.js.md)'s high power outputs for driving speakers. In this example we'll make a clock that will speak the time whenever it is moved. Multiple sound samples are stored (one for each number) and are then played in order.
 
