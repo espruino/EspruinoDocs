@@ -97,7 +97,10 @@ function existingThumbnail(file) {
   });
   if (found) return base + found;
   var match = fs.readFileSync(path.join(BASEDIR, file), "utf8").match(/!\[[^\]]*\]\(([^\)]*)\)/);
-  if (match) return file.substr(0, file.lastIndexOf("/")+1) + match[1];
+  if (!match) return;
+  if (/^data:image\/\w+[^,]*;base64,/.test(match[1])) return match[1];
+  var image = file.substr(0, file.lastIndexOf("/")+1) + match[1];
+  if (fs.existsSync(path.join(BASEDIR, image))) return image;
 }
 
 /// Markdown pages, plus the example .js files that bin/build.js turns into pages
@@ -503,6 +506,7 @@ if (opts.files.length) {
 if (opts.list) {
   files.forEach(function(f) {
     var t = existingThumbnail(f);
+    if (t && t.startsWith("data:")) t = "an image embedded in the page";
     console.log(t ? `${f}  (has ${t})` : f);
   });
   process.exit(0);

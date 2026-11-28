@@ -179,16 +179,31 @@ if (PROCESS_THUMBNAILS) markdownFiles.concat(exampleFiles).forEach(function(file
   if (!sourceImage) {
     var contents = fs.readFileSync(filename).toString();
     var match = contents.match(/!\[[^\]]*\]\(([^\)]*)\)/);
-    if (match)
-      sourceImage = filename.substr(0,filename.lastIndexOf("/")+1)+match[1];
+    if (match) {
+      if (match[1].startsWith("data:")) // image embedded in the page, eg. a Pixl.js screenshot
+        sourceImage = match[1];
+      else
+        sourceImage = filename.substr(0,filename.lastIndexOf("/")+1)+match[1];
+    }
+  }
+  // data: URIs and missing files (eg. remote images) can't be passed to convert as a filename
+  var sourceData = sourceImage && sourceImage.match(/^data:image\/(\w+)[^,]*;base64,(.*)$/);
+  if (sourceImage && !sourceData && !fs.existsSync(sourceImage)) {
+    console.log("THUMBNAIL SOURCE "+sourceImage+" NOT FOUND FOR "+filename);
+    sourceImage = undefined;
   }
   if (sourceImage) {
     var dstImage = IMAGE_DIR+createSafeFilename(baseName)+"_thumb.png";
     var radius = 6;
     var roundcorners = `\\( +clone -crop ${radius}x${radius}+0+0  -fill white -colorize 100% -draw 'fill black circle ${radius-1},${radius-1} ${radius-1},0' -background White -alpha shape \\( +clone -flip \\) \\( +clone -flop \\) \\( +clone -flip \\) \\) -flatten`;
-    var cmd = `convert "${sourceImage}" -resize ${THUMB_WIDTH}x${THUMB_HEIGHT} +repage ${roundcorners} -gravity South -extent ${THUMB_WIDTH}x -strip -define png:include-chunk=none "${path.resolve(HTML_DIR, dstImage)}"`;
+    var source = sourceData ? sourceData[1]+":-" : `"${sourceImage}"`; // data: URIs are piped in on stdin
+    var cmd = `convert ${source} -resize ${THUMB_WIDTH}x${THUMB_HEIGHT} +repage ${roundcorners} -gravity South -extent ${THUMB_WIDTH}x -strip -define png:include-chunk=none "${path.resolve(HTML_DIR, dstImage)}"`;
     //console.log(cmd);
-    child_process.exec(cmd);
+    var convert = child_process.exec(cmd);
+    if (sourceData) {
+      convert.stdin.on("error", function() {}); // like other convert errors, don't stop the build
+      convert.stdin.end(Buffer.from(sourceData[2], "base64"));
+    }
     console.log("THUMBNAIL "+filename+" --> "+dstImage);
     markdownThumbs[filename] = dstImage;
   } else {
