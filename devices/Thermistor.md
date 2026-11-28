@@ -51,6 +51,7 @@ Thermistors can be wired up as follows:
   |               +---------+            |
   |                    100K current      |
   |                    limiting resistor |
+  |                    (optional)        |
 +-+-+                                    |
 |   |                                 +----+
 |   | 10K Thermistor                  +----+ 100nF Capacitor
@@ -77,10 +78,35 @@ i.e. : If the thermistor is a 10K3A1 temperature sensor connected to Pin C0 then
   t1.getTemp();
 ```
 
+The module assumes a 10K biasing resistor. If you use a different value (for
+instance a 20K resistor with a 20K6A1 sensor) then pass its value in Ohms as
+the `resistor` option:
+
+```
+  var t1 = require("Thermistor").connect(C0,"C",{resistor:20000});
+  t1.getTemp();
+```
+
+If your thermistor isn't in the table above, you can supply your own
+[Steinhart-Hart](https://en.wikipedia.org/wiki/Steinhart%E2%80%93Hart_equation)
+coefficients `[A,B,C]` (usually found in the thermistor's datasheet) instead of a
+code. For example for the 5K thermistor used in the [Thermistors](../tutorials/Thermistors.md)
+tutorial, wired up with a 5.6K biasing resistor:
+
+```
+  var t1 = require("Thermistor").connect(C0,[1.2874E-03,2.3573E-04,9.5052E-08],{resistor:5600});
+  t1.getTemp();
+```
+
 **Troubleshooting.**
 
 If you find the code returns NaN.  Check that you have used ``" " ``around the thermistor type.
 
+
+Reference
+---------
+
+* APPEND_JSDOC: Thermistor.js
 
 Buying
 -----

@@ -3,19 +3,21 @@
 Read different common thermistor characteristic temperature sensors.
 */
 
-function thermistor(pin,characteristic) {
+function thermistor(pin,characteristic,options) {
   this.pin = pin;
   this.characteristic = characteristic;
+  this.resistor = (options && options.resistor) || 10000;
 }
 
-// Read input and calculate temperature i.e. getTemp(C0,"B")
+/** Read the input and return the temperature in degrees C, rounded to two decimal places */
 thermistor.prototype.getTemp = function() {
   var pin = this.pin;
   var characteristic = this.characteristic;
 
   var scale = [];
-    
-  switch (characteristic) { //Types Based on Sontay Datasheet
+
+  if (Array.isArray(characteristic)) scale = characteristic; // custom Steinhart-Hart coefficients [A,B,C]
+  else switch (characteristic) { //Types Based on Sontay Datasheet
     case "A": // 10K3A1
       scale = [0.001128524, 0.000234171, 0.000000088];
       break;
@@ -52,13 +54,23 @@ thermistor.prototype.getTemp = function() {
   }
   
   var val = analogRead(pin); // read voltage
-  var ohms = 10000.0*val/(1-val); // calculate thermistor resistance
+  var ohms = this.resistor*val/(1-val); // calculate thermistor resistance
   var W = Math.log(ohms);
   var temp = 1 / (scale[0] + W * (scale[1]+scale[2] * W*W)) - 273.15;  // calc temperature using Steinhert equation
   temp = Math.round(temp * 100) / 100; // round the temperature to two decimal places
   return temp; // and return the temperature
 };
 
-exports.connect = function (pin, type) {
-  return new thermistor(pin, type);
+/** Create a thermistor connected to `pin`.
+
+`type` is one of the sensor codes listed on this page (eg. `"A"` for a 10K3A1),
+or an array of your own Steinhart-Hart coefficients `[A,B,C]`.
+
+`options` is optional and can contain:
+
+* `resistor` - the value in Ohms of the biasing resistor between the
+  thermistor and 3.3v (default 10000)
+*/
+exports.connect = function (pin, type, options) {
+  return new thermistor(pin, type, options);
 };
